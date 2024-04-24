@@ -1,0 +1,178 @@
+@use "variables" as *;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@300;400;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap');
+
+
+html {
+  box-sizing: border-box;
+  font-size: clamp(10px, 0.9vw, 22px);
+  @include hd {
+    font-size: clamp(10px, 0.9vw, 20px);
+  }
+  @include cel {
+    font-size: clamp(16px, 1.8vw, 18px);
+  }
+  @include hdplus {
+    font-size: clamp(14px, 7vw, 22px);
+  }
+
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 100;
+  background: #ffffff;
+  scroll-behavior: smooth;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  position: relative;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3, h4 {
+  line-height: 1em;
+  font-family: "Averia Serif Libre", serif;
+  padding-bottom: 0.7rem;
+  color: $secundario;
+}
+h1 {
+
+  font-size: clamp(3rem, 6vw, 30vw);
+}
+h2 {
+  font-size: clamp(2.2em, 2vw, 30vw);
+  @include hd {
+    font-size: clamp(3em, 2vw, 50vw);
+  }
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-size: cover;
+  shape-margin: 0.75rem;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  @extend .anime;
+  &:hover {
+    transform: scale(0.9);
+  }
+}
+p {
+  margin-bottom: 1rem;
+}
+p:last-child {
+  margin-bottom: 0rem;
+}
+b {
+  font-weight: bold;
+}
+
+// grid
+.grid {
+  display: grid;
+  grid-template-columns: [pantalla-start] 5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 5vw [pantalla-end];
+  @include hd {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+  @include hdplus {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+}
+.contenido > * {
+  grid-column: contenido;
+}
+.extra > * {
+  grid-column: extra;
+}
+.pantalla > * {
+  grid-column: pantalla;
+}
+.pantalla-izq > * {
+  grid-column: pantalla-start / contenido-end;
+}
+.pantalla-der > * {
+  grid-column: contenido-start / pantalla-end;
+}
+
+.conte-cartas {
+  display: flex;
+  gap: $margen-min;
+  margin: $margen 0;
+  flex-wrap: wrap;
+}
+
+#zigzag {
+  padding: $margen 0;
+  .bloqueMapa:last-child {
+    z-index: 400;
+    transform: translateY(-2rem);
+    @include cel {
+      transform: translateY(0);
+    }
+    .izq {
+      order: 2;
+    }
+    .der {
+      order: 1;
+      
+    }
+  }
+}
+
+.fondo-mitad {
+  background: $terciario;
+  background: linear-gradient(
+    0deg,
+    $terciario 50%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.btn {
+  padding: 1rem $margen-cel;
+  color: white;
+  border: 1px solid white;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  @include cel {
+    width: 100%;
+    text-align: center;
+  }
+  &:hover {
+    background: white;
+    border-radius: $margen-min;
+    color: $primario;
+  }
+}
+.desactivado {
+  pointer-events: none;
+}

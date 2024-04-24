@@ -1,0 +1,27 @@
+---
+import { Picture } from "astro:assets";
+import Nav from "./Nav.astro";
+import Btn from "./Btn.astro";
+
+interface Props {
+  encabezado: string;
+  description: string;
+  fondo: string;
+}
+const { encabezado, description, fondo } = Astro.props;
+import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp"
+---
+
+<section class="hero">
+  <Nav />
+  <div class="izq">
+    <h1>{encabezado}</h1>
+    <p set:html={description} />
+    <Btn liga="#bodas" texto="Invitacion de bodas" claro={false} />
+    <Btn liga="#contacto" texto="Contáctanos" claro={true} />
+  </div>
+
+  <div class="der">
+<Picture src={cover} alt="Invitaciones de bodas" />
+</div>
+</section>

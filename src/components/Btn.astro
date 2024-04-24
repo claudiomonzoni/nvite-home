@@ -1,0 +1,29 @@
+---
+interface Props {
+    liga: string;
+    texto: string;
+    claro: boolean;
+}
+const { liga, texto, claro } = Astro.props;
+---
+<a href="{liga}" class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto}></a>
+
+<style lang="scss">
+    @mixin btn {
+        padding: 10px 20px;
+        display: inline-block;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .btn-claro {
+        @include btn;
+        background-color: #fff;
+        color: #000;
+    }
+    .btn-oscuro {
+        @include btn;
+        background-color: #000;
+        color: #fff;
+    }
+
+</style>
