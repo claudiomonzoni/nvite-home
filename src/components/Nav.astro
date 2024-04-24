@@ -2,9 +2,8 @@
 
 
 ---
-
 <nav>
-    <a href="/"><img src="nvite-logo.svg" alt="Nvite invitaciones digitales"></a>
+    <a href="/"><img src="nvite-logo.svg" alt="Nvite invitaciones digitales" id="logo"></a>
     <ul>
         <li><a href="/bodas">Bodas</a></li>
         <li><a href="/xvanos">XV años</a></li>
@@ -12,3 +11,26 @@
         <li><a href="/eventos">Eventos</a></li>
     </ul>
 </nav>
+
+<style lang="scss">
+    @import '../estilos/_variables.scss';
+    #logo{
+        max-width: 220px;
+    }
+
+    nav {
+        flex: 1 0 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $margen-cel 0;
+        @include cel {
+            flex-wrap:wrap;
+
+        }
+    }
+    ul{
+        display: flex;
+        gap:$margen-min;
+    }
+</style>

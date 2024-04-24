@@ -9,19 +9,79 @@ interface Props {
   fondo: string;
 }
 const { encabezado, description, fondo } = Astro.props;
-import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp"
+import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
 ---
 
-<section class="hero">
+<section class="grid contenido">
   <Nav />
-  <div class="izq">
-    <h1>{encabezado}</h1>
-    <p set:html={description} />
-    <Btn liga="#bodas" texto="Invitacion de bodas" claro={false} />
-    <Btn liga="#contacto" texto="Contáctanos" claro={true} />
-  </div>
+  <div id="hero">
+    <div class="izq">
+      <div class="bandeja">
+        <h1><span>nvite</span>ciones <span id="digitales">digitales</span></h1>
+        <p set:html={description} />
+        <Btn liga="#bodas" texto="Invitacion de bodas" claro={false} />
+        <Btn liga="#contacto" texto="Contáctanos" claro={true} />
+      </div>
+    </div>
 
-  <div class="der">
-<Picture src={cover} alt="Invitaciones de bodas" />
-</div>
+    <div class="der">
+      <Picture src={cover} alt="Invitaciones de bodas" />
+    </div>
+  </div>
 </section>
+
+<style lang="scss">
+    @import '../estilos/_variables.scss';
+
+  #hero {
+    background:white;
+    border-radius: $margen-min;
+    display: flex;
+    h1{
+      color: $primario;
+      span{
+        color: $acento;
+      }
+    }
+    @extend .sombra;
+    .bandeja{
+      width: fit-content;
+    }
+    .der,
+    .izq {
+      display: flex;
+      
+    }
+    .izq{
+      padding: $margen;
+      justify-content: center;
+      align-items: center;
+      flex: 1 0 min-content;
+    }
+    .der{
+      justify-content: right;
+      align-items: bottom;
+      flex: 1 0 40%;
+      background: url('/fondo-cover-nviteme-invitaciones-digitales.webp');
+      overflow: hidden;
+      border-radius: $margen-min;
+    }
+
+    @include cel {
+      flex-wrap: wrap;
+      .izq{
+        padding: $margen-cel;
+        text-align: center;
+        flex: 1 0 100%;
+      }
+      .der{
+        flex: 1 0 100%;
+      }
+    }
+  }
+  #digitales{
+    color: $primario!important;
+    font-weight: 700;
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+</style>
