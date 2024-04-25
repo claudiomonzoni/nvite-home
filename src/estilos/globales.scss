@@ -1,8 +1,6 @@
 @use "variables" as *;
 
-
-@import url('https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@300;400;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@300;400;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap");
 
 html {
   box-sizing: border-box;
@@ -19,7 +17,7 @@ html {
 
   font-family: "Montserrat Alternates", sans-serif;
   font-weight: 100;
-  background: #EDE3DD;
+  background: #ede3dd;
   scroll-behavior: smooth;
 }
 
@@ -48,18 +46,19 @@ ul {
 
 h1,
 h2,
-h3, h4 {
+h3,
+h4 {
   line-height: 1em;
   font-family: "Averia Serif Libre", serif;
   padding-bottom: 0.7rem;
   color: $secundario;
 }
 h1 {
-
   font-size: clamp(2.5rem, 5vw, 7vw);
 }
 h2 {
   font-size: clamp(2.2em, 2vw, 30vw);
+  color: $acento;
   @include hd {
     font-size: clamp(3em, 2vw, 50vw);
   }
@@ -81,13 +80,19 @@ img {
 a {
   text-decoration: none;
   display: inline-block;
+  color: $primario;
   @extend .anime;
   &:hover {
-    transform: scale(0.9);
+    transform: scale(1.05);
   }
 }
+.selected {
+  color: $acento;
+  text-decoration: underline;
+  font-weight: 700;
+}
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
 }
 p:last-child {
   margin-bottom: 0rem;
@@ -95,7 +100,12 @@ p:last-child {
 b {
   font-weight: bold;
 }
-
+//flex
+.flex {
+  display: flex;
+  gap: $margen-min;
+  flex-wrap: wrap;
+}
 // grid
 .grid {
   display: grid;
@@ -143,7 +153,6 @@ b {
     }
     .der {
       order: 1;
-      
     }
   }
 }
@@ -175,4 +184,121 @@ b {
 }
 .desactivado {
   pointer-events: none;
+}
+
+.cartaBase {
+  background: white;
+  border-radius: $margen-min;
+  position: relative;
+  @extend .sombra;
+  margin: $margen;
+  @include cel {
+    margin: $margen-cel 0;
+  }
+}
+.baseA {
+  --baseAPadd: 30dvh;
+  text-align: center;
+  padding: var(--baseAPadd) $margen $margen $margen;
+  p {
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 70%;
+  }
+  img {
+    object-fit: cover;
+  }
+
+  @include tableta {
+    padding: 12dvh $margen $margen $margen;
+  }
+  @include tableta-land {
+    padding: 25dvh $margen $margen $margen;
+  }
+  @include cel {
+    padding: 0 $margen-cel $margen-cel $margen-cel;
+  }
+}
+
+.cartasBaseImagenes {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  left: 0;
+  // top: calc((100% - var(--baseAPadd)) );
+  top: -7rem;
+  gap: 1rem;
+  justify-content: center;
+  .bloqueImg {
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    border-radius: $margen-min;
+    background: rgba(94, 206, 221, 0.4);
+    flex: 1 0 fit-content;
+    display: flex;
+    max-width: 50%;
+    @extend .sombra;
+    &:first-child {
+      max-width: 20%;
+      background: rgba(255, 136, 0, 0.4);
+    }
+  }
+
+  @include cel {
+    top: -1dvh;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 2rem;
+    .bloqueImg {
+      max-width: 100%;
+      &:first-child {
+        max-width: 100%;
+        justify-content: center;
+        img {
+          height: 70vw;
+        }
+      }
+    }
+  }
+}
+
+.cartaBase2 {
+  text-align: center;
+  background: white;
+  border-radius: $margen-min;
+  position: relative;
+  flex: 1 0 60%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  img{
+    object-fit: contain;
+    width: auto;
+    padding: $margen-min 0;
+  }
+  h2, p{
+    flex: 1 0 100%;
+  }
+  
+  @extend .sombra;
+  padding: $margen;
+  @include cel {
+    padding: $margen-cel;
+  }
+  
+  &:last-child {
+    flex: 1 0 30%;
+    background: $secundario;
+    padding: $margen-cel $margen-cel 0 $margen-cel;
+    img{
+      object-fit: contain;
+      width: auto;
+      padding: 0;
+    }
+  
+  }
 }

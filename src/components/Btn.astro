@@ -9,6 +9,7 @@ const { liga, texto, claro } = Astro.props;
 <a href="{liga}" class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto}></a>
 
 <style lang="scss">
+    @import '../estilos/_variables.scss';
     @mixin btn {
         padding: 10px 20px;
         display: inline-block;
@@ -17,13 +18,15 @@ const { liga, texto, claro } = Astro.props;
     }
     .btn-claro {
         @include btn;
-        background-color: #fff;
-        color: #000;
+        color: $primario;
+        border: 1px solid $primario;
+        font-weight: 700;
     }
     .btn-oscuro {
         @include btn;
-        background-color: #000;
-        color: #fff;
+        background-color: $primario;
+        color: $secundario;
+        font-weight: 700;
     }
 
 </style>
