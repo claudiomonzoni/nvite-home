@@ -1,4 +1,6 @@
 ---
+import Banner from '../components/Banner.astro';
+import Caracteristicas from '../components/Caracteristicas.astro';
 import Hero from '../components/Hero.astro';
 import Layout from '../layouts/Layout.astro';
 
@@ -29,6 +31,7 @@ import Layout from '../layouts/Layout.astro';
 			<div class="cartaBase2">
 				<h2>personalizadas</h2>
 				<p>Tu invitados <b>se sentirán especiales al leer sus nombres</b>, cada invitación tiene un numero de identificación relacionado con tu invitado y los pases que le asignes.</p>
+				<img id="decor" src="/decoracion-muestra-invitacion-digital-nvite.webp" alt="decoracion invitacion">
 				<img src="/muestra-invitacion-digital-nvite-personalizada.webp" alt="invitacion personalizada">
 			</div>
 			<div class="cartaBase2">
@@ -38,6 +41,21 @@ import Layout from '../layouts/Layout.astro';
 			</div>
 			</div>
 
+			<!-- carcateristicas -->
+
+			<div id="conteCaracteristicas">
+				<Caracteristicas encabezado="mapas" texto="Para que tus invitados no se pierdan." icono="/ico-nvite-mapa.svg" fondo="/fondo-nvite-caracteristicas.png" />
+				
+				<Caracteristicas encabezado="regalos" texto="Sugiere los regalos que quieres en tu evento." icono="/ico-nvite-regalos.svg" fondo="/fondo-nvite-caracteristicas-2.png" />
+
+				<Caracteristicas encabezado="detalles" texto="Agrega los detalles de tu evento." icono="/ico-nvite-detalles.svg" fondo="fondo-nvite-caracteristicas-3.png" />
+
+				<Caracteristicas encabezado="fotos" texto="Agrega hasta 6 fotos a tu galería." icono="/ico-nvite-fotos.svg" fondo="fondo-nvite-caracteristicas-4.png" />
+			</div>
+
+			<div class="grid pantalla">
+				<Banner />
+			</div>
 
 		</section>
 </Layout>

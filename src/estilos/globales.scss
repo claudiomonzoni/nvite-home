@@ -275,30 +275,89 @@ b {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  img{
+  img {
+    position: relative;
+    margin-top: $margen-min;
     object-fit: contain;
     width: auto;
     padding: $margen-min 0;
   }
-  h2, p{
+  h2,
+  p {
     flex: 1 0 100%;
   }
-  
+
   @extend .sombra;
   padding: $margen;
   @include cel {
     padding: $margen-cel;
   }
-  
+
   &:last-child {
     flex: 1 0 30%;
-    background: $secundario;
     padding: $margen-cel $margen-cel 0 $margen-cel;
-    img{
-      object-fit: contain;
-      width: auto;
+    background: url("/fondo-nvite-caracteristicas-2.png") no-repeat $secundario;
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    img {
+      margin-top: 0;
       padding: 0;
+      align-self: flex-end;
     }
-  
+  }
+  #decor {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 10vw;
+
+    @include hdplus {
+      left: 6rem;
+    }
+    @include cel {
+      width: 20vw;
+    }
+  }
+}
+
+#conteCaracteristicas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $margen-min;
+  justify-content: space-around;
+  margin: $margen-min 0;
+  & > * {
+    position: relative;
+    flex: 1;
+    border-radius: $margen-min;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf;
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    aspect-ratio: 3 / 2;
+    @include cel {
+      aspect-ratio: 3 / 5;
+    }
+    .conte {
+      position: relative;
+      max-width: 70%;
+      text-align: center;
+    }
+    h3 {
+      color: $acento;
+      font-size: clamp(3.7vh, 2vw, 3vw);
+    }
+    .icono {
+      max-width: 1.7rem;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      @include cel {
+        max-width: 2rem;
+      }
+    }
   }
 }

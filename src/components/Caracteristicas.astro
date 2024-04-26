@@ -1,0 +1,30 @@
+---
+interface Props {
+  encabezado: string;
+  texto: string;
+  icono: string;
+  fondo?: string;
+}
+const { encabezado, texto, icono, fondo } = Astro.props;
+const url = `url("${fondo}")`
+console.log(url)
+---
+
+
+  <div class="carcateristicas">
+      <div class="icono"><img src={icono} alt={encabezado} /></div>
+    <div class="conte">
+      <h3>{encabezado}</h3>
+      <p>{texto}</p>
+    </div>
+  </div>
+
+
+<!-- buscare en globales  -->
+<style define:vars={{url}}>     
+
+.carcateristicas{
+    /* background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf; */
+    background: var(--url) no-repeat #ffd9b0;
+}
+</style>
