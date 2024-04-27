@@ -1,28 +1,62 @@
 ---
-import Btn from "./Btn.astro"
+import Btn from "./Btn.astro";
 ---
 
 <div class="banner">
-  <h2>Nvite <span>Bodas</span></h2>
-  <p>La invitación que también la puedes usar como sitio web de tu boda</p>
-  <ul>
-    <li>Envía tu invitación por whatsapp o correo a tus invitados</li>
-    <li>Foto de portada</li>
-    <li>
-      Cada invitación es personalizada con el nombre del invitado y los pases
-      asignados
-    </li>
-    <li>
-      Sugiere mesas de regalos, regalos en efectivo o transferencias de dinero
-    </li>
-    <li>Cuenta regresiva para la fecha del evento</li>
-    <li>Mapas de ubicación de la ceremonia y la fiesta</li>
-    <li>Galería de fotos de la pareja</li>
-    <li>Frase animada de amor y textos descriptivos del evento</li>
-    <li>Código de vestimenta</li>
-    <li>Detalles adicionales</li>
-    <li>Formulario de confirmación de asistencia y pases a usar</li>
-  </ul>
-  <Btn liga="/bodas" texto="ver invitacion de bodas" claro={false} />
-  <Btn liga="/bodas" texto="comprar $1590" claro={true} />
+  <div class="der">
+    <div class="bande">
+      <h2>Nvite <span>Bodas</span></h2>
+      <p>La invitación que también la puedes usar como sitio web de tu boda</p>
+      <ul>
+        <li>Envía tu invitación por whatsapp o correo a tus invitados</li>
+        <li>Foto de portada</li>
+        <li>
+          Cada invitación es personalizada con el nombre del invitado y los
+          pases asignados
+        </li>
+        <li>
+          Sugiere mesas de regalos, regalos en efectivo o transferencias de
+          dinero
+        </li>
+        <li>Cuenta regresiva para la fecha del evento</li>
+        <li>Mapas de ubicación de la ceremonia y la fiesta</li>
+        <li>Galería de fotos de la pareja</li>
+        <li>Frase animada de amor y textos descriptivos del evento</li>
+        <li>Código de vestimenta</li>
+        <li>Detalles adicionales</li>
+        <li>Formulario de confirmación de asistencia y pases a usar</li>
+      </ul>
+      <Btn liga="/bodas" texto="ver invitacion de bodas" claro={false} />
+      <Btn liga="/bodas" texto="comprar $1590" claro={true} />
+    </div>
+  </div>
+  <div class="izq">
+    <img
+      src="novios-cover-invitacion-digital-nvite.webp"
+      alt="Invitaciones de bodas"
+    />
+  </div>
 </div>
+<style>
+  .banner {
+    display: flex;
+  }
+  .der, .izq{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .bande {
+    width: 80%;
+  }
+  ul{
+    padding: 1rem 0;
+  }
+  li{
+    list-style: disc;
+    /* list-style-position: inside; */
+    margin-left: 1.5rem;
+    margin-bottom: .2rem;
+  }
+</style>
