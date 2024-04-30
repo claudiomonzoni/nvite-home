@@ -68,6 +68,12 @@ ol,
 ul {
   list-style: none;
 }
+li{
+  list-style: disc;
+  /* list-style-position: inside; */
+  margin-left: 1.5rem;
+  margin-bottom: .2rem;
+}
 
 img {
   max-width: 100%;
@@ -266,6 +272,7 @@ b {
   }
 }
 
+
 .cartaBase2 {
   text-align: center;
   background: white;
@@ -321,6 +328,18 @@ b {
   }
 }
 
+.cartaBase3 {
+  padding: 0!important;
+  .bande{
+    padding:$margen-cel;
+  }
+  overflow: hidden;
+  img{
+    width: 100%;
+  }
+  
+}
+
 #conteCaracteristicas {
   display: flex;
   flex-wrap: wrap;
@@ -364,6 +383,19 @@ b {
 
 .azulBG{
   background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat $terciario;
-  background-position: top right;
-  background-size: contain;
+  background-position: center right;
+  background-size: 50%;
+  @include cel{
+    background-position: center bottom;
+    background-size: 120%;
+  }
+  margin-bottom: $margen-min;
+}
+.texto-izq{
+  text-align: left;
+}
+.mini{
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: $primario;
 }

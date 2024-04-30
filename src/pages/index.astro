@@ -1,61 +1,158 @@
 ---
-import Banner from '../components/Banner.astro';
-import Caracteristicas from '../components/Caracteristicas.astro';
-import Hero from '../components/Hero.astro';
-import Layout from '../layouts/Layout.astro';
-
+import Banner from "../components/Banner.astro";
+import Caracteristicas from "../components/Caracteristicas.astro";
+import Hero from "../components/Hero.astro";
+import Layout from "../layouts/Layout.astro";
+import Btn from "../components/Btn.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
 <Layout title="Invitaciones de bodas digitales.">
-	<Hero encabezado="<span>Nvite</span>ciones digitales" description="Estamos trabajando en ofrecerte más invitaciones y variedad, iniciamos con la <b>invitación de bodas</b>, pero pronto tendrás disponible mas opciones." fondo="fondo-cover-nviteme-invitaciones-digitales.webp" />
+  <Hero
+    encabezado="<span>Nvite</span>ciones digitales"
+    description="Estamos trabajando en ofrecerte más invitaciones y variedad, iniciamos con la <b>invitación de bodas</b>, pero pronto tendrás disponible mas opciones."
+    fondo="fondo-cover-nviteme-invitaciones-digitales.webp"
+  />
 
-		<section class="grid contenido">
-			
-			<div class="cartaBase baseA">
-				<div class="cartasBaseImagenes">
-					<div class="bloqueImg">
-						<img src="/muestra-invitacion-digital-nvite-celular.webp" alt="invitacion digital celular">
-					</div>
-					<div class="bloqueImg">
-						<img src="/muestra-invitacion-digital-nvite-escritorio.webp" alt="invitacion digital celular">
-					</div>
-				</div>
+  <section class="grid contenido">
+    <div class="cartaBase baseA">
+      <div class="cartasBaseImagenes">
+        <div class="bloqueImg">
+          <img
+            src="/muestra-invitacion-digital-nvite-celular.webp"
+            alt="invitacion digital celular"
+          />
+        </div>
+        <div class="bloqueImg">
+          <img
+            src="/muestra-invitacion-digital-nvite-escritorio.webp"
+            alt="invitacion digital celular"
+          />
+        </div>
+      </div>
 
-				<h2>en cualquier pantalla</h2>
-				<p>Diseñadas para verse en celulares o monitores de computadoras, <b>tus invitaciones se verán geniales</b> donde sea que las vean.</p>
-				<p>Además, podrás usar tus invitaciones tambien como <b>página web de tu evento</b></p>
-			</div>
-			<div class="flex">
-				
-			<div class="cartaBase2">
-				<h2>personalizadas</h2>
-				<p>Tu invitados <b>se sentirán especiales al leer sus nombres</b>, cada invitación tiene un numero de identificación relacionado con tu invitado y los pases que le asignes.</p>
-				<img id="decor" src="/decoracion-muestra-invitacion-digital-nvite.webp" alt="decoracion invitacion">
-				<img src="/muestra-invitacion-digital-nvite-personalizada.webp" alt="invitacion personalizada">
-			</div>
-			<div class="cartaBase2">
-				<h2>confirmación</h2>
-				<p>Sabemos lo importante que es para ti que tus invitados confirmen su asistencia, asi que <b>podrán confirmarte directamente a tu whatsapp</b> su asitencia y cuantos pases planean usar.</p>
-				<img src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp" alt="invitacion con confirmación de asistencia">
-			</div>
-			</div>
+      <h2>en cualquier pantalla</h2>
+      <p>
+        Diseñadas para verse en celulares o monitores de computadoras, <b
+          >tus invitaciones se verán geniales</b
+        > donde sea que las vean.
+      </p>
+      <p>
+        Además, podrás usar tus invitaciones tambien como <b
+          >página web de tu evento</b>
+      </p>
+    </div>
+    <div class="flex">
+      <div class="cartaBase2">
+        <h2>personalizadas</h2>
+        <p>
+          Tu invitados <b>se sentirán especiales al leer sus nombres</b>, cada
+          invitación tiene un numero de identificación relacionado con tu
+          invitado y los pases que le asignes.
+        </p>
+        <img
+          id="decor"
+          src="/decoracion-muestra-invitacion-digital-nvite.webp"
+          alt="decoracion invitacion"
+        />
+        <img
+          src="/muestra-invitacion-digital-nvite-personalizada.webp"
+          alt="invitacion personalizada"
+        />
+      </div>
+      <div class="cartaBase2">
+        <h2>confirmación</h2>
+        <p>
+          Sabemos lo importante que es para ti que tus invitados confirmen su
+          asistencia, asi que <b
+            >podrán confirmarte directamente a tu whatsapp</b
+          > su asitencia y cuantos pases planean usar.
+        </p>
+        <img
+          src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
+          alt="invitacion con confirmación de asistencia"
+        />
+      </div>
+    </div>
 
-			<!-- carcateristicas -->
+    <!-- carcateristicas -->
 
-			<div id="conteCaracteristicas">
-				<Caracteristicas encabezado="mapas" texto="Para que tus invitados no se pierdan." icono="/ico-nvite-mapa.svg" fondo="/fondo-nvite-caracteristicas.png" />
-				
-				<Caracteristicas encabezado="regalos" texto="Sugiere los regalos que quieres en tu evento." icono="/ico-nvite-regalos.svg" fondo="/fondo-nvite-caracteristicas-2.png" />
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="mapas"
+        texto="Para que tus invitados no se pierdan."
+        icono="/ico-nvite-mapa.svg"
+        fondo="/fondo-nvite-caracteristicas.png"
+      />
 
-				<Caracteristicas encabezado="detalles" texto="Agrega los detalles de tu evento." icono="/ico-nvite-detalles.svg" fondo="fondo-nvite-caracteristicas-3.png" />
+      <Caracteristicas
+        encabezado="regalos"
+        texto="Sugiere los regalos que quieres en tu evento."
+        icono="/ico-nvite-regalos.svg"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+      />
 
-				<Caracteristicas encabezado="fotos" texto="Agrega hasta 6 fotos a tu galería." icono="/ico-nvite-fotos.svg" fondo="fondo-nvite-caracteristicas-4.png" />
-			</div>
+      <Caracteristicas
+        encabezado="detalles"
+        texto="Agrega los detalles de tu evento."
+        icono="/ico-nvite-detalles.svg"
+        fondo="fondo-nvite-caracteristicas-3.png"
+      />
 
-			
-		</section>
-		<div class="azulBG grid contenido">
-			<Banner />
+      <Caracteristicas
+        encabezado="fotos"
+        texto="Agrega hasta 6 fotos a tu galería."
+        icono="/ico-nvite-fotos.svg"
+        fondo="fondo-nvite-caracteristicas-4.png"
+      />
+    </div>
+  </section>
+  <div class="azulBG grid contenido">
+    <Banner />
+  </div>
+
+  <section class="grid contenido">
+    <div class="flex">
+      <div class="cartaBase2 texto-izq">
+        <div class="bande">
+			<h2>contacto</h2>
+      <ul>
+		<li><b>Contáctanos por whatsapp</b> para iniciar con el proceso o compra  en línea directamente la invitación.</li>
+		<li>Te enviamos un formulario donde nos <b>proporcionas la información de tu boda</b>.</li>
+		<li>También te enviamos un documento excel para que <b>agregues los nombres de los invitados</b> y asignar sus pases</li>
+		<li>En menos de 2 días te entregamos la dirección de la invitación de tu boda, lista para ser enviada a tus invitados <span class="mini">(2 días después de tener los datos del evento e invitados completos)</span></li>
+	  </ul>
+	  <Btn liga="/bodas" texto="Iniciar proceso" claro={true} />
 		</div>
+
+       <div id="formu">
+        <h3>Empezemos hacer tus invitaciones, contactanos por whatsapp:</h3>
+        <form>
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombres" placeholder="Puede ser con apellidos o sin ellos">
+          <label for="nombre">Fecha del evento</label>
+          <input type="date" name="fecha" id="fecha">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email">
+          <button type="submit">Empezemos</button>
+
+        </form>
+       </div>
+      </div>
+      <div class="cartaBase2 cartaBase3 texto-izq">
+       <div class="bande">
+		<h2>recibes</h2>
+        <p>
+          Además de tus <b>invitaciones personalizadas</b>, tendrás <b>acceso a un panel de invitados</b> donde tendrás control de las
+          invitaciones copiadas y podrás marcar a los invitados confirmados, con esto tendrás un listado que te ayudará a a <b>tener mejor control</b> de lo más importante de tu evento, tus invitados.
+        </p>
+		<Btn liga="/bodas" texto="Comprar $1590" claro={false} />
+	   </div>
+        <img
+          src="/nvite-panel-invitados.webp"
+          alt="panel de invitados nvite"
+        />
+      </div>
+    </div>
+  </section>
 </Layout>

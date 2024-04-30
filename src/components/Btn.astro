@@ -15,6 +15,12 @@ const { liga, texto, claro } = Astro.props;
         display: inline-block;
         text-decoration: none;
         border-radius: 5px;
+        margin: $margen-min 0;
+        @include cel {
+            margin-top: $margen-min;
+            text-align: center;
+            width: max-content;
+        }
     }
     .btn-claro {
         @include btn;

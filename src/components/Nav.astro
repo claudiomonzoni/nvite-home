@@ -25,12 +25,27 @@
         align-items: center;
         padding: $margen-cel 0;
         @include cel {
+            padding: $margen-min 0;
             flex-wrap:wrap;
+            justify-content: center;
+            ul{
+                justify-content: center;
+                margin-top: 1rem;
+                flex-wrap:wrap;
+                gap:.4rem;
+           
+            }
+            li{
+                margin: 0 .7rem;
+            }
 
         }
     }
     ul{
         display: flex;
         gap:$margen-min;
+    }
+    li{
+        list-style: none;
     }
 </style>
