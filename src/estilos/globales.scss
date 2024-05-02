@@ -434,9 +434,9 @@ input {
   padding: 0.5rem;
   border: solid 1px $acento;
 }
-button[type="submit"] {
+button[type="submit"], #empezar {
   margin-top: $margen-min;
-
+  border-radius: .5rem;
   padding: 1rem $margen-cel;
   color: white;
   border: 1px solid white;
@@ -466,3 +466,8 @@ input::placeholder {
     
   }
 }
+
+.desactivado{
+  opacity: .4;
+  cursor:not-allowed!important;
+  }
