@@ -68,11 +68,11 @@ ol,
 ul {
   list-style: none;
 }
-li{
+li {
   list-style: disc;
   /* list-style-position: inside; */
   margin-left: 1.5rem;
-  margin-bottom: .2rem;
+  margin-bottom: 0.2rem;
 }
 
 img {
@@ -272,7 +272,6 @@ b {
   }
 }
 
-
 .cartaBase2 {
   text-align: center;
   background: white;
@@ -329,15 +328,14 @@ b {
 }
 
 .cartaBase3 {
-  padding: 0!important;
-  .bande{
-    padding:$margen-cel;
+  padding: 0 !important;
+  .bande {
+    padding: $margen-cel;
   }
   overflow: hidden;
-  img{
+  img {
     width: 100%;
   }
-  
 }
 
 #conteCaracteristicas {
@@ -381,21 +379,90 @@ b {
   }
 }
 
-.azulBG{
-  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat $terciario;
+.azulBG {
+  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat
+    $terciario;
   background-position: center right;
   background-size: 50%;
-  @include cel{
+  @include cel {
     background-position: center bottom;
     background-size: 120%;
   }
   margin-bottom: $margen-min;
 }
-.texto-izq{
+.texto-izq {
   text-align: left;
 }
-.mini{
+.mini {
   font-size: 0.7rem;
   font-weight: bold;
   color: $primario;
+}
+
+#formu {
+  width: 70%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding: $margen-cel;
+  border-radius: $margen-min;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.4);
+  @include cel {
+    width: 100%;
+  }
+  @extend .sombra;
+  form {
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+  h3 {
+    flex: 1 0 100%;
+    color: $acento;
+  }
+}
+
+label {
+  flex: 1 0 100%;
+  font-size: clamp(0.9rem, 0.8vw, 1rem);
+  color: $primario;
+  padding-top: $margen-min;
+}
+input {
+  flex: 1 0 100%;
+  padding: 0.5rem;
+  border: solid 1px $acento;
+}
+button[type="submit"] {
+  margin-top: $margen-min;
+
+  padding: 1rem $margen-cel;
+  color: white;
+  border: 1px solid white;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  background-color: $acento;
+  @include cel {
+    width: 100%;
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+  &:hover {
+    background: $secundario;
+    color: $primario;
+  }
+}
+input::placeholder {
+  color: $primario;
+}
+
+.fondo-alegre{
+  background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") repeat-x white;
+  background-size: 50%;
+  background-position: 0% 300%;
+  @include cel {
+    background-size: 100%;
+    background-position: 0% 150%;
+    
+  }
 }
