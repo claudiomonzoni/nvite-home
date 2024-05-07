@@ -6,7 +6,7 @@ interface Props {
 }
 const { liga, texto, claro } = Astro.props;
 ---
-<a href="{liga}" class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto}></a>
+<a href={liga} class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto}></a>
 
 <style lang="scss">
     @import '../estilos/_variables.scss';
