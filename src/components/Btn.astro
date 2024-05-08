@@ -3,10 +3,11 @@ interface Props {
     liga: string;
     texto: string;
     claro: boolean;
+    blank?: boolean;
 }
-const { liga, texto, claro } = Astro.props;
+const { liga, texto, claro, blank } = Astro.props;
 ---
-<a href={liga} class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto}></a>
+<a href={liga} class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto} target={blank ? '_blank' : ''}></a>
 
 <style lang="scss">
     @import '../estilos/_variables.scss';
