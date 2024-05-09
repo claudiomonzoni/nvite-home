@@ -1,9 +1,13 @@
-<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect y="0.453613" width="33.4522" height="33.4522" fill="url(#pattern0)"/>
-<defs>
-<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_15_80" transform="scale(0.0104167)"/>
-</pattern>
-<image id="image0_15_80" width="96" height="96" xlink:href="data:image/png;base64,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"/>
-</defs>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect x="0" y="0.454" width="33.452" height="33.452" style="fill:none;"/>
+    <g transform="matrix(1.10042,0,0,1.10042,-1.65677,0.00615582)">
+        <g transform="matrix(0.434846,0,0,0.434846,1.24601,-1.38375)">
+            <path d="M33.894,69.385C16.814,69.385 2.946,55.615 2.946,38.655C2.946,21.695 16.814,7.925 33.894,7.925C50.975,7.925 64.843,21.695 64.843,38.655" style="fill:rgb(72,79,140);"/>
+        </g>
+        <g transform="matrix(0.434846,0,0,0.434846,1.24601,-1.38375)">
+            <path d="M37.543,46.385C37.912,46.39 38.253,46.374 38.521,46.328C39.461,46.166 40.148,45.746 40.583,45.305C41.026,44.855 41.457,44.113 41.591,43.103C41.776,41.725 41.315,39.26 41.315,39.259C40.568,35.519 41.65,31.487 44.567,28.59C49.208,23.981 56.746,23.981 61.387,28.59C63.656,30.844 64.83,33.783 64.866,36.739C64.867,36.856 64.867,48.209 64.867,58.205C64.867,60.84 66.454,64.447 68.846,66.862C69.288,67.294 69.422,67.949 69.187,68.519C68.952,69.089 68.393,69.46 67.773,69.46C52.671,69.468 31.997,69.468 31.905,69.467C28.928,69.432 25.968,68.266 23.699,66.012C19.057,61.403 19.057,53.92 23.699,49.311C26.629,46.401 30.713,45.33 34.495,46.094L37.543,46.385Z" style="fill:rgb(208,50,0);"/>
+        </g>
+    </g>
 </svg>
