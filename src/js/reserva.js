@@ -2,7 +2,7 @@ const nombre = document.getElementById("nombre");
 const fecha = document.getElementById("fecha");
 const email = document.getElementById("email");
 const empezar = document.getElementById("empezar");
-const numeroWhats = 5217551132486
+const numeroWhats = 5217551132468
 
 console.log(nombre)
 //user agent
