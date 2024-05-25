@@ -380,11 +380,13 @@ b {
 }
 
 .azulBG {
-  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat
-    $terciario;
-  background-position: center right;
-  background-size: 50%;
+  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+  linear-gradient(43deg, rgb(255, 255, 255) 30%, $secundario 100%) no-repeat;
+  background-position: center right, top left;
+  background-size: 50%, 100%;
   @include cel {
+    background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+    linear-gradient(43deg, $secundario 0%, rgb(255, 255, 255) 100%) no-repeat;
     background-position: center bottom;
     background-size: 120%;
   }
@@ -407,7 +409,12 @@ b {
   padding: $margen-cel;
   border-radius: $margen-min;
   backdrop-filter: blur(6px);
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 206, 149, 0.2);
+  img{
+    width: 50px;
+    vertical-align: middle;
+    margin: 0;
+  }
   @include cel {
     width: 100%;
   }
@@ -415,9 +422,10 @@ b {
   form {
     display: flex;
     flex-wrap: wrap;
-
+    
   }
   h3 {
+    vertical-align: middle;
     flex: 1 0 100%;
     color: $acento;
   }

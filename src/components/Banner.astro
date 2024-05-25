@@ -26,8 +26,9 @@ import Btn from "./Btn.astro";
         <li>Detalles adicionales</li>
         <li>Formulario de <b>confirmación de asistencia</b> y pases a usar</li>
       </ul>
-      <Btn liga="/bodas/nvite-bodas-1?id=2" texto="ver invitacion de bodas" claro={false} />
-      <Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="comprar $1490" claro={true} blank={true} />
+      <Btn liga="/bodas/nvite-bodas-1?id=2" texto="Ver invitacion de boda 1" claro={true} />
+      <Btn liga="/bodas/nvite-bodas-2?id=2" texto="Ver invitacion de boda 2" claro={true} />
+      <Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="comprar $1490" claro={false} blank={true} />
     </div>
   </div>
   <div class="izq">
@@ -40,7 +41,7 @@ import Btn from "./Btn.astro";
 <style lang="scss">
   @import "../estilos/_variables.scss";
   h2{
-    color: $primario;
+    color: $acento;
   }
 
   .banner {
