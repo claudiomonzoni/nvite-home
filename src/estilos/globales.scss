@@ -356,6 +356,7 @@ b {
     background-blend-mode: color-dodge;
     aspect-ratio: 3 / 2;
     @include cel {
+      flex: 1 0 47%;
       aspect-ratio: 3 / 5;
     }
     .conte {
@@ -365,7 +366,7 @@ b {
     }
     h3 {
       color: $acento;
-      font-size: clamp(3.7vh, 2vw, 3vw);
+      font-size: clamp(3vh, 2vw, 3vw);
     }
     .icono {
       max-width: 1.7rem;
@@ -417,6 +418,10 @@ b {
   }
   @include cel {
     width: 100%;
+    margin-top: 2rem;
+    img{
+      width: 30px;
+    }
   }
   @extend .sombra;
   form {

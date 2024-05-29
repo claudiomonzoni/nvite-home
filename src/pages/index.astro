@@ -114,16 +114,52 @@ import Footer from "../components/Footer.astro";
   </div>
 
   <section class="grid contenido">
+<h2>Compra tu invitacion</h2>
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+      encabezado="Contacto"
+      texto="Resolvemos tus dudas y te guiamos en el proceso."
+      icono="/ico-nvite-recibes.svg"
+      fondo="/fondo-nvite-caracteristicas.png"
+      colorBg="#FFF1E1";
+      />
+      
+      <Caracteristicas
+      encabezado="Pago"
+      texto="Te damos distintas opciones de pago."
+      icono="/ico-nvite-pago.svg"
+      fondo="/fondo-nvite-caracteristicas-2.png"
+      />
+      
+      <Caracteristicas
+      encabezado="Datos"
+      texto="Nos envias los datos de tu evento."
+      icono="/ico-nvite-datos.svg"
+      fondo="fondo-nvite-caracteristicas-3.png"
+      colorBg="#FFF1E1";
+      />
+      
+      <Caracteristicas
+      encabezado="Entrega"
+      texto="Tienes tu invitación lista para usarse"
+      icono="/ico-nvite-entrega.svg"
+      fondo="fondo-nvite-caracteristicas-4.png"
+      />
+    </div>
+  </section>
+</section>
+
+<section class="grid contenido">
     <div class="flex">
-      <div class="cartaBase2 texto-izq fondo-alegre">
+      <div class="cartaBase2  fondo-alegre">
         <div class="bande">
-			<h2>Contactanos y obtén tu invitación</h2>
-      <ul>
-		<li><b>Contáctanos por Whatsapp</b>, Aida resolverá tus dudas o iniciará el proceso para que obtengas tu invitación.</li>
+			<h2>Obtén tu invitación</h2>
+      <p><b>Contáctanos por Whatsapp</b>, Aida resolverá tus dudas o iniciará el proceso para que obtengas tu invitación.</p>
+      <!-- <ul>
 		<li>Iniciado el proceso, te enviamos un formulario donde nos <b>proporcionas la información de tu boda</b>.</li>
 		<li>También te enviamos un documento excel para que <b>agregues los nombres de los invitados</b> y asignar sus pases</li>
 		<li>En un promedio de 2 días <b>te entregamos tu invitación de tu boda</b>, lista para ser enviada a tus invitados <span class="mini">(2 días después de tener los datos del evento e invitados completos)</span></li>
-	  </ul>
+	  </ul> -->
 	  <!-- <Btn liga="/bodas" texto="Iniciar proceso" claro={true} /> -->
 		</div>
 
@@ -144,14 +180,13 @@ import Footer from "../components/Footer.astro";
         </form>
        </div>
       </div>
-      <div class="cartaBase2 cartaBase3 texto-izq">
+      <div class="cartaBase2 cartaBase3">
        <div class="bande">
 		<h2>¿Qué recibo?</h2>
         <p>
-          Además de tus <b>invitaciones personalizadas</b>, tendrás <b>acceso a un panel de invitados</b> donde tendrás control de las
-          invitaciones copiadas y podrás marcar a los invitados confirmados, con esto tendrás un listado que te ayudará a a <b>tener mejor control</b> de lo más importante de tu evento, tus invitados.
+          Además de tus <b>invitaciones personalizadas</b>, tendrás acceso a un <b>panel de invitados</b> donde podrás copiar las ligas de cada invitado y marcar a los confirmados, <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.
         </p>
-		<Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="Comprar $1490" claro={false} blank={true} />
+		<Btn liga="https://www.nvite.me/bodas/nvite-bodas-1/panel" texto="Ver panel de invitados" claro={false} blank={true} />
 	   </div>
         <img
           src="/nvite-panel-invitados.webp"

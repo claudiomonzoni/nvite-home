@@ -4,9 +4,12 @@ interface Props {
   texto: string;
   icono: string;
   fondo?: string;
+  colorBg?: string;
 }
 const { encabezado, texto, icono, fondo } = Astro.props;
+let{ colorBg } = Astro.props
 const url = `url("${fondo}")`
+colorBg ? colorBg : colorBg = "#ffd9b0";
 ---
 
 
@@ -20,10 +23,10 @@ const url = `url("${fondo}")`
 
 
 <!-- buscare en globales  -->
-<style define:vars={{url}}>     
+<style define:vars={{url, colorBg}}>     
 
 .carcateristicas{
     /* background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf; */
-    background: var(--url) no-repeat #ffd9b0;
+    background: var(--url) no-repeat var(--colorBg);
 }
 </style>
