@@ -151,10 +151,10 @@ import Footer from "../components/Footer.astro";
 
 <section class="grid contenido">
     <div class="flex">
-      <div class="cartaBase2  fondo-alegre">
+      <div class="cartaBase2  fondo-formu">
         <div class="bande">
 			<h2>Obtén tu invitación</h2>
-      <p><b>Contáctanos por Whatsapp</b>, Aida resolverá tus dudas o iniciará el proceso para que obtengas tu invitación.</p>
+      <p><b>Contáctanos</b>, para resolver tus dudas o iniciará el proceso para que obtengas tu invitación.</p>
       <!-- <ul>
 		<li>Iniciado el proceso, te enviamos un formulario donde nos <b>proporcionas la información de tu boda</b>.</li>
 		<li>También te enviamos un documento excel para que <b>agregues los nombres de los invitados</b> y asignar sus pases</li>
@@ -164,24 +164,25 @@ import Footer from "../components/Footer.astro";
 		</div>
 
        <div id="formu">
-         <form><h3>
+         <form>
+          <!-- <h3>
           <img src="/whatsapp.png" alt="logo whatsapp">
-          Contáctanos por <b>whatsapp</b></h3>
-          <p>Aida, nuestra asistente,resolverá tus dudas 😊</p>
+         <b>whatsapp</b></h3> -->
+          <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
           <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Puede ser sin apellidos">
+          <input type="text" id="nombre" placeholder="Agrega al menos un apellido">
           <label for="date">Fecha del evento</label>
           <input type="date" name="fecha" id="fecha">
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="introducir email valido">
-          <a href="#" id="empezar" class="desactivado">Iniciemos con tu invitación</a>
+          <input type="email" name="email" id="email" placeholder="introducir un email valido">
+          <a href="#" id="empezar" class="desactivado"><img src="/whatsapp.png" alt="logo whatsapp"> Hola <b>Aida</b></a>
           <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
 
         </form>
        </div>
       </div>
       <div class="cartaBase2 cartaBase3">
-       <div class="bande">
+       <div class="bande-2">
 		<h2>¿Qué recibo?</h2>
         <p>
           Además de tus <b>invitaciones personalizadas</b>, tendrás acceso a un <b>panel de invitados</b> donde podrás copiar las ligas de cada invitado y marcar a los confirmados, <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.

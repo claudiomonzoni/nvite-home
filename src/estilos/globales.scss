@@ -281,6 +281,7 @@ b {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   img {
     position: relative;
     margin-top: $margen-min;
@@ -325,11 +326,17 @@ b {
       width: 20vw;
     }
   }
+  .bande{
+    max-width: 80%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .cartaBase3 {
   padding: 0 !important;
-  .bande {
+  .bande-2 {
     padding: $margen-cel;
   }
   overflow: hidden;
@@ -404,15 +411,15 @@ b {
 
 #formu {
   width: 70%;
-  height: auto;
   display: flex;
   align-items: center;
   padding: $margen-cel;
   border-radius: $margen-min;
-  backdrop-filter: blur(6px);
-  background: rgba(255, 206, 149, 0.2);
+  backdrop-filter: blur(5px);
+  background: rgba(255, 136, 0, 0.3);
+  text-align: left;
   img{
-    width: 50px;
+    width: 30px;
     vertical-align: middle;
     margin: 0;
   }
@@ -420,7 +427,7 @@ b {
     width: 100%;
     margin-top: 2rem;
     img{
-      width: 30px;
+      width: 20px;
     }
   }
   @extend .sombra;
@@ -432,7 +439,12 @@ b {
   h3 {
     vertical-align: middle;
     flex: 1 0 100%;
-    color: $acento;
+    color: $primario;
+    padding: 0;
+    margin: 0;
+  }
+  label{
+    text-align: left;
   }
 }
 
@@ -445,19 +457,21 @@ label {
 input {
   flex: 1 0 100%;
   padding: 0.5rem;
-  border: solid 1px $acento;
+  border: none;
+  background: $terciario;
+  @extend .sombra;
 }
 button[type="submit"], #empezar {
   margin-top: $margen-min;
   border-radius: .5rem;
-  padding: 1rem $margen-cel;
+  padding: 0.1rem $margen-cel;
   color: white;
   border: 1px solid white;
   margin: 0.5rem 0.5rem 0.5rem 0;
   background-color: $acento;
   @include cel {
     width: 100%;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     text-align: center;
   }
   &:hover {
@@ -467,6 +481,17 @@ button[type="submit"], #empezar {
 }
 input::placeholder {
   color: $primario;
+}
+
+.fondo-formu{
+  background: url("/fondo-formu.webp") no-repeat white;
+  background-size: 60%;
+  background-position: 150% bottom;
+  @include cel {
+    background-size: 90%;
+    background-position: 500% bottom;
+    
+  }
 }
 
 .fondo-alegre{
