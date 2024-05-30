@@ -1,4 +1,5 @@
 ---
+// @ts-ignore
 import { Picture } from "astro:assets";
 import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
@@ -15,73 +16,110 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
 <section class="grid contenido">
   <Nav />
   <div id="hero">
-    <div class="izq">
-      <div class="bandeja">
-        <h1><span>nvite</span>ciones <span id="digitales">digitales</span></h1>
+    <div class="izq anime">
+      <div class="bandeja anime">
+        <h1>
+          <span id="nvitePalabras">invita</span>ciones <span id="digitales"
+            >digitales</span
+          >
+        </h1>
         <p set:html={description} />
         <Btn liga="#bodas" texto="Invitacion de bodas" claro={false} />
         <Btn liga="#formu" texto="Contáctanos" claro={true} />
       </div>
     </div>
 
-    <div class="der">
+    <div class="der anime">
       <Picture src={cover} alt="Invitaciones de bodas" />
     </div>
   </div>
 </section>
 
 <style lang="scss">
-    @import '../estilos/_variables.scss';
+  @import "../estilos/_variables.scss";
 
   #hero {
-    background:white;
+    background: white;
     border-radius: $margen-min;
     display: flex;
-    h1{
+    h1 {
+      width: 100%;
       color: $primario;
-      span{
+      span {
         color: $acento;
       }
     }
     @extend .sombra;
-    .bandeja{
+    .bandeja {
       width: fit-content;
     }
     .der,
     .izq {
       display: flex;
-      
     }
-    .izq{
+    .izq {
       padding: $margen;
       justify-content: center;
       align-items: center;
-      flex: 1 0 min-content;
+      flex: 1 0 50%;
     }
-    .der{
+    .der {
       justify-content: right;
       align-items: bottom;
-      flex: 1 0 40%;
-      background: url('/fondo-cover-nviteme-invitaciones-digitales.webp');
+      flex: 1 0 50%;
+      background: url("/fondo-cover-nviteme-invitaciones-digitales.webp");
       overflow: hidden;
       border-radius: $margen-min;
     }
 
     @include cel {
       flex-wrap: wrap;
-      .izq{
+      .izq {
         padding: $margen-cel;
         text-align: center;
         flex: 1 0 100%;
       }
-      .der{
+      .der {
         flex: 1 0 100%;
       }
     }
   }
-  #digitales{
-    color: $primario!important;
+  #digitales {
+    color: $primario !important;
     font-weight: 700;
     font-family: "Montserrat Alternates", sans-serif;
   }
 </style>
+<script>
+  import SplitType from "split-type";
+  const encabezado = document.getElementById("nvitePalabras");
+
+  const remplazo = new SplitType(encabezado, {
+    types: "chars",
+  });
+
+  const timeout = setTimeout(() => {
+    eliminarTxt();
+  }, 2000);
+
+  function eliminarTxt() {
+    var index = 0;
+    const inter = setInterval(() => {
+      remplazo.chars[index++].classList.add("desapareceH1");
+
+      if (index >= remplazo.chars.length) {
+        clearInterval(inter);
+        mostrarTxt();
+      }
+    }, 50);
+  }
+
+  function mostrarTxt() {
+    const delay = setInterval(() => {
+      encabezado.classList.add("apareceH1");
+      encabezado.innerText = "nvite";
+      clearInterval(delay);
+    },600)
+    clearTimeout(timeout);
+  }
+</script>
