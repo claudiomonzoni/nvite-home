@@ -8,6 +8,8 @@ import type { CollectionEntry } from "astro:content";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Cartas from "../../components/bodas/Cartas.astro";
 import Frase from "../../components/bodas/Frase.astro";
+import Galeria from "../../components/bodas/Galeria.astro";
+import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
@@ -65,6 +67,36 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
   <section class="grid contenido">
     <Frase frase={boda.data.frase_amor} />
   </section>
+
+  <!-- galeria -->
+  <section class="grid pantalla">
+    <Galeria carpeta="nvitaPlus" />
+  </section>
+
+  <Encabezados  texto="El Lugar" />
+  <section class="grid contenido fondo-mitad">
+    <ParrafosLibres>
+      Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+      la recepción de nuestra boda
+    </ParrafosLibres>
+    <div id="zigzag">
+      <BloqueMapa
+        encabezado="Ceremonia"
+        dir={boda.data.ceremonia.lugar}
+        horario={boda.data.ceremonia.hora}
+        lat={boda.data.ceremonia.lat}
+        lng={boda.data.ceremonia.lang}
+        mapName="mapa1"
+      />
+      <BloqueMapa
+        encabezado="Recepción"
+        dir={boda.data.recepcion.lugar}
+        horario={boda.data.recepcion.hora}
+        lat={boda.data.recepcion.lat}
+        lng={boda.data.recepcion.lang}
+        mapName="mapa2"
+      />
+    </div>
 </Layout>
 
 

@@ -9,7 +9,6 @@ interface Props {
 }
 
 const { encabezado, dir, lat, lng, mapName, horario } = Astro.props;
-
 import Mapa from "./Mapa.astro";
 ---
 
@@ -35,7 +34,7 @@ import Mapa from "./Mapa.astro";
 </div>
 
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @import "../../estilos/bodas/_variables.scss";
   h3 {
     color: $secundario;
     font-size: clamp(2.5rem, 2.5vw, 3rem);
