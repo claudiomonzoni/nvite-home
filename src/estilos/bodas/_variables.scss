@@ -1,0 +1,95 @@
+//colores a
+// $primario: #484E6E;
+// $secundario: #864E4E;
+// $terciario: #F2E5D9;
+// $acento: #83F4E0;
+// $gris: #2b2b2b;
+
+//colores b
+$primario: #2b225e;
+$secundario: #f5839a;
+$terciario: #fcf7ee;
+$acento: #f1d4da;
+$gris: #8d58c2;
+
+
+//media query
+$cel: 479px;
+$nocel: 479px;
+$tableta: 768px;
+$tableta-land: 1024px;
+$hd:1600px;
+$hdplus:1990px;
+
+
+//extra
+$radio: .8rem;
+$margen: 4rem;
+$margen-top: 8rem;
+$radio-cel: 0.5rem;
+$margen-cel: 2rem;
+$margen-min: 1rem;
+$margen-top-cel: 6rem;
+
+// variable de css para rutas 
+$urlPatron: url("/bodas/nvite-bodas-1/patron-fondo.png");
+$urlCover: url("/bodas/nvite-bodas-1/cover.webp");
+$encabezados: "Sacramento";
+$txt: "Merriweather";
+
+
+@mixin cel {
+  @media (max-width: #{$cel}) {
+    @content;
+  }
+}
+
+@mixin nocel {
+  @media (min-width: #{$nocel}) {
+    @content;
+  }
+}
+
+@mixin tableta_land {
+  @media (min-width: #{$tableta-land}) and (max-width: #{$hd - 1px}) {
+    @content;
+  }
+}
+
+@mixin tableta {
+  @media (min-width: #{$tableta - 1px}) and (max-width: #{$tableta-land - 1px}) {
+    @content;
+  }
+}
+
+@mixin hd {
+  @media (min-width: #{$hd}) and (max-width: #{$hdplus}) {
+    @content;
+  }
+}
+
+@mixin hdplus {
+  @media (min-width: #{$hdplus}) {
+    @content;
+  }
+}
+// animaciones 
+.anime{
+  transition: all .5s ease-in-out;
+  }
+
+  @keyframes slide-in {
+    0% { max-height:0; }
+    // por si tenemos en auto la altura
+    100% { max-height:200rem; } 
+  }
+
+
+
+
+// intentar con min
+$margen-riel: calc((100% - (100% - 5rem)) / 2 );
+
+.sombra{
+  box-shadow: 0px 4px 8px 0px rgba(60, 60, 60, 0.6);
+}

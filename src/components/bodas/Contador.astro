@@ -1,0 +1,87 @@
+---
+interface Props {
+    fecha: string;
+}
+
+const { fecha } = Astro.props;
+---
+
+<div id="demo"></div>
+<div id="contador">
+<p id="falta">Solo faltan:</p>
+<div id="numero">12</div>
+<p id="dias">días</p>
+</div>
+
+<style lang="scss">
+    @import "../estilos/_variables.scss";
+
+    #contador {
+        display:  flex;
+        justify-content: center;
+        align-items: center;
+    color: $secundario;
+    font-family: 'Italiana', serif;
+    gap: .7rem;
+    border-top: 1px solid $secundario;
+    border-bottom: 1px solid $secundario;
+    
+}
+
+#numero{
+    font-size: clamp(6.5rem, 10.5vw, 14rem);
+}
+p{
+    font-size: clamp(1.5rem, 2.5vw, 3rem);
+    margin: 0;
+    
+}
+#demo{
+        font-family: 'Italiana', serif;
+        text-align: center;
+        padding-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+
+</style>
+
+
+
+
+<script define:vars={{ fecha }}>
+const Quincemas = new Date();
+const QuinceDias = Quincemas.setDate(Quincemas.getDate() + 15);
+
+// Set the date we're counting down to
+const countDownDate = new Date(fecha).getTime();
+
+// Update the count down every 1 second
+const cuenta = function() {
+
+  // Get today's date and time
+  const now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  const distance = countDownDate - now
+    
+  // Time calculations for days, hours, minutes and seconds
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+      // Output the result in an element with id="demo"
+  document.getElementById("numero").innerHTML = days;
+  
+  // If the count down is over, write some text 
+  if (distance < 0) {
+        document.getElementById("numero").innerHTML = "0";
+      document.getElementById("demo").innerHTML = "Gracias por ser parte de nuestra boda";
+    }
+
+    if (days == 1) {
+        document.getElementById("dias").innerHTML = "Dia";
+        document.getElementById("falta").innerHTML = "Solo falta";
+    }
+   
+};
+cuenta()
+
+</script>

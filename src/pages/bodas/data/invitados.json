@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "nombre": "Familia Ortiz",
+      "pases": 3
+    },
+    {
+      "id": 2,
+      "nombre": "Aljandra Martinez",
+      "pases": 1
+    },
+    {
+      "id": 3,
+      "nombre": "Familia Hernandez",
+      "pases": 6
+    },
+    {
+      "id": 4,
+      "nombre": "Franco Mendéz y esposa",
+      "pases": 3
+    },
+    {
+      "id": 5,
+      "nombre": "Cristian Espinoza",
+      "pases": 1
+    }
+  ]

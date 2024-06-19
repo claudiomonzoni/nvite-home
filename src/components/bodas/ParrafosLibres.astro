@@ -1,0 +1,38 @@
+---
+
+---
+
+<div class="grid contenido">
+  <p class="parrafos-libres">
+    <slot />
+  </p>
+</div>
+
+<style>
+  p {
+    padding: 0 10%;
+    text-align: center;
+  }
+</style>
+
+<script>
+
+  import gsap from "gsap";  
+  
+  const parrafos = gsap.utils.toArray(".parrafos-libres");
+  
+  parrafos.forEach((ele , id) => {
+    gsap.from(ele as HTMLElement, {
+      scrollTrigger: {
+        trigger: ele as HTMLElement,
+        start: "top 100%",
+        end: "bottom 70%",
+      },
+      delay: 2,
+      ease: "power2.out",
+      y: -30,
+      opacity: 0
+    });
+  });
+</script>
+

@@ -1,0 +1,135 @@
+---
+interface Props {
+  listado: Array<any>;
+}
+const { listado } = Astro.props;
+const base = import.meta.env.BASE_URL
+const urlPatron = `url("${base}/patron-fondo.png")`
+---
+
+<section class="grid pantalla" id="riel">
+    <ol>
+      {
+        listado.map((item, index) => (
+          <li>
+            <h4>{item.titulo}</h4>
+            <p>{item.lugar}</p>
+            <p>{item.hora}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+</section>
+
+<style lang="scss" define:vars={{urlPatron}}>
+  @import "../estilos/_variables.scss";
+
+  
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $primario $secundario;
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-track:hover {
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-track:active {
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: $primario;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background-color: $secundario;
+  }
+
+  #riel {
+
+  }
+  ol {
+    list-style: none;
+    overflow-x: auto;
+    overflow-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    display: grid;
+    grid-auto-flow: column;
+    padding-bottom: $margen-cel;
+
+  }
+  li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: $gris;
+    padding: $margen;
+    width: 22vw;
+    font-size: clamp(1rem, 1.5vw, 2vw);
+    border-right: 1px solid $gris;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    border-left: 1px solid transparent;
+    @include cel {
+      padding: $margen-cel;
+      width: 60vw;
+    }
+    // background: var(--urlPatron), $primario;
+    // background-blend-mode:overlay;
+    // background-size: cover;
+    // background-position: center;
+  }
+  h4 {
+    font-size: clamp(2.5rem, 3vw, 4vw);
+    color: $primario;
+  }
+</style>
+<!-- 
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const li = gsap.utils.toArray(" ol li");
+  const riel = document.querySelector("#riel");
+
+  gsap.to(li, {
+    xPercent: -100 * (li.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: riel,
+      pin: true,
+      start: "center center center",
+      end: "+=3000",
+      scrub: 1,
+        snap: {
+          snapTo: 1 / (li.length - 1),
+          duration: 0.7,
+          delay: 0.6,
+          ease: "power1.inOut",
+        },
+      markers: true,
+    },
+  });
+</script> -->

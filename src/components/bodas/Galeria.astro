@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+const imas =  await Astro.glob("../galeria/*").then(images => {
+    return images.map(foto => foto.default);
+});
+
+---
+<div class="gale">
+
+  {
+   
+   imas.map((ima) => (
+       <Image src={ima} width={500} alt="galeria" />
+   ))
+  }
+</div>
+
+<style lang="scss" is:global>
+  @import "../estilos/_variables.scss";
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $primario $secundario;
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-track:hover {
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-track:active {
+    background-color: $terciario;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: $primario;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background-color: $secundario;
+  }
+  .gale {
+    margin: 0rem 0 $margen 0;
+  }
+  .gale img {
+    // height: 50vh;
+    // width: 100%;
+    object-fit: cover;
+    aspect-ratio: 6/5;
+    @include cel {
+      aspect-ratio: 5/5;
+    }
+  }
+  .gale  {
+    overflow-x: auto;
+    overflow-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 30%;
+
+    padding: 2rem 0;
+
+    @include cel {
+      grid-auto-columns: 80%;
+    }
+  }
+</style>
