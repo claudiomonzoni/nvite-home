@@ -1,6 +1,6 @@
 ---
 interface Props {
-    fecha: string;
+    fecha: Date;
 }
 
 const { fecha } = Astro.props;
@@ -14,7 +14,7 @@ const { fecha } = Astro.props;
 </div>
 
 <style lang="scss">
-    @import "../estilos/_variables.scss";
+    @import "../../estilos/bodas/_variables.scss";
 
     #contador {
         display:  flex;

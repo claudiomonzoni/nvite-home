@@ -10,6 +10,10 @@ import Cartas from "../../components/bodas/Cartas.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
+import Regalos from "../../components/bodas/Regalos.astro";
+import Contador from "../../components/bodas/Contador.astro";
+import Confirmacion from "../../components/bodas/Confirmacion";
+import Footer from "../../components/bodas/Footer.astro";
 
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
@@ -97,6 +101,31 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
         mapName="mapa2"
       />
     </div>
+  </section>
+
+    
+  <section class="grid contenido">
+    <Regalos
+      frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
+      beneficiario={boda.data.beneficiario}
+      banco={boda.data.banco}
+      cuenta={boda.data.cuenta}
+    />
+  </section>
+
+  <section class="grid contenido">
+    <Contador fecha={Nfecha} />
+  </section>
+
+  <section>
+    <Confirmacion whatsapp={boda.data.whatsapp} dias_antes={7} client:only />
+  </section>
+ 
+
+  <!-- footer -->
+  <section class="grid contenido">
+    <Footer />
+  </section>
 </Layout>
 
 
