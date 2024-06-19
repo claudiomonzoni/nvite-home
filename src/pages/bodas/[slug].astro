@@ -1,9 +1,13 @@
 ---
-import Hero from "../../components/bodas/Hero";
 import Layout from "../../layouts/bodas/Layout.astro";
+import Hero from "../../components/bodas/Hero";
+import Encabezados from "../../components/bodas/Encabezados.astro";
 
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
+import Cartas from "../../components/bodas/Cartas.astro";
+import Frase from "../../components/bodas/Frase.astro";
 
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
@@ -14,19 +18,53 @@ export async function getStaticPaths() {
     props: { boda },
   }));
 }
-// interface Props{
-//     playa: CollectionEntry<"playas">
-// }
+interface Props{
+    boda: CollectionEntry<"bodas">
+}
 type boda = CollectionEntry<"bodas">;
 const { boda } = Astro.props;
 const base = new URL(Astro.url.pathname, Astro.site);
 // const{Content} = await boda.render()
+const Nfecha = new Date(boda.data.fecha);
+const fecha = Nfecha.toLocaleDateString(["es-MX"], {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })
 
 ---
 
 <Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()}>
-  <Hero nombres={boda.data.novios} fecha={boda.data.fecha.toString()} client:load />
+  <Hero
+    nombres={boda.data.novios}
+    fecha={fecha}
+    client:load
+  />
+
+  <Encabezados texto="Nuestra Boda" />
+  <ParrafosLibres>
+    Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
+    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda.
+  </ParrafosLibres>
+
+  <section class="grid contenido">
+    <div class="conte-cartas">
+      <Cartas icono=`${base}/fecha-icono.svg` titulo="Fecha de nuestra boda">
+        <p>{fecha}</p>
+      </Cartas>
+      <Cartas icono=`${base}/detalles-icono.svg` titulo="Detalles" array={boda.data.consideraciones}>
+        <p>qiuueueu</p>
+      </Cartas>
+      <Cartas icono=`${base}/formal-icono.svg` titulo="Código de vestimenta">
+        <p>{boda.data.vestimenta}</p>
+      </Cartas>
+    </div>
+  </section>
+
+  <section class="grid contenido">
+    <Frase frase={boda.data.frase_amor} />
+  </section>
 </Layout>
 
-<h1>{boda.data.titulo}</h1>
-<p>{boda.data.descripcion}</p>
+
