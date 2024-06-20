@@ -14,6 +14,7 @@ import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/bodas/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
+import Itinerario from "../../components/bodas/Itinerario.astro";
 
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
@@ -103,6 +104,9 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
     </div>
   </section>
 
+  <Encabezados texto="Itinerario" />
+  <Itinerario listado={boda.data.iterario} />
+
     
   <section class="grid contenido">
     <Regalos
@@ -124,7 +128,7 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
 
   <!-- footer -->
   <section class="grid contenido">
-    <Footer />
+    <Footer ruta={base} />
   </section>
 </Layout>
 
