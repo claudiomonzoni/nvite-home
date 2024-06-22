@@ -6,6 +6,6 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.nvite.me',
+  site: 'https://www.nvita.me',
   integrations: [sitemap(), react(), mdx()]
 });
