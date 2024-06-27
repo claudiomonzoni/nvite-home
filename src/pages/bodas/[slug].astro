@@ -1,21 +1,9 @@
 ---
-import Layout from "../../layouts/bodas/Layout.astro";
-import Hero from "../../components/bodas/Hero";
-import Encabezados from "../../components/bodas/Encabezados.astro";
-
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
-import Cartas from "../../components/bodas/Cartas.astro";
-import Frase from "../../components/bodas/Frase.astro";
-import Galeria from "../../components/bodas/Galeria.astro";
-import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
-import Regalos from "../../components/bodas/Regalos.astro";
-import Contador from "../../components/bodas/Contador.astro";
-import Confirmacion from "../../components/bodas/Confirmacion";
+import Layout from "../../layouts/bodas/Layout.astro";
+import Hero from "../../components/bodas/Hero";
 import Footer from "../../components/bodas/Footer.astro";
-import Itinerario from "../../components/bodas/Itinerario.astro";
-import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
@@ -41,176 +29,20 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
     day: "numeric", 
   })
 
-  // const{Content} = await boda.render()
+  const{Content} = await boda.render()
 ---
 
 <Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()}>
-  <!-- <Content /> -->
-
-  {
-    boda.data.version === "plus" ?  
-    
-    
-  <Hero
-    nombres={boda.data.novios}
-    fecha={fecha}
-    client:load
+    <Hero
+  nombres={boda.data.novios}
+  fecha={fecha}
+  client:load
   />
-
-  <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres>
-    Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
-    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda.
-  </ParrafosLibres>
-
-  <section class="grid contenido">
-    <div class="conte-cartas">
-      <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
-        <p>{fecha}</p>
-      </Cartas>
-      <Cartas icono= "/bodas/detalles-icono.svg" titulo="Detalles" array={boda.data.consideraciones}>
-        <p>qiuueueu</p>
-      </Cartas>
-      <Cartas icono= "/bodas/formal-icono.svg" titulo="Código de vestimenta">
-        <p>{boda.data.vestimenta}</p>
-      </Cartas>
-    </div>
-  </section>
-
-  <section class="grid contenido">
-    <Frase frase={boda.data.frase_amor} />
-  </section>
-
-  <!-- galeria -->
-  <section class="grid pantalla">
-    <Galeria carpeta="nvitaPlus" />
-  </section>
-
-  <Encabezados  texto="El Lugar" />
-  <section class="grid contenido fondo-mitad">
-    <ParrafosLibres>
-      Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la recepción de nuestra boda
-    </ParrafosLibres>
-    <div id="zigzag">
-      <BloqueMapa
-        encabezado="Ceremonia"
-        dir={boda.data.ceremonia.lugar}
-        horario={boda.data.ceremonia.hora}
-        lat={boda.data.ceremonia.lat}
-        lng={boda.data.ceremonia.lang}
-        mapName="mapa1"
-      />
-      <BloqueMapa
-        encabezado="Recepción"
-        dir={boda.data.recepcion.lugar}
-        horario={boda.data.recepcion.hora}
-        lat={boda.data.recepcion.lat}
-        lng={boda.data.recepcion.lang}
-        mapName="mapa2"
-      />
-    </div>
-  </section>
-
-  <Encabezados texto="Itinerario" />
-  <Itinerario listado={boda.data.iterario} />
-
-    
-  <section class="grid contenido">
-    <Regalos
-      frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
-      beneficiario={boda.data.beneficiario}
-      banco={boda.data.banco}
-      cuenta={boda.data.cuenta}
-    />
-  </section>
-
-  <section class="grid contenido">
-    <Contador fecha={Nfecha} />
-  </section>
-
-  <section>
-    <Confirmacion whatsapp={boda.data.whatsapp} dias_antes={7} version={boda.data.version} client:only />
-  </section>
- 
-
-  <!-- footer -->
+  <Content />
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>
   
-  : //aqui inicia basic
-
-  
-  <Hero
-    nombres={boda.data.novios}
-    fecha={fecha}
-    client:load
-  />
-
-  <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres>
-    Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
-    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda.
-  </ParrafosLibres>
-
-  <section class="grid contenido">
-    <div class="conte-cartas">
-      <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
-        <p>{fecha}</p>
-      </Cartas>
-      <Cartas icono= "/bodas/detalles-icono.svg" titulo="Detalles" array={boda.data.consideraciones}>
-        <p>qiuueueu</p>
-      </Cartas>
-      <Cartas icono= "/bodas/formal-icono.svg" titulo="Código de vestimenta">
-        <p>{boda.data.vestimenta}</p>
-      </Cartas>
-    </div>
-  </section>
-
-
-  <Encabezados  texto="El Lugar" />
-  <section class="grid contenido fondo-mitad">
-    <ParrafosLibres>
-      Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la recepción de nuestra boda
-    </ParrafosLibres>
-    <div id="zigzag">
-      <BloqueMapa
-        encabezado="Ceremonia"
-        dir={boda.data.ceremonia.lugar}
-        horario={boda.data.ceremonia.hora}
-        lat={boda.data.ceremonia.lat}
-        lng={boda.data.ceremonia.lang}
-        mapName="mapa1"
-      />
-      <BloqueMapa
-        encabezado="Recepción"
-        dir={boda.data.recepcion.lugar}
-        horario={boda.data.recepcion.hora}
-        lat={boda.data.recepcion.lat}
-        lng={boda.data.recepcion.lang}
-        mapName="mapa2"
-      />
-    </div>
-  </section>
-
-  
-
-  <section class="grid contenido">
-    <Contador fecha={Nfecha} />
-  </section>
-
-  <section>
-    <ConfirmacionBasica whatsapp={boda.data.whatsapp} dias_antes={7}  client:only />
-  </section>
- 
-
-  <!-- footer -->
-  <section class="grid contenido">
-    <Footer ruta={base} />
-  </section>
-  }
 
 </Layout>
 

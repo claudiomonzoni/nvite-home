@@ -8,7 +8,6 @@ whatsapp: 8488493900
 novios : Elena & Marcos
 fecha: 2025-03-25
 vestimenta: Formal casual
-frase_amor: De vez en cuando, justo en medio de una vida ordinaria, el amor nos regala un cuento de hadas.
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
@@ -58,3 +57,72 @@ iterario: [
   }
     ]
 ---
+
+import Hero from "../../components/bodas/Hero";
+import Encabezados from "../../components/bodas/Encabezados.astro";
+import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
+import Cartas from "../../components/bodas/Cartas.astro";
+import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
+import Contador from "../../components/bodas/Contador.astro";
+import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
+import Footer from "../../components/bodas/Footer.astro";
+
+
+  <Encabezados texto="Nuestra Boda" />
+  <ParrafosLibres>
+    Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
+    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda.
+  </ParrafosLibres>
+
+  <section class="grid contenido">
+    <div class="conte-cartas">
+      <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
+        <p>{frontmatter.fecha}</p>
+      </Cartas>
+      <Cartas icono= "/bodas/detalles-icono.svg" titulo="Detalles" array={frontmatter.consideraciones}>
+        <p>qiuueueu</p>
+      </Cartas>
+      <Cartas icono= "/bodas/formal-icono.svg" titulo="Código de vestimenta">
+        <p>{frontmatter.vestimenta}</p>
+      </Cartas>
+    </div>
+  </section>
+
+
+
+
+
+  <Encabezados  texto="El Lugar" />
+  <section class="grid contenido fondo-mitad">
+    <ParrafosLibres>
+      Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+      la recepción de nuestra boda
+    </ParrafosLibres>
+    <div id="zigzag">
+      <BloqueMapa
+        encabezado="Ceremonia"
+        dir={frontmatter.ceremonia.lugar}
+        horario={frontmatter.ceremonia.hora}
+        lat={frontmatter.ceremonia.lat}
+        lng={frontmatter.ceremonia.lang}
+        mapName="mapa1"
+      />
+      <BloqueMapa
+        encabezado="Recepción"
+        dir={frontmatter.recepcion.lugar}
+        horario={frontmatter.recepcion.hora}
+        lat={frontmatter.recepcion.lat}
+        lng={frontmatter.recepcion.lang}
+        mapName="mapa2"
+      />
+    </div>
+  </section>
+
+
+  <section class="grid contenido">
+    <Contador fecha={frontmatter.fecha} />
+  </section>
+
+  <section>
+    <ConfirmacionBasica whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only />
+  </section>
