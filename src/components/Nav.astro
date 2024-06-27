@@ -3,7 +3,7 @@
 
 ---
 <nav>
-    <a href="/"><img src="nvite-logo.svg" alt="Nvite invitaciones digitales" id="logo"></a>
+    <a href="/"><img src="nvita-logo.svg" alt="Nvita invitaciones digitales" id="logo"></a>
     <ul>
         <li><a href="#bodas" class="selected">Bodas</a></li>
         <li>XV años</li>
@@ -18,8 +18,12 @@
 <style lang="scss">
     @import '../estilos/_variables.scss';
     #logo{
-        max-width: 220px;
+    width: 15vw;
+    @include cel {
+        width: 50vw;
+        padding-top: 1rem;
     }
+  }
 
     nav {
         flex: 1 0 100%;

@@ -3,7 +3,7 @@ version: plus
 titulo: Nvite Plus muestra
 extracto: Muestra de la invitación de bodas nvite plus
 descripcion: Muestra de la invitación de bodas nvite plus, la más completa de las invitaciones que te ofrecemos.
-slug: nvite-plus
+slug: nvita-plus
 whatsapp: 8488493900
 novios : Elena & Marcos
 fecha: 2025-03-24
@@ -74,11 +74,9 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 
 
   <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres>
-    Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
-    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda.
-  </ParrafosLibres>
-
+  <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
+    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda." />
+ 
   <section class="grid contenido">
     <div class="conte-cartas">
       <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
@@ -104,10 +102,8 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 
   <Encabezados  texto="El Lugar" />
   <section class="grid contenido fondo-mitad">
-    <ParrafosLibres>
-      Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la recepción de nuestra boda
-    </ParrafosLibres>
+  <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+      la recepción de nuestra boda" />
     <div id="zigzag">
       <BloqueMapa
         encabezado="Ceremonia"

@@ -2,33 +2,89 @@
 import Btn from "./Btn.astro";
 ---
 
-<div class="banner">
+<div class="banner azulBG">
   <div class="der">
     <div class="bande">
-      <h2>Nvite <span>Bodas</span></h2>
-      <p>La invitación que también la puedes usar como <b>sitio web de tu boda</b></p>
-      <ul>
-        <li>Envía tu <b>invitación por whatsapp</b> o correo a tus invitados</li>
-        <li>Foto de <b>portada</b></li>
-        <li>
-          Cada invitación es personalizada con el <b>nombre del invitado</b> y los
-          pases asignados
-        </li>
-        <li>
-          <b>Sugiere mesas de regalos</b>, regalos en efectivo o transferencias de
-          dinero
-        </li>
-        <li><b>Cuenta regresiva</b> para la fecha del evento</li>
-        <li>Mapas de ubicación de la ceremonia y la fiesta</li>
-        <li>Galería de fotos de la pareja</li>
-        <li>Frase animada de amor y textos descriptivos del evento</li>
-        <li>Código de <b>vestimenta</b></li>
-        <li>Detalles adicionales</li>
-        <li>Formulario de <b>confirmación de asistencia</b> y pases a usar</li>
-      </ul>
-      <Btn liga="/bodas/nvite-bodas-1?id=2" texto="Ver invitacion de boda 1" claro={true} />
+      <div class="lista">
+        <h2>Nvita Plus</h2>
+        <ul>
+          <li><b>Panel de invitados</b></li>
+          <li>Música ambiental</li>
+          <li><b>Nombre del invitado</b></li>
+          <li>Detalles del evento</li>
+          <li>Cuenta regresiva</li>
+          <li>Datos de tu evento</li>
+          <li>Mapas de ubicación</li>
+          <li>Galería de imágenes</li>
+          <li>Sugerencia de regalos</li>
+          <li>Frase animada</li>
+          <li><b>Itinerario</b></li>
+          <li>Formulario de confirmación</li>
+        </ul>
+        <Btn
+        liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss"
+        texto="$1290"
+        claro={false}
+        />
+        <Btn
+        liga="/bodas/nvita-plus"
+        texto="Ver invitacion"
+        claro={true}
+        />
+      </div>
+      
+      
+      <div class="lista">
+        <h2>Nvita</h2>
+        <ul>
+          <li><b>Panel de invitados</b></li>
+          <li><b>Nombre del invitado</b></li>
+          <li>Detalles del evento</li>
+          <li>Cuenta regresiva</li>
+          <li>Datos de tu evento</li>
+          <li>Mapas de ubicación</li>
+          <li>Galería de imágenes</li>
+          <li>Sugerencia de regalos</li>
+          <li>Frase animada</li>
+          <li>Formulario de confirmación</li>
+        </ul>
+        <Btn
+          liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss"
+          texto="$990"
+          claro={false}
+        />
+        <Btn
+          liga="/bodas/nvita-bodas"
+          texto="Ver invitacion"
+          claro={true}
+        />
+      </div>
+
+      <div class="lista">
+        <h2>Nvita</h2>
+        <ul>
+          <li>Detalles del evento</li>
+          <li>Cuenta regresiva</li>
+          <li>Datos de tu evento</li>
+          <li>Mapas de ubicación</li>
+          <li>Frase animada</li>
+          <li>Formulario de confirmación sencilla</li>
+        </ul>
+        <Btn
+          liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss"
+          texto="$740"
+          claro={false}
+        />
+        <Btn
+          liga="/bodas/nvita-basic"
+          texto="Ver invitacion"
+          claro={true}
+        />
+      </div>
+
+      <!-- <Btn liga="/bodas/nvite-bodas-1?id=2" texto="Ver invitacion de boda 1" claro={true} />
       <Btn liga="/bodas/nvite-bodas-2?id=2" texto="Ver invitacion de boda 2" claro={true} />
-      <Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="comprar $1490" claro={false} blank={true} />
+      <Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="comprar $1490" claro={false} blank={true} /> -->
     </div>
   </div>
   <div class="izq">
@@ -40,7 +96,7 @@ import Btn from "./Btn.astro";
 </div>
 <style lang="scss">
   @import "../estilos/_variables.scss";
-  h2{
+  h2 {
     color: $acento;
   }
 
@@ -48,24 +104,57 @@ import Btn from "./Btn.astro";
     display: flex;
     flex-wrap: wrap;
   }
-  .der, .izq{
-    flex: 1;
+  .der,
+  .izq {
     display: flex;
     justify-content: center;
-    align-items: center;
     @include cel {
-      flex : 1 0 100%;
+      flex: 1 0 100%;
+    }
+  }
+  .der {
+    flex: 1 0 70%;
+    @tableta_land{
+      flex: 1 0 80%;
+      
     }
   }
   .izq {
+    flex: 1 0 30%;
+    width: 100px;
     align-items: end;
+    @tableta_land{
+      flex: 1 0 20%;
+      
+    }
   }
   .bande {
-    width: 80%;
+
     margin: $margen 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 1.5rem
   }
-  ul{
+  .lista {
+    &:last-child {
+      border: none;
+    }
+
+    border-right: solid 1px $primario;
+    padding: 1rem;
+    @include cel {
+      border-right: none;
+      border-bottom: solid 1px $primario;
+  }
+}
+  ul {
     padding: 1rem 0;
   }
-
+  @include cel {
+    .izq,
+    .der {
+      flex: 1 0 100%;
+    }
+  }
 </style>

@@ -1,14 +1,17 @@
 ---
-version: basic
-titulo: Nvite Basic muestra
-extracto: Muestra de la invitación de bodas nvite básica
-descripcion: Muestra de la invitación de bodas nvite básica, la más básica de las invitaciones que te ofrecemos.
-slug: nvita-basic
+version: reg
+titulo: Nvite regular muestra
+extracto: Muestra de la invitación de bodas nvite regular
+descripcion: Muestra de la invitación de bodas nvite regular, la más vendida de las invitaciones que te ofrecemos.
+slug: nvita-bodas
 whatsapp: 8488493900
 novios : Elena & Marcos
-fecha: 2025-03-25
+fecha: 2025-03-24
 vestimenta: Formal casual
 frase_amor: De vez en cuando, justo en medio de una vida ordinaria, el amor nos regala un cuento de hadas.
+beneficiario: Elena Ramirez
+banco: Banco Santander
+cuenta: 123456789
 consideraciones: ["No vestir de blanco","Favor de no llevar bebes"]
 ceremonia: {
     "lat":17.665128, 
@@ -23,24 +26,25 @@ recepcion: {
     "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro."
     }
 
----
 
+---
 import Hero from "../../components/bodas/Hero";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Cartas from "../../components/bodas/Cartas.astro";
+import Galeria from "../../components/bodas/Galeria.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
+import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
-import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
+import Confirmacion from "../../components/bodas/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 
 
-  <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
-    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda." />
- 
 
+  <Encabezados texto="Nuestra Boda" />
+   <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
+    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda." />
 
   <section class="grid contenido">
     <div class="conte-cartas">
@@ -56,17 +60,18 @@ import Footer from "../../components/bodas/Footer.astro";
     </div>
   </section>
 
-
   <section class="grid contenido">
     <Frase frase={frontmatter.frase_amor} />
   </section>
 
+  <section class="grid pantalla">
+    <Galeria carpeta="nvitaPlus" />
+  </section>
 
   <Encabezados  texto="El Lugar" />
   <section class="grid contenido fondo-mitad">
-    <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+     <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
       la recepción de nuestra boda" />
-    
     <div id="zigzag">
       <BloqueMapa
         encabezado="Ceremonia"
@@ -87,11 +92,23 @@ import Footer from "../../components/bodas/Footer.astro";
     </div>
   </section>
 
+    
+  <section class="grid contenido">
+    <Regalos
+      frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
+      beneficiario={frontmatter.beneficiario}
+      banco={frontmatter.banco}
+      cuenta={frontmatter.cuenta}
+    />
+  </section>
 
   <section class="grid contenido">
     <Contador fecha={frontmatter.fecha} />
   </section>
 
   <section>
-    <ConfirmacionBasica whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only />
+    <Confirmacion whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only />
   </section>
+ 
+
+ 

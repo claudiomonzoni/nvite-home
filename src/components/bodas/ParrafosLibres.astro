@@ -1,10 +1,12 @@
 ---
-
+interface Props {
+  texto: string;
+}
+const { texto } = Astro.props;
 ---
 
 <div class="grid contenido">
-  <p class="parrafos-libres">
-    <slot />
+  <p class="parrafos-libres" set:html={texto}>
   </p>
 </div>
 
