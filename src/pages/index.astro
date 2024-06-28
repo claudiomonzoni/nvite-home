@@ -8,7 +8,7 @@ import Footer from "../components/Footer.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
-<Layout title="Invitaciones de bodas digitales.">
+<Layout title="Invitaciones de bodas, 15 años, cumpleaños y eventos digitales, personalizadas, con confirmación de asistencia y faciles de enviar.">
   <Hero
     encabezado="<span>Nvita</span>ciones digitales"
     description="Las invitaciones digitales son <b>fáciles de enviar, convenientes </br> y personalizadas</b>. Además te damos un panel de control con todos tus invitados. "
@@ -17,6 +17,7 @@ import Footer from "../components/Footer.astro";
 
   <section class="grid contenido">
     <div class="cartaBase baseA">
+
       <div class="cartasBaseImagenes">
         <div class="bloqueImg">
           <img
@@ -32,6 +33,7 @@ import Footer from "../components/Footer.astro";
         </div>
       </div>
 
+     <div class="cartaBaseTxt">
       <h2>Tu invitación digital en cualquier pantalla</h2>
       <p>
         Diseñadas para verse en celulares o monitores de computadoras, <b
@@ -42,6 +44,7 @@ import Footer from "../components/Footer.astro";
         Además, podrás usar tus invitaciones también como <b
           >página web de tu evento</b>
       </p>
+     </div>
     </div>
     <div class="flex">
       <div class="cartaBase2">
@@ -109,15 +112,14 @@ import Footer from "../components/Footer.astro";
     </div>
   </section>
 
-  <div id="bodas" class="azulBG grid contenido">
+  <div id="bodas" class=" grid pantalla-der">
     <Banner />
   </div>
 
   <section class="grid contenido">
-<h2>Compra tu invitacion</h2>
     <div id="conteCaracteristicas">
       <Caracteristicas
-      encabezado="Contacto"
+      encabezado="1: contacto"
       texto="Resolvemos tus dudas y te guiamos en el proceso."
       icono="/ico-nvite-recibes.svg"
       fondo="/fondo-nvite-caracteristicas.png"
@@ -125,14 +127,14 @@ import Footer from "../components/Footer.astro";
       />
       
       <Caracteristicas
-      encabezado="Pago"
+      encabezado="2: pago"
       texto="Te damos distintas opciones de pago."
       icono="/ico-nvite-pago.svg"
       fondo="/fondo-nvite-caracteristicas-2.png"
       />
       
       <Caracteristicas
-      encabezado="Datos"
+      encabezado="3: datos"
       texto="Nos envias los datos de tu evento."
       icono="/ico-nvite-datos.svg"
       fondo="fondo-nvite-caracteristicas-3.png"
@@ -140,7 +142,7 @@ import Footer from "../components/Footer.astro";
       />
       
       <Caracteristicas
-      encabezado="Entrega"
+      encabezado="4: entrega"
       texto="Tienes tu invitación lista para usarse"
       icono="/ico-nvite-entrega.svg"
       fondo="fondo-nvite-caracteristicas-4.png"

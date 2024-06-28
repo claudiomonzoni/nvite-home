@@ -4,7 +4,7 @@ import Style from "../../estilos/bodas/hero.module.scss";
 import invitadosData from "../../pages/bodas/data/invitados.json";
 
 export default function Hero({ nombres, fecha }) {
-  const [invitado, setInvitado] = useState("ID inexistente");
+  const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("opa");
@@ -13,7 +13,7 @@ export default function Hero({ nombres, fecha }) {
     const params = new URLSearchParams(valores);
     const id = params.get("id");
     // animacion intro
-    if ( id && id < invitadosData.length) {
+    if (id && id < invitadosData.length) {
       setInvitado(invitadosData[id].nombre);
       setPase(invitadosData[id].pases);
     }
@@ -49,9 +49,12 @@ export default function Hero({ nombres, fecha }) {
             </p>
             <p className={Style.fecha}>{fecha}</p>
           </div>
+          {pase > 0 ? 
+          <>
           <div id={Style["pases"]}>
             No. de pases: <span id="NumeroPases">{pase}</span>
           </div>
+          </> : <></>}
         </div>
       </section>
     </>

@@ -1,9 +1,9 @@
 ---
-version: plus
-titulo: Nvite Plus muestra
-extracto: Muestra de la invitación de bodas nvite plus
-descripcion: Muestra de la invitación de bodas nvite plus, la más completa de las invitaciones que te ofrecemos.
-slug: nvita-plus
+version: reg
+titulo: Nvite regular muestra
+extracto: Muestra de la invitación de bodas nvite regular
+descripcion: Muestra de la invitación de bodas nvite regular, la más vendida de las invitaciones que te ofrecemos.
+slug: nvita-bodas
 whatsapp: 8488493900
 novios : Elena & Marcos
 fecha: 2025-03-24
@@ -25,58 +25,27 @@ recepcion: {
     "hora": 18:00,
     "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro."
     }
-iterario: [
-    {
-        "titulo": "Ceremonia Religiosa",
-        "lugar": "Iglesa de la Santa Cruz, Ixtapa Gro.",
-        "hora": "16:00"
-    },
-    {
-        "titulo": "Recepción",
-        "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
-        "hora": "18:00"
-    },
-    {
-        "titulo": "Mariachi en vivo",
-        "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
-        "hora": "20:00"
-    },
-  {
-    "titulo": "Baile de los novios",
-    "lugar": "Salón de eventos Hotel SunScape Ixtapa",
-    "hora": "22:30",
-  },
-  {
-    "titulo": "Cena y Brindis",
-    "lugar": "Salón de eventos Hotel SunScape Ixtapa",
-    "hora": "23:00",
-  },
-  {
-    "titulo": "Cierre del evento",
-    "lugar": "Salón de eventos Hotel SunScape Ixtapa",
-    "hora": "3:00",
-  }
-    ]
+
 
 ---
 import Hero from "../../components/bodas/Hero";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Cartas from "../../components/bodas/Cartas.astro";
-import Frase from "../../components/bodas/Frase.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
+import Frase from "../../components/bodas/Frase.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/bodas/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
-import Itinerario from "../../components/bodas/Itinerario.astro";
+
 
 
   <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
+   <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
     encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda." />
- 
+
   <section class="grid contenido">
     <div class="conte-cartas">
       <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
@@ -95,14 +64,13 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
     <Frase frase={frontmatter.frase_amor} />
   </section>
 
-
   <section class="grid pantalla">
     <Galeria carpeta="nvitaPlus" />
   </section>
 
   <Encabezados  texto="El Lugar" />
   <section class="grid contenido fondo-mitad">
-  <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+     <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
       la recepción de nuestra boda" />
     <div id="zigzag">
       <BloqueMapa
@@ -123,9 +91,6 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
       />
     </div>
   </section>
-
-  <Encabezados texto="Itinerario" />
-  <Itinerario listado={frontmatter.iterario} />
 
     
   <section class="grid contenido">

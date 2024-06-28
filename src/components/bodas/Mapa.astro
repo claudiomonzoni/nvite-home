@@ -6,11 +6,12 @@ interface Props {
 }
 const { lat, lng, mapName } = Astro.props;
 const base = import.meta.env.BASE_URL
+
 ---
 
 <div id={mapName}></div>
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @import "../../estilos/bodas/_variables.scss";
     #mapa1, #mapa2 {
       @extend .sombra;
         min-height: 27dvw;
@@ -25,7 +26,7 @@ const base = import.meta.env.BASE_URL
   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
   crossorigin=""
 />
-<script src=`${base}/leaflet.js` is:inline></script>
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" is:inline></script>
 <script define:vars={{ lat, lng, mapName }}>
     var map = L.map(mapName).setView([lat, lng], 17);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {

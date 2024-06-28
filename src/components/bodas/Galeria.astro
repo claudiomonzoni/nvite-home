@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-const imas =  await Astro.glob("../galeria/*").then(images => {
+const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => {
     return images.map(foto => foto.default);
 });
 
@@ -16,7 +16,7 @@ const imas =  await Astro.glob("../galeria/*").then(images => {
 </div>
 
 <style lang="scss" is:global>
-  @import "../estilos/_variables.scss";
+  @import "../../estilos/bodas/_variables.scss";
 
   /* Firefox */
   * {

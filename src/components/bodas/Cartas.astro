@@ -2,38 +2,37 @@
 interface Props {
   icono: string;
   titulo: string;
+  array?: Array<any>;
 }
-const { icono, titulo } = Astro.props;
+const { icono, titulo, array } = Astro.props;
 
-const base = import.meta.env.BASE_URL
-const urlPatron = `url("${base}/patron-fondo.png")`
+const base = import.meta.env.BASE_URL;
+const urlPatron = 'url("/bodas/patron-fondo.png")';
 ---
 
 <div class="carta">
-
-    <img src={icono} alt={titulo} />
-    <h3 class="overlay">{titulo}</h3>
-    <slot />
-
+  <img src={icono} alt={titulo} />
+  <h3 class="overlay">{titulo}</h3>
+  {
+    array ? array.map(item => <li>{item}</li>)  :  <slot />
+  }
 </div>
 
-<style lang="scss" define:vars={{urlPatron}}>
-  @import "../estilos/_variables.scss";
+<style lang="scss" define:vars={{ urlPatron }}>
+  @import "../../estilos/bodas/_variables.scss";
   .overlay {
     // filter: ;
     // color: white;
     // filter: invert(20%);
     // mix-blend-mode: screen;
- 
   }
-
 
   .carta {
     aspect-ratio: 1/1;
     flex: 1;
     text-align: center;
     background: var(--urlPatron), $gris;
-    background-blend-mode:color-dodge;
+    background-blend-mode: color-dodge;
     background-size: 200% 200%;
     background-position: center;
     display: flex;
@@ -74,20 +73,18 @@ const urlPatron = `url("${base}/patron-fondo.png")`
   const carta = gsap.utils.toArray(".carta");
   gsap.registerPlugin(ScrollTrigger);
 
-  carta.forEach((cart : HTMLElement  , id) => {
+  carta.forEach((cart: HTMLElement, id) => {
     let mm = gsap.matchMedia();
-  
 
     mm.add("(min-width: 800px)", () => {
       const tl = gsap.timeline({
-      scrollTrigger: {
+        scrollTrigger: {
           trigger: cart as HTMLElement,
           start: "top 70%",
           end: "bottom 60%",
           scrub: true,
-          
-        }
-    });
+        },
+      });
       // desktop setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",
@@ -95,7 +92,7 @@ const urlPatron = `url("${base}/patron-fondo.png")`
         opacity: 0,
         delay: 0.3,
       });
-      tl.from(cart.children , {
+      tl.from(cart.children, {
         opacity: 0,
         y: -30,
       });
@@ -103,13 +100,13 @@ const urlPatron = `url("${base}/patron-fondo.png")`
 
     mm.add("(max-width: 799px)", () => {
       const tl = gsap.timeline({
-      scrollTrigger: {
+        scrollTrigger: {
           trigger: cart as HTMLElement,
           start: "top 80%",
           end: "bottom 20%",
-          scrub: true
-        }
-    });
+          scrub: true,
+        },
+      });
       // mobile setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",

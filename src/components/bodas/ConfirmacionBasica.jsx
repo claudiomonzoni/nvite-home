@@ -2,50 +2,22 @@ import { useState, useEffect } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
 import invitadosData from "../../pages/bodas/data/invitados.json";
 
-export default function Confirmacion({ whatsapp, dias_antes, version }) {
-  const [invitado, setInvitado] = useState("sin datos");
-  const [pases, setPases] = useState(0);
-  const [id, setId] = useState(0);
+export default function Confirmacion({ whatsapp, dias_antes }) {
+
 
   useEffect(() => {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
-    const valores = window.location.search;
-    const params = new URLSearchParams(valores);
-    const id = params.get("id");
-    if (id < invitadosData.length && id) {
-      setInvitado(invitadosData[id].nombre);
-      setPases(invitadosData[id].pases);
-      setId(id);
-    } else {
-      // alert('Error en ID de invitado');
-      // bloquear el boton
-    }
-    const pasesInput = document.querySelector("#Confipases");
-    const generarPases = () => {
-      for (let i = 1; i <= pases; i++) {
-        pasesInput.innerHTML += `<option value="Numero de pases: ${i}">${i}</option>`;
-      }
-    };
-    generarPases();
+    btnconfirmar.classList.remove("desactivado");
 
-    // whatsapp
-
-    // import moment from "moment";
-
-    //user agent
     const ua = navigator.userAgent;
 
     //si es cel app si es pc web.app
     const enviar = (e) => {
       e.preventDefault();
 
-      if (pasesInput.value ) {
-        btnconfirmar.classList.remove("desactivado");
-      } else {
-        console.log("vacio");
-      }
-      //comprobar si es cel o pc
+     
+
       let whats = "";
       if (/Mobile/i.test(ua)) {
         whats = `https://api.whatsapp.com/send/?phone=${whatsapp}&text=`;
@@ -53,17 +25,15 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         whats = `https://web.whatsapp.com/send/?phone=${whatsapp}&text=`;
       }
 
-      envio(whats, pasesInput.value, comentarios.value);
+      envio(whats, comentarios.value);
     };
 
-    const envio = (whats, pasesInput, comentarios) => {
+    const envio = (whats, comentarios) => {
       const url = `
-  ${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a${pasesInput}.%0aComentarios:%20${comentarios}.`;
+  ${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a.%0aComentarios:%20${comentarios}.`;
 
       btnconfirmar.href = url;
     };
-
-    pasesInput.addEventListener("focusout", enviar);
     comentarios.addEventListener("focusout", enviar);
   });
   return (
@@ -85,12 +55,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
 
             <form id={estilo["formulario"]}>
-            
-              <label for="pases">Selecciona el numero de pases:</label>
-              <select name="pases" id="Confipases" required  >
-                <option value="0">0</option>
-              </select>
-              <label for="comentarios">Envíanos comentarios (opcional):</label>
+        
+              <label for="comentarios">Escribenos tu <b>nombre completo</b> y cuantas personas asistiran:</label>
               <textarea name="comentarios" id="comentarios"></textarea>
               <a href="#" className="btn desactivado" id="btnconfirmar">
                 Confirmar

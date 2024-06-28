@@ -4,9 +4,10 @@
 
 <footer>
   <p>Invitaciones digitales</p>
-  <a href="https://nvite.me" target="_blank">
+  <a href="https://nvita.me" target="_blank">
     <img
-      src="/nvite-logo.svg"
+    class="logo"
+      src="/nvita-logo.svg"
       alt="invitaciones digitales para bodas, quince años y eventos"
     />
   </a>
@@ -50,7 +51,7 @@
       </li>
     </ul>
  
-  <p>© 2024 - {new Date().getFullYear()} Todos los derechos reservados</p>
+  <small>© 2024 - {new Date().getFullYear()} Todos los derechos reservados</small>
 </footer>
 
 <style lang="scss">
@@ -60,15 +61,24 @@
     margin: 0 auto;
     text-align: center;
   }
+  .logo{
+    width: 150px;
+    max-width: 220px;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px $primario;
+  }
   ul {
     display: flex;
     justify-content: center;
     padding: $margen-min;
   }
   li {
+    &:first-child {
+      margin-left: 0;
+    }
     list-style: none;
     svg {
-      width: 2rem;
+      width: 1.5rem;
       height: auto
     }
     path{
