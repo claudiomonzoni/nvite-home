@@ -6,7 +6,7 @@ import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.nvitagit a.me',
+  site: 'https://www.nvita.me',
   integrations: [sitemap(), react(), mdx()],
   output: "hybrid",
   adapter: vercel({
