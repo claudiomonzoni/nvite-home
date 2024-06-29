@@ -179,7 +179,12 @@ b {
   );
 }
 
-.btn {
+@mixin btn-mix ($claro) {
+  @if(claro){
+    background: $acento;
+    color: $primario;
+  }
+  
   padding: 1rem $margen-cel;
   color: white;
   border: 1px solid white;
@@ -193,6 +198,13 @@ b {
     border-radius: $margen-min;
     color: $primario;
   }
+}
+.btn {
+  @include btn-mix(claro=false);
+}
+.btn-claro{
+@include btn-mix(claro=true);
+border: solid;
 }
 .desactivado {
   pointer-events: none;
