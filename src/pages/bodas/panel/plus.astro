@@ -1,0 +1,289 @@
+---
+import Layout from "../../../layouts/bodas/Layout.astro";
+import invitadosData from "../data/invitados.json" ;
+// cambiar el nombre de nvita-plus por la url de la invitación
+const base = "/bodas/nvita-plus"
+const url = Astro.url.host
+---
+
+<Layout title="Panel de administración">
+  <div id="barra">
+    <img src=`/nvita-logo.svg` alt="Invitaciones digitales" id="logo">
+    <p>Boda de Delia y Oliver</p>
+  </div>
+  <div class="grid contenido">
+    <section id="panel">
+      <h2>Panel de invitados</h2>
+      <div id="explicalo">
+        <p>Copia las invitaciones y marca a los invitados confirmados.</p>
+        <p class="alerta">
+          <b>Importante:</b> La información no estará sicronizada entre distintos dispositivos,<b> te recomendamos usar un solo dispositivo</b>, ya sea tu celular o computadora para llevar el control.
+        </p>
+        <ul>
+            <li id="color-invitado">Invitación copiada</li>
+            <li id="color-confirmado">Invitado confirmado</li>
+        </ul>
+      </div>
+      <div id="invitados">
+        {
+     
+          invitadosData.map((invitado, id) => (
+            <li data-id={id}>
+
+              <h3>{invitado.nombre}</h3>
+              <p class="info">Id: {id} | Pases: {invitado.pases}</p>
+            <div class="btnes" data-id={id}>
+          
+              <button id="copiar" value=`${url}${base}?id=${id}`> <img src=`/copy.png` alt="copiar" /> Copiar invitación </button>
+             <button id="confirmo"> <img src= `/read.png` alt="confirmo" /> Asistecia confirmada</button>
+             <button id="reset">Limpiar</button>
+              </div>
+
+            </li>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</Layout>
+<style lang="scss">
+  @import "../../../estilos/bodas/_variables.scss";
+  
+  $colorInvitado : #FCF1E4;
+  $colorConfirmado : #B8F4F4;
+  #barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $margen-min $margen-cel;
+    border-bottom: 1px solid $primario;
+  }
+  #logo {
+    max-width: 150px;
+    @include cel {
+      max-width: 100px;
+    }
+  }
+  h2 {
+    color: $primario;
+    text-align: center;
+    border-bottom: 1px solid $primario;
+  }
+  #panel {
+    margin-top: $margen;
+  }
+  #invitados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    li {
+        position: relative;
+        flex: 1 0 100%;
+      display: flex;
+      flex-wrap:wrap;
+      gap: 1rem;
+      width: fit-content;
+      border-bottom: solid 1px $primario;
+      margin-bottom: $margen-min;
+      padding: $margen-min;
+      align-items: center;
+      justify-content: space-between;
+      h3{
+        
+        font-size: clamp(1.6rem, 2.5vw, 3rem);
+        @include cel {
+          flex: 1 0 100%;
+          border-bottom:1px solid $primario;
+        }
+      }
+      .info{
+        flex: 1;
+        text-align: right;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: 0;
+      }
+      button{
+        padding: .4rem .6rem;
+        flex: 1;
+        border: none;
+        margin: .2rem;
+        background-color: $terciario;
+        color: $primario;
+        vertical-align: middle;
+        border-radius: 5px;
+        img{
+          height: 15px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+  .invitado{
+    background-color: $colorInvitado;
+  }
+  .confirmado{
+    background-color: $colorConfirmado;
+  }
+  #explicalo{
+    padding: $margen-min 0;
+
+  }
+  #explicalo ul{
+    display: flex;
+    gap : 1rem;
+    border: solid 1px $primario;
+    padding: $margen-min ;
+    font-size: .8rem;
+      li{
+        position: relative;
+        padding: 0px 5px;
+        margin-right: 50px;
+      }
+  }
+  #color-invitado::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -40px;
+    width: 30px;
+    height: 30px;
+    background-color: $colorInvitado;
+    border-radius: 50%;
+    
+  }
+  #color-confirmado::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -40px;
+    width: 30px;
+    height: 30px;
+    background-color: $colorConfirmado;
+    border-radius: 50%;
+
+  }
+</style>
+<>
+    <script>
+
+        const copiar = document.querySelectorAll('#copiar');
+        const confirmo = document.querySelectorAll('#confirmo');
+        const limpiar = document.querySelectorAll('#reset');
+
+
+copiar.forEach(boton => {
+
+  boton.addEventListener('click', (e: any) => {
+
+      const id = e.target.parentElement.parentElement.getAttribute('data-id');
+      e.target.parentElement.parentElement.classList.add('invitado');
+    //   copio al Clipboard con la funcion copiame
+      copiame(e.target.value as HTMLElement);
+
+      modificarLocalStorage(id, true, false, false);
+      
+    })
+})
+
+confirmo.forEach(confirmado => {
+    confirmado.addEventListener('click', (e: any) => {
+       const id = e.target.parentElement.parentElement.getAttribute('data-id');
+       e.target.parentElement.parentElement.classList.remove('invitado');
+       e.target.parentElement.parentElement.classList.add('confirmado');
+       // hacer el set en localStorage
+       modificarLocalStorage(id, true, true, false);
+       
+      })
+    })
+    limpiar.forEach(limpio => {
+      limpio.addEventListener('click', (e: any) => {
+        const id = e.target.parentElement.parentElement.getAttribute('data-id');
+        e.target.parentElement.parentElement.classList.remove('invitado');
+        e.target.parentElement.parentElement.classList.remove('confirmado');
+        // hacer el set en localStorage
+        modificarLocalStorage(id, true, true, true);
+      
+  })
+})
+function copiame(copiar) {
+  navigator.clipboard.writeText(copiar);
+  // Alert the copied text, mejor usar modal
+  alert("Invitación copiada en la memoria de tu dispositivo, ya la puedes pegar: " + copiar);
+}
+
+function modificarLocalStorage(id, copiado, confirmado, limpiado) {
+  
+            const invitado = {
+                id: id,
+                copiado: copiado,
+                confirmo: confirmado,
+                limpiado: limpiado
+            }
+      
+            // verifico que no haya sido picado el boton antes y devuelvo el objeto picado
+        const existe = invitadosData.find((inv) => (
+          inv.id === id ? true : false
+        ));
+
+        
+
+        if (!existe) {
+          invitadosData.push(invitado);
+          localStorage.setItem('invitados', JSON.stringify(invitadosData));
+        }
+        if(existe && confirmado == true){
+          // encontrar posicion de id en el array
+          invitadosData.forEach((inv, index) => {
+            if (inv.id === id) {
+              const confir = invitadosData.splice(index, 1, invitado)
+              localStorage.setItem('invitados', JSON.stringify(invitadosData));
+            }
+          }
+          )
+        }
+        if(existe && limpiado == true){
+          // encontrar posicion de id en el array y borrar
+          invitadosData.forEach((lim, index) => {
+            if (lim.id === id) {
+              const limpiar = invitadosData.splice(index, 1)
+              localStorage.setItem('invitados', JSON.stringify(invitadosData));
+            }
+          }
+          )
+        }
+}
+
+const revisar = JSON.parse(localStorage.getItem('invitados'))
+if(revisar === null){
+  var invitadosData = []
+
+}else{
+   invitadosData = JSON.parse(localStorage.getItem('invitados'))
+  //  recorro los invitados y les asino sus clases
+
+  invitadosData.forEach((lili, i) => {
+    // regresa el id en almacenado en localStorage
+
+    const lista = document.querySelector(`#invitados li[data-id="${lili.id}"]`);
+    if (lili) {
+
+      if (lili.copiado) {
+        lista.classList.add('invitado');
+      }
+      if (lili.confirmo) {
+        lista.classList.add('confirmado');
+      }
+      if (lili.limpiado) {
+        lista.classList.remove('invitado');
+        lista.classList.remove('confirmado');
+      }
+    }
+
+  }) 
+}
+
+</script>

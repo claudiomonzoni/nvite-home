@@ -34,7 +34,7 @@ import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Footer from "../../components/bodas/Footer.astro";
-
+import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 
   <Encabezados texto="Nuestra Boda" />
   <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
@@ -95,3 +95,4 @@ import Footer from "../../components/bodas/Footer.astro";
   <section>
     <ConfirmacionBasica whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only />
   </section>
+  <BloqueVenta />
