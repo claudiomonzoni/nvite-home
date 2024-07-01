@@ -104,19 +104,19 @@ const urlPatron = 'url("/bodas/patron-fondo.png")';
           trigger: cart as HTMLElement,
           start: "top 80%",
           end: "bottom 40%",
+          markers: true,
           scrub: true,
         },
       });
       // mobile setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",
-        y: -30,
+        y: -20,
         opacity: 0,
       });
       tl.from(cart.children, {
         opacity: 0,
         y: -30,
-        delay: 0.1,
         stagger: 0.1,
       });
     });
