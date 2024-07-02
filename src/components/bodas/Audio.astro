@@ -1,0 +1,27 @@
+---
+interface Props {
+    src: string;
+}
+const { src } = Astro.props;
+---
+<div id="rola">
+<h3>Escucha la <b>canción</b> de nuestra boda</h3>
+    <audio controls autoplay >
+        <!-- <source src="horse.ogg"  type="audio/ogg"> -->
+        <source src={`${src}.mp3`}  type="audio/mpeg">
+        Tu dispositivo no soporta el audio
+    </audio>
+</div>
+
+  <style>
+    #rola{
+        text-align: center;
+        margin-top: 2rem;
+    }
+    h3{
+        font-family: "Montserrat Alternates", sans-serif;
+    }
+    audio{
+    text-align: center;
+    }
+  </style>
