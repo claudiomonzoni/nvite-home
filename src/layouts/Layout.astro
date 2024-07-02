@@ -1,28 +1,39 @@
 ---
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
-import '../estilos/globales.scss';
+import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={title} />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="canonical" href={canonicalURL} />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<title>Invitaciones digitales - bodas, 15 años, cumpleaños y más.</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-	<script src="../js/reserva.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={title} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>Invitaciones digitales - bodas, 15 años, cumpleaños y más.</title>
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16632688949"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "AW-16632688949");
+  </script>
+  <body>
+    <slot />
+  </body>
+  <script src="../js/reserva.js"></script>
 </html>
