@@ -5,6 +5,57 @@ import Btn from "./Btn.astro";
 <div class="banner azulBG">
   <div class="der">
     <div class="bande">
+     
+      
+      <div class="lista">
+        <h2>Nvita Basic</h2>
+        <ul>
+          <li>Detalles del evento</li>
+          <li>Cuenta regresiva</li>
+          <li>Datos de tu evento</li>
+          <li>Mapas de ubicación</li>
+          <li>Frase animada</li>
+          <li>Formulario de confirmación sencilla</li>
+        </ul>
+        <Btn
+        liga="/bodas/nvita-basic"
+        texto="Ver invitación"
+        claro={true}
+        />
+        <Btn
+          liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
+          texto="$740"
+          claro={false}
+        />
+      </div>
+
+      
+      <div class="lista">
+        <h2>Nvita Bodas</h2>
+        <ul>
+          <li><b>Panel de invitados</b></li>
+          <li><b>Nombre del invitado</b></li>
+          <li>Detalles del evento</li>
+          <li>Cuenta regresiva</li>
+          <li>Datos de tu evento</li>
+          <li>Mapas de ubicación</li>
+          <li>Galería de imágenes</li>
+          <li>Sugerencia de regalos</li>
+          <li>Frase animada</li>
+          <li>Formulario de confirmación</li>
+        </ul>
+        <Btn
+        liga="/bodas/nvita-bodas?id=2"
+        texto="Ver invitación"
+        claro={true}
+        />
+        <Btn
+          liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
+          texto="$990"
+          claro={false}
+        />
+      </div>
+
       <div class="lista">
         <h2>Nvita Plus</h2>
         <ul>
@@ -22,69 +73,17 @@ import Btn from "./Btn.astro";
           <li>Formulario de confirmación</li>
         </ul>
         <Btn
+        liga="/bodas/nvita-plus?id=1"
+        texto="Ver invitación"
+        claro={true}
+        />
+        <Btn
         liga="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
         texto="$1290"
         claro={false}
         />
-        <Btn
-        liga="/bodas/nvita-plus?id=1"
-        texto="Ver invitacion"
-        claro={true}
-        />
-      </div>
-      
-      
-      <div class="lista">
-        <h2>Nvita Bodas</h2>
-        <ul>
-          <li><b>Panel de invitados</b></li>
-          <li><b>Nombre del invitado</b></li>
-          <li>Detalles del evento</li>
-          <li>Cuenta regresiva</li>
-          <li>Datos de tu evento</li>
-          <li>Mapas de ubicación</li>
-          <li>Galería de imágenes</li>
-          <li>Sugerencia de regalos</li>
-          <li>Frase animada</li>
-          <li>Formulario de confirmación</li>
-        </ul>
-        <Btn
-          liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
-          texto="$990"
-          claro={false}
-        />
-        <Btn
-          liga="/bodas/nvita-bodas?id=2"
-          texto="Ver invitacion"
-          claro={true}
-        />
       </div>
 
-      <div class="lista">
-        <h2>Nvita Basic</h2>
-        <ul>
-          <li>Detalles del evento</li>
-          <li>Cuenta regresiva</li>
-          <li>Datos de tu evento</li>
-          <li>Mapas de ubicación</li>
-          <li>Frase animada</li>
-          <li>Formulario de confirmación sencilla</li>
-        </ul>
-        <Btn
-          liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
-          texto="$740"
-          claro={false}
-        />
-        <Btn
-          liga="/bodas/nvita-basic"
-          texto="Ver invitacion"
-          claro={true}
-        />
-      </div>
-
-      <!-- <Btn liga="/bodas/nvite-bodas-1?id=2" texto="Ver invitacion de boda 1" claro={true} />
-      <Btn liga="/bodas/nvite-bodas-2?id=2" texto="Ver invitacion de boda 2" claro={true} />
-      <Btn liga="https://buy.stripe.com/00g4ix9sg7LRbkI7ss" texto="comprar $1490" claro={false} blank={true} /> -->
     </div>
   </div>
   <div class="izq">

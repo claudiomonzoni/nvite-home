@@ -8,7 +8,9 @@ import Footer from "../components/Footer.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
-<Layout title="Invitaciones de bodas, 15 años, cumpleaños y eventos digitales, personalizadas, con confirmación de asistencia y faciles de enviar.">
+<Layout
+  title="Invitaciones de bodas, 15 años, cumpleaños y eventos digitales, personalizadas, con confirmación de asistencia y faciles de enviar."
+>
   <Hero
     encabezado="<span>Nvita</span>ciones digitales"
     description="<b>fáciles de enviar, convenientes </br> y personalizadas</b>, tu mejor opción para hacer invitaciones. Además te damos un panel de control con todos tus invitados. "
@@ -17,7 +19,6 @@ import Footer from "../components/Footer.astro";
 
   <section class="grid contenido">
     <div class="cartaBase baseA">
-
       <div class="cartasBaseImagenes">
         <div class="bloqueImg">
           <img
@@ -33,18 +34,20 @@ import Footer from "../components/Footer.astro";
         </div>
       </div>
 
-     <div class="cartaBaseTxt">
-      <h2>Tu invitación digital en cualquier pantalla</h2>
-      <p>
-        Diseñadas para verse en celulares o monitores de computadoras, <b
-          >tus invitaciones se verán geniales</b
-        > donde sea que las vean, invitaciones rapidas y con toda la información de tu evento.
-      </p>
-      <p>
-        Además, podrás usar tus invitaciones también como <b
-          >página web de tu evento</b>
-      </p>
-     </div>
+      <div class="cartaBaseTxt">
+        <h2>Tu invitación digital en cualquier pantalla</h2>
+        <p>
+          Diseñadas para verse en celulares o monitores de computadoras, <b
+            >tus invitaciones se verán geniales</b
+          > donde sea que las vean, invitaciones rapidas y con toda la información
+          de tu evento.
+        </p>
+        <p>
+          Además, podrás usar tus invitaciones también como <b
+            >página web de tu evento</b
+          >
+        </p>
+      </div>
     </div>
     <div class="flex">
       <div class="cartaBase2">
@@ -112,92 +115,109 @@ import Footer from "../components/Footer.astro";
     </div>
   </section>
 
-  <div id="bodas" class=" grid pantalla-der">
+  <div id="bodas" class="grid pantalla-der">
     <Banner />
   </div>
 
   <section class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-      encabezado="1: contacto"
-      texto="Resolvemos tus dudas y te guiamos en el proceso."
-      icono="/ico-nvite-recibes.svg"
-      fondo="/fondo-nvite-caracteristicas.png"
-      colorBg="#FFF1E1";
+        encabezado="1: contacto"
+        texto="Resolvemos tus dudas y te guiamos en el proceso."
+        icono="/ico-nvite-recibes.svg"
+        fondo="/fondo-nvite-caracteristicas.png"
+        colorBg="#FFF1E1"
+        ;
       />
-      
+
       <Caracteristicas
-      encabezado="2: pago"
-      texto="Paga en Oxxo o con tu tarjeta."
-      icono="/ico-nvite-pago.svg"
-      fondo="/fondo-nvite-caracteristicas-2.png"
+        encabezado="2: pago"
+        texto="Paga en Oxxo o con tu tarjeta."
+        icono="/ico-nvite-pago.svg"
+        fondo="/fondo-nvite-caracteristicas-2.png"
       />
-      
+
       <Caracteristicas
-      encabezado="3: datos"
-      texto="Nos envias los datos de tu evento."
-      icono="/ico-nvite-datos.svg"
-      fondo="fondo-nvite-caracteristicas-3.png"
-      colorBg="#FFF1E1";
+        encabezado="3: datos"
+        texto="Nos envias los datos de tu evento."
+        icono="/ico-nvite-datos.svg"
+        fondo="fondo-nvite-caracteristicas-3.png"
+        colorBg="#FFF1E1"
+        ;
       />
-      
+
       <Caracteristicas
-      encabezado="4: entrega"
-      texto="Listos para invitar a familia y amigos."
-      icono="/ico-nvite-entrega.svg"
-      fondo="fondo-nvite-caracteristicas-4.png"
+        encabezado="4: entrega"
+        texto="Listos para invitar a familia y amigos."
+        icono="/ico-nvite-entrega.svg"
+        fondo="fondo-nvite-caracteristicas-4.png"
       />
     </div>
   </section>
-</section>
+</Layout>
 
 <section class="grid contenido">
-    <div class="flex">
-      <div class="cartaBase2  fondo-formu">
-        <div class="bande">
-			<h2>Obtén tu invitación</h2>
-      <p><b>Contáctanos</b>, para resolver tus dudas o iniciará el proceso para que obtengas tu invitación.</p>
-      <!-- <ul>
-		<li>Iniciado el proceso, te enviamos un formulario donde nos <b>proporcionas la información de tu boda</b>.</li>
-		<li>También te enviamos un documento excel para que <b>agregues los nombres de los invitados</b> y asignar sus pases</li>
-		<li>En un promedio de 2 días <b>te entregamos tu invitación de tu boda</b>, lista para ser enviada a tus invitados <span class="mini">(2 días después de tener los datos del evento e invitados completos)</span></li>
-	  </ul> -->
-	  <!-- <Btn liga="/bodas" texto="Iniciar proceso" claro={true} /> -->
-		</div>
+  <div class="flex">
+    <div class="cartaBase2 fondo-formu">
+      <div class="bande">
+        <h2>Obtén tu invitación</h2>
+        <p>
+          <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso para
+          que obtengas tu invitación.
+        </p>
+        <small>Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b></small>
+      </div>
 
-       <div id="formu">
-         <form>
+      <div id="formu">
+        <form>
           <!-- <h3>
           <img src="/whatsapp.png" alt="logo whatsapp">
          <b>whatsapp</b></h3> -->
           <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
           <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Agrega al menos un apellido">
+          <input
+            type="text"
+            id="nombre"
+            placeholder="Tu nombre"
+          />
           <label for="fecha">Fecha del evento</label>
-          <input type="date" name="fecha" id="fecha">
+          <input type="date" name="fecha" id="fecha" />
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="introducir un email valido">
-          <a href="#" id="empezar" class="desactivado"><img src="/whatsapp.png" alt="logo whatsapp"> Hola <b>Aida</b></a>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="agrega un email valido"
+          />
+          <a href="#" id="empezar" class="desactivado"
+            ><img src="/whatsapp.png" alt="logo whatsapp" /> Hola <b>Aida</b></a
+          >
           <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
-
         </form>
-       </div>
-      </div>
-      <div class="cartaBase2 cartaBase3">
-       <div class="bande-2">
-		<h2>¿Qué recibo?</h2>
-        <p>
-          Además de tus <b>invitaciones personalizadas</b>, *tendrás acceso a un <b>panel de invitados</b> donde podrás copiar las ligas de cada invitado y marcar a los confirmados, <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.
-        </p>
-        <small>*No aplica en la versión "basic"</small>
-		<Btn liga="https://www.nvita.me/bodas/nvite-bodas-1/panel" texto="Ver panel de invitados" claro={false} blank={true} />
-	   </div>
-        <img
-          src="/nvite-panel-invitados.webp"
-          alt="panel de invitados nvita.me"
-        />
       </div>
     </div>
-  </section>
-  <Footer />
-</Layout>
+    <div class="cartaBase2 cartaBase3">
+      <div class="bande-2">
+        <h2>¿Qué recibo?</h2>
+        <p>
+          Además de tus <b>invitaciones personalizadas</b>, *tendrás acceso a un <b
+            >panel de invitados</b
+          > donde podrás copiar las ligas de cada invitado y marcar a los confirmados,
+          <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.
+        </p>
+        <small>*No aplica en la versión "basic"</small>
+        <Btn
+          liga="https://www.nvita.me/bodas/nvite-bodas-1/panel"
+          texto="Ver panel de invitados"
+          claro={false}
+          blank={true}
+        />
+      </div>
+      <img
+        src="/nvite-panel-invitados.webp"
+        alt="panel de invitados nvita.me"
+      />
+    </div>
+  </div>
+</section>
+<Footer />

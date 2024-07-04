@@ -179,7 +179,6 @@ b {
   );
 }
 
-
 .btn {
   padding: 1rem $margen-cel;
   color: white;
@@ -213,6 +212,10 @@ b {
 
 .cartaBaseTxt {
   padding: 0 $margen $margen;
+  @include cel {
+    order: 1;
+    padding-top:$margen-cel;
+  }
 }
 .cartasBaseImagenes {
   width: 100%;
@@ -238,7 +241,7 @@ b {
   }
 
   @include cel {
-    top: -1dvh;
+    top: 0dvh;
     left: 50%;
     transform: translateX(-50%);
     max-width: 90%;
@@ -255,6 +258,7 @@ b {
         }
       }
     }
+    order: 2;
   }
 }
 
@@ -265,11 +269,11 @@ b {
   img {
     object-fit: cover;
   }
-
- 
+  @include cel {
+    display: flex;
+    flex-direction: column;
+  }
 }
-
-
 
 .cartaBase2 {
   text-align: center;
@@ -325,7 +329,7 @@ b {
       width: 20vw;
     }
   }
-  .bande{
+  .bande {
     max-width: 80%;
     height: auto;
     padding: 0;
@@ -389,12 +393,12 @@ b {
 .azulBG {
   border-radius: $radio;
   background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-  linear-gradient(43deg, rgb(255, 255, 255) 30%, $secundario 100%) no-repeat;
+    linear-gradient(43deg, rgb(255, 255, 255) 30%, $secundario 100%) no-repeat;
   background-position: center right, top left;
   background-size: 50%, 100%;
   @include cel {
     background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-    linear-gradient(43deg, $secundario 0%, rgb(255, 255, 255) 100%) no-repeat;
+      linear-gradient(43deg, $secundario 0%, rgb(255, 255, 255) 100%) no-repeat;
     background-position: center bottom;
     background-size: 120%;
   }
@@ -418,7 +422,7 @@ b {
   backdrop-filter: blur(5px);
   background: rgba(255, 136, 0, 0.3);
   text-align: left;
-  img{
+  img {
     width: 30px;
     vertical-align: middle;
     margin: 0;
@@ -426,7 +430,7 @@ b {
   @include cel {
     width: 100%;
     margin-top: 2rem;
-    img{
+    img {
       width: 20px;
     }
   }
@@ -434,7 +438,6 @@ b {
   form {
     display: flex;
     flex-wrap: wrap;
-    
   }
   h3 {
     vertical-align: middle;
@@ -443,7 +446,7 @@ b {
     padding: 0;
     margin: 0;
   }
-  label{
+  label {
     text-align: left;
   }
 }
@@ -461,9 +464,10 @@ input {
   background: $terciario;
   @extend .sombra;
 }
-button[type="submit"], #empezar {
+button[type="submit"],
+#empezar {
   margin-top: $margen-min;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   padding: 0.1rem $margen-cel;
   color: white;
   border: 1px solid white;
@@ -483,60 +487,60 @@ input::placeholder {
   color: $primario;
 }
 
-.fondo-formu{
+.fondo-formu {
   background: url("/fondo-formu.webp") no-repeat white;
   background-size: 60%;
   background-position: 150% bottom;
   @include cel {
     background-size: 90%;
     background-position: 500% bottom;
-    
+    order: 2;
   }
 }
 
-.fondo-alegre{
-  background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") repeat-x white;
+.fondo-alegre {
+  background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") repeat-x
+    white;
   background-size: 50%;
   background-position: 0% 300%;
   @include cel {
     background-size: 100%;
     background-position: 0% 150%;
-    
   }
 }
 
-.desactivado{
-  opacity: .4;
-  cursor:not-allowed!important;
-  }
+.desactivado {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+}
 
-  @keyframes desaparecer {
-    0% {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-10px);
+@keyframes desaparecer {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
   }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+}
 
-  @keyframes aparecer {
-    0% {
-      opacity: 0;
-      transform: translateY(0px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(10px);
+@keyframes aparecer {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
   }
+  100% {
+    opacity: 1;
+    transform: translateY(10px);
   }
+}
 
-  .desapareceH1 {
-    animation-name: desaparecer;
-    animation-duration: 1s;
-  }
-  .apareceH1 {
-    animation-name: aparecer;
-    animation-duration: 1s;
-  }
+.desapareceH1 {
+  animation-name: desaparecer;
+  animation-duration: 1s;
+}
+.apareceH1 {
+  animation-name: aparecer;
+  animation-duration: 1s;
+}
