@@ -206,18 +206,14 @@ import Footer from "../components/Footer.astro";
           <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.
         </p>
         <small>*No aplica en la versión "basic"</small>
-        <Btn
-          liga="https://www.nvita.me/bodas/nvite-bodas-1/panel"
-          texto="Ver panel de invitados"
-          claro={false}
-          blank={true}
+		<Btn liga="/bodas/panel/plus" texto="Ver panel de invitados" claro={false} blank={true} />
+	   </div>
+        <img
+          src="/nvite-panel-invitados.webp"
+          alt="panel de invitados nvita.me"
         />
       </div>
-      <img
-        src="/nvite-panel-invitados.webp"
-        alt="panel de invitados nvita.me"
-      />
     </div>
-  </div>
-</section>
-<Footer />
+  </section>
+  <Footer />
+</Layout>
