@@ -1,0 +1,93 @@
+---
+
+---
+
+<div class="banner" id="quince">
+  <div class="izq">
+    <img src="quince/quince-banner.webp" alt="Invitaciones de Quince XV años" />
+  </div>
+  <div class="der">
+  <div class="bande">
+    <h2><span>Próximamente</span> invitaciones de XV años</h2>
+    <p>
+      Estamos trabajando duro para traerte las mejores invitaciones que podemos
+      hacerte para tu fiesta de quince años.
+    </p>
+  </div>
+  </div>
+</div>
+<style lang="scss">
+  @import "../estilos/_variables.scss";
+  h2 {
+    color: $acento;
+  }
+
+  .banner {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: $radio;
+    background:
+      url("/fondo-nvite-caracteristicas-2.png") no-repeat,
+      linear-gradient(43deg, rgb(255, 255, 255) 10%, $primario 80%) no-repeat;
+    background-position:
+      center right,
+      top left;
+    background-size: 50%, 100%;
+    @include cel {
+      background:
+        url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+        linear-gradient(43deg, $primario 100%, rgb(255, 255, 255) 10%)
+          no-repeat;
+      background-position: center 200% , center ;
+      background-size: 110%, auto;
+    }
+    margin-bottom: $margen-min;
+  }
+  .der,
+  .izq {
+    display: flex;
+    justify-content: center;
+
+    @include cel {
+      flex: 1 0 100%;
+    }
+  }
+  .der {
+    h2 {
+      font-size: clamp(2rem, 4vw, 4rem);
+      color: aliceblue;
+      span{
+        color: $secundario;
+      }
+    }
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex: 1 0 60%;
+    @tableta_land {
+      flex: 1 0 80%;
+    }
+    @include cel {
+        order: 1;
+        h2{
+            margin-top: $margen;
+        }
+        color:white;
+    }
+  }
+  .izq {
+    flex: 1 0 40%;
+    width: 100px;
+    align-items: end;
+    @tableta_land {
+      flex: 1 0 20%;
+    }
+    @include cel {
+        order: 2;
+    }
+  }
+  .bande {
+    width: 70%;
+
+  }
+</style>
