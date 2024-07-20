@@ -17,7 +17,7 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
       <div class="icono"><img src={icono} alt={encabezado} /></div>
     <div class="conte">
       <h3>{encabezado}</h3>
-      <p>{texto}</p>
+      <p set:html={texto}></p>
     </div>
   </div>
 

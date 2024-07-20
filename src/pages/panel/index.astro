@@ -32,7 +32,7 @@ const url = Astro.url.host
               <p class="info">Id: {id} | Pases: {invitado.pases}</p>
             <div class="btnes" data-id={id}>
           
-              <button id="copiar" value=`${url}${base}?id=${id}`> <img src=`/copy.png` alt="copiar" /> Copiar invitación </button>
+              <button id="copiar" value=`https://${url}${base}?id=${id}`> <img src=`/copy.png` alt="copiar" /> Copiar invitación </button>
              <button id="confirmo"> <img src= `/read.png` alt="confirmo" /> Asistecia confirmada</button>
              <button id="editar">Editar</button>
               </div>

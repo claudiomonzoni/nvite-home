@@ -99,6 +99,10 @@ a {
 }
 p {
   margin-bottom: 0.6rem;
+  @include cel {
+    line-height: 1.4;
+  }
+  color: $primario;
 }
 p:last-child {
   margin-bottom: 0rem;
@@ -543,4 +547,25 @@ input::placeholder {
 .apareceH1 {
   animation-name: aparecer;
   animation-duration: 1s;
+}
+
+#choro {
+  text-align: center;
+color: $primario;
+padding: $margen;
+p{
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: $margen-min;
+}
+background: url("/fondo-exp.svg") no-repeat;
+background-position: center 70%;
+background-size: 60%;
+@include cel{
+  p{
+    max-width: 100%;
+  }
+  background-position: top center;
+  background-size: 110%;
+}
 }
