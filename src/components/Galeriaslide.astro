@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 ---
 
-<div class="grid pantalla-der">
+<div class="grid pantalla-der-especial">
   <div id="galeriaHome">
     <div class="izq">
       <div id="sliderH">
@@ -12,6 +12,10 @@ import { Icon } from "astro-icon/components";
           Tus invitaciones estarán personalizadas con tu nombre y el de tu
           pareja así como con el nombre de tus invitados y sus pases
         </p>
+      </div>
+      <div id="control">
+        <a href="#" id="btnIzq" class="btn"> <Icon name={"flecha-izq"} /></a>
+        <a href="#" id="brnDer" class="btn"><Icon name={"flecha-der"} /></a>
       </div>
     </div>
 
@@ -44,10 +48,7 @@ import { Icon } from "astro-icon/components";
         </div>
       </div>
 
-      <div id="control">
-        <a href="#" id="btnIzq" class="btn">izq</a>
-        <a href="#" id="brnDer" class="btn">der</a>
-      </div>
+     
     </div>
   </div>
 </div>
@@ -56,16 +57,16 @@ import { Icon } from "astro-icon/components";
 
   #galeriaHome {
     display: flex;
-    position: relative;
     @include cel {
       flex-wrap: wrap;
     }
   }
-
+  
   .izq {
     flex: 1 0 20%;
     display: flex;
     align-items: center;
+    position: relative;
   }
   .der {
     flex: 1 0 80%;
@@ -100,13 +101,15 @@ import { Icon } from "astro-icon/components";
   #control {
     position: absolute;
     bottom: 0;
-    left: 0;
+    right: -20px;
+    display: flex;
     @include cel {
       display: flex;
       background: $fondo;
+      padding: 0.6rem;
       bottom: auto;
       left: auto;
-      top: 0;
+      top: 74%;
       right: 0;
   }
 }

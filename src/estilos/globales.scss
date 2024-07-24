@@ -148,6 +148,12 @@ b {
     grid-column: contenido;
   }
 }
+.pantalla-der-especial > * {
+  grid-column: contenido-start / pantalla-end;
+  @include cel {
+    grid-column: contenido / pantalla-end;
+  }
+}
 
 .conte-cartas {
   display: flex;
@@ -184,20 +190,25 @@ b {
 }
 
 .btn {
-  padding:  .5rem $margen-cel;
-  color: white;
-  border: 1px solid white;
+
   margin: 0.5rem 0.5rem 0.5rem 0;
   background: $acento;
-  border-radius: .4rem;
+  border-radius: 40rem;
+  color: $fondo;
+  display: flex;
+  padding: 1rem;
+   svg{
+     width: 100%;
+     height: auto;
+   }
   @include cel {
     width: 100%;
     text-align: center;
   }
   &:hover {
     border-radius: $margen-cel;
-    background: $primario;
-    color: $fondo;
+    background: $secundario;
+    color: $primario;
   }
 }
 
