@@ -4,12 +4,14 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import vercel from "@astrojs/vercel/serverless";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.nvita.me',
-  integrations: [sitemap(), react(), mdx()],
+  integrations: [sitemap(), react(), mdx(), icon()],
   output: "hybrid",
   adapter: vercel({
-    imageService: true,
+    imageService: true
   })
 });

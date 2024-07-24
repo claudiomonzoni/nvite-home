@@ -1,0 +1,226 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="grid pantalla-der">
+  <div id="galeriaHome">
+    <div class="izq">
+      <div id="sliderH">
+        <Icon name="usuario" size={80} />
+        <h2>Portada de invitación</h2>
+        <p>
+          Tus invitaciones estarán personalizadas con tu nombre y el de tu
+          pareja así como con el nombre de tus invitados y sus pases
+        </p>
+      </div>
+    </div>
+
+    <div class="der">
+      <div id="sliderI">
+        <div class="ima resaltar">
+          <img src="/homegal/cover.webp" alt="cover invitaciones" />
+        </div>
+        <div class="ima">
+          <img src="/homegal/musica.webp" alt="musica invitaciones" />
+        </div>
+        <div class="ima">
+          <img src="/homegal/frase.webp" alt="frase invitaciones" />
+        </div>
+        <div class="ima">
+          <img src="/homegal/mapa.webp" alt="mapa invitaciones" />
+        </div>
+        <div class="ima">
+          <img src="/homegal/itinerario.webp" alt="itinerario invitaciones" />
+        </div>
+        <div class="ima">
+          <img src="/homegal/regalos.webp" alt="regalos invitaciones" />
+        </div>
+
+        <div class="ima">
+          <img
+            src="/homegal/confirmacion.webp"
+            alt="confirmacion invitaciones"
+          />
+        </div>
+      </div>
+
+      <div id="control">
+        <a href="#" id="btnIzq" class="btn">izq</a>
+        <a href="#" id="brnDer" class="btn">der</a>
+      </div>
+    </div>
+  </div>
+</div>
+<style lang="scss">
+  @import "../estilos/_variables.scss";
+
+  #galeriaHome {
+    display: flex;
+    position: relative;
+    @include cel {
+      flex-wrap: wrap;
+    }
+  }
+
+  .izq {
+    flex: 1 0 20%;
+    display: flex;
+    align-items: center;
+  }
+  .der {
+    flex: 1 0 80%;
+  }
+#sliderH {
+  padding: $margen-min;
+  border-right: 1px solid $primario;
+  @include cel {
+    padding: 0 0 $margen 0;
+    border-right: none;
+    border-bottom: 1px solid $primario;
+    margin-bottom: $margen;
+  }
+}
+  #sliderI {
+    overflow: hidden;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 25%;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    @include cel {
+      grid-auto-columns: 55%;
+    }
+  }
+  .ima {
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    @extend .anime;
+  }
+  #control {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    @include cel {
+      display: flex;
+      background: $fondo;
+      bottom: auto;
+      left: auto;
+      top: 0;
+      right: 0;
+  }
+}
+  .resaltar {
+    scale: 1.06;
+  }
+
+  @keyframes horizontal-shaking {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(5px);
+    }
+    50% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .shake {
+    animation: horizontal-shaking 0.5s forwards;
+  }
+</style>
+
+<script>
+  //   SLIDER IMAGENES------------------------------------------------------------
+  const txt = [
+    {
+      encabezado: "Portada de invitación",
+      texto:
+        "Tus invitaciones estarán personalizadas con tu nombre y el de tu pareja así como con el nombre de tus invitados y sus pases",
+    },
+    {
+      encabezado: "Musica e Información en tu invitación",
+      texto: "Agrega tu canción favorita y los detalles de tu boda",
+    },
+    {
+      encabezado: "Frase de boda y galería de fotos",
+      texto:
+        "Dí con palabras lo que sientes en una frase y muestra hasta 6 fotos de los novios",
+    },
+    {
+      encabezado: "Mapas de ubicación",
+      texto:
+        "Muestrale a tus invitados como llegar a tu ceremonio y recepción con un mapa digital",
+    },
+    {
+      encabezado: "Itinerario",
+      texto:
+        "Da los detalles en tu invitación de cada momento importante de tu boda",
+    },
+    {
+      encabezado: "Sugerencias de regalos",
+      texto:
+        "Agrega tu mesa de regalos o comparte tus datos para que tus invitados te hagan regalos en efectivo",
+    },
+    {
+      encabezado: "Cuenta regresiva y confirmación",
+      texto:
+        "Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán confirmar su asistencia",
+    },
+  ];
+  const slider = document.getElementById("sliderI");
+  const ima = document.querySelector(".ima");
+  const imagenes = document.querySelectorAll(".ima");
+  const izqBtn = document.getElementById("btnIzq");
+  const derBtn = document.getElementById("brnDer");
+  const h2 = document.querySelector("#sliderH h2");
+  const p = document.querySelector("#sliderH p");
+  var num = 0;
+
+  derBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const slideWidth = ima.clientWidth + 10 / slider.clientWidth - 10;
+    slider.scrollLeft += slideWidth;
+    // num = slider.scrollLeft / slideWidth + 1;
+
+    if (num + 1 !== txt.length) {
+      num += 1;
+      h2.innerHTML = txt[num].encabezado;
+      p.innerHTML = txt[num].texto;
+      resalta(num);
+      imagenes.forEach((imagen) => {
+        imagen.classList.remove("shake");
+      });
+    } else {
+      imagenes[6].classList.add("shake");
+    }
+  });
+
+  izqBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const slideWidth = ima.clientWidth;
+    slider.scrollLeft -= slideWidth;
+    if (num !== 0) {
+      num -= 1;
+      h2.innerHTML = txt[num].encabezado;
+      p.innerHTML = txt[num].texto;
+      resalta(num);
+    } else {
+      imagenes[0].classList.add("shake");
+    }
+  });
+
+  function resalta(item) {
+    imagenes.forEach((imagen) => {
+      imagen.classList.remove("resaltar");
+    });
+    imagenes[item].classList.add("resaltar");
+  }
+</script>

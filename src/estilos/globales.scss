@@ -184,18 +184,20 @@ b {
 }
 
 .btn {
-  padding: 1rem $margen-cel;
+  padding:  .5rem $margen-cel;
   color: white;
   border: 1px solid white;
   margin: 0.5rem 0.5rem 0.5rem 0;
+  background: $acento;
+  border-radius: .4rem;
   @include cel {
     width: 100%;
     text-align: center;
   }
   &:hover {
-    background: white;
-    border-radius: $margen-min;
-    color: $primario;
+    border-radius: $margen-cel;
+    background: $primario;
+    color: $fondo;
   }
 }
 
