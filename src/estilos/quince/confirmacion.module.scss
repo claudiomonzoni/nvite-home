@@ -1,0 +1,59 @@
+@import "_variables.scss";
+h2 {
+  color: white;
+  padding-top: $margen-min;
+  font-size: clamp(3rem, 1.5vw, 2rem);
+
+}
+.confirmacion {
+  color: white;
+  margin-top: $margen;
+}
+.bandeja {
+  text-align: center;
+  padding: $margen;
+  margin: 0 auto;
+  max-width: 60%;
+  background: $urlPatron, $gris;
+  background-blend-mode: color-dodge;
+  background-size: contain;
+  background-position: center;
+  @include cel {
+    max-width: 100%;
+    padding: $margen-cel;
+  }
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  margin: 0 auto;
+  width: 50%;
+  label,
+  input,
+  select,
+  textarea {
+    flex: 1 0 100%;
+    margin-top: 0.6rem;
+    padding: 0.5rem 0;
+  }
+  textarea{
+    field-sizing: content;
+    min-height: 50px;
+  }
+  textarea,
+  select {
+    border: none !important;
+    opacity: 0.5;
+    padding: 0.5rem;
+    @extend .sombra;
+  }
+  @include cel {
+    width: 100%;
+  }
+}
+svg {
+  max-width: 2.5rem;
+  height: auto;
+  margin: 0 auto;
+}

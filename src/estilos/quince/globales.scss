@@ -1,0 +1,227 @@
+@use "variables" as *;
+@use "componentes" as *;
+
+// @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+// @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+// @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+
+// hacer el scroll suave
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: clamp(10px, 0.9vw, 22px);
+  @include hd {
+    font-size: clamp(10px, 0.9vw, 20px);
+  }
+  @include cel {
+    font-size: clamp(16px, 1.8vw, 18px);
+  }
+  @include hdplus {
+    font-size: clamp(14px, 7vw, 22px);
+  }
+
+  color: $gris;
+  font-family: $txt, serif;
+  font-weight: 100;
+  background: url("/quince/decor.svg"), url("/quince/textuta-bg.webp") #fff;
+  background-repeat: no-repeat, repeat;
+  background-size: 40%, auto;
+  background-position: -8vw 120vh, 0%;
+  scroll-behavior: smooth;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  position: relative;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3, h4 {
+  line-height: 1em;
+  font-family: $encabezados, serif;
+  padding-bottom: 0.7rem;
+  color: $secundario;
+}
+h1 {
+  color: white;
+  font-size: clamp(3rem, 6vw, 30vw);
+}
+h2 {
+  font-size: clamp(2.2em, 2vw, 30vw);
+  @include hd {
+    font-size: clamp(3em, 2vw, 50vw);
+  }
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-size: cover;
+  shape-margin: 0.75rem;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  @extend .anime;
+  &:hover {
+    transform: scale(0.9);
+  }
+}
+p {
+  margin-bottom: 1rem;
+}
+p:last-child {
+  margin-bottom: 0rem;
+}
+b {
+  font-weight: bold;
+}
+
+// grid
+.grid {
+  display: grid;
+  grid-template-columns: [pantalla-start] 5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 5vw [pantalla-end];
+  @include hd {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+  @include hdplus {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+}
+.contenido > * {
+  grid-column: contenido;
+}
+.extra > * {
+  grid-column: extra;
+}
+.pantalla > * {
+  grid-column: pantalla;
+}
+.pantalla-izq > * {
+  grid-column: pantalla-start / contenido-end;
+}
+.pantalla-der > * {
+  grid-column: contenido-start / pantalla-end;
+}
+
+.conte-cartas {
+  display: flex;
+  gap: $margen-min;
+  margin: $margen 0;
+  flex-wrap: wrap;
+}
+
+#zigzag {
+  padding: $margen 0;
+  .bloqueMapa:last-child {
+    z-index: 400;
+    transform: translateY(-2rem);
+    @include cel {
+      transform: translateY(0);
+    }
+    .izq {
+      order: 2;
+    }
+    .der {
+      order: 1;
+      
+    }
+  }
+}
+
+.fondo-mitad {
+  background: $terciario;
+  background: linear-gradient(
+    0deg,
+    $terciario 88%,
+    rgba(255, 255, 255, 0) 88%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@mixin btn-mix ($claro) {
+  padding: 1rem $margen-cel;
+  color: white;
+  border: 1px solid white;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  @include cel {
+    width: 100%;
+    text-align: center;
+  }
+  &:hover {
+    background: white;
+    border-radius: $margen-min;
+    color: $primario;
+  }
+  @if $claro{
+    background: $secundario;
+    color: $primario;
+    border: none!important;
+  }
+}
+.btn {
+  @include btn-mix($claro:false);
+}
+.btn-claro{
+@include btn-mix($claro: true);
+border: solid;
+}
+.desactivado {
+  pointer-events: none;
+}
+.opa{
+  visibility: hidden;
+  border: 10px solid red !important;
+}

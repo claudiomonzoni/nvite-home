@@ -1,0 +1,123 @@
+---
+interface Props {
+  icono: string;
+  titulo: string;
+  array?: Array<any>;
+}
+const { icono, titulo, array } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const urlPatron = 'url("/quince/patron-fondo.png")';
+---
+
+<div class="carta">
+  <img src={icono} alt={titulo} />
+  <h3 class="overlay">{titulo}</h3>
+  {
+    array ? array.map(item => <li>{item}</li>)  :  <slot />
+  }
+</div>
+
+<style lang="scss" define:vars={{ urlPatron }}>
+  @import "../../estilos/quince/_variables.scss";
+  .overlay {
+    // filter: ;
+    // color: white;
+    // filter: invert(20%);
+    // mix-blend-mode: screen;
+  }
+
+  .carta {
+    aspect-ratio: 1/1;
+    flex: 1;
+    text-align: center;
+    background: var(--urlPatron), $gris;
+    background-blend-mode: color-dodge;
+    background-size: 200% 200%;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: $margen-min;
+    position: relative;
+    // word-break: break-all;
+    h3 {
+      width: fit-content;
+      color: $secundario;
+      border-bottom: solid 1px $terciario;
+      margin: $margen-min 0;
+      font-size: clamp(2.5rem, 1.6vw, 3rem);
+      @include cel {
+        color: white;
+        border-bottom: solid 1px $secundario;
+      }
+    }
+
+    img {
+      max-width: 2.5rem;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    @include cel {
+      flex: 1 0 100%;
+    }
+  }
+</style>
+<script>
+  import gsap from "gsap";
+  import ScrollTrigger from "gsap/ScrollTrigger";
+
+  const carta = gsap.utils.toArray(".carta");
+  gsap.registerPlugin(ScrollTrigger);
+
+  carta.forEach((cart: HTMLElement, id) => {
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 800px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: cart as HTMLElement,
+          start: "top 70%",
+          end: "bottom 60%",
+          scrub: true,
+        },
+      });
+      // desktop setup code here...
+      tl.from(cart as HTMLElement, {
+        ease: "power2.out",
+        x: -30,
+        opacity: 0,
+        delay: 0.3,
+      });
+      tl.from(cart.children, {
+        opacity: 0,
+        y: -30,
+      });
+    });
+
+    mm.add("(max-width: 799px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: cart as HTMLElement,
+          start: "top 90%",
+          end: "bottom 60%",
+          scrub: true,
+        },
+      });
+      // mobile setup code here...
+      tl.from(cart as HTMLElement, {
+        ease: "power2.out",
+        y: -20,
+        opacity: 0,
+      });
+      tl.from(cart.children, {
+        opacity: 0,
+        y: -30,
+        stagger: 0.1,
+      });
+    });
+  });
+</script>

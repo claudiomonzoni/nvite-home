@@ -1,0 +1,78 @@
+
+@import "../../estilos/quince/_variables.scss";
+
+ 
+#hero {
+  position: relative;
+  grid-template-rows: 2fr 1fr 20%;
+  height: 140dvh;
+  @include cel {
+    height: 100dvh;
+    height: auto;
+    grid-template-rows: repeat(10, 10vh);
+    // grid-template-rows: 2fr 1fr 1fr 10%;
+    margin-bottom: 8rem;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    grid-row: 1 / span 8;
+    width: 100%;
+    height: 100%;
+    // background: url(var(--cover));
+    background: $urlCover no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+
+.bandeja {
+  grid-row: 2 / -1;
+  background: $urlPatron, $primario;
+  background-blend-mode:overlay;
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.2rem, 1vw, 3vw);
+  position: relative;
+  padding: $margen-top $margen-min;
+  @include cel {
+    grid-row: 7 / -1;
+    padding: $margen-min;
+    max-height: content;
+  }
+}
+h1{
+  padding: $margen-min 0 $margen-min 0;
+  color: $secundario;
+}
+span {
+  padding-bottom: $margen-min;
+  border-bottom: solid 1px $gris;
+  margin-bottom: $margen-min;
+  display: block;
+}
+.familia {
+  font-size: clamp(1.3rem, 2vw, 5vw);
+}
+.fecha {
+  color: $secundario;
+  font-size: clamp(1.2rem, 2vw, 5vw);
+}
+#pases {
+  background: $secundario;
+  padding: 1rem;
+  position: absolute;
+  bottom: -5rem;
+  @extend .sombra;
+  span {
+    font-size: clamp(1.5rem, 2vw, 5vw);
+  }
+  @include cel {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
