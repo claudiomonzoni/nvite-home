@@ -1,16 +1,16 @@
-//colores a
-// $primario: #484E6E;
-// $secundario: #864E4E;
-// $terciario: #F2E5D9;
-// $acento: #83F4E0;
-// $gris: #2b2b2b;
 
-//colores b
-$primario: #2b225e;
-$secundario: #f5839a;
-$terciario: #fcf7ee;
-$acento: #f1d4da;
-$gris: #8d58c2;
+//base
+// $primario: #2b225e;
+// $secundario: #f5839a;
+// $terciario: #fcf7ee;
+// $acento: #f1d4da;
+// $gris: #8d58c2;
+//base
+$primario: #3D447D;
+$secundario: #E285DF;
+$terciario: #FEF1F1;
+$acento: #DE8080;
+$gris: #6a6074;
 
 
 //media query
@@ -33,9 +33,11 @@ $margen-top-cel: 6rem;
 
 // variable de css para rutas 
 $urlPatron: url("/bodas/patron-fondo.png");
+// cambiar la imagen tambinen el layout.astro
 $urlCover: url("../../assets/bodas/nvitaPlus/cover.webp");
-$encabezados: "Sacramento";
-$txt: "Merriweather";
+$encabezados: "DM+Serif+Display";
+$garigol: "Fleur+De+Leah";
+$txt: "Didact+Gothic";
 
 
 @mixin cel {

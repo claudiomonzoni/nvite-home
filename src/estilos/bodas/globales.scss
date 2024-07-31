@@ -1,15 +1,17 @@
 @use "variables" as *;
-@use "componentes" as *;
+
 
 // @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 // @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
 
 // @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Fleur+De+Leah&display=swap');
 
 
 // hacer el scroll suave
@@ -49,10 +51,6 @@ html {
   color: $gris;
   font-family: $txt, serif;
   font-weight: 100;
-  background: url("/bodas/decor.svg"), url("/bodas/textuta-bg.webp") #fff;
-  background-repeat: no-repeat, repeat;
-  background-size: 40%, auto;
-  background-position: -8vw 120vh, 0%;
   scroll-behavior: smooth;
 }
 
@@ -154,74 +152,4 @@ b {
 }
 .pantalla-der > * {
   grid-column: contenido-start / pantalla-end;
-}
-
-.conte-cartas {
-  display: flex;
-  gap: $margen-min;
-  margin: $margen 0;
-  flex-wrap: wrap;
-}
-
-#zigzag {
-  padding: $margen 0;
-  .bloqueMapa:last-child {
-    z-index: 400;
-    transform: translateY(-2rem);
-    @include cel {
-      transform: translateY(0);
-    }
-    .izq {
-      order: 2;
-    }
-    .der {
-      order: 1;
-      
-    }
-  }
-}
-
-.fondo-mitad {
-  background: $terciario;
-  background: linear-gradient(
-    0deg,
-    $terciario 88%,
-    rgba(255, 255, 255, 0) 88%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
-
-@mixin btn-mix ($claro) {
-  padding: 1rem $margen-cel;
-  color: white;
-  border: 1px solid white;
-  margin: 0.5rem 0.5rem 0.5rem 0;
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
-  &:hover {
-    background: white;
-    border-radius: $margen-min;
-    color: $primario;
-  }
-  @if $claro{
-    background: $secundario;
-    color: $primario;
-    border: none!important;
-  }
-}
-.btn {
-  @include btn-mix($claro:false);
-}
-.btn-claro{
-@include btn-mix($claro: true);
-border: solid;
-}
-.desactivado {
-  pointer-events: none;
-}
-.opa{
-  visibility: hidden;
-  border: 10px solid red !important;
 }
