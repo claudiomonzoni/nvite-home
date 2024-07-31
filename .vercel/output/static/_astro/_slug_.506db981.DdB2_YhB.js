@@ -1,0 +1,1 @@
+const a="_anime_1fzvu_1",_="_sombra_1fzvu_13",s="_pases_1fzvu_1",e="_hero_1fzvu_1",n="_bandeja_1fzvu_41",o="_familia_1fzvu_74",f="_fecha_1fzvu_78",i={anime:a,sombra:_,pases:s,hero:e,bandeja:n,familia:o,fecha:f,"slide-in":"_slide-in_1fzvu_1"};export{i as S};
