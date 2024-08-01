@@ -59,7 +59,7 @@ iterario: [
     ]
 
 ---
-import Hero from "../../components/bodas/Hero";
+
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Cartas from "../../components/bodas/Cartas.astro";
@@ -74,82 +74,7 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 
-  <Encabezados texto="Nuestra Boda" />
-  
-  <ParrafosLibres texto="Daremos el “sí quiero”, seguiremos este emocionante viaje juntos y nos
-    encantaría que nos acompañes a celebrar la gran fiesta de nuestra boda." />
- 
-  <section class="grid contenido">
-     <Audio src="/bodas/love-music" />
-  </section>
-  
-  <section class="grid contenido">
-    <div class="conte-cartas">
-      <Cartas icono= "/bodas/fecha-icono.svg" titulo="Fecha de nuestra boda">
-        <p>{frontmatter.fecha}</p>
-      </Cartas>
-      <Cartas icono= "/bodas/detalles-icono.svg" titulo="Detalles" array={frontmatter.consideraciones}>
-        <p>qiuueueu</p>
-      </Cartas>
-      <Cartas icono= "/bodas/formal-icono.svg" titulo="Código de vestimenta">
-        <p>{frontmatter.vestimenta}</p>
-      </Cartas>
-    </div>
-  </section>
-
-  <section class="grid contenido">
-    <Frase frase={frontmatter.frase_amor} />
-  </section>
 
 
-  <section class="grid pantalla">
-    <Galeria carpeta="nvitaPlus" />
-  </section>
-
-  <Encabezados  texto="El Lugar" />
-  <section class="grid contenido fondo-mitad">
-  <ParrafosLibres texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la recepción de nuestra boda" />
-    <div id="zigzag">
-      <BloqueMapa
-        encabezado="Ceremonia"
-        dir={frontmatter.ceremonia.lugar}
-        horario={frontmatter.ceremonia.hora}
-        lat={frontmatter.ceremonia.lat}
-        lng={frontmatter.ceremonia.lang}
-        mapName="mapa1"
-      />
-      <BloqueMapa
-        encabezado="Recepción"
-        dir={frontmatter.recepcion.lugar}
-        horario={frontmatter.recepcion.hora}
-        lat={frontmatter.recepcion.lat}
-        lng={frontmatter.recepcion.lang}
-        mapName="mapa2"
-      />
-    </div>
-  </section>
-
-  <Encabezados texto="Itinerario" />
-  <Itinerario listado={frontmatter.iterario} />
-
-    
-  <section class="grid contenido">
-    <Regalos
-      frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
-      beneficiario={frontmatter.beneficiario}
-      banco={frontmatter.banco}
-      cuenta={frontmatter.cuenta}
-    />
-  </section>
-
-  <section class="grid contenido">
-    <Contador fecha={frontmatter.fecha} />
-  </section>
-
-  <section>
-    <Confirmacion whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only="react" />
-  </section>
- 
 
    <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />

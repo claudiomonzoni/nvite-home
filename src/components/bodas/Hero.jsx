@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
 import invitadosData from "../../pages/bodas/data/invitados.json";
-
+ 
+// imagenes
+import cover from "../../assets/bodas/nvitaPlus/cover.jpg";
+import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
 export default function Hero({ nombres, fecha }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
@@ -37,8 +40,22 @@ export default function Hero({ nombres, fecha }) {
   }, []);
   return (
     <>
-      <section id={Style["hero"]} className="grid contenido opa">
-        <div className={Style.bandeja} id="bande">
+    <section className="grid contenido">
+      
+  
+      <div id={Style["hero"]}>
+
+<div className="izq">
+
+</div>
+
+<div className="der">
+  <div id={Style["avatar"]}>
+    <img src={avatar.src} alt="Invitaciones de bodas avatar" />
+  </div>
+</div>
+
+        {/* <div className={Style.bandeja} id="bande">
           <div className={Style.centro} id="centro">
             <span className={Style.familia} id="invitado">
               {invitado}
@@ -55,7 +72,8 @@ export default function Hero({ nombres, fecha }) {
             No. de pases: <span id="NumeroPases">{pase}</span>
           </div>
           </> : <></>}
-        </div>
+        </div> */}
+      </div>
       </section>
     </>
   );

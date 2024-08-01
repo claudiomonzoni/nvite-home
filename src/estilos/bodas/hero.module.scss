@@ -1,4 +1,24 @@
-
 @import "../../estilos/bodas/_variables.scss";
 
- 
+#hero {
+  height: 90dvh;
+  display: flex;
+  background: rgb(254, 241, 241);
+  margin-top: 3rem;
+  border-radius: $radio;
+  @extend .sombra;
+  background: linear-gradient(
+    0deg,
+    rgba(254, 241, 241, 1) 0%,
+    rgba(239, 220, 220, 1) 100%
+  );
+}
+
+#avatar {
+  width: 40%;
+  height: auto;
+  img {
+    width: 100%;
+  }
+  clip-path: circle(30% at 50% 50%);
+}
