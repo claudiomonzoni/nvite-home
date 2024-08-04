@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
 import invitadosData from "../../pages/bodas/data/invitados.json";
- 
+
 // imagenes
-import cover from "../../assets/bodas/nvitaPlus/cover.jpg";
+
 import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
-export default function Hero({ nombres, fecha }) {
+import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano 1.svg";
+
+export default function Hero({ nombres, dia, diaNum, mes, ano }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   useEffect(() => {
@@ -22,17 +24,10 @@ export default function Hero({ nombres, fecha }) {
     }
     const tl = gsap.timeline();
     gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
-    tl.from("#bande", {
+    tl.from("#bande *", {
       opacity: 0,
       y: -30,
       delay: 2,
-      height: 500,
-      duration: 1,
-      ease: "power4.out",
-    });
-    tl.from("#centro *", {
-      opacity: 0,
-      y: -30,
       duration: 1,
       ease: "power4.out",
       stagger: { amount: 0.5 },
@@ -40,40 +35,45 @@ export default function Hero({ nombres, fecha }) {
   }, []);
   return (
     <>
-    <section className="grid contenido">
-      
-  
-      <div id={Style["hero"]}>
-
-<div className="izq">
-
-</div>
-
-<div className="der">
-  <div id={Style["avatar"]}>
-    <img src={avatar.src} alt="Invitaciones de bodas avatar" />
-  </div>
-</div>
-
-        {/* <div className={Style.bandeja} id="bande">
-          <div className={Style.centro} id="centro">
-            <span className={Style.familia} id="invitado">
-              {invitado}
-            </span>
-            <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
-            <p>
-              desean invitarte a <b>celebrar su boda</b>
-            </p>
-            <p className={Style.fecha}>{fecha}</p>
+      <section className="grid contenido">
+        <div id={Style["hero"]}>
+          <div className={Style["izq"]}>
+            <div id={Style["avatar"]}>
+              <img src={avatar.src} alt="Invitaciones de bodas avatar" />
+            </div>
           </div>
-          {pase > 0 ? 
-          <>
-          <div id={Style["pases"]}>
-            No. de pases: <span id="NumeroPases">{pase}</span>
+
+          <div className={Style["der"]}>
+            <div className={Style.bandeja} id="bande">
+              {/* <span className={Style.familia} id="invitado">
+                {invitado}
+              </span> */}
+              <img src={divisor.src} alt="divisor bodas nvita" />
+              <p className={Style["casamos"]}> Nos casamos </p>
+              <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
+              <p>
+                deseamos invitarte a <b>celebrar nuestra boda el:</b>
+              </p>
+              <ul>
+
+              <li className={Style.fecha}>{dia}</li>
+              <li className={Style.fechaNum}>{diaNum}</li>
+              <li className={Style.fechaMes}>{mes}</li>
+              <li className={Style.fechaAno}>{ano}</li>
+
+              </ul>
+              {pase > 0 ? (
+                <>
+                  <div id={Style["pases"]}>
+                    No. de pases: <span id="NumeroPases">{pase}</span>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
-          </> : <></>}
-        </div> */}
-      </div>
+        </div>
       </section>
     </>
   );

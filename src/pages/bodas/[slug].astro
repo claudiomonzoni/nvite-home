@@ -22,11 +22,18 @@ const { boda } = Astro.props;
 const base = new URL(Astro.url.pathname, Astro.site);
 // const{Content} = await boda.render()
 const Nfecha = new Date(boda.data.fecha);
-const fecha = Nfecha.toLocaleDateString(["es-MX"], {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
+const dia = Nfecha.toLocaleDateString(["es-MX"], {
+    weekday: "long", 
+  })
+const diaNum = Nfecha.toLocaleDateString(["es-MX"], {
     day: "numeric", 
+  })
+const mes = Nfecha.toLocaleDateString(["es-MX"], {
+    month: "long",
+ 
+  })
+const ano = Nfecha.toLocaleDateString(["es-MX"], {
+    year: "numeric",
   })
 
   const{Content} = await boda.render()
@@ -35,7 +42,10 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
 <Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()}>
     <Hero
   nombres={boda.data.novios}
-  fecha={fecha}
+  dia={dia}
+  diaNum={diaNum}
+  mes={mes}
+  ano={ano}
   client:load
   />
   <Content />

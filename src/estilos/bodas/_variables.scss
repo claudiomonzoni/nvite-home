@@ -1,5 +1,7 @@
 
+
 //base
+
 // $primario: #2b225e;
 // $secundario: #f5839a;
 // $terciario: #fcf7ee;
@@ -32,12 +34,10 @@ $margen-min: 1rem;
 $margen-top-cel: 6rem;
 
 // variable de css para rutas 
-$urlPatron: url("/bodas/patron-fondo.png");
-// cambiar la imagen tambinen el layout.astro
-$urlCover: url("../../assets/bodas/nvitaPlus/cover.webp");
-$encabezados: "DM+Serif+Display";
-$garigol: "Fleur+De+Leah";
-$txt: "Didact+Gothic";
+
+$encabezados: "DM Serif Display";
+$garigol: "Fleur De Leah";
+$txt: "Didact Gothic";
 
 
 @mixin cel {
