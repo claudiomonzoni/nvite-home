@@ -3,11 +3,12 @@
 #hero {
   height: 90dvh;
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 3rem;
   border-radius: $radio;
   position: relative;
   z-index: 1;
-  flex-wrap: wrap;
   @extend .sombra;
   background: linear-gradient(
     0deg,
@@ -29,31 +30,59 @@
     background-position: 30% center;
     // background-blend-mode: color-burn;
     mix-blend-mode: overlay;
-    opacity: 0.7;
+    // opacity: 0.7;
     border-radius: $radio;
+    @include cel {
+      background-size: cover;
+      background-position: left;
+    }
+  }
+  @include cel {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+
+    .izq,
+    .der {
+      flex: 1 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .izq {
+      padding: 0;
+      margin: 0;
+      height: auto;
+    }
+    .der {
+      padding: 0 $margen-min $margen-cel $margen-min;
+    }
   }
 }
-
 .izq {
   flex: 1 0 40%;
+  height: 100%;
 }
 .der {
-  h1{
+  height: fit-content;
+  h1 {
     color: $acento;
+    font-size: clamp(3rem, 6vw, 7.5rem);
   }
+  font-size: clamp(1.3rem, 1vw, 1rem);
   flex: 1 0 60%;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  .bandeja{
+  .bandeja {
     text-align: center;
   }
 }
 .casamos {
   color: $secundario;
   font-family: $garigol, serif;
-  font-size: clamp(1.5rem, 4vw, 6rem);
+  font-size: clamp(2.4rem, 4vw, 6rem);
 }
 #avatar {
   width: 100%;
@@ -65,9 +94,37 @@
     object-fit: cover;
     border-radius: $radio;
   }
-
+  --tamano: 40%;
   @include cel {
-    width: 40%;
-    clip-path: circle(30% at 50% 50%);
+    width: var(--tamano);
+    clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
+  }
+}
+#fecha {
+  .linea:nth-child(2n + 0) {
+    border-top: solid 1px $primario;
+    position: absolute;
+    width:20%;
+    left: 5%;
+    top: 33%;
+  }
+  .linea:last-child {
+    border-top: solid 10px $primario;
+    position: absolute;
+    width:20%;
+    right: 5%;
+    top: 33%;
+  }
+  font-size: clamp(2rem, 2vw, 4rem);
+  position: relative;
+  .fechaNum {
+    font-size: clamp(5rem, 6vw, 7rem);
+    color: $secundario;
+    font-family: $encabezados, serif;
+    line-height: 0.9em;
+ 
+  }
+  .fechaAno {
+    font-family: $encabezados, serif;
   }
 }

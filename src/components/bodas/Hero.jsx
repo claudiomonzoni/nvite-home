@@ -54,10 +54,12 @@ export default function Hero({ nombres, dia, diaNum, mes, ano }) {
               <p>
                 deseamos invitarte a <b>celebrar nuestra boda el:</b>
               </p>
-              <ul>
+              <ul id={Style["fecha"]}>
 
               <li className={Style.fecha}>{dia}</li>
+              <hr className={Style.linea} />
               <li className={Style.fechaNum}>{diaNum}</li>
+              <hr className={Style.linea} />
               <li className={Style.fechaMes}>{mes}</li>
               <li className={Style.fechaAno}>{ano}</li>
 
