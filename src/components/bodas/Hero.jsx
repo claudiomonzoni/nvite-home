@@ -8,9 +8,19 @@ import invitadosData from "../../pages/bodas/data/invitados.json";
 import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
 import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano 1.svg";
 
-export default function Hero({ nombres, dia, diaNum, mes, ano }) {
+//---------------------------------------------------------------------------------------------
+export default function Hero({
+  nombres,
+  ellaIniciales,
+  elIniciales,
+  dia,
+  diaNum,
+  mes,
+  ano,
+}) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
+
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("opa");
     // confirmacion de id
@@ -23,22 +33,57 @@ export default function Hero({ nombres, dia, diaNum, mes, ano }) {
       setPase(invitadosData[id].pases);
     }
     const tl = gsap.timeline();
-    gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
+    gsap.from(".contenido", {
+      opacity: 0,
+      y: -30,
+      duration: 1,
+      delay: 0.2,
+    });
+    tl.from(".avatarConte", {
+      opacity: 0,
+      y: -30,
+      delay: 0.6,
+      duration: 2,
+      ease: "power4.out",
+      
+      onComplete: () => {
+        
+        gsap.to(".avatarConte", {
+          duration: .01,
+          transformOrigin:'center',
+          clipPath:'circle(100% at 50% 50%)',
+        })
+        gsap.to(".avatarConte", {
+          delay: 1,
+          duration: 2,
+          ease: "power4.out",
+          transformOrigin:'center',
+          clipPath:'circle(38% at 50% 50%)',
+          width:'80%',
+          height:'80%',
+          marginBottom:'-40',
+        })
+      }
+    });
+
     tl.from("#bande *", {
       opacity: 0,
       y: -30,
-      delay: 2,
+      delay: -1,
       duration: 1,
       ease: "power4.out",
-      stagger: { amount: 0.5 },
+      stagger: { amount: 1.6 },
     });
   }, []);
+
+  //---------------------------------------------------------------------------------------------
+
   return (
     <>
       <section className="grid contenido">
         <div id={Style["hero"]}>
-          <div className={Style["izq"]}>
-            <div id={Style["avatar"]}>
+          <div className={Style["izq"]} id="izq">
+            <div id={Style["avatar"]} className="avatarConte">
               <img src={avatar.src} alt="Invitaciones de bodas avatar" />
             </div>
           </div>
@@ -47,7 +92,7 @@ export default function Hero({ nombres, dia, diaNum, mes, ano }) {
             <div className={Style.bandeja} id="bande">
               <div id={Style["iniciales"]}>
                 <div className={Style.amp}>
-                  <span>E</span>&<span>M</span>
+                  <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
                 </div>
               </div>
               {/* <span className={Style.familia} id="invitado">

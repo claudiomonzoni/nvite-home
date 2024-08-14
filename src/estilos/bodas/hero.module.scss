@@ -50,8 +50,8 @@
       align-items: center;
     }
     .izq {
-      padding: 0;
-      margin: 0;
+      // padding: $margen-cel;
+      margin-bottom: $margen-cel;
       height: auto;
     }
     .der {
@@ -62,12 +62,16 @@
 .izq {
   flex: 1 0 40%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .der {
   height: fit-content;
   h1 {
-    color: $acento;
+    color: $primario;
     font-size: clamp(3rem, 6vw, 7.5rem);
+    text-shadow: 2px 2px 8px #cab9ae;
   }
   font-size: clamp(1.3rem, 1vw, 1rem);
   flex: 1 0 60%;
@@ -80,7 +84,7 @@
   }
 }
 .casamos {
-  color: $secundario;
+  color: $acento;
   font-family: $garigol, serif;
   font-size: clamp(2.4rem, 4vw, 6rem);
 }
@@ -88,6 +92,7 @@
   width: 100%;
   height: 100%;
   clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+
   img {
     width: 100%;
     height: 100%;
@@ -95,10 +100,10 @@
     border-radius: $radio;
   }
   --tamano: 40%;
-  @include cel {
-    width: var(--tamano);
-    clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
-  }
+  // @include cel {
+  //   width: var(--tamano);
+  //   clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
+  // }
 }
 #fecha {
   .linea1 {
@@ -122,7 +127,7 @@
     color: $secundario;
     font-family: $encabezados, serif;
     line-height: 0.9em;
- 
+    text-shadow: 2px 2px 8px #cab9ae;
   }
   .fechaAno {
     font-family: $encabezados, serif;
@@ -134,18 +139,21 @@
   .amp{
     font-size: clamp(2.5rem, 3.5vw, 4.5rem);
     font-family: $encabezados, serif;
-    color: $secundario;
+    color: $terciario;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+    text-shadow: 2px 2px 8px #cab9ae;
+  
     span{
-      color: $primario;
+      z-index: -1;
+      color: $acento;
       font-size: clamp(3rem, 4vw, 5rem);
     }
     span:first-child{
       position: relative;
-      top: -10px;
+      top: -15px;
       left: 10px;
     }
     span:last-child{
