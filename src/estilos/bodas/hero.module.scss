@@ -101,15 +101,15 @@
   }
 }
 #fecha {
-  .linea:nth-child(2n + 0) {
+  .linea1 {
     border-top: solid 1px $primario;
     position: absolute;
     width:20%;
     left: 5%;
     top: 33%;
   }
-  .linea:last-child {
-    border-top: solid 10px $primario;
+  .linea2 {
+    border-top: solid 1px $primario;
     position: absolute;
     width:20%;
     right: 5%;
@@ -126,5 +126,32 @@
   }
   .fechaAno {
     font-family: $encabezados, serif;
+  }
+}
+
+#iniciales{
+
+  .amp{
+    font-size: clamp(2.5rem, 3.5vw, 4.5rem);
+    font-family: $encabezados, serif;
+    color: $secundario;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    span{
+      color: $primario;
+      font-size: clamp(3rem, 4vw, 5rem);
+    }
+    span:first-child{
+      position: relative;
+      top: -10px;
+      left: 10px;
+    }
+    span:last-child{
+      position: relative;
+      top: 10px;
+      right: 13px;
+    }
   }
 }

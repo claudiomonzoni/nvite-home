@@ -45,6 +45,11 @@ export default function Hero({ nombres, dia, diaNum, mes, ano }) {
 
           <div className={Style["der"]}>
             <div className={Style.bandeja} id="bande">
+              <div id={Style["iniciales"]}>
+                <div className={Style.amp}>
+                  <span>E</span>&<span>M</span>
+                </div>
+              </div>
               {/* <span className={Style.familia} id="invitado">
                 {invitado}
               </span> */}
@@ -55,14 +60,12 @@ export default function Hero({ nombres, dia, diaNum, mes, ano }) {
                 deseamos invitarte a <b>celebrar nuestra boda el:</b>
               </p>
               <ul id={Style["fecha"]}>
-
-              <li className={Style.fecha}>{dia}</li>
-              <hr className={Style.linea} />
-              <li className={Style.fechaNum}>{diaNum}</li>
-              <hr className={Style.linea} />
-              <li className={Style.fechaMes}>{mes}</li>
-              <li className={Style.fechaAno}>{ano}</li>
-
+                <li className={Style.fecha}>{dia}</li>
+                <hr className={Style.linea1} />
+                <li className={Style.fechaNum}>{diaNum}</li>
+                <hr className={Style.linea2} />
+                <li className={Style.fechaMes}>{mes}</li>
+                <li className={Style.fechaAno}>{ano}</li>
               </ul>
               {pase > 0 ? (
                 <>
