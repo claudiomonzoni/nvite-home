@@ -139,7 +139,7 @@
   .amp{
     font-size: clamp(2.5rem, 3.5vw, 4.5rem);
     font-family: $encabezados, serif;
-    color: $terciario;
+    color: $fondo;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -148,7 +148,7 @@
   
     span{
       z-index: -1;
-      color: $acento;
+      color: white;
       font-size: clamp(3rem, 4vw, 5rem);
     }
     span:first-child{

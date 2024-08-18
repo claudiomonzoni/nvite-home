@@ -8,9 +8,15 @@ whatsapp: 8488493900
 novios : Elena & Marcos
 ellaIniciales: E
 elIniciales: M
+padres: {
+  "mamaNovia":"Martha Murray",
+  "papaNovia":"Teodoro Almansa",
+  "mamaNovio":"Eloísa Martínez",
+  "papaNovio":"Armando Hernández",
+}
 fecha: 08-28-2025
 vestimenta: Formal casual
-frase_amor: De vez en cuando, justo en medio de una vida ordinaria, el amor nos regala un cuento de hadas.
+frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
@@ -63,8 +69,9 @@ iterario: [
 ---
 
 import Encabezados from "../../components/bodas/Encabezados.astro";
+import Audio from "../../components/bodas/Audio.astro";
+import Padres from "../../components/bodas/Padres.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
-import Cartas from "../../components/bodas/Cartas.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
@@ -73,10 +80,15 @@ import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/bodas/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
-import Audio from "../../components/bodas/Audio.astro";
 import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 
+ <section class="grid contenido">
+<Audio src="../../src/assets/bodas/nvitaPlus/love-musicX" />
+</section>
 
+ <section class="grid contenido">
+<Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>
+</section>
 
 
    <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />

@@ -99,7 +99,7 @@ export default function Hero({
                 {invitado}
               </span> */}
               <img src={divisor.src} alt="divisor bodas nvita" />
-              <p className={Style["casamos"]}> Nos casamos </p>
+              <p className={Style["casamos"]}> nos casamos </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
               <p>
                 deseamos invitarte a <b>celebrar nuestra boda el:</b>
