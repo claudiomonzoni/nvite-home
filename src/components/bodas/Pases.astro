@@ -13,8 +13,8 @@ const { pase, invitados } = Astro.props;
         tan especial.
     </p>
     <h3><span id="varios"></span> entregamos</h3>
+    <hr />
     <div id="pase">
-        <hr />
         <li id="pase">{pase} <span id="pases"></span></li>
     </div>
 </div>
@@ -25,16 +25,35 @@ const { pase, invitados } = Astro.props;
     .bande{
         text-align: center;
         padding: $margen;
-        margin: $margen 0
+        margin: $margen 0;
+      
+        position: relative;
     }
     hr{
-        width: 100%;
+        width: 50%;
         border: none;
         border-top: 1px solid $gris;
+        position: absolute;
+        bottom: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        @include cel {
+            bottom: 22%;
+            width: 80%;
+        }
+    }
+    h3{
+        margin-bottom: $margen-cel;
     }
     #pase{
+        z-index: 10;
         font-family: $garigol, serif;
         font-size: clamp(1.8rem, 2.5vw, 3.5rem);
+        border: solid 1px $primario;
+        display: inline-block;
+        padding: $margen-min;
+        background-color: white;
     }
 
 </style>
