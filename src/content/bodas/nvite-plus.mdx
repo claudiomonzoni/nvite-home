@@ -71,6 +71,7 @@ iterario: [
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
+import Pases from "../../components/bodas/Pases.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
@@ -88,6 +89,10 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 
  <section class="grid contenido">
 <Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>
+</section>
+
+<section class="grid contenido">
+<Pases />
 </section>
 
 

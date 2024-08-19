@@ -23,15 +23,7 @@ export default function Hero({
 
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("opa");
-    // confirmacion de id
-    const valores = window.location.search;
-    const params = new URLSearchParams(valores);
-    const id = params.get("id");
-    // animacion intro
-    if (id && id < invitadosData.length) {
-      setInvitado(invitadosData[id].nombre);
-      setPase(invitadosData[id].pases);
-    }
+    
     const tl = gsap.timeline();
     gsap.from(".contenido", {
       opacity: 0,
@@ -112,15 +104,7 @@ export default function Hero({
                 <li className={Style.fechaMes}>{mes}</li>
                 <li className={Style.fechaAno}>{ano}</li>
               </ul>
-              {pase > 0 ? (
-                <>
-                  <div id={Style["pases"]}>
-                    No. de pases: <span id="NumeroPases">{pase}</span>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
+          
             </div>
           </div>
         </div>

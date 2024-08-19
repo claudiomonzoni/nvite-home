@@ -1,0 +1,63 @@
+---
+interface props {
+  pase: number;
+  invitados: string;
+}
+const { pase, invitados } = Astro.props;
+---
+<div class="bande">
+
+    <h2 id="invitados">{invitados}</h2>
+    <p>
+       <b> Su asistencia</b> a nuestra boda será una alegría más para nosotros en este día
+        tan especial.
+    </p>
+    <h3><span id="varios"></span> entregamos</h3>
+    <div id="pase">
+        <hr />
+        <li id="pase">{pase} <span id="pases"></span></li>
+    </div>
+</div>
+
+<style lang="scss">
+    @import "../../estilos/bodas/_variables.scss";
+
+    .bande{
+        text-align: center;
+        padding: $margen;
+        margin: $margen 0
+    }
+    hr{
+        width: 100%;
+        border: none;
+        border-top: 1px solid $gris;
+    }
+    #pase{
+        font-family: $garigol, serif;
+        font-size: clamp(1.8rem, 2.5vw, 3.5rem);
+    }
+
+</style>
+
+<script>
+  import invitadosData from "../../pages/bodas/data/invitados.json";
+
+  const invitados = document.querySelector("#invitados");
+  const pase = document.querySelector("#pase");
+  const valores = window.location.search;
+  const spanVarios = document.querySelector("#varios");
+
+  const params = new URLSearchParams(valores);
+  const id = Number(params.get("id"));
+  if (id && id < invitadosData.length) {
+    invitados.textContent = invitadosData[id].nombre;
+    if (id > 1) {
+        spanVarios.textContent = "Les";
+        pase.textContent = invitadosData[id].pases.toString() + " pases";
+    } else {
+        spanVarios.textContent = "Te";
+        pase.textContent = invitadosData[id].pases.toString() + " pase";
+    }
+
+  }
+</script>
