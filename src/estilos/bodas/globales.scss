@@ -126,6 +126,10 @@ p:last-child {
 }
 b {
   font-weight: bold;
+  color: $acento;
+  font-style: normal;
+  font-size: clamp(1.3em, 1vw, 2vw); 
+  font-family: $encabezados, serif;
 }
 
 // grid
