@@ -95,5 +95,34 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 <Pases />
 </section>
 
+  <section class="grid contenido">
+    <Frase frase={frontmatter.frase_amor} />
+  </section>
+
+    <section class="grid contenido">
+    <Encabezados texto="Nuestra Boda"/>
+    <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
+  </section>
+
+  <section class="grid contenido">
+    <BloqueMapa
+        encabezado="Ceremonia"
+        dir={frontmatter.ceremonia.lugar}
+        horario={frontmatter.ceremonia.hora}
+        lat={frontmatter.ceremonia.lat}
+        lng={frontmatter.ceremonia.lang}
+        mapName="mapa1"
+      />
+           <BloqueMapa
+        encabezado="Recepción"
+        dir={frontmatter.recepcion.lugar}
+        horario={frontmatter.recepcion.hora}
+        lat={frontmatter.recepcion.lat}
+        lng={frontmatter.recepcion.lang}
+        mapName="mapa2"
+      />
+  </section>
+
+
 
    <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />

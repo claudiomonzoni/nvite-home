@@ -11,14 +11,14 @@ const { frase } = Astro.props;
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
   .frase {
-    color: $primario;
-    font-family: $encabezados, serif;
+    color: $acento;
+    font-family: $garigol, serif;
     font-size: clamp(3rem, 5vw, 7vw);
     text-align: center;
-    margin: $margen-top $margen-min 0 $margen-min;
+    margin: $margen-min $margen-min 0 $margen-min;
     padding: $margen $margen-min;
-    border-top: 1px solid $primario;
-    border-bottom: 1px solid $primario;
+    border-top: 1px solid $acento;
+    border-bottom: 1px solid $acento;
   }
 </style>
 <script>
@@ -47,6 +47,7 @@ const { frase } = Astro.props;
     ease: "power2.out",
     y: -30,
     opacity: 0,
+    filter: "blur(20px)",
     stagger: 0.1,
   });
   })
