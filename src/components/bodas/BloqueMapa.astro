@@ -6,34 +6,37 @@ interface Props {
   lat: number;
   lng: number;
   mapName: string;
-  icono:string;
+  icono: string;
 }
 
 const { encabezado, dir, lat, lng, mapName, horario, icono } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Mapa from "./Mapa.astro";
-console.log(horario)
+console.log(horario);
 ---
 
 <div class="bloqueMapa">
-  <!-- <div class="izq">
+  <div id="modal">
     <Mapa lat={lat} lng={lng} mapName={mapName} />
-  </div> -->
+  </div>
+
   <div class="der">
     <div class="bandeja">
       <Icon name={icono} size={35} />
       <h3>{encabezado}</h3>
       <address set:html={dir}>
-        <svg  viewBox="0 0 29 41" fill="ffffff">
-          <path d="M14.5 0C6.48357 0 0 6.4165 0 14.35C0 25.1125 14.5 41 14.5 41C14.5 41 29 25.1125 29 14.35C29 6.4165 22.5164 0 14.5 0ZM14.5 19.475C11.6414 19.475 9.32143 17.179 9.32143 14.35C9.32143 11.521 11.6414 9.225 14.5 9.225C17.3586 9.225 19.6786 11.521 19.6786 14.35C19.6786 17.179 17.3586 19.475 14.5 19.475Z" fill="#864E4E"/>
-          </svg>
-        </address>
-<div id="bandeReloj">
-  <hr>
-  <Icon name="reloj" size={30} />
-</div>
-        <time datetime="{horario}">{horario}</time>
-        aqui agregar un boton modal
+        <svg viewBox="0 0 29 41" fill="ffffff">
+          <path
+            d="M14.5 0C6.48357 0 0 6.4165 0 14.35C0 25.1125 14.5 41 14.5 41C14.5 41 29 25.1125 29 14.35C29 6.4165 22.5164 0 14.5 0ZM14.5 19.475C11.6414 19.475 9.32143 17.179 9.32143 14.35C9.32143 11.521 11.6414 9.225 14.5 9.225C17.3586 9.225 19.6786 11.521 19.6786 14.35C19.6786 17.179 17.3586 19.475 14.5 19.475Z"
+            fill="#864E4E"></path>
+        </svg>
+      </address>
+      <div id="bandeReloj">
+        <hr class="linea1" />
+        <Icon name="reloj" size={30} />
+        <hr class="linea2" />
+      </div>
+      <time datetime="{horario}">{horario}</time>
     </div>
   </div>
 </div>
@@ -48,49 +51,66 @@ console.log(horario)
     color: $acento;
   }
 
-#bandeReloj {
-  position: relative;
-  text-align: center;
-  margin-top: $margen-min;
-  hr{
-    position: absolute;
-    top: 7px;
-    width: 100%;
-    z-index: -1;
-  }
-}
-time{
-  font-family: $encabezados, serif;
-  font-size: clamp(1.5rem, 1.5vw, 2rem);
-  color: $acento;
-}
-  .bloqueMapa {
-    display: flex;
+  #bandeReloj {
+    text-align: center;
+    margin-top: $margen-min;
+    hr {
+      position: absolute;
+      top: 7px;
+      width: 100%;
+      z-index: -1;
+    }
+    .linea1 {
+      border-top: solid 1px $primario;
+      position: absolute;
+      width: 40%;
+      left: 0%;
+      top: 18%;
+    }
+    .linea2 {
+      border-top: solid 1px $primario;
+      position: absolute;
+      width: 40%;
+      right: 0%;
+      top: 18%;
+    }
     position: relative;
-    align-items: center;
-    .izq {
-      flex: 1.3;
-      height: auto;
+  }
+  time {
+    font-family: $encabezados, serif;
+    font-size: clamp(1.5rem, 1.5vw, 2rem);
+    color: $acento;
+  }
+  .bloqueMapa {
+    flex: 1;
+    text-align: center;
+    #modal {
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 90dvw;
+      height: 100dvh;
+ 
+      z-index: 100;
     }
     .der {
       padding: $margen-cel;
-      flex: .6;
+      flex: 0.6;
       display: inherit;
       justify-content: center;
       align-items: center;
     }
-    time, address {
-      svg{
+    time,
+    address {
+      svg {
         width: 15px;
         height: auto;
         vertical-align: middle;
         margin: 10px 3px;
       }
       path {
-    
         // filter: invert(1);
         fill: $primario;
-      
       }
     }
     @include cel {
@@ -110,8 +130,6 @@ time{
   }
 </style>
 
-
-
 <script>
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
@@ -119,27 +137,26 @@ time{
   const bloqueMapa = gsap.utils.toArray(".bloqueMapa");
   gsap.registerPlugin(ScrollTrigger);
 
-  bloqueMapa.forEach((bMapa : HTMLElement , id) => {
+  bloqueMapa.forEach((bMapa: HTMLElement, id) => {
     let mm = gsap.matchMedia();
-  
 
     mm.add("(min-width: 800px)", () => {
       // desktop setup code here...
       const tl = gsap.timeline({
-      scrollTrigger: {
+        scrollTrigger: {
           trigger: bMapa as HTMLElement,
           start: "top 100%",
           end: "bottom 60%",
           scrub: true,
-        }
-    });
+        },
+      });
       tl.from(bMapa as HTMLElement, {
         ease: "power2.out",
         x: -30,
         opacity: 0,
         delay: 0.3,
       });
-      tl.from(bMapa.children , {
+      tl.from(bMapa.children, {
         opacity: 0,
         y: -50,
         stagger: 0.5,
@@ -148,13 +165,13 @@ time{
 
     mm.add("(max-width: 799px)", () => {
       const tl = gsap.timeline({
-      scrollTrigger: {
+        scrollTrigger: {
           trigger: bMapa as HTMLElement,
           start: "top 95%",
           end: "bottom 70%",
           scrub: true,
-        }
-    });
+        },
+      });
       // mobile setup code here...
       tl.from(bMapa as HTMLElement, {
         ease: "power2.out",

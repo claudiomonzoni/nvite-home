@@ -158,3 +158,16 @@ b {
 .pantalla-der > * {
   grid-column: contenido-start / pantalla-end;
 }
+
+
+.bandejaLugares{
+  margin-top: $margen;
+  display: flex;
+  flex-wrap: wrap;
+  background: rgb(255, 255, 255, 0.5);
+  border-radius: $radio;
+  backdrop-filter: blur(5px);
+  padding: $margen-min;
+  @extend .sombra;
+  overflow: hidden;
+}
