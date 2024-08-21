@@ -16,7 +16,7 @@ console.log(horario);
 ---
 
 <div class="bloqueMapa">
-  <div id="modal">
+  <div class="modal" data-mapa={mapName}>
     <Mapa lat={lat} lng={lng} mapName={mapName} />
   </div>
 
@@ -38,6 +38,7 @@ console.log(horario);
       </div>
       <time datetime="{horario}">{horario}</time>
     </div>
+    <a href="#" class="btn">Ver mapa</a>
   </div>
 </div>
 
@@ -84,14 +85,16 @@ console.log(horario);
   .bloqueMapa {
     flex: 1;
     text-align: center;
-    #modal {
-      position: absolute;
-      top: -30px;
-      left: -30px;
-      width: 90dvw;
-      height: 100dvh;
- 
+    position: relative;
+    .modal {
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 500px;
       z-index: 100;
+      position: absolute;
+      display: none;
+      border-radius: $radio;
     }
     .der {
       padding: $margen-cel;
@@ -130,7 +133,11 @@ console.log(horario);
   }
 </style>
 
-<script>
+<script >
+
+  // aqui el modal del mapa
+
+
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -138,6 +145,7 @@ console.log(horario);
   gsap.registerPlugin(ScrollTrigger);
 
   bloqueMapa.forEach((bMapa: HTMLElement, id) => {
+    
     let mm = gsap.matchMedia();
 
     mm.add("(min-width: 800px)", () => {
@@ -184,5 +192,15 @@ console.log(horario);
         stagger: 0.2,
       });
     });
+
+
+    // dentro del bucle encuentro el mapa del modal
+    const modal: HTMLElement = bMapa.querySelector('.modal');
+    const btn = bMapa.querySelector('.btn');
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      modal.style.display = 'block';
+  });
+
   });
 </script>

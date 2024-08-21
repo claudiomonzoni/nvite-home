@@ -169,5 +169,5 @@ b {
   backdrop-filter: blur(5px);
   padding: $margen-min;
   @extend .sombra;
-  overflow: hidden;
+  // overflow: hidden;
 }
