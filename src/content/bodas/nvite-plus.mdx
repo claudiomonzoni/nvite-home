@@ -127,6 +127,10 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
       </div>
   </section>
 
+<section class="grid pantalla" id="BaseItinerario">
+ <Encabezados texto="Itinerario" />
+<Itinerario listado={frontmatter.iterario} />
+</section>
 
 
    <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />

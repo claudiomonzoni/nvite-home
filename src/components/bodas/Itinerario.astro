@@ -3,11 +3,9 @@ interface Props {
   listado: Array<any>;
 }
 const { listado } = Astro.props;
-const base = import.meta.env.BASE_URL
-const urlPatron = `url("${base}/patron-fondo.png")`
 ---
 
-<section class="grid pantalla" id="riel">
+<section class="grid contenido" >
     <ol>
       {
         listado.map((item, index) => (
@@ -22,87 +20,28 @@ const urlPatron = `url("${base}/patron-fondo.png")`
 
 </section>
 
-<style lang="scss" define:vars={{urlPatron}}>
+<style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
+  ol{
+    text-align: center;
+    padding-bottom: $margen;
+    font-size: clamp(1.3rem, 2vw, 3rem);
+    
+    h4{
+      color: $acento;
+      font-family: $garigol, serif;
+    }
+    p{
+      color: white;
+      margin-bottom: none;
+    }
+    li{
+     margin: $margen 0;
+   }
+
+  }
 
   
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: $primario $secundario;
-  }
-
-  /* Chrome, Edge and Safari */
-  *::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
-  }
-  *::-webkit-scrollbar-track {
-    border-radius: 5px;
-    background-color: $terciario;
-  }
-
-  *::-webkit-scrollbar-track:hover {
-    background-color: $terciario;
-  }
-
-  *::-webkit-scrollbar-track:active {
-    background-color: $terciario;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: $primario;
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background-color: $acento;
-  }
-
-  *::-webkit-scrollbar-thumb:active {
-    background-color: $secundario;
-  }
-
-  #riel {
-
-  }
-  ol {
-    list-style: none;
-    overflow-x: auto;
-    overflow-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
-    display: grid;
-    grid-auto-flow: column;
-    padding-bottom: $margen-cel;
-
-  }
-  li {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: $gris;
-    padding: $margen;
-    width: 22vw;
-    font-size: clamp(1rem, 1.5vw, 2vw);
-    border-right: 1px solid $gris;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    border-left: 1px solid transparent;
-    @include cel {
-      padding: $margen-cel;
-      width: 60vw;
-    }
-    // background: var(--urlPatron), $primario;
-    // background-blend-mode:overlay;
-    // background-size: cover;
-    // background-position: center;
-  }
-  h4 {
-    font-size: clamp(2.5rem, 3vw, 4vw);
-    color: $primario;
-  }
 </style>
 <!-- 
 <script>

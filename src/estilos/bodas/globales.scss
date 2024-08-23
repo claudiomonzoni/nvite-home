@@ -1,6 +1,5 @@
 @use "variables" as *;
 
-
 // @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 // @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
@@ -11,11 +10,11 @@
 
 // @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Playwrite+CU:wght@100..400&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Playwrite+CU:wght@100..400&display=swap");
 
 // hacer el scroll suave
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -61,6 +60,31 @@ html {
 }
 body {
   position: relative;
+
+  &:before {
+    content: "";
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50.6%);
+    background: url(../../assets/bodas/nvitaPlus/corona-flores-negro.png)
+    no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-blend-mode: overlay;
+    z-index: -1;
+    opacity: 0.1;
+    
+    @include cel {
+      left: 0;
+      transform: translateX(0%);
+      background-position: 15% center;
+      background-size: cover;
+    }
+  }
 }
 body,
 h1,
@@ -79,7 +103,8 @@ ul {
 
 h1,
 h2,
-h3, h4 {
+h3,
+h4 {
   line-height: 1em;
   font-family: $encabezados, serif;
   padding-bottom: 0.7rem;
@@ -95,7 +120,6 @@ h2 {
     font-size: clamp(3em, 2vw, 50vw);
   }
 }
-
 
 ol,
 ul {
@@ -128,7 +152,7 @@ b {
   font-weight: bold;
   color: $acento;
   font-style: normal;
-  font-size: clamp(1.3em, 1vw, 2vw); 
+  font-size: clamp(1.3em, 1vw, 2vw);
   font-family: $encabezados, serif;
 }
 
@@ -159,15 +183,53 @@ b {
   grid-column: contenido-start / pantalla-end;
 }
 
-
-.bandejaLugares{
+.bandejaLugares {
   margin-top: $margen;
   display: flex;
   flex-wrap: wrap;
-  background: rgb(255, 255, 255, 0.5);
+  background: rgb(255, 255, 255, 0.4);
   border-radius: $radio;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   padding: $margen-min;
+  z-index: 30;
   @extend .sombra;
-  // overflow: hidden;
+  position: relative;
+  z-index: 30;
+  // outline: solid clamp(1px, 20px, 30px) white;
+  // outline-offset: -15px;
+  @include cel {
+  }
+}
+
+#BaseItinerario {
+  background: $primario;
+  position: relative;
+  z-index: -1;
+  overflow: hidden;
+  // border-radius: $radio;
+  border-top-right-radius:0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: $radio;
+  border-bottom-right-radius: $radio;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../../assets/bodas/nvitaPlus/corona-flores-negro.png)
+      no-repeat;
+    background-size: 40%;
+    background-position: center 110%;
+    mix-blend-mode: multiply;
+    opacity: 0.2;
+    transform: rotate(180deg);
+    @include cel {
+      background-position: center 105%;
+      background-size: 120%;
+      padding-top: $margen;
+    }
+  }
+  
 }

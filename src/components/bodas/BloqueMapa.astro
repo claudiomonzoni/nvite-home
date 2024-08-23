@@ -12,13 +12,13 @@ interface Props {
 const { encabezado, dir, lat, lng, mapName, horario, icono } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Mapa from "./Mapa.astro";
-console.log(horario);
 ---
 
 <div class="bloqueMapa">
-  <div class="modal" data-mapa={mapName}>
+  <dialog class="modal" data-mapa={mapName}>
+    <a href="#" id="close"><Icon name={"cerrar"} size={40} /></a>
     <Mapa lat={lat} lng={lng} mapName={mapName} />
-  </div>
+  </dialog>
 
   <div class="der">
     <div class="bandeja">
@@ -86,16 +86,44 @@ console.log(horario);
     flex: 1;
     text-align: center;
     position: relative;
-    .modal {
-      top: 0px;
-      left: 0px;
+    // .modal {
+    // }
+    dialog [open] {
+      position: relative;
       width: 100%;
       height: 500px;
       z-index: 100;
       position: absolute;
-      display: none;
-      border-radius: $radio;
+      border-radius: calc(5px * var($radio));
+      box-shadow:
+      0 0 #0000,
+      0 0 #0000,
+      0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      padding: 1.6rem;
+      scale: 1;
+      transition: scale 0.5s ease-in-out;
+      // transform: scale(1);
+      @starting-style {
+        border: none !important;
+        scale: 0;
+        // transform: scale(0);
+      }
     }
+    // dialog{
+    //   transition: scale 0.5s ease-in-out, display .3s ease-in-out allow-discrete;
+    //   scale: 0;
+    // }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    #close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 200;
+    }
+
     .der {
       padding: $margen-cel;
       flex: 0.6;
@@ -133,10 +161,8 @@ console.log(horario);
   }
 </style>
 
-<script >
-
+<script>
   // aqui el modal del mapa
-
 
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
@@ -145,7 +171,6 @@ console.log(horario);
   gsap.registerPlugin(ScrollTrigger);
 
   bloqueMapa.forEach((bMapa: HTMLElement, id) => {
-    
     let mm = gsap.matchMedia();
 
     mm.add("(min-width: 800px)", () => {
@@ -193,14 +218,21 @@ console.log(horario);
       });
     });
 
-
     // dentro del bucle encuentro el mapa del modal
-    const modal: HTMLElement = bMapa.querySelector('.modal');
-    const btn = bMapa.querySelector('.btn');
-    btn.addEventListener('click', (e) => {
+    const btn = bMapa.querySelector(".btn");
+    const modal: HTMLElement = bMapa.querySelector(".modal");
+    const dialog = bMapa.querySelector("dialog");
+    const cerrar = bMapa.querySelector("#close");
+    btn.addEventListener("click", (e) => {
       e.preventDefault();
-      modal.style.display = 'block';
-  });
-
+      // modal.style.display = "block";
+      console.log(dialog);
+      dialog.showModal();
+    });
+    cerrar.addEventListener("click", (e) => {
+      e.preventDefault();
+      // modal.style.display = "none";
+      dialog.close();
+    });
   });
 </script>
