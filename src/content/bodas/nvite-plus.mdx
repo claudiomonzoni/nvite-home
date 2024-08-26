@@ -74,6 +74,7 @@ import Padres from "../../components/bodas/Padres.astro";
 import Pases from "../../components/bodas/Pases.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
+import Detalles from "../../components/bodas/Detalles.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/bodas/Regalos.astro";
@@ -132,5 +133,13 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 <Itinerario listado={frontmatter.iterario} />
 </section>
 
+<section class="grid pantalla flex" >
+<Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones"  />
+<Detalles encabezado="Codigo de vestir" vestimenta={frontmatter.vestimenta}  />
+</section>
+
+<section class="grid contenido">
+<Contador fecha={frontmatter.fecha} />
+</section>
 
    <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />

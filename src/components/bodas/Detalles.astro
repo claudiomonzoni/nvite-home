@@ -1,0 +1,45 @@
+---
+interface Props {
+  encabezado: string;
+  vestimenta?: string;
+  lista?: Array<any>;
+}
+const { lista, encabezado, vestimenta } = Astro.props;
+
+import { Image } from "astro:assets";
+import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano 1.svg";
+---
+
+<div id="bandeja">
+  <div class="conte">
+    <h2>{encabezado}</h2>
+    <Image src={divisor} alt="vestimenta" />
+    <ul>
+      {
+        lista ? (
+          lista.map((item) => <li>{item}</li>)
+        ) : (
+          <span id="vestimenta">{vestimenta}</span>
+        )
+      }
+    </ul>
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../../estilos/bodas/_variables.scss";
+  #bandeja {
+    text-align: center;
+    flex: 1 0 50%;
+}
+.conte {
+    padding: $margen;
+}
+ul {
+    margin-top: $margen-min;
+}
+#vestimenta {
+    font-family: $garigol, serif; 
+    font-size: clamp(2rem, 2.5vw, 3rem);
+  }
+</style>
