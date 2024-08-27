@@ -1,9 +1,9 @@
 ---
 import { Image } from "astro:assets";
-const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => {
+const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/gale/*").then(images => {
     return images.map(foto => foto.default);
 });
-
+ const num = Number(imas.length);
 ---
 <div class="gale">
 
@@ -15,13 +15,15 @@ const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => 
   }
 </div>
 
-<style lang="scss" is:global>
+<style lang="scss" define:vars={num}>
+  @use 'sass:math';
+  $numero : var(--num);
   @import "../../estilos/bodas/_variables.scss";
 
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: $primario $secundario;
+    scrollbar-color: $acento $fondo;
   }
 
   /* Chrome, Edge and Safari */
@@ -31,20 +33,20 @@ const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => 
   }
   *::-webkit-scrollbar-track {
     border-radius: 5px;
-    background-color: $terciario;
+    background-color: $fondo;
   }
 
   *::-webkit-scrollbar-track:hover {
-    background-color: $terciario;
+    background-color: $acento;
   }
 
   *::-webkit-scrollbar-track:active {
-    background-color: $terciario;
+    background-color: $fondo;
   }
 
   *::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: $primario;
+    background-color: $acento;
   }
 
   *::-webkit-scrollbar-thumb:hover {
@@ -52,16 +54,29 @@ const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => 
   }
 
   *::-webkit-scrollbar-thumb:active {
-    background-color: $secundario;
+    background-color: $fondo;
   }
   .gale {
     margin: 0rem 0 $margen 0;
   }
+
+  $min : -16deg;
+  $max : 16deg;
+  @for $i from 1 through 10 {
+    .gale img:nth-child(#{$i}) {
+      // transform:rotate(random($max - $min) + $min);
+      transform:rotate(min(max((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg, -$max), $max));
+    }
+    
+  }
+
   .gale img {
     // height: 50vh;
     // width: 100%;
     object-fit: cover;
     aspect-ratio: 6/5;
+    border: solid 15px white;
+    @extend .sombra;
     @include cel {
       aspect-ratio: 5/5;
     }
@@ -74,7 +89,7 @@ const imas =  await Astro.glob("../../assets/bodas/nvitaPlus/*").then(images => 
     grid-auto-flow: column;
     grid-auto-columns: 30%;
 
-    padding: 2rem 0;
+    padding:$margen 0;
 
     @include cel {
       grid-auto-columns: 80%;
