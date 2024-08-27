@@ -77,7 +77,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                 fill="white"
               ></path>
             </svg>
-            <h2>Confirmación</h2>
+            <h2>¿Contamos con tu presencia?</h2>
             <p>
               Por favor <b>confírmanos</b> tu asistencia{" "}
               <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
@@ -86,14 +86,14 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
             <form id={estilo["formulario"]}>
             
-              <label for="pases">Selecciona el numero de pases:</label>
+              <label for="pases">¿Cuántos pases usaran?</label>
               <select name="pases" id="Confipases" required  >
                 <option value="0">0</option>
               </select>
-              <label for="comentarios">Envíanos comentarios (opcional):</label>
+              <label for="comentarios">Envíanos algún saludo(opcional):</label>
               <textarea name="comentarios" id="comentarios"></textarea>
               <a href="#" className="btn desactivado" id="btnconfirmar">
-                Confirmar
+                Confirmar mi asistencia
               </a>
             </form>
           </div>

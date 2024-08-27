@@ -67,7 +67,7 @@ body {
     height: 100vh;
     overflow: hidden;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translateX(-50.6%);
     background: url(../../assets/bodas/nvitaPlus/corona-flores-negro.png)
@@ -195,10 +195,6 @@ b {
   @extend .sombra;
   position: relative;
   z-index: 30;
-  // outline: solid clamp(1px, 20px, 30px) white;
-  // outline-offset: -15px;
-  @include cel {
-  }
 }
 
 #BaseItinerario {
