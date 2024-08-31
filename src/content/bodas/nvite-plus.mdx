@@ -139,6 +139,17 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 </section>
 
 <section class="grid contenido">
+<Encabezados texto="Regalos" />
+<ParrafosLibres texto="<b>El regalo más importante será tu presencia </b>, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial." />
+  <Regalos
+      frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
+      beneficiario={frontmatter.beneficiario}
+      banco={frontmatter.banco}
+      cuenta={frontmatter.cuenta}
+    />
+</section>
+
+<section class="grid contenido">
 <Contador fecha={frontmatter.fecha} />
 </section>
 <section class="grid pantalla">
