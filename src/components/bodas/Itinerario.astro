@@ -5,70 +5,90 @@ interface Props {
 const { listado } = Astro.props;
 ---
 
-<section class="grid contenido" >
-    <ol>
-      {
-        listado.map((item, index) => (
-          <li>
-            <h4>{item.titulo}</h4>
-            <p>{item.lugar}</p>
-            <p>{item.hora}</p>
-          </li>
-        ))
-      }
-    </ol>
-
+<section class="grid contenido">
+  <ol>
+    {
+      listado.map((item, index) => (
+        <li>
+          <h4>{item.titulo}</h4>
+          <p>{item.lugar}</p>
+          <p>{item.hora}</p>
+        </li>
+      ))
+    }
+  </ol>
 </section>
 
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
-  ol{
+  ol {
     text-align: center;
     padding-bottom: $margen;
     font-size: clamp(1.3rem, 2vw, 3rem);
-    
-    h4{
+
+    h4 {
       color: $acento;
       font-family: $garigol, serif;
     }
-    p{
+    p {
       color: white;
       margin-bottom: none;
     }
-    li{
-     margin: $margen 0;
-   }
-
+    li {
+      margin: $margen 0;
+    }
   }
-
-  
 </style>
-<!-- 
+
 <script>
+  // aqui el modal del mapa
+
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
+  let eventoItinerario = gsap.utils.toArray("ol li");
   gsap.registerPlugin(ScrollTrigger);
 
-  const li = gsap.utils.toArray(" ol li");
-  const riel = document.querySelector("#riel");
+  eventoItinerario.map((evento: HTMLElement) => {
+    let mm = gsap.matchMedia();
 
-  gsap.to(li, {
-    xPercent: -100 * (li.length - 1),
-    ease: "none",
-    scrollTrigger: {
-      trigger: riel,
-      pin: true,
-      start: "center center center",
-      end: "+=3000",
-      scrub: 1,
-        snap: {
-          snapTo: 1 / (li.length - 1),
-          duration: 0.7,
-          delay: 0.6,
-          ease: "power1.inOut",
+    mm.add("(min-width: 800px)", () => {
+      // desktop setup code here...
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: evento as HTMLElement,
+          start: "top 100%",
+          end: "bottom 70%",
+          scrub: true,
+          // markers: true,
         },
-      markers: true,
-    },
+      });
+      tl.from(evento.children, {
+        ease: "power2.out",
+        y: 160,
+        opacity: 0,
+        filter: "blur(20px)",
+        stagger: 0.1,
+      });
+    });
+
+    mm.add("(max-width: 799px)", () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: evento as HTMLElement,
+          start: "top 100%",
+          end: "bottom 70%",
+          scrub: true,
+          // markers: true,
+        },
+      });
+      tl.from(evento.children, {
+        ease: "power2.out",
+        y: 100,
+        opacity: 0,
+        filter: "blur(10px)",
+        stagger: 0.1,
+      });
+    });
   });
-</script> -->
+</script>

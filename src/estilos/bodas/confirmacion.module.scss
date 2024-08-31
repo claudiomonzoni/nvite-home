@@ -6,7 +6,9 @@ h2 {
 }
 .confirmacion {
   margin-top: $margen;
-  background-color: $terciario;
+  background: url("/bodas/patron-fondo.png") $terciario;
+  background-size: cover;
+  background-blend-mode:difference;
   border-radius: $radio;
   @extend .sombra;
 }
@@ -37,6 +39,7 @@ form {
     flex: 1 0 100%;
     margin-top: 0.6rem;
     padding: 0.5rem 0;
+    border-radius: $radio;
   }
   textarea{
     field-sizing: content;
