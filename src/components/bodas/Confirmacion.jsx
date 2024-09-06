@@ -3,6 +3,7 @@ import estilo from "../../estilos/bodas/confirmacion.module.scss";
 import invitadosData from "../../pages/bodas/data/invitados.json";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
+  const [ver, setVer] = useState(version);
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
@@ -13,59 +14,63 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
-    if (id < invitadosData.length && id) {
-      setInvitado(invitadosData[id].nombre);
-      setPases(invitadosData[id].pases);
-      setId(id);
-    } else {
-      // alert('Error en ID de invitado');
-      // bloquear el boton
-    }
-    const pasesInput = document.querySelector("#Confipases");
-    const generarPases = () => {
-      for (let i = 1; i <= pases; i++) {
-        pasesInput.innerHTML += `<option value="Numero de pases: ${i}">${i}</option>`;
-      }
-    };
-    generarPases();
-
-    // whatsapp
-
-    // import moment from "moment";
-
-    //user agent
     const ua = navigator.userAgent;
 
-    //si es cel app si es pc web.app
-    const enviar = (e) => {
-      e.preventDefault();
-
-      if (pasesInput.value ) {
-        btnconfirmar.classList.remove("desactivado");
+    try {
+      
+      if (id < invitadosData.length && id) {
+        setInvitado(invitadosData[id].nombre);
+        setPases(invitadosData[id].pases);
+        setId(id);
       } else {
-        console.log("vacio");
+        setVer("basic");
+        // alert('Error en ID de invitado');
+        // bloquear el boton
       }
-      //comprobar si es cel o pc
-      let whats = "";
-      if (/Mobile/i.test(ua)) {
-        whats = `https://api.whatsapp.com/send/?phone=${whatsapp}&text=`;
-      } else {
-        whats = `https://web.whatsapp.com/send/?phone=${whatsapp}&text=`;
-      }
+      
+      const pasesInput = document.querySelector("#Confipases");
+      const generarPases = () => {
+        for (let i = 1; i <= pases; i++) {
+          pasesInput.innerHTML += `<option value="Numero de pases: ${i}">${i}</option>`;
+        }
+      };
+      generarPases();
 
-      envio(whats, pasesInput.value, comentarios.value);
-    };
+      const enviar = (e) => {
+        e.preventDefault();
 
-    const envio = (whats, pasesInput, comentarios) => {
-      const url = `
-  ${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a${pasesInput}.%0aComentarios:%20${comentarios}.`;
+        if (pasesInput.value && comentarios.value) {
+          btnconfirmar.classList.remove("desactivado");
+        }
+        //comprobar si es cel o pc
+        let whats = "";
+        if (/Mobile/i.test(ua)) {
+          whats = `https://api.whatsapp.com/send/?phone=${whatsapp}&text=`;
+        } else {
+          whats = `https://web.whatsapp.com/send/?phone=${whatsapp}&text=`;
+        }
 
-      btnconfirmar.href = url;
-    };
+        envio(whats, pasesInput.value, comentarios.value);
 
-    pasesInput.addEventListener("focusout", enviar);
-    comentarios.addEventListener("focusout", enviar);
-  });
+      };
+      
+      const envio = (whats, pasesInput, comentarios) => {
+        const url = `${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a${pasesInput}.%0aComentarios:%20${comentarios}.`;
+        btnconfirmar.href = url;
+      };
+      
+     
+
+      pasesInput.addEventListener("focusout", enviar);
+      comentarios.addEventListener("focusout", enviar);
+
+
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  }, [id]);
   return (
     <>
       <div className="grid contenido">
@@ -85,12 +90,22 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
 
             <form id={estilo["formulario"]}>
-            
-              <label for="pases">¿Cuántos pases usaran?</label>
-              <select name="pases" id="Confipases" required  >
-                <option value="0">0</option>
-              </select>
-              <label for="comentarios">Envíanos algún saludo(opcional):</label>
+              {
+                <>
+                  {version === "basic" ? (
+                  ""
+                  ) : (
+                    <>
+                      <label for="pases">¿Cuántos pases usaran?</label>
+                      <select name="pases" id="Confipases" required>
+                        <option value="0">0</option>
+                      </select>
+                    </>
+                  )}
+                </>
+              }
+
+              <label for="comentarios">Envíanos algún saludo (opcional):</label>
               <textarea name="comentarios" id="comentarios"></textarea>
               <a href="#" className="btn desactivado" id="btnconfirmar">
                 Confirmar mi asistencia

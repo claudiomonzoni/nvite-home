@@ -239,3 +239,6 @@ b {
 .margen-arriba-abajo{
   margin: $margen 0;
 }
+.desactivado {
+  pointer-events: none;
+}

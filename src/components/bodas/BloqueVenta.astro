@@ -6,7 +6,7 @@ interface Props {
 }
 const { costo, version, stripe } = Astro.props;
 const url = Astro.url.host;
-const tipos = ["plus", "bodas", "basic"];
+const tipos = ["plus", "reg", "basic"];
 
 ---
 
@@ -22,7 +22,7 @@ const tipos = ["plus", "bodas", "basic"];
       {
         tipos.map((tipo) => (
           tipo !== version ?
-          <a href={`https://nvita.me/bodas/nvita-${tipo}?id=2`} class="btn">
+          <a href={`${url}/bodas/nvita-bodas-${tipo}?id=2`} class="btn">
             nvita {tipo}
           </a>
           : null

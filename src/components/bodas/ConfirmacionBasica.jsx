@@ -1,41 +1,35 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
-import invitadosData from "../../pages/bodas/data/invitados.json";
+
 
 export default function Confirmacion({ whatsapp, dias_antes }) {
-
-
   useEffect(() => {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
-    btnconfirmar.classList.remove("desactivado");
-
     const ua = navigator.userAgent;
-
+    console.log("uno");
     //si es cel app si es pc web.app
     const enviar = (e) => {
       e.preventDefault();
-
-     
-
+      console.log("dos");
+      
       let whats = "";
       if (/Mobile/i.test(ua)) {
         whats = `https://api.whatsapp.com/send/?phone=${whatsapp}&text=`;
       } else {
         whats = `https://web.whatsapp.com/send/?phone=${whatsapp}&text=`;
       }
-
+      
       envio(whats, comentarios.value);
     };
-
+    
     const envio = (whats, comentarios) => {
-      const url = `
-  ${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a.%0aComentarios:%20${comentarios}.`;
-
+      const url = `${whats}Hola,%20les%20confirmo%20la%20asistencia%20Comentarios:%20${comentarios}.`;
+      btnconfirmar.classList.remove("desactivado");
       btnconfirmar.href = url;
     };
     comentarios.addEventListener("focusout", enviar);
-  });
+  },[]);
   return (
     <>
       <div className="grid contenido">
@@ -55,8 +49,10 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
             </p>
 
             <form id={estilo["formulario"]}>
-        
-              <label for="comentarios">Escribenos tu <b>nombre completo</b> y cuantas personas asistiran:</label>
+              <label for="comentarios">
+                Escribenos tu <b>nombre completo</b> y cuantas personas
+                asistiran:
+              </label>
               <textarea name="comentarios" id="comentarios"></textarea>
               <a href="#" className="btn desactivado" id="btnconfirmar">
                 Confirmar
