@@ -13,13 +13,17 @@ import Encabezados from "./Encabezados.astro";
 
 <div id="bandeja">
   <div id="regalo">
-    <Icon name="regalo" size={40} />
-    <Encabezados texto="Regalos" />
+    <Icon name={"regalo"} size={40} />
+    <h2>Regalos</h2>
 
-    <p>{frase}</p>
-    <Btn url={'https://www.amazon.com.mx/registries'} texto="Amazon" />
-    <Btn url={'https://meli.uniko.co/Home'} texto="Marcado Libre" />
-    <Btn url={'https://mesaderegalos.liverpool.com.mx/'} texto="Liverpool" />
+    <p set:html={frase} />
+    <Btn url={"https://www.amazon.com.mx/registries"} texto="Amazon" />
+    <Btn url={"https://meli.uniko.co/Home"} texto="Marcado Libre" />
+    <Btn url={"https://mesaderegalos.liverpool.com.mx/"} texto="Liverpool" />
+  </div>
+  <div id="lluvia">
+    <h3>Lluvia de sobres</h3>
+    <p>Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre</p>
   </div>
   <div id="transferencias">
     <h3>Transferencias:</h3>
@@ -41,7 +45,7 @@ import Encabezados from "./Encabezados.astro";
     }
     margin-top: $margen;
     padding: $margen;
-    background: $gris;
+    background: $primario;
     color: white;
     text-align: center;
     svg {
@@ -49,11 +53,30 @@ import Encabezados from "./Encabezados.astro";
       height: auto;
       margin: 0 auto;
     }
+    border-radius: $radio;
+    @extend .sombra;
   }
-  #transferencias {
+  #lluvia {
     h3 {
       color: $gris;
       font-size: clamp(2.2rem, 1.5vw, 2rem);
+    }
+    background: $terciario;
+    margin: $margen-cel 0;
+    padding: $margen $margen-cel;
+    text-align: center;
+    border-radius: $radio;
+    @extend .sombra;
+  }
+  #transferencias {
+    border-radius: $radio;
+    @extend .sombra;
+    h3 {
+      color: $gris;
+      font-size: clamp(2.2rem, 1.5vw, 2rem);
+    }
+    b{
+      color: white;
     }
     ul {
       text-align: left;
@@ -68,15 +91,15 @@ import Encabezados from "./Encabezados.astro";
     margin-bottom: $margen-cel;
     background: $acento;
     color: $primario;
-
   }
   #bandeja {
     margin: 0 auto;
-    max-width: 60%;
+    max-width: 70%;
+    padding-bottom: $margen;
     @include cel {
       max-width: 100%;
       padding: 0;
-
+      padding-bottom: $margen;
     }
   }
 </style>
@@ -87,7 +110,6 @@ import Encabezados from "./Encabezados.astro";
   gsap.registerPlugin(ScrollTrigger);
   const mm = gsap.matchMedia();
 
-  
   mm.add("(min-width: 800px)", () => {
     // desktop setup code here...
     const tl = gsap.timeline({
@@ -95,25 +117,24 @@ import Encabezados from "./Encabezados.astro";
         trigger: "#regalo",
         start: "top 70%",
         end: "bottom 60%",
-  
-      }
-    })
+      },
+    });
     tl.from("#regalo", {
-    ease: "power2.out",
-    opacity: 0,
-    duration: 1,
-    x: -60,
-  })
-  tl.from("#transferencias", {
-    opacity: 0,
-    ease: "power2.out",
-    delay: 0.3,
-  })
-  tl.from("#transferencias > * ", {
-    ease: "power2.out",
-    opacity: 0,
-    stagger: 0.2,
-  })
+      ease: "power2.out",
+      opacity: 0,
+      duration: 1,
+      x: -60,
+    });
+    tl.from("#transferencias", {
+      opacity: 0,
+      ease: "power2.out",
+      delay: 0.3,
+    });
+    tl.from("#transferencias > * ", {
+      ease: "power2.out",
+      opacity: 0,
+      stagger: 0.2,
+    });
   });
 
   mm.add("(max-width: 799px)", () => {
@@ -124,24 +145,22 @@ import Encabezados from "./Encabezados.astro";
         start: "top 80%",
         end: "bottom 40%",
         scrub: true,
-  
-      }
-    })
+      },
+    });
     tl.from("#regalo", {
-    ease: "power2.out",
-    opacity: 0,
-    y: 60,
-  })
-  tl.from("#transferencias", {
-    opacity: 0,
-    ease: "power2.out",
-    delay: 0.3,
-  })
-  tl.from("#transferencias > * ", {
-    ease: "power2.out",
-    opacity: 0,
-    stagger: 0.2,
-  })
+      ease: "power2.out",
+      opacity: 0,
+      y: 60,
+    });
+    tl.from("#transferencias", {
+      opacity: 0,
+      ease: "power2.out",
+      delay: 0.3,
+    });
+    tl.from("#transferencias > * ", {
+      ease: "power2.out",
+      opacity: 0,
+      stagger: 0.2,
+    });
   });
- 
 </script>
