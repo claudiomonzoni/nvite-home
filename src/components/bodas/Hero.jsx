@@ -6,7 +6,7 @@ import invitadosData from "../../pages/bodas/data/_invitados.json";
 // imagenes
 
 import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
-import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.svg";
+import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.webp";
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,
