@@ -5,8 +5,8 @@ import invitadosData from "../../pages/bodas/data/_invitados.json";
 
 // imagenes
 
-import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
-import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.webp";
+// import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
+// import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.webp";
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,
@@ -74,9 +74,9 @@ export default function Hero({
       <section className="grid contenido">
         <div id={Style["hero"]}>
           <div className={Style["izq"]} id="izq">
-            <div id={Style["avatar"]} className="avatarConte">
+            {/* <div id={Style["avatar"]} className="avatarConte">
               <img src={avatar.src} alt="Invitaciones de bodas avatar" />
-            </div>
+            </div> */}
           </div>
 
           <div className={Style["der"]}>
@@ -89,7 +89,7 @@ export default function Hero({
               {/* <span className={Style.familia} id="invitado">
                 {invitado}
               </span> */}
-              <img src={divisor.src} alt="divisor bodas nvita" />
+              {/* <img src={divisor.src} alt="divisor bodas nvita" /> */}
               <p className={Style["casamos"]}> nos casamos </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
               <p>
