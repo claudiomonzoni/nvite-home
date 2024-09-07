@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/quince/confirmacion.module.scss";
-import invitadosData from "../../pages/quince/data/invitados.json";
+import invitadosData from "../../pages/quince/data/_invitados.json";
 
 export default function Confirmacion({ whatsapp, dias_antes }) {
 

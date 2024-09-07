@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
-import invitadosData from "../../pages/bodas/data/invitados.json";
+import invitadosData from "../../pages/bodas/data/_invitados.json";
 
 // imagenes
 
 import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
 import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano 1.svg";
-
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,

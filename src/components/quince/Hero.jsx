@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/quince/hero.module.scss";
-import invitadosData from "../../pages/quince/data/invitados.json";
+import invitadosData from "../../pages/quince/data/_invitados.json";
 
 export default function Hero({ nombres, fecha }) {
   const [invitado, setInvitado] = useState("-");

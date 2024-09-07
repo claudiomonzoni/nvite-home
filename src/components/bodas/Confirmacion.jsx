@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
-import invitadosData from "../../pages/bodas/data/invitados.json";
+import invitadosData from "../../pages/bodas/data/_invitados.json";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [ver, setVer] = useState(version);

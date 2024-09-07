@@ -1,1 +1,0 @@
-import{g as o}from"./index.ZORhgBxb.js";const t=o.utils.toArray(".parrafos-libres");t.forEach((r,a)=>{o.from(r,{scrollTrigger:{trigger:r,start:"top 100%",end:"bottom 70%"},delay:2,ease:"power2.out",y:-30,opacity:0})});
