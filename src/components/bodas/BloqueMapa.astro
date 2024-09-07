@@ -12,6 +12,7 @@ interface Props {
 const { encabezado, dir, lat, lng, mapName, horario, icono } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Mapa from "./Mapa.astro";
+import Anchor from "../comunes/Anchor.astro";
 ---
 
 <div class="bloqueMapa">
@@ -38,7 +39,10 @@ import Mapa from "./Mapa.astro";
       </div>
       <time datetime="{horario}">{horario}</time>
     </div>
-    <a href="#" class="btn">Ver mapa</a>
+    <!-- <a href="#" class="btn">Ver mapa</a> -->
+    <Anchor url={"#"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={true} tema={"primario"} texto={"Ver mapa"} />
+   
+    
   </div>
 </div>
 

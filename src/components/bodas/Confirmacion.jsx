@@ -107,9 +107,10 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
               <label for="comentarios">Envíanos algún saludo (opcional):</label>
               <textarea name="comentarios" id="comentarios"></textarea>
-              <a href="#" className="btn desactivado" id="btnconfirmar">
+              <a href="#" className="btn redondo  desactivado" id="btnconfirmar">
                 Confirmar mi asistencia
               </a>
+              
             </form>
           </div>
         </div>

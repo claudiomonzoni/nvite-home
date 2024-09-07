@@ -9,6 +9,7 @@ const { frase, beneficiario, banco, cuenta } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 import Encabezados from "./Encabezados.astro";
+import Anchor from "../comunes/Anchor.astro";
 ---
 
 <div id="bandeja">
@@ -17,9 +18,10 @@ import Encabezados from "./Encabezados.astro";
     <h2>Regalos</h2>
 
     <p set:html={frase} />
-    <Btn url={"https://www.amazon.com.mx/registries"} texto="Amazon" />
-    <Btn url={"https://meli.uniko.co/Home"} texto="Marcado Libre" />
-    <Btn url={"https://mesaderegalos.liverpool.com.mx/"} texto="Liverpool" />
+    <Anchor url={"https://www.amazon.com.mx/registries"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Amazon"} />
+    <Anchor url={"https://meli.uniko.co/Home"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Marcado Libre"} />
+    <Anchor url={"https://mesaderegalos.liverpool.com.mx/"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Liverpool"} />
+    
   </div>
   <div id="lluvia">
     <h3>Lluvia de sobres</h3>

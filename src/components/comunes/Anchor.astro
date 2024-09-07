@@ -1,0 +1,20 @@
+---
+interface Props {
+  id?: string;
+  clases?: string;
+  conBorde?: boolean;
+  redondo?: boolean;
+  sombra?: boolean;
+  tema?: string;
+  url: string;
+  texto?: string;
+}
+const { clases, conBorde, redondo, sombra, tema, url, texto,  ...rest } = Astro.props;
+---
+
+<a
+  href={url}
+  class:list={["btn", clases, tema, { "con-borde": conBorde, "redondo": redondo, "sombra": sombra }]}
+  {...rest}>
+  {texto}
+</a>

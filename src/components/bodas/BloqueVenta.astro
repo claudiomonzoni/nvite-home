@@ -1,4 +1,6 @@
 ---
+import Anchor from "../comunes/Anchor.astro";
+
 interface Props {
   costo: number;
   version: string;
@@ -7,26 +9,52 @@ interface Props {
 const { costo, version, stripe } = Astro.props;
 const url = Astro.url.host;
 const tipos = ["plus", "reg", "basic"];
-
 ---
 
 <div class="grid contenido">
   <div class="flex" id="bloqueventas">
     <div class="info">
-      <h3><span>Compra: nvita</span>ción de Boda {version}</h3>
-    <a href="https://nvita.me" class="btn"> Regresar</a>
-    <a href={stripe} class="btn-claro" target="_blank">Comprar ${costo}</a>
+      <h3>Compra: nvitación de Boda <span> {version}</span></h3>
+      <Anchor
+        url={"https://nvita.me"}
+        id={"estilo"}
+        clases={"large"}
+        conBorde={true}
+        redondo={true}
+        sombra={false}
+        tema={"primario"}
+        texto={"regresar a inicio"}
+      />
+      <Anchor
+        url={stripe}
+        id={"estilo"}
+        clases={"large"}
+        conBorde={false}
+        redondo={true}
+        sombra={false}
+        tema={"primario"}
+        texto={`Comprar ${costo}`}
+      />
     </div>
     <div id="version">
       <h4>Ver más versiones</h4>
       {
-        tipos.map((tipo) => (
-          tipo !== version ?
-          <a href={`${url}/bodas/nvita-bodas-${tipo}?id=2`} class="btn">
-            nvita {tipo}
-          </a>
-          : null
-        ))
+        tipos.map(
+          (tipo) => (
+            tipo !== version ? (
+              <Anchor
+                url={`${url}/bodas/nvita-bodas-${tipo}?id=2`}
+                id={"estilo"}
+                clases={"large"}
+                conBorde={false}
+                redondo={true}
+                sombra={false}
+                tema={"primario"}
+                texto={tipo}
+              />
+            ) : null
+          )
+        )
       }
     </div>
   </div>
@@ -49,7 +77,8 @@ const tipos = ["plus", "reg", "basic"];
     align-content: space-evenly;
     padding: 2rem;
     margin-bottom: 1rem;
-    .info, #version {
+    .info,
+    #version {
       flex: 1 0 100%;
       flex-wrap: wrap;
       justify-content: center;
@@ -60,7 +89,7 @@ const tipos = ["plus", "reg", "basic"];
         color: white;
         font-weight: bold;
       }
-     flex: 1 0 100%;
+      flex: 1 0 100%;
       display: flex;
       justify-content: center;
       font-family: Montserrat, sans-serif;
@@ -73,11 +102,11 @@ const tipos = ["plus", "reg", "basic"];
       font-size: clamp(1.5rem, 2.5vw, 3rem);
     }
 
-    h4{
-        font-family: Montserrat, sans-serif;
-        flex: 1 0 100%;
-        justify-content: center;
-        text-align: center;
-      }
+    h4 {
+      font-family: Montserrat, sans-serif;
+      flex: 1 0 100%;
+      justify-content: center;
+      text-align: center;
+    }
   }
 </style>

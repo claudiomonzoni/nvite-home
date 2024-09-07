@@ -1,0 +1,13 @@
+---
+interface Props {
+    id?: string;
+    clases?: string;
+    conBorde?: boolean;
+    tema?: string;
+}
+const { clases, conBorde, tema,...rest } = Astro.props
+---
+
+<button class:list={['btn', clases, tema,{ 'con-borde': conBorde }]} {...rest}>
+    <slot />
+</button>
