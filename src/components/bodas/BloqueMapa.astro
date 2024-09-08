@@ -43,7 +43,7 @@ import Anchor from "../comunes/Anchor.astro";
       <time datetime="{horario}">{horario}</time>
     </div>
     <!-- <a href="#" class="btn">Ver mapa</a> -->
-    <Anchor url={"#"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={true} tema={"primario"} texto={"Ver mapa"} />
+    <Anchor url={"#"} id={`${mapName}-btn`} clases={"large"} conBorde={false} redondo={true} sombra={true} tema={"primario"} texto={"Ver mapa"} />
    
     
   </div>
@@ -129,7 +129,7 @@ import Anchor from "../comunes/Anchor.astro";
       position: absolute;
       top: 10px;
       right: 10px;
-      z-index: 200;
+      z-index: 2000;
     }
 
     .der {
@@ -229,13 +229,15 @@ import Anchor from "../comunes/Anchor.astro";
 
     // dentro del bucle encuentro el mapa del modal
     const btn = bMapa.querySelector(".btn");
-    const modal: HTMLElement = bMapa.querySelector(".modal");
+    // const modal: HTMLElement = bMapa.querySelector(".modal");
     const dialog = bMapa.querySelector("dialog");
     const cerrar = bMapa.querySelector("#close");
+    const mapName = dialog.closest("div").childNodes[1].childNodes[3]
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       // modal.style.display = "block";
       dialog.showModal();
+  
     });
     cerrar.addEventListener("click", (e) => {
       e.preventDefault();

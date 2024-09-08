@@ -39,6 +39,11 @@ const { lat, lng, mapName } = Astro.props;
       radius: 30,
     }).addTo(map);
 
+    setTimeout(function() {
+        map.invalidateSize();
+        console.log('first')
+    }, 100);
+
 //     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 // if (isMobile) {
 
