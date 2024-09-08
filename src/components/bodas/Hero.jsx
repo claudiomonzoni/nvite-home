@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
-import invitadosData from "../../pages/bodas/data/_invitados.json";
 
 // imagenes
-
-import avatar from "../../assets/bodas/nvitaPlus/avatar.jpg";
+import avatar from "../../assets/bodas/nvitaPlus/avatar.webp";
 import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.svg";
+
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,
@@ -21,7 +20,7 @@ export default function Hero({
   const [pase, setPase] = useState(0);
 
   useEffect(() => {
-    document.querySelector(".contenido").classList.remove("opa");
+    document.querySelector(".contenido").classList.remove("invisible");
     
     const tl = gsap.timeline();
     gsap.from(".contenido", {
@@ -71,8 +70,8 @@ export default function Hero({
 
   return (
     <>
-      <section className="grid contenido">
-        <div id={Style["hero"]}>
+      <section className="grid contenido invisible">
+        <div id={Style["hero"]} >
           <div className={Style["izq"]} id="izq">
             <div id={Style["avatar"]} className="avatarConte">
               <img src={avatar.src} alt="Invitaciones de bodas avatar" />

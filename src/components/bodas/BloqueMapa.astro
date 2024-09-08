@@ -11,12 +11,15 @@ interface Props {
 
 const { encabezado, dir, lat, lng, mapName, horario, icono } = Astro.props;
 import { Icon } from "astro-icon/components";
-import Mapa from "./Mapa.astro";
+// import Mapa from "./Mapa.astro";
+import Mapa from "../comunes/Mapa.astro";
+
 import Anchor from "../comunes/Anchor.astro";
 ---
 
 <div class="bloqueMapa">
   <dialog class="modal" data-mapa={mapName}>
+
     <a href="#" id="close"><Icon name={"cerrar"} size={40} /></a>
     <Mapa lat={lat} lng={lng} mapName={mapName} />
   </dialog>
@@ -90,12 +93,13 @@ import Anchor from "../comunes/Anchor.astro";
     flex: 1;
     text-align: center;
     position: relative;
-    // .modal {
-    // }
+    .modal {
+      width: 100%;
+      height: 100%;
+    }
     dialog [open] {
       position: relative;
-      width: 100%;
-      height: 500px;
+    
       z-index: 100;
       position: absolute;
       border-radius: calc(5px * var($radio));
@@ -231,7 +235,6 @@ import Anchor from "../comunes/Anchor.astro";
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       // modal.style.display = "block";
-      console.log(dialog);
       dialog.showModal();
     });
     cerrar.addEventListener("click", (e) => {
