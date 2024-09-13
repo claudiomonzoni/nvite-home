@@ -307,6 +307,11 @@ b {
   align-items: center;
   flex: 1 0 30%;
   padding: $margen-cel $margen-cel 0 $margen-cel;
+  @include cel {
+   h2{
+    font-size: 1.7rem;
+   }
+  }
 
 
   img {
