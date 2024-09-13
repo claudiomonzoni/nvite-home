@@ -1,23 +1,20 @@
-
-$primario: #484F8C;
-$secundario: #FFCE95;
-$terciario: #B6DDE2;
-$acento: #D03200;
+$primario: #656a8d;
+$secundario: #ffce95;
+$terciario: #b6dde2;
+$acento: #ee6a6a;
 $gris: #555556;
-$fondo: #fff6f0;
-
+$fondo: #ffce95;
 
 //media query
 $cel: 479px;
 $nocel: 479px;
 $tableta: 768px;
 $tableta-land: 1024px;
-$hd:1600px;
-$hdplus:1990px;
-
+$hd: 1600px;
+$hdplus: 1990px;
 
 //extra
-$radio: .8rem;
+$radio: 0.8rem;
 $margen: 4rem;
 $margen-top: 8rem;
 $radio-cel: 0.5rem;
@@ -25,6 +22,8 @@ $margen-cel: 2rem;
 $margen-min: 1rem;
 $margen-top-cel: 6rem;
 
+$fuenteA: "Montserrat Alternates";
+$fuenteB: "Averia Serif Libre";
 
 @mixin cel {
   @media (max-width: #{$cel}) {
@@ -61,11 +60,19 @@ $margen-top-cel: 6rem;
     @content;
   }
 }
-// animaciones 
-.anime{
-  transition: all .2s ease-in-out;
-  }
+// animaciones
+.anime {
+  transition: all 0.2s ease-in-out;
+}
 
-.sombra{
+.sombra {
   box-shadow: 0px 4px 19px 0px rgba(205, 160, 109, 0.6);
+}
+.imagenFuera {
+  height: calc(100% - 2rem);
+  top: 2rem;
+  @include cel {
+    height: calc(100% + 1rem);
+    top: -1rem;
+  }
 }

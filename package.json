@@ -14,6 +14,7 @@
     "@astrojs/react": "^3.6.0",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/vercel": "^7.7.2",
+    "@iconify-json/mdi": "^1.2.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.11.5",
@@ -24,5 +25,8 @@
     "sass": "^1.75.0",
     "sharp": "^0.33.5",
     "split-type": "^0.3.4"
+  },
+  "devDependencies": {
+    "@iconify-json/solar": "^1.2.0"
   }
 }

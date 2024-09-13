@@ -1,0 +1,118 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  encabezado: string;
+  texto: string;
+  tema?: string;
+  icono?: string;
+  izquierda?: boolean;
+  urlImagen: string;
+}
+
+const { encabezado, texto, tema, icono, izquierda, urlImagen, ...rest } =
+  Astro.props;
+const imagen = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"
+);
+if (!imagen[urlImagen])
+  throw new Error(
+    `"${urlImagen}" no existe wey, checale: "src/assets/home/gale/*.{jpeg,jpg,png,gif}"`
+  );
+console.log(imagen);
+---
+
+<div id="banner" class:list={["flex", tema]} {...rest}>
+  <div class="contenido flex">
+    <div class="bande">
+      <Icon name={icono} size={40} />
+      <h2 set:html={encabezado}></h2>
+      <p set:html={texto} />
+      <slot />
+    </div>
+  </div>
+  <div class:list={["imagen", { izq: izquierda }]}>
+    <Image src={imagen[urlImagen]()} alt={encabezado} />
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../estilos/_variables.scss";
+
+  #banner {
+    border-radius: $radio;
+    margin-top: $margen-min;
+    @extend .sombra;
+    gap: 0;
+  }
+  h2 {
+    font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+  }
+  .izq {
+    order: 1 !important;
+    @include cel {
+      order: 0 !important;
+    }
+  }
+  .contenido {
+    align-items: center;
+    justify-content: center;
+    order: 1;
+    flex: 1 0 60%;
+    padding: $margen;
+    @include cel {
+      padding: $margen-cel;
+    }
+  }
+  .imagen {
+    order: 0;
+    flex: 1 0 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    img {
+      width: auto;
+      height: auto;
+      @extend .imagenFuera;
+      position: relative;
+    }
+    @include cel {
+      img {
+        width: 100%;
+      }
+    }
+  }
+  .primario {
+    background: linear-gradient(43deg, $secundario 10%, $primario 80%);
+    svg {
+      color: $fondo;
+    }
+    h2 {
+      color: $fondo;
+    }
+    p {
+      color: white;
+    }
+    @include cel {
+      background: linear-gradient(43deg, $primario 10%, $secundario 80%);
+    }
+  }
+  .secundario {
+    svg {
+      	color: $acento;
+    }
+  
+    background: linear-gradient(43deg, $secundario 10%, rgb(255, 247, 233) 80%);
+  }
+
+  // Cel
+
+  @include cel {
+    .imagen,
+    .contenido {
+      flex: 1 0 100%;
+    }
+  }
+</style>

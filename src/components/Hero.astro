@@ -24,8 +24,8 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
           >
         </h1>
         <p set:html={description} />
-        <Btn liga="#bodas" texto="Invitacion de bodas" claro={false} />
-        <Btn liga="#formu" texto="Contáctanos" claro={true} />
+        <Btn liga="#galeriaHome" texto="Ve tu próxima invitación" claro={false} clases="btn-oscuro" />
+        <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
     </div>
 
@@ -45,9 +45,13 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
     h1 {
       width: 100%;
       color: $primario;
+      font-family: $fuenteB, serif;
       span {
         color: $acento;
       }
+    }
+    p{
+      margin: $margen-cel 0;
     }
     @extend .sombra;
     .bandeja {
@@ -68,7 +72,8 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
       align-items: bottom;
       flex: 1 0 50%;
       background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") no-repeat;
-      background-position: -190% 0%;
+      background-size: cover;
+      background-position: 190% 0%;
       overflow: hidden;
       border-radius: $margen-min;
     }

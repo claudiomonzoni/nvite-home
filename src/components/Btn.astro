@@ -4,10 +4,15 @@ interface Props {
     texto: string;
     claro: boolean;
     blank?: boolean;
+    clases?: string;
+    id?: string;
 }
-const { liga, texto, claro, blank } = Astro.props;
+const { liga, texto, claro, blank, clases, ...rest } = Astro.props;
 ---
-<a href={liga} class={claro ? 'btn-claro' : 'btn-oscuro'} set:text={texto} target={blank ? '_blank' : ''}></a>
+
+    <a href={liga} class:list= {clases}  target={blank ? '_blank' : ''} {...rest} set:html={texto}>
+    <slot />
+</a>
 
 <style lang="scss">
     @import '../estilos/_variables.scss';
@@ -31,8 +36,8 @@ const { liga, texto, claro, blank } = Astro.props;
     }
     .btn-oscuro {
         @include btn;
-        background-color: $primario;
-        color: $secundario;
+        background-color: $acento;
+        color: white;
         font-weight: 700;
     }
 

@@ -7,6 +7,9 @@ import Btn from "../components/Btn.astro";
 import Footer from "../components/Footer.astro";
 import BannerQuince from "../components/BannerQuince.astro";
 import Galeriaslide from "../components/Galeriaslide.astro";
+import Recibes from "../components/Recibes.astro";
+import BannerGeneral from "../components/BannerGeneral.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
@@ -15,15 +18,26 @@ import Galeriaslide from "../components/Galeriaslide.astro";
 >
   <Hero
     encabezado="<span>Nvita</span>ciones digitales"
-    description="<b>fáciles de enviar, convenientes </br> y personalizadas</b>, tu mejor opción para hacer invitaciones. Además te damos un panel de control con todos tus invitados. "
+    description="<b>¡Haz de cada celebración un momento inolvidable!</b>, captura la esencia de tus eventos más importantes, desde bodas hasta XV años y más. Con un solo clic, <b>transforma las invitaciones de tu evento</b> en una experiencia única."
     fondo="fondo-cover-nviteme-invitaciones-digitales.webp"
   />
 
   <div class="grid contenido" id="choro">
-    <h2>Nuestra experiencia</h2>
-    <p>Somos una pequeña empresa con base en Ixtapa Zihuatanejo con más de 20 años de experiencia en el desarrollo de sitios web en México, Usa y Suiza, quisimos poner todo nuestro conocimiento al servicio de tu evento con <b>invitaciones digitales de alta calidad </b>y confianza.</p>
+    <h2>Tu evento merece lo mejor</h2>
     <p>
-      <b>Sabemos lo importante que es para ti ese día y queremos ayudarte a que sea espectacular.</b>
+      Con más de 20 años de experiencia ayudando a clientes alrededor del mundo,
+      estamos aquí para poner todo nuestro conocimiento a tu disposición.
+      Creamos invitaciones digitales personalizadas para bodas, XV años y
+      celebraciones únicas, asegurándonos de que cada detalle refleje la
+      importancia de tu evento.
+    </p>
+    <p>
+      Sabemos lo especial que es este momento para ti, y queremos ayudarte a que
+      sea inolvidable.
+      <br />
+      <b>
+        ¡Empieza hoy y diseña una invitación digital que encantará a todos!"
+      </b>
     </p>
   </div>
 
@@ -61,11 +75,11 @@ import Galeriaslide from "../components/Galeriaslide.astro";
     </div>
     <div class="flex">
       <div class="cartaBase2">
-        <h2>Invitaciones personalizadas</h2>
+        <h2>Invitaciones digitales personalizadas para cada invitado</h2>
         <p>
-          Tu invitados <b>se sentirán especiales al leer sus nombres</b>, cada
-          invitación tiene un numero de identificación relacionado con tu
-          invitado y los pases que le asignes.
+          Haz que tus invitados se sientan especiales desde el primer momento. <b
+            >Cada invitación llevará el nombre del invitado o su familia,</b
+          > creando una experiencia única y personal para tu evento."
         </p>
         <img
           id="decor"
@@ -78,12 +92,12 @@ import Galeriaslide from "../components/Galeriaslide.astro";
         />
       </div>
       <div class="cartaBase2">
-        <h2>Recibe confirmación de tu invitación</h2>
+        <h2>¡Confirma la asistencia de tus invitados fácilmente!</h2>
         <p>
-          Sabemos lo importante que es para ti que tus invitados confirmen su
-          asistencia, así que <b
-            >podrán confirmarte directamente a tu whatsapp</b
-          > su asitencia y cuantos pases planean usar.
+          No dejes nada al azar en tu evento especial. <b
+            >Tus invitados podrán confirmar</b
+          > su asistencia directamente desde su invitación digital, dándote tranquilidad
+          y el control que necesitas para organizar el día perfecto."
         </p>
         <img
           src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
@@ -92,12 +106,36 @@ import Galeriaslide from "../components/Galeriaslide.astro";
       </div>
     </div>
 
+    <BannerGeneral
+      encabezado="Cuenta regresiva y confirmación"
+      texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán confirmar su asistencia"
+      tema="primario azul"
+      icono="mdi:archive-clock-outline"
+      urlImagen="../assets/home/gale/confirmacion.webp"
+    />
+
+    <BannerGeneral
+      encabezado="Música e Información en tu invitación"
+      texto="Agrega <b>tu canción favorita</b> y los detalles de tu boda"
+      tema="secundario "
+      icono="mdi:music"
+      izquierda={true}
+      urlImagen="../assets/home/gale/musica.webp"
+    />
+
+    <BannerGeneral
+      encabezado="Frase de amor y galería de fotos"
+      texto="Dí con palabras lo que sientes en una frase y muestra hasta 6 fotos de los novios o la quinceara"
+      tema="primario "
+      icono="mdi:image-plus"
+      urlImagen="../assets/home/gale/frase.webp"
+    />
     <!-- carcateristicas -->
 
     <div id="conteCaracteristicas">
       <Caracteristicas
         encabezado="mapas"
-        texto="Tus invitados no se perderan."
+        texto="Tus invitados sabrán exactamente como llegar."
         icono="/ico-nvite-mapa.svg"
         fondo="/fondo-nvite-caracteristicas.png"
       />
@@ -110,22 +148,61 @@ import Galeriaslide from "../components/Galeriaslide.astro";
       />
 
       <Caracteristicas
-        encabezado="detalles"
-        texto="Agrega las considerciones de tu evento."
+        encabezado="itinerario"
+        texto="Lista cada momento importante de tu evento"
         icono="/ico-nvite-detalles.svg"
         fondo="fondo-nvite-caracteristicas-3.png"
       />
 
-      <Caracteristicas
-        encabezado="galería"
+      <!-- <Caracteristicas
+        encabezado="animacón"
         texto="Agrega hasta 6 fotos."
         icono="/ico-nvite-fotos.svg"
         fondo="fondo-nvite-caracteristicas-4.png"
-      />
+      /> -->
     </div>
-
   </section>
-  <Galeriaslide />
+  <!-- <Galeriaslide /> -->
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu invitación de <b>Nvita:</b>"
+      texto={`
+    <ul>
+    <li><b>Trato personalizado</b> durante y despues de tu compra</li>
+    <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> despues de tu compra</li>
+    <li>
+    Acceso a un <b>panel de invitados</b> para tener control total de tus
+    invitaciones
+    </li>
+        <li>Tu invitación, sin importar la versión, tiene envios ilimitados</li>
+        <li>
+        Tu invitación queda en línea <b>hasta 1 mes</b> despues de la fecha de tu
+        evento
+        </li>
+        <li>
+        Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+        </li>
+        </ul>
+        <small>*Panel de invitados no aplica en la versión "basic"</small>
+        <br>
+        `}
+      tema="secundario "
+      icono="mdi:image-plus"
+      urlImagen="../assets/home/gale/panel.png"
+    >
+      <Btn
+        liga="#formu"
+        texto="Obtén tu invitación"
+        clases="btn-claro"
+        claro={false}
+        blank={false}
+      />
+    </BannerGeneral>
+  </div>
+
+  <!-- <div class="grid contenido">
+    <Recibes />
+  </div> -->
 
   <div id="bodas" class="grid pantalla-der">
     <Banner />
@@ -180,7 +257,10 @@ import Galeriaslide from "../components/Galeriaslide.astro";
           <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso para
           que obtengas tu invitación.
         </p>
-        <small>Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b></small>
+        <small
+          >Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b
+          ></small
+        >
       </div>
 
       <div id="formu">
@@ -190,11 +270,7 @@ import Galeriaslide from "../components/Galeriaslide.astro";
          <b>whatsapp</b></h3> -->
           <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
           <label for="nombre">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            placeholder="Tu nombre"
-          />
+          <input type="text" id="nombre" placeholder="Tu nombre" />
           <label for="fecha">Fecha del evento</label>
           <input type="date" name="fecha" id="fecha" />
           <label for="email">Email</label>
@@ -204,31 +280,23 @@ import Galeriaslide from "../components/Galeriaslide.astro";
             id="email"
             placeholder="agrega un email valido"
           />
-          <a href="#" id="empezar" class="desactivado"
+          <!-- <a href="#" id="empezar" class="desactivado"
             ><img src="/whatsapp.png" alt="logo whatsapp" /> Hola <b>Aida</b></a
+          > -->
+          <Btn
+            liga="#"
+            id="empezar"
+            texto="<b>Hola</b> Aida"
+            clases="desactivado, btn-oscuro"
+            claro={false}
+            blank={true}
           >
+          <Icon name="mdi:whatsapp" />
+          </Btn>
           <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
         </form>
       </div>
     </div>
-    <div class="cartaBase2 cartaBase3">
-      <div class="bande-2">
-        <h2>¿Qué recibo?</h2>
-        <p>
-          Además de tus <b>invitaciones personalizadas</b>, *tendrás acceso a un <b
-            >panel de invitados</b
-          > donde podrás copiar las ligas de cada invitado y marcar a los confirmados,
-          <b>ten mejor control</b> de lo más importante de tu evento, tus invitados.
-        </p>
-        <small>*No aplica en la versión "basic"</small>
-		<Btn liga="/bodas/panel/plus" texto="Ver panel de invitados" claro={false} blank={true} />
-	   </div>
-        <img
-          src="/nvite-panel-invitados.webp"
-          alt="panel de invitados nvita.me"
-        />
-      </div>
-    </div>
-  </section>
-  <Footer />
-</Layout>
+  </div>
+</section>
+<Footer />

@@ -1,0 +1,103 @@
+---
+import Btn from "./Btn.astro";
+---
+
+<div class="flex">
+  <div id="recibes">
+    <div class="a">
+      <h2>Recibes con tu invitación de <b>Nvita:</b></h2>
+      <ul>
+        <li><b>Trato personalizado</b> durante y despues de tu compra</li>
+        <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> despues de tu compra</li>
+        <li>
+          Acceso a un <b>panel de invitados</b> para tener control total de tus
+          invitaciones
+        </li>
+        <li>Tu invitación, sin importar la versión, tiene envios ilimitados</li>
+        <li>
+          Tu invitación queda en línea <b>hasta 1 mes</b> despues de la fecha de tu
+          evento
+        </li>
+        <li>
+          Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+        </li>
+      </ul>
+      <small>*Panel de invitados no aplica en la versión "basic"</small>
+     <br>
+      <Btn
+      liga="#formu"
+      texto="Obtén tu invitación"
+      claro={false}
+      blank={false}
+      />
+    </div>
+    <div class="b">
+        <img src="/nvite-panel-invitados.webp" alt="panel de invitados nvita.me" />
+  </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @import "../estilos/variables";
+  b{
+    color: $primario;
+  }
+
+  #recibes {
+    @extend .sombra;
+    margin-bottom:$margen;
+    background:
+      url("/fondo-nvite-caracteristicas-3.png"),
+      linear-gradient(330deg, $fondo 0%, white 70%) $fondo;
+    background-size: contain, contain;
+    background-repeat: no-repeat, no-repeat;
+    background-position: right, center;
+    background-blend-mode: color-dodge, normal;
+    border-radius: $radio;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 30%;
+    // padding: $margen-cel $margen-cel 0 $margen-cel;
+
+}
+small{
+    font-size: 0.7rem;
+}
+li{
+    list-style: circle;
+    margin-top: 0.6rem;
+  }
+  .a{
+    flex: 1 0 70%;
+
+  }
+   .b{
+    flex: 1 0 30%;
+
+  }
+  .a{
+    padding: $margen;
+  }
+  .b{
+    display: flex;
+    flex-wrap: wrap;
+    img{
+        flex: 1 0 100%;
+
+    }
+    a{
+        flex: 1 0 100%;
+    }
+  }
+  @include cel{
+    h2{
+        text-align: center;
+    }
+    .a{
+        padding: $margen-cel;
+    }
+  }
+</style>
