@@ -37,7 +37,10 @@ export default function Hero({ nombres, fecha }) {
   }, []);
   return (
     <>
-      <section id={Style["hero"]} className="grid contenido opa">
+
+
+
+      <section id={Style["hero"]} >
         <div className={Style.bandeja} id="bande">
           <div className={Style.centro} id="centro">
             <span className={Style.familia} id="invitado">

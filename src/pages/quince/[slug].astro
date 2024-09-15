@@ -14,8 +14,8 @@ export async function getStaticPaths() {
     props: { quince },
   }));
 }
-interface Props{
-    quince: CollectionEntry<"quince">
+interface Props {
+  quince: CollectionEntry<"quince">;
 }
 type quince = CollectionEntry<"quince">;
 const { quince } = Astro.props;
@@ -23,27 +23,24 @@ const base = new URL(Astro.url.pathname, Astro.site);
 // const{Content} = await quince.render()
 const Nfecha = new Date(quince.data.fecha);
 const fecha = Nfecha.toLocaleDateString(["es-MX"], {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric", 
-  })
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
-  const{Content} = await quince.render()
+const { Content } = await quince.render();
 ---
 
-<Layout title=`Invitación de quince de ${quince.data.novios}` url={base.toString()}>
-    <Hero
-  nombres={quince.data.novios}
-  fecha={fecha}
-  client:load
-  />
+<Layout
+  title=`Invitación de quince de ${quince.data.novios}`
+  url={base.toString()}
+>
+  <div class="grid pantalla opa">
+    <Hero nombres={quince.data.novios} fecha={fecha} client:load />
+  </div>
   <Content />
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>
-  
-
 </Layout>
-
-
