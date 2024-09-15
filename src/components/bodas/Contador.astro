@@ -25,7 +25,7 @@ const { fecha } = Astro.props;
     margin-top: $margen-cel;
     font-size: clamp(1.8rem, 2vw, 3rem);
   }
-  #dias{
+  #dias {
     transform: translateY(-60%);
   }
   #contador {
@@ -36,8 +36,8 @@ const { fecha } = Astro.props;
     gap: 0.7rem;
     border: 1px solid $acento;
     position: relative;
-    &:before{
-      content: '';
+    &:before {
+      content: "";
       position: absolute;
       top: 0%;
       right: 0px;
@@ -46,28 +46,31 @@ const { fecha } = Astro.props;
       height: 130px;
       transform-origin: center;
       rotate: 180deg;
-      background: url("../../assets/bodas/nvitaPlus/esquina-floral-1.jpg") no-repeat center;
+      background: url("../../assets/bodas/nvitaPlus/esquina-floral-1.jpg")
+        no-repeat center;
       background-size: contain;
     }
-    &:after{
-      content: '';
+    &:after {
+      content: "";
       position: absolute;
       bottom: 0%;
       left: 0px;
       transform: translate(-50%, 50%);
       width: 130px;
       height: 130px;
-      background: url("../../assets/bodas/nvitaPlus/esquina-floral-1.jpg") no-repeat center;
+      background: url("../../assets/bodas/nvitaPlus/esquina-floral-1.jpg")
+        no-repeat center;
       background-size: contain;
     }
-    &:before, &:after{
-        @include cel{
-            width: 70px;
-            height: 70px;
-        }
+    &:before,
+    &:after {
+      @include cel {
+        width: 70px;
+        height: 70px;
+      }
     }
   }
-  .bande{
+  .bande {
     text-align: center;
   }
   #numero {
@@ -75,33 +78,30 @@ const { fecha } = Astro.props;
     font-size: clamp(6.5rem, 10.5vw, 14rem);
     color: $acento;
     font-family: $encabezados, serif;
-}
-p:first-child {
+  }
+  p:first-child {
     position: absolute;
     top: 0%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: $acento;
     border: solid 1px $secundario;
-    background-color:white;
-    padding:$margen-min;
-
-}
-p {
-      font-family: $encabezados, serif;
+    background-color: white;
+    padding: $margen-min;
+  }
+  p {
+    font-family: $encabezados, serif;
     color: $primario;
     font-size: clamp(1.5rem, 2.5vw, 3rem);
     margin: 0;
   }
 </style>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" type="text/javascript"></script>
 <script define:vars={{ fecha }}>
-  const Quincemas = new Date();
-  const QuinceDias = Quincemas.setDate(Quincemas.getDate() + 15);
 
-  // Set the date we're counting down to
+
   const countDownDate = new Date(fecha).getTime();
-
   // Update the count down every 1 second
   const cuenta = function () {
     // Get today's date and time
@@ -111,11 +111,11 @@ p {
     const distance = countDownDate - now;
 
     // Time calculations for days, hours, minutes and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const dias = days.toString()
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24) +1);
 
+console.log(typeof days)
     // Output the result in an element with id="demo"
-    document.getElementById("numero").innerHTML = dias
+    document.getElementById("numero").innerHTML = days;
 
     // If the count down is over, write some text
     if (distance < 0) {

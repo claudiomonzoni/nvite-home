@@ -63,12 +63,11 @@ const cuenta = function() {
   const distance = countDownDate - now
     
   // Time calculations for days, hours, minutes and seconds
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const dias = days.toString()
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24) +1);
 
 
       // Output the result in an element with id="demo"
-  document.getElementById("numero").innerHTML = dias;
+  document.getElementById("numero").innerHTML = days;
   
   // If the count down is over, write some text 
   if (distance < 0) {

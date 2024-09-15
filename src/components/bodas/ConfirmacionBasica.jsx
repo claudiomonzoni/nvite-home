@@ -7,12 +7,10 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
     const ua = navigator.userAgent;
-    console.log("uno");
     //si es cel app si es pc web.app
     const enviar = (e) => {
       e.preventDefault();
-      console.log("dos");
-      
+
       let whats = "";
       if (/Mobile/i.test(ua)) {
         whats = `https://api.whatsapp.com/send/?phone=${whatsapp}&text=`;
