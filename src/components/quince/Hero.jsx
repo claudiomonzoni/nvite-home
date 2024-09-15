@@ -40,7 +40,7 @@ export default function Hero({ nombres, fecha }) {
 
 
 
-      <section id={Style["hero"]} >
+      <section id={Style["hero"]} className="contenido opa" >
         <div className={Style.bandeja} id="bande">
           <div className={Style.centro} id="centro">
             <span className={Style.familia} id="invitado">
@@ -60,6 +60,7 @@ export default function Hero({ nombres, fecha }) {
           </> : <></>}
         </div>
       </section>
+          
     </>
   );
 }

@@ -36,9 +36,9 @@ const { Content } = await quince.render();
   title=`Invitación de quince de ${quince.data.novios}`
   url={base.toString()}
 >
-  <div class="grid pantalla opa">
+
     <Hero nombres={quince.data.novios} fecha={fecha} client:load />
-  </div>
+
   <Content />
   <section class="grid contenido">
     <Footer ruta={base} />
