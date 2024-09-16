@@ -19,7 +19,7 @@ html {
   font-weight: 100;
   background: #fff6f0;
   scroll-behavior: smooth;
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
   line-height: 1.3em;
 }
 
@@ -296,7 +296,8 @@ b {
 
 .cartaBase2 {
   text-align: center;
-  background:url("/fondo-nvite-caracteristicas-2.png"), linear-gradient(330deg, $fondo 0%, white 70%) $fondo;
+  background: url("/fondo-nvite-caracteristicas-2.png"),
+    linear-gradient(330deg, $fondo 0%, white 70%) $fondo;
   background-size: cover, contain;
   background-blend-mode: color-dodge, normal;
   border-radius: $margen-min;
@@ -308,11 +309,10 @@ b {
   flex: 1 0 30%;
   padding: $margen-cel $margen-cel 0 $margen-cel;
   @include cel {
-   h2{
-    font-size: 1.7rem;
-   }
+    h2 {
+      font-size: 1.7rem;
+    }
   }
-
 
   img {
     max-width: 12vw;
@@ -331,7 +331,6 @@ b {
   }
 
   @extend .sombra;
-
 
   &:last-child {
     flex: 1 0 30%;
@@ -391,22 +390,27 @@ b {
     display: flex;
     justify-content: center;
     align-items: center;
-    // background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf;
     background-size: cover;
     background-blend-mode: color-dodge;
     aspect-ratio: 3 / 2;
     @include cel {
       flex: 1 0 47%;
-      aspect-ratio: 3 / 5;
+      flex-direction: column;
+
+      padding: $margen-cel 0;
+      // aspect-ratio: 3 / 5;
     }
     .conte {
       position: relative;
       max-width: 70%;
       text-align: center;
+      @include cel {
+        max-width: 80%;
+      }
     }
     h3 {
       color: $acento;
-      font-size: clamp(3vh, 2vw, 3vw);
+      font-size: clamp(2.3vh, 2vw, 3vw);
     }
     .icono {
       max-width: 1.7rem;
@@ -414,7 +418,11 @@ b {
       right: 1rem;
       top: 1rem;
       @include cel {
-        max-width: 2rem;
+        right: auto;
+        top: auto;
+        position: relative;
+        max-width: 1.5rem;
+        margin: $margen-min 0;
       }
     }
   }
@@ -596,4 +604,3 @@ input::placeholder {
     background-size: 110%;
   }
 }
-

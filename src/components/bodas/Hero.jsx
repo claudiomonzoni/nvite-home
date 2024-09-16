@@ -3,7 +3,7 @@ import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
 
 // imagenes
-import avatar from "../../assets/bodas/nvitaPlus/avatar.webp";
+import cover from "../../assets/bodas/nvitaPlus/cover.webp";
 import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.svg";
 
 //---------------------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ export default function Hero({
         <div id={Style["hero"]} >
           <div className={Style["izq"]} id="izq">
             <div id={Style["avatar"]} className="avatarConte">
-              <img src={avatar.src} alt="Invitaciones de bodas avatar" />
+              <img src={cover.src} alt="Invitaciones de bodas cover" />
             </div>
           </div>
 

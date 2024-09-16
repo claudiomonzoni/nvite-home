@@ -9,9 +9,10 @@ interface Props {
   icono?: string;
   izquierda?: boolean;
   urlImagen: string;
+  margenAbajo?: boolean;
 }
 
-const { encabezado, texto, tema, icono, izquierda, urlImagen, ...rest } =
+const { encabezado, texto, tema, icono, izquierda, urlImagen, margenAbajo, ...rest } =
   Astro.props;
 const imagen = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"
@@ -23,7 +24,7 @@ if (!imagen[urlImagen])
 console.log(imagen);
 ---
 
-<div id="banner" class:list={["flex", tema]} {...rest}>
+<div id="banner" class:list={["flex", tema, { margenAbajo: margenAbajo }]} {...rest}>
   <div class="contenido flex">
     <div class="bande">
       <Icon name={icono} size={40} />
@@ -39,6 +40,9 @@ console.log(imagen);
 
 <style lang="scss">
   @import "../estilos/_variables.scss";
+  .margenAbajo {
+    margin-bottom: $margen;
+  }
 
   #banner {
     border-radius: $radio;
