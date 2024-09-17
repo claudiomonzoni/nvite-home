@@ -2,14 +2,13 @@
 interface Props {
   title: string;
   url?: string;
+  cover?: string;
 }
 
-const { title, url } = Astro.props;
+const { title, url, cover } = Astro.props;
 import "../../estilos/bodas/globales.scss";
 
-//actualizar url con la carpeta de cada invitación
-import cover from "./../../assets/bodas/nvitaPlus/cover.webp";
-const portadaOG = `https://nvita.me${cover.src}`;
+const portadaOG = `https://nvita.me${cover}`;
 
 ---
 

@@ -2,13 +2,18 @@ import { z, defineCollection } from "astro:content";
 // 2. Define a `type` and `schema` for each collection
 const bodas = defineCollection({
   type: "content", // v2.5.0 and later
-  schema: z.object({
+  schema: ({ image }) => z.object({
     titulo: z
       .string()
       .max(
         80,
         "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
       ),
+      cover: image().refine((img) => img.width >= 1080, {
+        message:
+          "¡La imagen de portada debe tener al menos 1080 píxeles de ancho!",
+      }),
+      coverAlt: z.string(),
     extracto: z.string(),
     descripcion: z.string(),
     whatsapp: z.number(),
