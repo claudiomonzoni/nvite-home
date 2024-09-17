@@ -8,6 +8,7 @@ const { icono, titulo, array } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 const urlPatron = 'url("/quince/patron-fondo.png")';
+
 ---
 
 <div class="carta">
@@ -16,6 +17,7 @@ const urlPatron = 'url("/quince/patron-fondo.png")';
   {
     array ? array.map(item => <li>{item}</li>)  :  <slot />
   }
+  <img src={} alt="">
 </div>
 
 <style lang="scss" define:vars={{ urlPatron }}>

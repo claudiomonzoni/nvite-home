@@ -3,7 +3,8 @@ import gsap from "gsap";
 import Style from "../../estilos/quince/hero.module.scss";
 import invitadosData from "../../pages/quince/data/_invitados.json";
 
-export default function Hero({ nombres, fecha }) {
+
+export default function Hero({ nombres, fecha, cover }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   useEffect(() => {
@@ -41,6 +42,9 @@ export default function Hero({ nombres, fecha }) {
 
 
       <section id={Style["hero"]} className="contenido opa" >
+        <div className={Style["laimagen"]}>
+          <img src={cover} alt="cover" />
+        </div>
         <div className={Style.bandeja} id="bande">
           <div className={Style.centro} id="centro">
             <span className={Style.familia} id="invitado">
@@ -50,7 +54,7 @@ export default function Hero({ nombres, fecha }) {
             <p>
               Te invitamos a mis <b>XV años</b>
             </p>
-            <p className={Style.fecha}>{fecha}</p>
+            <p className={Style.fecha}>{fecha.toLocaleString()}</p>
           </div>
           {pase > 0 ? 
           <>

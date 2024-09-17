@@ -1,0 +1,183 @@
+---
+version: plus
+titulo: Nina del casquito
+extracto: Muestra de la invitación de quince años nvita plus
+descripcion: Muestra de la invitación de quince nvita plus, la más completa de las invitaciones que te ofrecemos.
+slug: nina-casquito
+cover: /quince/nina-casquito/cover.jpg
+galeria: nina-casquito
+coverAlt: nina del casquito
+whatsapp: 8488493900
+novios: Maria Fernanda la del Casquito
+fecha: 2024-12-14
+vestimenta: Formal elegante
+frase_amor: Desde pequeña esperabas con ansias este día, imaginabas compartirlo con todas las personas que amas. Por fin llegó el día y es tal y como lo soñaste.
+beneficiario: Elena Ramirez
+banco: Banco Santander
+cuenta: 123456789
+consideraciones: ["No vestir de blanco", "Favor de no llevar bebes"]
+ceremonia:
+  {
+    "lat": 17.665128,
+    "lang": -101.597448,
+    "hora": 16:00,
+    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)",
+  }
+recepcion:
+  {
+    "lat": 17.661152,
+    "lang": -101.603728,
+    "hora": 18:00,
+    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.",
+  }
+iterario:
+  [
+    {
+      "titulo": "Ceremonia Religiosa",
+      "lugar": "Iglesa de la Santa Cruz, Ixtapa Gro.",
+      "hora": "16:00",
+    },
+    {
+      "titulo": "Recepción",
+      "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
+      "hora": "18:00",
+    },
+    {
+      "titulo": "Mariachi en vivo",
+      "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
+      "hora": "20:00",
+    },
+    {
+      "titulo": "Baile de la quinceañera",
+      "lugar": "Salón de eventos Hotel SunScape Ixtapa",
+      "hora": "22:30",
+    },
+    {
+      "titulo": "Cena y Brindis",
+      "lugar": "Salón de eventos Hotel SunScape Ixtapa",
+      "hora": "23:00",
+    },
+    {
+      "titulo": "Cierre del evento",
+      "lugar": "Salón de eventos Hotel SunScape Ixtapa",
+      "hora": "3:00",
+    },
+  ]
+---
+
+import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
+import Encabezados from "../../components/quince/Encabezados.astro";
+import Cartas from "../../components/quince/Cartas.astro";
+import Frase from "../../components/quince/Frase.astro";
+import Galeria from "../../components/quince/Galeria.astro";
+import BloqueMapa from "../../components/quince/BloqueMapa.astro";
+import Regalos from "../../components/quince/Regalos.astro";
+import Contador from "../../components/quince/Contador.astro";
+import Confirmacion from "../../components/quince/Confirmacion";
+import Footer from "../../components/quince/Footer.astro";
+import Itinerario from "../../components/quince/Itinerario.astro";
+import Audio from "../../components/quince/Audio.astro";
+import BloqueVenta from "../../components/quince/BloqueVenta.astro";
+
+{" "}
+
+<Encabezados texto="Mis Xv años" />
+<ParrafosLibres texto="El anhelo de todo padre es ver a su hija transformarse de una niña feliz a una mujer segura de sí. Y más orgulloso no podría estar y por eso contigo quiero celebra." />
+<section class="grid contenido">
+  <Audio src="/quince/quincePlus/quince-musica" />
+</section>
+<section class="grid contenido">
+  <div class="conte-cartas">
+    <Cartas icono="/quince/fecha-icono.svg" titulo="Fecha de los XV años">
+      <p>{frontmatter.fecha}</p>
+    </Cartas>
+    <Cartas
+      icono="/quince/detalles-icono.svg"
+      titulo="Detalles"
+      array={frontmatter.consideraciones}
+    >
+      <p>qiuueueu</p>
+    </Cartas>
+    <Cartas icono="/quince/formal-icono.svg" titulo="Código de vestimenta">
+      <p>{frontmatter.vestimenta}</p>
+    </Cartas>
+  </div>
+</section>
+
+{" "}
+
+<section class="grid contenido">
+  <Frase frase={frontmatter.frase_amor} />
+</section>
+
+  <section class="grid pantalla">
+    <Galeria>
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince1.jpg)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince2.jpg)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince3.jpg)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince4.jpg)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince5.jpg)
+    </Galeria>
+
+  </section>
+
+{" "}
+
+<Encabezados texto="El Lugar" />
+<section class="grid contenido fondo-mitad">
+  <ParrafosLibres
+    texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+      la fiesta de XV años"
+  />
+  <div id="zigzag">
+    <BloqueMapa
+      encabezado="Ceremonia"
+      dir={frontmatter.ceremonia.lugar}
+      horario={frontmatter.ceremonia.hora}
+      lat={frontmatter.ceremonia.lat}
+      lng={frontmatter.ceremonia.lang}
+      mapName="mapa1"
+    />
+    <BloqueMapa
+      encabezado="Recepción"
+      dir={frontmatter.recepcion.lugar}
+      horario={frontmatter.recepcion.hora}
+      lat={frontmatter.recepcion.lat}
+      lng={frontmatter.recepcion.lang}
+      mapName="mapa2"
+    />
+  </div>
+</section>
+
+{" "}
+
+<Encabezados texto="Itinerario" />
+<Itinerario listado={frontmatter.iterario} />
+
+{" "}
+
+<section class="grid contenido">
+  <Regalos
+    frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
+    beneficiario={frontmatter.beneficiario}
+    banco={frontmatter.banco}
+    cuenta={frontmatter.cuenta}
+  />
+</section>
+
+{" "}
+
+<section class="grid contenido">
+  <Contador fecha={frontmatter.fecha} />
+</section>
+
+{" "}
+
+<section>
+  <Confirmacion
+    whatsapp={frontmatter.whatsapp}
+    dias_antes={7}
+    version={frontmatter.version}
+    client:only="react"
+  />
+</section>

@@ -1,5 +1,6 @@
 @use "variables" as *;
 @use "componentes" as *;
+@use 'sass:math';
 
 // @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
@@ -224,4 +225,85 @@ border: solid;
 .opa{
   visibility: hidden;
   border: 10px solid red !important;
+}
+
+
+.gale{
+
+  // $numero : var(--num);
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $gris $acento;
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-track:hover {
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-track:active {
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: $gris;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: $acento;
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background-color: $acento;
+  }
+
+    margin: 0rem 0 $margen 0;
+
+  $min : -16deg;
+  $max : 16deg;
+  @for $i from 1 through 10 {
+     img:nth-child(#{$i}) {
+      transform:rotate(min(max((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg, -$max), $max));
+    }
+
+  }
+
+
+ img {
+    border: solid;
+    object-fit: cover;
+    aspect-ratio: 6/5;
+    border: solid 15px white;
+    @extend .sombra;
+    @include cel {
+      aspect-ratio: 5/5;
+    }
+  }
+ p  {
+    overflow-x: auto;
+    overflow-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    display: grid;
+    gap: 0px;
+    grid-auto-flow: column;
+    gap: 0;
+    grid-auto-columns: 30%;
+    padding:$margen 0;
+    justify-content: space-evenly;
+
+    @include cel {
+      grid-auto-columns: 80%;
+    }
+  }
 }

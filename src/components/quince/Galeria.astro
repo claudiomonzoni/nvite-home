@@ -1,23 +1,24 @@
 ---
 import { Image } from "astro:assets";
-const imas =  await Astro.glob("../../assets/quince/quincePlus/*").then(images => {
-    return images.map(foto => foto.default);
-});
- const num = Number(imas.length);
+// const imas =  await Astro.glob(`../../assets/quince//*`).then(images => {
+//     return images.map(foto => foto.default);
+// });
+//  const num = Number(imas.length);
 ---
 <div class="gale">
+ <slot />
+  <!-- {
 
-  {
-   
    imas.map((ima) => (
        <Image src={ima} width={500} alt="galeria" />
    ))
-  }
+  } -->
 </div>
 
-<style lang="scss" define:vars={num}>
+<style lang="scss" >
+// <style lang="scss" define:vars={num}>
   @use 'sass:math';
-  $numero : var(--num);
+  // $numero : var(--num);
   @import "../../estilos/quince/_variables.scss";
 
   /* Firefox */
@@ -56,9 +57,11 @@ const imas =  await Astro.glob("../../assets/quince/quincePlus/*").then(images =
   *::-webkit-scrollbar-thumb:active {
     background-color: $acento;
   }
-  .gale {
+  .gale {;
     margin: 0rem 0 $margen 0;
   }
+
+
 
   $min : -16deg;
   $max : 16deg;
@@ -66,12 +69,12 @@ const imas =  await Astro.glob("../../assets/quince/quincePlus/*").then(images =
     .gale img:nth-child(#{$i}) {
       transform:rotate(min(max((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg, -$max), $max));
     }
-    
+
   }
 
-  .gale img {
-    // height: 50vh;
-    // width: 100%;
+
+  .gale > img {
+    border: solid;
     object-fit: cover;
     aspect-ratio: 6/5;
     border: solid 15px white;
@@ -80,7 +83,7 @@ const imas =  await Astro.glob("../../assets/quince/quincePlus/*").then(images =
       aspect-ratio: 5/5;
     }
   }
-  .gale  {
+  .gale p  {
     overflow-x: auto;
     overflow-behavior-inline: contain;
     scroll-snap-type: inline mandatory;
