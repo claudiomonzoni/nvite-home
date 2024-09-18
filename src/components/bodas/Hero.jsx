@@ -21,7 +21,6 @@ export default function Hero({
 
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("invisible");
-    
     const tl = gsap.timeline();
     gsap.from(".contenido", {
       opacity: 0,

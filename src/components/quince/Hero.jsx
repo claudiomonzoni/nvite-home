@@ -3,21 +3,33 @@ import gsap from "gsap";
 import Style from "../../estilos/quince/hero.module.scss";
 import invitadosData from "../../assets/quince/quincePlus/data/invitados.json";
 
-
 export default function Hero({ nombres, fecha, cover }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
+  const folder = "quincePlus";
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("opa");
     // confirmacion de id
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
-    // animacion intro
-    if (id && id < invitadosData.length) {
-      setInvitado(invitadosData[id].nombre);
-      setPase(invitadosData[id].pases);
+
+
+    // Fetch data cuando se monta el componente
+    fetch(`/quince/${folder}/data/invitados.json`)
+    .then(res => res.json())
+    .then(json =>{
+
+      if (id && id < json.length) {
+        setInvitado(json[id].nombre);
+        setPase(json[id].pases);
+      }
     }
+    )
+
+  
+    // animacion intro
+  
     const tl = gsap.timeline();
     gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
     tl.from("#bande", {
@@ -35,13 +47,11 @@ export default function Hero({ nombres, fecha, cover }) {
       ease: "power4.out",
       stagger: { amount: 0.5 },
     });
+    
   }, []);
   return (
     <>
-
-
-
-      <section id={Style["hero"]} className="contenido opa" >
+      <section id={Style["hero"]} className="contenido opa">
         <div className={Style["laimagen"]}>
           <img src={cover} alt="cover" />
         </div>
@@ -56,15 +66,17 @@ export default function Hero({ nombres, fecha, cover }) {
             </p>
             <p className={Style.fecha}>{fecha.toLocaleString()}</p>
           </div>
-          {pase > 0 ? 
-          <>
-          <div id={Style["pases"]}>
-            No. de pases: <span id="NumeroPases">{pase}</span>
-          </div>
-          </> : <></>}
+          {pase > 0 ? (
+            <>
+              <div id={Style["pases"]}>
+                No. de pases: <span id="NumeroPases">{pase}</span>
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </section>
-          
     </>
   );
 }
