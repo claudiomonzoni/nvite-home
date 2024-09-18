@@ -3,10 +3,9 @@ import gsap from "gsap";
 import Style from "../../estilos/quince/hero.module.scss";
 import invitadosData from "../../assets/quince/quincePlus/data/invitados.json";
 
-export default function Hero({ nombres, fecha, cover }) {
+export default function Hero({ nombres, fecha, cover, folder }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
-  const folder = "quincePlus";
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("opa");
     // confirmacion de id
