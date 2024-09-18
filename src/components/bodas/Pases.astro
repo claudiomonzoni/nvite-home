@@ -1,11 +1,19 @@
 ---
+
 interface props {
   pase: number;
   invitados: string;
+  folder: string;
 }
-const { pase, invitados } = Astro.props;
-import fondoFloral from "../../assets/bodas/nvitaPlus/flores-fondo-a.png";
+const { pase, invitados, folder } = Astro.props;
+import fondoFloral from "../../assets/bodas/imas/flores-fondo-a.png";
 const fondoFloralUrl = `url(${fondoFloral.src})`;
+
+
+const canonicalURL = new URL(Astro.url, Astro.site);
+// Example: Construct a URL for SEO meta tags using your current domain
+// console.log(canonicalURL);
+
 ---
 <div class="bande">
 
@@ -69,8 +77,11 @@ const fondoFloralUrl = `url(${fondoFloral.src})`;
 
 </style>
 
+
+
 <script>
-  import invitadosData from "../../pages/bodas/data/_invitados.json";
+    
+  import invitadosData from "../../assets/bodas/nvitaPlus/data/invitados.json";
 
   const invitados = document.querySelector("#invitados");
   const pase = document.querySelector("#pase");

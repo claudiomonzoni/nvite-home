@@ -5,6 +5,7 @@ extracto: Muestra de la invitación de bodas nvite plus
 descripcion: Muestra de la invitación de bodas nvite plus, la más completa de las invitaciones que te ofrecemos.
 slug: nvita-bodas-plus
 cover: /bodas/nvitaPlus/cover.webp
+json: nvitaPlus
 whatsapp: 8488493900
 novios : Elena & Marcos
 ellaIniciales: E
@@ -95,7 +96,7 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 </section>
 
 <section class="grid contenido">
-<Pases />
+<Pases folder={frontmatter.json} />
 </section>
 
   <section class="grid contenido">

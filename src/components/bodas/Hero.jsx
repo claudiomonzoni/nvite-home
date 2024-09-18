@@ -3,7 +3,7 @@ import gsap from "gsap";
 import Style from "../../estilos/bodas/hero.module.scss";
 
 // imagenes
-import divisor from "../../assets/bodas/nvitaPlus/divisor-floral-plano1.svg";
+import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 
 //---------------------------------------------------------------------------------------------
 export default function Hero({
