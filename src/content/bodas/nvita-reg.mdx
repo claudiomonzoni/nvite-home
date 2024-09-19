@@ -41,7 +41,7 @@ recepcion: {
 
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Padres from "../../components/bodas/Padres.astro";
-import Pases from "../../components/bodas/Pases.astro";
+import Pases from "../../components/bodas/Pases";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
@@ -59,9 +59,9 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 <Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>
 </section>
 
-<section class="grid contenido">
-<Pases folder={frontmatter.json} />
-</section>
+
+<Pases folder={frontmatter.json} client:load />
+
 
   <section class="grid contenido">
     <Frase frase={frontmatter.frase_amor} />
