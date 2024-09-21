@@ -35,7 +35,7 @@ export default function Pases({ folder }) {
    
   }, []);
   return (
-    <section class="grid contenido">
+    <section className="grid contenido">
       <div id={Style["bande"]}>
         <h2 id={Style["invitados"]}>{invitado}</h2>
         <p>

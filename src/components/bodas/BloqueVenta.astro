@@ -7,7 +7,7 @@ interface Props {
   stripe: string;
 }
 const { costo, version, stripe } = Astro.props;
-const url = Astro.url.host;
+const url = Astro.url.origin;
 const tipos = ["plus", "reg", "basic"];
 ---
 
@@ -43,7 +43,7 @@ const tipos = ["plus", "reg", "basic"];
           (tipo) => (
             tipo !== version ? (
               <Anchor
-                url={`${url}/nvita-bodas-${tipo}?id=2`}
+                url={`${url}/bodas/nvita-bodas-${tipo}?id=2`}
                 id={"estilo"}
                 clases={"large"}
                 conBorde={false}
