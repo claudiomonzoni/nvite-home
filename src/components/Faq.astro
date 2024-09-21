@@ -1,0 +1,129 @@
+---
+
+---
+
+<div class="conte">
+    <h2>Dudas más frecuentes</h2>
+    <details>
+      <summary>¿Qué es la personalización de las invitaciones de nvita?</summary>
+      <div>
+        La personalización se refiere a los datos de la invitación. Cada
+        invitación tendrá los datos de tu evento. Además, es posible variar los
+        tonos de la invitación para que concuerden con los tonos oficiales de tu
+        evento.
+      </div>
+    </details>
+    <details>
+      <summary>¿Cómo puedo editar los colores de mi invitación?</summary>
+      <div>
+        En la compra de tu invitación, tendrás la opción de hablar con nuestro
+        diseñador para ajustar los colores. Toma en cuenta que las invitaciones ya
+        cuentan con un determinado número de colores y no se podrán quitar o poner
+        más colores de los que dispone. Además, solo tendrás gratis una sola
+        sesión de ajustes de colores. Si necesitas ver más opciones, el costo es
+        de $300 pesos por sesión de ajustes de colores.
+      </div>
+    </details>
+    <details>
+      <summary>¿Qué métodos de pago aceptan?</summary>
+      <div>
+        Puedes pagar con tu tarjeta de crédito o de débito, y si estás dentro de
+        México, además tendrás la opción de pagar en cualquier sucursal OXXO.
+      </div>
+    </details>
+    <details>
+      <summary>¿Con cuánto tiempo de anticipación debo hacer mi pedido?</summary>
+      <div>
+        En este momento no tenemos un tiempo de anticipación para hacer pedidos de
+        invitaciones digitales nvita, puedes comprarlas en cualquier momento, solo toma nuestros tiempos de entrega que son de 2 días hábiles.
+      </div>
+    </details>
+    <details>
+      <summary>¿Qué plazo de entrega tiene?</summary>
+      <div>
+        Al menos dos días hábiles son necesarios para la entrega de una invitación
+        después de haber entregado todos los datos e imágenes para la
+        personalización de la invitación.
+      </div>
+    </details>
+    <details>
+      <summary>¿En qué moneda están los precios?</summary>
+      <div>Todos nuestros precios están en pesos mexicanos.</div>
+    </details>
+    <details>
+      <summary>¿Se puede comprar desde cualquier ciudad o país?</summary>
+      <div>
+        Sí, puedes comprar desde cualquier ciudad, ya sea dentro o fuera de
+        México. Si estás fuera de México, tendrás la opción de pago con tarjeta de
+        débito o crédito.
+      </div>
+    </details>
+    <details>
+      <summary>¿Qué horarios de trabajo tienen?</summary>
+      <div>Lunes a viernes, de 9:00 A.M. a 6:00 P.M.</div>
+    </details>
+    <details>
+      <summary>Aún tengo más dudas, ¿Cómo me contacto con ustedes?</summary>
+      <div>
+        <ul>
+          <li>Puedes usar el formulario que está más abajo, es la forma más facil y simple de contactarnos. Platícanos tus dudas y con gusto te ayudaremos a resolverlas.</li>
+          <li>WhatsApp: +52 1 755 113 2468</li>
+          <li>Email: invitacionesnvita@gmail.com</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+<style lang="scss">
+  @import "../estilos/variables.scss";
+  .conte {
+    border-radius: $radio;
+    background: rgb(255, 247, 233);
+    margin-bottom: $margen;
+    @extend .sombra;
+    h2 {
+
+      padding: $margen-cel $margen-min;
+    }
+  }
+  details {
+    border-top: solid 1px $fondo;
+    color: $primario;
+    font-size: clamp(1rem, 1.3vw, 1.5vw);
+    @extend .anime;
+  }
+
+  summary {
+    padding: $margen-min;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    transition: height 1s ease;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:after {
+    content: "\002B";
+  }
+
+  details[open] summary {
+    border-bottom: 1px solid $fondo;
+  }
+
+  details[open] summary:after {
+    content: "\00D7";
+  }
+
+  details[open] div {
+    padding: $margen-cel $margen-min;
+    background: linear-gradient(0deg, $primario 80%, rgb(51, 47, 87) 40%);
+    background: $primario;
+    font-size: clamp(1rem, 1.3vw, 1vw);
+    color: white;
+    border-bottom-right-radius: $radio;
+    border-bottom-left-radius: $radio;
+  }
+</style>
