@@ -41,7 +41,7 @@ import Regalos from "../../components/quince/Regalos.astro";
 import Contador from "../../components/quince/Contador.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
-import BloqueVenta from "../../components/quince/BloqueVenta.astro";
+import Ventas from "../../components/comunes/Ventas.astro"
 
 
 
@@ -119,4 +119,4 @@ import BloqueVenta from "../../components/quince/BloqueVenta.astro";
   </section>
  
 
-   <BloqueVenta costo="990" stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX" version={frontmatter.version} />
+   <Ventas costo="990" stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX" version={frontmatter.version} tipo="quince" />

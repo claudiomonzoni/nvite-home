@@ -51,8 +51,9 @@ import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/bodas/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
+import Ventas from "../../components/comunes/Ventas.astro"
 
-import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
+
 
 
  <section class="grid contenido">
@@ -128,4 +129,4 @@ import BloqueVenta from "../../components/bodas/BloqueVenta.astro";
 <Confirmacion whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only="react" />
 
 
-   <BloqueVenta costo="990" stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX" version={frontmatter.version} />
+   <Ventas costo="990" stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX" version={frontmatter.version} tipo="bodas" />

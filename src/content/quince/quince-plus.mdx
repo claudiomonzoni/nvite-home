@@ -74,7 +74,7 @@ import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Audio from "../../components/quince/Audio.astro";
-import BloqueVenta from "../../components/quince/BloqueVenta.astro";
+import Ventas from "../../components/comunes/Ventas.astro"
 
   <Encabezados texto="Mis Xv años" />
   
@@ -159,4 +159,4 @@ import BloqueVenta from "../../components/quince/BloqueVenta.astro";
   </section>
  
 
-   <BloqueVenta costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} />
+   <Ventas costo="1290" stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su" version={frontmatter.version} tipo="quince" />

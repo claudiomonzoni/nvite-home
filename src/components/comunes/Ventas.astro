@@ -1,67 +1,70 @@
 ---
-import Anchor from "../comunes/Anchor.astro";
+import Anchor from "./Anchor.astro"
 
 interface Props {
   costo: number;
   version: string;
   stripe: string;
+  tipo: string;
 }
-const { costo, version, stripe } = Astro.props;
+const { costo, version, stripe, tipo } = Astro.props;
 const url = Astro.url.origin;
-const tipos = ["plus", "reg", "basic"];
+const tipos = ["plus", "reg", "basic"];	
 ---
 
 <div class="grid contenido">
   <div class="flex" id="bloqueventas">
     <div class="info">
-      <h3>Compra: nvitación de Boda <span> {version}</span></h3>
+      <h3><b>Nvitación</b> de {tipo} / <span> {version === "reg" ? "regular" : version}</span></h3>
       <Anchor
-        url={"https://nvita.me"}
-        id={"estilo"}
-        clases={"large"}
-        conBorde={true}
-        redondo={true}
-        sombra={false}
-        tema={"primario"}
-        texto={"regresar a inicio"}
+      url={stripe}
+      id={"estilo"}
+      clases={"large"}
+      conBorde={false}
+      redondo={true}
+      sombra={true}
+      tema={"secundario"}
+      texto={`Comprar $${costo} MXN.`}
       />
-      <Anchor
-        url={stripe}
-        id={"estilo"}
-        clases={"large"}
-        conBorde={false}
-        redondo={true}
-        sombra={false}
-        tema={"primario"}
-        texto={`Comprar ${costo}`}
-      />
+
     </div>
     <div id="version">
-      <h4>Ver más versiones</h4>
+      <h4>Otras versiones de invitaciones de <b>{tipo}</b> </h4>
       {
         tipos.map(
-          (tipo) => (
-            tipo !== version ? (
+          (ver) => (
+            ver !== version ? (
               <Anchor
-                url={`${url}/bodas/nvita-bodas-${tipo}?id=2`}
+                url={`${url}/${tipo}/nvita-${tipo}-${ver}?id=2`}
                 id={"estilo"}
                 clases={"large"}
                 conBorde={false}
                 redondo={true}
                 sombra={false}
                 tema={"primario"}
-                texto={tipo}
+                texto={ver}
               />
             ) : null
           )
         )
       }
     </div>
+
+    <Anchor
+    url={"https://nvita.me"}
+    id={"estilo"}
+    clases={"large"}
+    conBorde={true}
+    redondo={true}
+    sombra={false}
+    tema={"primario"}
+    texto={"regresar a inicio"}
+  />
   </div>
 </div>
 
 <style lang="scss">
-  @import "../../estilos/bodas/_variables.scss";
+  @import "../../estilos/_variables.scss";
   #bloqueventas {
     background-color: #484f8c;
     margin-top: $margen;
@@ -77,7 +80,9 @@ const tipos = ["plus", "reg", "basic"];
     align-content: space-evenly;
     padding: 2rem;
     margin-bottom: 1rem;
-    .info,
+    .info{
+        text-align: center;
+    }
     #version {
       flex: 1 0 100%;
       flex-wrap: wrap;
@@ -89,13 +94,13 @@ const tipos = ["plus", "reg", "basic"];
         color: white;
         font-weight: bold;
       }
-      flex: 1 0 100%;
-      display: flex;
+    //   flex: 1 0 100%;
+    //   display: flex;
       justify-content: center;
       font-family: Montserrat, sans-serif;
       font-weight: 100;
       color: #ffce95;
-      flex: 1 0 100%;
+    //   flex: 1 0 100%;
       text-align: center;
       padding: 0;
       margin: 0;
