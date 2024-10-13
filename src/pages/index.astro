@@ -26,16 +26,11 @@ import Faq from "../components/Faq.astro";
   <div class="grid contenido" id="choro">
     <h2>Tu evento merece lo mejor</h2>
     <p>
-      Con más de <b>20 años de experiencia</b>,
-      estamos aquí para poner todo nuestro conocimiento a tu disposición.
       Creamos invitaciones digitales personalizadas para <b>bodas, XV años</b> y
-      celebraciones únicas, asegurándonos de que cada detalle refleje la
-      importancia de tu evento.
+      celebraciones únicas. Sabemos lo especial que es este momento para ti, y queremos ayudarte a que
+      sea inolvidable.
     </p>
     <p>
-      Sabemos lo especial que es este momento para ti, y queremos ayudarte a que
-      sea inolvidable.
-      <br />
       <b>
         ¡Empieza hoy y diseña una invitación digital que encantará a todos!"
       </b>
@@ -43,37 +38,36 @@ import Faq from "../components/Faq.astro";
   </div>
 
   <section class="grid contenido">
-    <!-- <div class="cartaBase baseA">
-      <div class="cartasBaseImagenes">
-        <div class="bloqueImg">
-          <img
-            src="/muestra-invitacion-digital-nvite-celular.webp"
-            alt="invitacion digital celular"
-          />
-        </div>
-        <div class="bloqueImg">
-          <img
-            src="/muestra-invitacion-digital-nvite-escritorio.webp"
-            alt="invitacion digital celular"
-          />
-        </div>
-      </div>
+  
+ 
 
-      <div class="cartaBaseTxt">
-        <h2>Tu invitación digital en cualquier pantalla</h2>
-        <p>
-          Diseñadas para verse en celulares o monitores de computadoras, <b
-            >tus invitaciones se verán geniales</b
-          > donde sea que las vean, invitaciones rapidas y con toda la información
-          de tu evento.
-        </p>
-        <p>
-          Además, podrás usar tus invitaciones también como <b
-            >página web de tu evento</b
-          >
-        </p>
-      </div>
-    </div> -->
+    <BannerGeneral
+      encabezado="Cuenta regresiva y confirmación"
+      texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán confirmar su asistencia"
+      tema="primario azul"
+      icono="mdi:archive-clock-outline"
+      urlImagen="../assets/home/gale/confirmacion.webp"
+    />
+
+    <BannerGeneral
+      encabezado="Música e Información en tu invitación"
+      texto="Agrega <b>tu canción favorita</b> y los detalles de tu boda"
+      tema="secundario "
+      icono="mdi:music"
+      izquierda={true}
+      urlImagen="../assets/home/gale/musica.webp"
+    />
+
+    <BannerGeneral
+      encabezado="Frase de amor y galería de fotos"
+      texto="Dí con palabras lo que sientes en una frase y muestra hasta 6 fotos de los novios o la quinceara"
+      tema="primario "
+      icono="mdi:image-plus"
+      urlImagen="../assets/home/gale/frase.webp"
+    />
+
+
+
     <div class="flex">
       <div class="cartaBase2">
         <h2>Invitaciones digitales personalizadas para cada invitado</h2>
@@ -106,31 +100,7 @@ import Faq from "../components/Faq.astro";
         />
       </div>
     </div>
-
-    <BannerGeneral
-      encabezado="Cuenta regresiva y confirmación"
-      texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán confirmar su asistencia"
-      tema="primario azul"
-      icono="mdi:archive-clock-outline"
-      urlImagen="../assets/home/gale/confirmacion.webp"
-    />
-
-    <BannerGeneral
-      encabezado="Música e Información en tu invitación"
-      texto="Agrega <b>tu canción favorita</b> y los detalles de tu boda"
-      tema="secundario "
-      icono="mdi:music"
-      izquierda={true}
-      urlImagen="../assets/home/gale/musica.webp"
-    />
-
-    <BannerGeneral
-      encabezado="Frase de amor y galería de fotos"
-      texto="Dí con palabras lo que sientes en una frase y muestra hasta 6 fotos de los novios o la quinceara"
-      tema="primario "
-      icono="mdi:image-plus"
-      urlImagen="../assets/home/gale/frase.webp"
-    />
+    
     <!-- carcateristicas -->
 
     <div id="conteCaracteristicas">
@@ -162,6 +132,8 @@ import Faq from "../components/Faq.astro";
         fondo="fondo-nvite-caracteristicas-4.png"
       /> -->
     </div>
+
+
   </section>
   <!-- <Galeriaslide /> -->
   <div class="grid contenido">
@@ -198,7 +170,9 @@ import Faq from "../components/Faq.astro";
         clases="btn-claro"
         claro={false}
         blank={false}
-      />
+        >
+        <Icon name="bag" size={25} />
+        </Btn>
     </BannerGeneral>
   </div>
 

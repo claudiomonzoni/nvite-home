@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 ---
 
@@ -19,25 +20,30 @@ import Btn from "./Btn.astro";
           <li>Frase animada</li>
           <li>Formulario de confirmación sencilla</li>
         </ul>
-        <Btn
-        liga="/bodas/nvita-bodas-basic"
-        clases="btn-claro"
-        texto="Ver Bodas"
-        claro={true}
-        />
-        <Btn
-        liga="/quince/nvita-quince-basic"
-        clases="btn-claro"
-        texto="Ver Xv Añós"
-        claro={true}
-        />
-        <br/>
+        <div class="conteBtn">
+
+          <Btn
+          liga="/bodas/nvita-bodas-basic"
+          clases="btn-claro"
+          texto="Ver Bodas"
+          claro={true}
+          />
+          <Btn
+          liga="/quince/nvita-quince-basic"
+          clases="btn-claro"
+          texto="Ver Xv Añós"
+          claro={true}
+          />
+        </div>
+     
         <Btn
           liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
           clases="btn-oscuro"
           texto="Obtenla ahora"
           claro={false}
-        />
+        >
+        <Icon name="bag" size={25} />
+        </Btn>
       </div>
 
       
@@ -57,27 +63,32 @@ import Btn from "./Btn.astro";
           <li>Frase animada</li>
           <li>Formulario de confirmación</li>
         </ul>
-        <Btn
-        liga="/bodas/nvita-bodas-reg?id=2"
-        clases="btn-claro"
-        texto="Ver Bodas"
-        claro={true}
-        />
-        <Btn
-        liga="/quince/nvita-quince-reg?id=2"
-        clases="btn-claro"
-        texto="Ver Xv Años"
-        claro={true}
-        />
-        <br/>
-        <Btn
-          liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
-          clases="btn-oscuro"
-          texto="Obtenla ahora"
-          claro={false}
-        />
-      </div>
+        <div class="conteBtn">
 
+          <Btn
+          liga="/bodas/nvita-bodas-reg?id=2"
+          clases="btn-claro"
+          texto="Ver Bodas"
+          claro={true}
+          />
+          <Btn
+          liga="/quince/nvita-quince-reg?id=2"
+          clases="btn-claro"
+          texto="Ver Xv Años"
+          claro={true}
+          />
+        </div>
+        
+        <Btn
+        liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
+        clases="btn-oscuro"
+        texto="Obtenla ahora"
+        claro={false}
+        >
+        <Icon name="bag" size={25} />
+        </Btn>
+      </div>
+      
       <div class="lista">
         <small>Bodas & XV Años</small>
         <h2>Nvita Plus</h2>
@@ -96,25 +107,30 @@ import Btn from "./Btn.astro";
           <li><b>Itinerario</b></li>
           <li>Formulario de confirmación</li>
         </ul>
-        <Btn
-        liga="/bodas/nvita-bodas-plus?id=1"
-        clases="btn-claro"
-        texto="Ver Bodas"
-        claro={true}
-        />
-        <Btn
-        liga="/quince/nvita-quince-plus?id=1"
-        clases="btn-claro"
-        texto="Ver Xv Años"
-        claro={true}
-        />
-        <br/>
+        <div class="conteBtn">
+
+          <Btn
+          liga="/bodas/nvita-bodas-plus?id=1"
+          clases="btn-claro"
+          texto="Ver Bodas"
+          claro={true}
+          />
+          <Btn
+          liga="/quince/nvita-quince-plus?id=1"
+          clases="btn-claro"
+          texto="Ver Xv Años"
+          claro={true}
+          />
+        </div>
+
         <Btn
         liga="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
         clases="btn-oscuro"
         texto="Obtenla ahora"
         claro={false}
-        />
+        >
+        <Icon name="bag" size={25} />
+        </Btn>
       </div>
 
     </div>
@@ -172,25 +188,41 @@ small{
     }
   }
   .bande {
-
     margin: $margen 0;
     display: flex;
     flex-wrap: wrap;
-
-    gap: 1.5rem
+   
   }
   .lista {
+    min-width: min-content;
+    flex: 1;
+    border-right: solid 1px $primario;
+    padding: 0 1.5rem;
+    a{
+     align-self: auto;
+     justify-self: flex-start;
+     svg{
+            vertical-align: middle;
+        }
+    }
     &:last-child {
       border: none;
     }
-
-    border-right: solid 1px $primario;
-    padding: 0 1.5rem;
     @include cel {
       border-right: none;
       border-bottom: solid 1px $primario;
       padding: 2rem 1.5rem;
   }
+}
+.conteBtn{
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.conteBtn > * {
+  min-width: fit-content;
+  text-align: center;
+  flex: 1;
 }
   ul {
     padding: 1rem 0;
