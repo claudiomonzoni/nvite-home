@@ -1,58 +1,71 @@
 ---
-
-
+import { Icon } from "astro-icon/components";
+import Btn from "./Btn.astro";
 ---
+
 <nav>
-    <a href="/"><img src="nvita-logo.svg" alt="Nvita invitaciones digitales" id="logo"></a>
-    <ul>
-        <li><a href="#bodas" class="selected">Bodas</a></li>
-        <li><a href="#bodas">XV años</a></li>
-        <li><a href="#quince">Cumpleaños</a></li>
-        <li>Eventos</li>
-        <!-- <li><a href="/xvanos">XV años</a></li>
-        <li><a href="/cumples">Cumpleaños</a></li>
-        <li><a href="/eventos">Eventos</a></li> -->
-    </ul>
+  <a href="/"
+    ><img
+      src="nvita-logo.svg"
+      alt="Nvita invitaciones digitales"
+      id="logo"
+    /></a
+  >
+  <ul>
+    <li><a href="#bodas" class="selected">Bodas</a></li>
+    <li><a href="#bodas">XV años</a></li>
+    <li><a href="#quince">Cumpleaños</a></li>
+    <li>Eventos</li>
+  </ul>
+  <li>
+    <Btn
+      liga="/panel"
+      texto="Mi panel de invitados"
+      clases="btn-oscuro"
+      claro={false}
+      blank={true}
+    >
+    <Icon name="bag" size={25} />
+    </Btn>
+  </li>
 </nav>
 
 <style lang="scss">
-    @import '../estilos/_variables.scss';
-    #logo{
+  @import "../estilos/_variables.scss";
+  #logo {
     width: 15vw;
     @include cel {
-        width: 50vw;
-        padding-top: 1rem;
+      width: 50vw;
+      padding-top: 1rem;
     }
   }
 
-    nav {
-        flex: 1 0 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: $margen-cel 0;
-        @include cel {
-            padding: $margen-min 0;
-            flex-wrap:wrap;
-            justify-content: center;
-            ul{
-                justify-content: center;
-                margin-top: 1rem;
-                flex-wrap:wrap;
-                gap:.4rem;
-           
-            }
-            li{
-                margin: 0 .7rem;
-            }
-
-        }
+  nav {
+    flex: 1 0 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $margen-cel 0;
+    @include cel {
+      padding: $margen-min 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      ul {
+        justify-content: center;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      li {
+        margin: 0 0.7rem;
+      }
     }
-    ul{
-        display: flex;
-        gap:$margen-min;
-    }
-    li{
-        list-style: none;
-    }
+  }
+  ul {
+    display: flex;
+    gap: $margen-min;
+  }
+  li {
+    list-style: none;
+  }
 </style>
