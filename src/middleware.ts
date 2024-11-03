@@ -12,7 +12,7 @@ export const onRequest = defineMiddleware(async (context, next)  => {
     )){
         return context.redirect('/panel')
     }
-    if(!estaDentro && pathname !== "/panel/ingresar" && pathname !== "/panel/registro" && context.request.method === "GET"){
+    if(!estaDentro && pathname !== "/" && pathname !== "/panel/ingresar" && pathname !== "/panel/registro" && context.request.method === "GET"){
         return context.redirect('/panel/ingresar')
     }
     return next()
