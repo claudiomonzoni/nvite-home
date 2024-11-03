@@ -1,9 +1,14 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-
+import { NvitaAuth } from "../../firebase/config";
+import Layout from "../../layouts/panelInvitados.astro";
+const usuario = NvitaAuth.currentUser?.uid;
+const usuarioEmail = NvitaAuth.currentUser?.email;
 ---
 
 <Layout title="Panel de administración">
+    <h2>
+        {usuario && <p>Bienvenido {usuarioEmail}</p>}
+    </h2>
 <h1>Panel de administración</h1>
 <li>Formulario de ingreso</li>
 <li>coneccion a bd</li>

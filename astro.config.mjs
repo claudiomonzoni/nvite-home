@@ -10,7 +10,7 @@ import icon from "astro-icon";
 export default defineConfig({
   site: 'https://www.nvita.me',
   integrations: [sitemap(), react(), mdx(), icon()],
-  output: "hybrid",
+  output: "server",
   adapter: vercel({
     imageService: true
   })
