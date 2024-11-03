@@ -6,12 +6,13 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA2yrPZGYoUk5vQlC869IdXRdLWpGdyXgg",
+  apiKey: import.meta.env.SECRET_APIKEY,
   authDomain: "nvitausuarios.firebaseapp.com",
   projectId: "nvitausuarios",
   storageBucket: "nvitausuarios.firebasestorage.app",
-  messagingSenderId: "42025324165",
-  appId: "1:42025324165:web:39e579238347fc285423ec"
+  messagingSenderId: import.meta.env.SECRET_MESSAGINGSENDERID,
+  appId: import.meta.env.SECRET_APPID
+
 };
 
 // Initialize Firebase
