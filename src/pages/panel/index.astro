@@ -3,6 +3,9 @@ import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
 const usuario = NvitaAuth.currentUser?.uid;
 const usuarioEmail = NvitaAuth.currentUser?.email;
+import { db, Invitados, Usuario } from 'astro:db';
+const invitadosData = await db.select().from(Usuario);
+console.log(invitadosData);
 ---
 
 <Layout title="Panel de administración">

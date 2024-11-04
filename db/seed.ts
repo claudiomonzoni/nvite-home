@@ -1,0 +1,49 @@
+import {Usuario, Invitados,  db } from 'astro:db';
+
+
+
+export default async function seed() {
+  await db.insert(Usuario).values([
+    {
+      id: 1,
+      email: "u9aB3@example.com",
+    },
+    {
+      id: 2,
+      email: "bq7p4@example.com",
+    },
+  ]);
+
+  await db.insert(Invitados).values([
+    {
+      usuarioId: 1,
+      nombre: "Ricardo Salinas Pliego",
+      pases: 3,
+      mesa: "2",
+      numeroWhats: 123456789,
+      confirmado: true,
+      vip: true,
+      InvitacionEnviada: true,
+      noAsiste: false,
+      fechaEnvitado: new Date(),
+      invitacionFamiliar: false,
+      invitacionIndividual: true,
+      invitacionGrupal: false,
+    },
+    {
+      usuarioId: 2,
+      nombre: "Familia Slim",
+      pases: 20,
+      mesa: "1",
+      numeroWhats: 323456782,
+      confirmado: false,
+      vip: true,
+      InvitacionEnviada: false,
+      noAsiste: false,
+      fechaEnvitado: new Date(),
+      invitacionFamiliar: true,
+      invitacionIndividual: false,
+      invitacionGrupal: false,
+    },
+  ]);
+}
