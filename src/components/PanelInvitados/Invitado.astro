@@ -1,0 +1,27 @@
+---
+export type InvitadoProps = {
+    nombre: string,
+    pases: string,
+    mesa: number,
+    numeroWhats:number,
+    confirmado:boolean,
+    vip:boolean,
+    InvitacionEnviada:boolean,
+    noAsiste:boolean,
+    fechaEnvitado: Date,
+    invitacionFamiliar:boolean,
+    invitacionIndividual:boolean,
+    invitacionGrupal:boolean,
+};
+
+type Props = {
+    invitadoData:InvitadoProps
+}
+const { invitadoData } = Astro.props;
+
+---
+
+<div class="invitado">
+    <h3>{invitadoData.nombre}</h3>
+    <p class="info">Id: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
+</div>

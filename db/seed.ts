@@ -12,6 +12,10 @@ export default async function seed() {
       id: 2,
       email: "bq7p4@example.com",
     },
+    {
+      id: 3,
+      email: "qg8wS@example.com",
+    }
   ]);
 
   await db.insert(Invitados).values([
@@ -44,6 +48,21 @@ export default async function seed() {
       invitacionFamiliar: true,
       invitacionIndividual: false,
       invitacionGrupal: false,
+    },
+    {
+      usuarioId: 2,
+      nombre: "Los gorrones",
+      pases: 209,
+      mesa: "11",
+      numeroWhats: 34234582,
+      confirmado: true,
+      vip: false,
+      InvitacionEnviada: false,
+      noAsiste: false,
+      fechaEnvitado: new Date(),
+      invitacionFamiliar: false,
+      invitacionIndividual: false,
+      invitacionGrupal: true,
     },
   ]);
 }
