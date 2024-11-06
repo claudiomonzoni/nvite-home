@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input"> {
+  checked: boolean;
+  inputId: number;
+  titulo: string;
+}
+
+const { inputId, checked, titulo, ...rest } = Astro.props;
+---
+
+<div >
+  <input
+    type="checkbox"
+    checked={checked}
+    class=""
+    id={`check-${inputId}`}
+    {...rest}
+  />
+  <div aria-hidden="true">
+    <Icon name="bag" size={16} />
+  </div>
+  <label for={`check-${inputId}`}>{titulo}</label>
+</div>

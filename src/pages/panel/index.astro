@@ -9,7 +9,8 @@ const request = await fetch(`${Astro.url.origin}/api/getInvitados.json`);
 const invitadosData = await request.json();
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
-
+import Dialog from "../../components/PanelInvitados/Dialog.astro";
+console.log(invitadosData)
 ---
 
 <Layout title="Panel de administración">
@@ -23,6 +24,9 @@ import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro
     invitadosData.map( (invi:InvitadoProps)=> <li><Invitado invitadoData={invi} /></li>  )
 }
     </ul>
+
+    <button id="agregar-invitado">Agregar invitado</button>
+    <Dialog />
 
 <li>UI</li>
 <li>Mostrar invitados, formulario de agregarlos con un icono +</li>

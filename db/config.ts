@@ -12,7 +12,7 @@ const Invitados = defineTable({
   columns: {
     usuarioId: column.number({references: () => Usuario.columns.id}),
     nombre: column.text(),
-    pases: column.number(),
+    pases: column.text(),
     mesa: column.text({ optional: true }),
     numeroWhats: column.number({ optional: true }),
     confirmado: column.boolean({
@@ -27,17 +27,8 @@ const Invitados = defineTable({
     noAsiste: column.boolean({
       default: false,
     }),
-    fechaEnvitado: column.date({
-      // default: new Date(),
-    }),
-    invitacionFamiliar: column.boolean({
-      default: false,
-    }),
-    invitacionIndividual: column.boolean({
-      default: false,
-    }),
-    invitacionGrupal: column.boolean({
-      default: false,
+    tipoInvitacion: column.text({
+      optional: true,
     }),
   },
 });
