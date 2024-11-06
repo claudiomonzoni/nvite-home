@@ -5,14 +5,20 @@ export default async function seed() {
     {
       id: 1,
       email: "u9aB3@example.com",
+      tipo: "boda",
+    ruta: "/panchaypepe/"
     },
     {
       id: 2,
       email: "bq7p4@example.com",
+      tipo: "quince",
+    ruta: "/raulyrenan/"
     },
     {
       id: 3,
       email: "qg8wS@example.com",
+      tipo: "cumple",
+    ruta: "/lupeylalo/"
     }
   ]);
 

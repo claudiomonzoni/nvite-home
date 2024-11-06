@@ -5,6 +5,9 @@ const Usuario = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     email: column.text(),
+    tipo: column.text({default: "bodas",}),
+    ruta: column.text({}),
+
   },
 });
 
