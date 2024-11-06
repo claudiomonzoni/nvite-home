@@ -16,10 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
       vip,
       InvitacionEnviada,
       noAsiste,
-      fechaEnvitado,
-      invitacionFamiliar,
-      invitacionIndividual,
-      invitacionGrupal,
+      tipoInvitacion,
     } = body;
 
     // comprobamos que los campos no esten vacios
@@ -40,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
     // hacemos el reg en la bd
     const req = await db.insert(Invitados).values({
-      usuarioId: sanitize(usuarioId),
+      usuarioId: sanitize(2),
       nombre: sanitize(nombre),
       pases: sanitize(pases),
       mesa: sanitize(mesa),
@@ -49,10 +46,7 @@ export const POST: APIRoute = async ({ request }) => {
       vip,
       InvitacionEnviada,
       noAsiste,
-      fechaEnvitado: sanitize(fechaEnvitado),
-      invitacionFamiliar,
-      invitacionIndividual,
-      invitacionGrupal,
+      tipoInvitacion,
     });
 
     return new Response(
