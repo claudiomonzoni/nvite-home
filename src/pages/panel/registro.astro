@@ -20,6 +20,15 @@ import Layout from "../../layouts/panelInvitados.astro";
       autocomplete="password"
       placeholder="Agrega una contraseñá segura"
     />
+    <label for="tipoInvitacion">Tipo Invitacion</label>
+    <select name="tipoInvitacion" id="tipoInvitacion">
+      <option value="boda">Boda</option>
+      <option value="quince">Xv años</option>
+      <option value="cumples">Cumpleaños</option>
+    </select>
+
+    <label for="ruta">Ruta</label>
+    <input type="text" name="ruta" placeholder="Agrega una /juanyjuana/" />
     <button>Registrate</button>
   </form>
   <p>Ya tienes cuenta? <a href="/panel/ingresar">Ingresar</a></p>

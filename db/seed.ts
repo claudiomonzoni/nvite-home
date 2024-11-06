@@ -1,4 +1,4 @@
-import {Usuario, Invitados,  db } from 'astro:db';
+import { Usuario, Invitados, db } from 'astro:db';
 
 export default async function seed() {
   await db.insert(Usuario).values([
@@ -6,19 +6,19 @@ export default async function seed() {
       id: 1,
       email: "u9aB3@example.com",
       tipo: "boda",
-    ruta: "/panchaypepe/"
+      ruta: "/panchaypepe/"
     },
     {
       id: 2,
       email: "bq7p4@example.com",
       tipo: "quince",
-    ruta: "/raulyrenan/"
+      ruta: "/raulyrenan/"
     },
     {
       id: 3,
       email: "qg8wS@example.com",
       tipo: "cumple",
-    ruta: "/lupeylalo/"
+      ruta: "/lupeylalo/"
     }
   ]);
 
@@ -46,7 +46,7 @@ export default async function seed() {
       InvitacionEnviada: false,
       noAsiste: false,
       tipoInvitacion: "familiar",
-  
+
     },
     {
       usuarioId: 2,
