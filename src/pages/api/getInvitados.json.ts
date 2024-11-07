@@ -5,7 +5,6 @@ const usuarioEmail = NvitaAuth.currentUser?.email;
 
 
 export const GET: APIRoute = async () => {
-  console.log(usuarioEmail)
   try {
     //aqui hay que hacer el filtro por usuario
     const data = await db.select().from(Invitados).where(eq(Invitados.usuarioId, 2 ));

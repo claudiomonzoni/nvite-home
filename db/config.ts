@@ -13,6 +13,7 @@ const Usuario = defineTable({
 
 const Invitados = defineTable({
   columns: {
+    id: column.number({ primaryKey: true }),
     usuarioId: column.number({references: () => Usuario.columns.id}),
     nombre: column.text(),
     pases: column.text(),

@@ -11,10 +11,10 @@ import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
 import Dialog from "../../components/PanelInvitados/Dialog.astro";
 
-import {Usuario, db} from "astro:db"
-const usuarios = await db.select().from(Usuario)
-console.log(usuarios)
-// console.log(invitadosData)
+// import {Usuario, db} from "astro:db"
+// const usuarios = await db.select().from(Usuario)
+// console.log(usuarios)
+ console.log(invitadosData)
 ---
 
 <Layout title="Panel de administración">

@@ -1,5 +1,6 @@
 ---
 export type InvitadoProps = {
+    id:number,
     nombre: string,
     pases: string,
     mesa: number,
@@ -8,10 +9,8 @@ export type InvitadoProps = {
     vip:boolean,
     InvitacionEnviada:boolean,
     noAsiste:boolean,
-    fechaEnvitado: Date,
-    invitacionFamiliar:boolean,
-    invitacionIndividual:boolean,
-    invitacionGrupal:boolean,
+    tipoInvitacion:string,
+  
 };
 
 type Props = {
@@ -20,8 +19,80 @@ type Props = {
 const { invitadoData } = Astro.props;
 
 ---
+<article>
 
-<div class="invitado">
-    <h3>{invitadoData.nombre}</h3>
-    <p class="info">Id: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
-</div>
+  <div class="invitado">
+    <h3>{invitadoData.nombre} Id (borrar en prod): {invitadoData.id}</h3>
+    <p class="info">Mesa: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
+    <li>Whatsapp: {invitadoData.numeroWhats}</li>
+    <li>Confirmado: {invitadoData.confirmado}</li>
+    <li>VIP: {invitadoData.vip}</li>
+    <li>Enviada: {invitadoData.InvitacionEnviada}</li>
+    <li>No asiste: {invitadoData.noAsiste}</li>
+    <li>Tipo: {invitadoData.tipoInvitacion}</li>
+    <button  data-delete data-id={invitadoData.id} >borrar</button>
+  </div>
+  
+</article>
+<script>
+    // delete links
+    const deleteBtns = document.querySelectorAll(
+      "[data-delete]"
+    ) as NodeListOf<HTMLButtonElement>;
+  
+    deleteBtns.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.dataset.id;
+        try {
+          if (!id) {
+            throw new Error("No id present");
+          }
+          const req = await fetch(`/api/${id}.json`, {
+            method: "DELETE",
+          });
+  
+          if (!req.ok) {
+            throw new Error("Error al borrar invitado");
+          }
+  
+          console.log("borrado");
+          btn.closest("article")?.remove();
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    });
+  
+    // is Read Links
+    const isReadChecks = document.querySelectorAll(
+      "[data-isRead]"
+    ) as NodeListOf<HTMLInputElement>;
+  
+    isReadChecks.forEach((check) => {
+      check.addEventListener("click", async () => {
+        const id = check.dataset.id;
+        const isRead = check.checked;
+        try {
+          if (!id) {
+            throw new Error("No id present");
+          }
+          console.log("something here");
+          const req = await fetch(`/api/${id}.json`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ isRead }),
+          });
+  
+          if (!req.ok) {
+            throw new Error("Patch req was not OK");
+          }
+  
+          console.log("updated");
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    });
+  </script>

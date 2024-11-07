@@ -24,6 +24,7 @@ export default async function seed() {
 
   await db.insert(Invitados).values([
     {
+      id: 1,
       usuarioId: 1,
       nombre: "Ricardo Salinas Pliego",
       pases: "3",
@@ -36,6 +37,7 @@ export default async function seed() {
       tipoInvitacion: "individual"
     },
     {
+      id: 2,
       usuarioId: 2,
       nombre: "Familia Slim",
       pases: "20",
@@ -49,6 +51,7 @@ export default async function seed() {
 
     },
     {
+      id: 3,
       usuarioId: 2,
       nombre: "Los gorrones",
       pases: "209",
