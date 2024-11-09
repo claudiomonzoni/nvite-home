@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { Invitados, db, eq } from "astro:db";
+import { Invitados, Usuario, db, eq, desc } from "astro:db";
 import { NvitaAuth } from "../../firebase/config";
 const usuarioEmail = NvitaAuth.currentUser?.email;
 
@@ -7,7 +7,12 @@ const usuarioEmail = NvitaAuth.currentUser?.email;
 export const GET: APIRoute = async () => {
   try {
     //aqui hay que hacer el filtro por usuario
-    const data = await db.select().from(Invitados).where(eq(Invitados.usuarioId, 2 ));
+    const user = await db.select().from(Usuario).where(eq(Usuario.email, usuarioEmail ));
+    const data = await db
+    .select()
+    .from(Invitados)
+    .orderBy(desc(Invitados.id))
+    .where(eq(Invitados.usuarioId, user[0].id )); 
     return new Response(JSON.stringify(data), {
       status: 200,
     });

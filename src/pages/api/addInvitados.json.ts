@@ -37,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
     // hacemos el reg en la bd
     const req = await db.insert(Invitados).values({
-      usuarioId: sanitize(2),
+      usuarioId,
       nombre: sanitize(nombre),
       pases: sanitize(pases),
       mesa: sanitize(mesa),

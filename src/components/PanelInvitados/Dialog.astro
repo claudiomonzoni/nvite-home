@@ -1,10 +1,16 @@
 ---
+import { NvitaAuth } from "../../firebase/config";
 import Checkbox from "./Checkbox.astro";
+import {Usuario, db, eq} from "astro:db"
+const usuarioEmail = NvitaAuth.currentUser?.email;
+const usuarios = await db.select().from(Usuario ).where(eq(Usuario.email, usuarioEmail));
+const usuarioId = usuarios[0].id
+
 ---
 
 <dialog>
   <div class="formulario">
-    <form id="agregar-formu">
+    <form id="agregar-formu" data-ref={usuarioId}>
       <h2>Agrega un invitado a tu panel</h2>
       <label for="nombre">Nombre del invitado</label>
       <input
@@ -27,7 +33,12 @@ import Checkbox from "./Checkbox.astro";
         placeholder="Donde enviar la invitacion"
       />
       <label for="confirmado">¿Ya confirmo sus asistencia?</label>
-      <Checkbox checked={false} inputId={Math.random()} name="confirmado" titulo="Confirmado" />
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="confirmado"
+        titulo="Confirmado"
+      />
 
       <label for="vip">¿Es invitado importante?</label>
       <Checkbox
@@ -37,10 +48,20 @@ import Checkbox from "./Checkbox.astro";
         name="vip"
       />
       <label for="InvitacionEnviada">¿Ya envio invitacion?</label>
-      <Checkbox checked={false} inputId={Math.random()} titulo="Enviada" name="InvitacionEnviada" />
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        titulo="Enviada"
+        name="InvitacionEnviada"
+      />
 
       <label for="noAsiste">Confirmo que no asistirá</label>
-      <Checkbox checked={false} inputId={Math.random()} titulo="No asistirá" name="noAsiste" />
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        titulo="No asistirá"
+        name="noAsiste"
+      />
 
       <label for="tipoInvitacion">Tipo de invitación</label>
       <select name="tipoInvitacion" id="tipoInvitacion">
@@ -57,6 +78,8 @@ import Checkbox from "./Checkbox.astro";
 
 <script>
   import sanitize from "sanitize-html";
+  const form = document.querySelector("form") as HTMLFormElement;
+  const refere = form.dataset.ref;
 
   // query selectors
   const addForm = document.querySelector("#agregar-formu") as HTMLFormElement;
@@ -84,6 +107,7 @@ import Checkbox from "./Checkbox.astro";
     e.preventDefault();
     try {
       const formData = new FormData(addForm);
+      const ref = formData.get("data-ref");
       const nombre = sanitize(formData.get("nombre") as string);
       const pases = sanitize(formData.get("pases") as string);
       const mesa = sanitize(formData.get("mesa") as string);
@@ -91,7 +115,8 @@ import Checkbox from "./Checkbox.astro";
       const confirmado = formData?.get("confirmado") === "on" ? true : false;
       // const confirmado = formData?.get("confirmado") === "on" ? true : (false ?? false);
       const vip = formData?.get("vip") === "on" ? true : false;
-      const InvitacionEnviada = formData?.get("InvitacionEnviada") === "on" ? true : false;
+      const InvitacionEnviada =
+        formData?.get("InvitacionEnviada") === "on" ? true : false;
       const noAsiste = formData?.get("noAsiste") === "on" ? true : false;
       const tipoInvitacion = sanitize(formData.get("tipoInvitacion") as string);
 
@@ -101,6 +126,7 @@ import Checkbox from "./Checkbox.astro";
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          usuarioId: refere,
           nombre,
           pases,
           mesa,
@@ -109,7 +135,7 @@ import Checkbox from "./Checkbox.astro";
           vip,
           InvitacionEnviada,
           noAsiste,
-          tipoInvitacion
+          tipoInvitacion,
         }),
       });
 
