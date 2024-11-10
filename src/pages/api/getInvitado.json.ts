@@ -1,14 +1,15 @@
 import type { APIRoute } from "astro";
-import { Invitados, Usuario, db, eq, desc } from "astro:db";
+import { Invitados, Usuario, db, eq, desc, and } from "astro:db";
 import { NvitaAuth } from "../../firebase/config";
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const losu = [{"id":1,"usuarioId":1,"nombre":"Ricardo Salinas Pliego","pases":"3","mesa":"2","numeroWhats":123456789,"confirmado":true,"vip":true,"InvitacionEnviada":true,"noAsiste":false,"tipoInvitacion":"individual"}]
+
 
 
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
   const id = url.searchParams.get('id');
+  const uid = url.searchParams.get('uid');
   
   if (!id) {
     return new Response(JSON.stringify({ error: 'ID is required' }), {
@@ -18,9 +19,13 @@ export const GET: APIRoute = async ({ request }) => {
   }
   
   try {
-    // const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-    const response = await db.select().from(Invitados).where(eq(Invitados.id, Number(id)))
-   // Verifica si se encontró un resultado
+    // 
+    // se debe enviar una url como esta: http://localhost:4321/api/getInvitado.json?id=1&uid=1
+    //donde el id de la invitación debe de existir con el id del usuario que la creo
+    const response = await db.select()
+    .from(Invitados)
+    .where(and(eq(Invitados.id, Number(id)), eq(Invitados.usuarioId, Number(uid)))
+    )
    if (response.length === 0) {
     return new Response(JSON.stringify({ error: 'No invitado found' }), {
       status: 404,
@@ -28,7 +33,7 @@ export const GET: APIRoute = async ({ request }) => {
     });
   }
 
-  return new Response(JSON.stringify(response[0]), {
+  return new Response(JSON.stringify(response), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });
