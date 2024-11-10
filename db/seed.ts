@@ -4,19 +4,19 @@ export default async function seed() {
   await db.insert(Usuario).values([
     {
       id: 1,
-      email: "u9aB3@example.com",
+      email: "claudiomonzoni@hotmail.com",
       tipo: "boda",
       ruta: "/panchaypepe/"
     },
     {
       id: 2,
-      email: "bq7p4@example.com",
+      email: "test@test.com",
       tipo: "quince",
       ruta: "/raulyrenan/"
     },
     {
       id: 3,
-      email: "qg8wS@example.com",
+      email: "test1@test.com",
       tipo: "cumple",
       ruta: "/lupeylalo/"
     }
