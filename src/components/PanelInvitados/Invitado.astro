@@ -13,9 +13,7 @@ export type InvitadoProps = {
   
 };
 
-type Props = {
-    invitadoData:InvitadoProps
-}
+type Props = {invitadoData:InvitadoProps}
 const { invitadoData } = Astro.props;
 
 ---
@@ -30,15 +28,15 @@ const { invitadoData } = Astro.props;
     <li>Enviada: {invitadoData.InvitacionEnviada}</li>
     <li>No asiste: {invitadoData.noAsiste}</li>
     <li>Tipo: {invitadoData.tipoInvitacion}</li>
+    <button  data-edit data-id={invitadoData.id}>editar</button>
     <button  data-delete data-id={invitadoData.id} >borrar</button>
   </div>
   
 </article>
 <script>
     // delete links
-    const deleteBtns = document.querySelectorAll(
-      "[data-delete]"
-    ) as NodeListOf<HTMLButtonElement>;
+    const deleteBtns = document.querySelectorAll("[data-delete]") as NodeListOf<HTMLButtonElement>;
+    const editBtns = document.querySelectorAll("[data-edit]") as NodeListOf<HTMLButtonElement>;
   
     deleteBtns.forEach((btn) => {
       btn.addEventListener("click", async () => {
@@ -63,6 +61,13 @@ const { invitadoData } = Astro.props;
       });
     });
   
+    editBtns.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.dataset.id;
+        console.log( "editando el:" + id)
+      })
+      
+    })
     // is Read Links
     const isReadChecks = document.querySelectorAll(
       "[data-isRead]"
