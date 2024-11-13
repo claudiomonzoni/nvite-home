@@ -5,9 +5,9 @@ export { renderers } from '../renderers.mjs';
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`${maybeRenderHead()}<h1>Invitaciones de quince años</h1>`;
-}, "/mnt/c/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/quince/index.astro", void 0);
+}, "C:/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/quince/index.astro", void 0);
 
-const $$file = "/mnt/c/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/quince/index.astro";
+const $$file = "C:/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/quince/index.astro";
 const $$url = "/quince";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({

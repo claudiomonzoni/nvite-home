@@ -1,7 +1,7 @@
-import { d as defineMiddleware, s as sequence } from './chunks/index_CrFWftBT.mjs';
+import { d as defineMiddleware, s as sequence } from './chunks/index_DlMulNML.mjs';
 import { N as NvitaAuth } from './chunks/config_B1_1FYaz.mjs';
 import 'es-module-lexer';
-import './chunks/astro-designed-error-pages_DdOpKj4M.mjs';
+import './chunks/astro-designed-error-pages_D-jwUdGp.mjs';
 import 'cookie';
 
 const onRequest$1 = defineMiddleware(async (context, next) => {

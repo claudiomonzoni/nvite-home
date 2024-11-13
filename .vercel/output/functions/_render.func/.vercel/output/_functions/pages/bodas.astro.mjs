@@ -5,9 +5,9 @@ export { renderers } from '../renderers.mjs';
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`${maybeRenderHead()}<h1>Listado opciones Bodas AG</h1>`;
-}, "/mnt/c/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/bodas/index.astro", void 0);
+}, "C:/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/bodas/index.astro", void 0);
 
-const $$file = "/mnt/c/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/bodas/index.astro";
+const $$file = "C:/Users/claud/OneDrive/Escritorio/nvita/nvite-home/src/pages/bodas/index.astro";
 const $$url = "/bodas";
 
 const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
