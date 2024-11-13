@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-// import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel/serverless';
 import sitemap from '@astrojs/sitemap';
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
@@ -11,8 +11,8 @@ import db from "@astrojs/db";
 export default defineConfig({
   site: 'https://www.nvita.me',
   integrations: [sitemap(), react(), mdx(), icon(), db()],
-  output: "static",
-  // adapter: vercel({
-  //   imageService: true
-  // })
+  output: "server",
+  adapter: vercel({
+    imageService: true
+  })
 });
