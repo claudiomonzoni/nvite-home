@@ -30,7 +30,7 @@ import Dialog from "../../components/PanelInvitados/Dialog.astro";
       </ul>
     
 {
-    !invitadosData ? (
+    invitadosData && invitadosData.length > 0 ? (
         <button id="agregar-invitado">Agregar invitado</button>
         <Dialog />
     ): (
