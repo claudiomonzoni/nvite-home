@@ -5,15 +5,12 @@ import Layout from "../../layouts/panelInvitados.astro";
 const usuario = NvitaAuth.currentUser?.uid;
 const usuarioEmail = NvitaAuth.currentUser?.email;
 
-const request = await fetch(`${Astro.url.origin}/api/getInvitados.json`);
+const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`);
 const invitadosData = await request.json();
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
 import Dialog from "../../components/PanelInvitados/Dialog.astro";
 
-// import {Usuario, db} from "astro:db"
-// const usuarios = await db.select().from(Usuario)
-// console.log(usuarios)
 
 ---
 
@@ -23,18 +20,27 @@ import Dialog from "../../components/PanelInvitados/Dialog.astro";
     </h2>
 
     <ul>
-        <!-- <Invitado invitadoData={invitadosData[0]} /> -->
-<!-- {
-    invitadosData.map( (invi:InvitadoProps)=> <li><Invitado invitadoData={invi} /></li>  )
+        {invitadosData && invitadosData.length > 0 ? (
+          invitadosData.map((invi: InvitadoProps) => (
+            <li><Invitado invitadoData={invi} /></li>
+          ))
+        ) : (
+          <h2>Error</h2>
+        )}
+      </ul>
+    
+{
+    !invitadosData ? (
+        <button id="agregar-invitado">Agregar invitado</button>
+        <Dialog />
+    ): (
+        <p>Contacte al administrador para tener acceso a esta sección</p>
+    )
 }
-    </ul>
 
-    <button id="agregar-invitado">Agregar invitado</button>
-    <Dialog /> -->
 
-<li>UI</li>
 <li>Mostrar invitados, formulario de agregarlos con un icono +</li>
 <li>Cada invitado con icono de editar y borrar</li>
 <li>Cada invitado deberá poder confirmar desde la invitacion </li>
-<li>Cada usurio de invitación podrá tambien editar estatus de confirmación</li>
+
 </Layout>
