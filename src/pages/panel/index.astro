@@ -5,22 +5,16 @@ import Layout from "../../layouts/panelInvitados.astro";
 const usuario = NvitaAuth.currentUser?.uid;
 const usuarioEmail = NvitaAuth.currentUser?.email;
 
-let invitadosData = [];
-
-try {
-  const request = await fetch(`${Astro.url.origin}/api/getInvitados.json`);
-  if (request.ok) {
-    invitadosData = await request.json();
-  } else {
-    throw new Error("No se encontraron invitados.");
-  }
-} catch (error) {
-  invitadosData = null; // Maneja el caso de error estableciendo invitadosData en null
-}
-
+const request = await fetch(`${Astro.url.origin}/api/getInvitados.json`);
+const invitadosData = await request.json();
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
 import Dialog from "../../components/PanelInvitados/Dialog.astro";
+
+// import {Usuario, db} from "astro:db"
+// const usuarios = await db.select().from(Usuario)
+// console.log(usuarios)
+
 ---
 
 <Layout title="Panel de administración">
@@ -30,26 +24,13 @@ import Dialog from "../../components/PanelInvitados/Dialog.astro";
 
     <ul>
         <!-- <Invitado invitadoData={invitadosData[0]} /> -->
-        <ul>
-            {invitadosData && invitadosData.length > 0 ? (
-              invitadosData.map((invi: InvitadoProps) => (
-                <li><Invitado invitadoData={invi} /></li>
-              ))
-            ) : (
-              <h3>Ocurrio un error</h3>
-            )}
-          </ul>
+{
+    invitadosData.map( (invi:InvitadoProps)=> <li><Invitado invitadoData={invi} /></li>  )
+}
     </ul>
 
-    {
-        invitadosData && invitadosData.length > 0 ? (
-
-            <button id="agregar-invitado">Agregar invitado</button>
-            <Dialog /> 
-        ):(
-            <p>Contacta a los administradores para podre agregar invitados</p>
-        )
-    }
+    <button id="agregar-invitado">Agregar invitado</button>
+    <Dialog />
 
 <li>UI</li>
 <li>Mostrar invitados, formulario de agregarlos con un icono +</li>
