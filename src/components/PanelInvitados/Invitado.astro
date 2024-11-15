@@ -1,26 +1,31 @@
 ---
+
+
 export type InvitadoProps = {
-    id:number,
-    nombre: string,
-    pases: string,
-    mesa: number,
-    numeroWhats:number,
-    confirmado:boolean,
-    vip:boolean,
-    InvitacionEnviada:boolean,
-    noAsiste:boolean,
-    tipoInvitacion:string,
-  
+  id: number;
+  usuarioId: number;
+  nombre: string;
+  pases: string;
+  mesa: number;
+  numeroWhats: number;
+  confirmado: boolean;
+  vip: boolean;
+  InvitacionEnviada: boolean;
+  noAsiste: boolean;
+  tipoInvitacion: string;
 };
 
-type Props = {invitadoData:InvitadoProps}
+type Props = { invitadoData: InvitadoProps };
 const { invitadoData } = Astro.props;
-
 ---
-<article>
 
+<article>
   <div class="invitado">
-    <h3>{invitadoData.nombre} Id (borrar en prod): {invitadoData.id}</h3>
+    <h3>
+      {invitadoData.nombre} Id invitacion: {invitadoData.id} / Usuario id: {
+        invitadoData.usuarioId
+      }
+    </h3>
     <p class="info">Mesa: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
     <li>Whatsapp: {invitadoData.numeroWhats}</li>
     <li>Confirmado: {invitadoData.confirmado}</li>
@@ -28,76 +33,101 @@ const { invitadoData } = Astro.props;
     <li>Enviada: {invitadoData.InvitacionEnviada}</li>
     <li>No asiste: {invitadoData.noAsiste}</li>
     <li>Tipo: {invitadoData.tipoInvitacion}</li>
-    <button  data-edit data-id={invitadoData.id}>editar</button>
-    <button  data-delete data-id={invitadoData.id} >borrar</button>
+    <button
+      data-edit
+      data-id={invitadoData.id}
+      data-uid={invitadoData.usuarioId}>editar</button
+    >
+    <button data-delete data-id={invitadoData.id}>borrar</button>
   </div>
-  
 </article>
+
+
 <script>
-    // delete links
-    const deleteBtns = document.querySelectorAll("[data-delete]") as NodeListOf<HTMLButtonElement>;
-    const editBtns = document.querySelectorAll("[data-edit]") as NodeListOf<HTMLButtonElement>;
-  
-    deleteBtns.forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        try {
-          if (!id) {
-            throw new Error("No id present");
-          }
-          const req = await fetch(`/api/${id}.json`, {
-            method: "DELETE",
-          });
-  
-          if (!req.ok) {
-            throw new Error("Error al borrar invitado");
-          }
-  
-          console.log("borrado");
-          btn.closest("article")?.remove();
-        } catch (e) {
-          console.log(e);
+  // delete links
+  const deleteBtns = document.querySelectorAll(
+    "[data-delete]"
+  ) as NodeListOf<HTMLButtonElement>;
+  const editBtns = document.querySelectorAll(
+    "[data-edit]"
+  ) as NodeListOf<HTMLButtonElement>;
+
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      try {
+        if (!id) {
+          throw new Error("No id present");
+        }
+        const req = await fetch(`/api/${id}.json`, {
+          method: "DELETE",
+        });
+
+        if (!req.ok) {
+          throw new Error("Error al borrar invitado");
+        }
+
+        console.log("borrado");
+        btn.closest("article")?.remove();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  });
+
+
+  editBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const uid = btn.dataset.uid;
+      const ediataDialog = document.querySelector("#editar-invitado-dialog") as HTMLDialogElement;
+      ediataDialog.showModal();
+      llenar(ediataDialog, id, uid);
+
+
+      ediataDialog.addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) {
+          ediataDialog.close();
         }
       });
     });
+
+    //funcion de llenado
+    const getInvitadoData = async (id, uid) => {
+      const idfetch = await fetch(`http://localhost:4321/api/getInvitado.json?id=${id}&uid=${uid}`);
+      const idInvitacion = await idfetch.json();
+      return idInvitacion
+    }
+
+    const llenar = async(dialogo, id, uid) => {
+
+      const nombreInput = dialogo.querySelector("input[name='nombre']") as HTMLInputElement;
+      const pasesInput = dialogo.querySelector("input[name='pases']") as HTMLInputElement;
+      const mesaInput = dialogo.querySelector("input[name='mesa']") as HTMLInputElement;
+      const numeroWhatsInput = dialogo.querySelector("input[name='numeroWhats']") as HTMLInputElement;
+      const confirmadoCheckbox = dialogo.querySelector("input[name='confirmado']") as HTMLInputElement;
+      const vipCheckbox = dialogo.querySelector("input[name='vip']") as HTMLInputElement;
+      const invitacionEnviadaCheckbox = dialogo.querySelector("input[name='InvitacionEnviada']") as HTMLInputElement;
+      const noAsisteCheckbox = dialogo.querySelector("input[name='noAsiste']") as HTMLInputElement;
+
+      // Assuming you have a function or API to get the invitado data by id
+      // const invitadoData = getInvitadoData(id, uid);
+      const invitadoDataPromise = getInvitadoData(id, uid);
+      invitadoDataPromise.then(invitadoData => {
   
-    editBtns.forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        console.log( "editando el:" + id)
+        if (invitadoData) {
+          dialogo.dataset.refedit = invitadoData[0].id;
+          nombreInput.value = invitadoData[0].nombre;
+          pasesInput.value = invitadoData[0].pases;
+          mesaInput.value = invitadoData[0].mesa.toString();
+          numeroWhatsInput.value = invitadoData[0].numeroWhats.toString();
+          confirmadoCheckbox.checked = invitadoData[0].confirmado;
+          vipCheckbox.checked = invitadoData[0].vip;
+          invitacionEnviadaCheckbox.checked = invitadoData[0].InvitacionEnviada;
+          noAsisteCheckbox.checked = invitadoData[0].noAsiste;
+        }
       })
-      
-    })
-    // is Read Links
-    const isReadChecks = document.querySelectorAll(
-      "[data-isRead]"
-    ) as NodeListOf<HTMLInputElement>;
   
-    isReadChecks.forEach((check) => {
-      check.addEventListener("click", async () => {
-        const id = check.dataset.id;
-        const isRead = check.checked;
-        try {
-          if (!id) {
-            throw new Error("No id present");
-          }
-          console.log("something here");
-          const req = await fetch(`/api/${id}.json`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ isRead }),
-          });
-  
-          if (!req.ok) {
-            throw new Error("Patch req was not OK");
-          }
-  
-          console.log("updated");
-        } catch (e) {
-          console.log(e);
-        }
-      });
-    });
-  </script>
+    }
+  });
+</script>

@@ -8,7 +8,7 @@ const usuarioId = usuarios[0].id
 
 ---
 
-<dialog>
+<dialog  id="agrega-invitado-dialog">
   <div class="formulario">
     <form id="agregar-formu" data-ref={usuarioId}>
       <h2>Agrega un invitado a tu panel</h2>
@@ -89,7 +89,7 @@ const usuarioId = usuarios[0].id
   const closeDialogBtn = document.getElementById(
     "cerrar-dialog"
   ) as HTMLButtonElement;
-  const dialog = document.querySelector("dialog") as HTMLDialogElement;
+  const dialog = document.querySelector("#agrega-invitado-dialog") as HTMLDialogElement;
 
   // dialog
   openDialogBtn.addEventListener("click", () => dialog.showModal());

@@ -1,19 +1,12 @@
 ---
-import { NvitaAuth } from "../../firebase/config";
 import Checkbox from "./Checkbox.astro";
-
-// Ahora llegara el id desde el boton
-import {Usuario, db, eq} from "astro:db"
-const usuarioEmail = NvitaAuth.currentUser?.email;
-const usuarios = await db.select().from(Usuario ).where(eq(Usuario.email, usuarioEmail));
-const usuarioId = usuarios[0].id
 
 ---
 
-<dialog>
+<dialog id="editar-invitado-dialog">
   <div class="formulario">
-    <form id="agregar-formu" data-ref={usuarioId}>
-      <h2>Edita al invitado</h2>
+    <form id="editar-formu"  >
+      <h2>Edita al invitado </h2>
       <label for="nombre">Nombre del invitado</label>
       <input
         type="text"
@@ -80,36 +73,19 @@ const usuarioId = usuarios[0].id
 
 <script>
   import sanitize from "sanitize-html";
-  const form = document.querySelector("form") as HTMLFormElement;
-  const refere = form.dataset.ref;
-
+  const dialoged = document.querySelector("#editar-invitado-dialog") as HTMLFormElement;
+  
   // query selectors
-  const addForm = document.querySelector("#agregar-formu") as HTMLFormElement;
-//   const openDialogBtn = document.getElementById(
-//     "agregar-invitado"
-//   ) as HTMLButtonElement;
-  const closeDialogBtn = document.getElementById(
-    "cerrar-dialog"
-  ) as HTMLButtonElement;
-  const dialog = document.querySelector("dialog") as HTMLDialogElement;
-
-  // dialog
-  // openDialogBtn.addEventListener("click", () => dialog.showModal());
-
-  closeDialogBtn.addEventListener("click", () => dialog.close());
-
-  dialog.addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) {
-      dialog.close();
-    }
-  });
-
+  const addFormEdit = document.querySelector("#editar-formu") as HTMLFormElement;
+  const dialogeditar = document.querySelector("#editar-invitado-dialog") as HTMLDialogElement;
   // form submit
-  addForm.addEventListener("submit", async (e) => {
+  addFormEdit.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const refere = dialoged.dataset.refedit;
+    console.log(refere)
     try {
-      const formData = new FormData(addForm);
-      const ref = formData.get("data-ref");
+      const formData = new FormData(addFormEdit);
+      // const ref = formData.get("data-ref");
       const nombre = sanitize(formData.get("nombre") as string);
       const pases = sanitize(formData.get("pases") as string);
       const mesa = sanitize(formData.get("mesa") as string);
@@ -121,9 +97,8 @@ const usuarioId = usuarios[0].id
         formData?.get("InvitacionEnviada") === "on" ? true : false;
       const noAsiste = formData?.get("noAsiste") === "on" ? true : false;
       const tipoInvitacion = sanitize(formData.get("tipoInvitacion") as string);
-
-      const req = await fetch("/api/addInvitados.json", {
-        method: "POST",
+      const req = await fetch(`/api/${refere}.json`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -147,8 +122,8 @@ const usuarioId = usuarios[0].id
 
       const res = await req.json();
       if (res.success) {
-        addForm.reset();
-        dialog.close();
+        addFormEdit.reset();
+        dialogeditar.close();
         location.reload();
       } else {
         throw new Error(res.message);

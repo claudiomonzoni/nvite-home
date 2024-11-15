@@ -9,7 +9,8 @@ const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${u
 const invitadosData = await request.json();
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
-import Dialog from "../../components/PanelInvitados/Dialog.astro";
+import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
+import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
 
 
 ---
@@ -28,11 +29,12 @@ import Dialog from "../../components/PanelInvitados/Dialog.astro";
           <h2>Error</h2>
         )}
       </ul>
-    
-{
-    invitadosData && invitadosData.length > 0 ? (
-        <button id="agregar-invitado">Agregar invitado</button>
-        <Dialog />
+      
+      {
+        invitadosData && invitadosData.length > 0 ? (
+          <button id="agregar-invitado">Agregar invitado</button>
+          <AgregarInvitado />
+          <EditarInvitado  />
     ): (
         <p>Contacte al administrador para tener acceso a esta sección</p>
     )
