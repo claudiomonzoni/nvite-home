@@ -99,7 +99,7 @@ const { invitadoData } = Astro.props;
       return idInvitacion
     }
 
-    const llenar = async(dialogo, id, uid) => {
+    const llenar = (dialogo, id, uid) => {
 
       const nombreInput = dialogo.querySelector("input[name='nombre']") as HTMLInputElement;
       const pasesInput = dialogo.querySelector("input[name='pases']") as HTMLInputElement;
@@ -110,11 +110,10 @@ const { invitadoData } = Astro.props;
       const invitacionEnviadaCheckbox = dialogo.querySelector("input[name='InvitacionEnviada']") as HTMLInputElement;
       const noAsisteCheckbox = dialogo.querySelector("input[name='noAsiste']") as HTMLInputElement;
 
-      // Assuming you have a function or API to get the invitado data by id
-      // const invitadoData = getInvitadoData(id, uid);
+    
       const invitadoDataPromise = getInvitadoData(id, uid);
       invitadoDataPromise.then(invitadoData => {
-  
+        alert('llenando')
         if (invitadoData) {
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
