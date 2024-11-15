@@ -101,7 +101,6 @@ const { invitadoData } = Astro.props;
 
     const llenar = (dialogo, id, uid) => {
 
-      alert(id + "user" + uid);	
       const nombreInput = dialogo.querySelector("input[name='nombre']") as HTMLInputElement;
       const pasesInput = dialogo.querySelector("input[name='pases']") as HTMLInputElement;
       const mesaInput = dialogo.querySelector("input[name='mesa']") as HTMLInputElement;
@@ -110,10 +109,12 @@ const { invitadoData } = Astro.props;
       const vipCheckbox = dialogo.querySelector("input[name='vip']") as HTMLInputElement;
       const invitacionEnviadaCheckbox = dialogo.querySelector("input[name='InvitacionEnviada']") as HTMLInputElement;
       const noAsisteCheckbox = dialogo.querySelector("input[name='noAsiste']") as HTMLInputElement;
-
-    
+      
+      
       const invitadoDataPromise = getInvitadoData(id, uid);
+      console.log(invitadoDataPromise);	
       invitadoDataPromise.then(invitadoData => {
+        console.log(invitadoData[0].nombre);	
         if (invitadoData) {
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
