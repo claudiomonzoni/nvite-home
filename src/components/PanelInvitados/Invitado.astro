@@ -81,10 +81,10 @@ const { invitadoData } = Astro.props;
       const id = btn.dataset.id;
       const uid = btn.dataset.uid;
       const ediataDialog = document.querySelector("#editar-invitado-dialog") as HTMLDialogElement;
-      ediataDialog.showModal();
       llenar(ediataDialog, id, uid);
-
-
+      
+      
+      ediataDialog.showModal();
       ediataDialog.addEventListener("click", (e) => {
         if (e.target === e.currentTarget) {
           ediataDialog.close();
@@ -101,6 +101,7 @@ const { invitadoData } = Astro.props;
 
     const llenar = (dialogo, id, uid) => {
 
+      alert(id + "user" + uid);	
       const nombreInput = dialogo.querySelector("input[name='nombre']") as HTMLInputElement;
       const pasesInput = dialogo.querySelector("input[name='pases']") as HTMLInputElement;
       const mesaInput = dialogo.querySelector("input[name='mesa']") as HTMLInputElement;
@@ -113,7 +114,6 @@ const { invitadoData } = Astro.props;
     
       const invitadoDataPromise = getInvitadoData(id, uid);
       invitadoDataPromise.then(invitadoData => {
-        alert('llenando')
         if (invitadoData) {
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
