@@ -6,43 +6,44 @@ const usuario = NvitaAuth.currentUser?.uid;
 const usuarioEmail = NvitaAuth.currentUser?.email;
 
 const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`);
-const invitadosData = await request.json();
+let invitadosData = null;
+
+try {
+  const data = await request.json();
+  invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
+} catch (error) {
+  console.error("Error al obtener los datos de invitados:", error);
+  invitadosData = null; // Manejo del error
+}
+
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
-import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
+import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
 import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
-
-
 ---
 
 <Layout title="Panel de administración">
-    <h2>
-        {usuario && <p>Bienvenido {usuarioEmail}</p>}
-    </h2>
+  <h2>
+    {usuario && <p>Bienvenido {usuarioEmail}</p>}
+  </h2>
 
-    <ul>
-        {invitadosData && invitadosData.length > 0 ? (
-          invitadosData.map((invi: InvitadoProps) => (
-            <li><Invitado invitadoData={invi} /></li>
-          ))
-        ) : (
-          <h2>Error</h2>
-        )}
-      </ul>
-      
-      {
-        invitadosData && invitadosData.length > 0 ? (
-          <button id="agregar-invitado">Agregar invitado</button>
-          <AgregarInvitado />
-          <EditarInvitado  />
-    ): (
-        <p>Contacte al administrador para tener acceso a esta sección</p>
-    )
-}
-
-
-<li>Mostrar invitados, formulario de agregarlos con un icono +</li>
-<li>Cada invitado con icono de editar y borrar</li>
-<li>Cada invitado deberá poder confirmar desde la invitacion </li>
-
+  <ul>
+    {invitadosData === null ? (
+      <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
+    ) : invitadosData.length > 0 ? (
+      invitadosData.map((invi: InvitadoProps) => (
+        <li><Invitado invitadoData={invi} /></li>
+      ))
+    ) : (
+      <p>No tienes invitados aún. Usa el botón de abajo para agregar uno.</p>
+    )}
+  </ul>
+  
+  {invitadosData !== null && (
+    <>
+      <button id="agregar-invitado">Agregar invitado</button>
+      <AgregarInvitado />
+      <EditarInvitado />
+    </>
+  )}
 </Layout>
