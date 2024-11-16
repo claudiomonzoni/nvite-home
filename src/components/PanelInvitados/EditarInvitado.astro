@@ -89,13 +89,16 @@ import Checkbox from "./Checkbox.astro";
   const dialogeditar = document.querySelector(
     "#editar-invitado-dialog"
   ) as HTMLDialogElement;
+
   // form submit
   addFormEdit.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const nombreInput = addFormEdit.querySelector(
       "input[name='nombre']"
     ) as HTMLInputElement;
     const nombre = nombreInput.value.trim();
+
     if (!nombre) {
       alert("El nombre no puede estar vacío.");
       return;
@@ -106,60 +109,61 @@ import Checkbox from "./Checkbox.astro";
         .value,
       10
     );
+
     if (isNaN(pases) || pases < 1) {
       alert("El número de pases debe ser un número positivo.");
       return;
     }
+
     const refere = dialoged.dataset.refedit;
+
     try {
       const formData = new FormData(addFormEdit);
-      // const ref = formData.get("data-ref");
-      const nombre = sanitize(formData.get("nombre") as string);
-      const pases = sanitize(formData.get("pases") as string);
-      const mesa = sanitize(formData.get("mesa") as string);
-      const numeroWhats = sanitize(formData.get("numeroWhats") as string);
-      const confirmado = formData?.get("confirmado") === "on" ? true : false;
-      // const confirmado = formData?.get("confirmado") === "on" ? true : (false ?? false);
-      const vip = formData?.get("vip") === "on" ? true : false;
-      const InvitacionEnviada =
-        formData?.get("InvitacionEnviada") === "on" ? true : false;
-      const noAsiste = formData?.get("noAsiste") === "on" ? true : false;
-      const tipoInvitacion = sanitize(formData.get("tipoInvitacion") as string);
-      const req = await fetch(`/api/${refere}.json`, {
+      const requestBody = {
+        usuarioId: refere,
+        nombre: sanitize(formData.get("nombre") as string),
+        pases: sanitize(formData.get("pases") as string),
+        mesa: sanitize(formData.get("mesa") as string),
+        numeroWhats: sanitize(formData.get("numeroWhats") as string),
+        confirmado: formData.get("confirmado") === "on",
+        vip: formData.get("vip") === "on",
+        InvitacionEnviada: formData.get("InvitacionEnviada") === "on",
+        noAsiste: formData.get("noAsiste") === "on",
+        tipoInvitacion: sanitize(formData.get("tipoInvitacion") as string),
+      };
+
+      const request = await fetch(`/api/${refere}.json`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          usuarioId: refere,
-          nombre,
-          pases,
-          mesa,
-          numeroWhats,
-          confirmado,
-          vip,
-          InvitacionEnviada,
-          noAsiste,
-          tipoInvitacion,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
-      if (!req.ok) {
-        throw new Error("Req no esta bien!");
+      if (!request.ok) {
+        const errorText = await request.text();
+        throw new Error(
+          `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
+        );
       }
 
-      const res = await req.json();
+      let res;
+      try {
+        res = await request.json();
+      } catch (err) {
+        throw new Error("La respuesta del servidor no es JSON válido.");
+      }
+
       if (res.success) {
         addFormEdit.reset();
         dialogeditar.close();
         location.reload();
       } else {
-        throw new Error(res.message);
+        throw new Error(res.message || "Ocurrió un error desconocido.");
       }
     } catch (e) {
-      if (e instanceof Error) {
-        alert(e.message);
-      }
+      console.error("Error en la solicitud:", e);
+      alert(e.message );
     }
   });
 </script>
