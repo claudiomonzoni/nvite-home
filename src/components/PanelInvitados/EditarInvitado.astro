@@ -1,20 +1,25 @@
 ---
 import Checkbox from "./Checkbox.astro";
-
 ---
 
 <dialog id="editar-invitado-dialog">
   <div class="formulario">
-    <form id="editar-formu"  >
-      <h2>Edita al invitado </h2>
+    <form id="editar-formu">
+      <h2>Edita al invitado</h2>
       <label for="nombre">Nombre del invitado</label>
       <input
         type="text"
         name="nombre"
+        required
         placeholder="Invitado, familiar o grupal"
       />
       <label for="pases">Numero de pases</label>
-      <input type="number" name="pases" placeholder="Asignar numero de pases" />
+      <input
+        type="number"
+        name="pases"
+        required
+        placeholder="Asignar numero de pases"
+      />
       <label for="mesa">Numero de mesa</label>
       <input
         type="number"
@@ -23,7 +28,7 @@ import Checkbox from "./Checkbox.astro";
       />
       <label for="whatsapp">Numero de whatsapp</label>
       <input
-        type="number"
+        type="tel"
         name="numeroWhats"
         placeholder="Donde enviar la invitacion"
       />
@@ -73,16 +78,39 @@ import Checkbox from "./Checkbox.astro";
 
 <script>
   import sanitize from "sanitize-html";
-  const dialoged = document.querySelector("#editar-invitado-dialog") as HTMLFormElement;
-  
+  const dialoged = document.querySelector(
+    "#editar-invitado-dialog"
+  ) as HTMLFormElement;
+
   // query selectors
-  const addFormEdit = document.querySelector("#editar-formu") as HTMLFormElement;
-  const dialogeditar = document.querySelector("#editar-invitado-dialog") as HTMLDialogElement;
+  const addFormEdit = document.querySelector(
+    "#editar-formu"
+  ) as HTMLFormElement;
+  const dialogeditar = document.querySelector(
+    "#editar-invitado-dialog"
+  ) as HTMLDialogElement;
   // form submit
   addFormEdit.addEventListener("submit", async (e) => {
     e.preventDefault();
+    const nombreInput = addFormEdit.querySelector(
+      "input[name='nombre']"
+    ) as HTMLInputElement;
+    const nombre = nombreInput.value.trim();
+    if (!nombre) {
+      alert("El nombre no puede estar vacío.");
+      return;
+    }
+
+    const pases = parseInt(
+      (addFormEdit.querySelector("input[name='pases']") as HTMLInputElement)
+        .value,
+      10
+    );
+    if (isNaN(pases) || pases < 1) {
+      alert("El número de pases debe ser un número positivo.");
+      return;
+    }
     const refere = dialoged.dataset.refedit;
-    console.log(refere)
     try {
       const formData = new FormData(addFormEdit);
       // const ref = formData.get("data-ref");
@@ -129,7 +157,6 @@ import Checkbox from "./Checkbox.astro";
         throw new Error(res.message);
       }
     } catch (e) {
-      console.log(e);
       if (e instanceof Error) {
         alert(e.message);
       }

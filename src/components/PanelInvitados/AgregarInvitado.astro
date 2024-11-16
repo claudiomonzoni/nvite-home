@@ -17,9 +17,10 @@ const usuarioId = usuarios[0].id
         type="text"
         name="nombre"
         placeholder="Invitado, familiar o grupal"
+        required
       />
       <label for="pases">Numero de pases</label>
-      <input type="number" name="pases" placeholder="Asignar numero de pases" />
+      <input type="number" name="pases" required placeholder="Asignar numero de pases" />
       <label for="mesa">Numero de mesa</label>
       <input
         type="number"
@@ -28,7 +29,7 @@ const usuarioId = usuarios[0].id
       />
       <label for="whatsapp">Numero de whatsapp</label>
       <input
-        type="number"
+        type="tel"
         name="numeroWhats"
         placeholder="Donde enviar la invitacion"
       />
@@ -105,6 +106,21 @@ const usuarioId = usuarios[0].id
   // form submit
   addForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    
+      // Validaciones de cliente
+      const nombreInput = addForm.querySelector("input[name='nombre']") as HTMLInputElement;
+      const nombre = nombreInput.value.trim();
+  if (!nombre) {
+    alert("El nombre no puede estar vacío.");
+    return;
+  }
+
+  const pases = parseInt((addForm.querySelector("input[name='pases']") as HTMLInputElement).value, 10);
+  if (isNaN(pases) || pases < 1) {
+    alert("El número de pases debe ser un número positivo.");
+    return;
+  }
+
     try {
       const formData = new FormData(addForm);
       const ref = formData.get("data-ref");
@@ -152,7 +168,6 @@ const usuarioId = usuarios[0].id
         throw new Error(res.message);
       }
     } catch (e) {
-      console.log(e);
       if (e instanceof Error) {
         alert(e.message);
       }

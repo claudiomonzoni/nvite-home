@@ -1,9 +1,26 @@
 import { defineMiddleware } from "astro:middleware";
 import { NvitaAuth } from "./firebase/config";
 
-export const onRequest = defineMiddleware(async (context, next)  => {
-    const estaDentro = NvitaAuth.currentUser
+export const onRequest = defineMiddleware(async (context, next) => {
+    const estaDentro = NvitaAuth.currentUser; // Verifica si el usuario está autenticado
     const { pathname } = context.url;
+    const method = context.request.method;
+
+    // Rutas específicas que requieren autenticación para métodos sensibles
+    const rutasProtegidas = [
+        /^\/api\/addInvitados\.json$/, // Ruta para agregar invitados
+        /^\/api\/\d+\.json$/,          // Ruta para un invitado específico por ID
+    ];
+
+    const esRutaProtegida = rutasProtegidas.some((ruta) => ruta.test(pathname));
+
+    // Verificar si es una ruta protegida con métodos sensibles
+    if (esRutaProtegida && (method === "POST" || method === "DELETE" || method === "PATCH")) {
+        if (!estaDentro) {
+            return new Response(JSON.stringify({ message: "No autorizado" }), { status: 401 });
+        }
+        return next();
+    }
     
     if(estaDentro && (
         pathname === '/panel/ingresar' ||
