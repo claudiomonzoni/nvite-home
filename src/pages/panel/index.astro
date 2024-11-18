@@ -2,10 +2,16 @@
 import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
 
-const usuario = NvitaAuth.currentUser?.uid;
-const usuarioEmail = NvitaAuth.currentUser?.email;
+import Invitado from "../../components/PanelInvitados/Invitado.astro";
+import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
+import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
+import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
+import { Usuario, db, eq } from "astro:db";
 
-const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`);
+const usuarioEmail = NvitaAuth.currentUser?.email;
+const request = await fetch(
+  `${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`
+);
 let invitadosData = null;
 
 try {
@@ -16,34 +22,43 @@ try {
   invitadosData = null; // Manejo del error
 }
 
-import Invitado from "../../components/PanelInvitados/Invitado.astro";
-import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
-import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
-import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
+const usuarios = await db
+  .select()
+  .from(Usuario)
+  .where(eq(Usuario.email, usuarioEmail));
+const tipoInvitacion = usuarios[0].tipo;
+const ruta = usuarios[0].ruta;
+
 ---
 
 <Layout title="Panel de administración">
   <h2>
-    {usuario && <p>Bienvenido {usuarioEmail}</p>}
+    {(<p>Bienvenido {usuarioEmail} tipo {tipoInvitacion} ruta {ruta}</p>)}
   </h2>
 
   <ul>
-    {invitadosData === null ? (
-      <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
-    ) : invitadosData.length > 0 ? (
-      invitadosData.map((invi: InvitadoProps) => (
-        <li><Invitado invitadoData={invi} /></li>
-      ))
-    ) : (
-      <p>No tienes invitados aún. Usa el botón de abajo para agregar uno.</p>
-    )}
+    {
+      invitadosData === null ? (
+        <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
+      ) : invitadosData.length > 0 ? (
+        invitadosData.map((invi: InvitadoProps) => (
+          <li>
+            <Invitado invitadoData={invi} ruta={ruta} tipo={tipoInvitacion} />
+          </li>
+        ))
+      ) : (
+        <p>No tienes invitados aún. Usa el botón de abajo para agregar uno.</p>
+      )
+    }
   </ul>
-  
-  {invitadosData !== null && (
-    <>
-      <button id="agregar-invitado">Agregar invitado</button>
-      <AgregarInvitado />
-      <EditarInvitado />
-    </>
-  )}
+
+  {
+    invitadosData !== null && (
+      <>
+        <button id="agregar-invitado">Agregar invitado</button>
+        <AgregarInvitado />
+        <EditarInvitado />
+      </>
+    )
+  }
 </Layout>
