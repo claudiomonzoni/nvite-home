@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/quince/confirmacion.module.scss";
-import invitadosData from "../../pages/quince/data/_invitados.json";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
@@ -13,14 +12,15 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
-    if (id < invitadosData.length && id) {
-      setInvitado(invitadosData[id].nombre);
-      setPases(invitadosData[id].pases);
-      setId(id);
-    } else {
-      // alert('Error en ID de invitado');
-      // bloquear el boton
-    }
+    const uid = params.get("uid");
+
+    fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setInvitado(json[0].nombre);
+        setPases(json[0].pases);
+      });
+
     const pasesInput = document.querySelector("#Confipases");
     const generarPases = () => {
       for (let i = 1; i <= pases; i++) {
@@ -40,7 +40,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     const enviar = (e) => {
       e.preventDefault();
 
-      if (pasesInput.value ) {
+      if (pasesInput.value) {
         btnconfirmar.classList.remove("desactivado");
       } else {
         console.log("vacio");
@@ -85,9 +85,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
 
             <form id={estilo["formulario"]}>
-            
               <label for="pases">Selecciona el numero de pases:</label>
-              <select name="pases" id="Confipases" required  >
+              <select name="pases" id="Confipases" required>
                 <option value="0">0</option>
               </select>
               <label for="comentarios">Envíanos comentarios (opcional):</label>

@@ -11,28 +11,24 @@ export default function Pases({ folder }) {
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
-
+    const uid = params.get("uid");
     const pase = document.querySelector(".paseSpan");
     const spanVarios = document.querySelector(".variosSpan");
     // Fetch data cuando se monta el componente
-    fetch(`/bodas/${folder}/data/invitados.json`)
-    .then((res) => res.json())
-    .then((json) => {
-      if (id && id < json.length) {
-        setInvitado(json[id].nombre);
-        setPase(json[id].pases);
-        console.log(json)
-          if (json[id].pases > 1) {
-            spanVarios.textContent = "Les";
-            pase.textContent = " pases";
-          } else {
-            spanVarios.textContent = "Te";
-            pase.textContent = " pase";
-          }
+    fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setInvitado(json[0].nombre);
+        setPase(json[0].pases);
 
+        if (json[0].pases > 1) {
+          spanVarios.textContent = "Les";
+          pase.textContent = " pases";
+        } else {
+          spanVarios.textContent = "Te";
+          pase.textContent = " pase";
         }
       });
-   
   }, []);
   return (
     <section className="grid contenido">
@@ -46,9 +42,9 @@ export default function Pases({ folder }) {
           <span id={Style["varios"]} className="variosSpan"></span> entregamos
         </h3>
         <hr />
-        <div >
+        <div>
           <li id={Style["pase"]}>
-            {pase} <span  className="paseSpan"></span>
+            {pase} <span className="paseSpan"></span>
           </li>
         </div>
       </div>
