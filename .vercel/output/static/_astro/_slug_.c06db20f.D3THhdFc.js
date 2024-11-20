@@ -1,1 +1,0 @@
-const a="_anime_12qu4_1",_="_sombra_12qu4_13",e="_pases_12qu4_1",s="_bandeja_12qu4_13",n="_hero_12qu4_1",i="_laimagen_12qu4_32",o="_familia_12qu4_86",c="_fecha_12qu4_90",m={anime:a,sombra:_,pases:e,bandeja:s,hero:n,laimagen:i,familia:o,fecha:c,"slide-in":"_slide-in_12qu4_1"};export{m as S};

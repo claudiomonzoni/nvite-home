@@ -1,6 +1,7 @@
 ---
 import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
+import Menu from "../../components/PanelInvitados/Menu.astro";
 
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
@@ -32,6 +33,7 @@ const ruta = usuarios[0].ruta;
 ---
 
 <Layout title="Panel de administración">
+  <Menu />
   <h2>
     {(<p>Bienvenido {usuarioEmail} tipo {tipoInvitacion} ruta {ruta}</p>)}
   </h2>
