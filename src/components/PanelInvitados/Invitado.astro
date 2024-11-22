@@ -17,6 +17,7 @@ export type InvitadoProps = {
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`
 ---
 <article>
   <div class="invitado" >
@@ -63,7 +64,7 @@ const { invitadoData, ruta, tipo } = Astro.props;
    
   </div>
   <div class="control">
-    <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
+    <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={urlWA}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
     <a
       href="#"
       id="copiar"
@@ -107,6 +108,7 @@ const { invitadoData, ruta, tipo } = Astro.props;
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
     const invitacion = btn.dataset.copiarwa;
+    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`
     if (!numeroWhats) {
       btn.closest(".control").querySelector("h4").style.display = "none";
       btn.style.display = "none";
