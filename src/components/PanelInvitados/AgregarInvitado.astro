@@ -9,9 +9,9 @@ const tipoInvitacion = usuarios[0].tipo
 const ruta = usuarios[0].ruta
 ---
 
-<dialog  id="agrega-invitado-dialog">
+<dialog  id="agrega-invitado-dialog" data-ref={usuarioId}>
   <div class="formulario">
-    <form id="agregar-formu" data-ref={usuarioId}>
+    <form id="agregar-formu" >
       <h2>Agrega un invitado a tu panel</h2>
       <label for="nombre">Nombre del invitado</label>
       <input
@@ -80,8 +80,9 @@ const ruta = usuarios[0].ruta
 
 <script>
   import sanitize from "sanitize-html";
-  const form = document.querySelector("form") as HTMLFormElement;
+  const form = document.querySelector("#agrega-invitado-dialog") as HTMLFormElement;
   const refere = form.dataset.ref;
+  console.log(form)
 
   // query selectors
   const addForm = document.querySelector("#agregar-formu") as HTMLFormElement;

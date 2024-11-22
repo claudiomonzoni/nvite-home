@@ -33,11 +33,14 @@ const ruta = usuarios[0].ruta;
 ---
 
 <Layout title="Panel de administración">
-  <Menu />
-  <h2>
-    {(<p>Bienvenido {usuarioEmail} tipo {tipoInvitacion} ruta {ruta}</p>)}
-  </h2>
+  <Menu tipo={tipoInvitacion} ruta={ruta} />
+  <section class="grid contenido">
 
+ 
+  <!-- <h2>
+    {(<p>Bienvenido {usuarioEmail} tipo {tipoInvitacion} ruta {ruta}</p>)}
+  </h2> -->
+  
   <ul>
     {
       invitadosData === null ? (
@@ -64,11 +67,20 @@ const ruta = usuarios[0].ruta;
     )
   }
 
-<div id="salirLog">
-  <form data-authForm action="../api/salir.json">
-    <button>Salir del panel de invitados</button>
-  </form>
-</div>
+</section>
+
 </Layout>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+  section{
+    // font-size: clamp(1.2rem, 1.3vw, 1.5vw);
+  }
+
+  li{
+    list-style: none;
+    margin-left: 0;
+  }
+</style>
 
 

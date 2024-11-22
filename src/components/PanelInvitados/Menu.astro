@@ -1,9 +1,44 @@
 ---
+import { Icon } from 'astro-icon/components';
+import Boton from '../comunes/Boton.astro';
+
+interface Props {
+    tipo: string;
+    ruta: string;
+}
+const { tipo, ruta } = Astro.props;
 ---
 
 <nav>
     <ul>
-        <li><a href={Astro.url.origin}>Home</a></li>
-        <li><a href="/panel/invitaciones">Invitaciones</a></li>
+        <li><a href={Astro.url.origin}><img src="/nvita-logo.svg" alt="nvitaciones"></a></li>
+        <li>{tipo} de {ruta}</li>
+        <li> <form data-authForm action="../api/salir.json">
+            <Boton  texto="Salir" clases="btn-claro" claro={false}>
+                <Icon name="mdi:logout" size={20} />
+            </Boton>
+            
+          
+          </form></li>
     </ul>
 </nav>
+
+<style lang="scss">
+    @import "../../estilos/_variables.scss";
+    li{
+        list-style: none;
+        text-decoration: none;
+        color: $primario;
+        padding: 1rem;
+        display: block;
+        font-weight: bold;
+    }
+    
+    nav{
+        background-color: $secundario;    
+        ul{
+            display: flex;
+            color: white;
+        }
+    }
+</style>

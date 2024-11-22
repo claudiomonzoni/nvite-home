@@ -1,4 +1,6 @@
 ---
+import { Icon } from "astro-icon/components";
+
 export type InvitadoProps = {
   id: number;
   usuarioId: number;
@@ -16,40 +18,62 @@ export type InvitadoProps = {
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
 ---
-
 <article>
   <div class="invitado" >
     <h3>
-      {invitadoData.nombre} Id invitacion: {invitadoData.id} / Usuario id: {
-        invitadoData.usuarioId
-      }
+      {invitadoData.nombre} 
     </h3>
-    <p class="info">Mesa: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
-    <li>Whatsapp: {invitadoData.numeroWhats}</li>
-    <li>Confirmado: {invitadoData.confirmado}</li>
-    <li>VIP: {invitadoData.vip}</li>
-    <li>Enviada: {invitadoData.InvitacionEnviada}</li>
-    <li>No asiste: {invitadoData.noAsiste}</li>
-    <li>Tipo: {invitadoData.tipoInvitacion}</li>
-    <button
-      data-edit
-      data-id={invitadoData.id}
-      data-uid={invitadoData.usuarioId}>editame</button
-    >
-    <button data-delete data-id={invitadoData.id}>borrar</button>
+    <div class="relevantes">
+      <ul>
+        <li>Pases asignados: {invitadoData.pases}</li>
+        {
+          invitadoData.mesa ? (
+            <li>No. de mesa asignada: {invitadoData.mesa}</li>
+          ) : (
+            ""
+          )
+        }
+        <li>
+          <button
+          data-edit
+          data-id={invitadoData.id}
+          data-uid={invitadoData.usuarioId}
+          ><Icon name="mdi:account-edit-outline" size={20} />editar</button
+        >
+        <button data-delete data-id={invitadoData.id}
+        ><Icon name="borrar" size={20} />borrar</button
+      >
+        </li>
+      </ul>
+    </div>
+    <ul>
+      {invitadoData.vip ? <li>Invitado Importante</li> : ""}
+      {
+        invitadoData.numeroWhats ? (
+          <li>Whatsapp: {invitadoData.numeroWhats}</li>
+        ) : (
+          <li>Agregar numero de Whatsapp</li>
+        )
+      }
+      {invitadoData.confirmado ? <li>Confirmada su asistencia</li> : ""}
+      {invitadoData.noAsiste ? <li>Confirmo que no asiste</li> : ""}
+      {invitadoData.InvitacionEnviada ? <li>Invitacion Enviada</li> : ""}
+      <li>Invitación <b> {invitadoData.tipoInvitacion} </b></li>
+    </ul>
+   
   </div>
   <div class="control">
-    <h4>Envia la invitación al numero de Whatsapp</h4>
-    <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}>Logo WA enviar invitación</a>
-    <h4>Copia la invitacion</h4>
+    <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
     <a
       href="#"
       id="copiar"
       data-copiar={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
-      >Copiar invitación</a
+      ><Icon name="mdi:content-copy" size={20} />Copiar invitación</a
     >
   </div>
 </article>
+
+
 
 <script>
   //botones de control para compiar y enviar a whatsapp la invitación en el panel
@@ -77,13 +101,15 @@ const { invitadoData, ruta, tipo } = Astro.props;
   //logica para enviar la invitación por whatsapp
   const ua = navigator.userAgent;
 
-  const enviarwaBtnes = document.querySelectorAll("#enviarwa") as NodeListOf<HTMLAnchorElement>;
+  const enviarwaBtnes = document.querySelectorAll(
+    "#enviarwa"
+  ) as NodeListOf<HTMLAnchorElement>;
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
     const invitacion = btn.dataset.copiarwa;
-    if(!numeroWhats){
-      btn.closest(".control").querySelector("h4").style.display = "none"
-      btn.style.display = "none"; 
+    if (!numeroWhats) {
+      btn.closest(".control").querySelector("h4").style.display = "none";
+      btn.style.display = "none";
     }
 
     let whats = "";
@@ -92,11 +118,10 @@ const { invitadoData, ruta, tipo } = Astro.props;
     } else {
       whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
     }
-    
+
     const url = `${whats}`;
     btn.href = url;
   });
-
 
   // btn borrar
   const deleteBtns = document.querySelectorAll(
@@ -202,3 +227,34 @@ const { invitadoData, ruta, tipo } = Astro.props;
     };
   });
 </script>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+  article {
+    background: #fff;
+    border-radius: 15px;
+    padding: $margen-cel;
+    color: $primario;
+    @extend .sombra;
+    h3 {
+      color: $acento;
+    }
+    .relevantes {
+      background-color: $primario;
+      border-radius: 20px;
+      color: #fff;
+      ul {
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        li {
+          list-style: none;
+        }
+      }
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+</style>
