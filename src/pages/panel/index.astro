@@ -8,6 +8,7 @@ import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.ast
 import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
 import { Usuario, db, eq } from "astro:db";
+import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
 const request = await fetch(
@@ -29,58 +30,119 @@ const usuarios = await db
   .where(eq(Usuario.email, usuarioEmail));
 const tipoInvitacion = usuarios[0].tipo;
 const ruta = usuarios[0].ruta;
-
 ---
 
 <Layout title="Panel de administración">
   <Menu tipo={tipoInvitacion} ruta={ruta} />
   <section class="grid contenido">
+    <div id="hero">
+      <h1>Invitaciones</h1>
+      <ul>
+        <li>Invitación <b class="enviada">Enviada</b></li>
+        <li>Asistencia <b class="confirmado">Confirmada</b></li>
+        <li>Confirmación de <b class="NoAsiste"> No asistencia</b></li>
+      </ul>
+    </div>
+    <ul>
+      {
+        invitadosData === null ? (
+          <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
+        ) : invitadosData.length > 0 ? (
+          invitadosData.map((invi: InvitadoProps) => (
+            <li>
+              <Invitado invitadoData={invi} ruta={ruta} tipo={tipoInvitacion} />
+            </li>
+          ))
+        ) : (
+          <p>
+            No tienes invitados aún. Usa el botón de abajo para agregar uno.
+          </p>
+        )
+      }
+    </ul>
 
- 
-  <!-- <h2>
-    {(<p>Bienvenido {usuarioEmail} tipo {tipoInvitacion} ruta {ruta}</p>)}
-  </h2> -->
-  
-  <ul>
     {
-      invitadosData === null ? (
-        <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
-      ) : invitadosData.length > 0 ? (
-        invitadosData.map((invi: InvitadoProps) => (
-          <li>
-            <Invitado invitadoData={invi} ruta={ruta} tipo={tipoInvitacion} />
-          </li>
-        ))
-      ) : (
-        <p>No tienes invitados aún. Usa el botón de abajo para agregar uno.</p>
+      invitadosData !== null && (
+        <>
+          <button id="agregar-invitado">
+            {" "}
+            <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+          </button>
+          <AgregarInvitado />
+          <EditarInvitado />
+        </>
       )
     }
-  </ul>
-
-  {
-    invitadosData !== null && (
-      <>
-        <button id="agregar-invitado">Agregar invitado</button>
-        <AgregarInvitado />
-        <EditarInvitado />
-      </>
-    )
-  }
-
-</section>
-
+  </section>
 </Layout>
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
-  section{
-    // font-size: clamp(1.2rem, 1.3vw, 1.5vw);
+  #hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: $margen-min;
+    @include cel {
+      gap: 0.5rem;
+    }
   }
 
-  li{
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: clamp(.5rem, .7rem, 1rem);
+    text-align: center;
+    @include cel {
+      gap: 0.5rem;
+    }
+  }
+  li {
+    flex: 1 0 fit-content;
     list-style: none;
     margin-left: 0;
   }
+  #agregar-invitado {
+    background-color: $acento;
+    border-radius: $radio;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: clamp(1.1rem, 1rem, 2rem);
+    font-weight: bold;
+    margin: 1rem 0;
+    position: fixed;
+    right: 5%;
+    bottom: 2%;
+    @extend .sombra;
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+  }
+
+  .enviada{
+    background-color: #edf8fd;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+    
+  }
+  .confirmado{
+    background-color: $fondo;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+    
+  }
+  .NoAsiste{
+    background-color: #c6bfb5;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+  }
 </style>
-
-

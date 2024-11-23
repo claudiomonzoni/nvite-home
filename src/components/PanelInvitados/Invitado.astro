@@ -19,14 +19,15 @@ type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
 const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`
 ---
-<article>
+<article class=`${invitadoData.confirmado ? "confirmado" : ""} ${invitadoData.noAsiste ? "NoAsiste" : ""} ${invitadoData.InvitacionEnviada ? "enviada" : ""}`>
   <div class="invitado" >
-    <h3>
+    <h2>
       {invitadoData.nombre} 
-    </h3>
+    </h2>
     <div class="relevantes">
       <ul>
-        <li>Pases asignados: {invitadoData.pases}</li>
+        {invitadoData.vip ? <li class="vip"> <Icon name="mdi:heart" size={25} /> Invitación importante</li> : ""}
+        <li>Pases asignados: {invitadoData.pases}</li> 
         {
           invitadoData.mesa ? (
             <li>No. de mesa asignada: {invitadoData.mesa}</li>
@@ -39,37 +40,41 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
           data-edit
           data-id={invitadoData.id}
           data-uid={invitadoData.usuarioId}
-          ><Icon name="mdi:account-edit-outline" size={20} />editar</button
+          ><Icon name="mdi:account-edit-outline" size={20} />Editar</button
         >
         <button data-delete data-id={invitadoData.id}
-        ><Icon name="borrar" size={20} />borrar</button
+        ><Icon name="borrar" size={20} />Borrar</button
       >
         </li>
       </ul>
     </div>
-    <ul>
-      {invitadoData.vip ? <li>Invitado Importante</li> : ""}
+    <ul id="info">
       {
         invitadoData.numeroWhats ? (
-          <li>Whatsapp: {invitadoData.numeroWhats}</li>
+          <li><b>Whatsapp:</b> {invitadoData.numeroWhats}</li>
         ) : (
-          <li>Agregar numero de Whatsapp</li>
+          <li><b>Agregar</b> numero de Whatsapp</li>
         )
       }
-      {invitadoData.confirmado ? <li>Confirmada su asistencia</li> : ""}
-      {invitadoData.noAsiste ? <li>Confirmo que no asiste</li> : ""}
-      {invitadoData.InvitacionEnviada ? <li>Invitacion Enviada</li> : ""}
+      {invitadoData.confirmado ? <li><b>Confirmada</b> la asistencia</li> : ""}
+      {invitadoData.noAsiste ? <li>Confirmo que <b>no asiste</b></li> : ""}
+      {invitadoData.InvitacionEnviada ? <li>Invitacion <b>Enviada</b></li> : ""}
       <li>Invitación <b> {invitadoData.tipoInvitacion} </b></li>
     </ul>
    
   </div>
   <div class="control">
-    <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={urlWA}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
+  {
+        invitadoData.numeroWhats ? (
+        <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={urlWA}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
+      ) : (
+        ""
+      )}
     <a
       href="#"
       id="copiar"
       data-copiar={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
-      ><Icon name="mdi:content-copy" size={20} />Copiar invitación</a
+      ><Icon name="mdi:content-copy" size={20} /> Copiar invitación</a
     >
   </div>
 </article>
@@ -232,23 +237,81 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
+  .enviada{
+    background-color: #edf8fd;
+    color: #4b7c91;
+    h2{
+      color: $primario;
+    }
+
+  }
+  .confirmado{
+    background-color: $fondo;
+    color: #4b7c91;
+    h2{
+      color: $acento;
+    }
+    .control a{
+      background-color: #ffc685;
+      color: $primario;
+    }
+  }
+  .NoAsiste{
+    background-color: #c6bfb5;
+    color: #4a443b;
+    h2{
+      color: #e3e3e3;
+    }
+    .relevantes{
+      background-color: #687378;
+    }
+    .control a{
+      background-color: #cacaca;
+    }
+  }
   article {
     background: #fff;
     border-radius: 15px;
     padding: $margen-cel;
     color: $primario;
     @extend .sombra;
-    h3 {
+    h2 {
       color: $acento;
+      font-size: clamp(1.8rem, 2.5vw, 2rem);
+
+    }
+    .vip{
+      color: $secundario;
+      font-weight: bold;
+    }
+    button{
+      background-color: $acento;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      padding: .3rem .8rem;
+      font-weight: bold;
+     
+      svg{
+        vertical-align: middle;
+        margin-right: .2rem;
+      }
+      @include cel{
+        margin-top: .5rem;
+      }
     }
     .relevantes {
       background-color: $primario;
-      border-radius: 20px;
+      border-radius: 10px;
       color: #fff;
       ul {
         padding: 15px;
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        margin-bottom: $margen-min;
         li {
           list-style: none;
         }
@@ -257,6 +320,26 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     ul {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .control{
+      margin-top: .5rem;
+      padding: $margen-min;
+      border-top: solid 1px #ccc;
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      gap: .5rem;
+      a{
+        padding: .5rem;
+        text-align: center;
+        border-radius: 10px;
+        flex: 1;
+        display: block;
+        background-color: #fff;
+        @extend .sombra;
+        max-width: 300px;
+      }
     }
   }
 </style>
