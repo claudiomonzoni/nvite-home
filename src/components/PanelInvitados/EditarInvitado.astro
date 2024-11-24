@@ -1,0 +1,169 @@
+---
+import Checkbox from "./Checkbox.astro";
+---
+
+<dialog id="editar-invitado-dialog">
+  <div class="formulario">
+    <form id="editar-formu">
+      <h2>Edita al invitado</h2>
+      <label for="nombre">Nombre del invitado</label>
+      <input
+        type="text"
+        name="nombre"
+        required
+        placeholder="Invitado, familiar o grupal"
+      />
+      <label for="pases">Numero de pases</label>
+      <input
+        type="number"
+        name="pases"
+        required
+        placeholder="Asignar numero de pases"
+      />
+      <label for="mesa">Numero de mesa</label>
+      <input
+        type="number"
+        name="mesa"
+        placeholder="Asignar numero de mesa (opcional)"
+      />
+      <label for="whatsapp">Numero de whatsapp</label>
+      <input
+        type="tel"
+        name="numeroWhats"
+        placeholder="Donde enviar la invitacion"
+      />
+      <label for="confirmado">¿Ya confirmo sus asistencia?</label>
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="confirmado"
+        titulo="Confirmado"
+      />
+
+      <label for="vip">¿Es invitado importante?</label>
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        titulo="Invitado importante"
+        name="vip"
+      />
+      <label for="InvitacionEnviada">¿Ya envio invitacion?</label>
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        titulo="Enviada"
+        name="InvitacionEnviada"
+      />
+
+      <label for="noAsiste">Confirmo que no asistirá</label>
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        titulo="No asistirá"
+        name="noAsiste"
+      />
+
+      <label for="tipoInvitacion">Tipo de invitación</label>
+      <select name="tipoInvitacion" id="tipoInvitacion">
+        <option value="Familiar">Familiar</option>
+        <option value="Individual">Individual</option>
+        <option value="Grupal">Grupal</option>
+      </select>
+
+      <input type="submit" value="Editar invitado" />
+    </form>
+  </div>
+  <button id="cerrar-dialog">Cerrar</button>
+</dialog>
+
+<script>
+  import sanitize from "sanitize-html";
+  const dialoged = document.querySelector(
+    "#editar-invitado-dialog"
+  ) as HTMLFormElement;
+
+  // query selectors
+  const addFormEdit = document.querySelector(
+    "#editar-formu"
+  ) as HTMLFormElement;
+  const dialogeditar = document.querySelector(
+    "#editar-invitado-dialog"
+  ) as HTMLDialogElement;
+
+  // form submit
+  addFormEdit.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nombreInput = addFormEdit.querySelector(
+      "input[name='nombre']"
+    ) as HTMLInputElement;
+    const nombre = nombreInput.value.trim();
+
+    if (!nombre) {
+      alert("El nombre no puede estar vacío.");
+      return;
+    }
+
+    const pases = parseInt(
+      (addFormEdit.querySelector("input[name='pases']") as HTMLInputElement)
+        .value,
+      10
+    );
+
+    if (isNaN(pases) || pases < 1) {
+      alert("El número de pases debe ser un número positivo.");
+      return;
+    }
+
+    const refere = dialoged.dataset.refedit;
+
+    try {
+      const formData = new FormData(addFormEdit);
+      const requestBody = {
+        usuarioId: refere,
+        nombre: sanitize(formData.get("nombre") as string),
+        pases: sanitize(formData.get("pases") as string),
+        mesa: sanitize(formData.get("mesa") as string),
+        numeroWhats: sanitize(formData.get("numeroWhats") as string),
+        confirmado: formData.get("confirmado") === "on",
+        vip: formData.get("vip") === "on",
+        InvitacionEnviada: formData.get("InvitacionEnviada") === "on",
+        noAsiste: formData.get("noAsiste") === "on",
+        tipoInvitacion: sanitize(formData.get("tipoInvitacion") as string),
+      };
+
+      const request = await fetch(`/api/${refere}.json`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!request.ok) {
+        const errorText = await request.text();
+        throw new Error(
+          `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
+        );
+      }
+
+      let res;
+      try {
+        res = await request.json();
+      } catch (err) {
+        throw new Error("La respuesta del servidor no es JSON válido.");
+      }
+
+      if (res.success) {
+        addFormEdit.reset();
+        dialogeditar.close();
+        location.reload();
+      } else {
+        throw new Error(res.message || "Ocurrió un error desconocido.");
+      }
+    } catch (e) {
+      console.error("Error en la solicitud:", e);
+      alert(e.message );
+    }
+  });
+</script>

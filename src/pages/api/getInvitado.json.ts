@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { Invitados, Usuario, db, eq, desc, and } from "astro:db";
+import { Invitados, db, eq, and } from "astro:db";
 import { NvitaAuth } from "../../firebase/config";
 const usuarioEmail = NvitaAuth.currentUser?.email;
 

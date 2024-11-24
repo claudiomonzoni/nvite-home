@@ -1,40 +1,148 @@
 ---
 import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
+import Menu from "../../components/PanelInvitados/Menu.astro";
 
-const usuario = NvitaAuth.currentUser?.uid;
-const usuarioEmail = NvitaAuth.currentUser?.email;
-
-const request = await fetch(`${Astro.url.origin}/api/getInvitados.json`);
-const invitadosData = await request.json();
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
-import type {InvitadoProps} from "../../components/PanelInvitados/Invitado.astro";
-import Dialog from "../../components/PanelInvitados/Dialog.astro";
+import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
+import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
+import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
+import { Usuario, db, eq } from "astro:db";
+import { Icon } from "astro-icon/components";
 
-// import {Usuario, db} from "astro:db"
-// const usuarios = await db.select().from(Usuario)
-// console.log(usuarios)
+const usuarioEmail = NvitaAuth.currentUser?.email;
+const request = await fetch(
+  `${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`
+);
+let invitadosData = null;
 
+try {
+  const data = await request.json();
+  invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
+} catch (error) {
+  console.error("Error al obtener los datos de invitados:", error);
+  invitadosData = null; // Manejo del error
+}
+
+const usuarios = await db
+  .select()
+  .from(Usuario)
+  .where(eq(Usuario.email, usuarioEmail));
+const tipoInvitacion = usuarios[0].tipo;
+const ruta = usuarios[0].ruta;
 ---
 
 <Layout title="Panel de administración">
-    <h2>
-        {usuario && <p>Bienvenido {usuarioEmail}</p>}
-    </h2>
-
+  <Menu tipo={tipoInvitacion} ruta={ruta} />
+  <section class="grid contenido">
+    <div id="hero">
+      <h1>Invitaciones</h1>
+      <ul>
+        <li>Invitación <b class="enviada">Enviada</b></li>
+        <li>Asistencia <b class="confirmado">Confirmada</b></li>
+        <li>Confirmación de <b class="NoAsiste"> No asistencia</b></li>
+      </ul>
+    </div>
     <ul>
-        <!-- <Invitado invitadoData={invitadosData[0]} /> -->
-{
-    invitadosData.map( (invi:InvitadoProps)=> <li><Invitado invitadoData={invi} /></li>  )
-}
+      {
+        invitadosData === null ? (
+          <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
+        ) : invitadosData.length > 0 ? (
+          invitadosData.map((invi: InvitadoProps) => (
+            <li>
+              <Invitado invitadoData={invi} ruta={ruta} tipo={tipoInvitacion} />
+            </li>
+          ))
+        ) : (
+          <p>
+            No tienes invitados aún. Usa el botón de abajo para agregar uno.
+          </p>
+        )
+      }
     </ul>
 
-    <button id="agregar-invitado">Agregar invitado</button>
-    <Dialog />
-
-<li>UI</li>
-<li>Mostrar invitados, formulario de agregarlos con un icono +</li>
-<li>Cada invitado con icono de editar y borrar</li>
-<li>Cada invitado deberá poder confirmar desde la invitacion </li>
-<li>Cada usurio de invitación podrá tambien editar estatus de confirmación</li>
+    {
+      invitadosData !== null && (
+        <>
+          <button id="agregar-invitado">
+            {" "}
+            <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+          </button>
+          <AgregarInvitado />
+          <EditarInvitado />
+        </>
+      )
+    }
+  </section>
 </Layout>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+  #hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: $margen-min;
+    @include cel {
+      gap: 0.5rem;
+    }
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: clamp(.5rem, .7rem, 1rem);
+    text-align: center;
+    @include cel {
+      gap: 0.5rem;
+    }
+  }
+  li {
+    flex: 1 0 fit-content;
+    list-style: none;
+    margin-left: 0;
+  }
+  #agregar-invitado {
+    background-color: $acento;
+    border-radius: $radio;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: clamp(1.1rem, 1rem, 2rem);
+    font-weight: bold;
+    margin: 1rem 0;
+    position: fixed;
+    right: 5%;
+    bottom: 2%;
+    @extend .sombra;
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+  }
+
+  .enviada{
+    background-color: #edf8fd;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+    
+  }
+  .confirmado{
+    background-color: $fondo;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+    
+  }
+  .NoAsiste{
+    background-color: #c6bfb5;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+  }
+</style>

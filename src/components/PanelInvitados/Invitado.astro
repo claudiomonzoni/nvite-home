@@ -1,98 +1,345 @@
 ---
+import { Icon } from "astro-icon/components";
+
 export type InvitadoProps = {
-    id:number,
-    nombre: string,
-    pases: string,
-    mesa: number,
-    numeroWhats:number,
-    confirmado:boolean,
-    vip:boolean,
-    InvitacionEnviada:boolean,
-    noAsiste:boolean,
-    tipoInvitacion:string,
-  
+  id: number;
+  usuarioId: number;
+  nombre: string;
+  pases: string;
+  mesa: number;
+  numeroWhats: number;
+  confirmado: boolean;
+  vip: boolean;
+  InvitacionEnviada: boolean;
+  noAsiste: boolean;
+  tipoInvitacion: string;
 };
 
-type Props = {
-    invitadoData:InvitadoProps
-}
-const { invitadoData } = Astro.props;
-
+type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
+const { invitadoData, ruta, tipo } = Astro.props;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`
 ---
-<article>
-
-  <div class="invitado">
-    <h3>{invitadoData.nombre} Id (borrar en prod): {invitadoData.id}</h3>
-    <p class="info">Mesa: {invitadoData.mesa} | Pases: {invitadoData.pases}</p>
-    <li>Whatsapp: {invitadoData.numeroWhats}</li>
-    <li>Confirmado: {invitadoData.confirmado}</li>
-    <li>VIP: {invitadoData.vip}</li>
-    <li>Enviada: {invitadoData.InvitacionEnviada}</li>
-    <li>No asiste: {invitadoData.noAsiste}</li>
-    <li>Tipo: {invitadoData.tipoInvitacion}</li>
-    <button  data-delete data-id={invitadoData.id} >borrar</button>
+<article class=`${invitadoData.confirmado ? "confirmado" : ""} ${invitadoData.noAsiste ? "NoAsiste" : ""} ${invitadoData.InvitacionEnviada ? "enviada" : ""}`>
+  <div class="invitado" >
+    <h2>
+      {invitadoData.nombre} 
+    </h2>
+    <div class="relevantes">
+      <ul>
+        {invitadoData.vip ? <li class="vip"> <Icon name="mdi:heart" size={25} /> Invitación importante</li> : ""}
+        <li>Pases asignados: {invitadoData.pases}</li> 
+        {
+          invitadoData.mesa ? (
+            <li>No. de mesa asignada: {invitadoData.mesa}</li>
+          ) : (
+            ""
+          )
+        }
+        <li>
+          <button
+          data-edit
+          data-id={invitadoData.id}
+          data-uid={invitadoData.usuarioId}
+          ><Icon name="mdi:account-edit-outline" size={20} />Editar</button
+        >
+        <button data-delete data-id={invitadoData.id}
+        ><Icon name="borrar" size={20} />Borrar</button
+      >
+        </li>
+      </ul>
+    </div>
+    <ul id="info">
+      {
+        invitadoData.numeroWhats ? (
+          <li><b>Whatsapp:</b> {invitadoData.numeroWhats}</li>
+        ) : (
+          <li><b>Agregar</b> numero de Whatsapp</li>
+        )
+      }
+      {invitadoData.confirmado ? <li><b>Confirmada</b> la asistencia</li> : ""}
+      {invitadoData.noAsiste ? <li>Confirmo que <b>no asiste</b></li> : ""}
+      {invitadoData.InvitacionEnviada ? <li>Invitacion <b>Enviada</b></li> : ""}
+      <li>Invitación <b> {invitadoData.tipoInvitacion} </b></li>
+    </ul>
+   
   </div>
-  
+  <div class="control">
+  {
+        invitadoData.numeroWhats ? (
+        <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={urlWA}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
+      ) : (
+        ""
+      )}
+    <a
+      href="#"
+      id="copiar"
+      data-copiar={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
+      ><Icon name="mdi:content-copy" size={20} /> Copiar invitación</a
+    >
+  </div>
 </article>
+
+
+
 <script>
-    // delete links
-    const deleteBtns = document.querySelectorAll(
-      "[data-delete]"
-    ) as NodeListOf<HTMLButtonElement>;
-  
-    deleteBtns.forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const id = btn.dataset.id;
-        try {
-          if (!id) {
-            throw new Error("No id present");
+  //botones de control para compiar y enviar a whatsapp la invitación en el panel
+  const copiarBtnes = document.querySelectorAll(
+    "#copiar"
+  ) as NodeListOf<HTMLAnchorElement>;
+
+  copiarBtnes.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const copyValue = btn.getAttribute("data-copiar");
+      if (copyValue) {
+        navigator.clipboard.writeText(copyValue).then(
+          () => {
+            alert("Texto copiado al portapapeles: " + copyValue);
+          },
+          (err) => {
+            console.error("Error al copiar el texto: ", err);
           }
-          const req = await fetch(`/api/${id}.json`, {
-            method: "DELETE",
-          });
-  
-          if (!req.ok) {
-            throw new Error("Error al borrar invitado");
-          }
-  
-          console.log("borrado");
-          btn.closest("article")?.remove();
-        } catch (e) {
-          console.log(e);
+        );
+      }
+    });
+  });
+
+  //logica para enviar la invitación por whatsapp
+  const ua = navigator.userAgent;
+
+  const enviarwaBtnes = document.querySelectorAll(
+    "#enviarwa"
+  ) as NodeListOf<HTMLAnchorElement>;
+  enviarwaBtnes.forEach((btn) => {
+    const numeroWhats = btn.dataset.wa;
+    const invitacion = btn.dataset.copiarwa;
+    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`
+    if (!numeroWhats) {
+      btn.closest(".control").querySelector("h4").style.display = "none";
+      btn.style.display = "none";
+    }
+
+    let whats = "";
+    if (/Mobile/i.test(ua)) {
+      whats = `https://api.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+    } else {
+      whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+    }
+
+    const url = `${whats}`;
+    btn.href = url;
+  });
+
+  // btn borrar
+  const deleteBtns = document.querySelectorAll(
+    "[data-delete]"
+  ) as NodeListOf<HTMLButtonElement>;
+  // btn editar
+  const editBtns = document.querySelectorAll(
+    "[data-edit]"
+  ) as NodeListOf<HTMLButtonElement>;
+
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const id = btn.dataset.id;
+      try {
+        if (!id) {
+          throw new Error("No id present");
+        }
+        const req = await fetch(`/api/${id}.json`, {
+          method: "DELETE",
+        });
+
+        if (!req.ok) {
+          throw new Error("Error al borrar invitado");
+        }
+
+        console.log("borrado");
+        btn.closest("article")?.remove();
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  });
+
+  editBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const uid = btn.dataset.uid;
+      const ediataDialog = document.querySelector(
+        "#editar-invitado-dialog"
+      ) as HTMLDialogElement;
+      llenar(ediataDialog, id, uid);
+
+      ediataDialog.showModal();
+      ediataDialog.addEventListener("click", (e) => {
+        if (e.target === e.currentTarget) {
+          ediataDialog.close();
         }
       });
     });
-  
-    // is Read Links
-    const isReadChecks = document.querySelectorAll(
-      "[data-isRead]"
-    ) as NodeListOf<HTMLInputElement>;
-  
-    isReadChecks.forEach((check) => {
-      check.addEventListener("click", async () => {
-        const id = check.dataset.id;
-        const isRead = check.checked;
-        try {
-          if (!id) {
-            throw new Error("No id present");
-          }
-          console.log("something here");
-          const req = await fetch(`/api/${id}.json`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ isRead }),
-          });
-  
-          if (!req.ok) {
-            throw new Error("Patch req was not OK");
-          }
-  
-          console.log("updated");
-        } catch (e) {
-          console.log(e);
+
+    //funcion de llenado
+    const getInvitadoData = async (id, uid) => {
+      const baseURL = window.location.origin;
+      const response = await fetch(
+        `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`
+      );
+      // const idfetch = await fetch(`http://localhost:4321/api/getInvitado.json?id=${id}&uid=${uid}`);
+      const idInvitacion = await response.json();
+      return idInvitacion;
+    };
+
+    const llenar = (dialogo, id, uid) => {
+      const nombreInput = dialogo.querySelector(
+        "input[name='nombre']"
+      ) as HTMLInputElement;
+      const pasesInput = dialogo.querySelector(
+        "input[name='pases']"
+      ) as HTMLInputElement;
+      const mesaInput = dialogo.querySelector(
+        "input[name='mesa']"
+      ) as HTMLInputElement;
+      const numeroWhatsInput = dialogo.querySelector(
+        "input[name='numeroWhats']"
+      ) as HTMLInputElement;
+      const confirmadoCheckbox = dialogo.querySelector(
+        "input[name='confirmado']"
+      ) as HTMLInputElement;
+      const vipCheckbox = dialogo.querySelector(
+        "input[name='vip']"
+      ) as HTMLInputElement;
+      const invitacionEnviadaCheckbox = dialogo.querySelector(
+        "input[name='InvitacionEnviada']"
+      ) as HTMLInputElement;
+      const noAsisteCheckbox = dialogo.querySelector(
+        "input[name='noAsiste']"
+      ) as HTMLInputElement;
+
+      const invitadoDataPromise = getInvitadoData(id, uid);
+      invitadoDataPromise.then((invitadoData) => {
+        console.log(invitadoData[0].nombre);
+        if (invitadoData) {
+          dialogo.dataset.refedit = invitadoData[0].id;
+          nombreInput.value = invitadoData[0].nombre;
+          pasesInput.value = invitadoData[0].pases;
+          mesaInput.value = invitadoData[0].mesa.toString();
+          numeroWhatsInput.value = invitadoData[0].numeroWhats.toString();
+          confirmadoCheckbox.checked = invitadoData[0].confirmado;
+          vipCheckbox.checked = invitadoData[0].vip;
+          invitacionEnviadaCheckbox.checked = invitadoData[0].InvitacionEnviada;
+          noAsisteCheckbox.checked = invitadoData[0].noAsiste;
         }
       });
-    });
-  </script>
+    };
+  });
+</script>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+  .enviada{
+    background-color: #edf8fd;
+    color: #4b7c91;
+    h2{
+      color: $primario;
+    }
+
+  }
+  .confirmado{
+    background-color: $fondo;
+    color: #4b7c91;
+    h2{
+      color: $acento;
+    }
+    .control a{
+      background-color: #ffc685;
+      color: $primario;
+    }
+  }
+  .NoAsiste{
+    background-color: #c6bfb5;
+    color: #4a443b;
+    h2{
+      color: #e3e3e3;
+    }
+    .relevantes{
+      background-color: #687378;
+    }
+    .control a{
+      background-color: #cacaca;
+    }
+  }
+  article {
+    background: #fff;
+    border-radius: 15px;
+    padding: $margen-cel;
+    color: $primario;
+    @extend .sombra;
+    h2 {
+      color: $acento;
+      font-size: clamp(1.8rem, 2.5vw, 2rem);
+
+    }
+    .vip{
+      color: $secundario;
+      font-weight: bold;
+    }
+    button{
+      background-color: $acento;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      padding: .3rem .8rem;
+      font-weight: bold;
+     
+      svg{
+        vertical-align: middle;
+        margin-right: .2rem;
+      }
+      @include cel{
+        margin-top: .5rem;
+      }
+    }
+    .relevantes {
+      background-color: $primario;
+      border-radius: 10px;
+      color: #fff;
+      ul {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $margen-min;
+        li {
+          list-style: none;
+        }
+      }
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .control{
+      margin-top: .5rem;
+      padding: $margen-min;
+      border-top: solid 1px #ccc;
+      display: flex;
+      justify-content: right;
+      align-items: center;
+      gap: .5rem;
+      a{
+        padding: .5rem;
+        text-align: center;
+        border-radius: 10px;
+        flex: 1;
+        display: block;
+        background-color: #fff;
+        @extend .sombra;
+        max-width: 300px;
+      }
+    }
+  }
+</style>

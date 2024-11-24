@@ -6,6 +6,7 @@ interface Props {
 const { title } = Astro.props;
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
 ---
 
 <!doctype html>
@@ -25,9 +26,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   </head>
   <body>
     <slot />
-    <form data-authForm action="../api/salir.json">
-      <button>Salir del panel de invitados</button>
-    </form>
     <script>
       import { formSubmit } from "../pages/panel/lib/formSubmit";
       const form = document.querySelectorAll(
@@ -39,3 +37,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </body>
 </html>
+
+

@@ -12,16 +12,23 @@ export default function Hero({ nombres, fecha, cover, folder }) {
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
-
+    const uid = params.get("uid");
+    const pase = document.querySelector(".paseSpan");
+    const spanVarios = document.querySelector(".variosSpan");
 
     // Fetch data cuando se monta el componente
-    fetch(`/quince/${folder}/data/invitados.json`)
+    fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
     .then(res => res.json())
     .then(json =>{
 
-      if (id && id < json.length) {
-        setInvitado(json[id].nombre);
-        setPase(json[id].pases);
+      setInvitado(json[0].nombre);
+      setPase(json[0].pases);
+      if (json[0].pases > 1) {
+        spanVarios.textContent = "Los";
+        pase.textContent = " pases";
+      } else {
+        spanVarios.textContent = "Te";
+        pase.textContent = " pase";
       }
     }
     )
@@ -61,19 +68,14 @@ export default function Hero({ nombres, fecha, cover, folder }) {
             </span>
             <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
             <p>
-              Te invitamos a mis <b>XV años</b>
+            <span className="variosSpan"></span>  invitamos a mis <b>XV años</b>
             </p>
             <p className={Style.fecha}>{fecha.toLocaleString()}</p>
           </div>
-          {pase > 0 ? (
-            <>
               <div id={Style["pases"]}>
-                No. de pases: <span id="NumeroPases">{pase}</span>
+                No. de <span className="paseSpan">pases</span> <br /> <span id="NumeroPases">{pase}</span>
               </div>
-            </>
-          ) : (
-            <></>
-          )}
+       
         </div>
       </section>
     </>

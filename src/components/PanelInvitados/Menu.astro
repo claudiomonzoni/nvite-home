@@ -1,0 +1,79 @@
+---
+import { Icon } from "astro-icon/components";
+import Boton from "../comunes/Boton.astro";
+
+interface Props {
+  tipo: string;
+  ruta: string;
+}
+const { tipo, ruta } = Astro.props;
+---
+
+<nav>
+  <ul>
+    <a href={Astro.url.origin}
+      ><img src="/nvita-logo-panel.svg" alt="nvitaciones" id="logo" /></a
+    >
+    <li>{tipo} de {ruta}</li>
+    <li>
+      <form data-authForm action="../api/salir.json">
+        <Boton texto="Salir" clases="btn-claro" claro={false}>
+          <Icon name="mdi:logout" size={20} />
+        </Boton>
+      </form>
+    </li>
+  </ul>
+</nav>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+  #logo {
+    width: 10vw;
+    height: auto;
+    svg {
+        border: solid 1px #fff;
+        fill: #fff;
+    }
+    @include cel {
+        width: 100vw;
+    }
+  }
+  li {
+    text-align: center;
+    list-style: none;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    font-weight: bold;
+  }
+
+  nav {
+    background-color: $primario;
+    margin-bottom: $margen;
+  
+    ul {
+      display: flex;
+      color: white;
+      justify-content: space-between;
+      align-items: center;
+      padding: $margen-min;
+    }
+
+    button {
+      background-color: $acento;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      padding: 0.3rem 0.8rem;
+      font-weight: bold;
+      margin: 0;
+
+      svg {
+        vertical-align: middle;
+        margin-right: 0.2rem;
+      }
+    }
+  }
+</style>

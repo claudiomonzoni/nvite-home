@@ -53,8 +53,9 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 
   try {
     if (!id) {
-      throw new Error("no existe o fue enviado el id del usuario");
+      throw new Error("No existe o fue enviado el id del usuario.");
     }
+
     await db
       .update(Invitados)
       .set({
@@ -69,7 +70,14 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         tipoInvitacion,
       })
       .where(eq(Invitados.id, Number(id)));
-    return new Response(null, { status: 200 });
+
+    return new Response(
+      JSON.stringify({
+        message: "Invitado actualizado correctamente.",
+        success: true,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (e) {
     console.error(e);
     if (e instanceof Error) {
@@ -79,18 +87,21 @@ export const PATCH: APIRoute = async ({ params, request }) => {
           success: false,
         }),
         {
-          status: 404,
+          status: 400,
+          headers: { "Content-Type": "application/json" },
         }
       );
     }
   }
+
   return new Response(
     JSON.stringify({
-      message: "There was an unknown error",
+      message: "Ocurrió un error desconocido.",
       success: false,
     }),
     {
-      status: 404,
+      status: 500,
+      headers: { "Content-Type": "application/json" },
     }
   );
 };

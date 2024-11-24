@@ -14,19 +14,20 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
+    const uid = params.get("uid");
+
+    
     const ua = navigator.userAgent;
 
     try {
       
-      if (id < invitadosData.length && id) {
-        setInvitado(invitadosData[id].nombre);
-        setPases(invitadosData[id].pases);
-        setId(id);
-      } else {
-        setVer("basic");
-        // alert('Error en ID de invitado');
-        // bloquear el boton
-      }
+      fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setInvitado(json[0].nombre);
+        setPases(json[0].pases);
+        setId(json[0].id);
+      });
       
       const pasesInput = document.querySelector("#Confipases");
       const generarPases = () => {

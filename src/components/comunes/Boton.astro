@@ -1,13 +1,47 @@
 ---
 interface Props {
-    id?: string;
+    texto: string;
+    claro: boolean;
     clases?: string;
-    conBorde?: boolean;
-    tema?: string;
+    id?: string;
 }
-const { clases, conBorde, tema,...rest } = Astro.props
+const {  texto, claro, clases, ...rest } = Astro.props;
 ---
 
-<button class:list={['btn', clases, tema,{ 'con-borde': conBorde }]} {...rest}>
+
+<button class:list= {clases}  {...rest} set:html={texto}>
     <slot />
 </button>
+
+
+
+<style lang="scss">
+    @import '../../estilos/_variables.scss';
+    @mixin btn {
+        padding: 10px 20px;
+        display: inline-block;
+        text-decoration: none;
+        border-radius: 5px;
+        vertical-align: middle;
+       
+       
+        @include cel {
+            margin-top: $margen-min;
+            text-align: center;
+            width: max-content;
+        }
+    }
+    .btn-claro {
+        @include btn;
+        color: $primario;
+        border: 1px solid $primario;
+        font-weight: 700;
+    }
+    .btn-oscuro {
+        @include btn;
+        background-color: $acento;
+        color: white;
+        font-weight: 700;
+    }
+
+</style>
