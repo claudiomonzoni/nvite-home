@@ -6,11 +6,12 @@ interface Props {
     blank?: boolean;
     clases?: string;
     id?: string;
+    rel?: string;
 }
-const { liga, texto, claro, blank, clases, ...rest } = Astro.props;
+const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
 ---
 
-    <a href={liga} class:list= {clases}  target={blank ? '_blank' : ''} {...rest} set:html={texto}>
+    <a href={liga} class:list= {clases}  target={blank ? '_blank' : ''} {...rest} rel={rel} set:html={texto}>
     <slot />
 </a>
 

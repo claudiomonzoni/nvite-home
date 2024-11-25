@@ -18,7 +18,33 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:site_name" content="Invitaciones Digitales Nvita">
     <title>{title}</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Invitaciones Digitales - Nvita",
+        "url": "https://www.nvita.me",
+        "logo": "https://www.nvita.me/nvita-logo.svg", 
+        "sameAs": [
+          "https://www.facebook.com/nvitaciones",
+          "https://www.instagram.com/nvitaciones"
+        ],
+        "description": "¡Que tu celebración sea inolvidable!, transforma las invitaciones de tu evento en una experiencia única con las invitaciones digitales de nvita",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "México",
+          "addressCountry": "MX"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+5217551132468",
+          "contactType": "customer service"
+        }
+      }
+      </script>
+      
   </head>
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
 <script>
