@@ -40,41 +40,39 @@ import Checkbox from "./Checkbox.astro";
       </select>
 
       <div class="check">
+        <Checkbox
+          checked={false}
+          inputId={Math.random()}
+          name="confirmado"
+          titulo="¿Ya confirmo sus asistencia?"
+        />
 
         <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="confirmado"
-        titulo="¿Ya confirmo sus asistencia?"
+          checked={false}
+          inputId={Math.random()}
+          titulo="Invitado importante"
+          name="vip"
         />
-        
+
         <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="Invitado importante"
-        name="vip"
+          checked={false}
+          inputId={Math.random()}
+          titulo="Invitación enviada"
+          name="InvitacionEnviada"
         />
-  
+
         <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="Invitación enviada"
-        name="InvitacionEnviada"
+          checked={false}
+          inputId={Math.random()}
+          titulo="No asistirá"
+          name="noAsiste"
         />
-        
-        <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="No asistirá"
-        name="noAsiste"
-        />
-        
       </div>
-        
-        <input type="submit" value="Editar invitado" />
-      </form>
+
+      <input type="submit" value="Editar invitado" />
+    </form>
   </div>
-  <button id="cerrar-dialog">Cerrar</button>
+  <a href="#" id="cerrar-dialog-editar">X</a>
 </dialog>
 
 <script>
@@ -164,77 +162,97 @@ import Checkbox from "./Checkbox.astro";
       }
     } catch (e) {
       console.error("Error en la solicitud:", e);
-      alert(e.message );
+      alert(e.message);
     }
   });
+  const dialogEditar = document.querySelector(
+    "#editar-invitado-dialog"
+  ) as HTMLDialogElement;
+  const closeDialogBtn = document.getElementById(
+    "cerrar-dialog-editar"
+  ) as HTMLButtonElement;
+  closeDialogBtn.addEventListener("click", () => dialogEditar.close());
 </script>
-
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
-dialog {
-  border: none;
-  border-radius: $margen-cel;
-  padding: $margen-cel;
-  width: 100%;
-  max-width: 70%;
-  text-align: center;
-  @include cel {
-    max-width: 90%;
-    padding: $margen-min;
-    form{
-      width: 90%;
+  dialog {
+    border: none;
+    border-radius: $margen-cel;
+    padding: $margen-cel;
+    width: 100%;
+    max-width: 70%;
+    text-align: center;
+    @include cel {
+      max-width: 90%;
+      padding: $margen-min;
+      form {
+        width: 90%;
+      }
     }
+    @extend .sombra;
   }
-  @extend .sombra;
-}
-  form{
+  form {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     justify-content: center;
     width: 70%;
     margin: 0 auto;
 
-    
-    label{
+    label {
       flex: 1 0 70%;
       text-align: left;
       font-weight: bold;
       color: $acento;
     }
-    input, select{
+    input,
+    select {
       border-radius: 5px;
       width: 100%;
-      margin: .5rem 0;
-      padding: .6rem;
+      margin: 0.5rem 0;
+      padding: 0.6rem;
     }
-    
   }
 
-  button, input[type="submit"]{
-      background-color: $acento;
-      border-radius: 5px;
-      color: #fff;
-      border: none;
-      display: inline-block;
-      text-align: center;
-      padding: .3rem .8rem;
-      font-weight: bold;
-     
-      svg{
-        vertical-align: middle;
-        margin-right: .2rem;
-      }
-      @include cel{
-        margin-top: .5rem;
-      }
+  button,
+  input[type="submit"] {
+    background-color: $acento;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.3rem 0.8rem;
+    font-weight: bold;
+
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+    @include cel {
+      margin-top: 0.5rem;
+    }
   }
-  #check{
+  #check {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
     padding: $margen-min;
-    gap: 1.5rem;}
-
+    gap: 1.5rem;
+  }
+  #cerrar-dialog-editar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: $acento;
+    border-radius: 100px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 0.8rem;
+    font-weight: bold;
+    @extend .sombra;
+  }
 </style>

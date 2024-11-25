@@ -27,6 +27,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body>
     <slot />
     <script>
+  
       import { formSubmit } from "../pages/panel/lib/formSubmit";
       const form = document.querySelectorAll(
         "[data-authForm]"

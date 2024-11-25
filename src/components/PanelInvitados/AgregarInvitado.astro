@@ -86,7 +86,8 @@ const ruta = usuarios[0].ruta
       <input type="submit" value="Agregar invitación" />
     </form>
   </div>
-  <button id="cerrar-dialog">Cerrar</button>
+  <a href="#" id="cerrar-dialog">X</a>
+
 </dialog>
 
 <script>
@@ -253,6 +254,20 @@ dialog {
     justify-content: space-evenly;
     align-items: center;
     padding: $margen-min;
-    gap: 1.5rem;}
-
+    gap: 1.5rem;
+  }
+  #cerrar-dialog {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: $acento;
+    border-radius: 100px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 0.8rem;
+    font-weight: bold;
+    @extend .sombra;
+  }
 </style>

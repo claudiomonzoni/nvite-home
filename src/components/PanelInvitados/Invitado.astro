@@ -17,17 +17,29 @@ export type InvitadoProps = {
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
-const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`;
 ---
-<article class=`${invitadoData.confirmado ? "confirmado" : ""} ${invitadoData.noAsiste ? "NoAsiste" : ""} ${invitadoData.InvitacionEnviada ? "enviada" : ""}`>
-  <div class="invitado" >
+
+<article
+  class=`${invitadoData.confirmado ? "confirmado" : ""} ${invitadoData.noAsiste ? "NoAsiste" : ""} ${invitadoData.InvitacionEnviada ? "enviada" : ""}`
+>
+  <div class="invitado">
     <h2>
-      {invitadoData.nombre} 
+      {invitadoData.nombre}
     </h2>
     <div class="relevantes">
       <ul>
-        {invitadoData.vip ? <li class="vip"> <Icon name="mdi:heart" size={25} /> Invitación importante</li> : ""}
-        <li>Pases asignados: {invitadoData.pases}</li> 
+        {
+          invitadoData.vip ? (
+            <li class="vip">
+              {" "}
+              <Icon name="mdi:heart" size={25} /> Invitación importante
+            </li>
+          ) : (
+            ""
+          )
+        }
+        <li>Pases asignados: {invitadoData.pases}</li>
         {
           invitadoData.mesa ? (
             <li>No. de mesa asignada: {invitadoData.mesa}</li>
@@ -37,39 +49,74 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
         }
         <li>
           <button
-          data-edit
-          data-id={invitadoData.id}
-          data-uid={invitadoData.usuarioId}
-          ><Icon name="mdi:account-edit-outline" size={20} />Editar</button
-        >
-        <button data-delete data-id={invitadoData.id}
-        ><Icon name="borrar" size={20} />Borrar</button
-      >
+            data-edit
+            data-id={invitadoData.id}
+            data-uid={invitadoData.usuarioId}
+            ><Icon name="mdi:account-edit-outline" size={20} />Editar</button
+          >
+          <button data-delete data-id={invitadoData.id}
+            ><Icon name="borrar" size={20} />Borrar</button
+          >
         </li>
       </ul>
     </div>
     <ul id="info">
       {
         invitadoData.numeroWhats ? (
-          <li><b>Whatsapp:</b> {invitadoData.numeroWhats}</li>
+          <li>
+            <b>Whatsapp:</b> {invitadoData.numeroWhats}
+          </li>
         ) : (
-          <li><b>Agregar</b> numero de Whatsapp</li>
+          <li>
+            <b>Agregar</b> numero de Whatsapp
+          </li>
         )
       }
-      {invitadoData.confirmado ? <li><b>Confirmada</b> la asistencia</li> : ""}
-      {invitadoData.noAsiste ? <li>Confirmo que <b>no asiste</b></li> : ""}
-      {invitadoData.InvitacionEnviada ? <li>Invitacion <b>Enviada</b></li> : ""}
+      {
+        invitadoData.confirmado ? (
+          <li>
+            <b>Confirmada</b> la asistencia
+          </li>
+        ) : (
+          ""
+        )
+      }
+      {
+        invitadoData.noAsiste ? (
+          <li>
+            Confirmo que <b>no asiste</b>
+          </li>
+        ) : (
+          ""
+        )
+      }
+      {
+        invitadoData.InvitacionEnviada ? (
+          <li>
+            Invitacion <b>Enviada</b>
+          </li>
+        ) : (
+          ""
+        )
+      }
       <li>Invitación <b> {invitadoData.tipoInvitacion} </b></li>
     </ul>
-   
   </div>
   <div class="control">
-  {
-        invitadoData.numeroWhats ? (
-        <a href="#" id="enviarwa" data-wa={invitadoData.numeroWhats} data-copiarwa={urlWA}><Icon name="mdi:whatsapp" size={20} /> Enviar invitación</a>
+    {
+      invitadoData.numeroWhats ? (
+        <a
+          href="#"
+          id="enviarwa"
+          data-wa={invitadoData.numeroWhats}
+          data-copiarwa={urlWA}
+        >
+          <Icon name="mdi:whatsapp" size={20} /> Enviar invitación
+        </a>
       ) : (
         ""
-      )}
+      )
+    }
     <a
       href="#"
       id="copiar"
@@ -78,8 +125,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     >
   </div>
 </article>
-
-
 
 <script>
   //botones de control para compiar y enviar a whatsapp la invitación en el panel
@@ -113,7 +158,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
     const invitacion = btn.dataset.copiarwa;
-    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`
+    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`;
     if (!numeroWhats) {
       btn.closest(".control").querySelector("h4").style.display = "none";
       btn.style.display = "none";
@@ -146,12 +191,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
         if (!id) {
           throw new Error("No id present");
         }
-        const req = await fetch(`/api/${id}.json`, {
-          method: "DELETE",
-        });
+        if (window.confirm("¿Quieres borrar la invitación?")) {
+          const req = await fetch(`/api/${id}.json`, {
+            method: "DELETE",
+          });
 
-        if (!req.ok) {
-          throw new Error("Error al borrar invitado");
+          if (!req.ok) {
+            throw new Error("Error al borrar invitado");
+            
+          }
+        } else {
+          return;
         }
 
         console.log("borrado");
@@ -237,35 +287,34 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
-  .enviada{
+  .enviada {
     background-color: #edf8fd;
     color: #4b7c91;
-    h2{
+    h2 {
       color: $primario;
     }
-
   }
-  .confirmado{
+  .confirmado {
     background-color: $fondo;
     color: #4b7c91;
-    h2{
+    h2 {
       color: $acento;
     }
-    .control a{
+    .control a {
       background-color: #ffc685;
       color: $primario;
     }
   }
-  .NoAsiste{
+  .NoAsiste {
     background-color: #c6bfb5;
     color: #4a443b;
-    h2{
+    h2 {
       color: #e3e3e3;
     }
-    .relevantes{
+    .relevantes {
       background-color: #687378;
     }
-    .control a{
+    .control a {
       background-color: #cacaca;
     }
   }
@@ -278,28 +327,27 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     h2 {
       color: $acento;
       font-size: clamp(1.8rem, 2.5vw, 2rem);
-
     }
-    .vip{
+    .vip {
       color: $secundario;
       font-weight: bold;
     }
-    button{
+    button {
       background-color: $acento;
       border-radius: 5px;
       color: #fff;
       border: none;
       display: inline-block;
       text-align: center;
-      padding: .3rem .8rem;
+      padding: 0.3rem 0.8rem;
       font-weight: bold;
-     
-      svg{
+
+      svg {
         vertical-align: middle;
-        margin-right: .2rem;
+        margin-right: 0.2rem;
       }
-      @include cel{
-        margin-top: .5rem;
+      @include cel {
+        margin-top: 0.5rem;
       }
     }
     .relevantes {
@@ -322,16 +370,16 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       flex-wrap: wrap;
       justify-content: space-between;
     }
-    .control{
-      margin-top: .5rem;
+    .control {
+      margin-top: 0.5rem;
       padding: $margen-min;
       border-top: solid 1px #ccc;
       display: flex;
       justify-content: right;
       align-items: center;
-      gap: .5rem;
-      a{
-        padding: .5rem;
+      gap: 0.5rem;
+      a {
+        padding: 0.5rem;
         text-align: center;
         border-radius: 10px;
         flex: 1;
