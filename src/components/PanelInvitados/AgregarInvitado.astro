@@ -11,66 +11,77 @@ const ruta = usuarios[0].ruta
 
 <dialog  id="agrega-invitado-dialog" data-ref={usuarioId}>
   <div class="formulario">
+    <h2>Agrega un invitado a tu panel</h2>
     <form id="agregar-formu" >
-      <h2>Agrega un invitado a tu panel</h2>
-      <label for="nombre">Nombre del invitado</label>
-      <input
+      <label for="nombre">Nombre del invitado
+
+        <input
         type="text"
         name="nombre"
-        placeholder="Invitado, familiar o grupal"
+        placeholder="Nombre que aparecerá en la invitación"
         required
-      />
-      <label for="pases">Numero de pases</label>
-      <input type="number" name="pases" required placeholder="Asignar numero de pases" />
-      <label for="mesa">Numero de mesa</label>
-      <input
+        />
+      </label>
+      <label for="pases">Numero de pases
+
+        <input type="number" name="pases" required placeholder="Asignar numero de pases" />
+      </label>
+      <label for="mesa">Numero de mesa
+
+        <input
         type="number"
         name="mesa"
         placeholder="Asignar numero de mesa (opcional)"
-      />
-      <label for="whatsapp">Numero de whatsapp</label>
-      <input
+        />
+      </label>
+      <label for="whatsapp">Numero de whatsapp
+
+        <input
         type="tel"
         name="numeroWhats"
-        placeholder="Donde enviar la invitacion"
-      />
-      <label for="confirmado">¿Ya confirmo sus asistencia?</label>
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="confirmado"
-        titulo="Confirmado"
-      />
-
-      <label for="vip">¿Es invitado importante?</label>
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="Invitado importante"
-        name="vip"
-      />
-      <label for="InvitacionEnviada">¿Ya envio invitacion?</label>
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="Enviada"
-        name="InvitacionEnviada"
-      />
-
-      <label for="noAsiste">Confirmo que no asistirá</label>
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        titulo="No asistirá"
-        name="noAsiste"
-      />
-
+        placeholder="Numero de whatsapp del invitado"
+        />
+      </label>
       <label for="tipoInvitacion">Tipo de invitación</label>
       <select name="tipoInvitacion" id="tipoInvitacion">
         <option value="Familiar">Familiar</option>
         <option value="Individual">Individual</option>
         <option value="Grupal">Grupal</option>
       </select>
+      
+      <div id="check">
+        
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="confirmado"
+        titulo="Ya confirmo su asistencia"
+      />
+
+     
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="vip"
+        titulo="Invitado importante"
+      />
+      
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="InvitacionEnviada"
+        titulo="Invitación enviada"
+      />
+
+     
+      <Checkbox
+        checked={false}
+        inputId={Math.random()}
+        name="noAsiste"
+        titulo="No asistirá"
+      />
+
+      </div>
 
       <input type="submit" value="Agregar invitación" />
     </form>
@@ -176,3 +187,72 @@ const ruta = usuarios[0].ruta
     }
   });
 </script>
+
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
+dialog {
+  border: none;
+  border-radius: $margen-cel;
+  padding: $margen-cel;
+  width: 100%;
+  max-width: 70%;
+  text-align: center;
+  @include cel {
+    max-width: 90%;
+    padding: $margen-min;
+    form{
+      width: 90%;
+    }
+  }
+  @extend .sombra;
+}
+  form{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+
+    
+    label{
+      flex: 1 0 70%;
+      text-align: left;
+      font-weight: bold;
+      color: $acento;
+    }
+    input, select{
+      border-radius: 5px;
+      width: 100%;
+      margin: .5rem 0;
+      padding: .6rem;
+    }
+    
+  }
+
+  button, input[type="submit"]{
+      background-color: $acento;
+      border-radius: 5px;
+      color: #fff;
+      border: none;
+      display: inline-block;
+      text-align: center;
+      padding: .3rem .8rem;
+      font-weight: bold;
+     
+      svg{
+        vertical-align: middle;
+        margin-right: .2rem;
+      }
+      @include cel{
+        margin-top: .5rem;
+      }
+  }
+  #check{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: $margen-min;
+    gap: 1.5rem;}
+
+</style>

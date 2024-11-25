@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<"input"> {
 const { inputId, checked, titulo, ...rest } = Astro.props;
 ---
 
-<div >
+<div class="check" >
   <input
     type="checkbox"
     checked={checked}
@@ -19,8 +19,30 @@ const { inputId, checked, titulo, ...rest } = Astro.props;
     id={`check-${inputId}`}
     {...rest}
   />
-  <div aria-hidden="true">
+  <!-- <div aria-hidden="true">
     <Icon name="bag" size={16} />
-  </div>
+  </div> -->
   <label for={`check-${inputId}`}>{titulo}</label>
 </div>
+
+<style> 
+.check{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+label{
+  padding: 0;
+  text-align: left;
+  font-weight: bold;
+}
+  input[type="checkbox"] {
+    height: 1rem;
+   max-width: 1rem;
+   
+   
+  }
+  input[type="checkbox"]:checked {
+    background-color: #ff4444;
+  }
+</style>
