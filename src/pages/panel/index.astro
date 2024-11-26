@@ -11,7 +11,7 @@ import { Usuario, db, eq } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`, {
+const request = await fetch("https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=claudiomonzoni@hotmail.com", {
   headers: {
     "Content-Type": "application/json",
     "Cache-Control": "no-store",
