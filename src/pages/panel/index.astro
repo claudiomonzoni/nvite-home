@@ -12,10 +12,10 @@ import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
 const request = await fetch(
-  `https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=${usuarioEmail}`
+  `https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=claudiomonzoni@hotmail.com`
   // `${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`
 );
-console.log(request)
+console.log(usuarioEmail)
 let invitadosData = null;
 
 try {
