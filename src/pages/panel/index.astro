@@ -18,9 +18,12 @@ const baseUrl = process.env.VERCEL_URL
 
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const request = await fetch(
-  `${baseUrl}/api/getInvitados.json?email=${usuarioEmail}`
-);
+const request = await fetch(`${baseUrl}/api/getInvitados.json?email=${usuarioEmail}`, {
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
 let invitadosData = null;
 
 try {
