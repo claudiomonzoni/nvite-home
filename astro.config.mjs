@@ -5,12 +5,14 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import db from "@astrojs/db";
-import netlify from "@astrojs/netlify";
+// import netlify from "@astrojs/netlify";
+import vercelServerless from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.nvita.me',
   integrations: [sitemap(), react(), mdx(), icon(), db()],
   output: "server",
-  adapter: netlify()
+  // adapter: netlify()
+  adapter: vercelServerless(),
 });
