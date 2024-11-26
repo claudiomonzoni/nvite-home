@@ -20,6 +20,7 @@ try {
   const data = await request.json();
   invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
 } catch (error) {
+  console.log(invitadosData)
   console.error("Error al obtener los datos de invitados:", error);
   invitadosData = null; // Manejo del error
 }
