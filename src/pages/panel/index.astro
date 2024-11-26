@@ -14,16 +14,16 @@ const usuarioEmail = NvitaAuth.currentUser?.email;
 const request = await fetch(
   `${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`
 );
-// let invitadosData = null;
+console.log(request)
+let invitadosData = null;
 
-const invitadosData = await request.json();
-// try {
-//   // invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
-// } catch (error) {
-//   console.error("Error al obtener los datos de invitados:", error);
-//   // invitadosData = null; // Manejo del error
-// }
-console.log(invitadosData)
+try {
+  const data = await request.json();
+  invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
+} catch (error) {
+  console.error("Error al obtener los datos de invitados :( :", error);
+  invitadosData = null; // Manejo del error
+}
 
 const usuarios = await db
   .select()
