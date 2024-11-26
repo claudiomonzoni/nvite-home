@@ -10,17 +10,16 @@ import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro
 import { Usuario, db, eq } from "astro:db";
 import { Icon } from "astro-icon/components";
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : Astro.url.origin;
-
 const usuarioEmail = NvitaAuth.currentUser?.email;
-
-const request = await fetch(`${baseUrl}/api/getInvitados.json?email=${usuarioEmail}`, {
+const request = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`, {
   headers: {
     "Content-Type": "application/json",
+    "Cache-Control": "no-store",
   },
 });
+
+const rawResponse = await request.text(); // Obtén la respuesta como texto
+console.log("Contenido bruto de la respuesta:", rawResponse);
 
 let invitadosData = null;
 
