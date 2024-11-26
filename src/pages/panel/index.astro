@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
 import Menu from "../../components/PanelInvitados/Menu.astro";
@@ -13,8 +12,11 @@ import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
 const request = await fetch(
-  `${Astro.url.origin}/api/getInvitados.json?email=${usuarioEmail}`
+  `https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=${usuarioEmail}`
 );
+
+const rawResponse = await request.text(); // Obtén la respuesta como texto
+console.log("Contenido bruto de la respuesta:", rawResponse);
 let invitadosData = null;
 
 try {
