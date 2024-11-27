@@ -120,7 +120,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     <a
       href="#"
       id="copiar"
-      data-copiar={`${Astro.url.origin}/${tipo}${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
+      data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
       ><Icon name="mdi:content-copy" size={20} /> Copiar invitación</a
     >
   </div>
