@@ -15,9 +15,23 @@ const request = await fetch(
   `https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=${usuarioEmail}`
 );
 
-const rawResponse = await request.text(); // Obtén la respuesta como texto
-console.log("Contenido bruto de la respuesta:", rawResponse);
+console.log("Estado de la respuesta:", request.status);
+console.log("Encabezados de la respuesta:", [...request.headers.entries()]);
+
+if (!request.ok) {
+  throw new Error(`Error en la solicitud: ${request.status} ${request.statusText}`);
+}
+
 let invitadosData = null;
+try {
+  const data = await request.json();
+  console.log("Datos recibidos de la API:", data);
+  invitadosData = Array.isArray(data) ? data : null;
+} catch (error) {
+  console.error("Error al analizar el cuerpo de la respuesta:", error);
+  invitadosData = null;
+}
+
 
 try {
   const data = await request.json();
