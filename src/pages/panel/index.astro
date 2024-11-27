@@ -2,53 +2,50 @@
 import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
 import Menu from "../../components/PanelInvitados/Menu.astro";
-
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
 import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
-import { Usuario, db, eq } from "astro:db";
+import { Usuario, Invitados, db, eq } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const request = await fetch(
-  `https://nvite-git-nvitapanelinvitados-claudiomonzonis-projects.vercel.app/api/getInvitados.json?email=${usuarioEmail}`
-);
 
-console.log("Estado de la respuesta:", request.status);
-console.log("Encabezados de la respuesta:", [...request.headers.entries()]);
-
-if (!request.ok) {
-  throw new Error(`Error en la solicitud: ${request.status} ${request.statusText}`);
+if (!usuarioEmail) {
+  console.error("El usuario no está autenticado.");
+  throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
 }
 
 let invitadosData = null;
+let tipoInvitacion = null;
+let ruta = null;
+
 try {
-  const data = await request.json();
-  console.log("Datos recibidos de la API:", data);
-  invitadosData = Array.isArray(data) ? data : null;
+  // Obtén los datos del usuario
+  const usuarios = await db
+    .select()
+    .from(Usuario)
+    .where(eq(Usuario.email, usuarioEmail));
+
+  if (usuarios.length === 0) {
+    throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
+  }
+
+  tipoInvitacion = usuarios[0].tipo;
+  ruta = usuarios[0].ruta;
+
+  // Obtén los datos de los invitados
+  invitadosData = await db
+    .select()
+    .from(Invitados)
+    .where(eq(Invitados.usuarioId, usuarios[0].id));
 } catch (error) {
-  console.error("Error al analizar el cuerpo de la respuesta:", error);
+  console.error("Error al obtener los datos:", error);
   invitadosData = null;
 }
 
 
-try {
-  const data = await request.json();
-  invitadosData = Array.isArray(data) ? data : null; // Asegura que sea un array o null si hay un error
-} catch (error) {
-  console.error("Error al obtener los datos de invitados:", error);
-  invitadosData = null; // Manejo del error
-}
-
-const usuarios = await db
-  .select()
-  .from(Usuario)
-  .where(eq(Usuario.email, usuarioEmail));
-const tipoInvitacion = usuarios[0].tipo;
-const ruta = usuarios[0].ruta;
 ---
-
 <Layout title="Panel de administración">
   <Menu tipo={tipoInvitacion} ruta={ruta} />
   <section class="grid contenido">
@@ -57,39 +54,32 @@ const ruta = usuarios[0].ruta;
       <ul>
         <li>Invitación <b class="enviada">Enviada</b></li>
         <li>Asistencia <b class="confirmado">Confirmada</b></li>
-        <li>Confirmación de <b class="NoAsiste"> No asistencia</b></li>
+        <li>Confirmación de <b class="NoAsiste">No asistencia</b></li>
       </ul>
     </div>
     <ul>
-      {
-        invitadosData === null ? (
-          <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
-        ) : invitadosData.length > 0 ? (
-          invitadosData.map((invi: InvitadoProps) => (
-            <li>
-              <Invitado invitadoData={invi} ruta={ruta} tipo={tipoInvitacion} />
-            </li>
-          ))
-        ) : (
-          <p>
-            No tienes invitados aún. Usa el botón de abajo para agregar uno.
-          </p>
-        )
-      }
+      {invitadosData === null ? (
+        <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
+      ) : invitadosData.length > 0 ? (
+        invitadosData.map((invitado: InvitadoProps) => (
+          <li>
+            <Invitado invitadoData={invitado} ruta={ruta} tipo={tipoInvitacion} />
+          </li>
+        ))
+      ) : (
+        <p>No tienes invitados aún. Usa el botón de abajo para agregar uno.</p>
+      )}
     </ul>
 
-    {
-      invitadosData !== null && (
-        <>
-          <button id="agregar-invitado">
-            {" "}
-            <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-          </button>
-          <AgregarInvitado />
-          <EditarInvitado />
-        </>
-      )
-    }
+    {invitadosData !== null && (
+      <>
+        <button id="agregar-invitado">
+          <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+        </button>
+        <AgregarInvitado />
+        <EditarInvitado />
+      </>
+    )}
   </section>
 </Layout>
 
