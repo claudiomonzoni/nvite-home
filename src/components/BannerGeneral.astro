@@ -112,6 +112,21 @@ if (!imagen[urlImagen])
   
     background: linear-gradient(43deg, $secundario 10%, rgb(255, 247, 233) 80%);
   }
+  .terciario {
+    svg {
+      	color: $acento;
+    }
+  
+    h2{
+      color: $secundario;
+    }
+  
+    background: linear-gradient(83deg, #a2a4ba 10%, $primario 60%);
+    @include cel {
+      background: linear-gradient(123deg, #a2a4ba 10%, $primario 60%);
+    }
+    color: #fff;
+  }
 
   // Cel
 
