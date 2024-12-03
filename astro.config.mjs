@@ -10,7 +10,7 @@ import vercelServerless from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.nvita.me',
+  site: 'https://www.nvitaciones.com',
   integrations: [sitemap(), react(), mdx(), icon(), db()],
   output: "server",
   // adapter: netlify()
