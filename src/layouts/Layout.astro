@@ -6,6 +6,7 @@ interface Props {
 const { title } = Astro.props;
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+import Analytics from '@vercel/analytics/astro'
 ---
 
 <!doctype html>
@@ -104,6 +105,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
     <slot />
+    <Analytics />
   </body>
   <script src="../js/reserva.js"></script>
 </html>
