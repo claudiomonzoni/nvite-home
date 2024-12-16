@@ -68,13 +68,13 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   });
   return (
     <>
-      <div className="grid contenido">
+      <div className="grid pantalla">
         <div className={estilo.confirmacion}>
           <div className={estilo.bandeja}>
             <svg viewBox="0 0 41 31" fill="none">
               <path
                 d="M41 6.3152H22.55V10.4293H41V6.3152ZM41 22.7717H22.55V26.8859H41V22.7717ZM7.257 14.5435L0 7.26145L2.8905 4.36098L7.2365 8.72196L15.9285 0L18.819 2.90046L7.257 14.5435ZM7.257 31L0 23.718L2.8905 20.8175L7.2365 25.1785L15.9285 16.4565L18.819 19.357L7.257 31Z"
-                fill="white"
+                fill="#8e75a8"
               ></path>
             </svg>
             <h2>Confirmación</h2>

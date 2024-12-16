@@ -1,6 +1,6 @@
 @import "_variables.scss";
 h2 {
-  color: white;
+  color: $secundario;
   padding-top: $margen-min;
   font-size: clamp(3rem, 1.5vw, 2rem);
 
@@ -13,12 +13,14 @@ h2 {
   text-align: center;
   padding: $margen;
   margin: 0 auto;
-  max-width: 60%;
-  background: $urlPatron, $gris;
-  background-blend-mode: color-dodge;
+  background: $urlPatron, $terciario;
+  background-blend-mode: color-burn;
+  background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  color: $primario;
   @include cel {
+    background-size: cover;
     max-width: 100%;
     padding: $margen-cel;
   }
@@ -36,6 +38,7 @@ form {
     flex: 1 0 100%;
     margin-top: 0.6rem;
     padding: 0.5rem 0;
+    border-radius: 3px;
   }
   textarea{
     field-sizing: content;
@@ -44,7 +47,7 @@ form {
   textarea,
   select {
     border: none !important;
-    opacity: 0.5;
+    opacity: 0.8;
     padding: 0.5rem;
     @extend .sombra;
   }

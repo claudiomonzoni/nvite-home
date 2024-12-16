@@ -1,26 +1,36 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   icono: string;
   titulo: string;
   array?: Array<any>;
+  fecha?: Date;
+  codigo?: string;
 }
-const { icono, titulo, array } = Astro.props;
+const { icono, titulo, array, fecha, codigo } = Astro.props;
 
-const base = import.meta.env.BASE_URL;
-const urlPatron = 'url("/quince/patron-fondo.png")';
-
+const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric" }) : null;
 ---
-
+ 
 <div class="carta">
-  <img src={icono} alt={titulo} />
+  <Icon name={icono} size={40} />
   <h3 class="overlay">{titulo}</h3>
+  {
+    fecha ? <p>{formattedFecha}</p> : <slot />
+  }
+
   {
     array ? array.map(item => <li>{item}</li>)  :  <slot />
   }
-  <img src={} alt="">
+
+  {
+    codigo ? <p>{codigo}</p> : <slot />
+  }
+ 
 </div>
 
-<style lang="scss" define:vars={{ urlPatron }}>
+<style lang="scss" >
   @import "../../estilos/quince/_variables.scss";
   .overlay {
     // filter: ;
@@ -33,18 +43,22 @@ const urlPatron = 'url("/quince/patron-fondo.png")';
     aspect-ratio: 1/1;
     flex: 1;
     text-align: center;
-    background: var(--urlPatron), $gris;
-    background-blend-mode: color-dodge;
-    background-size: 200% 200%;
+    background: $urlPatron, $terciario;
+    background-blend-mode:color-burn;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: $gris;
     padding: $margen-min;
     position: relative;
-    // word-break: break-all;
+    font-size: clamp(1.3rem, 1.3vw, 2vw);
+    li{
+      list-style: none;
+      padding-bottom: $margen-min;
+    }
+    @extend .sombra;
     h3 {
       width: fit-content;
       color: $secundario;
@@ -52,11 +66,16 @@ const urlPatron = 'url("/quince/patron-fondo.png")';
       margin: $margen-min 0;
       font-size: clamp(2.5rem, 1.6vw, 3rem);
       @include cel {
-        color: white;
         border-bottom: solid 1px $secundario;
       }
     }
 
+    svg path{
+        border: solid;
+        fill: $gris;
+      }
+   
+    
     img {
       max-width: 2.5rem;
       height: auto;
@@ -82,17 +101,17 @@ const urlPatron = 'url("/quince/patron-fondo.png")';
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: cart as HTMLElement,
-          start: "top 70%",
-          end: "bottom 60%",
+          start: "top 60%",
+          end: "bottom 80%",
           scrub: true,
         },
       });
       // desktop setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",
-        x: -30,
+        x: -20,
         opacity: 0,
-        delay: 0.3,
+        delay: id * 0.3,
       });
       tl.from(cart.children, {
         opacity: 0,
@@ -112,7 +131,7 @@ const urlPatron = 'url("/quince/patron-fondo.png")';
       // mobile setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",
-        y: -20,
+        y: 100,
         opacity: 0,
       });
       tl.from(cart.children, {

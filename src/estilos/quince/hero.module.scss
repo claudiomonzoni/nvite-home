@@ -37,10 +37,10 @@
   grid-column: 2 / -1;
   grid-row: 1 / -1;
   margin: $margen 0;
-  background: $urlPatron, $primario;
-  background-blend-mode:overlay;
+  background: $urlPatron, $terciario;
+  background-blend-mode:color-burn;
   text-align: center;
-  color: white;
+  color: $primario;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +60,6 @@ h1{
 }
 span {
   padding-bottom: $margen-min;
-  border-bottom: solid 1px $gris;
   margin-bottom: $margen-min;
  
 }
@@ -72,16 +71,22 @@ span {
   font-size: clamp(1.2rem, 2vw, 5vw);
 }
 #pases {
+  display: flex;
+  gap: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: $secundario;
-  padding: 1rem;
+  opacity: 0.9;
+  padding: 2rem;
   position: absolute;
   bottom: -5rem;
-  @extend .sombra;
-  span {
-    font-size: clamp(1.5rem, 2vw, 5vw);
-  }
+ 
   @include cel {
     padding: 1rem;
     font-size: 1rem;
   }
+}
+#NumeroPases{
+  font-size: clamp(2em, 3vw, 7vw);
 }

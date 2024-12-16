@@ -6,11 +6,12 @@
 // $gris: #2b2b2b;
 
 //colores b
-$primario: #2b225e;
+$primario: #403969;
 $secundario: #f5839a;
 $terciario: #fcf7ee;
 $acento: #f1d4da;
-$gris: #8d58c2;
+$gris: #8e75a8;
+
 
 
 //media query
@@ -32,7 +33,7 @@ $margen-min: 1rem;
 $margen-top-cel: 6rem;
 
 // variable de css para rutas 
-$urlPatron: url("/bodas/patron-fondo.png");
+$urlPatron: url("/bodas/patron-fondo.webp");
 // tambien cambiar la portada o cover en el archivo de layout para OpenGraph (la imagen que aparece al compartir por whatsapp)
 $urlCover: url("../../assets/quince/quincePlus/cover.webp");
 $encabezados: "Sacramento";
@@ -92,5 +93,5 @@ $txt: "Merriweather";
 $margen-riel: calc((100% - (100% - 5rem)) / 2 );
 
 .sombra{
-  box-shadow: 0px 4px 8px 0px rgba(111, 80, 126, 0.6);
+  box-shadow: 0px 1px 30px 6px rgba(162, 150, 119, 0.359);
 }

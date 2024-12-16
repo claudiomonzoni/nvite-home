@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/quince/hero.module.scss";
-import invitadosData from "../../assets/quince/quincePlus/data/invitados.json";
 
-export default function Hero({ nombres, fecha, cover, folder }) {
+
+export default function Hero({ nombres, fecha, cover }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   useEffect(() => {
@@ -71,10 +71,16 @@ export default function Hero({ nombres, fecha, cover, folder }) {
             <span className="variosSpan"></span>  invitamos a mis <b>XV años</b>
             </p>
             <p className={Style.fecha}>{fecha.toLocaleString()}</p>
-          </div>
+          </div>{
+            pase ? (
               <div id={Style["pases"]}>
-                No. de <span className="paseSpan">pases</span> <br /> <span id="NumeroPases">{pase}</span>
-              </div>
+              No. de pases <p id={Style["NumeroPases"]}>{pase}</p>
+            </div>
+            ) : (
+              ""
+            )
+          }
+              
        
         </div>
       </section>

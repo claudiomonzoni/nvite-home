@@ -11,6 +11,7 @@ interface Props {
 }
 const { encabezado, description, fondo } = Astro.props;
 import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
+import { Icon } from "astro-icon/components";
 ---
 
 <section class="grid contenido">
@@ -24,7 +25,14 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
           >
         </h1>
         <p set:html={description} />
-        <Btn liga="#bodas" texto="Conoce las invitaciones" claro={false} clases="btn-oscuro" />
+        <Btn
+          liga="#bodas"
+          texto="Conoce las invitaciones"
+          claro={false}
+          clases="btn-oscuro"
+        >
+<Icon name="nvitacion" size={25} />
+        </Btn>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
     </div>
@@ -50,7 +58,7 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
         color: $acento;
       }
     }
-    p{
+    p {
       margin: $margen-cel 0;
     }
     @extend .sombra;
@@ -71,7 +79,8 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
       justify-content: right;
       align-items: bottom;
       flex: 1 0 50%;
-      background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") no-repeat;
+      background: url("/fondo-cover-nviteme-invitaciones-digitales.webp")
+        no-repeat;
       background-size: cover;
       background-position: 190% 0%;
       overflow: hidden;
@@ -125,7 +134,7 @@ import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
       encabezado.classList.add("apareceH1");
       encabezado.innerText = "Invita";
       clearInterval(delay);
-    },600)
+    }, 600);
     clearTimeout(timeout);
   }
 </script>

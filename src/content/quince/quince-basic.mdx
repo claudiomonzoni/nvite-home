@@ -43,15 +43,9 @@ import Ventas from "../../components/comunes/Ventas.astro"
 
   <section class="grid contenido">
     <div class="conte-cartas">
-      <Cartas icono= "/quince/fecha-icono.svg" titulo="Fecha de los XV años">
-        <p>{frontmatter.fecha}</p>
-      </Cartas>
-      <Cartas icono= "/quince/detalles-icono.svg" titulo="Consideraciones" array={frontmatter.consideraciones}>
-        <p>qiuueueu</p>
-      </Cartas>
-      <Cartas icono= "/quince/formal-icono.svg" titulo="Código de vestimenta">
-        <p>{frontmatter.vestimenta}</p>
-      </Cartas>
+          <Cartas icono="mdi:clipboard-text-date-outline" titulo="Fecha de mis XV años" fecha={frontmatter.fecha}/>
+      <Cartas icono="mdi:list-status" titulo="Detalles" array={frontmatter.consideraciones}/>
+      <Cartas icono="mdi:clothes-hanger" titulo="Código de vestimenta" codigo={frontmatter.vestimenta} />
     </div>
   </section>
 
