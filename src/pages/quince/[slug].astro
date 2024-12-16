@@ -38,6 +38,7 @@ const { Content } = await quince.render();
 <Layout title=`Invitación de quince de ${quince.data.novios}` url={base.toString()} cover={quince.data.cover}>
   <Hero nombres={quince.data.novios} fecha={fecha} cover={quince.data.cover} 
   client:load />
+  
   <!--(esto estaba arriba): folder={quince.data.json} -->
 
   <Content />
