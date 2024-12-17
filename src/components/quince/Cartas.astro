@@ -104,6 +104,7 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
           start: "top 60%",
           end: "bottom 80%",
           scrub: true,
+        
         },
       });
       // desktop setup code here...
@@ -123,8 +124,8 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: cart as HTMLElement,
-          start: "top 90%",
-          end: "bottom 60%",
+          start: "top 100%",
+          end: "bottom 80%",
           scrub: true,
         },
       });

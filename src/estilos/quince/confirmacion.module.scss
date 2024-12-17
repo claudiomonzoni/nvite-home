@@ -31,6 +31,11 @@ form {
   text-align: left;
   margin: 0 auto;
   width: 50%;
+  a{
+    color: $primario!important;
+    border: solid 1px $primario!important;
+    margin-top: $margen-cel;
+  }
   label,
   input,
   select,
@@ -53,6 +58,12 @@ form {
   }
   @include cel {
     width: 100%;
+  }
+  @include cel {
+  
+    label {
+      text-align: center;
+    }
   }
 }
 svg {
