@@ -6,7 +6,7 @@ import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
 import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
-import { Usuario, Invitados, db, eq } from "astro:db";
+import { Usuario, Invitados, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
@@ -16,7 +16,7 @@ if (!usuarioEmail) {
   throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
 }
 
-let invitadosData = null;
+let invitadosData = [];
 let tipoInvitacion = null;
 let ruta = null;
 
@@ -38,14 +38,14 @@ try {
   invitadosData = await db
     .select()
     .from(Invitados)
-    .where(eq(Invitados.usuarioId, usuarios[0].id));
+    .where(eq(Invitados.usuarioId, usuarios[0].id))
+    .orderBy(desc(Invitados.id));
 } catch (error) {
   console.error("Error al obtener los datos:", error);
-  invitadosData = null;
+  invitadosData = [];
 }
-
-
 ---
+
 <Layout title="Panel de administración">
   <Menu tipo={tipoInvitacion} ruta={ruta} />
   <section class="grid contenido">
@@ -56,13 +56,17 @@ try {
         <li>Asistencia <b class="confirmado">Confirmada</b></li>
         <li>Confirmación de <b class="NoAsiste">No asistencia</b></li>
       </ul>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="Buscar invitado por nombre..."
+        class="buscador"
+      />
     </div>
-    <ul>
-      {invitadosData === null ? (
-        <h2>Error al cargar los datos. Intente de nuevo más tarde.</h2>
-      ) : invitadosData.length > 0 ? (
+    <ul id="invitados-list">
+      {invitadosData.length > 0 ? (
         invitadosData.map((invitado: InvitadoProps) => (
-          <li>
+          <li class="invitado-item" data-nombre={invitado.nombre.toLowerCase()}>
             <Invitado invitadoData={invitado} ruta={ruta} tipo={tipoInvitacion} />
           </li>
         ))
@@ -71,7 +75,7 @@ try {
       )}
     </ul>
 
-    {invitadosData !== null && (
+    {invitadosData.length > 0 && (
       <>
         <button id="agregar-invitado">
           <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
@@ -82,6 +86,29 @@ try {
     )}
   </section>
 </Layout>
+
+<script>
+  // Funcionalidad del buscador
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search-input") as HTMLInputElement; // Especificamos el tipo
+    const invitadosList = document.getElementById("invitados-list");
+    const invitadoItems = invitadosList.querySelectorAll(".invitado-item") as NodeListOf<HTMLLIElement>;
+
+    searchInput.addEventListener("input", () => {
+      const searchTerm = searchInput.value.toLowerCase(); // Ahora TypeScript no se quejará
+
+      invitadoItems.forEach((item) => {
+        const nombre = item.getAttribute("data-nombre") || "";
+        if (nombre.includes(searchTerm)) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
@@ -96,9 +123,22 @@ try {
     }
   }
 
+  .buscador {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 400px;
+    @include cel {
+      margin-top: $margen-cel;
+    }
+  }
+
   ul {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 1rem;
     font-size: clamp(.5rem, .7rem, 1rem);
     text-align: center;
@@ -107,7 +147,7 @@ try {
     }
   }
   li {
-    flex: 1 0 fit-content;
+    flex: 1 0 30%;
     list-style: none;
     margin-left: 0;
   }
@@ -132,26 +172,24 @@ try {
     }
   }
 
-  .enviada{
+  .enviada {
     background-color: #edf8fd;
-    padding: .3rem .5rem;
-    border-radius: 5px;
-    @extend .sombra;
-    
-  }
-  .confirmado{
-    background-color: $fondo;
-    padding: .3rem .5rem;
-    border-radius: 5px;
-    @extend .sombra;
-    
-  }
-  .NoAsiste{
-    background-color: #c6bfb5;
     padding: .3rem .5rem;
     border-radius: 5px;
     @extend .sombra;
   }
 
-  
+  .confirmado {
+    background-color: $fondo;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+  }
+
+  .NoAsiste {
+    background-color: #c6bfb5;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    @extend .sombra;
+  }
 </style>
