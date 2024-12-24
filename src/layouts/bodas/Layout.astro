@@ -7,9 +7,11 @@ interface Props {
 
 const { title, url, cover } = Astro.props;
 import "../../estilos/bodas/globales.scss";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const portadaOG = `https://nvitaciones.com${cover}`;
 
+console.log(cover)
 ---
 
 <!doctype html>
@@ -19,6 +21,8 @@ const portadaOG = `https://nvitaciones.com${cover}`;
     <meta name="description" content="Invitacion de bodas de nvite.me" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={`/favicon.svg`} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta property="og:locale" content="es_MX" />
@@ -38,6 +42,31 @@ const portadaOG = `https://nvitaciones.com${cover}`;
     <meta property="og:image:height" content="900" />
     <meta property="og:image:type" content="image/webp" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Invitaciones Digitales - Nvitaciones",
+        "url": "https://www.nvitaciones.com",
+        "logo": "https://www.nvitaciones.com/nvita-logo.svg", 
+        "sameAs": [
+          "https://www.facebook.com/nvitaciones",
+          "https://www.instagram.com/nvitaciones"
+        ],
+        "description": "¡Que tu celebración sea inolvidable!, transforma las invitaciones de tu evento en una experiencia única con las invitaciones digitales de nvitaciones.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "México",
+          "addressCountry": "MX"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+5217551132468",
+          "contactType": "customer service"
+        }
+      }
+      </script>
 
   </head>
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->

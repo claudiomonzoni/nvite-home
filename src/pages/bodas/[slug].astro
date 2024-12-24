@@ -42,7 +42,7 @@ const ano = Nfecha.toLocaleDateString(["es-MX"], {
   const{Content} = await boda.render()
 ---
 
-<Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()}>
+<Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()} cover={boda.data.cover}>
     <Hero
   nombres={boda.data.novios}
   dia={dia}
