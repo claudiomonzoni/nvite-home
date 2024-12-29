@@ -91,6 +91,13 @@ import { Icon } from "astro-icon/components";
       // background-position: 190% 0%;
       overflow: hidden;
       border-radius: $margen-min;
+      picture{
+        width: fit-content;
+        height: auto;
+        img{
+          object-fit: contain;
+        }
+      }
     }
 
     @include cel {
@@ -110,9 +117,17 @@ import { Icon } from "astro-icon/components";
     justify-content: left;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
+    border: solid;
     p{
       font-size: .8rem;
       color: $acento;
+    }
+    @include cel{
+      justify-content: center;
+      p{
+        margin: 0!important;
+      }
     }
   }
   #digitales {
