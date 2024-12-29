@@ -313,6 +313,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     }
     .relevantes {
       background-color: #687378;
+      display: flex;
     }
     .control a {
       background-color: #cacaca;
@@ -332,6 +333,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     .vip {
       color: $secundario;
       font-weight: bold;
+      margin-bottom: $margen-min;
+      svg{
+        vertical-align: middle;
+        margin: 0 .4rem 0 0; 
+      }
     }
     button {
       background-color: $acento;
@@ -357,9 +363,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       color: #fff;
       ul {
         padding: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+
         margin-bottom: $margen-min;
         li {
           list-style: none;
@@ -371,7 +375,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       flex-wrap: wrap;
       justify-content: space-between;
     }
-    .control {
+.control {
       margin-top: 0.5rem;
       padding: $margen-min;
       border-top: solid 1px #ccc;
