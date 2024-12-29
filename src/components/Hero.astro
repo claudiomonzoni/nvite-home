@@ -32,7 +32,7 @@ import { Icon } from "astro-icon/components";
             claro={false}
             clases="btn-oscuro"
           >
-            <Icon name="nvitacion" size={25} />
+            <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
           <p>Más de 10 años de experiencia</p>
         </div>
@@ -41,7 +41,22 @@ import { Icon } from "astro-icon/components";
     </div>
 
     <div class="der anime">
-      <Picture src={cover} alt="Invitaciones digitales para eventos" />
+      <!-- <Picture src={cover} alt="Invitaciones digitales para eventos" />
+        -->
+        <picture>
+          <source
+            srcset="/invitaciones-digitales-cover-nvitacines.webp"
+            media="(min-width: 479px)"
+          />
+          <source
+            srcset="/invitaciones-digitales-cover-nvitacines-cel.webp"
+            media="(max-width: 479px)"
+          />
+          <img
+            src="/invitaciones-digitales-cover-nvitacines.webp"
+            alt="nvitaciones digitales para eventos bodas y quince años"
+          />
+        </picture>
     </div>
   </div>
 </section>
@@ -54,7 +69,7 @@ import { Icon } from "astro-icon/components";
     border-top-left-radius: $margen-min;
     border-bottom-left-radius: $margen-min;
     @include cel {
-      border-radius: $margen-min;
+      border-radius: 1.5rem;
     }
     display: flex;
     h1 {
@@ -96,6 +111,10 @@ import { Icon } from "astro-icon/components";
         height: auto;
         img{
           object-fit: contain;
+          transform: translateY(-1rem);
+          @include cel{
+            transform: translateY(0);
+          }
         }
       }
     }
@@ -118,7 +137,7 @@ import { Icon } from "astro-icon/components";
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    border: solid;
+
     p{
       font-size: .8rem;
       color: $acento;
@@ -127,6 +146,7 @@ import { Icon } from "astro-icon/components";
       justify-content: center;
       p{
         margin: 0!important;
+        font-size: 1rem;
       }
     }
   }
