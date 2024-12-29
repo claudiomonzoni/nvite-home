@@ -10,35 +10,38 @@ interface Props {
   fondo: string;
 }
 const { encabezado, description, fondo } = Astro.props;
-import cover from "../assets/home/invitaciones-digitales-cover-nviteme.webp";
+import cover from "../assets/home/invitaciones-digitales-cover-nvitacines.webp";
 import { Icon } from "astro-icon/components";
 ---
 
-<section class="grid contenido">
+<div class="grid contenido">
   <Nav />
+</div>
+<section class="grid pantalla-der">
   <div id="hero">
     <div class="izq anime">
       <div class="bandeja anime">
         <h1>
-          <span id="nvitePalabras">nvita</span>ciones <span id="digitales"
-            >digitales</span
-          >
+          <span>La Mejor Forma de Invitar:</span> fácil, personalizada y elegante.
         </h1>
         <p set:html={description} />
-        <Btn
+        <div class="cta">
+          <Btn
           liga="#bodas"
-          texto="Conoce las invitaciones"
-          claro={false}
-          clases="btn-oscuro"
-        >
-<Icon name="nvitacion" size={25} />
-        </Btn>
+            texto="Ver invitaciones"
+            claro={false}
+            clases="btn-oscuro"
+          >
+            <Icon name="nvitacion" size={25} />
+          </Btn>
+          <p>Más de 10 años de experiencia</p>
+        </div>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
     </div>
 
     <div class="der anime">
-      <Picture src={cover} alt="Invitaciones de bodas" />
+      <Picture src={cover} alt="Invitaciones digitales para eventos" />
     </div>
   </div>
 </section>
@@ -48,12 +51,15 @@ import { Icon } from "astro-icon/components";
 
   #hero {
     background: white;
-    border-radius: $margen-min;
+    border-top-left-radius: $margen-min;
+    border-bottom-left-radius: $margen-min;
+    @include cel {
+      border-radius: $margen-min;
+    }
     display: flex;
     h1 {
       width: 100%;
       color: $primario;
-      font-family: $fuenteB, serif;
       span {
         color: $acento;
       }
@@ -79,10 +85,10 @@ import { Icon } from "astro-icon/components";
       justify-content: right;
       align-items: bottom;
       flex: 1 0 50%;
-      background: url("/fondo-cover-nviteme-invitaciones-digitales.webp")
-        no-repeat;
-      background-size: cover;
-      background-position: 190% 0%;
+      // background: url("/fondo-cover-nviteme-invitaciones-digitales.webp")
+      //   no-repeat;
+      // background-size: cover;
+      // background-position: 190% 0%;
       overflow: hidden;
       border-radius: $margen-min;
     }
@@ -99,13 +105,23 @@ import { Icon } from "astro-icon/components";
       }
     }
   }
+  .cta{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    p{
+      font-size: .8rem;
+      color: $acento;
+    }
+  }
   #digitales {
     color: $primario !important;
     font-weight: 700;
     font-family: "Montserrat Alternates", sans-serif;
   }
 </style>
-<script>
+<!-- <script>
   import SplitType from "split-type";
   const encabezado = document.getElementById("nvitePalabras");
 
@@ -137,4 +153,4 @@ import { Icon } from "astro-icon/components";
     }, 600);
     clearTimeout(timeout);
   }
-</script>
+</script> -->
