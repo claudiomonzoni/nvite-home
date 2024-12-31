@@ -37,6 +37,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/panel\/registro$/,               // Página de registro
         /^\/bodas(\/.*)?$/,                  // Cualquier subruta en /bodas
         /^\/quince(\/.*)?$/,                 // Cualquier subruta en /quince
+        /^\/terminos-condiciones(\/.*)?$/,                 // Cualquier subruta en /quince
         // /^\/api\/.*$/                        // Todas las rutas de la API con método GET
     ];
 

@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+const url = Astro.url.pathname;
+console.log(url)
 ---
 
 <nav >
@@ -12,10 +14,17 @@ import Btn from "./Btn.astro";
     /></a
   >
   <ul>
-    <li><a href="#bodas" class="selected">Bodas</a></li>
-    <li><a href="#bodas">XV años</a></li>
-    <li><a href="#quince">Cumpleaños</a></li>
-    <li>Eventos</li>
+    {
+      url === "/terminos-condiciones" ? (
+        <li><a href="/" class="selected">Regresar</a></li>
+      ) : (
+      
+        <li><a href="#bodas" class="selected">Bodas</a></li>
+        <li><a href="#bodas">XV años</a></li>
+        <li><a href="#quince">Cumpleaños</a></li>
+        <li>Eventos</li>
+      )
+    }
   </ul>
   <li>
     <Btn
