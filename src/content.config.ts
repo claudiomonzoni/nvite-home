@@ -30,10 +30,10 @@ const bodas = defineCollection({
       vestimenta: z.string(),
       frase_amor: z.string(),
       ceremonia: z.object({
-        hora: z.string(),
-        lugar: z.string(),
-        lat: z.number(),
-        lng: z.number(),
+        hora: z.string().optional(),
+        lugar: z.string().optional(),
+        lat: z.number().optional(),
+        lng: z.number().optional(),
       }).optional(),
       recepcion: z.object({
         hora: z.string().optional(),
