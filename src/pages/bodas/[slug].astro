@@ -7,15 +7,16 @@ import Hero from "../../components/bodas/Hero";
 import Footer from "../../components/bodas/Footer.astro";
 
 export async function getStaticPaths() {
+
   const bodas = await getCollection("bodas", ({ data }) => {
     return !data.draft;
   });
-
   
   return bodas.map((boda) => ({
     params: { slug: boda.slug },
     props: { boda },
   }));
+  
 }
 interface Props{
     boda: CollectionEntry<"bodas">
@@ -40,6 +41,7 @@ const ano = Nfecha.toLocaleDateString(["es-MX"], {
   })
 
   const{Content} = await boda.render()
+
 ---
 
 <Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()} cover={boda.data.cover}>

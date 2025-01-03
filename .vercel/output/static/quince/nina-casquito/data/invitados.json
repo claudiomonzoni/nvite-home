@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "nombre": "Familia Nina Casquito",
+      "pases": 3
+    },
+    {
+      "id": 2,
+      "nombre": "Alejandra Martinez",
+      "pases": 1
+    },
+    {
+      "id": 3,
+      "nombre": "Familia Hernández Guzmán",
+      "pases": 5
+    },
+    {
+      "id": 4,
+      "nombre": "Franco Mendéz y Esposa",
+      "pases": 3
+    },
+    {
+      "id": 5,
+      "nombre": "Victor Espinoza De la Cruz",
+      "pases": 1
+    }
+  ]

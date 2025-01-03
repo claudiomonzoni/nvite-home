@@ -8,15 +8,17 @@ import { glob, file } from 'astro/loaders';
 const bodas = defineCollection({
     // type: "content", // v2.5.0 and later
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/bodas" }),
-    schema:  z.object({
+    schema: ({ image }) => z.object({
       titulo: z
         .string()
         .max(
           80,
           "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
         ),
-       
-      coverAlt: z.string(),
+      cover: image().refine((img) => img.width >= 200, {
+        message:
+          "¡La imagen de portada debe tener al menos 200 píxeles de ancho!",
+      }), 
       extracto: z.string(),
       descripcion: z.string(),
       whatsapp: z.number(),
