@@ -36,7 +36,7 @@ const bodas = defineCollection({
         direccion: z.string(),
         lat: z.number(),
         lng: z.number(),
-      }),
+      }).optional(),
       itinerario: z.array(
         z.object({
           titulo: z.string(),
@@ -80,7 +80,7 @@ const quince = defineCollection({
           direccion: z.string(),
           lat: z.number(),
           lng: z.number(),
-        }),
+        }).optional(),
         recepcion: z.object({
           horario: z.string(),
           direccion: z.string(),
