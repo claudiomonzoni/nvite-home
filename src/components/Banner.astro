@@ -64,6 +64,9 @@ import Btn from "./Btn.astro";
           <li>Frase animada</li>
           <li>Formulario de confirmación</li>
         </ul>
+        <div class="masvendida">
+          <small>Más vendida</small>
+        </div>
         <div class="conteBtn">
 
           <Btn
@@ -189,7 +192,7 @@ text-decoration-thickness: .9px;
   .izq {
     flex: 1 0 30%;
     width: 100px;
-    align-items: end;
+    align-items: center;
     @tableta_land{
       flex: 1 0 20%;
       
@@ -199,10 +202,11 @@ text-decoration-thickness: .9px;
     margin: $margen 0;
     display: flex;
     flex-wrap: wrap;
-   
+    
   }
   .lista {
     min-width: min-content;
+    justify-content: center;
     flex: 1;
     border-right: solid 1px $primario;
     padding: 0 1.5rem;
@@ -221,6 +225,10 @@ text-decoration-thickness: .9px;
       border-bottom: solid 1px $primario;
       padding: 2rem 1.5rem;
   }
+}
+.masvendida{
+  background-color: $secundario;
+  color: white;
 }
 .conteBtn{
   display: flex;
