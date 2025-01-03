@@ -54,7 +54,8 @@ const bodas = defineCollection({
 const quince = defineCollection({
     // type: "content", // v2.5.0 and later
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/quince" }),
-    schema:z.object({
+    schema: ({ image }) =>
+      z.object({
         titulo: z
           .string()
           .max(
@@ -62,10 +63,10 @@ const quince = defineCollection({
             "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
           ),
   
-        // cover: image().refine((img) => img.width >= 200, {
-        //   message:
-        //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
-        // }),
+        cover: image().refine((img) => img.width >= 200, {
+          message:
+            "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
+        }),
         coverAlt: z.string(),
   
         extracto: z.string(),
