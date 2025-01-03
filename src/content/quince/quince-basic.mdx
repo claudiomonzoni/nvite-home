@@ -13,13 +13,13 @@ frase_amor: Desde pequeña esperabas con ansias este día, imaginabas compartirl
 consideraciones: ["No vestir de blanco","Favor de no llevar bebes"]
 ceremonia: {
     "lat":17.665128, 
-    "lang":-101.597448,
+    "lgn":-101.597448,
     "hora": 16:00,
     "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)"
     }
 recepcion: {
     "lat":17.661152, 
-    "lang":-101.603728,
+    "lgn":-101.603728,
     "hora": 18:00,
     "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro."
     }
@@ -66,7 +66,7 @@ import Ventas from "../../components/comunes/Ventas.astro"
         dir={frontmatter.ceremonia.lugar}
         horario={frontmatter.ceremonia.hora}
         lat={frontmatter.ceremonia.lat}
-        lng={frontmatter.ceremonia.lang}
+        lng={frontmatter.ceremonia.lgn}
         mapName="mapa1"
       />
       <BloqueMapa
@@ -74,7 +74,7 @@ import Ventas from "../../components/comunes/Ventas.astro"
         dir={frontmatter.recepcion.lugar}
         horario={frontmatter.recepcion.hora}
         lat={frontmatter.recepcion.lat}
-        lng={frontmatter.recepcion.lang}
+        lng={frontmatter.recepcion.lgn}
         mapName="mapa2"
       />
     </div>

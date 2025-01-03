@@ -32,10 +32,10 @@ const bodas = defineCollection({
         lng: z.number(),
       }).optional(),
       recepcion: z.object({
-        horario: z.string(),
-        direccion: z.string(),
-        lat: z.number(),
-        lng: z.number(),
+        horario: z.string().optional(),
+        direccion: z.string().optional(),
+        lat: z.number().optional(),
+        lng: z.number().optional(),
       }).optional(),
       itinerario: z.array(
         z.object({
@@ -82,10 +82,10 @@ const quince = defineCollection({
           lng: z.number(),
         }).optional(),
         recepcion: z.object({
-          horario: z.string(),
-          direccion: z.string(),
-          lat: z.number(),
-          lng: z.number(),
+          horario: z.string().optional(),
+          direccion: z.string().optional(),
+          lat: z.number().optional(),
+          lng: z.number().optional(),
         }).optional(),
         itinerario: z.array(
           z.object({
