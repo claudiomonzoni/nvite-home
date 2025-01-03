@@ -15,10 +15,10 @@ const bodas = defineCollection({
           80,
           "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
         ),
-        // cover: image().refine((img) => img.width >= 700, {
-        //   message:
-        //     "¡La imagen de portada de bodas debe tener al menos 700 píxeles de ancho!",
-        // }),
+        cover: image().refine((img) => img.width >= 700, {
+          message:
+            "¡La imagen de portada de bodas debe tener al menos 700 píxeles de ancho!",
+        }),
         coverAlt: z.string(),
       extracto: z.string(),
       descripcion: z.string(),
@@ -66,10 +66,10 @@ const quince = defineCollection({
             "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
           ),
   
-        // cover: image().refine((img) => img.width >= 700, {
-        //   message:
-        //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
-        // }),
+        cover: image().refine((img) => img.width >= 700, {
+          message:
+            "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
+        }),
         coverAlt: z.string(),
   
         extracto: z.string(),
