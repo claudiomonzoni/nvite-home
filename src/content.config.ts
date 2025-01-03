@@ -16,13 +16,13 @@ const bodas = defineCollection({
           "Para un mejor Seo, por favor ingrese un titulo de menos de 80 caracteres"
         ),
        
-        coverAlt: z.string(),
+      coverAlt: z.string(),
       extracto: z.string(),
       descripcion: z.string(),
       whatsapp: z.number(),
-      novios : z.string(),
+      novios : z.string().optional(),
       fecha: z.date(),
-      consideraciones: z.array(z.string()),
+      consideraciones: z.array(z.string()).optional(),
       vestimenta: z.string(),
       frase_amor: z.string(),
       ceremonia: z.object({
@@ -30,7 +30,7 @@ const bodas = defineCollection({
         direccion: z.string(),
         lat: z.number(),
         lng: z.number(),
-      }),
+      }).optional(),
       recepcion: z.object({
         horario: z.string(),
         direccion: z.string(),
@@ -43,10 +43,10 @@ const bodas = defineCollection({
           lugar: z.string(),
           hora: z.number(),
         })
-      ),
-      beneficiario: z.string(),
-      banco: z.string(),
-      cuenta: z.number(),
+      ).optional(),
+      beneficiario: z.string().optional(),
+      banco: z.string().optional(),
+      cuenta: z.number().optional(),
     }),
   });
 
@@ -66,15 +66,14 @@ const quince = defineCollection({
         cover: image().refine((img) => img.width >= 200, {
           message:
             "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
-        }),
+        }).optional(),
         coverAlt: z.string(),
-  
         extracto: z.string(),
         descripcion: z.string(),
         whatsapp: z.number(),
         quinceanera: z.string(),
         fecha: z.date(),
-        consideraciones: z.array(z.string()),
+        consideraciones: z.array(z.string()).optional(),
         vestimenta: z.string(),
         frase_amor: z.string(),
         ceremonia: z.object({
@@ -88,17 +87,17 @@ const quince = defineCollection({
           direccion: z.string(),
           lat: z.number(),
           lng: z.number(),
-        }),
+        }).optional(),
         itinerario: z.array(
           z.object({
             titulo: z.string(),
             lugar: z.string(),
             hora: z.number(),
           })
-        ),
-        beneficiario: z.string(),
-        banco: z.string(),
-        cuenta: z.number(),
+        ).optional(),
+        beneficiario: z.string().optional(),
+        banco: z.string().optional(),
+        cuenta: z.number().optional(),
       }),
   });
 
