@@ -12,7 +12,7 @@ export async function getStaticPaths() {
   });
 
   return bodas.map((boda) => ({
-    params: { slug: boda.id },
+    params: { slug: boda.slug },
     props: { boda },
   }));
 }
