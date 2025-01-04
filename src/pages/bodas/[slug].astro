@@ -7,61 +7,58 @@ import Hero from "../../components/bodas/Hero";
 import Footer from "../../components/bodas/Footer.astro";
 
 export async function getStaticPaths() {
-
   const bodas = await getCollection("bodas", ({ data }) => {
     return !data.draft;
   });
-  
-  return bodas.map((boda) => ({
+
+  return bodas.map((boda: { slug: any; }) => ({
     params: { slug: boda.slug },
     props: { boda },
   }));
-  
-}
-interface Props{
-    boda: CollectionEntry<"bodas">
 }
 type boda = CollectionEntry<"bodas">;
+interface Props {
+  boda: CollectionEntry<"bodas">;
+}
 const { boda } = Astro.props;
+const { Content, Headings } = await boda.render();
 const base = new URL(Astro.url.pathname, Astro.site);
-// const{Content} = await boda.render()
+
 const Nfecha = new Date(boda.data.fecha);
 const dia = Nfecha.toLocaleDateString(["es-MX"], {
-    weekday: "long", 
-  })
+  weekday: "long",
+});
 const diaNum = Nfecha.toLocaleDateString(["es-MX"], {
-    day: "numeric", 
-  })
+  day: "numeric",
+});
 const mes = Nfecha.toLocaleDateString(["es-MX"], {
-    month: "long",
- 
-  })
+  month: "long",
+});
 const ano = Nfecha.toLocaleDateString(["es-MX"], {
-    year: "numeric",
-  })
+  year: "numeric",
+});
 
-  const{Content} = await boda.render()
 
 ---
 
-<Layout title=`Invitación de boda de ${boda.data.novios}` url={base.toString()} cover={boda.data.cover}>
-    <Hero
-  nombres={boda.data.novios}
-  dia={dia}
-  diaNum={diaNum}
-  mes={mes}
-  ano={ano}
-  ellaIniciales = {boda.data.ellaIniciales}
-  elIniciales = {boda.data.elIniciales}
+<Layout
+  title=`Invitación de boda de ${boda.data.novios}`
+  url={base.toString()}
   cover={boda.data.cover}
-  client:load
+>
+  <Hero
+    nombres={boda.data.novios}
+    dia={dia}
+    diaNum={diaNum}
+    mes={mes}
+    ano={ano}
+    ellaIniciales={boda.data.ellaIniciales}
+    elIniciales={boda.data.elIniciales}
+    cover={boda.data.cover}
+    client:load
   />
   <Content />
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>
-  
-
 </Layout>
-
-
