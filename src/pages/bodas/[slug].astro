@@ -11,8 +11,8 @@ export async function getStaticPaths() {
     return !data.draft;
   });
 
-  return bodas.map((boda: { slug: any; }) => ({
-    params: { slug: boda.slug },
+  return bodas.map((boda) => ({
+    params: { slug: boda.id },
     props: { boda },
   }));
 }

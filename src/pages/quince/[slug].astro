@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     return !data.draft;
   });
   return quinces.map((quince) => ({
-    params: { slug: quince.slug },
+    params: { slug: quince.id },
     props: { quince },
   }));
 }
