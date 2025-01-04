@@ -21,7 +21,7 @@ interface Props {
   boda: CollectionEntry<"bodas">;
 }
 const { boda } = Astro.props;
-const { Content, Headings } = await render(boda);
+const { Content } = await render(boda);
 const base = new URL(Astro.url.pathname, Astro.site);
 
 const Nfecha = new Date(boda.data.fecha);

@@ -32,7 +32,7 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
   day: "numeric",
 });
 
-const { Content } = await quince.render();
+const { Content } = await render(quince);
 ---
 
 <Layout title=`Invitación de quince de ${quince.data.quinceanera}` url={base.toString()} cover={quince.data.cover}>
