@@ -1,6 +1,6 @@
 ---
 export const prerender = true;
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/quince/Layout.astro";
 import Hero from "../../components/quince/Hero";
@@ -23,7 +23,6 @@ type quince = CollectionEntry<"quince">;
 const { quince } = Astro.props;
 
 const base = new URL(Astro.url.pathname, Astro.site);
-// const{Content} = await quince.render()
 const Nfecha = new Date(quince.data.fecha);
 const fecha = Nfecha.toLocaleDateString(["es-MX"], {
   weekday: "long",
