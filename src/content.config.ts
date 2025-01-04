@@ -70,7 +70,6 @@ const quince = defineCollection({
         //   message:
         //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
         // }).optional(),
-        coverAlt: z.string(),
         extracto: z.string(),
         descripcion: z.string(),
         whatsapp: z.number(),
