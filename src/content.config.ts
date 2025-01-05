@@ -11,6 +11,11 @@ const bodas = defineCollection({
     schema:
     //  ({ image }) =>
        z.object({
+      draft: z.boolean().optional(),
+      slug: z.string(),
+      cover: z.string(),
+      ellaIniciales: z.string(),
+      elIniciales: z.string(),
       titulo: z
         .string()
         .max(
@@ -59,6 +64,9 @@ const quince = defineCollection({
     // type: "content", // v2.5.0 and later
     loader: glob({ pattern: "**/*.mdx", base: "./src/content/quince" }),
     schema: z.object({
+      draft: z.boolean().optional(),
+      slug: z.string(),
+      cover: z.string(),
         titulo: z
           .string()
           .max(
