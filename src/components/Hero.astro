@@ -5,12 +5,12 @@ import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
 
 interface Props {
-  encabezado: string;
+
   description: string;
-  fondo: string;
+
 }
-const { encabezado, description, fondo } = Astro.props;
-import cover from "../assets/home/invitaciones-digitales-cover-nvitacines.webp";
+const {  description } = Astro.props;
+
 import { Icon } from "astro-icon/components";
 ---
 
