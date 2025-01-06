@@ -6,8 +6,6 @@ import Btn from "./Btn.astro";
 <div class="banner azulBG">
   <div class="der">
     <div class="bande">
-     
-      
       <div class="lista">
         <small>Bodas & XV Años</small>
         <h2>Nvita Basic</h2>
@@ -18,81 +16,81 @@ import Btn from "./Btn.astro";
           <li>Datos de tu evento</li>
           <li>Mapas de ubicación</li>
           <li>Frase animada</li>
-          <li>Formulario <b>sencillo</b> de confirmación </li>
+          <li>Formulario <b>sencillo</b> de confirmación</li>
         </ul>
         <div class="conteBtn">
-
           <Btn
-          liga="/bodas/nvita-bodas-basic"
-          clases="btn-claro"
-          texto="Ver Bodas"
-          claro={true}
+            liga="/bodas/nvita-bodas-basic"
+            clases="btn-claro"
+            texto="Ver Bodas"
+            claro={true}
           />
           <Btn
-          liga="/quince/nvita-quince-basic"
-          clases="btn-claro"
-          texto="Ver Xv Añós"
-          claro={true}
+            liga="/quince/nvita-quince-basic"
+            clases="btn-claro"
+            texto="Ver Xv Añós"
+            claro={true}
           />
         </div>
-     
+
         <Btn
           liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
           clases="btn-oscuro"
           texto="Obtenla ahora"
           claro={false}
         >
-        <Icon name="bag" size={25} />
+          <Icon name="bag" size={25} />
         </Btn>
       </div>
 
-      
-      <div class="lista">
-        <small>Bodas & XV Años</small>
-        <h2>Nvita Regular</h2>
-        <div class="precio">$990</div>
-        <ul>
-          <li><b>Panel de invitados</b></li>
-          <li><b>Nombre del invitado</b></li>
-          <li><b>Pases del invitado</b></li>
-          <li><b>Galería de imágenes</b></li>
-          <li><b>Sugerencia de regalos</b></li>
-          <li>Detalles del evento</li>
-          <li>Cuenta regresiva</li>
-          <li>Datos de tu evento</li>
-          <li>Mapas de ubicación</li>
-          <li>Frase animada</li>
-          <li>Formulario de confirmación</li>
-        </ul>
-        <div class="masvendida">
-          <small>Más vendida</small>
-        </div>
-        <div class="conteBtn">
+      <div class="lista destacada">
+        <div class="bandeDestacada">
+          <small>Bodas & XV Años</small>
+          <h2>
+            Nvita Regular
+            <div id="masvendido">Más vendida</div>
+          </h2>
+          <div class="precio">$990</div>
+          <ul>
+            <li><b>Panel de invitados</b></li>
+            <li><b>Nombre del invitado</b></li>
+            <li><b>Pases del invitado</b></li>
+            <li><b>Galería de imágenes</b></li>
+            <li><b>Sugerencia de regalos</b></li>
+            <li>Detalles del evento</li>
+            <li>Cuenta regresiva</li>
+            <li>Datos de tu evento</li>
+            <li>Mapas de ubicación</li>
+            <li>Frase animada</li>
+            <li>Formulario de confirmación</li>
+          </ul>
+
+          <div class="conteBtn">
+            <Btn
+              liga="/bodas/nvita-bodas-reg?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Bodas"
+              claro={true}
+            />
+            <Btn
+              liga="/quince/nvita-quince-reg?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Xv Años"
+              claro={true}
+            />
+          </div>
 
           <Btn
-          liga="/bodas/nvita-bodas-reg?id=1&uid=1"
-          clases="btn-claro"
-          texto="Ver Bodas"
-          claro={true}
-          />
-          <Btn
-          liga="/quince/nvita-quince-reg?id=1&uid=1"
-          clases="btn-claro"
-          texto="Ver Xv Años"
-          claro={true}
-          />
+            liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
+            clases="btn-oscuro"
+            texto="Obtenla ahora"
+            claro={false}
+          >
+            <Icon name="bag" size={25} />
+          </Btn>
         </div>
-        
-        <Btn
-        liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
-        clases="btn-oscuro"
-        texto="Obtenla ahora"
-        claro={false}
-        >
-        <Icon name="bag" size={25} />
-        </Btn>
       </div>
-      
+
       <div class="lista">
         <small>Bodas & XV Años</small>
         <h2>Nvita Plus</h2>
@@ -113,31 +111,29 @@ import Btn from "./Btn.astro";
           <li>Formulario de confirmación</li>
         </ul>
         <div class="conteBtn">
-
           <Btn
-          liga="/bodas/nvita-bodas-plus?id=1&uid=1"
-          clases="btn-claro"
-          texto="Ver Bodas"
-          claro={true}
+            liga="/bodas/nvita-bodas-plus?id=1&uid=1"
+            clases="btn-claro"
+            texto="Ver Bodas"
+            claro={true}
           />
           <Btn
-          liga="/quince/nvita-quince-plus?id=1&uid=1"
-          clases="btn-claro"
-          texto="Ver Xv Años"
-          claro={true}
+            liga="/quince/nvita-quince-plus?id=1&uid=1"
+            clases="btn-claro"
+            texto="Ver Xv Años"
+            claro={true}
           />
         </div>
 
         <Btn
-        liga="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
-        clases="btn-oscuro"
-        texto="Obtenla ahora"
-        claro={false}
+          liga="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
+          clases="btn-oscuro"
+          texto="Obtenla ahora"
+          claro={false}
         >
-        <Icon name="bag" size={25} />
+          <Icon name="bag" size={25} />
         </Btn>
       </div>
-
     </div>
   </div>
   <div class="izq">
@@ -152,24 +148,25 @@ import Btn from "./Btn.astro";
   h2 {
     color: $acento;
     font-size: clamp(2.2rem, 1.5vw, 2.7vw);
+    position: relative;
   }
-small{
-  color: $gris;
-}
-b{
-  color: $primario;
-  text-decoration: underline;
-text-underline-offset: 5px;
-text-decoration-thickness: .9px;
-}
-.precio{
-  display:inline-block;
-  padding-bottom: 1rem;
-  border-bottom: solid 1px $terciario;
-  font-weight: bolder;
-  color: $primario;
-  font-size: clamp(1.9rem, 1.7vw, 3vw);
-}
+  small {
+    color: $gris;
+  }
+  b {
+    color: $primario;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 0.9px;
+  }
+  .precio {
+    display: inline-block;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px $terciario;
+    font-weight: bolder;
+    color: $primario;
+    font-size: clamp(1.9rem, 1.7vw, 3vw);
+  }
   .banner {
     display: flex;
     flex-wrap: wrap;
@@ -184,64 +181,94 @@ text-decoration-thickness: .9px;
   }
   .der {
     flex: 1 0 70%;
-    @tableta_land{
+    @tableta_land {
       flex: 1 0 80%;
-      
     }
   }
   .izq {
     flex: 1 0 30%;
     width: 100px;
     align-items: center;
-    @tableta_land{
+    @tableta_land {
       flex: 1 0 20%;
-      
     }
   }
   .bande {
     margin: $margen 0;
     display: flex;
     flex-wrap: wrap;
-    
   }
   .lista {
     min-width: min-content;
     justify-content: center;
+    align-self: center;
     flex: 1;
-    border-right: solid 1px $primario;
+    // border-right: solid 1px $primario;
     padding: 0 1.5rem;
-    a{
-     align-self: auto;
-     justify-self: flex-start;
-     svg{
-            vertical-align: middle;
-        }
+    a {
+
+      justify-self: flex-start;
+      svg {
+        vertical-align: middle;
+      }
     }
-    &:last-child {
-      border: none;
+    // &:last-child {
+      //   border: none;
+      // }
+      @include cel {
+        border-right: none;
+        // border-bottom: solid 1px $primario;
+        padding: 2rem 1.5rem;
+        position: relative;
+        a {
+       width: 100%;
+      }
     }
-    @include cel {
-      border-right: none;
-      border-bottom: solid 1px $primario;
-      padding: 2rem 1.5rem;
   }
-}
-.masvendida{
-  background-color: $secundario;
-  color: white;
-}
-.conteBtn{
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-}
-.conteBtn > * {
-  min-width: fit-content;
-  text-align: center;
-  flex: 1;
-}
+  .destacada {
+    background: white;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    border-radius: $radio;
+    padding: 1rem;
+    @extend .sombra;
+  }
+  #masvendido {
+    border-bottom: solid 2px $primario;
+    position: absolute;
+    background: rgb(255, 255, 255, 0.4);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(3px);
+    @extend .sombra;
+    border-radius: $radio;
+    color: $primario;
+    font-size: clamp(0.8rem, 0.6vw, 1vw);
+    padding: 0 0.5rem;
+    transform: rotate(-5deg);
+    right: 0;
+    top: 35%;
+  }
+  .conteBtn {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    @include cel {
+      gap: 0rem;
+    }
+  }
+  .conteBtn > * {
+    min-width: fit-content;
+    text-align: center;
+    flex: 1;
+  }
   ul {
     padding: 1rem 0;
+    li::marker {
+      color: $secundario;
+    }
   }
   @include cel {
     .izq,
