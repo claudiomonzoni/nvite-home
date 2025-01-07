@@ -56,7 +56,9 @@ const bodas = defineCollection({
       beneficiario: z.string().optional(),
       banco: z.string().optional(),
       cuenta: z.number().optional(),
+      paleta: z.string().optional(),
     }),
+   
   });
 
 
@@ -108,6 +110,7 @@ const quince = defineCollection({
         beneficiario: z.string().optional(),
         banco: z.string().optional(),
         cuenta: z.number().optional(),
+        paleta: z.string().optional(),
       }),
   });
 

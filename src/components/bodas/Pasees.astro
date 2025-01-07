@@ -49,7 +49,7 @@ const canonicalURL = new URL(Astro.url, Astro.site);
     hr{
         width: 50%;
         border: none;
-        border-top: 1px solid $acento;
+        border-top: 1px solid var(--acento);
         position: absolute;
         bottom: 30%;
         left: 50%;
@@ -67,7 +67,7 @@ const canonicalURL = new URL(Astro.url, Astro.site);
         z-index: 10;
         font-family: $garigol, serif;
         font-size: clamp(1.8rem, 2.5vw, 3.5rem);
-        border: solid 1px $acento;
+        border: solid 1px var(--acento);
         display: inline-block;
         padding: $margen-min;
         border-radius: $margen-min;

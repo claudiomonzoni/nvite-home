@@ -19,7 +19,7 @@ const { fecha } = Astro.props;
   @import "../../estilos/bodas/_variables.scss";
 
   h3 {
-    color: $primario;
+    color: var(--primario);
     font-family: $garigol, serif;
     text-align: center;
     margin-top: $margen-cel;
@@ -32,9 +32,9 @@ const { fecha } = Astro.props;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $secundario;
+    color: var(--secundario);
     gap: 0.7rem;
-    border: 1px solid $acento;
+    border: 1px solid var(--acento);
     position: relative;
     &:before {
       content: "";
@@ -76,7 +76,7 @@ const { fecha } = Astro.props;
   #numero {
     margin-top: $margen-cel;
     font-size: clamp(6.5rem, 10.5vw, 14rem);
-    color: $acento;
+    color: var(--acento);
     font-family: $encabezados, serif;
   }
   p:first-child {
@@ -84,14 +84,14 @@ const { fecha } = Astro.props;
     top: 0%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: $acento;
-    border: solid 1px $secundario;
+    color: var(--acento);
+    border: solid 1px var(--secundario);
     background-color: white;
     padding: $margen-min;
   }
   p {
     font-family: $encabezados, serif;
-    color: $primario;
+    color: var(--primario);
     font-size: clamp(1.5rem, 2.5vw, 3rem);
     margin: 0;
   }
@@ -111,7 +111,7 @@ const { fecha } = Astro.props;
     const distance = countDownDate - now;
 
     // Time calculations for days, hours, minutes and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24) +1);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
 
     // Output the result in an element with id="demo"
     document.getElementById("numero").innerHTML = days;

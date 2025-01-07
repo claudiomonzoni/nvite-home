@@ -1,5 +1,21 @@
+
+
 @use 'sass:math';
 @use "variables" as *;
+
+@use '../paletas/invierno' as *;
+@use '../paletas/base' as *;
+
+
+
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+
+:root[data-paleta="base"] {
+  @include base();
+}
+
 
 // @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
@@ -48,7 +64,7 @@ html {
     font-size: clamp(14px, 7vw, 22px);
   }
 
-  color: $primario;
+  color: var(--primario);
   font-family: $txt, serif;
   font-weight: 100;
   scroll-behavior: smooth;
@@ -109,7 +125,7 @@ h4 {
   line-height: 1em;
   font-family: $encabezados, serif;
   padding-bottom: 0.7rem;
-  color: $secundario;
+  color: var(--secundario);
 }
 h1 {
   color: white;
@@ -151,7 +167,7 @@ p:last-child {
 }
 b {
   font-weight: bold;
-  color: $acento;
+  color: var(--acento);
   font-style: normal;
   font-size: clamp(1.3em, 1vw, 2vw);
   font-family: $encabezados, serif;
@@ -199,7 +215,10 @@ b {
 }
 
 #BaseItinerario {
-  background: $primario;
+  h2{
+    color: var(--acento);
+  }
+  background: var(--primario);
   position: relative;
   z-index: -1;
   overflow: hidden;
@@ -245,7 +264,7 @@ b {
 @mixin liga($conBorde, $redondo) {
   margin: $margen-min 0;
   color: white;
-  background: $acento;
+  background: var(--acento);
   padding: $margen-min $margen-cel;
   @if $conBorde {
     border: 1px solid $acento;

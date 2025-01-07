@@ -33,13 +33,13 @@ const {  texto, claro, clases, ...rest } = Astro.props;
     }
     .btn-claro {
         @include btn;
-        color: $primario;
-        border: 1px solid $primario;
+        color: var(--primario);
+        border: 1px solid var(--primario);
         font-weight: 700;
     }
     .btn-oscuro {
         @include btn;
-        background-color: $acento;
+        background-color: var(--acento);
         color: white;
         font-weight: 700;
     }

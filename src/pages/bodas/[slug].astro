@@ -5,7 +5,8 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Hero from "../../components/bodas/Hero";
 import Footer from "../../components/bodas/Footer.astro";
-
+import "../../estilos/paletas/invierno.scss";
+import "../../estilos/bodas/globales.scss";
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
     return !data.draft;
@@ -38,13 +39,13 @@ const ano = Nfecha.toLocaleDateString(["es-MX"], {
   year: "numeric",
 });
 
-
 ---
 
 <Layout
   title=`Invitación de boda de ${boda.data.novios}`
   url={base.toString()}
   cover={boda.data.cover}
+  paleta={boda.data.paleta}
 >
   <Hero
     nombres={boda.data.novios}
@@ -62,3 +63,7 @@ const ano = Nfecha.toLocaleDateString(["es-MX"], {
     <Footer ruta={base} />
   </section>
 </Layout>
+
+
+
+

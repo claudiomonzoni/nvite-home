@@ -1,19 +1,30 @@
 
 
-//base
-
-// $primario: #2b225e;
-// $secundario: #f5839a;
-// $terciario: #fcf7ee;
-// $acento: #f1d4da;
-// $gris: #8d58c2;
-//base
 $primario: #292e5a;
 $secundario: #e65288;
 $terciario: #FEF1F1;
 $acento: #DE8080;
 $gris: #6a6074;
 $fondo: #efdcdc;
+
+
+
+
+@use '../paletas/invierno' as *;
+@use '../paletas/base' as *;
+@use '../paletas/otono' as *;
+
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+
+:root[data-paleta="base"] {
+  @include base();
+}
+:root[data-paleta="otono"] {
+  @include otono();
+}
+
 
 
 //media query

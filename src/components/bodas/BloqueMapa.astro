@@ -52,11 +52,11 @@ import Anchor from "../comunes/Anchor.astro";
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
   h3 {
-    color: $secundario;
+    color: var(--secundario);
     font-size: clamp(2.5rem, 2.5vw, 3rem);
   }
   [data-icon] {
-    color: $acento;
+    color: var(--acento);
   }
 
   #bandeReloj {
@@ -69,14 +69,14 @@ import Anchor from "../comunes/Anchor.astro";
       z-index: -1;
     }
     .linea1 {
-      border-top: solid 1px $primario;
+      border-top: solid 1px var(--primario);
       position: absolute;
       width: 40%;
       left: 0%;
       top: 18%;
     }
     .linea2 {
-      border-top: solid 1px $primario;
+      border-top: solid 1px var(--primario);
       position: absolute;
       width: 40%;
       right: 0%;
@@ -87,7 +87,7 @@ import Anchor from "../comunes/Anchor.astro";
   time {
     font-family: $encabezados, serif;
     font-size: clamp(1.5rem, 1.5vw, 2rem);
-    color: $acento;
+    color: var(--acento);
   }
   .bloqueMapa {
     flex: 1;
@@ -149,7 +149,7 @@ import Anchor from "../comunes/Anchor.astro";
       }
       path {
         // filter: invert(1);
-        fill: $primario;
+        fill: var(--primario);
       }
     }
     @include cel {

@@ -11,14 +11,14 @@ const { frase } = Astro.props;
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
   .frase {
-    color: $acento;
+    color: var(--acento);
     font-family: $garigol, serif;
     font-size: clamp(3rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-min $margen-min 0 $margen-min;
     padding: $margen $margen-min;
-    border-top: 1px solid $acento;
-    border-bottom: 1px solid $acento;
+    border-top: 1px solid var(--acento);
+    border-bottom: 1px solid var(--acento);
   }
 </style>
 <script>

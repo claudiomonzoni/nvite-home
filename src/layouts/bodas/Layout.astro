@@ -3,19 +3,17 @@ interface Props {
   title: string;
   url?: string;
   cover?: string;
+  paleta?: string;
 }
 
-const { title, url, cover } = Astro.props;
-import "../../estilos/bodas/globales.scss";
+const { title, url, paleta,cover } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 const portadaOG = `https://nvitaciones.com${cover}`;
 
-console.log(cover)
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" id=`paleta-${paleta}` data-paleta={paleta}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content=`Invitacion de bodas de nvitaciones.com / ${title}` />
@@ -82,6 +80,7 @@ console.log(cover)
 </script>
 
   <body>
-    <slot />
+      <slot />
   </body>
 </html>
+

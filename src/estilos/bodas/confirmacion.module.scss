@@ -2,14 +2,23 @@
 h2 {
   padding-top: $margen-min;
   font-size: clamp(3rem, 1.5vw, 2rem);
+  color: var(--primario);
 
 }
 .confirmacion {
   margin-top: $margen;
-  background: url("/bodas/patron-fondo.png") $terciario;
-  background-size: cover;
-  background-blend-mode:difference;
+  // background: url("/bodas/confirma-fondo-izq.webp") var(--fondo);
+  background: url("/bodas/confirma-fondo-izq.webp"), url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right bottom;
+  background-size: contain;
+  // background-blend-mode:difference;
   border-radius: $radio;
+  @include cel {
+    background-position: -20% top, right bottom;
+    background-size: 50%, 100%;
+    background-blend-mode: color-burn, normal;
+  }
   @extend .sombra;
 }
 .bandeja {
@@ -61,7 +70,10 @@ svg {
   height: auto;
   margin: 0 auto;
   path{
-    fill: $acento;
+    fill: var(--acento);
+  }
+  .btn{
+    border-radius: $radio!important;
   }
 }
 

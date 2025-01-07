@@ -36,7 +36,7 @@ const { mamaNovia, papaNovia, mamaNovio, papaNovio } = Astro.props;
   }
   .bande {
     background: rgb(254, 241, 241);
-    background: linear-gradient(0deg, $terciario 0%, #fff 60%);
+    background: linear-gradient(0deg, var(--terciario) -10%, rgb(255, 255, 255, 0) 40%);
     border-radius: $radio;
     font-size: clamp(1.5rem, 1.7vw, 2.4vw);
     z-index: -2;
@@ -72,8 +72,9 @@ const { mamaNovia, papaNovia, mamaNovio, papaNovio } = Astro.props;
 
     h3 {
       //   background-color: #fff;
+      color: var(--terciario);
       display: inline-block;
-      background-color: transparentize($color: #fff, $amount: 0.1);
+      background-color: transparentize($color: #fff, $amount: 0);
       background-blend-mode: difference;
       backdrop-filter: blur(20%);
       border-radius: 4px;

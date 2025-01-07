@@ -61,7 +61,7 @@ const { texto } = Astro.props;
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
   path {
-    fill: $secundario;
+    fill: var(--secundario);
   }
   .titulo {
     margin: $margen-top $margen $margen-cel $margen;
@@ -70,7 +70,7 @@ const { texto } = Astro.props;
       margin: $margen-cel $margen-min $margen-min $margen-min;
     }
     h2 {
-      color: $secundario;
+      color: var(--secundario);
       font-size: clamp(2.8rem, 3vw, 4vw);
     }
   }

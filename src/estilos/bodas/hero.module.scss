@@ -12,8 +12,8 @@
   @extend .sombra;
   background: linear-gradient(
     0deg,
-    rgba(254, 241, 241, 1) 0%,
-    rgba(239, 220, 220, 1) 100%
+    var(--gris) 0%,
+   var(--fondo) 100%
   );
 
   &::before {
@@ -69,7 +69,7 @@
 .der {
   height: fit-content;
   h1 {
-    color: $primario;
+    color: var(--primario);
     font-size: clamp(3rem, 6vw, 7.5rem);
     text-shadow: 2px 2px 8px #cab9ae;
   }
@@ -84,7 +84,7 @@
   }
 }
 .casamos {
-  color: $acento;
+  color: var(--acento);
   font-family: $garigol, serif;
   font-size: clamp(1.4rem, 2vw, 3rem);
 }
@@ -92,6 +92,7 @@
   width: 100%;
   height: 100%;
   clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  
 
   img {
     width: 100%;
@@ -107,14 +108,14 @@
 }
 #fecha {
   .linea1 {
-    border-top: solid 1px $primario;
+    border-top: solid 1px var(--primario);
     position: absolute;
     width:20%;
     left: 5%;
     top: 33%;
   }
   .linea2 {
-    border-top: solid 1px $primario;
+    border-top: solid 1px var(--primario);
     position: absolute;
     width:20%;
     right: 5%;
@@ -124,7 +125,7 @@
   font-size: clamp(2rem, 2vw, 4rem);
   .fechaNum {
     font-size: clamp(5rem, 6vw, 7rem);
-    color: $secundario;
+    color: var(--primario);
     font-family: $encabezados, serif;
     line-height: 0.9em;
     text-shadow: 2px 2px 8px #cab9ae;
@@ -148,7 +149,7 @@
   
     span{
       z-index: -1;
-      color: $acento;
+      color: var(--acento);
       font-size: clamp(3rem, 4vw, 5rem);
     }
     span:first-child{
