@@ -11,9 +11,6 @@ import { Icon } from "astro-icon/components";
 
 const usuarioEmail = NvitaAuth.currentUser?.email;
 
-const usuarios = await db.select().from(Usuario).where(eq(Usuario.email, usuarioEmail));
-const usuarioId = usuarios[0].id
-
 if (!usuarioEmail) {
   console.error("El usuario no está autenticado.");
   throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
@@ -47,8 +44,6 @@ try {
   console.error("Error al obtener los datos:", error);
   invitadosData = [];
 }
-
-
 ---
 
 <Layout title="Panel de administración">
@@ -80,12 +75,15 @@ try {
       )}
     </ul>
 
-    <button id="agregar-invitado">
-      <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-    </button>
-    <AgregarInvitado usuarioId={usuarioId} />
-    <EditarInvitado />
-    
+        <button id="agregar-invitado">
+          <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+        </button>
+        <AgregarInvitado />
+    {invitadosData.length > 0 && (
+      <>
+        <EditarInvitado />
+      </>
+    )}
   </section>
 </Layout>
 
