@@ -3,10 +3,11 @@ import { NvitaAuth } from "../../firebase/config";
 import Checkbox from "./Checkbox.astro";
 import {Usuario, db, eq} from "astro:db"
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const usuarios = await db.select().from(Usuario ).where(eq(Usuario.email, usuarioEmail));
-const usuarioId = usuarios[0].id
-const tipoInvitacion = usuarios[0].tipo
-const ruta = usuarios[0].ruta
+
+// const tipoInvitacion = usuarios[0].tipo
+// const ruta = usuarios[0].ruta
+const {usuarioId} = Astro.props
+console.log(usuarioId + " desde agregar invitado")
 ---
 
 <dialog  id="agrega-invitado-dialog" data-ref={usuarioId}>

@@ -6,16 +6,14 @@ import Hero from "../components/Hero.astro";
 import Layout from "../layouts/Layout.astro";
 import Btn from "../components/Btn.astro";
 import Footer from "../components/Footer.astro";
-import BannerQuince from "../components/BannerQuince.astro"
+import BannerQuince from "../components/BannerQuince.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
 import { Icon } from "astro-icon/components";
 import Faq from "../components/Faq.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
-<Layout
-  title="Invitaciones Digitales para Bodas y Xv años | Nvitaciones"
->
+<Layout title="Invitaciones Digitales para Bodas y 15 años | Nvitaciones">
   <Hero
     description="<b>Invitaciones digitales</b> con todo lo que necesitas: cuentas regresivas, confirmaciones de asistencia, etc... y un práctico panel para organizar a tus invitados sin esfuerzo."
   />
@@ -23,17 +21,40 @@ import Faq from "../components/Faq.astro";
   <div class="grid contenido" id="choro">
     <h2>Invitar, no tiene que ser complicado.</h2>
     <p>
-      Invitaciones en papel que se pierden, listas de invitados difíciles de gestionar, invitados perdidos... <b> <br>¡Basta de estrés!</b>
+      Invitaciones en papel que se pierden, listas de invitados difíciles de
+      gestionar, invitados perdidos... <b> <br />¡Basta de estrés!</b>
     </p>
     <p>
-        Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados, edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
+      Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados,
+      edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
     </p>
   </div>
 
   <section class="grid contenido">
-  
- 
+    <div id="video">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/cV49wo2c5fU?si=c95LYo30Mkdnu-1b&controls=0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+    </div>
+    <div id="videoCel">
+      <iframe
+        width="315"
+        height="560"
+        src="https://www.youtube.com/embed/UBu6HRRfCdA"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+  </section>
 
+  <section class="grid contenido">
     <BannerGeneral
       encabezado="Cuenta regresiva y confirmación"
       texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
@@ -53,7 +74,7 @@ import Faq from "../components/Faq.astro";
 
     <BannerGeneral
       encabezado="Frase de amor y galería de fotos"
-      texto="Dí con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos de los novios o la quinceara"
+      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imagenes"
       tema="primario"
       icono="mdi:image-plus"
       urlImagen="../assets/home/gale/frase.webp"
@@ -67,11 +88,9 @@ import Faq from "../components/Faq.astro";
       urlImagen="../assets/home/gale/panel.webp"
     />
 
-
-
     <div class="flex">
       <div class="cartaBase2">
-        <h2>Invitaciones digitales personalizadas para cada invitado</h2>
+        <h2>Invitación personalizada para cada invitado</h2>
         <p>
           Haz que tus invitados se sientan especiales desde el primer momento. <b
             >Cada invitación llevará el nombre del invitado o su familia,</b
@@ -88,12 +107,11 @@ import Faq from "../components/Faq.astro";
         />
       </div>
       <div class="cartaBase2">
-        <h2>¡Confirma la asistencia de tus invitados fácilmente!</h2>
+        <h2>¡Tus invitados confirmarán su asistencia fácilmente!</h2>
         <p>
-          No dejes nada al azar en tu evento especial. <b
-            >Tus invitados podrán confirmar</b
-          > su asistencia directamente desde su invitación digital, dándote tranquilidad
-          y el control que necesitas para organizar el día perfecto."
+          <b>Tus invitados podrán confirmar</b> su asistencia directamente desde
+          su invitación digital, dándote tranquilidad y el control que necesitas
+          para organizar el día perfecto."
         </p>
         <img
           src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
@@ -101,7 +119,7 @@ import Faq from "../components/Faq.astro";
         />
       </div>
     </div>
-    
+
     <!-- carcateristicas -->
 
     <div id="conteCaracteristicas">
@@ -133,8 +151,6 @@ import Faq from "../components/Faq.astro";
         fondo="fondo-nvite-caracteristicas-4.png"
       /> -->
     </div>
-
-
   </section>
   <!-- <Galeriaslide /> -->
   <div class="grid contenido">
@@ -148,9 +164,9 @@ import Faq from "../components/Faq.astro";
     Acceso a un <b>panel de invitados</b> para tener control total de tus
     invitaciones
     </li>
-        <li>Tu invitación, sin importar la versión, tiene envios ilimitados</li>
+        <li>Tu invitación, sin importar la versión, <mark>tiene envios ilimitados</mark></li>
         <li>
-        Tu invitación queda en línea <b>hasta 1 mes</b> después de la fecha de tu
+        Tu invitación queda en línea <b>hasta 1 semana</b> después de la fecha de tu
         evento
         </li>
         <li>
@@ -171,22 +187,15 @@ import Faq from "../components/Faq.astro";
         clases="btn-oscuro"
         claro={true}
         blank={false}
-        >
+      >
         <Icon name="bag" size={25} />
-        </Btn>
+      </Btn>
     </BannerGeneral>
   </div>
 
   <!-- <div class="grid contenido">
     <Recibes />
   </div> -->
-
-  <div id="bodas" class="grid pantalla-der">
-    <Banner />
-  </div>
-  <div id="bodas" class="grid pantalla-izq">
-    <BannerQuince />
-  </div>
 
   <section class="grid contenido">
     <div id="conteCaracteristicas">
@@ -223,6 +232,14 @@ import Faq from "../components/Faq.astro";
       />
     </div>
   </section>
+
+  <div id="precios" class="grid pantalla-der">
+    <Banner />
+  </div>
+
+  <div id="cumples" class="grid pantalla-izq">
+    <BannerQuince />
+  </div>
 </Layout>
 <div class="grid contenido">
   <Faq />
@@ -270,7 +287,7 @@ import Faq from "../components/Faq.astro";
             claro={false}
             blank={true}
           >
-          <Icon name="mdi:whatsapp" />
+            <Icon name="mdi:whatsapp" />
           </Btn>
           <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
         </form>

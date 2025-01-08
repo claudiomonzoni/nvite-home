@@ -16,9 +16,9 @@ export default async function seed() {
     },
     {
       id: 3,
-      email: "test1@test.com",
+      email: "testamesta@test.com",
       tipo: "cumple",
-      ruta: "/lupeylalo/"
+      ruta: "juliamontenegro"
     }
   ]);
 

@@ -94,7 +94,8 @@ a {
   &:hover {
     transform: scale(1.05);
   }
-  img, svg {
+  img,
+  svg {
     vertical-align: middle;
   }
 }
@@ -115,6 +116,12 @@ p:last-child {
 }
 b {
   font-weight: bold;
+}
+mark {
+  background-color: $acento;
+  color: white;
+  padding: 0 0.3rem;
+  border-radius: 0.2rem;
 }
 //flex
 .flex {
@@ -455,7 +462,6 @@ b {
 }
 
 #formu {
-
   width: 70%;
   display: flex;
   align-items: center;
@@ -536,14 +542,15 @@ input::placeholder {
   //   linear-gradient(330deg, $fondo 0%, white 70%) $fondo;
   // background-size: contain, contain;
   // background-blend-mode: color-dodge, normal;
-  
-  background: url("/fondo-formu.webp"), linear-gradient(330deg, $fondo 0%, white 70%)  white;
+
+  background: url("/fondo-formu.webp"),
+    linear-gradient(330deg, $fondo 0%, white 70%) white;
   background-repeat: no-repeat;
   background-size: 30%;
   background-position: right bottom, center;
-.bande{
-  padding: $margen-cel 0;
-}
+  .bande {
+    padding: $margen-cel 0;
+  }
   text-align: center;
   border-radius: $margen-min;
   position: relative;
@@ -553,7 +560,6 @@ input::placeholder {
   align-items: center;
   flex: 1 0 30%;
   padding: $margen-cel $margen-cel 0 $margen-cel;
-
 
   @include cel {
     background-size: 90%;
@@ -628,5 +634,46 @@ input::placeholder {
     padding: $margen-cel;
     background-position: top center;
     background-size: 110%;
+  }
+}
+
+#video {
+  // clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  @include cel {
+    display: none;
+  }
+  margin-bottom: $margen-cel;
+  display: flex;
+  justify-content: center;
+  iframe {
+    border-radius: $radio;
+    aspect-ratio: 16 / 9;
+    width: 100% !important;
+    height: auto;
+  }
+}
+
+#videoCel {
+  // clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  @include hd {
+    display: none;
+  }
+  @include hdplus {
+    display: none;
+  }
+  @include tableta {
+    display: none;
+  }
+  @include tableta_land {
+    display: none;
+  }
+  margin-bottom: $margen-cel;
+  display: flex;
+  justify-content: center;
+  iframe {
+    border-radius: $radio;
+    aspect-ratio: 9 / 16;
+    width: 100% !important;
+    height: auto;
   }
 }
