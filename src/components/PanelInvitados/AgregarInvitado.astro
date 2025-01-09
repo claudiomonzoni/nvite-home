@@ -1,46 +1,78 @@
 ---
 import { NvitaAuth } from "../../firebase/config";
 import Checkbox from "./Checkbox.astro";
-import {Usuario, db, eq} from "astro:db"
+import { Usuario, db, eq } from "astro:db";
 const usuarioEmail = NvitaAuth.currentUser?.email;
-const usuarios = await db.select().from(Usuario ).where(eq(Usuario.email, usuarioEmail));
+const usuarios = await db
+  .select()
+  .from(Usuario)
+  .where(eq(Usuario.email, usuarioEmail));
 // const usuarioId = usuarios[0].id
-const {usuarioId} = Astro.props
+const { usuarioId } = Astro.props;
 // const tipoInvitacion = usuarios[0].tipo
 // const ruta = usuarios[0].ruta
+
+///________________________________________________________________________
+// import { monitorAuthState } from "../../firebase/authListener";
+
+// const verificarAuth = () => {
+//   return new Promise((resolve) => {
+//     monitorAuthState(({ authenticated }) => {
+//       resolve(authenticated);
+//     });
+//   });
+// };
+
+// verificarAuth().then((authenticated) => {
+
+//   if (!authenticated) {
+//     location.reload();
+//   return;
+//   }
+// });
+///________________________________________________________________________
 ---
 
-<dialog  id="agrega-invitado-dialog" data-ref={usuarioId}>
+<dialog id="agrega-invitado-dialog" data-ref={usuarioId}>
   <div class="formulario">
     <h2>Agrega un invitado a tu panel</h2>
-    <form id="agregar-formu" >
-      <label for="nombre">Nombre del invitado
+    <form id="agregar-formu">
+      <label for="nombre"
+        >Nombre del invitado
 
         <input
-        type="text"
-        name="nombre"
-        placeholder="Nombre que aparecerá en la invitación"
-        required
+          type="text"
+          name="nombre"
+          placeholder="Nombre que aparecerá en la invitación"
+          required
         />
       </label>
-      <label for="pases">Numero de pases
-
-        <input type="number" name="pases" required placeholder="Asignar numero de pases" />
-      </label>
-      <label for="mesa">Numero de mesa
+      <label for="pases"
+        >Numero de pases
 
         <input
-        type="number"
-        name="mesa"
-        placeholder="Asignar numero de mesa (opcional)"
+          type="number"
+          name="pases"
+          required
+          placeholder="Asignar numero de pases"
         />
       </label>
-      <label for="whatsapp">Numero de whatsapp
+      <label for="mesa"
+        >Numero de mesa
 
         <input
-        type="tel"
-        name="numeroWhats"
-        placeholder="Numero de whatsapp del invitado"
+          type="number"
+          name="mesa"
+          placeholder="Asignar numero de mesa (opcional)"
+        />
+      </label>
+      <label for="whatsapp"
+        >Numero de whatsapp
+
+        <input
+          type="tel"
+          name="numeroWhats"
+          placeholder="Numero de whatsapp del invitado"
         />
       </label>
       <label for="tipoInvitacion">Tipo de invitación</label>
@@ -49,51 +81,48 @@ const {usuarioId} = Astro.props
         <option value="Individual">Individual</option>
         <option value="Grupal">Grupal</option>
       </select>
-      
+
       <div id="check">
-        
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="confirmado"
-        titulo="Ya confirmo su asistencia"
-      />
+        <Checkbox
+          checked={false}
+          inputId={Math.random()}
+          name="confirmado"
+          titulo="Ya confirmo su asistencia"
+        />
 
-     
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="vip"
-        titulo="Invitado importante"
-      />
-      
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="InvitacionEnviada"
-        titulo="Invitación enviada"
-      />
+        <Checkbox
+          checked={false}
+          inputId={Math.random()}
+          name="vip"
+          titulo="Invitado importante"
+        />
 
-     
-      <Checkbox
-        checked={false}
-        inputId={Math.random()}
-        name="noAsiste"
-        titulo="No asistirá"
-      />
+        <Checkbox
+          checked={false}
+          inputId={Math.random()}
+          name="InvitacionEnviada"
+          titulo="Invitación enviada"
+        />
 
+        <Checkbox
+          checked={false}
+          inputId={Math.random()}
+          name="noAsiste"
+          titulo="No asistirá"
+        />
       </div>
 
       <input type="submit" value="Agregar invitación" />
     </form>
   </div>
   <a href="#" id="cerrar-dialog">X</a>
-
 </dialog>
 
 <script>
   import sanitize from "sanitize-html";
-  const form = document.querySelector("#agrega-invitado-dialog") as HTMLFormElement;
+  const form = document.querySelector(
+    "#agrega-invitado-dialog"
+  ) as HTMLFormElement;
   const refere = form.dataset.ref;
 
   // query selectors
@@ -104,7 +133,9 @@ const {usuarioId} = Astro.props
   const closeDialogBtn = document.getElementById(
     "cerrar-dialog"
   ) as HTMLButtonElement;
-  const dialog = document.querySelector("#agrega-invitado-dialog") as HTMLDialogElement;
+  const dialog = document.querySelector(
+    "#agrega-invitado-dialog"
+  ) as HTMLDialogElement;
 
   // dialog
   openDialogBtn.addEventListener("click", () => dialog.showModal());
@@ -120,20 +151,25 @@ const {usuarioId} = Astro.props
   // form submit
   addForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
-      // Validaciones de cliente
-      const nombreInput = addForm.querySelector("input[name='nombre']") as HTMLInputElement;
-      const nombre = nombreInput.value.trim();
-  if (!nombre) {
-    alert("El nombre no puede estar vacío.");
-    return;
-  }
 
-  const pases = parseInt((addForm.querySelector("input[name='pases']") as HTMLInputElement).value, 10);
-  if (isNaN(pases) || pases < 1) {
-    alert("El número de pases debe ser un número positivo.");
-    return;
-  }
+    // Validaciones de cliente
+    const nombreInput = addForm.querySelector(
+      "input[name='nombre']"
+    ) as HTMLInputElement;
+    const nombre = nombreInput.value.trim();
+    if (!nombre) {
+      alert("El nombre no puede estar vacío.");
+      return;
+    }
+
+    const pases = parseInt(
+      (addForm.querySelector("input[name='pases']") as HTMLInputElement).value,
+      10
+    );
+    if (isNaN(pases) || pases < 1) {
+      alert("El número de pases debe ser un número positivo.");
+      return;
+    }
 
     try {
       const formData = new FormData(addForm);
@@ -170,7 +206,10 @@ const {usuarioId} = Astro.props
       });
 
       if (!req.ok) {
-        throw new Error("Req no esta bien!");
+        location.reload();
+        throw new Error(
+          "Algo salió mal, se va a recargar la página, por favor vuelve a intentarlo, ingresa de nuevo al panel de invitados."
+        );
       }
 
       const res = await req.json();
@@ -191,64 +230,64 @@ const {usuarioId} = Astro.props
 
 <style lang="scss">
   @import "../../estilos/_variables.scss";
-dialog {
-  border: none;
-  border-radius: $margen-cel;
-  padding: $margen-cel;
-  width: 100%;
-  max-width: 70%;
-  text-align: center;
-  @include cel {
-    max-width: 90%;
-    padding: $margen-min;
-    form{
-      width: 90%;
+  dialog {
+    border: none;
+    border-radius: $margen-cel;
+    padding: $margen-cel;
+    width: 100%;
+    max-width: 70%;
+    text-align: center;
+    @include cel {
+      max-width: 90%;
+      padding: $margen-min;
+      form {
+        width: 90%;
+      }
     }
+    @extend .sombra;
   }
-  @extend .sombra;
-}
-  form{
+  form {
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     justify-content: center;
     width: 70%;
     margin: 0 auto;
 
-    
-    label{
+    label {
       flex: 1 0 70%;
       text-align: left;
       font-weight: bold;
       color: $acento;
     }
-    input, select{
+    input,
+    select {
       border-radius: 5px;
       width: 100%;
-      margin: .5rem 0;
-      padding: .6rem;
+      margin: 0.5rem 0;
+      padding: 0.6rem;
     }
-    
   }
 
-  button, input[type="submit"]{
-      background-color: $acento;
-      border-radius: 5px;
-      color: #fff;
-      border: none;
-      display: inline-block;
-      text-align: center;
-      padding: .3rem .8rem;
-      font-weight: bold;
-     
-      svg{
-        vertical-align: middle;
-        margin-right: .2rem;
-      }
-      @include cel{
-        margin-top: .5rem;
-      }
+  button,
+  input[type="submit"] {
+    background-color: $acento;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.3rem 0.8rem;
+    font-weight: bold;
+
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+    @include cel {
+      margin-top: 0.5rem;
+    }
   }
-  #check{
+  #check {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;

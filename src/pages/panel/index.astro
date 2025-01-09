@@ -9,37 +9,6 @@ import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro
 import { Usuario, Invitados, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
-//_________________________________________________________________________________________________________
-
-import { monitorAuthState } from "../../firebase/authListener";
-
-// const authStateElement = document.getElementById("auth-state");
-
-monitorAuthState(({ authenticated, user }) => {
-  if (authenticated) {
-    console.log('dentro')
-    // authStateElement.textContent = `Bienvenido, ${user.email}`;
-  } else {
-    alert('caduco la sesión, vuelve a iniciar sesion')
-    location.reload();
-    // authStateElement.textContent = "Tu sesión ha caducado. Por favor, inicia sesión.";
-    // Redirigir al usuario al inicio de sesión
-    window.location.href = "/panel/login";
-  }
-});
-
-// const authBanner = document.getElementById("auth-state");
-
-// monitorAuthState(({ authenticated }) => {
-//   if (!authenticated) {
-//     authBanner.classList.remove("hidden");
-//     authBanner.textContent = "Tu sesión ha terminado. Por favor, inicia sesión.";
-//   } else {
-//     authBanner.classList.add("hidden");
-//   }
-// });
-//__________________________________________________________________________________________
-
 if (!NvitaAuth.currentUser) {
   alert("No estás autenticado. Por favor, inicia sesión.");
   return;

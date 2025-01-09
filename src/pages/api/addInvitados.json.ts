@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import sanitize from "sanitize-html";
-
 import { Invitados, db } from "astro:db";
 
 export const POST: APIRoute = async ({ request }) => {
@@ -81,5 +80,7 @@ export const POST: APIRoute = async ({ request }) => {
         status: 404,
       }
     );
+
+    
   }
 };
