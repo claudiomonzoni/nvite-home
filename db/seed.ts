@@ -10,9 +10,9 @@ export default async function seed() {
     },
     {
       id: 2,
-      email: "test@test.com",
+      email: "test1@test.com",
       tipo: "quince",
-      ruta: "/raulyrenan/"
+      ruta: "raulyrenan"
     },
     {
       id: 3,
