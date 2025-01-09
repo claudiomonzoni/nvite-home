@@ -22,28 +22,29 @@ let ruta = null;
 
 try {
   // Obtén los datos del usuario
-  const usuarios = await db
+  var usuarios = await db
     .select()
     .from(Usuario)
     .where(eq(Usuario.email, usuarioEmail));
 
-  if (usuarios.length === 0) {
-    throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
-  }
-
-  tipoInvitacion = usuarios[0].tipo;
-  ruta = usuarios[0].ruta;
-
-  // Obtén los datos de los invitados
-  invitadosData = await db
+    if (usuarios.length === 0) {
+      throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
+    }
+    
+    tipoInvitacion = usuarios[0].tipo;
+    ruta = usuarios[0].ruta;
+    
+    // Obtén los datos de los invitados
+    invitadosData = await db
     .select()
     .from(Invitados)
     .where(eq(Invitados.usuarioId, usuarios[0].id))
     .orderBy(desc(Invitados.id));
-} catch (error) {
-  console.error("Error al obtener los datos:", error);
-  invitadosData = [];
-}
+  } catch (error) {
+    console.error("Error al obtener los datos:", error);
+    invitadosData = [];
+  }
+  const usuarioId = usuarios[0].id;
 ---
 
 <Layout title="Panel de administración">
@@ -86,14 +87,18 @@ try {
       }
     </ul>
 
-    <button id="agregar-invitado">
-      <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-    </button>
-    <AgregarInvitado />
     {
-      invitadosData.length > 0 && (
+      usuarioId ? (
         <>
+        <button id="agregar-invitado">
+          <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+        </button>
+        <AgregarInvitado usuarioId = {usuarioId} />
           <EditarInvitado />
+        </>
+      ) : (
+        <>
+          {console.error("No se encontró el ID del usuario.")}
         </>
       )
     }
