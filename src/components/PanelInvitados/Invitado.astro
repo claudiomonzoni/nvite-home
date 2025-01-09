@@ -47,7 +47,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
             ""
           )
         }
-        <li>
+        <li id="botones">
           <button
             data-edit
             data-id={invitadoData.id}
@@ -339,6 +339,10 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
         margin: 0 .4rem 0 0; 
       }
     }
+    #botones{
+      display: flex;
+      gap: .5rem;
+    }
     button {
       background-color: $acento;
       border-radius: 5px;
@@ -348,6 +352,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       text-align: center;
       padding: 0.3rem 0.8rem;
       font-weight: bold;
+      font-size: clamp(0.8rem, 1vw, 1rem);
 
       svg {
         vertical-align: middle;

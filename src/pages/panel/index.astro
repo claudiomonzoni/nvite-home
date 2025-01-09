@@ -180,6 +180,26 @@ try {
       }
     }
   }
+
+  #invitados-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    @include cel {
+      grid-template-columns: 1fr;
+    }
+    @include tableta {
+      grid-template-columns: 1fr 1fr;
+    }
+    gap: 1rem;
+
+    li{
+      flex: 1 1 30%;
+      width: fit-content;
+    }
+    @include cel {
+      gap: 0.5rem;
+    }
+  }
   ul {
     flex: 1 0 auto;
     display: flex;
