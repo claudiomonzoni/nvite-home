@@ -1,34 +1,34 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
-import invitadosData from "../../pages/bodas/data/_invitados.json";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
-  const [ver, setVer] = useState(version);
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
+  const[switchConfirmado, setSwitchConfirmado] = useState(false);
 
   useEffect(() => {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
+    const btnSwitch = document.getElementById("confirmado");
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
     const uid = params.get("uid");
 
-    
     const ua = navigator.userAgent;
 
     try {
-      
-      fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setInvitado(json[0].nombre);
-        setPases(json[0].pases);
-        setId(json[0].id);
-      });
-      
+      fetch(
+        `${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          setInvitado(json[0].nombre);
+          setPases(json[0].pases);
+          setId(json[0].id);
+        });
+
       const pasesInput = document.querySelector("#Confipases");
       const generarPases = () => {
         for (let i = 1; i <= pases; i++) {
@@ -52,25 +52,18 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         }
 
         envio(whats, pasesInput.value, comentarios.value);
-
       };
-      
+
       const envio = (whats, pasesInput, comentarios) => {
         const url = `${whats}Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda%20de:%20${invitado},%20y%20usaremos:%0a${pasesInput}.%0aComentarios:%20${comentarios}.`;
         btnconfirmar.href = url;
       };
-      
-     
 
       pasesInput.addEventListener("focusout", enviar);
       comentarios.addEventListener("focusout", enviar);
-
-
     } catch (error) {
       console.log(error);
     }
-
-
   }, [id]);
   return (
     <>
@@ -94,9 +87,17 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               {
                 <>
                   {version === "basic" ? (
-                  ""
+                    ""
                   ) : (
                     <>
+                    <div className={estilo.conteCheck}>
+                    <p>Si vamos</p>
+                      <label className={estilo.switch}>
+                        <input type="checkbox" id="switch"  /> 
+                        <span className={estilo.slider}></span>
+                      </label>
+                    </div>
+
                       <label for="pases">¿Cuántos pases usaran?</label>
                       <select name="pases" id="Confipases" required>
                         <option value="0">0</option>
@@ -111,7 +112,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               <a href="#" className="btn redondo desactivado" id="btnconfirmar">
                 Confirmar mi asistencia
               </a>
-              
             </form>
           </div>
         </div>
