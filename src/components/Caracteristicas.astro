@@ -14,7 +14,7 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 
 
   <div class="carcateristicas">
-      <div class="icono"><img src={icono} alt={encabezado} /></div>
+      <div class="icono"><img src={icono} alt={encabezado}  /></div>
     <div class="conte">
       <h3>{encabezado}</h3>
       <p set:html={texto}></p>
@@ -28,5 +28,14 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 .carcateristicas{
     /* background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf; */
     background: var(--url) no-repeat var(--colorBg);
+}
+
+.icono{
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
 }
 </style>
