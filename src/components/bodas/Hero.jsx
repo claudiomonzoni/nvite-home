@@ -36,22 +36,41 @@ export default function Hero({
       ease: "power4.out",
       
       onComplete: () => {
+        let mm = gsap.matchMedia();
+        mm.add("(min-width: 800px)", () => {
+
+          gsap.to(".avatarConte", {
+            delay: 1,
+            duration: 2,
+            ease: "power4.out",
+            transformOrigin:'center',
+            clipPath:'polygon(0 0%, 100% 0, 100% 100%, 0% 100%)',
+            width:'83%',
+            height:'90%',
+         
+          })
+        });
         
-        gsap.to(".avatarConte", {
-          duration: .01,
-          transformOrigin:'center',
-          clipPath:'circle(100% at 50% 50%)',
-        })
-        gsap.to(".avatarConte", {
-          delay: 1,
-          duration: 2,
-          ease: "power4.out",
-          transformOrigin:'center',
-          clipPath:'circle(38% at 50% 50%)',
-          width:'80%',
-          height:'80%',
-          marginBottom:'-40',
-        })
+        mm.add("(max-width: 799px)", () => {
+          gsap.to(".avatarConte", {
+            delay: 1,
+            duration: 2,
+            ease: "power4.out",
+            transformOrigin:'center',
+            clipPath:'polygon(0 0%, 100% 0, 100% 100%, 0% 100%)',
+            width:'85%',
+            height:'90%',
+            marginTop: 20, // para que se vea el avatar
+         
+          })
+
+
+        });
+        // gsap.to(".avatarConte", {
+        //   duration: .01,
+        //   transformOrigin:'center',
+        //   clipPath:'circle(100% at 50% 50%)',
+        // })
       }
     });
 
