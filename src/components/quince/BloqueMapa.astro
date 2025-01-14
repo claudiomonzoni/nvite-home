@@ -36,7 +36,7 @@ import Mapa from "./Mapa.astro";
 <style lang="scss">
   @import "../../estilos/quince/_variables.scss";
   h3 {
-    color: $secundario;
+    color: var(--secundario);
     font-size: clamp(3rem, 2.5vw, 3rem);
   }
 
@@ -65,7 +65,7 @@ import Mapa from "./Mapa.astro";
       path {
     
         // filter: invert(1);
-        fill: $primario;
+        fill: var(--primario);
       
       }
     }

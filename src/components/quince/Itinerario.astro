@@ -29,7 +29,7 @@ const urlPatron = `url("${base}/patron-fondo.png")`
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: $primario $secundario;
+    scrollbar-color: var(--primario) var(--secundario);
   }
 
   /* Chrome, Edge and Safari */
@@ -39,28 +39,28 @@ const urlPatron = `url("${base}/patron-fondo.png")`
   }
   *::-webkit-scrollbar-track {
     border-radius: 5px;
-    background-color: $terciario;
+    background-color: var(--terciario);
   }
 
   *::-webkit-scrollbar-track:hover {
-    background-color: $terciario;
+    background-color: var(--terciario);
   }
 
   *::-webkit-scrollbar-track:active {
-    background-color: $terciario;
+    background-color: var(--terciario);
   }
 
   *::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: $primario;
+    background-color: var(--primario);
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-thumb:active {
-    background-color: $secundario;
+    background-color: var(--secundario);
   }
 
   #riel {
@@ -82,11 +82,11 @@ const urlPatron = `url("${base}/patron-fondo.png")`
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: $gris;
+    color: var(--gris);
     padding: $margen;
     width: 22vw;
     font-size: clamp(1rem, 1.5vw, 2vw);
-    border-right: 1px solid $gris;
+    border-right: 1px solid var(--gris);
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
     border-left: 1px solid transparent;
@@ -94,14 +94,14 @@ const urlPatron = `url("${base}/patron-fondo.png")`
       padding: $margen-cel;
       width: 60vw;
     }
-    // background: var(--urlPatron), $primario;
+    // background: var(--urlPatron), var(--primario);
     // background-blend-mode:overlay;
     // background-size: cover;
     // background-position: center;
   }
   h4 {
     font-size: clamp(2.5rem, 3vw, 4vw);
-    color: $primario;
+    color: var(--primario);
   }
 </style>
 <!-- 

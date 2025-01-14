@@ -3,9 +3,10 @@ interface Props {
   title: string;
   url?: string;
   cover?: string;
+  paleta?: string;
 }
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, url, cover } = Astro.props;
+const { title, url, cover, paleta } = Astro.props;
 import "../../estilos/quince/globales.scss";
 
 
@@ -14,7 +15,7 @@ const portadaOG = `https://nvitaciones.com${cover}`;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" id=`paleta-${paleta}` data-paleta={paleta}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Invitacion de XV años de nvita.me" />

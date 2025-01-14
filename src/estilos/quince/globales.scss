@@ -47,7 +47,7 @@ html {
     font-size: clamp(14px, 7vw, 22px);
   }
 
-  color: $gris;
+  color: var(--gris);
   font-family: $txt, serif;
   font-weight: 100;
   background: url("/quince/decor.svg"), url("/quince/textuta-bg.webp") #fff;
@@ -86,7 +86,7 @@ h3, h4 {
   line-height: 1em;
   font-family: $encabezados, serif;
   padding-bottom: 0.7rem;
-  color: $secundario;
+  color: var(--secundario);
 }
 h1 {
   color: white;
@@ -183,10 +183,10 @@ b {
 }
 
 .fondo-mitad {
-  background: $terciario;
+  background: var(--terciario);
   background: linear-gradient(
     0deg,
-    $terciario 88%,
+    var(--terciario) 88%,
     rgba(255, 255, 255, 0) 88%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -204,11 +204,11 @@ b {
   &:hover {
     background: white;
     border-radius: $margen-min;
-    color: $primario;
+    color: var(--primario);
   }
   @if $claro{
-    background: $secundario;
-    color: $primario;
+    background: var(--secundario);
+    color: var(--primario);
     border: none!important;
   }
 }
@@ -234,7 +234,7 @@ border: solid;
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: $gris $acento;
+    scrollbar-color: var(--gris) var(--acento);
   }
 
   /* Chrome, Edge and Safari */
@@ -244,28 +244,28 @@ border: solid;
   }
   *::-webkit-scrollbar-track {
     border-radius: 5px;
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-track:hover {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-track:active {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: $gris;
+    background-color: var(--gris);
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-thumb:active {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
     margin: 0rem 0 $margen 0;

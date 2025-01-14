@@ -31,14 +31,22 @@ const fecha = Nfecha.toLocaleDateString(["es-MX"], {
   day: "numeric",
 });
 
-
 const { Content } = await render(quince);
 ---
 
-<Layout title=`Invitación de quince de ${quince.data.quinceanera}` url={base.toString()} cover={quince.data.cover}>
-  <Hero nombres={quince.data.quinceanera} fecha={fecha} cover={quince.data.cover} 
-  client:load />
-  
+<Layout
+  title=`Invitación de quince de ${quince.data.quinceanera}`
+  url={base.toString()}
+  cover={quince.data.cover}
+  paleta={quince.data.paleta}
+>
+  <Hero
+    nombres={quince.data.quinceanera}
+    fecha={fecha}
+    cover={quince.data.cover}
+    client:load
+  />
+
   <!--(esto estaba arriba): folder={quince.data.json} -->
 
   <Content />

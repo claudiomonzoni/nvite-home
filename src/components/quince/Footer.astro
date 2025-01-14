@@ -59,7 +59,7 @@ const { base } = Astro.props;
 <style lang="scss">
   @import "../../estilos/quince/_variables.scss";
   footer {
-    border-top: solid 1px $secundario;
+    border-top: solid 1px var(--secundario);
     padding: $margen 0;
     margin: 0 auto;
     text-align: center;
@@ -82,7 +82,7 @@ const { base } = Astro.props;
       height: auto
     }
     path{
-        fill: $primario;
+        fill: var(--primario);
     }
   }
 </style>

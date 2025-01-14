@@ -1,6 +1,6 @@
 @import "_variables.scss";
 h2 {
-  color: $secundario;
+  color: var(--secundario);
   padding-top: $margen-min;
   font-size: clamp(3rem, 1.5vw, 2rem);
 
@@ -13,12 +13,12 @@ h2 {
   text-align: center;
   padding: $margen;
   margin: 0 auto;
-  background: $urlPatron, $terciario;
+  background: $urlPatron, var(--terciario);
   background-blend-mode: color-burn;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  color: $primario;
+  color: var(--primario);
   @include cel {
     background-size: cover;
     max-width: 100%;
@@ -32,8 +32,8 @@ form {
   margin: 0 auto;
   width: 50%;
   a{
-    color: $primario!important;
-    border: solid 1px $primario!important;
+    color: var(--primario)!important;
+    border: solid 1px var(--primario)!important;
     margin-top: $margen-cel;
   }
   label,

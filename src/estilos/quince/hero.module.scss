@@ -37,10 +37,10 @@
   grid-column: 2 / -1;
   grid-row: 1 / -1;
   margin: $margen 0;
-  background: $urlPatron, $terciario;
+  background: $urlPatron, var(--terciario);
   background-blend-mode:color-burn;
   text-align: center;
-  color: $primario;
+  color: var(--primario);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@
 }
 h1{
   padding: $margen-min 0 $margen-min 0;
-  color: $secundario;
+  color: var(--secundario);
 }
 span {
   padding-bottom: $margen-min;
@@ -65,9 +65,10 @@ span {
 }
 .familia {
   font-size: clamp(1.3rem, 2vw, 5vw);
+  color: var(--acento);
 }
 .fecha {
-  color: $secundario;
+  color: var(--secundario);
   font-size: clamp(1.2rem, 2vw, 5vw);
 }
 #pases {
@@ -76,11 +77,12 @@ span {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: $secundario;
+  background: var(--acento);
   opacity: 0.9;
   padding: 2rem;
   position: absolute;
   bottom: -5rem;
+  color: var(--terciario);
  
   @include cel {
     padding: 1rem;

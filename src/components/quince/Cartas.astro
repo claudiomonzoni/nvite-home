@@ -43,14 +43,14 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
     aspect-ratio: 1/1;
     flex: 1;
     text-align: center;
-    background: $urlPatron, $terciario;
+    background: $urlPatron, var(--terciario);
     background-blend-mode:color-burn;
     background-position: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: $gris;
+    color: var(--gris);
     padding: $margen-min;
     position: relative;
     font-size: clamp(1.3rem, 1.3vw, 2vw);
@@ -61,18 +61,18 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
     @extend .sombra;
     h3 {
       width: fit-content;
-      color: $secundario;
-      border-bottom: solid 1px $terciario;
+      color: var(--secundario);
+      border-bottom: solid 1px var(--terciario);
       margin: $margen-min 0;
       font-size: clamp(2.5rem, 1.6vw, 3rem);
       @include cel {
-        border-bottom: solid 1px $secundario;
+        border-bottom: solid 1px var(--secundario);
       }
     }
 
     svg path{
         border: solid;
-        fill: $gris;
+        fill: var(--gris);
       }
    
     
