@@ -30,7 +30,7 @@ const { lat, lng, mapName } = Astro.props;
     maxZoom: 27,
   }).addTo(map);
 
-  L.marker([lat, lng]).addTo(map).bindPopup("Justo Aqui").openPopup();
+  L.marker([lat, lng]).addTo(map).bindPopup("Ubicación").openPopup();
 
   setTimeout(function () {
     const boton1 = document.getElementById("mapa1-btn");
