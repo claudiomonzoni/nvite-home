@@ -38,6 +38,10 @@ import Anchor from "../comunes/Anchor.astro";
 </div>
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
+  h3{
+    padding-bottom: 0!important;
+    margin: 0;
+  }
   #regalo {
     h2 {
       color: white;
@@ -47,7 +51,10 @@ import Anchor from "../comunes/Anchor.astro";
     }
     margin-top: $margen;
     padding: $margen;
-    background: var(--primario);
+    background: url("/bg-floral-regalos-izq.svg") var(--primario);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-blend-mode: color-burn;
     color: white;
     text-align: center;
     svg {
@@ -60,10 +67,14 @@ import Anchor from "../comunes/Anchor.astro";
   }
   #lluvia {
     h3 {
-      color: $gris;
+      color: var(--acento);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
-    background: var(--terciario);
+    background: url("/bg-floral-regalos-der.svg")  var(--terciario);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: color-dodge;
+   
     margin: $margen-cel 0;
     padding: $margen $margen-cel;
     text-align: center;
@@ -74,11 +85,11 @@ import Anchor from "../comunes/Anchor.astro";
     border-radius: $radio;
     @extend .sombra;
     h3 {
-      color: $gris;
+      color: var(--terciario);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
     b{
-      color: white;
+      color: var(--terciario);
     }
     ul {
       text-align: left;
@@ -91,8 +102,12 @@ import Anchor from "../comunes/Anchor.astro";
     align-items: center;
     text-align: center;
     margin-bottom: $margen-cel;
-    background: var(--acento);
-    color: var(--primario);
+    background: url("/bg-floral-regalos-der.svg") var(--acento);
+background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    background-blend-mode: color-burn;
+    color: var(--terciario);
   }
   #bandeja {
     margin: 0 auto;

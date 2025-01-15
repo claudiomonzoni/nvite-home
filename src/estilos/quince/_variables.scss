@@ -12,14 +12,18 @@
 // $acento: #f1d4da;
 // $gris: #8e75a8;
 
-@use './paletas/base.scss' as *;
-@use './paletas/otono.scss' as *;
+@use '../paletas/quince/base.scss' as *;
+@use '../paletas/quince/otono.scss' as *;
+@use '../paletas/quince/invierno.scss' as *;
 
 :root[data-paleta="base"] {
   @include base();
 }
 :root[data-paleta="otono"] {
   @include otono();
+}
+:root[data-paleta="invierno"] {
+  @include invierno();
 }
 
 //media query
