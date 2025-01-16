@@ -90,13 +90,13 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     ""
                   ) : (
                     <>
-                    <div className={estilo.conteCheck}>
+                    {/* <div className={estilo.conteCheck}>
                     <p>Si vamos</p>
                       <label className={estilo.switch}>
                         <input type="checkbox" id="switch"  /> 
                         <span className={estilo.slider}></span>
                       </label>
-                    </div>
+                    </div> */}
 
                       <label for="pases">¿Cuántos pases usaran?</label>
                       <select name="pases" id="Confipases" required>
