@@ -618,7 +618,26 @@ input::placeholder {
 
 #choro {
   display: flex;
+  position: relative;
 
+  #play {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    @extend .sombra;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    path {
+      fill:$acento;
+    }
+  }
   #info {
     display: flex;
     justify-content: center;
@@ -645,6 +664,7 @@ input::placeholder {
     }
   }
   #video-home {
+    position: relative;
     flex: 1;
     justify-content: left;
     padding: $margen-cel 0 0 0;
@@ -655,14 +675,15 @@ input::placeholder {
   }
   @include cel {
     flex-wrap: wrap;
-    #info, #video-home {
+    #info,
+    #video-home {
       flex: 1 0 100%;
     }
     #video-home {
       padding: 0 0 0 0;
       display: flex;
       justify-content: center;
-      video{
+      video {
         width: 85%;
       }
     }

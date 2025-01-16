@@ -34,7 +34,10 @@ import Faq from "../components/Faq.astro";
         </div>
       </div>
       <div id="video-home">
-        <video preload="auto" autoplay loop>
+        <div id="play">
+          <Icon name="mdi:play-circle" size={70} />
+        </div>
+        <video preload="metadata" poster="/video-poster.webp" loop id="video-home-cel">
           <source
             src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1737046817/pantalla-sitio_web.mp4"
             type="video/mp4"
@@ -346,3 +349,18 @@ import Faq from "../components/Faq.astro";
   </div>
 </section>
 <Footer />
+
+<script>
+  const mivideoHome = document.getElementById("video-home-cel") as HTMLVideoElement; 
+  const play = document.getElementById("play") as HTMLDivElement;
+  console.log(mivideoHome)
+
+play.addEventListener("click", playPause);
+
+function playPause() { 
+  if (mivideoHome.paused) 
+    mivideoHome.play(); 
+  else 
+    mivideoHome.pause(); 
+} 
+</script>
