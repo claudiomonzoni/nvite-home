@@ -408,7 +408,7 @@ mark {
       flex: 1 0 47%;
       flex-direction: column;
       padding: $margen-cel 0;
-   
+
       // aspect-ratio: 3 / 5;
     }
     .conte {
@@ -617,24 +617,55 @@ input::placeholder {
 }
 
 #choro {
-  text-align: center;
-  color: $primario;
-  padding: $margen;
-  p {
-    max-width: 80%;
-    margin: 0 auto;
-    margin-top: $margen-min;
-  }
-  background: url("/fondo-exp.svg") no-repeat;
-  background-position: center 70%;
-  background-size: 60%;
-  @include cel {
+  display: flex;
+
+  #info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+    text-align: center;
+    color: $primario;
+    padding: $margen;
     p {
-      max-width: 100%;
+      max-width: 80%;
+      margin: 0 auto;
+      margin-top: $margen-min;
     }
-    padding: $margen-cel;
-    background-position: top center;
-    background-size: 110%;
+    // background: url("/fondo-exp.svg") no-repeat;
+    // background-position: center 70%;
+    // background-size: 60%;
+    @include cel {
+      p {
+        max-width: 100%;
+      }
+      padding: $margen-cel;
+      background-position: top center;
+      background-size: 110%;
+    }
+  }
+  #video-home {
+    flex: 1;
+    justify-content: left;
+    padding: $margen-cel 0 0 0;
+    video {
+      width: 70%;
+      height: auto;
+    }
+  }
+  @include cel {
+    flex-wrap: wrap;
+    #info, #video-home {
+      flex: 1 0 100%;
+    }
+    #video-home {
+      padding: 0 0 0 0;
+      display: flex;
+      justify-content: center;
+      video{
+        width: 85%;
+      }
+    }
   }
 }
 

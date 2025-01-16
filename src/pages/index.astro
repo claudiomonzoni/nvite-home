@@ -18,57 +18,69 @@ import Faq from "../components/Faq.astro";
     description="<b>Invitaciones digitales</b> con todo lo que necesitas: cuentas regresivas, confirmaciones de asistencia, etc... y un práctico panel para organizar a tus invitados sin esfuerzo."
   />
 
-  <div class="grid contenido" id="choro">
-    <h2>Invitar, no tiene que ser complicado.</h2>
-    <p>
-      Invitaciones en papel que se pierden, listas de invitados difíciles de
-      gestionar, invitados perdidos... <b> <br />¡Basta de estrés!</b>
-    </p>
-    <p>
-      Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados,
-      edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
-    </p>
+  <div class="grid contenido">
+    <div id="choro">
+      <div id="info">
+        <div class="bande">
+          <h2>Invitar, no tiene que ser complicado.</h2>
+          <p>
+            Invitaciones en papel que se pierden, listas de invitados difíciles
+            de gestionar, invitados perdidos... <b> <br />¡Basta de estrés!</b>
+          </p>
+          <p>
+            Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados,
+            edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
+          </p>
+        </div>
+      </div>
+      <div id="video-home">
+        <video preload="metadata" autoplay loop>
+          <source
+            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1737046817/pantalla-sitio_web.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
   </div>
 
   <div class="grid contenido">
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="fácil"
+        texto="Agrega tus <b>invitados</b> de manera fácil."
+        icono="/ico-addInvitado.svg"
+        fondo="/fondo-nvite-caracteristicas-3.png"
+        colorBg="#FFF1E1"
+      />
 
-    
-    <div id="conteCaracteristicas" >
       <Caracteristicas
-      encabezado="fácil"
-      texto="Agrega tus <b>invitados</b> de manera fácil."
-      icono="/ico-addInvitado.svg"
-      fondo="/fondo-nvite-caracteristicas-3.png"
-      colorBg="#FFF1E1"
+        encabezado="rápido"
+        texto="Envia tu invitación con un <b>solo clic.</b>"
+        icono="/ico-rapido.svg"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+        colorBg="#FFF1E1"
       />
-      
+
       <Caracteristicas
-      encabezado="rápido"
-      texto="Envia tu invitación con un <b>solo clic.</b>"
-      icono="/ico-rapido.svg"
-      fondo="/fondo-nvite-caracteristicas-2.png"
-      colorBg="#FFF1E1"
+        encabezado="útil"
+        texto="<b>Organiza</b> todo en un solo lugar."
+        icono="/ico-organiza.svg"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#FFF1E1"
       />
-      
+
       <Caracteristicas
-      encabezado="útil"
-      texto="<b>Organiza</b> todo en un solo lugar."
-      icono="/ico-organiza.svg"
-      fondo="/fondo-nvite-caracteristicas-4.png"
-      colorBg="#FFF1E1"
-      />
-      
-      <Caracteristicas
-      encabezado="único"
-      texto="Invitaciones con <b>estilo.</b>"
-      icono="/ico-tabletas.svg"
-      fondo="/fondo-nvite-caracteristicas-4.png"
-      colorBg="#FFF1E1"
+        encabezado="único"
+        texto="Invitaciones con <b>estilo.</b>"
+        icono="/ico-tabletas.svg"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#FFF1E1"
       />
     </div>
   </div>
-    
-    <!-- <section class="grid contenido">
+
+  <!-- <section class="grid contenido">
       <div id="video">
         <iframe
         width="560"
