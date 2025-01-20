@@ -5,12 +5,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
-  const[switchConfirmado, setSwitchConfirmado] = useState(false);
+  const [switchConfirmado, setSwitchConfirmado] = useState(false);
 
   useEffect(() => {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
-    const btnSwitch = document.getElementById("confirmado");
+    const btnSwitch = document.getElementById("switch");
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
@@ -27,6 +27,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
           setInvitado(json[0].nombre);
           setPases(json[0].pases);
           setId(json[0].id);
+          setSwitchConfirmado(json[0].confirmado);
         });
 
       const pasesInput = document.querySelector("#Confipases");
@@ -64,6 +65,36 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     } catch (error) {
       console.log(error);
     }
+
+    //Asistencia------------------------------------------------------------------------------------------------------
+
+    btnSwitch.addEventListener("click", async (e) => {
+      try {
+        console.log(e.target.checked);
+        const requestBody = {
+          confirmado: e.target.checked,
+          // noAsiste: formData.get("noAsiste") === "on",
+        };
+
+        const request = await fetch(`/api/${id}.json`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!request.ok) {
+          const errorText = await request.text();
+          throw new Error(
+            `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
+          );
+        }
+      } catch (error) {
+        throw new Error("Error confirmando.");
+      }
+    });
+    //Asistencia------------------------------------------------------------------------------------------------------
   }, [id]);
   return (
     <>
@@ -90,13 +121,17 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     ""
                   ) : (
                     <>
-                    {/* <div className={estilo.conteCheck}>
-                    <p>Si vamos</p>
-                      <label className={estilo.switch}>
-                        <input type="checkbox" id="switch"  /> 
-                        <span className={estilo.slider}></span>
-                      </label>
-                    </div> */}
+                      <div className={estilo.conteCheck}>
+                        <p>Si vamos</p>
+                        <label className={estilo.switch}>
+                          <input
+                            type="checkbox"
+                            id="switch"
+                            // checked={switchConfirmado}
+                          />
+                          <span className={estilo.slider}></span>
+                        </label>
+                      </div>
 
                       <label for="pases">¿Cuántos pases usaran?</label>
                       <select name="pases" id="Confipases" required>
