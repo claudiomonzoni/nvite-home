@@ -127,7 +127,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                           <input
                             type="checkbox"
                             id="switch"
-                            // checked={switchConfirmado}
+                            checked={switchConfirmado}
                           />
                           <span className={estilo.slider}></span>
                         </label>
