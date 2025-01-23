@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
+import { set } from "astro:schema";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
@@ -83,7 +84,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
           },
           body: JSON.stringify(requestBody),
         });
-
+        // setSwitchConfirmado(requestBody.confirmado);
         if (!request.ok) {
           const errorText = await request.text();
           throw new Error(

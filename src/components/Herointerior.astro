@@ -1,0 +1,202 @@
+---
+// @ts-ignore
+import { Picture } from "astro:assets";
+import Btn from "./Btn.astro";
+
+interface Props {
+  h1: string;
+  Spanh1: string;
+  description: string;
+  imagen?: string;
+  fondo: string;
+}
+const { description, h1, imagen, fondo, Spanh1 } = Astro.props;
+
+import { Icon } from "astro-icon/components";
+console.log(fondo)
+---
+
+<section class="grid pantalla-der">
+  <div id="hero">
+    <div class="izq anime">
+      <div class="bandeja anime">
+        <h1>
+          <span set:html={Spanh1}></span> {h1}
+        </h1>
+        <p set:html={description} />
+        <div class="cta">
+          <Btn
+            liga="#precios"
+            texto="Ver invitaciones"
+            claro={false}
+            clases="btn-oscuro"
+          >
+            <Icon name="mdi:chevron-double-down" size={25} />
+          </Btn>
+          <p>Más de 10 años de experiencia</p>
+        </div>
+        <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
+      </div>
+    </div>
+
+    <div class="der anime">
+      <!-- <Picture src={cover} alt="Invitaciones digitales para eventos" />
+        -->
+      <picture>
+        <source
+          srcset="/invitaciones-digitales-cover-nvitacines.webp"
+          media="(min-width: 479px)"
+        />
+        <source
+          srcset="/invitaciones-digitales-cover-nvitacines-cel.webp"
+          media="(max-width: 479px)"
+        />
+        <img
+          src="/invitaciones-digitales-cover-nvitacines.webp"
+          alt="nvitaciones digitales para eventos bodas y quince años"
+        />
+      </picture>
+    </div>
+  </div>
+</section>
+
+<style lang="scss" define:vars={{fondo}}>
+  @import "../estilos/_variables.scss";
+
+  #hero {
+    background:var(--fondo);
+    border-top-left-radius: $margen-min;
+    border-bottom-left-radius: $margen-min;
+    @include cel {
+      border-radius: 1.5rem;
+    }
+    display: flex;
+    h1 {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      color: white;
+      font-size:clamp(5rem, 6vw, 8rem);
+      line-height: .6em;
+      text-align:left;
+      
+      span {
+        flex: 1 0 100%;
+          color: $primario;
+          font-size:clamp(1.5rem, 1.3vw, 2rem);
+          font-weight: 100;
+      }
+    }
+    p {
+      margin: $margen-cel 0;
+    }
+    @extend .sombra;
+    .bandeja {
+      width: fit-content;
+      max-width: 80%;
+    
+    }
+    .der,
+    .izq {
+      display: flex;
+    }
+    .izq {
+      padding: $margen;
+      justify-content: center;
+      align-items: center;
+      flex: 1 0 50%;
+      
+    }
+    .der {
+      justify-content: center;
+      align-items: center;
+      flex: 1 0 50%;
+      // background: url("/fondo-cover-nviteme-invitaciones-digitales.webp")
+      //   no-repeat;
+      // background-size: cover;
+      // background-position: 190% 0%;
+      overflow: hidden;
+      border-radius: $margen-min;
+      picture {
+        width: fit-content;
+        height: auto;
+        img {
+          object-fit: contain;
+          transform: translateY(-1rem);
+          @include cel {
+            transform: translateY(0);
+          }
+        }
+      }
+    }
+
+    @include cel {
+      flex-wrap: wrap;
+      .izq {
+        padding: $margen-cel;
+        text-align: center;
+        flex: 1 0 100%;
+      }
+      .der {
+        flex: 1 0 100%;
+      }
+    }
+  }
+  .cta {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    p {
+      font-size: 0.8rem;
+      color: $acento;
+    }
+    @include cel {
+      justify-content: center;
+      p {
+        margin: 0 !important;
+        font-size: 1rem;
+      }
+    }
+  }
+  #digitales {
+    color: $primario !important;
+    font-weight: 700;
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+</style>
+<!-- <script>
+  import SplitType from "split-type";
+  const encabezado = document.getElementById("nvitePalabras");
+
+  const remplazo = new SplitType(encabezado, {
+    types: "chars",
+  });
+
+  const timeout = setTimeout(() => {
+    eliminarTxt();
+  }, 2000);
+
+  function eliminarTxt() {
+    var index = 0;
+    const inter = setInterval(() => {
+      remplazo.chars[index++].classList.add("desapareceH1");
+
+      if (index >= remplazo.chars.length) {
+        clearInterval(inter);
+        mostrarTxt();
+      }
+    }, 50);
+  }
+
+  function mostrarTxt() {
+    const delay = setInterval(() => {
+      encabezado.classList.add("apareceH1");
+      encabezado.innerText = "Invita";
+      clearInterval(delay);
+    }, 600);
+    clearTimeout(timeout);
+  }
+</script> -->
