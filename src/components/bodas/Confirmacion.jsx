@@ -68,32 +68,32 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
     //Asistencia------------------------------------------------------------------------------------------------------
 
-    btnSwitch.addEventListener("click", async (e) => {
-      try {
-        console.log(e.target.checked);
-        const requestBody = {
-          confirmado: e.target.checked,
-          // noAsiste: formData.get("noAsiste") === "on",
-        };
+    // btnSwitch.addEventListener("click", async (e) => {
+    //   try {
+    //     console.log(e.target.checked);
+    //     const requestBody = {
+    //       confirmado: e.target.checked,
+    //       // noAsiste: formData.get("noAsiste") === "on",
+    //     };
 
-        const request = await fetch(`/api/${id}.json`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        });
+    //     const request = await fetch(`/api/${id}.json`, {
+    //       method: "PATCH",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(requestBody),
+    //     });
 
-        if (!request.ok) {
-          const errorText = await request.text();
-          throw new Error(
-            `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
-          );
-        }
-      } catch (error) {
-        throw new Error("Error confirmando.");
-      }
-    });
+    //     if (!request.ok) {
+    //       const errorText = await request.text();
+    //       throw new Error(
+    //         `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
+    //       );
+    //     }
+    //   } catch (error) {
+    //     throw new Error("Error confirmando.");
+    //   }
+    // });
     //Asistencia------------------------------------------------------------------------------------------------------
   }, [id]);
   return (
@@ -121,6 +121,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     ""
                   ) : (
                     <>
+                      {/*
                       <div className={estilo.conteCheck}>
                         <p>Si vamos</p>
                         <label className={estilo.switch}>
@@ -132,6 +133,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                           <span className={estilo.slider}></span>
                         </label>
                       </div>
+                      */}
+
 
                       <label for="pases">¿Cuántos pases usaran?</label>
                       <select name="pases" id="Confipases" required>
