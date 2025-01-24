@@ -1,16 +1,170 @@
 ---
+import { Icon } from "astro-icon/components";
+import Btn from "../components/Btn.astro";
+import Caracteristicas from "../components/Caracteristicas.astro";
 import Herointerior from "../components/Herointerior.astro";
 import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
- 
-
+import BannerGeneral from "../components/BannerGeneral.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de bodas.">
+  <div class="grid contenido">
+    <Nav />
+  </div>
 
-    <div class="grid contenido">
-        <Nav />
-      </div>
+  <Herointerior
+    Spanh1="<b>Invitaciones</b> de"
+    h1="bodas"
+    description="Tu bodas es especial, tus invitados son especiales, tus <b>invitaciones</b> también lo tienen que ser"
+    fondo="#ffce95"
+    imagen="/Nvitaciones-invitaciones-digitales-bodas.webp"
+    imagencel="/Nvitaciones-invitaciones-digitales-bodas-cel.webp"
+  />
 
-      <Herointerior Spanh1="<b>Invitaciones</b> de" h1="bodas" description="Tu bodas es especial, tus invitados son especiales, tus <b>invitaciones</b> también lo tienen que ser" fondo="#ffce95" />
+
+
+  <div class="grid contenido">
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="Administra"
+        texto="Agrega, borra y edita tus invitados."
+        icono="/ico-addInvitado.svg"
+        fondo="/fondo-nvite-caracteristicas-3.png"
+        colorBg="#fff"
+      />
+
+      <Caracteristicas
+        encabezado="Envia"
+        texto="Por whatsapp, correo o redes sociales."
+        icono="/ico-rapido.svg"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+        colorBg="#fff"
+      />
+
+      <Caracteristicas
+        encabezado="Recibe"
+        texto="Confirmaciones y mensajes de tus invitados."
+        icono="/ico-organiza.svg"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#fff"
+      />
+
+      <Caracteristicas
+        encabezado="Ilimitado"
+        texto="Envia a todos tus invitados sin límite."
+        icono="/ico-tabletas.svg"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#fff"
+      />
+    </div>
+  </div>
+
+  <section class="grid contenido">
+    <p class="intro">
+      Una invitación que refleje el amor y la emoción de ese día tan especial.
+      En nvitaciones.com, te ayudamos a crear <b
+        >invitaciones digitales únicas</b
+      >, elegantes y personalizadas que dejarán una impresión inolvidable en tus
+      invitados.
+    </p>
+  </section>
+  <section class="grid contenido" id="colores">
+<h1>Colores</h1>
+<p>Elige la paleta de colores que mas te guste o envíanos los colores de tu evento para que tus invitaciones convienen a la perfección.</p>
+<div id="bandejacolor">
+  <div class="item">
+    <h3>Invierno</h3>
+    <img src="/invierno.webp" alt="invitaciones de bodas invierno / Nvitaciones.com">
+  </div>
+  <div class="item">
+    <h3>Primavera</h3>
+    <img src="/primavera.webp" alt="invitaciones de bodas primavera / Nvitaciones.com">
+  </div>
+  <div class="item">
+    <h3>Otoño</h3>
+    <img src="/otono.webp" alt="invitaciones de bodas otoño / Nvitaciones.com">
+  </div>
+  <div class="item">
+    <h3>Verano</h3>
+    <img src="/otono.webp" alt="invitaciones de bodas verano / Nvitaciones.com">
+  </div>
+</div>
+
+  </section>
+
+
+
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu invitación de <b>Nvita:</b>"
+      texto={`
+    <ul>
+    <li><b>Trato personalizado</b> durante y después de tu compra</li>
+    <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> después de tu compra</li>
+    <li>
+    Acceso a un <b>panel de invitados</b> para tener control total de tus
+    invitaciones
+    </li>
+        <li>Tu invitación, sin importar la versión, <mark>tiene envíos ilimitados</mark></li>
+        <li>
+        Tu invitación queda en línea <b>hasta 1 semana</b> después de la fecha de tu
+        evento
+        </li>
+        <li>
+        Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+        </li>
+        </ul>
+        <small>*Panel de invitados no aplica en la versión "basic"</small>
+        <br>
+        `}
+      tema="terciario"
+      icono="mdi:deal"
+      urlImagen="../assets/home/gale/recibes.webp"
+      margenAbajo={true}
+    >
+      <Btn
+        liga="#formu"
+        texto="Obtén tu invitación"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="bag" size={25} />
+      </Btn>
+    </>
+  </div>
+
+  <Footer />
 </Layout>
+
+<style lang="scss">
+  @import "../estilos/bodas/_variables.scss";
+
+  .intro {
+    line-height: 1.1em;
+    text-align: center;
+    font-size: clamp(1.3rem, 1.7vw, 2.7rem);
+    margin: $margen $margen-min;
+    @extend .sombra;
+  }
+  #bandejacolor{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: $margen-cel;
+    h3{
+      color:$acento;
+      padding: 0;
+      
+    }
+    .item{
+      flex: 1;
+      
+    }
+  }
+</style>
