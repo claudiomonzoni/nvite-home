@@ -1,0 +1,230 @@
+---
+// tipo se refiere al tipo de Regalos, si es mesas, efectivo o transferencia
+interface Props {
+  frase: string;
+  beneficiario?: string;
+  banco?: string;
+  cuenta?: string;
+  tipo: Array<string>;
+  mesas?: Array<any>;
+}
+const { frase, beneficiario, banco, cuenta, tipo, mesas } = Astro.props;
+import { Icon } from "astro-icon/components";
+// import Btn from "./Btn.astro";
+// import Encabezados from "./Encabezados.astro";
+import Anchor from "../comunes/Anchor.astro";
+---
+
+<div id="bandeja">
+  <Icon name={"mdi:wallet-giftcard"} size={40} />
+  <h2>Regalos</h2>
+  <p set:html={frase} />
+  {
+    tipo.map((item) =>
+      item === "mesa" ? (
+        <div id="regalo">
+          <h2>Mesa de regalos</h2>
+         {
+          mesas.map((mesa) => (
+          <Anchor
+            url={mesa.url}
+            id={"estilo"}
+            clases={"large"}
+            conBorde={false}
+            redondo={true}
+            sombra={false}
+            tema={"primario"}
+            texto={mesa.titulo}
+          />
+          ))
+         }
+       
+        </div>
+      ) : item === "efectivo" ? (
+        <div id="lluvia">
+          <h3>Lluvia de sobres</h3>
+          <p>
+            Preferimos que los presentes que deseen hacernos sean en efectivo,
+            los cuales podrán colocar en un sobre
+          </p>
+        </div>
+      ) : item === "transferencia" ? (
+        <div id="transferencias">
+          <h3>Transferencias:</h3>
+          <ul>
+            <li>
+              <b>Beneficiario</b>: {beneficiario}
+            </li>
+            <li>
+              <b>Banco</b>: {banco}
+            </li>
+            <li>
+              <b>Cuenta</b>: {cuenta}
+            </li>
+          </ul>
+        </div>
+      ) : null
+    )
+  }
+</div>
+<style lang="scss">
+  @import "../../estilos/bodas/_variables.scss";
+  h3 {
+    padding-bottom: 0 !important;
+    margin: 0;
+  }
+  #regalo {
+    h2 {
+      color: white;
+      border-bottom: 1px solid white;
+      margin-bottom: $margen-min;
+      padding-bottom: $margen-min;
+    }
+    margin-top: $margen;
+    padding: $margen;
+    background: url("/bg-floral-regalos-izq.svg") var(--primario);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-blend-mode: color-burn;
+    color: white;
+    text-align: center;
+    svg {
+      max-width: 2.5rem;
+      height: auto;
+      margin: 0 auto;
+    }
+    border-radius: $radio;
+    @extend .sombra;
+  }
+  #lluvia {
+    h3 {
+      color: var(--primario);
+      font-size: clamp(2.2rem, 1.5vw, 2rem);
+    }
+    p{
+        color: var(--primario);
+        font-size: clamp(1.5rem, 1.5vw, 1.8rem);
+    }
+    background: url("/bg-floral-regalos-der.svg") var(--terciario);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: color-burn;
+
+    margin: $margen-cel 0;
+    padding: $margen $margen-cel;
+    text-align: center;
+    border-radius: $radio;
+    @extend .sombra;
+  }
+  #transferencias {
+    border-radius: $radio;
+    @extend .sombra;
+    h3 {
+      color: var(--primario);
+      font-size: clamp(2.2rem, 1.5vw, 2rem);
+    }
+    b {
+      color: var(--terciario);
+    }
+    ul {
+      text-align: left;
+    }
+    padding: $margen $margen-min;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $margen-cel;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: $margen-cel;
+    background: url("/bg-floral-regalos-der.svg") var(--acento);
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    background-blend-mode: color-burn;
+    color: var(--primario);
+  }
+  #regalo,
+  #lluvia,
+  #transferencias {
+    @include cel {
+      // background-size: 70%;
+      // background-repeat: repeat-y;
+      background-size: cover;
+      background-blend-mode: soft-light;
+    }
+  }
+
+  #bandeja {
+    margin: 0 auto;
+    max-width: 70%;
+    padding-bottom: $margen;
+    text-align: center;
+    @include cel {
+      max-width: 100%;
+      padding: 0;
+      padding-bottom: $margen;
+    }
+  }
+</style>
+<!-- <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+  const mm = gsap.matchMedia();
+
+  mm.add("(min-width: 800px)", () => {
+    // desktop setup code here...
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#regalo",
+        start: "top 70%",
+        end: "bottom 60%",
+      },
+    });
+    tl.from("#regalo", {
+      ease: "power2.out",
+      opacity: 0,
+      duration: 1,
+      x: -60,
+    });
+    tl.from("#transferencias", {
+      opacity: 0,
+      ease: "power2.out",
+      delay: 0.3,
+    });
+    tl.from("#transferencias > * ", {
+      ease: "power2.out",
+      opacity: 0,
+      stagger: 0.2,
+    });
+  });
+
+  mm.add("(max-width: 799px)", () => {
+    // mobile setup code here...
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#regalo",
+        start: "top 80%",
+        end: "bottom 40%",
+        scrub: true,
+      },
+    });
+    tl.from("#regalo", {
+      ease: "power2.out",
+      opacity: 0,
+      y: 60,
+    });
+    tl.from("#transferencias", {
+      opacity: 0,
+      ease: "power2.out",
+      delay: 0.3,
+    });
+    tl.from("#transferencias > * ", {
+      ease: "power2.out",
+      opacity: 0,
+      stagger: 0.2,
+    });
+  });
+</script> -->

@@ -1,0 +1,200 @@
+---
+version: plus
+titulo: Boda de Edith y Enrique
+extracto: Edith Berenice Jiménez Cuevas y Enrique Isaac Apaez Moya
+descripcion: Te invitamos a nuestra boda, donde celebraremos el amor que nos une.
+slug: edithyenrique
+cover: /bodas/edithyenrique/edithyenrique.webp
+json: nvitaPlus
+whatsapp: 525542626232
+novios: Edith Berenice &  Enrique Isaac
+ellaIniciales: E
+elIniciales: E
+padres:
+  {
+    "mamaNovia": "Miriam Cuevas Romero",
+    "papaNovia": "Mario Jiménez Torres",
+    "mamaNovio": "Maribel Monica Moya Orozco ",
+    "papaNovio": "Simón Apaéz Amaro",
+  }
+fecha: 2025-05-25
+vestimenta: Formal casual
+frase_amor: Con alegría y emoción, queremos compartir con ustedes un momento muy especial para nosotros. El amor que nos une nos ha llevado a tomar la decisión de unir nuestras vidas para siempre. Es por eso que con todo nuestro corazón, los invitamos a celebrar con nosotros el día en que comenzaremos un nuevo capítulo juntos.
+frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
+# beneficiario: Elena Ramirez
+# banco: Banco Santander
+# cuenta: 123456789
+consideraciones:
+  [
+    "Queremos que sea una celebración íntima y especial, por eso hemos limitado la lista de invitados, ¡Agradecemos mucho tu apoyo!",
+    "La ceremonia religiosa comienza a las 3:00pm, te agradecemos que llegues unos minutos antes para disfrutar juntos cada detalle",
+    "Color de vestimenta blanco, beige, naranja y traje de caballero azul reservado para el cortejo nupcial",
+    "Los hombres pueden usar un traje tradicional (no azul) con camisa en colores claros",
+    "Las mujeres pueden usar vestidos de cóctel, un traje de pantalón elegante o un vestido largo." 
+  ]
+ceremonia:
+  {
+    "lat": 19.028146786942596,
+    "lang": -98.82205364204178,
+    "hora": 3:00 P.M.,
+    "lugar": "<b>Santuario Dulce Nombre de Jesús de Tepetlixpa</b>. Av. México 52, Tepetlixpa, 56880 Tepetlixpa, Estado de México.",
+  }
+recepcion:
+  {
+    "lat": 18.821543,
+    "lang": -98.905247,
+    "hora": 5:00 P.M.,
+    "lugar": "<b>Jardín:</b> Calle Guayabos, 62824, Yecapixtla Morelos.",
+  }
+iterario: [
+    {
+      "titulo": "Misa",
+      "lugar": "Santuario Dulce Nombre de Jesús de Tepetlixpa.",
+      "hora": "3:00 P.M.",
+    },
+    {
+      "titulo": "Sesión fotográfica familiares y amigos",
+      #   "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
+      "hora": "4:00 P.M.",
+    },
+    {
+      "titulo": "Recepción",
+      #   "lugar": "Salón de eventos Hotel SunScape Ixtapa.",
+      "hora": "5:00 P.M.",
+    },
+    {
+      "titulo": "Comida",
+      #   "lugar": "Salón de eventos Hotel SunScape Ixtapa",
+      "hora": "6:00 P.M.",
+    },
+  ]
+tipoRegalo: [ "efectivo"]
+# mesaRegalos: [
+#     {
+#         "titulo": "Amazonnnn",
+#         "url": "https://www.amazon.com.mx/registries",   
+#     },
+#     {
+#         "titulo": "Mercado Libre",
+#         "url": "https://meli.uniko.co/Home",   
+#     },
+#     {
+#         "titulo": "Liverpool",
+#         "url": "https://mesaderegalos.liverpool.com.mx",   
+#     },
+# ]
+paleta: otono
+---
+
+import Encabezados from "../../components/bodas/Encabezados.astro";
+import Audio from "../../components/bodas/Audio.astro";
+import Padres from "../../components/bodas/Padres.astro";
+import Pases from "../../components/bodas/Pases";
+import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
+import Frase from "../../components/bodas/Frase.astro";
+import Detalles from "../../components/bodas/Detalles.astro";
+import Galeria from "../../components/bodas/Galeria.astro";
+import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
+import Regalos from "../../components/comunes/Regalos.astro";
+import Contador from "../../components/bodas/Contador.astro";
+import Confirmacion from "../../components/bodas/Confirmacion";
+import Footer from "../../components/bodas/Footer.astro";
+import Itinerario from "../../components/bodas/Itinerario.astro";
+import Ventas from "../../components/comunes/Ventas.astro";
+
+{" "}
+
+<section class="grid contenido">
+  <Audio src="/bodas/edithyenrique/brunogaga" />
+</section>
+
+{" "}
+
+<section class="grid contenido">
+  <Padres
+    mamaNovia={frontmatter.padres.mamaNovia}
+    papaNovia={frontmatter.padres.papaNovia}
+    mamaNovio={frontmatter.padres.mamaNovio}
+    papaNovio={frontmatter.padres.papaNovio}
+  />
+</section>
+
+<Pases folder={frontmatter.json} client:load />
+
+{" "}
+
+<section class="grid contenido">
+  <Frase frase={frontmatter.frase_amor} />
+</section>
+
+    <section class="grid contenido">
+    <Encabezados texto="Nuestra Boda"/>
+    <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
+
+  </section>
+
+{" "}
+
+<section class="grid contenido">
+  <div class="bandejaLugares">
+    <BloqueMapa
+      encabezado="Ceremonia"
+      dir={frontmatter.ceremonia.lugar}
+      horario={frontmatter.ceremonia.hora}
+      lat={frontmatter.ceremonia.lat}
+      lng={frontmatter.ceremonia.lang}
+      mapName="mapa1"
+      icono="iglesia"
+    />
+    <BloqueMapa
+      encabezado="Recepción"
+      dir={frontmatter.recepcion.lugar}
+      horario={frontmatter.recepcion.hora}
+      lat={frontmatter.recepcion.lat}
+      lng={frontmatter.recepcion.lang}
+      mapName="mapa2"
+      icono="espantasuegras"
+    />
+  </div>
+</section>
+
+<section class="grid pantalla" id="BaseItinerario">
+  <Encabezados texto="Itinerario" />
+  <Itinerario listado={frontmatter.iterario} />
+</section>
+
+<section class="grid pantalla flex margen-arriba-abajo">
+  <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />
+  <Detalles encabezado="Codigo de vestir" vestimenta={frontmatter.vestimenta} />
+</section>
+
+<section class="grid contenido">
+
+  <Regalos
+      frase={frontmatter.frase_regalos}
+      beneficiario={frontmatter.beneficiario}
+      banco={frontmatter.banco}
+      cuenta={frontmatter.cuenta}
+      tipo={frontmatter.tipoRegalo}
+      mesas={frontmatter.mesaRegalos}
+    />
+</section>
+
+<section class="grid contenido">
+  <Contador fecha={frontmatter.fecha} />
+</section>
+<section class="grid pantalla">
+  <Galeria>
+    ![Boda de Edith y
+    Enrique](../../assets/bodas/edithyenrique/edithyenrique.webp)
+  </Galeria>
+</section>
+
+<Confirmacion
+  whatsapp={frontmatter.whatsapp}
+  dias_antes={7}
+  version={frontmatter.version}
+  client:only="react"
+/>
+
+{" "}
