@@ -18,7 +18,8 @@ import Anchor from "../comunes/Anchor.astro";
 <div id="bandeja">
   <Icon name={"mdi:wallet-giftcard"} size={40} />
   <h2>Regalos</h2>
-  <p set:html={frase} />
+  <!-- <p><b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.</p> -->
+  
   {
     tipo.map((item) =>
       item === "mesa" ? (
@@ -43,10 +44,7 @@ import Anchor from "../comunes/Anchor.astro";
       ) : item === "efectivo" ? (
         <div id="lluvia">
           <h3>Lluvia de sobres</h3>
-          <p>
-            Preferimos que los presentes que deseen hacernos sean en efectivo,
-            los cuales podrán colocar en un sobre
-          </p>
+          <p set:html={frase} />
         </div>
       ) : item === "transferencia" ? (
         <div id="transferencias">
@@ -69,6 +67,7 @@ import Anchor from "../comunes/Anchor.astro";
 </div>
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
+
   h3 {
     padding-bottom: 0 !important;
     margin: 0;
@@ -103,8 +102,9 @@ import Anchor from "../comunes/Anchor.astro";
     }
     p{
         color: var(--primario);
-        font-size: clamp(1.5rem, 1.5vw, 1.8rem);
+        font-size: clamp(1.4rem, 1.5vw, 1.8rem);
     }
+   
     background: url("/bg-floral-regalos-der.svg") var(--terciario);
     background-repeat: no-repeat;
     background-size: cover;
