@@ -7,6 +7,7 @@ import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
 import Footer from "../components/Footer.astro";
+import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de bodas.">
@@ -22,8 +23,6 @@ import Footer from "../components/Footer.astro";
     imagen="/Nvitaciones-invitaciones-digitales-bodas.webp"
     imagencel="/Nvitaciones-invitaciones-digitales-bodas-cel.webp"
   />
-
-
 
   <div class="grid contenido">
     <div id="conteCaracteristicas">
@@ -70,31 +69,77 @@ import Footer from "../components/Footer.astro";
       invitados.
     </p>
   </section>
+
+  <CaracteristicasGrid
+    matriz={[
+      {
+        imagen: "/bodas-caractaristicas.webp",
+        titulo: "Invitaciones <span>personalizadas</span>",
+        texto:
+          "Tus invitados sabrán lo especiales que son para ti, cada invitación se envía con su nombre y los pases asignados",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:email-check",
+        titulo: "Confirmación de asistencia",
+        texto:
+          "Ten control de los asistentes a tu evento, facilítale a tus invitados su confirmación.",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:
+          "Invitaciones ilimitadas, envialas a todos tus amigos y seres queridos.",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:"Con toda la información necesaria para tu boda"
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:
+          "Cero estrés por buscar a tus invitados en persona",
+      },
+    ]}
+  />
+
   <section class="grid contenido" id="colores">
-<h1>Colores</h1>
-<p>Elige la paleta de colores que mas te guste o envíanos los colores de tu evento para que tus invitaciones convienen a la perfección.</p>
-<div id="bandejacolor">
-  <div class="item">
-    <h3>Invierno</h3>
-    <img src="/invierno.webp" alt="invitaciones de bodas invierno / Nvitaciones.com">
-  </div>
-  <div class="item">
-    <h3>Primavera</h3>
-    <img src="/primavera.webp" alt="invitaciones de bodas primavera / Nvitaciones.com">
-  </div>
-  <div class="item">
-    <h3>Otoño</h3>
-    <img src="/otono.webp" alt="invitaciones de bodas otoño / Nvitaciones.com">
-  </div>
-  <div class="item">
-    <h3>Verano</h3>
-    <img src="/otono.webp" alt="invitaciones de bodas verano / Nvitaciones.com">
-  </div>
-</div>
-
+    <h1>Colores</h1>
+    <p>
+      Elige la paleta de colores que mas te guste o envíanos los colores de tu
+      evento para que tus invitaciones convienen a la perfección.
+    </p>
+    <div id="bandejacolor">
+      <div class="item">
+        <h3>Invierno</h3>
+        <img
+          src="/invierno.webp"
+          alt="invitaciones de bodas invierno / Nvitaciones.com"
+        />
+      </div>
+      <div class="item">
+        <h3>Primavera</h3>
+        <img
+          src="/primavera.webp"
+          alt="invitaciones de bodas primavera / Nvitaciones.com"
+        />
+      </div>
+      <div class="item">
+        <h3>Otoño</h3>
+        <img
+          src="/otono.webp"
+          alt="invitaciones de bodas otoño / Nvitaciones.com"
+        />
+      </div>
+      <div class="item">
+        <h3>Verano</h3>
+        <img
+          src="/otono.webp"
+          alt="invitaciones de bodas verano / Nvitaciones.com"
+        />
+      </div>
+    </div>
   </section>
-
-
 
   <div class="grid contenido">
     <BannerGeneral
@@ -133,7 +178,7 @@ import Footer from "../components/Footer.astro";
       >
         <Icon name="bag" size={25} />
       </Btn>
-    </>
+    </BannerGeneral>
   </div>
 
   <Footer />
@@ -149,22 +194,25 @@ import Footer from "../components/Footer.astro";
     margin: $margen $margen-min;
     @extend .sombra;
   }
-  #bandejacolor{
-    display: flex;
-    flex-wrap: wrap;
+  #colores {
+    text-align: center;
+    padding-bottom: $margen;
+  }
+  #bandejacolor {
+    padding-top: $margen;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-bottom: $margen-cel;
-    h3{
-      color:$acento;
+    h3 {
+      color: $acento;
       padding: 0;
-      
     }
-    .item{
-      flex: 1;
-      
+    .item {
+      flex: 1 0 42%;
     }
   }
 </style>
