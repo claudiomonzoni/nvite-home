@@ -8,6 +8,7 @@ import Layout from "../layouts/Layout.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
 import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
+import Banner from "../components/Banner.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de bodas.">
@@ -180,6 +181,62 @@ import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
       </Btn>
     </BannerGeneral>
   </div>
+
+  <div id="precios" class="grid pantalla">
+    <Banner dondeEstoy="bodas" />
+  </div>
+
+  <section class="grid contenido">
+    <div class="flex">
+      <div class="fondo-formu">
+        <div class="bande">
+          <h2>Obtén tu invitación</h2>
+          <p>
+            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso para
+            que obtengas tu invitación.
+          </p>
+          <small
+            >Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b
+            ></small
+          >
+        </div>
+  
+        <div id="formu">
+          <form>
+            <!-- <h3>
+            <img src="/whatsapp.png" alt="logo whatsapp">
+           <b>whatsapp</b></h3> -->
+            <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" />
+            <label for="fecha">Fecha del evento</label>
+            <input type="date" name="fecha" id="fecha" />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="agrega un email valido"
+            />
+            <!-- <a href="#" id="empezar" class="desactivado"
+              ><img src="/whatsapp.png" alt="logo whatsapp" /> Hola <b>Aida</b></a
+            > -->
+            <Btn
+              liga="#"
+              id="empezar"
+              texto="<b>Hola</b> Aida"
+              clases="desactivado, btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:whatsapp" />
+            </Btn>
+            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <Footer />
 </Layout>
