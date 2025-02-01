@@ -9,6 +9,7 @@ import vercelServerless from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
+  base: "/",
   site: 'https://nvitaciones.com',
   integrations: [sitemap(), react(), mdx(), icon(), db()],
   output: "server",
