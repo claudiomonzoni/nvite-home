@@ -142,7 +142,7 @@ import Banner from "../components/Banner.astro";
     </div>
   </section>
 
-  <div class="grid contenido">
+  <div  class="grid contenido">
     <BannerGeneral
       encabezado="Recibes con tu invitación de <b>Nvita:</b>"
       texto={`
@@ -167,7 +167,7 @@ import Banner from "../components/Banner.astro";
         `}
       tema="terciario"
       icono="mdi:deal"
-      urlImagen="../assets/home/gale/recibes.webp"
+      urlImagen="../assets/home/gale/cover.png"
       margenAbajo={true}
     >
       <Btn
@@ -182,7 +182,7 @@ import Banner from "../components/Banner.astro";
     </BannerGeneral>
   </div>
 
-  <div id="precios" class="grid pantalla">
+  <div id="precios" class="grid contenido">
     <Banner dondeEstoy="bodas" />
   </div>
 
@@ -242,14 +242,13 @@ import Banner from "../components/Banner.astro";
 </Layout>
 
 <style lang="scss">
-  @import "../estilos/bodas/_variables.scss";
+  @use "../estilos/_variables.scss" as *;
 
   .intro {
     line-height: 1.1em;
     text-align: center;
     font-size: clamp(1.3rem, 1.7vw, 2.7rem);
     margin: $margen $margen-min;
-    @extend .sombra;
   }
   #colores {
     text-align: center;

@@ -220,7 +220,7 @@ import Btn from "./Btn.astro";
   }
 </div>
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @use "../estilos/_variables.scss" as *;
   h2 {
     color: $acento;
     font-size: clamp(2.2rem, 1.5vw, 2.7vw);
@@ -291,10 +291,9 @@ import Btn from "./Btn.astro";
         vertical-align: middle;
       }
     }
-    // &:last-child {
-      //   border: none;
-      // }
+    
       @include cel {
+        flex:1 0 100%;
         border-right: none;
         // border-bottom: solid 1px $primario;
         padding: 2rem 1.5rem;
