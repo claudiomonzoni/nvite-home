@@ -32,6 +32,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     const rutasPublicas = [
         /^\/$/,                              // Página principal
+        /^\/bodas$/,                        
+        /^\/quince$/,                      
         /^\/api\/getInvitados\.json$/,       // Ruta específica de la API
         /^\/panel\/ingresar$/,               // Página de ingreso
         /^\/panel\/registro$/,               // Página de registro
