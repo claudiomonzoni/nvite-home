@@ -19,7 +19,8 @@ console.log(url)
         <li><a href="/" class="selected">Regresar</a></li>
       ) : (
       
-        <li><a href="#precios" class="selected">Bodas</a></li>
+        // <li><a href="#precios" class="selected">Bodas</a></li>
+        <li><a href="/bodas">Bodas</a></li>
         <li><a href="#precios">15 años</a></li>
         <li><a href="#cumples">Cumpleaños</a></li>
         <li>Eventos</li>
@@ -43,10 +44,13 @@ console.log(url)
 <style lang="scss">
   @import "../estilos/_variables.scss";
   #logo {
+
     width: 15vw;
+    transform: translateY(-0.5rem);
     @include cel {
       width: 70vw;
       padding-top: 1rem;
+      transform: translateY(0rem);
     }
   }
 

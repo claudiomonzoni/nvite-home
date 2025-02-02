@@ -42,5 +42,11 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
         color: white;
         font-weight: 700;
     }
+    .btn-bordes{
+        @include btn;
+        border: 1px solid $secundario;
+        color: $secundario;
+        font-weight: 700;
+    }
 
 </style>

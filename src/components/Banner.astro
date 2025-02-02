@@ -1,4 +1,6 @@
 ---
+const{dondeEstoy} = Astro.props
+
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 ---
@@ -8,7 +10,7 @@ import Btn from "./Btn.astro";
     <div class="bande">
       <article class="lista">
         <small>Bodas & 15 Años</small>
-        <h2>Nvita Basic</h2>
+        <h2>Nvita Esencial</h2>
         <div class="precio">$740</div>
         <ul>
           <li>Detalles del evento</li>
@@ -19,18 +21,41 @@ import Btn from "./Btn.astro";
           <li>Formulario <b>sencillo</b> de confirmación</li>
         </ul>
         <div class="conteBtn">
-          <Btn
-            liga="/bodas/nvita-bodas-basic"
+        
+          {
+            dondeEstoy === 'home' ? (
+            <Btn
+            liga="/bodas/nvita-bodas-esencial"
             clases="btn-claro"
             texto="Ver Bodas"
             claro={true}
           />
           <Btn
-            liga="/quince/nvita-quince-basic"
+            liga="/quince/nvita-quince-esencial"
             clases="btn-claro"
             texto="Ver 15 Años"
             claro={true}
           />
+          ) : (
+
+            dondeEstoy === "bodas"  ? (
+                <Btn
+            liga="/bodas/nvita-bodas-esencial"
+            clases="btn-claro"
+            texto="Ver Nvitacion Esencial"
+            claro={true}
+          />
+            ):(
+            <Btn
+            liga="/quince/nvita-quince-esencial"
+            clases="btn-claro"
+            texto="Ver Nvitacion Esencial"
+            claro={true}
+          />
+            )
+          )
+          }
+         
         </div>
 
         <Btn
@@ -46,8 +71,8 @@ import Btn from "./Btn.astro";
       <article class="lista destacada">
         <div class="bandeDestacada">
           <small>Bodas & 15 Años</small>
-          <h2>
-            Nvita Regular
+          <h2> 
+            Nvita Clásica
             <div id="masvendido">Más vendida</div>
           </h2>
           <div class="precio">$990</div>
@@ -66,18 +91,40 @@ import Btn from "./Btn.astro";
           </ul>
 
           <div class="conteBtn">
-            <Btn
-              liga="/bodas/nvita-bodas-reg?id=1&uid=1"
+            {
+              dondeEstoy === 'home' ? (
+              <Btn
+              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
               clases="btn-claro"
               texto="Ver Bodas"
               claro={true}
             />
             <Btn
-              liga="/quince/nvita-quince-reg?id=1&uid=1"
+              liga="/quince/nvita-quince-clasica?id=1&uid=1"
               clases="btn-claro"
               texto="Ver 15 Años"
               claro={true}
             />
+            ) : (
+
+              dondeEstoy === "bodas"  ? (
+              <Btn
+              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Nvitacion Clásica"
+              claro={true}
+            />
+              ):(
+              <Btn
+              liga="/quince/nvita-quince-clasica?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Nvitacion Clásica"
+              claro={true}
+            />
+              )
+            )}
+          
+           
           </div>
 
           <Btn
@@ -93,7 +140,7 @@ import Btn from "./Btn.astro";
 
       <article class="lista">
         <small>Bodas & 15 Años</small>
-        <h2>Nvita Plus</h2>
+        <h2>Nvita Lux</h2>
         <div class="precio">$1290</div>
         <ul>
           <li><b>Panel de invitados</b></li>
@@ -111,18 +158,39 @@ import Btn from "./Btn.astro";
           <li>Formulario de confirmación</li>
         </ul>
         <div class="conteBtn">
-          <Btn
-            liga="/bodas/nvita-bodas-plus?id=1&uid=1"
-            clases="btn-claro"
-            texto="Ver Bodas"
-            claro={true}
-          />
-          <Btn
-            liga="/quince/nvita-quince-plus?id=1&uid=1"
-            clases="btn-claro"
-            texto="Ver 15 Años"
-            claro={true}
-          />
+          {
+            dondeEstoy === 'home' ? (
+              <Btn
+              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Bodas"
+              claro={true}
+            />
+            <Btn
+              liga="/quince/nvita-quince-lux?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver 15 Años"
+              claro={true}
+            />
+            ) : (
+              dondeEstoy === "bodas"  ? (
+              <Btn
+              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
+              clases="btn-claro"
+              texto="Ver Nvitacion Lux"
+              claro={true}
+            />
+              ):(
+              <Btn
+              liga="/quince/nvita-quince-Lux?id=1&uid=1"
+              clases="btn-claro"  
+              texto="Ver Nvitacion Lux"
+              claro={true}
+            />
+              )
+            )
+          }
+         
         </div>
 
         <Btn
@@ -136,15 +204,23 @@ import Btn from "./Btn.astro";
       </article>
     </div>
   </div>
-  <div class="izq">
+  {
+    dondeEstoy === 'home' ? (
+
+    <div class="izq">
     <img
       src="novios-cover-invitacion-digital-nvite.webp"
       alt="Invitaciones de bodas"
     />
   </div>
+  
+    ) : (
+      ''
+    )
+  }
 </div>
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @use "../estilos/_variables.scss" as *;
   h2 {
     color: $acento;
     font-size: clamp(2.2rem, 1.5vw, 2.7vw);
@@ -205,6 +281,9 @@ import Btn from "./Btn.astro";
     flex: 1;
     // border-right: solid 1px $primario;
     padding: 0 1.5rem;
+    @include hd{
+      padding: 0 3rem;
+    }
     a {
 
       justify-self: flex-start;
@@ -212,10 +291,9 @@ import Btn from "./Btn.astro";
         vertical-align: middle;
       }
     }
-    // &:last-child {
-      //   border: none;
-      // }
+    
       @include cel {
+        flex:1 0 100%;
         border-right: none;
         // border-bottom: solid 1px $primario;
         padding: 2rem 1.5rem;

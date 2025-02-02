@@ -261,6 +261,8 @@ b {
 .desactivado {
   pointer-events: none;
 }
+
+
 @mixin liga($conBorde, $redondo) {
   margin: $margen-min 0;
   color: white;

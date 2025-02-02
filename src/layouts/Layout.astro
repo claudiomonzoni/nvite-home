@@ -4,13 +4,14 @@ interface Props {
 }
 
 const { title } = Astro.props;
+import { ClientRouter } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 import Analytics from '@vercel/analytics/astro'
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" >
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content=`Invitacion digitales de Bodas y 15 años nvitaciones.com / ${title}` />
@@ -48,7 +49,7 @@ import Analytics from '@vercel/analytics/astro'
         }
       }
       </script>
-      
+      <ClientRouter />
   </head>
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
 <script>
@@ -83,7 +84,7 @@ import Analytics from '@vercel/analytics/astro'
   &noscript=1"/>
   </noscript>
   <!-- End Facebook Pixel Code -->
-  <body>
+  <body >
 
     <slot />
     <Analytics />

@@ -10,62 +10,55 @@ interface Props {
 }
 const { costo, version, stripe, tipo } = Astro.props;
 const url = Astro.url.origin;
-const tipos = ["plus", "reg", "basic"];	
+const tipos = ["lux", "clasica", "esencial"];	
 
 ---
 
-<div class="grid contenido">
+<div class="grid pantalla">
   <div class="flex" id="bloqueventas">
     <div class="info">
-      <h3><b>Nvitación</b> de {tipo} / <span> {version === "reg" ? "regular" : version}</span></h3>
+      <h3><b>Nvitación</b> de {tipo} / <span> {version === "clasica" ? "clasica" : version}</span></h3>
       <Anchor
       url={stripe}
       id={"estilo"}
       clases={"large"}
       conBorde={false}
-      redondo={true}
+      redondo={false}
       sombra={true}
       tema={"secundario"}
       texto={`Comprar $${costo} MXN.`}
       />
 
+      <div id="whats">
+        <a href=`https://api.whatsapp.com/send/?phone=5217551132468&text=%20me%20contacto%20desde%20nvitaciones.com%20me%20interesa%20la%20invitación%20de%20${tipo}%20${version}` target="_blank"><Icon name={"whatsapp"} size={40} /> Contáctanos por whatsapp</a>
+      </div>
     </div>
-    <div id="whats">
-      <a href=`https://api.whatsapp.com/send/?phone=5217551132468&text=%20me%20contacto%20desde%20nvitaciones.com%20me%20interesa%20la%20invitación%20de%20${tipo}%20${version}` target="_blank"><Icon name={"whatsapp"} size={40} /> Tambien puedes contactarnos directamente para obtener esta invitación.</a>
-
       
     <div id="version">
-      <h4>Otras versiones de invitaciones de <b>{tipo}</b> </h4>
+      <h4>Conoces otras versiones de <b>Nvitaciones de {tipo}:</b> </h4>
       {
         tipos.map(
           (ver) => (
             ver !== version ? (
+              <div class="item">
+
               <Anchor
                 url={`${url}/${tipo}/nvita-${tipo}-${ver}?id=2`}
                 id={"estilo"}
                 clases={"large"}
-                conBorde={false}
-                redondo={true}
+                conBorde={true}
+                redondo={false}
                 sombra={false}
                 tema={"primario"}
-                texto={ver}
-              />
+                texto={`Nvitación ${ver}`}
+                />
+                </div>
             ) : null
           )
         )
       }
     </div>
 
-    <Anchor
-    url={"https://nvitaciones.com"}
-    id={"estilo"}
-    clases={"large"}
-    conBorde={true}
-    redondo={true}
-    sombra={false}
-    tema={"primario"}
-    texto={"regresar a inicio"}
-  />
 
   </div>
   </div>
@@ -81,25 +74,27 @@ const tipos = ["plus", "reg", "basic"];
 </script> -->
 
 <style lang="scss">
-  @import "../../estilos/_variables.scss";
+  @use "../../estilos/_variables.scss" as *;
   #bloqueventas {
-    background-color: #484f8c;
-    margin-top: $margen;
-    color: white;
+    background-color: $secundario;
+    margin: $margen 0;
+    padding: $margen $margen-cel;
+    color: $primario;
     min-height: 20vh;
     display: flex;
     flex-wrap: wrap;
-    border-radius: 1rem;
+
     justify-content: center;
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
     align-content: space-evenly;
-    padding: 2rem;
-    margin-bottom: 1rem;
     position: relative;
     .info{
         text-align: center;
+    }
+    .item {
+      padding: .5rem;
     }
     #version {
       flex: 1 0 100%;
@@ -109,7 +104,7 @@ const tipos = ["plus", "reg", "basic"];
     }
     h3 {
       span {
-        color: white;
+        color:$acento;
         font-weight: bold;
       }
     //   flex: 1 0 100%;
@@ -117,7 +112,7 @@ const tipos = ["plus", "reg", "basic"];
       justify-content: center;
       font-family: Montserrat, sans-serif;
       font-weight: 100;
-      color: #ffce95;
+      color: $primario;
     //   flex: 1 0 100%;
       text-align: center;
       padding: 0;
@@ -134,25 +129,17 @@ const tipos = ["plus", "reg", "basic"];
     }
   }
   #whats {
+    border-bottom: solid;
     a {
-      display: flex;
-      align-items: center;	
-      justify-content: center;
-      color: white;
+      vertical-align: middle;
+      color: $primario;
       margin: 1rem;
-      text-align: center;
-      svg{
-        margin-right: 0.5rem;
-      }
-      @include cel {
-        
-        svg{
-          width: 20rem;
-          margin-right: 0.5rem;
-        }
-      
-        text-align: center
-      };
+      text-decoration: underline;
+ 
+    }
+    svg {
+      vertical-align: middle;
+      margin-right: .5rem;
     }
   }
 </style>

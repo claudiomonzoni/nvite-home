@@ -18,14 +18,43 @@ import Anchor from "../comunes/Anchor.astro";
     <h2>Regalos</h2>
 
     <p set:html={frase} />
-    <Anchor url={"https://www.amazon.com.mx/registries"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Amazon"} />
-    <Anchor url={"https://meli.uniko.co/Home"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Marcado Libre"} />
-    <Anchor url={"https://mesaderegalos.liverpool.com.mx/"} id={"estilo"} clases={"large"} conBorde={false} redondo={true} sombra={false} tema={"primario"} texto={"Liverpool"} />
-    
+    <Anchor
+      url={"https://www.amazon.com.mx/registries"}
+      id={"estilo"}
+      clases={"large"}
+      conBorde={false}
+      redondo={true}
+      sombra={false}
+      tema={"primario"}
+      texto={"Amazon"}
+    />
+    <Anchor
+      url={"https://meli.uniko.co/Home"}
+      id={"estilo"}
+      clases={"large"}
+      conBorde={false}
+      redondo={true}
+      sombra={false}
+      tema={"primario"}
+      texto={"Marcado Libre"}
+    />
+    <Anchor
+      url={"https://mesaderegalos.liverpool.com.mx/"}
+      id={"estilo"}
+      clases={"large"}
+      conBorde={false}
+      redondo={true}
+      sombra={false}
+      tema={"primario"}
+      texto={"Liverpool"}
+    />
   </div>
   <div id="lluvia">
     <h3>Lluvia de sobres</h3>
-    <p>Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre</p>
+    <p>
+      Preferimos que los presentes que deseen hacernos sean en efectivo, los
+      cuales podrán colocar en un sobre
+    </p>
   </div>
   <div id="transferencias">
     <h3>Transferencias:</h3>
@@ -38,6 +67,7 @@ import Anchor from "../comunes/Anchor.astro";
 </div>
 <style lang="scss">
   @import "../../estilos/bodas/_variables.scss";
+
   #regalo {
     h2 {
       color: white;
@@ -61,22 +91,23 @@ import Anchor from "../comunes/Anchor.astro";
     border-radius: $radio;
     @extend .sombra;
   }
+
   #lluvia {
     h3 {
       color: var(--gris);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
-    background: url("/bg-floral-regalos-der.svg")  var(--terciario);
+    background: url("/bg-floral-regalos-der.svg") var(--terciario);
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: color-dodge;
-   
     margin: $margen-cel 0;
     padding: $margen $margen-cel;
     text-align: center;
     border-radius: $radio;
     @extend .sombra;
   }
+
   #transferencias {
     border-radius: $radio;
     @extend .sombra;
@@ -84,7 +115,6 @@ import Anchor from "../comunes/Anchor.astro";
       color: var(--terciario);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
-
     ul {
       text-align: left;
     }
@@ -97,12 +127,22 @@ import Anchor from "../comunes/Anchor.astro";
     text-align: center;
     margin-bottom: $margen-cel;
     background: url("/bg-floral-regalos-der.svg") var(--acento);
-background-position: top right;
+    background-position: top right;
     background-repeat: no-repeat;
     background-size: 40%;
     background-blend-mode: color-burn;
     color: var(--terciario);
   }
+
+  #regalo,
+  #lluvia,
+  #transferencias {
+    @include cel {
+      background-size: cover;
+      background-blend-mode: soft-light;
+    }
+  }
+
   #bandeja {
     margin: 0 auto;
     max-width: 70%;

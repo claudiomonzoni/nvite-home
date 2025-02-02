@@ -1,7 +1,7 @@
 @import "_variables.scss";
 h2 {
   padding-top: $margen-min;
-  font-size: clamp(3rem, 1.5vw, 2rem);
+  font-size: clamp(2.5rem, 1.5vw, 2rem);
   color: var(--primario);
 
 }
@@ -63,6 +63,7 @@ form {
   }
   @include cel {
     width: 100%;
+    text-align: center;
   }
 }
 svg {
@@ -113,6 +114,13 @@ svg {
   &::before{
     border-radius: 34px;
   }
+}
+
+.btn{
+  border-radius: $radio;
+}
+.btn-ancho{
+width: 100%;
 }
 
 .slider:before {

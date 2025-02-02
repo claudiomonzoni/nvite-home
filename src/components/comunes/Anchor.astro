@@ -18,3 +18,34 @@ const { clases, conBorde, redondo, sombra, tema, url, texto,  ...rest } = Astro.
   {...rest}>
   {texto}
 </a>
+
+<style lang="scss">
+  @use "../../estilos/_variables.scss" as *;
+
+  @mixin liga($conBorde, $redondo) {
+  margin: $margen-min 0;
+  color: white;
+  background: $acento;
+  padding: $margen-min $margen-cel;
+  @if $conBorde {
+    border: 1px solid $acento;
+    background: $secundario;
+    opacity: 0.8;
+    color: $primario;
+  }
+  @if $redondo {
+    border-radius: $radio;
+  }
+}
+
+.btn {
+  @include liga(false, false);
+}
+.con-borde {
+  @include liga(true, null);
+}
+.redondo{
+  @include liga(null, true);
+}
+
+</style>
