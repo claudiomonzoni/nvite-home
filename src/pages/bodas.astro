@@ -17,8 +17,6 @@ import Banner from "../components/Banner.astro";
     <Nav />
   </div>
 
-
-
   <Herointerior
     Spanh1="<b>Invitaciones</b> de"
     h1="bodas"
@@ -97,21 +95,19 @@ import Banner from "../components/Banner.astro";
       },
       {
         imagen: "mdi:infinity-box",
-        texto:"Con toda la información necesaria para tu boda"
+        texto: "Con <span>toda la información</span> necesaria para tu boda",
       },
       {
         imagen: "mdi:infinity-box",
-        texto:
-          "Cero estrés por buscar a tus invitados en persona",
+        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
       },
     ]}
   />
 
   <section class="grid contenido" id="colores">
-    <h1>Colores</h1>
+    <h2>Tu <b>invitación</b>, justo como la quieres</h2>
     <p>
-      Elige la paleta de colores que mas te guste o envíanos los colores de tu
-      evento para que tus invitaciones convienen a la perfección.
+      <b>Personaliza</b> tu invitación eligiendo entre cuatro opciones de colores o envíanos los tonos de tu evento para que combinen a la perfección.
     </p>
     <div id="bandejacolor">
       <div class="item">
@@ -119,6 +115,8 @@ import Banner from "../components/Banner.astro";
         <img
           src="/invierno.webp"
           alt="invitaciones de bodas invierno / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="item">
@@ -126,6 +124,8 @@ import Banner from "../components/Banner.astro";
         <img
           src="/primavera.webp"
           alt="invitaciones de bodas primavera / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="item">
@@ -133,19 +133,23 @@ import Banner from "../components/Banner.astro";
         <img
           src="/otono.webp"
           alt="invitaciones de bodas otoño / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
         />
       </div>
-      <div class="item">
+      <!-- <div class="item">
         <h3>Verano</h3>
         <img
           src="/otono.webp"
           alt="invitaciones de bodas verano / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
         />
-      </div>
+      </div> -->
     </div>
   </section>
 
-  <div  class="grid contenido">
+  <div class="grid contenido">
     <BannerGeneral
       encabezado="Recibes con tu invitación de <b>Nvita:</b>"
       texto={`
@@ -195,15 +199,16 @@ import Banner from "../components/Banner.astro";
         <div class="bande">
           <h2>Obtén tu invitación</h2>
           <p>
-            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso para
-            que obtengas tu invitación.
+            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso
+            para que obtengas tu invitación.
           </p>
           <small
-            >Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b
+            >Usa el formulario para hablar con nuestra asistente de <b
+              >whatsapp</b
             ></small
           >
         </div>
-  
+
         <div id="formu">
           <form>
             <!-- <h3>
@@ -254,11 +259,17 @@ import Banner from "../components/Banner.astro";
     margin: $margen $margen-min;
   }
   #colores {
+    padding-top: $margen;
     text-align: center;
     padding-bottom: $margen;
+    h2{
+      color: $primario;
+      b{
+        color: $acento;
+      }
+    }
   }
   #bandejacolor {
-    padding-top: $margen;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
@@ -268,10 +279,14 @@ import Banner from "../components/Banner.astro";
     margin-bottom: $margen-cel;
     h3 {
       color: $acento;
-      padding: 0;
+      padding: 0 0 $margen-min 0;
+      border-bottom: dashed .1rem $terciario;
     }
     .item {
-      flex: 1 0 42%;
+      padding: $margen;
+      @include cel {
+        padding: 0;
+      }
     }
   }
 </style>

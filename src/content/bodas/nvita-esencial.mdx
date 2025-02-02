@@ -1,29 +1,12 @@
 ---
-version: reg
-titulo: Nvita Regular muestra
-cover: /bodas/nvitaReg/cover-boda-reg.webp
-extracto: Muestra de la invitación de bodas nvita
-descripcion: Muestra de la invitación de bodas nvita, la invitación que tiene más de lo básico.
+version: esencial
+titulo: Nvita esencial muestra
+extracto: Muestra de la invitación de bodas nvita basic
+descripcion: Muestra de la invitación de bodas nvite basic, nuestra invitación mas accesible pero con lo básico necesario para tu invitación.
+slug: nvita-bodas-esencial
+cover: /bodas/nvitaPlus/cover.webp
 whatsapp: 8488493900
 novios : Elena & Marcos
-fecha: 2025-01-29
-consideraciones: ["No vestir de blanco","Favor de no llevar bebes"]
-vestimenta: Formal casual
-frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
-ceremonia: {
-    "lat":17.665128, 
-    "lgn":-101.597448,
-    "hora": 6:00 P.M.,
-    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)"
-    }
-recepcion: {
-    "lat":17.661152, 
-    "lgn":-101.603728,
-    "hora": 7:30 P.M.,
-    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro."
-    }
-slug: nvita-bodas-reg
-json: nvitaPlus
 ellaIniciales: E
 elIniciales: M
 padres: {
@@ -32,37 +15,45 @@ padres: {
   "mamaNovio":"Eloísa Martínez",
   "papaNovio":"Armando Hernández",
 }
-frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
+fecha: 2025-12-13
+vestimenta: Formal casual
+frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
+
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
-paleta: invierno
-
+consideraciones: ["No vestir de blanco","Favor de no llevar bebes"]
+ceremonia: {
+    "lat":17.665128, 
+    "lang":-101.597448,
+    "hora": 6:00 P.M.,
+    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)"
+    }
+recepcion: {
+    "lat":17.661152, 
+    "lang":-101.603728,
+    "hora": 7:30 P.M.,
+    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro."
+    }
+paleta: base
 ---
 
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Padres from "../../components/bodas/Padres.astro";
-import Pases from "../../components/bodas/Pases";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
-import Galeria from "../../components/bodas/Galeria.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
-import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
-import Confirmacion from "../../components/bodas/Confirmacion";
+import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Footer from "../../components/bodas/Footer.astro";
 import Ventas from "../../components/comunes/Ventas.astro"
-
 
 
 
  <section class="grid contenido">
 <Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>
 </section>
-
-
-<Pases folder={frontmatter.json} client:load />
 
 
   <section class="grid contenido">
@@ -81,7 +72,7 @@ import Ventas from "../../components/comunes/Ventas.astro"
         dir={frontmatter.ceremonia.lugar}
         horario={frontmatter.ceremonia.hora}
         lat={frontmatter.ceremonia.lat}
-        lng={frontmatter.ceremonia.lgn}
+        lng={frontmatter.ceremonia.lang}
         mapName="mapa1"
         icono="iglesia"
       />
@@ -90,7 +81,7 @@ import Ventas from "../../components/comunes/Ventas.astro"
         dir={frontmatter.recepcion.lugar}
         horario={frontmatter.recepcion.hora}
         lat={frontmatter.recepcion.lat}
-        lng={frontmatter.recepcion.lgn}
+        lng={frontmatter.recepcion.lang}
         mapName="mapa2"
         icono="espantasuegras"
       />
@@ -104,30 +95,12 @@ import Ventas from "../../components/comunes/Ventas.astro"
 </section>
 
 <section class="grid contenido">
-
-  <Regalos
-      frase={frontmatter.frase_regalos}
-      beneficiario={frontmatter.beneficiario}
-      banco={frontmatter.banco}
-      cuenta={frontmatter.cuenta}
-    />
-</section>
-
-<section class="grid contenido">
 <Contador fecha={frontmatter.fecha} />
 </section>
-<section class="grid pantalla">
-       <Galeria>
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp)
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda1.webp)
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda3.webp)
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda4.webp)
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda5.webp)
-    </Galeria>
-</section>
 
 
-<Confirmacion whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only="react" />
+
+<ConfirmacionBasica whatsapp={frontmatter.whatsapp} dias_antes={7} version={frontmatter.version} client:only="react" />
 
 
-   <Ventas costo="990" stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX" version={frontmatter.version} tipo="bodas" />
+   <Ventas costo="740" stripe="https://buy.stripe.com/9AQ5mBdIwaY374s6os" version={frontmatter.version} tipo="bodas" />

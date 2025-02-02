@@ -26,7 +26,7 @@ const { matriz } = Astro.props;
             se envía con su nombre y los pases asignados
           </p>
           <Btn
-            liga="#comprar"
+            liga="#formu"
             texto="Saber más"
             claro={false}
             clases="btn-bordes"
@@ -39,6 +39,8 @@ const { matriz } = Astro.props;
         <img
           src="/bodas-caracteristicas.webp"
           alt="Invitaciones digitales bodas"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -48,21 +50,18 @@ const { matriz } = Astro.props;
       <p set:html={matriz[1].texto} />
     </div>
     <div id="item-c" class="item">
-        <Icon name={matriz[2].imagen} size={45} />
+      <Icon name={matriz[2].imagen} size={45} />
       <p>
         {matriz[2].texto}
       </p>
     </div>
     <div id="item-d" class="item">
-        <p>
-          {matriz[3].texto}
-        </p>
+      <p class="p-itemGlobal" set:html={matriz[3].texto} />
     </div>
     <div id="item-e" class="item">
-        
-        <p>
-          {matriz[4].texto}
-        </p>
+      <p class="p-itemGlobal" set:html={matriz[4].texto} />
+   
+      </p>
     </div>
   </div>
 </div>
@@ -77,6 +76,11 @@ const { matriz } = Astro.props;
 
   #caracteristicash2 :global(span) {
     color: $secundario;
+  }
+  .p-itemGlobal :global(span) {
+    font-weight: bold;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+
   }
 
   #caracteristicas {
@@ -139,16 +143,15 @@ const { matriz } = Astro.props;
       }
     }
     #item-c {
-        
-        background: $acento;
-        grid-column: 3 / span 1;
-        grid-row: 2 / span 2;
-        p{
-            color: #fff;
-        }
-        svg {
-          color: #fff;
-        }
+      background: $acento;
+      grid-column: 3 / span 1;
+      grid-row: 2 / span 2;
+      p {
+        color: #fff;
+      }
+      svg {
+        color: #fff;
+      }
     }
     #item-d {
       background: #fff;
@@ -158,7 +161,7 @@ const { matriz } = Astro.props;
     #item-e {
       grid-column: 4 / span 1;
       grid-row: 3 / span 1;
-      p{
+      p {
         color: $terciario;
       }
     }
@@ -194,16 +197,18 @@ const { matriz } = Astro.props;
         grid-row: 3 / span 1;
         height: auto;
         background: #fff;
-        p, svg{
-            color:$acento;
+        p,
+        svg {
+          color: $acento;
         }
-       
       }
       #item-d {
         grid-column: 1 / span 2;
         grid-row: 4 / span 1;
         background: $acento;
         border-bottom-left-radius: $radio;
+        p{
+          color: #fff;}
       }
       #item-e {
         grid-column: 3 / span 2;

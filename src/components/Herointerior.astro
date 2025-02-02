@@ -14,7 +14,7 @@ interface Props {
 const { description, h1, imagen, imagencel, fondo, Spanh1 } = Astro.props;
 
 import { Icon } from "astro-icon/components";
-console.log(fondo)
+console.log(fondo);
 ---
 
 <section class="grid pantalla-der">
@@ -22,7 +22,7 @@ console.log(fondo)
     <div class="izq anime">
       <div class="bandeja anime">
         <h1>
-          <span set:html={Spanh1}></span>{h1}
+          <span set:html={Spanh1} />{h1}
         </h1>
         <p set:html={description} />
         <div class="cta">
@@ -44,28 +44,24 @@ console.log(fondo)
       <!-- <Picture src={cover} alt="Invitaciones digitales para eventos" />
         -->
       <picture>
-        <source
-          srcset={imagen}
-          media="(min-width: 479px)"
-        />
-        <source
-          srcset={imagencel}
-          media="(max-width: 479px)"
-        />
+        <source srcset={imagen} media="(min-width: 479px)" />
+        <source srcset={imagencel} media="(max-width: 479px)" />
         <img
           src="/invitaciones-digitales-cover-nvitacines.webp"
           alt="nvitaciones digitales para eventos bodas y quince años"
+          loading="lazy"
+          decoding="async"
         />
       </picture>
     </div>
   </div>
 </section>
 
-<style lang="scss" define:vars={{fondo}}>
+<style lang="scss" define:vars={{ fondo }}>
   @import "../estilos/_variables.scss";
 
   #hero {
-    background:var(--fondo);
+    background: var(--fondo);
     border-top-left-radius: $margen-min;
     border-bottom-left-radius: $margen-min;
     @include cel {
@@ -77,27 +73,28 @@ console.log(fondo)
       flex-wrap: wrap;
       width: 100%;
       color: white;
-      font-size:clamp(4.5rem, 6vw, 8rem);
-      line-height: .6em;
-      text-align:left;
-      text-shadow: 2px 2px 0px var(--fondo), 5px 4px 10px rgba(0,0,0,0.15);
-      transform: translateX(-.5rem);
+      font-size: clamp(4.5rem, 6vw, 8rem);
+      line-height: 0.6em;
+      text-align: left;
+      text-shadow:
+        2px 2px 0px var(--fondo),
+        5px 4px 10px rgba(0, 0, 0, 0.15);
+      transform: translateX(-0.5rem);
       span {
         flex: 1 0 100%;
         color: $primario;
-        font-size:clamp(1.3rem, 1.3vw, 2rem);
+        font-size: clamp(1.3rem, 1.3vw, 2rem);
         font-weight: 100;
-        transform: translateX(.5rem);
+        transform: translateX(0.5rem);
       }
       @include cel {
         justify-content: center;
-        line-height: .7em;
+        line-height: 0.7em;
         text-align: center;
         transform: translateX(0rem);
         @include cel {
-          span{
+          span {
             transform: translateX(0rem);
-
           }
         }
       }
@@ -112,7 +109,6 @@ console.log(fondo)
       @include cel {
         max-width: 100%;
       }
-    
     }
     .der,
     .izq {
@@ -123,7 +119,6 @@ console.log(fondo)
       justify-content: center;
       align-items: center;
       flex: 1 0 50%;
-      
     }
     .der {
       justify-content: center;

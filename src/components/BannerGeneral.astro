@@ -10,9 +10,10 @@ interface Props {
   izquierda?: boolean;
   urlImagen: string;
   margenAbajo?: boolean;
+  valorBoton?: string;
 }
 
-const { encabezado, texto, tema, icono, izquierda, urlImagen, margenAbajo, ...rest } =
+const { encabezado, texto, tema, icono, izquierda, urlImagen, margenAbajo, valorBoton, ...rest } =
   Astro.props;
 const imagen = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"

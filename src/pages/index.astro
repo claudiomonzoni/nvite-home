@@ -37,7 +37,12 @@ import Faq from "../components/Faq.astro";
         <div id="play">
           <Icon name="mdi:play-circle" size={70} />
         </div>
-        <video preload="metadata" poster="/video-poster.webp" loop id="video-home-cel">
+        <video
+          preload="metadata"
+          poster="/video-poster.webp"
+          loop
+          id="video-home-cel"
+        >
           <source
             src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1737046817/pantalla-sitio_web.mp4"
             type="video/mp4"
@@ -113,9 +118,18 @@ import Faq from "../components/Faq.astro";
       texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
       tema="primario azul"
       icono="mdi:archive-clock-outline"
-      urlImagen="../assets/home/gale/confirmacion.webp"
-    />
-
+      urlImagen="../assets/home/gale/confirmacion.webp">
+      <Btn
+      liga="/bodas"
+      texto="Bodas"
+      clases="btn-bordes"
+      claro={true}
+      blank={false}
+    >
+      <Icon name="mdi:find-love" size={25} />
+    </Btn>
+      </BannerGeneral
+    >
     <BannerGeneral
       encabezado="Música e Información en tu invitación"
       texto="Agrega <b>tu canción favorita</b> y los detalles de tu boda"
@@ -153,10 +167,14 @@ import Faq from "../components/Faq.astro";
           id="decor"
           src="/decoracion-muestra-invitacion-digital-nvite.webp"
           alt="decoracion invitacion"
+          loading="lazy"
+          decoding="async"
         />
         <img
           src="/muestra-invitacion-digital-nvite-personalizada.webp"
           alt="invitacion personalizada"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div class="cartaBase2">
@@ -169,6 +187,8 @@ import Faq from "../components/Faq.astro";
         <img
           src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
           alt="invitacion con confirmación de asistencia"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -351,16 +371,16 @@ import Faq from "../components/Faq.astro";
 <Footer />
 
 <script>
-  const mivideoHome = document.getElementById("video-home-cel") as HTMLVideoElement; 
+  const mivideoHome = document.getElementById(
+    "video-home-cel"
+  ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
-  console.log(mivideoHome)
+  console.log(mivideoHome);
 
-play.addEventListener("click", playPause);
+  play.addEventListener("click", playPause);
 
-function playPause() { 
-  if (mivideoHome.paused) 
-    mivideoHome.play(); 
-  else 
-    mivideoHome.pause(); 
-} 
+  function playPause() {
+    if (mivideoHome.paused) mivideoHome.play();
+    else mivideoHome.pause();
+  }
 </script>
