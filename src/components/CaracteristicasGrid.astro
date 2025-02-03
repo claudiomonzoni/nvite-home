@@ -80,6 +80,9 @@ const { matriz } = Astro.props;
   .p-itemGlobal :global(span) {
     font-weight: bold;
     font-size: clamp(1.5rem, 2vw, 2rem);
+    @include cel {
+      font-size: 1rem;
+    }
 
   }
 
@@ -169,6 +172,9 @@ const { matriz } = Astro.props;
     @include cel {
       grid-template-rows: repeat(5, auto);
       width: 100%;
+      h2{
+        font-size: 1.8rem;
+      }
       #item-a {
         flex-wrap: wrap;
         grid-column: 1 / -1;
