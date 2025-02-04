@@ -1,0 +1,105 @@
+---
+interface Props {
+  encabezado: string;
+  small: string;
+  texto: string;
+  img: string;
+  link?: string;
+}
+const { img, encabezado, texto, link, small } = Astro.props;
+---
+
+<div id="oferta">
+  <h3 set:html={encabezado} />
+  <div class="info">
+    <p set:html={texto} />
+    <small set:html={small} />
+  </div>
+  <div id="bandejaImagen">
+    <div id="imagen">
+      <img src={img} alt={encabezado} loading="lazy" decoding="async" />
+    </div>
+  </div>
+</div>
+<style lang="scss">
+  @use "../estilos/variables" as *;
+
+  #oferta {
+    display: flex;
+    gap: 1rem;
+    border-radius: $radio;
+    background: $acento;
+    margin: $margen 0 0;
+    justify-content: center;
+    align-items: center;
+  }
+  h3,
+  p,
+  small {
+    color: #fff;
+  }
+  h3 {
+    font-size: clamp(2.2rem, 2.5vw, 3rem);
+    flex: 2;
+    text-align: center;
+  }
+  .info {
+    flex: 2;
+  }
+  #bandejaImagen {
+    flex: 1;
+    height: 100%;
+    background: $secundario;
+    border-radius: $radio;
+  }
+  #imagen {
+    position: relative;
+    width: 100%;
+    height: calc(100% + 30px);
+    top: -30px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: $radio;
+    }
+  }
+  @include cel {
+    #oferta {
+      flex-wrap: wrap;
+    }
+    h3,
+    .info,
+    #bandejaImagen {
+      flex: 1 0 100%;
+    }
+    h3,
+    .info {
+      text-align: center;
+    }
+    h3 {
+        order: 1;
+        padding: $margen-cel $margen-cel 0;
+    }
+    .info {
+        order: 2;
+        padding: $margen-min $margen-cel $margen-cel;
+    }
+    #bandejaImagen {
+        order: 0;
+        height: 20vh;
+  
+    #imagen {
+      width: 100%;
+      height: calc(100% + 30px);
+      top: -30px;
+      img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          border-radius: $radio;
+        }
+    }
+}
+}
+</style>

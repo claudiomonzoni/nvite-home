@@ -10,6 +10,7 @@ import BannerQuince from "../components/BannerQuince.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
 import { Icon } from "astro-icon/components";
 import Faq from "../components/Faq.astro";
+import Ofertashome from "../components/Ofertashome.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
@@ -19,6 +20,7 @@ import Faq from "../components/Faq.astro";
   />
 
   <div class="grid contenido">
+  
     <div id="choro">
       <div id="info">
         <div class="bande">
@@ -50,6 +52,13 @@ import Faq from "../components/Faq.astro";
         </video>
       </div>
     </div>
+
+    <Ofertashome
+    encabezado="<b>Obtén un 30% </b>de descuento"
+    texto="Durante el mes de febrero <b>aplica el cupón: AMOR30</b> a la hora de adquirir tu invitación de boda o 15 años."
+    small="Solo aplica para pagos en línea, promoción valida hasta el 28 de febrero."
+    img="/promo.webp"
+  />
   </div>
 
   <div class="grid contenido">
@@ -118,18 +127,18 @@ import Faq from "../components/Faq.astro";
       texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
       tema="primario azul"
       icono="mdi:archive-clock-outline"
-      urlImagen="../assets/home/gale/confirmacion.webp">
+      urlImagen="../assets/home/gale/confirmacion.webp"
+    >
       <Btn
-      liga="/bodas"
-      texto="Bodas"
-      clases="btn-bordes"
-      claro={true}
-      blank={false}
-    >
-      <Icon name="mdi:find-love" size={25} />
-    </Btn>
-      </BannerGeneral
-    >
+        liga="/bodas"
+        texto="Bodas"
+        clases="btn-bordes"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="mdi:find-love" size={25} />
+      </Btn>
+    </BannerGeneral>
     <BannerGeneral
       encabezado="Música e Información en tu invitación"
       texto="Agrega <b>tu canción favorita</b> y los detalles de tu boda"
