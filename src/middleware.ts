@@ -42,7 +42,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/panel\/ingresar$/,                // Página de ingreso
         /^\/panel\/registro$/,                // Página de registro
         /^\/bodas(\/.*)?$/,                   // Cualquier subruta en /bodas
-        /^\/quince(\/.*)?$/,                  // Cualquier subruta en /quince
+        /^\/quince(\/.*)?$/,                   // Cualquier subruta en /bodas
+        /^\/invitaciones-quince(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/terminos-condiciones(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
     ];
 

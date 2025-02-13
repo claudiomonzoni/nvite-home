@@ -10,21 +10,22 @@ interface Props {
   imagen?: string;
   imagencel?: string;
   fondo: string;
+  tema?: string;
 }
-const { description, h1, imagen, imagencel, fondo, Spanh1 } = Astro.props;
+const { description, h1, imagen, imagencel, fondo, Spanh1, tema } = Astro.props;
 
 import { Icon } from "astro-icon/components";
 console.log(fondo);
 ---
 
 <section class="grid pantalla-der">
-  <div id="hero">
+  <div id="hero" >
     <div class="izq anime">
       <div class="bandeja anime">
-        <h1>
+        <h1 class={tema}>
           <span set:html={Spanh1} />{h1}
         </h1>
-        <p set:html={description} />
+        <p class={tema} set:html={description} />
         <div class="cta">
           <Btn
             liga="#precios"
@@ -87,6 +88,7 @@ console.log(fondo);
         font-weight: 100;
         transform: translateX(0.5rem);
       }
+    
       @include cel {
         justify-content: center;
         line-height: 0.7em;
@@ -179,6 +181,12 @@ console.log(fondo);
     font-weight: 700;
     font-family: "Montserrat Alternates", sans-serif;
   }
+  .oscuro{
+    color: white;
+  }
+  .oscuro span{
+        color:$secundario !important;
+      }
 </style>
 <!-- <script>
   import SplitType from "split-type";
