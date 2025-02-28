@@ -59,7 +59,7 @@ console.log(fondo);
 </section>
 
 <style lang="scss" define:vars={{ fondo }}>
-  @import "../estilos/_variables.scss";
+  @use "../estilos/variables.scss" as *;
 
   #hero {
     background: var(--fondo);
