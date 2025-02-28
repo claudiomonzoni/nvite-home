@@ -2,7 +2,6 @@
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 const url = Astro.url.pathname;
-console.log(url)
 ---
 
 <nav >
@@ -18,8 +17,8 @@ console.log(url)
       url === "/terminos-condiciones" ? (
         <li><a href="/" class="selected">Regresar</a></li>
       ) : (
-        <li><a href="/bodas" class={url == '/bodas' ? 'selected' : 'none'}>Bodas</a></li>
-        <li><a href="/invitaciones-quince" class={url == '/invitaciones-quince' ? 'selected' : 'none'}>15 años</a></li>
+        <li><a href="/bodas" class={url == 'https://nvitaciones.com/bodas' ? 'selected' : 'none'}>Bodas</a></li>
+        <li><a href="/invitaciones-quince" class={url == 'https://nvitaciones.com//invitaciones-quince' ? 'selected' : 'none'}>15 años</a></li>
         <li><a href="https://nvitaciones.com/#cumples" class={url == '/cumpleanos' ? 'selected' : 'none'}>Cumpleaños</a></li>
         // <li><a href="/eventos" class={url == '/eventos' ? 'selected' : 'none'}>Eventos</a></li>
       )
@@ -40,7 +39,7 @@ console.log(url)
 </nav>
 
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @use "../estilos/_variables.scss" as *;
   #logo {
 
     width: 15vw;
