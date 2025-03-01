@@ -10,6 +10,7 @@ import BannerGeneral from "../components/BannerGeneral.astro";
 import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Banner from "../components/Banner.astro";
+import Ofertashome from "../components/Ofertashome.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de 15 años.">
@@ -25,6 +26,40 @@ import Banner from "../components/Banner.astro";
     imagen="/Nvitaciones-invitaciones-digitales-quince.webp"
     imagencel="/Nvitaciones-invitaciones-digitales-quince-cel.webp"
   />
+
+  <div class="grid contenido">
+    <div id="choro">
+      <div id="info">
+        <div class="bande">
+          <h2>Preparar tu fiesta de 15 años debería ser emocionante, no estresante.</h2>
+          <p>
+            Horas coordinando invitados, confirmaciones que no llegan y cambios de último minuto… <b>Organizar tu XV no tiene por qué ser un dolor de cabeza.</b>
+          </p>
+          <p>
+            Con nuestras <b>invitaciones digitales para XV años</b>, todo es más fácil: diseña una invitación única, recibe confirmaciones en tiempo real y envía los detalles con un solo clic. Haz que tu gran noche comience con la invitación perfecta.
+          </p>
+        </div>
+      </div>
+      <div id="video-home">
+        <div id="play">
+          <Icon name="mdi:play-circle" size={70} />
+        </div>
+        <video
+          preload="metadata"
+          poster="/video-poster.webp"
+          loop
+          id="video-home-cel"
+        >
+          <source
+            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009715/quince_fq3r0w.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
+
+
+  </div>
 
   <div class="grid contenido">
     <div id="conteCaracteristicas">
@@ -290,3 +325,18 @@ import Banner from "../components/Banner.astro";
     }
   }
 </style>
+
+<script>
+  const mivideoHome = document.getElementById(
+    "video-home-cel"
+  ) as HTMLVideoElement;
+  const play = document.getElementById("play") as HTMLDivElement;
+  console.log(mivideoHome);
+
+  play.addEventListener("click", playPause);
+
+  function playPause() {
+    if (mivideoHome.paused) mivideoHome.play();
+    else mivideoHome.pause();
+  }
+</script>
