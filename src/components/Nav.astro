@@ -25,6 +25,7 @@ console.log(url)
       )
     }
   </ul>
+  {url}
   <li>
     <Btn
       liga="/panel"
@@ -40,7 +41,7 @@ console.log(url)
 </nav>
 
 <style lang="scss">
-  @import "../estilos/_variables.scss";
+  @use "../estilos/_variables.scss" as *;
   #logo {
 
     width: 15vw;

@@ -16,7 +16,7 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
 </a>
 
 <style lang="scss">
-    @import '../estilos/_variables.scss';
+    @use '../estilos/_variables.scss' as *;
     @mixin btn {
         padding: 10px 20px;
         display: inline-block;
