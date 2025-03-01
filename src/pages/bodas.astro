@@ -49,7 +49,7 @@ import Ofertashome from "../components/Ofertashome.astro";
           preload="metadata"
           poster="/video-poster.webp"
           loop
-          id="video-home-cel"
+          id="video-bodas-cel"
         >
           <source
             src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009712/bodas_fyiaju.mp4"
@@ -330,16 +330,16 @@ import Ofertashome from "../components/Ofertashome.astro";
 </style>
 
 <script>
-  const mivideoHome = document.getElementById(
-    "video-home-cel"
+  const mivideobodas = document.getElementById(
+    "video-bodas-cel"
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
-  console.log(mivideoHome);
+  console.log(mivideobodas);
 
   play.addEventListener("click", playPause);
 
   function playPause() {
-    if (mivideoHome.paused) mivideoHome.play();
-    else mivideoHome.pause();
+    if (mivideobodas.paused) mivideobodas.play();
+    else mivideobodas.pause();
   }
 </script>

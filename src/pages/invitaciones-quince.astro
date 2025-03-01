@@ -48,7 +48,7 @@ import Ofertashome from "../components/Ofertashome.astro";
           preload="metadata"
           poster="/video-poster-quince.webp"
           loop
-          id="video-home-cel"
+          id="video-quince-cel"
         >
           <source
             src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009715/quince_fq3r0w.mp4"
@@ -327,16 +327,16 @@ import Ofertashome from "../components/Ofertashome.astro";
 </style>
 
 <script>
-  const mivideoHome = document.getElementById(
-    "video-home-cel"
+  const mivideoquince = document.getElementById(
+    "video-quince-cel"
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
-  console.log(mivideoHome);
+  console.log(mivideoquince);
 
   play.addEventListener("click", playPause);
 
   function playPause() {
-    if (mivideoHome.paused) mivideoHome.play();
-    else mivideoHome.pause();
+    if (mivideoquince.paused) mivideoquince.play();
+    else mivideoquince.pause();
   }
 </script>
