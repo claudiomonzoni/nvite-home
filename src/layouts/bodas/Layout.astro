@@ -6,17 +6,19 @@ interface Props {
   paleta?: string;
 }
 
-const { title, url, paleta,cover } = Astro.props;
+const { title, url, paleta, cover } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const portadaOG = `https://nvitaciones.com${cover}`;
-
 ---
 
 <!doctype html>
 <html lang="es" id=`paleta-${paleta}` data-paleta={paleta}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content=`Invitacion de bodas de nvitaciones.com / ${title}` />
+    <meta
+      name="description"
+      content=`Invitacion de bodas de nvitaciones.com / ${title}`
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href={`/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
@@ -29,7 +31,10 @@ const portadaOG = `https://nvitaciones.com${cover}`;
       property="og:title"
       content=`${title} - Invitación digital nvitaciones.com`
     />
-    <meta property="og:description" content=`Esperamos tu asistencia, estaremos felices de celebrar juntos / ${title}` />
+    <meta
+      property="og:description"
+      content=`Esperamos tu asistencia, estaremos felices de celebrar juntos / ${title}`
+    />
     <meta property="og:url" content={url} />
     <meta
       property="og:site_name"
@@ -47,7 +52,7 @@ const portadaOG = `https://nvitaciones.com${cover}`;
         "@type": "Organization",
         "name": "Invitaciones Digitales - Nvitaciones",
         "url": "https://www.nvitaciones.com",
-        "logo": "https://www.nvitaciones.com/nvita-logo.svg", 
+        "logo": "https://www.nvitaciones.com/nvita-logo.svg",
         "sameAs": [
           "https://www.facebook.com/nvitaciones",
           "https://www.instagram.com/nvitaciones"
@@ -64,23 +69,77 @@ const portadaOG = `https://nvitaciones.com${cover}`;
           "contactType": "customer service"
         }
       }
-      </script>
-
+    </script>
   </head>
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
-<script>
-  (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:5048561,hjsv:6};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj =
+        h.hj ||
+        function () {
+          (h.hj.q = h.hj.q || []).push(arguments);
+        };
+      h._hjSettings = { hjid: 5048561, hjsv: 6 };
+      a = o.getElementsByTagName("head")[0];
+      r = o.createElement("script");
+      r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
       a.appendChild(r);
-  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
+    })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+  </script>
+
+  <!-- <script>
+    if (window.addEventListener)
+      window.addEventListener("DOMMouseScroll", wheel, false);
+    window.addEventListener("mousewheel", wheel);
+    document.addEventListener("mousewheel", wheel);
+
+    function wheel(event) {
+      var delta = 0;
+      if (event.wheelDelta)
+        delta = event.wheelDelta / 40; //controls the scroll wheel range/speed
+      else if (event.detail) delta = -event.detail / 40;
+
+      handle(delta);
+      if (event.preventDefault) event.preventDefault();
+      event.returnValue = false;
+    }
+
+    var goUp = true;
+    var end = null;
+    var interval = null;
+
+    function handle(delta) {
+      var animationInterval = 20; //controls the scroll animation after scroll is done
+      var scrollSpeed = 20; //controls the scroll animation after scroll is done
+
+      if (end == null) {
+        end = $(window).scrollTop();
+      }
+      end -= 20 * delta;
+      goUp = delta > 0;
+
+      if (interval == null) {
+        interval = setInterval(function () {
+          var scrollTop = $(window).scrollTop();
+          var step = Math.round((end - scrollTop) / scrollSpeed);
+          if (
+            scrollTop <= 0 ||
+            scrollTop >= $(window).prop("scrollHeight") - $(window).height() ||
+            (goUp && step > -1) ||
+            (!goUp && step < 1)
+          ) {
+            clearInterval(interval);
+            interval = null;
+            end = null;
+          }
+          window.scrollTo(0, window.scrollY + step);
+        }, animationInterval);
+      }
+    }
+  </script> -->
 
   <body>
-      <slot />
+    <slot />
   </body>
 </html>
-

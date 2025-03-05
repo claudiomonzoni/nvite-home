@@ -1,0 +1,109 @@
+---
+import { Icon } from "astro-icon/components";
+import Btn from "./Btn.astro";
+
+interface Props {
+  h2: string;
+  p: string;
+  fondo: string;
+  imagenes: Array<{ imagen: string; liga: string }>;
+}
+const { h2, p, imagenes, fondo } = Astro.props;
+---
+
+<div id="Savethedate">
+  <div class="izq">
+    <div class="conte">
+      <h2 set:html={h2} />
+      <p set:html={p} />
+    </div>
+  </div>
+  <div class="der">
+    <div class="bandeja">
+      {
+        imagenes.map((imagen) => (
+          <div class="item">
+            <img src={imagen.imagen} alt={h2} loading="lazy" decoding="async" />
+            <Btn
+              liga={imagen.liga}
+              texto="Descargar"
+              clases="btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:cloud-download" size={25} />
+            </Btn>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .izq,
+  .der {
+    display: flex;
+    flex: 1 0 50%;
+    position: relative;
+  }
+  .izq {
+    flex: 1 0 40%;
+    justify-content: center;
+    align-items: center;
+    order: 1;
+    .conte {
+      width: 70%;
+    }
+  }
+
+  .bandeja {
+    display: flex;
+  }
+  .item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  #Savethedate {
+    display: flex;
+    background: url("/fondo-reserva-la-fecha.webp") $fondo no-repeat;
+    background-size: contain;
+    background-position: 20%;
+    border-radius: $radio;
+    margin: $margen-min 0 $margen-cel 0;
+    align-items: center;
+    max-height: 70%;
+    transform: translateY(15%);
+}
+@include cel {
+    #Savethedate {
+        flex-wrap: wrap;
+        max-height: unset;
+        transform: translateY(0%);
+        background-position:  -20% 20%;
+        background-size: 160%;
+    }
+    .izq {
+      order: 0;
+      padding: $margen-cel;
+      text-align: center;
+    }
+    .izq,
+    .der {
+      flex: 1 0 100%;
+      flex-wrap: wrap;
+    }
+   .bandeja{
+    flex-wrap: wrap;
+    justify-content: center;
+    .item{
+      max-width: 70%;
+    }
+   }
+  }
+</style>
