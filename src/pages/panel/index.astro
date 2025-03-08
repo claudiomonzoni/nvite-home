@@ -66,7 +66,7 @@ try {
         <div class="stat-item">
           <span class="stat-numero">
             {invitadosData.reduce((sum, inv) => {
-              const pases = parseInt(inv.pases || "0", 10);
+              const pases = Math.round(parseFloat(inv.pases || "0"));
               return sum + (inv.noAsiste ? 0 : pases);
             }, 0)}
           </span>

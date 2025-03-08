@@ -5,14 +5,14 @@ export default async function seed() {
     {
       id: 1,
       email: "claudiomonzoni@hotmail.com",
-      tipo: "boda",
-      ruta: "/panchaypepe/"
+      tipo: "bodas",
+      ruta: "nvita-bodas-lux"
     },
     {
       id: 2,
-      email: "test1@test.com",
-      tipo: "quince",
-      ruta: "raulyrenan"
+      email: "nvitaplusboda@nvita.me",
+      tipo: "bodas",
+      ruta: "nvita-bodas-lux"
     },
     {
       id: 3,
@@ -29,7 +29,7 @@ export default async function seed() {
       nombre: "Ricardo Salinas Pliego",
       pases: "3",
       mesa: "2",
-      numeroWhats: 123456789,
+      numeroWhats: 7551048550,
       confirmado: true,
       vip: true,
       InvitacionEnviada: true,

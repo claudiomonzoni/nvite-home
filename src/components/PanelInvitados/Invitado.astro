@@ -39,7 +39,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
             ""
           )
         }
-        <li>Pases asignados: {invitadoData.pases}</li>
+        <li>Pases asignados: {Math.round(parseFloat(invitadoData.pases))}</li>
         {
           invitadoData.mesa ? (
             <li>No. de mesa asignada: {invitadoData.mesa}</li>
