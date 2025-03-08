@@ -30,7 +30,7 @@ const canonicalURL = new URL(Astro.url, Astro.site);
 </div>
 
 <style lang="scss" define:vars={{fondoFloralUrl}}>
-    @import "../../estilos/bodas/_variables.scss";
+    @use "../../estilos/bodas/_variables.scss" as *;
 
     .bande{
         text-align: center;

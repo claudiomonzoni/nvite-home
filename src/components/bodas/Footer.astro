@@ -57,7 +57,7 @@ const { base } = Astro.props;
 </footer>
 
 <style lang="scss">
-  @import "../../estilos/bodas/_variables.scss";
+  @use "../../estilos/bodas/_variables.scss" as *;
   footer {
     border-top: solid 1px var(--secundario);
     padding: $margen 0;

@@ -9,7 +9,8 @@ const { lat, lng, mapName } = Astro.props;
 
 <div id={mapName}></div>
 <style lang="scss">
-  @import "../../estilos/bodas/_variables.scss";
+  @use "../../estilos/bodas/_variables.scss" as *;
+
   #mapa1,
   #mapa2 {
     width: 100%;

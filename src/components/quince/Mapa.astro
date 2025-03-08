@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL
 
 <div id={mapName}></div>
 <style lang="scss">
-  @import "../../estilos/quince/_variables.scss";
+  @use "../../estilos/quince/_variables.scss" as *;
     #mapa1, #mapa2 {
       @extend .sombra;
         min-height: 27dvw;

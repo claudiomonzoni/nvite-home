@@ -9,7 +9,7 @@ const { frase } = Astro.props;
   {frase}
 </p>
 <style lang="scss">
-  @import "../../estilos/bodas/_variables.scss";
+  @use "../../estilos/bodas/_variables.scss" as *;
   .frase {
     color: var(--acento);
     font-family: $garigol, serif;

@@ -16,7 +16,7 @@ const { fecha } = Astro.props;
 <h3>para nuestra boda.</h3>
 
 <style lang="scss">
-  @import "../../estilos/bodas/_variables.scss";
+  @use "../../estilos/bodas/_variables.scss" as *;
 
   h3 {
     color: var(--primario);

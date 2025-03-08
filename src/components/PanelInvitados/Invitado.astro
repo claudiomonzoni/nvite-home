@@ -286,7 +286,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 </script>
 
 <style lang="scss">
-  @import "../../estilos/_variables.scss";
+  @use "../../estilos/_variables.scss" as *;
   .enviada {
     background-color: #edf8fd;
     color: #4b7c91;

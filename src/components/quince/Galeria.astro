@@ -21,7 +21,7 @@ import { Image } from "astro:assets";
 // <style lang="scss" define:vars={num}>
   @use 'sass:math';
   // $numero : var(--num);
-  @import "../../estilos/quince/_variables.scss";
+  @use "../../estilos/quince/_variables.scss" as *;
 
   /* Firefox */
   * {

@@ -9,7 +9,7 @@ const { frase } = Astro.props;
   {frase}
 </p>
 <style lang="scss">
-  @import "../../estilos/quince/_variables.scss";
+  @use "../../estilos/quince/_variables.scss" as *;
   .frase {
     color: var(--primario);
     font-family: $encabezados, serif;
