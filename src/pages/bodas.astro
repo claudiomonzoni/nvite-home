@@ -10,6 +10,8 @@ import BannerGeneral from "../components/BannerGeneral.astro";
 import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Banner from "../components/Banner.astro";
+import Ofertashome from "../components/Ofertashome.astro";
+import SaveTheDate from "../components/SaveTheDate.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de bodas.">
@@ -26,6 +28,46 @@ import Banner from "../components/Banner.astro";
     imagencel="/Nvitaciones-invitaciones-digitales-bodas-cel.webp"
     tema="oscuro"
   />
+
+  <div class="grid contenido">
+    <div id="choro">
+      <div id="info">
+        <div class="bande">
+          <h2>
+            Organizar tu boda ya es un reto… ¿y ahora también las invitaciones?"
+          </h2>
+          <p>
+            Invitaciones que se pierden, listas de invitados desordenadas y
+            confirmaciones tardías… <b
+              >No dejes que el estrés arruine la emoción de tu gran día</b
+            >.
+          </p>
+          <p>
+            Con nuestras <b>invitaciones digitales de boda</b>, olvídate del
+            caos. Personaliza tu diseño, gestiona invitados desde un solo panel
+            y envía por WhatsApp en segundos. Haz que tu boda comience con
+            elegancia y sin complicaciones.
+          </p>
+        </div>
+      </div>
+      <div id="video-home">
+        <div id="play">
+          <Icon name="mdi:play-circle" size={70} />
+        </div>
+        <video
+          preload="metadata"
+          poster="/video-poster.webp"
+          loop
+          id="video-bodas-cel"
+        >
+          <source
+            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009712/bodas_fyiaju.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
+  </div>
 
   <div class="grid contenido">
     <div id="conteCaracteristicas">
@@ -108,7 +150,9 @@ import Banner from "../components/Banner.astro";
   <section class="grid contenido" id="colores">
     <h2>Tu <b>invitación</b>, justo como la quieres</h2>
     <p>
-      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b>colores</b> o envíanos los tonos de tu evento para que combinen a la perfección.
+      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b
+        >colores</b
+      > o envíanos los tonos de tu evento para que combinen a la perfección.
     </p>
     <div id="bandejacolor">
       <div class="item">
@@ -194,6 +238,28 @@ import Banner from "../components/Banner.astro";
     <Banner dondeEstoy="bodas" />
   </div>
 
+  <div class="grid contenido">
+
+    <SaveTheDate
+    h2="Save the date <span>Gratis</span>"
+    p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Designer) o <b>contactanos y por $60 MXN lo editamos por ti. </b></i></small>"
+    fondo="/fondo-reserva-la-fecha.webp"
+    imagenes={[
+      {
+        imagen: "/reserva-la-fecha-1.webp",
+        liga: "https://drive.google.com/file/d/1p8vFvo8Nrcfg1hc7kWKPuZelHMvTDyEW/view?usp=drive_link",
+      },
+      {
+        imagen: "/reserva-la-fecha-2.webp",
+        liga: "https://drive.google.com/file/d/17ZyXf4TW5NZvJTBz8l3n8tFrXHpDIPsI/view?usp=drive_link",
+      },
+      {
+        imagen: "/reserva-la-fecha-3.webp",
+        liga: "https://drive.google.com/file/d/1r_vCzGdy2ahv0QqYPf23KGxokH_9ncQ5/view?usp=drive_link",
+      },
+    ]}
+  />
+</div>
   <section class="grid contenido">
     <div class="flex">
       <div class="fondo-formu">
@@ -263,9 +329,9 @@ import Banner from "../components/Banner.astro";
     padding-top: $margen;
     text-align: center;
     padding-bottom: $margen;
-    h2{
+    h2 {
       color: $primario;
-      b{
+      b {
         color: $acento;
       }
     }
@@ -281,7 +347,7 @@ import Banner from "../components/Banner.astro";
     h3 {
       color: $acento;
       padding: 0 0 $margen-min 0;
-      border-bottom: dashed .1rem $terciario;
+      border-bottom: dashed 0.1rem $terciario;
     }
     .item {
       padding: $margen;
@@ -291,3 +357,18 @@ import Banner from "../components/Banner.astro";
     }
   }
 </style>
+
+<script>
+  const mivideobodas = document.getElementById(
+    "video-bodas-cel"
+  ) as HTMLVideoElement;
+  const play = document.getElementById("play") as HTMLDivElement;
+  console.log(mivideobodas);
+
+  play.addEventListener("click", playPause);
+
+  function playPause() {
+    if (mivideobodas.paused) mivideobodas.play();
+    else mivideobodas.pause();
+  }
+</script>

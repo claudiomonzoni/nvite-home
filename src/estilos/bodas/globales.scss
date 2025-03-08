@@ -383,3 +383,27 @@ b {
       color: var(--secundario);
   }      
 }
+.conte-cartas {
+  display: flex;
+  gap: $margen-min;
+  margin: $margen 0;
+  flex-wrap: wrap;
+}
+
+#zigzag {
+  padding: $margen 0;
+  .bloqueMapa:last-child {
+    z-index: 400;
+    transform: translateY(-2rem);
+    @include cel {
+      transform: translateY(0);
+    }
+    .izq {
+      order: 2;
+    }
+    .der {
+      order: 1;
+      
+    }
+  }
+}
