@@ -11,6 +11,7 @@ import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Banner from "../components/Banner.astro";
 import Ofertashome from "../components/Ofertashome.astro";
+import SaveTheDate from "../components/SaveTheDate.astro";
 ---
 
 <Layout title="Nvitaciones - Invitaciones digitales de 15 años.">
@@ -228,6 +229,29 @@ import Ofertashome from "../components/Ofertashome.astro";
     <Banner dondeEstoy="quince" />
   </div>
 
+
+  <div class="grid contenido">
+
+    <SaveTheDate
+    h2="Save the date <span>Gratis</span>"
+    p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Designer) o <b>contactanos y por $60 MXN lo editamos por ti. </b></i></small>"
+    fondo="/fondo-reserva-la-fecha.webp"
+    imagenes={[
+      {
+        imagen: "/reserva-la-fecha-1.webp",
+        liga: "https://drive.google.com/file/d/1p8vFvo8Nrcfg1hc7kWKPuZelHMvTDyEW/view?usp=drive_link",
+      },
+      {
+        imagen: "/reserva-la-fecha-2.webp",
+        liga: "https://drive.google.com/file/d/17ZyXf4TW5NZvJTBz8l3n8tFrXHpDIPsI/view?usp=drive_link",
+      },
+      {
+        imagen: "/reserva-la-fecha-3.webp",
+        liga: "https://drive.google.com/file/d/1r_vCzGdy2ahv0QqYPf23KGxokH_9ncQ5/view?usp=drive_link",
+      },
+    ]}
+  />
+</div>
   <section class="grid contenido">
     <div class="flex">
       <div class="fondo-formu">
