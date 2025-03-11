@@ -16,6 +16,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const btnconfirmarRef = useRef(null);
 
   // Memoizar la URL base de WhatsApp
+  
   const whatsappBase = useMemo(() => {
     const ua = navigator.userAgent;
     return /Mobile/i.test(ua)
@@ -23,6 +24,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
       : "https://web.whatsapp.com/send/?phone=";
   }, []);
 
+  
   useEffect(() => {
     const fetchInvitado = async () => {
       setIsLoading(true);
