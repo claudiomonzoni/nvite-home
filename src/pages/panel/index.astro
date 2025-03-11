@@ -85,24 +85,29 @@ try {
           <span class="stat-label">Invitaciones enviadas</span>
         </div>
       </div>
-      <ol id="ayudas">
-        <li>Invitación <b class="enviada">Enviada</b></li>
-        <li>Invitación <b class="confirmado">Confirmada</b></li>
-        <li>Invitación <b class="NoAsiste">No asite</b></li>
-      </ol>
-      <div class="filtros">
-        <input
+    
+      <div class="conteFiltros">
+
+        <div class="filtros">
+          <input
           id="search-input"
           type="text"
           placeholder="Buscar invitado por nombre..."
           class="buscador"
-        />
-        <div class="filtros-estado">
-          <button class="filtro-btn activo" data-estado="todos">Todos</button>
-          <button class="filtro-btn" data-estado="enviada">Enviada</button>
-          <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
-          <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
+          />
+          <div class="filtros-estado">
+            <button class="filtro-btn activo" data-estado="todos">Todos</button>
+            <button class="filtro-btn" data-estado="enviada">Enviada</button>
+            <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
+            <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
+          </div>
         </div>
+        
+        <ol id="ayudas">
+          <li>Invitación <b class="enviada">Enviada</b></li>
+          <li>Invitación <b class="confirmado">Confirmada</b></li>
+          <li>Invitación <b class="NoAsiste">No asite</b></li>
+        </ol>
       </div>
     </div>
     <ul id="invitados-list">
@@ -214,13 +219,11 @@ try {
 
   .buscador {
     padding: 0.5rem;
-    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
-    width: 100%;
-    max-width: 400px;
+    flex: 1 0 auto;
     @include cel {
-      margin-top: $margen-cel;
+      margin: $margen-min 0;
     }
   }
 
@@ -230,30 +233,38 @@ try {
     color: $primario;
     width: fit-content;
   }
-  #hero input {
-    flex: 1 0 auto;
-    @include cel {
-      justify-content: center;
-      align-items: center;
-    }
-  }
+ 
   #ayudas {
     display: flex;
+    flex : 1 0 auto;
     align-items: center;
-    flex: 2 0 auto;
     gap: 1rem;
     flex-wrap: wrap;
-    font-size: clamp(0.7rem, 0.7rem, 1rem);
-    @include cel {
-      display: inline-block;
-      li{
-        font-size: clamp(1rem, 0.7rem, 1rem);
-        padding: .2rem 0;
-        flex: 1 0 100;
-      }
+    font-size: clamp(0.6rem, 0.7rem, 1rem);
+    li{
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: .3rem;
     }
+    @include cel {
+      order: 0;
+    }      
+  
   }
 
+  .conteFiltros{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: solid 1px #ccc;
+    padding-bottom: $margen-min;
+    flex-wrap: wrap;
+    @include cel {
+      grid-template-columns: 1fr;
+    }
+  }
   #invitados-list{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -333,24 +344,32 @@ try {
 
   .filtros {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
     width: 100%;
-    max-width: 400px;
+    flex : 1 0 auto;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    @include cel {
+      
+      order: 1
+    }
   }
-
+  
   .filtros-estado {
+ 
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
 
   .filtro-btn {
+    flex: 1 0 auto;
     padding: 0.5rem 1rem;
     border: 1px solid $acento;
     border-radius: $radio;
     background: transparent;
     color: $acento;
+    max-width: fit-content;
     cursor: pointer;
     transition: all 0.3s ease;
 

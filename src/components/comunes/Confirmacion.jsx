@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import styles from "../../estilos/confirmacion.module.scss";
+
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
@@ -22,7 +23,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
       : "https://web.whatsapp.com/send/?phone=";
   }, []);
 
-
   useEffect(() => {
     const fetchInvitado = async () => {
       setIsLoading(true);
@@ -39,9 +39,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         }
 
         const response = await fetch(
-          `${
-            window.location.origin
-          }/api/getInvitado.json?id=${encodeURIComponent(
+          `${window.location.origin}/api/getInvitado.json?id=${encodeURIComponent(
             idParam
           )}&uid=${encodeURIComponent(uidParam)}`
         );
@@ -61,7 +59,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         setId(json[0].id);
         setAsistira(json[0].confirmado);
       } catch (error) {
-        setError(error.message);
+        setError("Ocurrió un error al obtener la información del invitado. Por favor, inténtalo de nuevo más tarde.");
         console.error("Error fetching invitado:", error);
       } finally {
         setIsLoading(false);
@@ -86,7 +84,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
       const mensaje = asistira
         ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda:%20${encodeURIComponent(
             invitado
-          )},%20y%20usaremos%20${pasesSeleccionados}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
+          )},%20y%20usaremos%20${encodeURIComponent(pasesSeleccionados)}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
           )}.`
         : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20boda:%20${encodeURIComponent(
@@ -95,7 +93,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             comentariosValue || "Sin comentarios"
           )}.`;
 
-      btnconfirmarRef.current.href = `${whatsappBase}${whatsapp}&text=${mensaje}`;
+      btnconfirmarRef.current.href = `${whatsappBase}${encodeURIComponent(whatsapp)}&text=${mensaje}`;
     },
     [
       whatsappBase,
@@ -273,7 +271,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
             <p>
               Mueve el <span>switch a la derecha </span>para confirmar tu
-              asitencia
+              asistencia
             </p>
 
             <form
@@ -294,7 +292,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
               {asistira ? (
                 // Formulario para confirmar asistencia
-
                 <>
                   <label htmlFor="pases">¿Cuántos pases usarán?</label>
                   <select
@@ -347,7 +344,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                     
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
@@ -383,7 +379,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                      
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
