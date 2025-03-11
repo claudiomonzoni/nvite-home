@@ -1,27 +1,37 @@
-@use "_variables.scss" as *;
-@use "globales.scss" as *;
-h2 {
-  color: var(--secundario);
-  padding-top: $margen-min;
-  font-size: clamp(3rem, 1.5vw, 2rem);
+@use "bodas/_variables.scss" as *;
+@use "bodas/globales.scss" as *;
 
+h2 {
+  padding-top: $margen-min;
+  font-size: clamp(2.5rem, 1.5vw, 2rem);
+  color: var(--primario);
 }
 .confirmacion {
-  color: white;
   margin-top: $margen;
+  background: url("/bodas/confirma-fondo-izq.webp"),
+    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right bottom;
+  background-size: contain;
+  background-blend-mode: color-burn, color-burn;
+  border-radius: $radio;
+  transition: all 0.3s ease;
+  @include cel {
+    background-position: -20% top, right bottom;
+    background-size: 50%, 100%;
+    background-blend-mode: color-burn, normal;
+  }
+  @extend .sombra;
 }
 .bandeja {
   text-align: center;
   padding: $margen;
   margin: 0 auto;
-  background: $urlPatron, var(--terciario);
-  background-blend-mode: color-burn;
-  background-repeat: no-repeat;
+  max-width: 60%;
+  background-blend-mode: color-dodge;
   background-size: contain;
   background-position: center;
-  color: var(--primario);
   @include cel {
-    background-size: cover;
     max-width: 100%;
     padding: $margen-cel;
   }
@@ -32,15 +42,6 @@ form {
   text-align: left;
   margin: 0 auto;
   width: 50%;
-  a{
-    color: var(--primario)!important;
-    border: solid 1px var(--primario)!important;
-    margin-top: $margen-cel!important;
-    @include cel{
-      width: 100%!important;
-      margin: $margen-cel 0 0 0 !important;
-    }
-  }
   label,
   input,
   select,
@@ -48,39 +49,33 @@ form {
     flex: 1 0 100%;
     margin-top: 0.6rem;
     padding: 0.5rem 0;
-    border-radius: 3px;
+    border-radius: $radio;
   }
-  textarea{
+  textarea {
     field-sizing: content;
     min-height: 50px;
   }
   textarea,
   select {
     border: none !important;
-    opacity: 0.8;
+    opacity: 0.5;
     padding: 0.5rem;
     @extend .sombra;
   }
   @include cel {
     width: 100%;
-
-    select{
-      padding: 1rem;
-    }
-  
-    label {
-      text-align: center;
-    }
+    text-align: center;
   }
 }
 svg {
   max-width: 2.5rem;
   height: auto;
   margin: 0 auto;
+  path {
+    fill: var(--acento);
+  }
+ 
 }
-
-
-
 .conteCheck {
   display: flex;
   align-items: center;
@@ -98,7 +93,7 @@ svg {
   position: relative;
   display: inline-block;
   max-width: 46px;
-  height: 37px;
+  height: 24px;
 
   input {
     opacity: 0;
@@ -106,15 +101,15 @@ svg {
     height: 0;
 
     &:checked + .slider {
-      background-color: var(--acento);
+      background-color: $acento;
 
       &:before {
-        transform: translateX(23px);
+        transform: translateX(22px);
       }
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px var(--acento);
+      box-shadow: 0 0 1px $acento;
     }
   }
 }
@@ -125,7 +120,7 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ff4444;
+  background-color:$acento;
   transition: 0.3s;
   border-radius: 24px;
 
@@ -142,8 +137,6 @@ svg {
   }
 }
 
-
-
 .btnConfirmar {
   @extend .btn;
   display: flex;
@@ -159,19 +152,16 @@ svg {
   pointer-events: none;
 }
 .asistira {
-  background-color: rgba(var(--primario), 0.7);
+  background-color: rgba($primario, 0.8);
   .slider {
-    background-color: var(--acento) !important;
+    background-color: $acento !important;
   }
 }
 
 .noAsistira {
-  background-color: rgba(var(--gris), 0.7)!important;
-  background: #ff4444;
-  border: solid 1px var(--acento);
-
+  background-color: rgba($gris, 0.4);
   .slider {
-    background-color: var(--gris) !important;
+    background-color: $gris !important;
   }
 }
 
@@ -182,5 +172,5 @@ small{
 }
 span{
   font-weight: bolder;
-  color: var(--acento);
+  color: $acento;
 }

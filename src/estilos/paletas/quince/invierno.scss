@@ -1,8 +1,8 @@
 @mixin invierno() {
-    --primario: #9c65c4;
-    --secundario: #b78f69;
+    --primario: rgb(156, 101, 196);
+    --secundario: rgb(183, 143, 105);
     --terciario: rgb(249, 243, 243);
-    --acento: #5e99c9;
-    --gris: #785789;
+    --acento: rgb(94, 153, 201);
+    --gris: rgb(120, 87, 137);
     --sombra: rgba(117, 118, 143, 0.5);
   }
