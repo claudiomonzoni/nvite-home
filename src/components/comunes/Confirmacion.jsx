@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import styles from "../../estilos/confirmacion.module.scss";
-console.log(styles)
-
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
@@ -349,7 +347,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                      className="btn-icono"
+                     
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
@@ -385,7 +383,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                      className="btn-icono"
+                      
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}

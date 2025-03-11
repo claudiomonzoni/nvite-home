@@ -31,6 +31,7 @@ h2 {
   background-blend-mode: color-dodge;
   background-size: contain;
   background-position: center;
+  @extend .anime;
   @include cel {
     max-width: 100%;
     padding: $margen-cel;
@@ -74,7 +75,6 @@ svg {
   path {
     fill: var(--acento);
   }
- 
 }
 .conteCheck {
   display: flex;
@@ -105,6 +105,7 @@ svg {
 
       &:before {
         transform: translateX(22px);
+        @extend .sombra;
       }
     }
 
@@ -120,7 +121,7 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color:$acento;
+  background-color: $acento;
   transition: 0.3s;
   border-radius: 24px;
 
@@ -138,17 +139,26 @@ svg {
 }
 
 .btnConfirmar {
-  // @extend .btn;
   display: flex;
   border-radius: $radio;
-  img{
+  padding: 1rem $margen-cel;
+  color: white !important;
+  margin: 1rem 0.5rem 0.5rem 0;
+  background-color: $acento;
+  @include cel {
+    width: 100%;
+    text-align: center;
+  }
+  img {
     max-width: 1.5rem;
     height: auto;
     vertical-align: middle;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }
 .desactivado {
+  opacity: 0.7;
+  filter: blur(3px);
   pointer-events: none;
 }
 .asistira {
@@ -156,21 +166,29 @@ svg {
   .slider {
     background-color: $acento !important;
   }
-}
-
-.noAsistira {
-  background-color: rgba($gris, 0.4);
-  .slider {
-    background-color: $gris !important;
+  svg,
+  path {
+    fill: $acento;
   }
 }
 
-small{
+.noAsistira {
+  background-color: rgba($gris, 0.3);
+  .slider {
+    background-color: $gris !important;
+  }
+  svg,
+  path {
+    fill: $terciario;
+  }
+}
+
+small {
   padding-top: $margen-min;
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
-span{
+span {
   font-weight: bolder;
   color: $acento;
 }
