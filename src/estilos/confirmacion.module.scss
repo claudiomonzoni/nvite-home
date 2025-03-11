@@ -1,5 +1,5 @@
 @use "bodas/_variables.scss" as *;
-@use "bodas/globales.scss" as *;
+// @use "bodas/globales.scss" as *;
 
 h2 {
   padding-top: $margen-min;
@@ -138,7 +138,7 @@ svg {
 }
 
 .btnConfirmar {
-  @extend .btn;
+  // @extend .btn;
   display: flex;
   border-radius: $radio;
   img{

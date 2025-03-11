@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import estilo from "../../estilos/confirmacion.module.scss";
+import styles from "../../estilos/confirmacion.module.scss";
+console.log(styles)
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
@@ -17,8 +18,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
   // Memoizar la URL base de WhatsApp
   const whatsappBase = useMemo(() => {
-    return "https://web.whatsapp.com/send/?phone=";
+    const ua = navigator.userAgent;
+    return /Mobile/i.test(ua)
+      ? "https://api.whatsapp.com/send/?phone="
+      : "https://web.whatsapp.com/send/?phone=";
   }, []);
+
 
   useEffect(() => {
     const fetchInvitado = async () => {
@@ -123,9 +128,9 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
       if (btnconfirmarRef.current) {
         if (value && value !== "0") {
-          btnconfirmarRef.current.classList.remove(`${estilo.desactivado}`);
+          btnconfirmarRef.current.classList.remove(`${styles.desactivado}`);
         } else {
-          btnconfirmarRef.current.classList.add(`${estilo.desactivado}`);
+          btnconfirmarRef.current.classList.add(`${styles.desactivado}`);
         }
       }
 
@@ -159,7 +164,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     setPersonasNoAsisten("");
 
     if (!checked && btnconfirmarRef.current) {
-      btnconfirmarRef.current.classList.remove(`${estilo.desactivado}`);
+      btnconfirmarRef.current.classList.remove(`${styles.desactivado}`);
     }
   }, []);
 
@@ -201,7 +206,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const handleConfirmar = useCallback(
     async (e) => {
       e.preventDefault();
-      if (e.target.classList.contains(`${estilo.desactivado}`)) return;
+      if (e.target.classList.contains(`${styles.desactivado}`)) return;
 
       try {
         // Guardamos la URL de WhatsApp antes de cualquier operación
@@ -251,11 +256,11 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     <>
       <div className="grid contenido">
         <div
-          className={`${estilo.confirmacion} ${
-            asistira ? estilo.asistira : estilo.noAsistira
+          className={`${styles.confirmacion} ${
+            asistira ? styles.asistira : styles.noAsistira
           }`}
         >
-          <div className={estilo.bandeja}>
+          <div className={styles.bandeja}>
             <svg viewBox="0 0 41 31" fill="none">
               <path
                 d="M41 6.3152H22.55V10.4293H41V6.3152ZM41 22.7717H22.55V26.8859H41V22.7717ZM7.257 14.5435L0 7.26145L2.8905 4.36098L7.2365 8.72196L15.9285 0L18.819 2.90046L7.257 14.5435ZM7.257 31L0 23.718L2.8905 20.8175L7.2365 25.1785L15.9285 16.4565L18.819 19.357L7.257 31Z"
@@ -274,18 +279,18 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
 
             <form
-              id={estilo["formulario"]}
+              id={styles["formulario"]}
               onSubmit={(e) => e.preventDefault()}
             >
-              <div className={estilo.conteCheck}>
+              <div className={styles.conteCheck}>
                 <p>{asistira ? "¡Sí asistiré! 😄" : "No podré asistir 😭"}</p>
-                <label className={estilo.switch}>
+                <label className={styles.switch}>
                   <input
                     type="checkbox"
                     checked={asistira}
                     onChange={(e) => handleSwitchChange(e.target.checked)}
                   />
-                  <span className={estilo.slider}></span>
+                  <span className={styles.slider}></span>
                 </label>
               </div>
 
@@ -339,7 +344,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                   ></textarea>
                   <a
                     href="#"
-                    className={`${estilo.btnConfirmar} ${estilo.desactivado}`}
+                    className={`${styles.btnConfirmar} ${styles.desactivado}`}
                     ref={btnconfirmarRef}
                     onClick={handleConfirmar}
                   >
@@ -375,7 +380,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                   </small>
                   <a
                     href="#"
-                    className={estilo.btnConfirmar}
+                    className={styles.btnConfirmar}
                     ref={btnconfirmarRef}
                     onClick={handleConfirmar}
                   >
