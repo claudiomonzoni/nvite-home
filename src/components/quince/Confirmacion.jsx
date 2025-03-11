@@ -276,12 +276,9 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               asitencia
             </p>
 
-            <form
-              id={estilo["formulario"]}
-              onSubmit={(e) => e.preventDefault()}
-            >
+            <form className={estilo.formulario} onSubmit={(e) => e.preventDefault()}>
               <div className={estilo.conteCheck}>
-                <p>{asistira ? "¡Sí asistiré! 😄" : "No podré asistir 😭"}</p>
+                <p>{asistira ? "¡Sí asistiré! 🎉" : "No podré asistir 😔"}</p>
                 <label className={estilo.switch}>
                   <input
                     type="checkbox"
@@ -293,8 +290,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               </div>
 
               {asistira ? (
-                // Formulario para confirmar asistencia
-
                 <>
                   <label htmlFor="pases">¿Cuántos pases usarán?</label>
                   <select
@@ -355,7 +350,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                   </a>
                 </>
               ) : (
-                // Formulario para confirmar inasistencia
                 <>
                   <label htmlFor="comentarios">
                     ¿Deseas dejar un mensaje? (opcional):
