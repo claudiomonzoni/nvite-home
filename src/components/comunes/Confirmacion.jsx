@@ -17,10 +17,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
   // Memoizar la URL base de WhatsApp
   const whatsappBase = useMemo(() => {
-    const ua = navigator.userAgent;
-    return /Mobile/i.test(ua)
-      ? "https://api.whatsapp.com/send/?phone="
-      : "https://web.whatsapp.com/send/?phone=";
+    return "https://web.whatsapp.com/send/?phone=";
   }, []);
 
   useEffect(() => {
