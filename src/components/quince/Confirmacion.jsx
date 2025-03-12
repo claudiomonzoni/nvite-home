@@ -269,7 +269,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         <div className={estilo.confirmacion}>
           <div className={estilo.bandeja}>
             <p className={estilo.mensajeNoAsistencia}>
-              Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir a nuestro evento. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.
+              Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.
             </p>
           </div>
         </div>
@@ -426,4 +426,3 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     </>
   );
 }
-
