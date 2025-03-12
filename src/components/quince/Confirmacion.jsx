@@ -86,12 +86,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
           : "";
 
       const mensaje = asistira
-        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda:%20${encodeURIComponent(
+        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20fiesta%20de%20XV%20años:%20${encodeURIComponent(
             invitado
           )},%20y%20usaremos%20${encodeURIComponent(pasesSeleccionados)}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
           )}.`
-        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20boda:%20${encodeURIComponent(
+        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20fiesta%20de%20XV%20años:%20${encodeURIComponent(
             invitado
           )}.%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
@@ -215,21 +215,25 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         // Actualizamos la base de datos
         await actualizarBaseDatos(asistira);
 
-        // Si todo salió bien y el usuario no asistirá pero dejó un mensaje, abrimos WhatsApp en una nueva ventana
-        if (asistira || comentarios.trim() !== "") {
+        // Si el usuario dejó un mensaje o nombres de personas que no asisten, abrimos WhatsApp
+        if (comentarios.trim() !== "" || personasNoAsisten.trim() !== "") {
           if (whatsappUrl) {
             window.open(whatsappUrl, "_blank");
           }
         } else {
-          // Mostrar modal de agradecimiento
-          setModalMessage("Gracias por confirmar que no asistirás.");
+          // Si no hay mensaje ni nombres, mostramos agradecimiento según el caso
+          setModalMessage(
+            asistira 
+              ? "¡Muchas gracias por confirmar su asistencia! Nos llena de alegría saber que podremos contar con su presencia en este día tan especial."
+              : "Agradecemos mucho su pronta respuesta. Lamentamos que no pueda acompañarnos en esta ocasión tan especial."
+          );
           setModalVisible(true);
         }
       } catch (err) {
         console.error("Error al procesar la confirmación:", err);
       }
     },
-    [actualizarBaseDatos, asistira, comentarios]
+    [actualizarBaseDatos, asistira, comentarios, personasNoAsisten]
   );
 
   const renderPasesOptions = useMemo(() => {
@@ -256,6 +260,21 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
   if (error) {
     return <div className="error">Error: {error}</div>;
+  }
+
+  // Agregar verificación para invitados que ya confirmaron no asistencia
+  if (pases === 0 && !asistira) {
+    return (
+      <div className="grid pantalla">
+        <div className={estilo.confirmacion}>
+          <div className={estilo.bandeja}>
+            <p className={estilo.mensajeNoAsistencia}>
+              Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -286,7 +305,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
             <form className={estilo.formulario} onSubmit={(e) => e.preventDefault()}>
               <div className={estilo.conteCheck}>
-                <p>{asistira ? "¡Sí asistiré! 🎉" : "No podré asistir 😔"}</p>
+                <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
                 <label className={estilo.switch}>
                   <input
                     type="checkbox"

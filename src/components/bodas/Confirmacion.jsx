@@ -232,17 +232,17 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
 
             <form id={estilo["formulario"]} onSubmit={(e) => e.preventDefault()}>
-              <div className={estilo.conteCheck}>
+                      <div className={estilo.conteCheck}>
                 <p>{asistira ? "¡Sí asistiré! 😄" : "No podré asistir 😭"}</p>
-                <label className={estilo.switch}>
-                  <input
-                    type="checkbox"
+                        <label className={estilo.switch}>
+                          <input
+                            type="checkbox"
                     checked={asistira}
                     onChange={(e) => handleSwitchChange(e.target.checked)}
-                  />
-                  <span className={estilo.slider}></span>
-                </label>
-              </div>
+                          />
+                          <span className={estilo.slider}></span>
+                        </label>
+                      </div>
 
               {asistira ? (
                 // Formulario para confirmar asistencia
@@ -257,7 +257,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                       onChange={handlePasesChange}
                     >
                       {renderPasesOptions}
-                    </select>
+                      </select>
 
                     {mostrarCampoNoAsisten && (
                       <>
@@ -272,8 +272,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                           placeholder="Escribe aquí los nombres..."
                           maxLength={500}
                         ></textarea>
-                      </>
-                    )}
+                    </>
+                  )}
 
                     <label htmlFor="comentarios">Envíanos algún saludo (opcional):</label>
                     <textarea 
