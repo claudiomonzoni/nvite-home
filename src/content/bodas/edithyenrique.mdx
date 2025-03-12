@@ -97,7 +97,7 @@ import Galeria from "../../components/bodas/Galeria.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
-import Confirmacion from "../../components/bodas/Confirmacion";
+import Confirmacion from "../../components/comunes/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import Ventas from "../../components/comunes/Ventas.astro";
@@ -194,7 +194,9 @@ import Ventas from "../../components/comunes/Ventas.astro";
   whatsapp={frontmatter.whatsapp}
   dias_antes={15}
   version={frontmatter.version}
+  tipoEvento="boda"
   client:only="react"
 />
+
 
 {" "}

@@ -1,5 +1,3 @@
-
-
 @use 'sass:math';
 @use "variables" as *;
 
@@ -342,12 +340,18 @@ b {
   $min : -16deg;
   $max : 16deg;
   @for $i from 1 through 10 {
-     img:nth-child(#{$i}) {
-      transform:rotate(min(max((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg, -$max), $max));
+    img:nth-child(#{$i}) {
+      transform: rotate(
+        math.max(
+          math.min(
+            (math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg,
+            $max
+          ),
+          -$max
+        )
+      );
     }
-
   }
-
 
  img {
     border: solid;

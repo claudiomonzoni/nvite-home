@@ -426,3 +426,4 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     </>
   );
 }
+

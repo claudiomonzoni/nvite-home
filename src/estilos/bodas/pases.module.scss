@@ -1,5 +1,5 @@
 
-    @import "../../estilos/bodas/_variables.scss";
+    @use "../../estilos/bodas/_variables.scss" as *;
 
     #bande{
         text-align: center;
