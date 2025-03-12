@@ -6,7 +6,7 @@ export default async function seed() {
       id: 1,
       email: "claudiomonzoni@hotmail.com",
       tipo: "bodas",
-      ruta: "nvita-bodas-lux"
+      ruta: "nvita-bodas-clasica"
     },
     {
       id: 2,
@@ -16,9 +16,9 @@ export default async function seed() {
     },
     {
       id: 3,
-      email: "testamesta@test.com",
-      tipo: "cumple",
-      ruta: "juliamontenegro"
+      email: "nvitacionluxquince@nvitaciones.com",
+      tipo: "quince",
+      ruta: "nvita-quince-lux"
     }
   ]);
 
@@ -57,6 +57,19 @@ export default async function seed() {
       pases: "209",
       mesa: "11",
       numeroWhats: 34234582,
+      confirmado: true,
+      vip: false,
+      InvitacionEnviada: false,
+      noAsiste: false,
+      tipoInvitacion: "grupal",
+    },
+    {
+      id: 4,
+      usuarioId: 3,
+      nombre: "Los Familiares de la quinceañera",
+      pases: "20",
+      mesa: "1",
+      numeroWhats: 7551048550,
       confirmado: true,
       vip: false,
       InvitacionEnviada: false,

@@ -12,6 +12,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [isLoading, setIsLoading] = useState(false);
   const [personasNoAsisten, setPersonasNoAsisten] = useState("");
   const [mostrarCampoNoAsisten, setMostrarCampoNoAsisten] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const btnconfirmarRef = useRef(null);
 
@@ -211,15 +213,21 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         // Actualizamos la base de datos
         await actualizarBaseDatos(asistira);
 
-        // Si todo salió bien, abrimos WhatsApp en una nueva ventana
-        if (whatsappUrl) {
-          window.open(whatsappUrl, "_blank");
+        // Si todo salió bien y el usuario no asistirá pero dejó un mensaje, abrimos WhatsApp en una nueva ventana
+        if (asistira || comentarios.trim() !== "") {
+          if (whatsappUrl) {
+            window.open(whatsappUrl, "_blank");
+          }
+        } else {
+          // Mostrar modal de agradecimiento
+          setModalMessage("Gracias por confirmar que no asistirás.");
+          setModalVisible(true);
         }
       } catch (err) {
         console.error("Error al procesar la confirmación:", err);
       }
     },
-    [actualizarBaseDatos, asistira]
+    [actualizarBaseDatos, asistira, comentarios]
   );
 
   const renderPasesOptions = useMemo(() => {
@@ -390,6 +398,15 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
           </div>
         </div>
       </div>
+
+      {modalVisible && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <p>{modalMessage}</p>
+            <button onClick={() => setModalVisible(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

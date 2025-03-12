@@ -12,11 +12,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [isLoading, setIsLoading] = useState(false);
   const [personasNoAsisten, setPersonasNoAsisten] = useState("");
   const [mostrarCampoNoAsisten, setMostrarCampoNoAsisten] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const btnconfirmarRef = useRef(null);
 
   // Memoizar la URL base de WhatsApp
-  
   const whatsappBase = useMemo(() => {
     const ua = navigator.userAgent;
     return /Mobile/i.test(ua)
@@ -24,7 +25,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
       : "https://web.whatsapp.com/send/?phone=";
   }, []);
 
-  
   useEffect(() => {
     const fetchInvitado = async () => {
       setIsLoading(true);
@@ -215,15 +215,21 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         // Actualizamos la base de datos
         await actualizarBaseDatos(asistira);
 
-        // Si todo salió bien, abrimos WhatsApp en una nueva ventana
-        if (whatsappUrl) {
-          window.open(whatsappUrl, "_blank");
+        // Si todo salió bien y el usuario no asistirá pero dejó un mensaje, abrimos WhatsApp en una nueva ventana
+        if (asistira || comentarios.trim() !== "") {
+          if (whatsappUrl) {
+            window.open(whatsappUrl, "_blank");
+          }
+        } else {
+          // Mostrar modal de agradecimiento
+          setModalMessage("Gracias por confirmar que no asistirás.");
+          setModalVisible(true);
         }
       } catch (err) {
         console.error("Error al procesar la confirmación:", err);
       }
     },
-    [actualizarBaseDatos, asistira]
+    [actualizarBaseDatos, asistira, comentarios]
   );
 
   const renderPasesOptions = useMemo(() => {
@@ -275,7 +281,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             </p>
             <p>
               Mueve el <span>switch a la derecha </span>para confirmar tu
-              asitencia
+              asistencia
             </p>
 
             <form className={estilo.formulario} onSubmit={(e) => e.preventDefault()}>
@@ -344,7 +350,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                      
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
@@ -379,7 +384,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                     onClick={handleConfirmar}
                   >
                     <img
-                      
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
@@ -391,6 +395,15 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
           </div>
         </div>
       </div>
+
+      {modalVisible && (
+        <div className={estilo.modal}>
+          <div className={estilo.modalContent}>
+            <p>{modalMessage}</p>
+            <button onClick={() => setModalVisible(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
