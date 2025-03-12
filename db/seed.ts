@@ -5,20 +5,20 @@ export default async function seed() {
     {
       id: 1,
       email: "claudiomonzoni@hotmail.com",
-      tipo: "boda",
-      ruta: "/panchaypepe/"
+      tipo: "bodas",
+      ruta: "nvita-bodas-clasica"
     },
     {
       id: 2,
-      email: "test1@test.com",
-      tipo: "quince",
-      ruta: "raulyrenan"
+      email: "nvitaplusboda@nvita.me",
+      tipo: "bodas",
+      ruta: "nvita-bodas-lux"
     },
     {
       id: 3,
-      email: "testamesta@test.com",
-      tipo: "cumple",
-      ruta: "juliamontenegro"
+      email: "nvitacionluxquince@nvitaciones.com",
+      tipo: "quince",
+      ruta: "nvita-quince-lux"
     }
   ]);
 
@@ -29,7 +29,7 @@ export default async function seed() {
       nombre: "Ricardo Salinas Pliego",
       pases: "3",
       mesa: "2",
-      numeroWhats: 123456789,
+      numeroWhats: 7551048550,
       confirmado: true,
       vip: true,
       InvitacionEnviada: true,
@@ -57,6 +57,19 @@ export default async function seed() {
       pases: "209",
       mesa: "11",
       numeroWhats: 34234582,
+      confirmado: true,
+      vip: false,
+      InvitacionEnviada: false,
+      noAsiste: false,
+      tipoInvitacion: "grupal",
+    },
+    {
+      id: 4,
+      usuarioId: 3,
+      nombre: "Los Familiares de la quinceañera",
+      pases: "20",
+      mesa: "1",
+      numeroWhats: 7551048550,
       confirmado: true,
       vip: false,
       InvitacionEnviada: false,

@@ -1,39 +1,41 @@
-@use "_variables.scss" as *;
+@use "bodas/_variables.scss" as *;
+// @use "bodas/globales.scss" as *;
 
 h2 {
-  color: var(--secundario);
   padding-top: $margen-min;
-  font-size: clamp(3rem, 1.5vw, 2rem);
+  font-size: clamp(2.5rem, 1.5vw, 2rem);
+  color: var(--primario);
 }
 .confirmacion {
-  color: white;
   margin-top: $margen;
+  background: url("/bodas/confirma-fondo-izq.webp"),
+    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right bottom;
+  background-size: contain;
+  background-blend-mode: color-burn, color-burn;
+  border-radius: $radio;
+  transition: all 0.3s ease;
+  @include cel {
+    background-position: -20% top, right bottom;
+    background-size: 50%, 100%;
+    background-blend-mode: color-burn, normal;
+  }
+  @extend .sombra;
 }
 .bandeja {
   text-align: center;
   padding: $margen;
   margin: 0 auto;
-  background: $urlPatron, var(--terciario);
-  background-blend-mode: color-burn;
-  background-repeat: no-repeat;
+  max-width: 60%;
+  background-blend-mode: color-dodge;
   background-size: contain;
   background-position: center;
-  color: var(--primario);
   @extend .anime;
   @include cel {
-    background-size: cover;
     max-width: 100%;
     padding: $margen-cel;
   }
-
-  svg {
-    max-width: 2.5rem;
-    height: auto;
-    margin: 0 auto;
-  }
-}
-.acento {
-  color: var(--acento);
 }
 form {
   display: flex;
@@ -41,14 +43,6 @@ form {
   text-align: left;
   margin: 0 auto;
   width: 50%;
-  a {
-    color: var(--primario) !important;
-    margin-top: $margen-cel !important;
-    @include cel {
-      width: 100% !important;
-      margin: $margen-cel 0 0 0 !important;
-    }
-  }
   label,
   input,
   select,
@@ -56,7 +50,7 @@ form {
     flex: 1 0 100%;
     margin-top: 0.6rem;
     padding: 0.5rem 0;
-    border-radius: 3px;
+    border-radius: $radio;
   }
   textarea {
     field-sizing: content;
@@ -65,23 +59,23 @@ form {
   textarea,
   select {
     border: none !important;
-    opacity: 0.8;
+    opacity: 0.5;
     padding: 0.5rem;
     @extend .sombra;
   }
   @include cel {
     width: 100%;
-
-    select {
-      padding: 1rem;
-    }
-
-    label {
-      text-align: center;
-    }
+    text-align: center;
   }
 }
-
+svg {
+  max-width: 2.5rem;
+  height: auto;
+  margin: 0 auto;
+  path {
+    fill: var(--acento);
+  }
+}
 .conteCheck {
   display: flex;
   align-items: center;
@@ -98,8 +92,8 @@ form {
 .switch {
   position: relative;
   display: inline-block;
-  max-width: 47px;
-  height: 38px;
+  max-width: 46px;
+  height: 24px;
 
   input {
     opacity: 0;
@@ -107,16 +101,16 @@ form {
     height: 0;
 
     &:checked + .slider {
-      background-color: var(--acento);
+      background-color: $acento;
 
       &:before {
-        transform: translateX(23px);
+        transform: translateX(22px);
         @extend .sombra;
       }
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px var(--acento);
+      box-shadow: 0 0 1px $acento;
     }
   }
 }
@@ -127,7 +121,7 @@ form {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--acento);
+  background-color: $acento;
   transition: 0.3s;
   border-radius: 24px;
 
@@ -148,9 +142,9 @@ form {
   display: flex;
   border-radius: $radio;
   padding: 1rem $margen-cel;
-  margin: 1rem 0.5rem 0.5rem 0;
-  background-color: var(--acento);
   color: white !important;
+  margin: 1rem 0.5rem 0.5rem 0;
+  background-color: $acento;
   @include cel {
     width: 100%;
     text-align: center;
@@ -168,42 +162,34 @@ form {
   pointer-events: none;
 }
 .asistira {
+  background-color: rgba($primario, 0.2);
   .slider {
-    background-color: var(--acento) !important;
+    background-color: $acento !important;
   }
   svg,
   path {
-    fill: var(--acento);
+    fill: $acento;
   }
 }
 
 .noAsistira {
-  .bandeja{
-    background: $urlPatron, rgb(236, 231, 231);
-    background-blend-mode:color-burn;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
-
+  background-color: rgba($gris, 0.3);
   .slider {
-    background-color: var(--gris) !important;
+    background-color: $gris !important;
   }
-
   svg,
   path {
-    fill: var(--secundario);
+    fill: $terciario;
   }
 }
 
 small {
   padding-top: $margen-min;
-  text-align: center;
   font-size: 0.8rem;
 }
 span {
   font-weight: bolder;
-  color: var(--acento);
+  color: $acento;
 }
 
 dialog {
@@ -242,7 +228,6 @@ dialog {
     }
   }
 }
-
 
 .modal {
   position: fixed;

@@ -60,7 +60,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       .update(Invitados)
       .set({
         nombre,
-        pases,
+        pases: Math.trunc(Number(pases)).toString(),
         mesa,
         numeroWhats,
         confirmado,

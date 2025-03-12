@@ -5,7 +5,7 @@ import mdx from "@astrojs/mdx";
 import icon from "astro-icon";
 import db from "@astrojs/db";
 // import netlify from "@astrojs/netlify";
-import vercelServerless from '@astrojs/vercel/serverless';
+import vercelServerless from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({

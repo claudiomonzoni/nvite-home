@@ -1,8 +1,8 @@
 @mixin otono() {
-    --primario: #5e4583;
-    --secundario: #788d96;
+    --primario: rgb(94, 69, 131);
+    --secundario: rgb(120, 141, 150);
     --terciario: rgb(249, 243, 243);
-    --acento: #e68e78;
-    --gris: #785789;
+    --acento: rgba(230, 142, 120, 1);
+    --gris: rgb(120, 87, 137);
     --sombra: rgba(143, 133, 117, 0.5);
   }
