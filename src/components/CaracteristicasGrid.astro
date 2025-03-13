@@ -7,6 +7,8 @@ interface MatrizItems {
   imagen?: string;
   texto?: string;
   enlace?: string;
+  txtbtn?: string;
+  icono?: string;
 }
 interface Props {
   matriz: Array<MatrizItems>;
@@ -21,24 +23,22 @@ const { matriz } = Astro.props;
       <div class="info">
         <div class="conte">
           <h2 set:html={matriz[0].titulo} id="caracteristicash2" />
-          <p>
-            Tus invitados sabrán lo especiales que son para ti, cada invitación
-            se envía con su nombre y los pases asignados
-          </p>
+          <p set:html={matriz[0].texto}> </p>
+            
           <Btn
-            liga="#formu"
-            texto="Saber más"
+          liga={matriz[0].enlace ? matriz[0].enlace : "#formu"}
+            texto={matriz[0].txtbtn ? matriz[0].txtbtn : "Saber más"}
             claro={false}
             clases="btn-bordes"
           >
-            <Icon name="mdi:whatsapp" size={25} />
+            <Icon name={matriz[0].icono ? matriz[0].icono : "mdi:check-all"} size={25} />
           </Btn>
         </div>
       </div>
       <div class="imagen">
         <img
           src={matriz[0].imagen}
-          alt="Invitaciones digitales bodas"
+          alt="Invitaciones digitales / Nvitaciones"
           loading="lazy"
           decoding="async"
         />
@@ -86,10 +86,11 @@ const { matriz } = Astro.props;
 
   }
 
+ 
   #caracteristicas {
     @extend .sombra;
     margin: 0 auto;
-    width: 80%;
+    // width: 80%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
@@ -100,6 +101,7 @@ const { matriz } = Astro.props;
       place-content: center;
       padding: $margen $margen-cel;
       text-align: center;
+      line-height: 1.5rem;
     }
     #item-a {
       grid-column: 1 / -1;
@@ -171,10 +173,11 @@ const { matriz } = Astro.props;
 
     @include cel {
       grid-template-rows: repeat(5, auto);
-      width: 100%;
+      // width: 100%;
       h2{
         font-size: 1.8rem;
       }
+  
       #item-a {
         flex-wrap: wrap;
         grid-column: 1 / -1;

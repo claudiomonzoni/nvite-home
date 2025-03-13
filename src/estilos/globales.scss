@@ -324,9 +324,13 @@ mark {
       font-size: 1.7rem;
     }
   }
-
+ .imaCelular{
+   max-width: 16vw;
+   @include cel {
+    max-width: 60vw;
+  }
+ }
   img {
-    max-width: 12vw;
     position: relative;
     margin-top: 0;
     padding: 0;
@@ -366,7 +370,7 @@ mark {
       left: 6rem;
     }
     @include cel {
-      width: 20vw;
+      width: 27vw;
     }
   }
   .bande {

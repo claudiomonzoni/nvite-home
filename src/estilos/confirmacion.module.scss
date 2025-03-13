@@ -145,15 +145,16 @@ svg {
   color: white !important;
   margin: 1rem 0.5rem 0.5rem 0;
   background-color: $acento;
+  img {
+    width: 1.5rem;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
   @include cel {
     width: 100%;
     text-align: center;
-  }
-  img {
-    max-width: 1.5rem;
-    height: auto;
-    vertical-align: middle;
-    margin-right: 0.5rem;
   }
 }
 .desactivado {
