@@ -5,11 +5,9 @@ import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
 
 interface Props {
-
   description: string;
-
 }
-const {  description } = Astro.props;
+const { description } = Astro.props;
 
 import { Icon } from "astro-icon/components";
 ---
@@ -27,7 +25,7 @@ import { Icon } from "astro-icon/components";
         <p set:html={description} />
         <div class="cta">
           <Btn
-          liga="#precios"
+            liga="#precios"
             texto="Ver invitaciones"
             claro={false}
             clases="btn-oscuro"
@@ -43,26 +41,26 @@ import { Icon } from "astro-icon/components";
     <div class="der anime">
       <!-- <Picture src={cover} alt="Invitaciones digitales para eventos" />
         -->
-        <picture>
-          <source
-            srcset="/invitaciones-digitales-cover-nvitacines.webp"
-            media="(min-width: 479px)"
-          />
-          <source
-            srcset="/invitaciones-digitales-cover-nvitacines-cel.webp"
-            media="(max-width: 479px)"
-          />
-          <img
-            src="/invitaciones-digitales-cover-nvitacines.webp"
-            alt="nvitaciones digitales para eventos bodas y quince años"
-          />
-        </picture>
+      <picture>
+        <source
+          srcset="/invitaciones-digitales-cover-nvitacines.webp"
+          media="(min-width: 479px)"
+        />
+        <source
+          srcset="/invitaciones-digitales-cover-nvitacines-cel.webp"
+          media="(max-width: 479px)"
+        />
+        <img
+          src="/invitaciones-digitales-cover-nvitacines.webp"
+          alt="nvitaciones digitales para eventos bodas y quince años"
+        />
+      </picture>
     </div>
   </div>
 </section>
 
 <style lang="scss">
-  @use "../estilos/variables.scss" as *;
+  @use "../estilos/_variables.scss" as *;
 
   #hero {
     background: white;
@@ -75,6 +73,8 @@ import { Icon } from "astro-icon/components";
     h1 {
       width: 100%;
       color: $primario;
+      font-size: clamp(1.7rem, 3.6vw, 6vw);
+
       span {
         color: $acento;
       }
@@ -106,13 +106,13 @@ import { Icon } from "astro-icon/components";
       // background-position: 190% 0%;
       overflow: hidden;
       border-radius: $margen-min;
-      picture{
+      picture {
         width: fit-content;
         height: auto;
-        img{
+        img {
           object-fit: contain;
           transform: translateY(-1rem);
-          @include cel{
+          @include cel {
             transform: translateY(0);
           }
         }
@@ -131,21 +131,21 @@ import { Icon } from "astro-icon/components";
       }
     }
   }
-  .cta{
+  .cta {
     display: flex;
     justify-content: left;
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
 
-    p{
-      font-size: .8rem;
+    p {
+      font-size: 0.8rem;
       color: $acento;
     }
-    @include cel{
+    @include cel {
       justify-content: center;
-      p{
-        margin: 0!important;
+      p {
+        margin: 0 !important;
         font-size: 1rem;
       }
     }
