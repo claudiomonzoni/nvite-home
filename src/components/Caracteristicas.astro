@@ -1,4 +1,6 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   encabezado: string;
   texto: string;
@@ -14,7 +16,10 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 
 
   <div class="carcateristicas">
-      <div class="icono"><img src={icono} alt={encabezado}  /></div>
+      <div class="icono">
+      <Icon name={icono} size={45} color="#656a8d"/>
+        <!-- <img src={icono} alt={encabezado}  /> -->
+      </div>
     <div class="conte">
       <h3>{encabezado}</h3>
       <p set:html={texto}></p>
@@ -31,7 +36,7 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 }
 
 .icono{
-  img{
+  svg{
     width: 100%;
     height: 100%;
     object-fit: contain;

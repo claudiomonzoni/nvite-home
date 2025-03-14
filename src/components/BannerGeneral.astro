@@ -73,11 +73,6 @@ if (!imagen[urlImagen])
   .imagen {
     order: 0;
     flex: 1 0 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    position: relative;
     z-index: 200;
     img {
       width: auto;
@@ -88,6 +83,9 @@ if (!imagen[urlImagen])
     @include cel {
       img {
         width: 100%;
+        height: 100%;
+        aspect-ratio: 9/13;
+        object-fit: cover;
       }
     }
   }

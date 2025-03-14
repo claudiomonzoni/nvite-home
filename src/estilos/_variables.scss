@@ -70,7 +70,7 @@ $fuenteB: "Averia Serif Libre";
 }
 .imagenFuera {
   height: calc(100% - 2rem);
-  top: 2rem;
+  top: -2rem;
   @include cel {
     height: calc(100% + 1rem);
     top: -1rem;
