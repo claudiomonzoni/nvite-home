@@ -75,6 +75,7 @@ import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
 import Pases from "../../components/bodas/Pases";
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
@@ -96,6 +97,12 @@ import Ventas from "../../components/comunes/Ventas.astro"
 </section>
 
 <Pases folder={frontmatter.json} client:load />
+<ProgresoInvitados
+  email="nvitaplusboda@nvita.me"
+  porcentajeMostrarInvitados={20}
+  frase="¡Ya casi completamos la lista de invitados!"
+  mostrarSiempre={true}
+/>
 
 
   <section class="grid contenido">
