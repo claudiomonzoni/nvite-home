@@ -1,0 +1,13 @@
+---
+interface Props {
+    porcentajeMostrarInvuitados: number;
+    porcentajeInvitadosActual: number;
+    Frase: string;
+    mostrarSiempre: boolean;
+}
+const { porcentajeInvitadosActual, porcentajeMostrarInvuitados, Frase, mostrarSiempre } = Astro.props;
+---
+
+<div id="progresoInvitados">
+    <h2>{Frase}</h2>
+</div>
