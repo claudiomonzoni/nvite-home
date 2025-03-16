@@ -198,7 +198,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
           if (!req.ok) {
             throw new Error("Error al borrar invitado");
-            
           }
         } else {
           return;
@@ -319,29 +318,36 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       background-color: #cacaca;
     }
   }
+
   article {
     background: #fff;
-    border-radius: 15px;
+    border-radius: $radio;
     padding: $margen-cel;
     color: $primario;
-    height: 100%;
+
+
     @extend .sombra;
     h2 {
       color: $acento;
       font-size: clamp(1.8rem, 2.5vw, 2rem);
     }
+
     .vip {
       color: $secundario;
       font-weight: bold;
       margin-bottom: $margen-min;
-      svg{
+      svg {
         vertical-align: middle;
-        margin: 0 .4rem 0 0; 
+        margin: 0 0.4rem 0 0;
       }
     }
-    #botones{
+    #info{
+
+      margin: .5rem 0;
+    }
+    #botones {
       display: flex;
-      gap: .5rem;
+      gap: 0.5rem;
     }
     button {
       background-color: $acento;
@@ -380,10 +386,10 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       flex-wrap: wrap;
       justify-content: space-between;
     }
-.control {
+    .control {
       margin-top: 0.5rem;
-      padding: $margen-min;
-      border-top: solid 1px #ccc;
+      padding-top: $margen-min;
+      border-top: solid 1px #676767;
       display: flex;
       justify-content: right;
       align-items: center;
@@ -398,6 +404,10 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
         @extend .sombra;
         max-width: 300px;
       }
+    }
+    @include cel {
+      padding: $margen-min;
+      font-size: 0.8rem;
     }
   }
 </style>

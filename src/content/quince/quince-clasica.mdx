@@ -40,10 +40,16 @@ import Regalos from "../../components/quince/Regalos.astro";
 import Contador from "../../components/quince/Contador.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import Ventas from "../../components/comunes/Ventas.astro"
 
 
-
+<ProgresoInvitados
+  email="claudiomonzoni@hotmail.com"
+  porcentajeMostrarInvitados={20}
+  frase="¡Ya casi completamos la lista de invitados!"
+  mostrarSiempre={true}
+/>
   <Encabezados texto="Mis 15 años" />
    <ParrafosLibres texto="El anhelo de todo padre es ver a su hija transformarse de una niña feliz a una mujer segura de sí. Y más orgulloso no podría estar y por eso contigo quiero celebra." />
 

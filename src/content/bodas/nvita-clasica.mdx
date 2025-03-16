@@ -59,12 +59,6 @@ import Ventas from "../../components/comunes/Ventas.astro";
 
 
 <section class="grid contenido"> 
-<ProgresoInvitados
-  email="claudiomonzoni@hotmail.com"
-  porcentajeMostrarInvitados={20}
-  frase="¡Ya casi completamos la lista de invitados!"
-  mostrarSiempre={true}
-/>
 </section>
 <section class="grid contenido">
   <Padres
@@ -77,6 +71,12 @@ import Ventas from "../../components/comunes/Ventas.astro";
 
 <Pases folder={frontmatter.json} client:load />
 
+<ProgresoInvitados
+  email="claudiomonzoni@hotmail.com"
+  porcentajeMostrarInvitados={20}
+  frase="¡Ya casi completamos la lista de invitados!"
+  mostrarSiempre={true}
+/>
 
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />

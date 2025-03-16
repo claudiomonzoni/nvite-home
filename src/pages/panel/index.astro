@@ -15,8 +15,6 @@ if (!NvitaAuth.currentUser) {
 }
 const usuarioEmail = NvitaAuth.currentUser.email;
 
-
-
 if (!usuarioEmail) {
   console.error("El usuario no está autenticado.");
   throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
@@ -33,24 +31,24 @@ try {
     .from(Usuario)
     .where(eq(Usuario.email, usuarioEmail));
 
-    if (usuarios.length === 0) {
-      throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
-    }
-    
-    tipoInvitacion = usuarios[0].tipo;
-    ruta = usuarios[0].ruta;
-    
-    // Obtén los datos de los invitados
-    invitadosData = await db
+  if (usuarios.length === 0) {
+    throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
+  }
+
+  tipoInvitacion = usuarios[0].tipo;
+  ruta = usuarios[0].ruta;
+
+  // Obtén los datos de los invitados
+  invitadosData = await db
     .select()
     .from(Invitados)
     .where(eq(Invitados.usuarioId, usuarios[0].id))
     .orderBy(desc(Invitados.id));
-  } catch (error) {
-    console.error("Error al obtener los datos:", error);
-    invitadosData = [];
-  }
-  const usuarioId = usuarios[0].id;
+} catch (error) {
+  console.error("Error al obtener los datos:", error);
+  invitadosData = [];
+}
+const usuarioId = usuarios[0].id;
 ---
 
 <Layout title="Panel de administración">
@@ -60,18 +58,56 @@ try {
       <div class="barra-progreso-container">
         <h3>Progreso de confirmaciones de tu Nvitacion</h3>
         <div class="barra-progreso">
-          <div class="barra" style={`--progress: ${
-            invitadosData.length > 0 
-              ? Math.round((invitadosData.filter(inv => inv.confirmado && !inv.noAsiste).length / invitadosData.length) * 100)
-              : 0
-          }%`}></div>
+          <div
+            class="barra"
+            style={`--progress: ${
+              invitadosData.length > 0
+                ? Math.round(
+                    (invitadosData.filter(
+                      (inv) => inv.confirmado && !inv.noAsiste
+                    ).length /
+                      invitadosData.length) *
+                      100
+                  )
+                : 0
+            }%`}
+          >
+          </div>
         </div>
         <p class="porcentaje-texto">
-          <span class="porcentaje">{invitadosData.length > 0 
-            ? Math.round((invitadosData.filter(inv => inv.confirmado && !inv.noAsiste).length / invitadosData.length) * 100)
-            : 0}%</span> de pases confirmados,
-          <span class="confirmados">{invitadosData.reduce((sum, inv) => inv.confirmado && !inv.noAsiste ? sum + parseInt(inv.pases || "0") : sum, 0)}</span> pases confirmados, 
-          <span class="pendientes">{invitadosData.reduce((sum, inv) => !inv.confirmado ? sum + parseInt(inv.pases || "0") : sum, 0)}</span> pases por confirmar
+          <span class="porcentaje"
+            >{
+              invitadosData.length > 0
+                ? Math.round(
+                    (invitadosData.filter(
+                      (inv) => inv.confirmado && !inv.noAsiste
+                    ).length /
+                      invitadosData.length) *
+                      100
+                  )
+                : 0
+            }%</span
+          > de pases confirmados,
+          <span class="confirmados"
+            >{
+              invitadosData.reduce(
+                (sum, inv) =>
+                  inv.confirmado && !inv.noAsiste
+                    ? sum + parseInt(inv.pases || "0")
+                    : sum,
+                0
+              )
+            }</span
+          > pases confirmados,
+          <span class="pendientes"
+            >{
+              invitadosData.reduce(
+                (sum, inv) =>
+                  !inv.confirmado ? sum + parseInt(inv.pases || "0") : sum,
+                0
+              )
+            }</span
+          > pases por confirmar
         </p>
       </div>
       <div class="estadisticas">
@@ -81,48 +117,53 @@ try {
         </div>
         <div class="stat-item">
           <span class="stat-numero">
-            {invitadosData.reduce((sum, inv) => {
-              const pases = Math.round(parseFloat(inv.pases || "0"));
-              return sum + (inv.noAsiste ? 0 : pases);
-            }, 0)}
+            {
+              invitadosData.reduce((sum, inv) => {
+                const pases = Math.round(parseFloat(inv.pases || "0"));
+                return sum + (inv.noAsiste ? 0 : pases);
+              }, 0)
+            }
           </span>
           <span class="stat-label">Total de pases asignados</span>
         </div>
         <div class="stat-item">
-          <span class="stat-numero">{invitadosData.filter(inv => inv.confirmado).length}</span>
+          <span class="stat-numero"
+            >{invitadosData.filter((inv) => inv.confirmado).length}</span
+          >
           <span class="stat-label">Invitaciones confirmadas</span>
         </div>
         <div class="stat-item">
-          <span class="stat-numero">{invitadosData.filter(inv => inv.noAsiste).length}</span>
+          <span class="stat-numero"
+            >{invitadosData.filter((inv) => inv.noAsiste).length}</span
+          >
           <span class="stat-label">No asisten</span>
         </div>
         <div class="stat-item">
-          <span class="stat-numero">{invitadosData.filter(inv => inv.InvitacionEnviada).length}</span>
+          <span class="stat-numero"
+            >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
+          >
           <span class="stat-label">Invitaciones enviadas</span>
         </div>
       </div>
-    
+
       <div class="conteFiltros">
-        <div class="filtros">
-          <input
+        <input
           id="search-input"
           type="text"
           placeholder="Buscar invitado por nombre..."
           class="buscador"
-          />
+        />
+        <div class="filtros">
           <div class="filtros-estado">
             <button class="filtro-btn activo" data-estado="todos">Todos</button>
             <button class="filtro-btn" data-estado="enviada">Enviada</button>
             <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
             <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
+            <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
           </div>
         </div>
-        
-        <ol id="ayudas">
-          <li>Invitación <b class="enviada">Enviada</b></li>
-          <li>Invitación <b class="confirmado">Confirmada</b></li>
-          <li>Invitación <b class="NoAsiste">No asite</b></li>
-        </ol>
+
+   
       </div>
     </div>
     <ul id="invitados-list">
@@ -133,9 +174,13 @@ try {
               class="invitado-item"
               data-nombre={invitado.nombre.toLowerCase()}
               data-estado={
-                invitado.confirmado ? "confirmado" :
-                invitado.noAsiste ? "NoAsiste" :
-                invitado.InvitacionEnviada ? "enviada" : "todos"
+                invitado.confirmado
+                  ? "confirmado"
+                  : invitado.noAsiste
+                    ? "NoAsiste"
+                    : invitado.InvitacionEnviada
+                      ? "enviada"
+                      : "noEnviada"
               }
             >
               <Invitado
@@ -156,31 +201,34 @@ try {
     {
       usuarioId ? (
         <>
-        <button id="agregar-invitado">
-          <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-        </button>
-        <AgregarInvitado usuarioId = {usuarioId} />
+          <button id="agregar-invitado">
+            <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+          </button>
+          <AgregarInvitado usuarioId={usuarioId} />
           <EditarInvitado />
         </>
       ) : (
-        <>
-          {console.error("No se encontró el ID del usuario.")}
-        </>
+        <>{console.error("No se encontró el ID del usuario.")}</>
       )
     }
   </section>
 
   <!-- <div id="auth-state" class="auth-banner hidden"></div> -->
-
 </Layout>
 
 <script>
   // Funcionalidad del buscador y filtros
   document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const searchInput = document.getElementById(
+      "search-input"
+    ) as HTMLInputElement;
     const invitadosList = document.getElementById("invitados-list");
-    const invitadoItems = invitadosList.querySelectorAll(".invitado-item") as NodeListOf<HTMLLIElement>;
-    const filtroBtns = document.querySelectorAll(".filtro-btn") as NodeListOf<HTMLButtonElement>;
+    const invitadoItems = invitadosList.querySelectorAll(
+      ".invitado-item"
+    ) as NodeListOf<HTMLLIElement>;
+    const filtroBtns = document.querySelectorAll(
+      ".filtro-btn"
+    ) as NodeListOf<HTMLButtonElement>;
 
     let estadoFiltro = "todos";
 
@@ -191,10 +239,11 @@ try {
       invitadoItems.forEach((item) => {
         const nombre = item.getAttribute("data-nombre") || "";
         const estado = item.getAttribute("data-estado") || "";
-        
+
         const cumpleBusqueda = nombre.includes(searchTerm);
-        const cumpleFiltro = estadoFiltro === "todos" || estado === estadoFiltro;
-        
+        const cumpleFiltro =
+          estadoFiltro === "todos" || estado === estadoFiltro;
+
         item.style.display = cumpleBusqueda && cumpleFiltro ? "block" : "none";
       });
     };
@@ -203,10 +252,10 @@ try {
     searchInput.addEventListener("input", filtrarInvitados);
 
     // Evento para los botones de filtro
-    filtroBtns.forEach(btn => {
+    filtroBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
         // Remover clase activo de todos los botones
-        filtroBtns.forEach(b => b.classList.remove("activo"));
+        filtroBtns.forEach((b) => b.classList.remove("activo"));
         // Agregar clase activo al botón clickeado
         btn.classList.add("activo");
         // Actualizar el estado del filtro
@@ -218,16 +267,15 @@ try {
   });
 </script>
 
-
 <style lang="scss">
-  @use  "../../estilos/_variables.scss" as *;
+  @use "../../estilos/_variables.scss" as *;
   #hero {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     padding-bottom: $margen-min;
-    
+
     @include cel {
       gap: 0.5rem;
     }
@@ -245,32 +293,13 @@ try {
     border-radius: 5px;
     font-size: 1rem;
     flex: 1 0 auto;
-    
+
     @include cel {
       margin: $margen-min 0;
     }
   }
- 
-  #ayudas {
-    display: flex;
-    flex: 1 0 auto;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    font-size: clamp(0.6rem, 0.7rem, 1rem);
-    
-    @include cel {
-      order: 0;
-    }      
 
-    li {
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: .3rem;
-    }
-  }
+  
 
   .conteFiltros {
     width: 100%;
@@ -279,7 +308,9 @@ try {
     border-bottom: solid 1px #ccc;
     padding-bottom: $margen-min;
     flex-wrap: wrap;
-    
+    gap: 1rem;
+    align-items: center;
+
     @include cel {
       grid-template-columns: 1fr;
     }
@@ -289,6 +320,12 @@ try {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+    .invitado-item {
+      flex: 1 1 30%;
+      list-style: none;
+      margin-left: 0!important;
+     
+    }
 
     @include cel {
       grid-template-columns: 1fr;
@@ -298,20 +335,25 @@ try {
     @include tableta {
       grid-template-columns: 1fr 1fr;
     }
-
-    li {
-      flex: 1 1 30%;
-      width: fit-content;
-    }
   }
 
   .stat-item {
     flex: 1;
+    display: flex;
+    flex-direction: column;
     min-width: 150px;
     text-align: center;
     padding: 1rem;
     border-right: 1px solid rgba($primario, 0.1);
-    
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+    .stat-numero {
+      font-size: clamp(1.2rem, 1.5vw, 2rem);
+      color: $acento;
+      font-weight: bold;
+    }
+
     &:last-child {
       border-right: none;
     }
@@ -322,7 +364,7 @@ try {
       border-right: none;
       border-bottom: 1px solid rgba($primario, 0.1);
 
-      &:nth-last-child(-n+2) {
+      &:nth-last-child(-n + 2) {
         border-bottom: none;
       }
     }
@@ -331,18 +373,19 @@ try {
   .filtros {
     display: flex;
     width: 100%;
-    flex : 1 0 auto;
+    flex: 1 0 auto;
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
     @include cel {
-      
-      order: 1
+      order: 1;
+    }
+    input{
+      border-radius: $radio;
     }
   }
-  
+
   .filtros-estado {
- 
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
@@ -376,7 +419,6 @@ try {
     padding: 1rem;
     background: white;
     border-radius: $radio;
-    margin-bottom: 1rem;
     flex-wrap: wrap;
     @extend .sombra;
 
@@ -388,7 +430,6 @@ try {
 
   .barra-progreso-container {
     width: 100%;
-
 
     h3 {
       color: $primario;
@@ -403,7 +444,7 @@ try {
     background-color: #f0f0f0;
     border-radius: 10px;
     overflow: hidden;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
 
   .barra {
@@ -411,6 +452,7 @@ try {
     width: 0;
     background: linear-gradient(to right, $primario, $acento);
     animation: crecer 1.5s ease-out forwards;
+    
   }
 
   @keyframes crecer {
@@ -434,26 +476,47 @@ try {
       color: $acento;
     }
 
-    .confirmados, .pendientes {
+    .confirmados,
+    .pendientes {
       font-weight: bold;
       color: $acento;
     }
   }
 
+  #agregar-invitado {
+    background-color: $acento;
+    border-radius: $radio;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: clamp(1.1rem, 1rem, 2rem);
+    font-weight: bold;
+    margin: 1rem 0;
+    position: fixed;
+    right: 5%;
+    bottom: 2%;
+    @extend .sombra;
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+  }
+
   //alerta
-//   .auth-banner {
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   background-color: #ff4444;
-//   color: white;
-//   text-align: center;
-//   padding: 10px;
-//   z-index: 1000;
-// }
+  //   .auth-banner {
+  //   position: fixed;
+  //   top: 0;
+  //   width: 100%;
+  //   background-color: #ff4444;
+  //   color: white;
+  //   text-align: center;
+  //   padding: 10px;
+  //   z-index: 1000;
+  // }
 
-// .hidden {
-//   // display: none;
-// }
-
+  // .hidden {
+  //   // display: none;
+  // }
 </style>
