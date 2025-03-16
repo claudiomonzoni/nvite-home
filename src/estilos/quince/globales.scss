@@ -183,10 +183,10 @@ b {
 }
 
 .fondo-mitad {
-  background: var(--terciario);
+  background: var(--fondoBurn);
   background: linear-gradient(
     0deg,
-    var(--terciario) 88%,
+    var(--fondoBurn) 88%,
     rgba(255, 255, 255, 0) 88%,
     rgba(255, 255, 255, 0) 100%
   );
@@ -292,7 +292,7 @@ border: solid;
   }
  p  {
     overflow-x: auto;
-    overflow-behavior-inline: contain;
+    overscroll-behavior-inline: contain;
     scroll-snap-type: inline mandatory;
     display: grid;
     gap: 0px;
