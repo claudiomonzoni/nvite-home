@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 
 interface Props {
   icono: string;
@@ -10,27 +10,26 @@ interface Props {
 }
 const { icono, titulo, array, fecha, codigo } = Astro.props;
 
-const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day: "2-digit", month: "long", year: "numeric" }) : null;
+const formattedFecha = fecha
+  ? new Date(fecha).toLocaleDateString("es-MX", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : null;
 ---
- 
+
 <div class="carta">
   <Icon name={icono} size={40} />
   <h3 class="overlay">{titulo}</h3>
-  {
-    fecha ? <p>{formattedFecha}</p> : <slot />
-  }
+  {fecha ? <p>{formattedFecha}</p> : <slot />}
 
-  {
-    array ? array.map(item => <li>{item}</li>)  :  <slot />
-  }
+  {array ? array.map((item) => <li>{item}</li>) : <slot />}
 
-  {
-    codigo ? <p>{codigo}</p> : <slot />
-  }
- 
+  {codigo ? <p>{codigo}</p> : <slot />}
 </div>
 
-<style lang="scss" >
+<style lang="scss">
   @use "../../estilos/quince/_variables.scss" as *;
   .overlay {
     // filter: ;
@@ -44,7 +43,7 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
     flex: 1;
     text-align: center;
     background: $urlPatron, var(--fondoBurn);
-    background-blend-mode:color-burn;
+    background-blend-mode: color-burn;
     background-position: center;
     display: flex;
     flex-direction: column;
@@ -54,15 +53,14 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
     padding: $margen-min;
     position: relative;
     font-size: clamp(1.3rem, 1.3vw, 2vw);
-    li{
+    li {
       list-style: none;
       padding-bottom: $margen-min;
     }
-    @extend .sombra;
     h3 {
       width: fit-content;
       color: var(--secundario);
-      border-bottom: solid 1px var(--terciario);
+      border-bottom: solid .5px var(--primario);
       margin: $margen-min 0;
       font-size: clamp(2.5rem, 1.6vw, 3rem);
       @include cel {
@@ -70,17 +68,17 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
       }
     }
 
-    svg path{
-        border: solid;
-        fill: var(--gris);
-      }
-   
-    
+    svg path {
+      border: solid;
+      fill: var(--acento);
+    }
+
     img {
       max-width: 2.5rem;
       height: auto;
       margin: 0 auto;
     }
+    @extend .sombra;
 
     @include cel {
       flex: 1 0 100%;
@@ -104,7 +102,6 @@ const formattedFecha = fecha ? new Date(fecha).toLocaleDateString("es-MX", { day
           start: "top 60%",
           end: "bottom 80%",
           scrub: true,
-        
         },
       });
       // desktop setup code here...

@@ -36,7 +36,7 @@ import Mapa from "./Mapa.astro";
 <style lang="scss">
   @use "../../estilos/quince/_variables.scss" as *;
   h3 {
-    color: var(--secundario);
+    color: var(--acento);
     font-size: clamp(3rem, 2.5vw, 3rem);
   }
 
@@ -56,6 +56,7 @@ import Mapa from "./Mapa.astro";
       align-items: center;
     }
     time, address {
+      color: var(--secundario);
       svg{
         width: 15px;
         height: auto;

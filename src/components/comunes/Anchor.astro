@@ -20,18 +20,18 @@ const { clases, conBorde, redondo, sombra, tema, url, texto,  ...rest } = Astro.
 </a>
 
 <style lang="scss">
-  @use "../../estilos/_variables.scss" as *;
+  @use "../../estilos/quince/_variables.scss" as *;
 
   @mixin liga($conBorde, $redondo) {
   margin: $margen-min 0;
   color: white;
-  background: $acento;
+  background: var(--acento);
   padding: $margen-min $margen-cel;
   @if $conBorde {
-    border: 1px solid $acento;
-    background: $secundario;
+    border: 1px solid var(--acento);
+    background: var(--secundario);
     opacity: 0.8;
-    color: $primario;
+    color: var(--primario);
   }
   @if $redondo {
     border-radius: $radio;
