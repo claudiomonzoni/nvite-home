@@ -1,4 +1,4 @@
-@import "../../estilos/bodas/_variables.scss";
+@use "../../estilos/bodas/_variables.scss" as *;
 
 #hero {
   height: 90dvh;

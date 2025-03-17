@@ -2,10 +2,14 @@
 @use "variables" as *;
 
 @use '../paletas/invierno' as *;
+@use '../paletas/otono' as *;
 @use '../paletas/base' as *;
 
 
 
+:root[data-paleta="otono"] {
+  @include otono();
+}
 :root[data-paleta="invierno"] {
   @include invierno();
 }

@@ -5,11 +5,10 @@ interface Props {
     mapName: string;
 }
 const { lat, lng, mapName } = Astro.props;
-
-
 ---
 
 <div id={mapName}></div>
+
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
     #mapa1, #mapa2 {
@@ -19,6 +18,7 @@ const { lat, lng, mapName } = Astro.props;
       height: 100%;
     }
 </style>
+
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
@@ -26,28 +26,50 @@ const { lat, lng, mapName } = Astro.props;
   crossorigin=""
 />
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" is:inline></script>
+
 <script define:vars={{ lat, lng, mapName }}>
-    var map = L.map(mapName).setView([lat, lng], 16);
+  let map;
+
+  function initMap() {
+    if (map) {
+      map.remove(); // Remove existing map instance
+    }
+
+    map = L.map(mapName).setView([lat, lng], 16);
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 27,
- 
     }).addTo(map);
-    var circle = L.circle([lat, lng], {
+
+    L.circle([lat, lng], {
       color: "red",
       fillColor: "#E76128",
       fillOpacity: 0.5,
       radius: 30,
     }).addTo(map);
 
-    setTimeout(function() {
-        map.invalidateSize();
-        console.log('first')
-    }, 100);
+    // Force map to recalculate its container's size
+    map.invalidateSize();
+  }
 
-//     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-// if (isMobile) {
+  // Initialize map when script loads
+  initMap();
 
-//   map.dragging.disable();
-// }
-//     map.scrollWheelZoom.disable();
-  </script>
+  // Re-initialize map when dialog opens
+  document.addEventListener('DOMContentLoaded', () => {
+    const dialog = document.querySelector('dialog');
+    if (dialog) {
+      dialog.addEventListener('show', () => {
+        setTimeout(() => {
+          initMap();
+        }, 100);
+      });
+    }
+  });
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    if (map) {
+      map.invalidateSize();
+    }
+  });
+</script>

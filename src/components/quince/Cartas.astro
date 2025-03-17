@@ -20,7 +20,9 @@ const formattedFecha = fecha
 ---
 
 <div class="carta">
-  <Icon name={icono} size={40} />
+  <div class="icono">
+    <Icon name={icono} size={40} />
+  </div>
   <h3 class="overlay">{titulo}</h3>
   {fecha ? <p>{formattedFecha}</p> : <slot />}
 
@@ -56,6 +58,10 @@ const formattedFecha = fecha
     li {
       list-style: none;
       padding-bottom: $margen-min;
+      color: var(--primario);
+    }
+    p{
+      color: var(--primario);
     }
     h3 {
       width: fit-content;
@@ -66,11 +72,6 @@ const formattedFecha = fecha
       @include cel {
         border-bottom: solid 1px var(--secundario);
       }
-    }
-
-    svg path {
-      border: solid;
-      fill: var(--acento);
     }
 
     img {
@@ -84,6 +85,12 @@ const formattedFecha = fecha
       flex: 1 0 100%;
     }
   }
+
+  .icono  {
+      path{
+        fill: var(--acento)!important;
+      }
+    }
 </style>
 <script>
   import gsap from "gsap";

@@ -244,4 +244,15 @@ import Anchor from "../comunes/Anchor.astro";
       dialog.close();
     });
   });
+
+  const dialog = document.querySelector('dialog');
+  const openButtons = document.querySelectorAll('[data-open-map]');
+
+  openButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      dialog.showModal();
+      // Create and dispatch show event
+      dialog.dispatchEvent(new Event('show'));
+    });
+  });
 </script>
