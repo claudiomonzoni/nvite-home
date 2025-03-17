@@ -169,12 +169,12 @@ b {
   .bloqueMapa:last-child {
     z-index: 400;
     transform: translateY(-2rem);
-  }
-  .izq {
-    order: 2;
-  }
-  .der {
-    order: 1;
+    .izq {
+      order: 2;
+    }
+    .der {
+      order: 1;
+    }
   }
   @include cel {
     transform: translateY(0);
