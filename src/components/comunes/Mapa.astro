@@ -16,6 +16,12 @@ const { lat, lng, mapName } = Astro.props;
     width: 100%;
     height: 100%;
   }
+
+
+  :global(.custom-marker) {
+    color: var(--acento);
+    font-size: 2.5rem;
+  }
 </style>
 <link
   rel="stylesheet"
@@ -26,28 +32,66 @@ const { lat, lng, mapName } = Astro.props;
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" is:inline
 ></script>
 <script define:vars={{ lat, lng, mapName }}>
-  var map = L.map(mapName).setView([lat, lng], 15);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 27,
-  }).addTo(map);
+  let map;
 
-  L.marker([lat, lng]).addTo(map).bindPopup("Ubicación").openPopup();
+  function initMap() {
+    if (map) {
+      map.remove(); // Remove existing map instance
+    }
 
-  setTimeout(function () {
-    const boton1 = document.getElementById("mapa1-btn");
-    const boton2 = document.getElementById("mapa2-btn");
-    boton1.addEventListener("click", (e) => {
-      map.invalidateSize();
+    map = L.map(mapName, {
+      zoomControl: false, // Disable default zoom controls
+      attributionControl: false // Remove attribution
+    }).setView([lat, lng], 16);
+
+    // Using CartoDB Positron for a light, clean style
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 27,
+      subdomains: 'abcd',
+    }).addTo(map);
+
+    // Custom marker icon
+    const customIcon = L.divIcon({
+      html: `<i class="fa-solid fa-location-dot custom-marker"></i>`,
+      className: 'custom-div-icon',
+      iconSize: [30, 42],
+      iconAnchor: [15, 42]
     });
-    boton2.addEventListener("click", (e) => {
+
+    // Add marker with custom icon
+    L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+    // Add custom zoom controls
+    L.control.zoom({
+      position: 'bottomright'
+    }).addTo(map);
+
+    // Force map to recalculate its container's size
+    setTimeout(() => {
       map.invalidateSize();
-    });
-  }, 100);
+    }, 100);
+  }
 
-  //     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  // if (isMobile) {
+  // Initialize map when custom event is triggered
+  document.addEventListener('map-dialog-opened', (e) => {
+    if (e.detail.mapName === mapName) {
+      setTimeout(initMap, 0);
+    }
+  });
 
-  //   map.dragging.disable();
-  // }
-  //     map.scrollWheelZoom.disable();
+  // Initialize map on page load
+  document.addEventListener('DOMContentLoaded', initMap);
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    if (map) {
+      map.invalidateSize();
+    }
+  });
 </script>
+
+<!-- Add Font Awesome for the marker icon -->
+<link 
+  rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>

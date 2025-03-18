@@ -227,32 +227,31 @@ import Anchor from "../comunes/Anchor.astro";
     });
 
     // dentro del bucle encuentro el mapa del modal
-    const btn = bMapa.querySelector(".btn");
-    // const modal: HTMLElement = bMapa.querySelector(".modal");
+    const btn = bMapa.querySelector(".large");  // Changed from .btn to .large
     const dialog = bMapa.querySelector("dialog");
     const cerrar = bMapa.querySelector("#close");
-    const mapName = dialog.closest("div").childNodes[1].childNodes[3]
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      // modal.style.display = "block";
-      dialog.showModal();
-  
-    });
-    cerrar.addEventListener("click", (e) => {
-      e.preventDefault();
-      // modal.style.display = "none";
-      dialog.close();
-    });
+    
+    if (btn && dialog) {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.showModal();
+        
+        // Dispatch custom event when dialog opens
+        setTimeout(() => {
+          const showEvent = new CustomEvent('map-dialog-opened', {
+            detail: { mapName: dialog.getAttribute('data-mapa') }
+          });
+          document.dispatchEvent(showEvent);
+        }, 100);
+      });
+    }
+
+    if (cerrar && dialog) {
+      cerrar.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.close();
+      });
+    }
   });
 
-  const dialog = document.querySelector('dialog');
-  const openButtons = document.querySelectorAll('[data-open-map]');
-
-  openButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      dialog.showModal();
-      // Create and dispatch show event
-      dialog.dispatchEvent(new Event('show'));
-    });
-  });
 </script>
