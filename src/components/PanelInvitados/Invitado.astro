@@ -13,6 +13,7 @@ export type InvitadoProps = {
   InvitacionEnviada: boolean;
   noAsiste: boolean;
   tipoInvitacion: string;
+  mensajePersonalizado?: string;
 };
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
@@ -218,8 +219,22 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       const ediataDialog = document.querySelector(
         "#editar-invitado-dialog"
       ) as HTMLDialogElement;
+      
+      // Configurar el evento change del checkbox VIP
+      const vipCheckbox = ediataDialog.querySelector(
+        "input[name='vip']"
+      ) as HTMLInputElement;
+      const mensajeVipContainer = ediataDialog.querySelector(
+        "#mensaje-vip-container"
+      ) as HTMLDivElement;
+      
+      if (vipCheckbox && mensajeVipContainer) {
+        vipCheckbox.addEventListener("change", () => {
+          mensajeVipContainer.style.display = vipCheckbox.checked ? "block" : "none";
+        });
+      }
+      
       llenar(ediataDialog, id, uid);
-
       ediataDialog.showModal();
       ediataDialog.addEventListener("click", (e) => {
         if (e.target === e.currentTarget) {
@@ -264,6 +279,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       const noAsisteCheckbox = dialogo.querySelector(
         "input[name='noAsiste']"
       ) as HTMLInputElement;
+      const mensajePersonalizadoTextarea = dialogo.querySelector(
+        "textarea[name='mensajePersonalizado']"
+      ) as HTMLTextAreaElement;
+      const mensajeVipContainer = dialogo.querySelector(
+        "#mensaje-vip-container"
+      ) as HTMLDivElement;
 
       const invitadoDataPromise = getInvitadoData(id, uid);
       invitadoDataPromise.then((invitadoData) => {
@@ -272,12 +293,20 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
           pasesInput.value = invitadoData[0].pases;
-          mesaInput.value = invitadoData[0].mesa.toString();
-          numeroWhatsInput.value = invitadoData[0].numeroWhats.toString();
+          mesaInput.value = invitadoData[0].mesa?.toString() || "";
+          numeroWhatsInput.value = invitadoData[0].numeroWhats?.toString() || "";
           confirmadoCheckbox.checked = invitadoData[0].confirmado;
           vipCheckbox.checked = invitadoData[0].vip;
           invitacionEnviadaCheckbox.checked = invitadoData[0].InvitacionEnviada;
           noAsisteCheckbox.checked = invitadoData[0].noAsiste;
+          
+          if (mensajePersonalizadoTextarea) {
+            mensajePersonalizadoTextarea.value = invitadoData[0].mensajePersonalizado || "";
+            // Mostrar/ocultar el contenedor de mensaje VIP según el estado del checkbox
+            if (mensajeVipContainer) {
+              mensajeVipContainer.style.display = invitadoData[0].vip ? "block" : "none";
+            }
+          }
         }
       });
     };

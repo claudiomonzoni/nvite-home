@@ -49,6 +49,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     InvitacionEnviada,
     noAsiste,
     tipoInvitacion,
+    mensajePersonalizado,
   } = await request.json();
 
   try {
@@ -68,6 +69,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
         InvitacionEnviada,
         noAsiste,
         tipoInvitacion,
+        mensajePersonalizado: vip ? mensajePersonalizado : null,
       })
       .where(eq(Invitados.id, Number(id)));
 

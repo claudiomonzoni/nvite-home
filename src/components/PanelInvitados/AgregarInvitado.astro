@@ -112,6 +112,15 @@ const { usuarioId } = Astro.props;
         />
       </div>
 
+      <div id="mensaje-vip-container" class="mensaje-vip-container" style="display: none;">
+        <label for="mensajePersonalizado">Mensaje personalizado para invitado VIP</label>
+        <textarea
+          name="mensajePersonalizado"
+          placeholder="Escribe un mensaje especial para este invitado VIP"
+          rows="3"
+        ></textarea>
+      </div>
+
       <input type="submit" value="Agregar invitación" />
     </form>
   </div>
@@ -136,6 +145,19 @@ const { usuarioId } = Astro.props;
   const dialog = document.querySelector(
     "#agrega-invitado-dialog"
   ) as HTMLDialogElement;
+  const mensajeVipContainer = document.querySelector(
+    "#mensaje-vip-container"
+  ) as HTMLDivElement;
+  const vipCheckbox = document.querySelector(
+    "input[name='vip']"
+  ) as HTMLInputElement;
+
+  // Mostrar/ocultar campo de mensaje VIP cuando cambia el checkbox
+  vipCheckbox?.addEventListener("change", () => {
+    if (mensajeVipContainer) {
+      mensajeVipContainer.style.display = vipCheckbox.checked ? "block" : "none";
+    }
+  });
 
   // dialog
   openDialogBtn.addEventListener("click", () => dialog.showModal());
@@ -179,12 +201,12 @@ const { usuarioId } = Astro.props;
       const mesa = sanitize(formData.get("mesa") as string);
       const numeroWhats = sanitize(formData.get("numeroWhats") as string);
       const confirmado = formData?.get("confirmado") === "on" ? true : false;
-      // const confirmado = formData?.get("confirmado") === "on" ? true : (false ?? false);
       const vip = formData?.get("vip") === "on" ? true : false;
       const InvitacionEnviada =
         formData?.get("InvitacionEnviada") === "on" ? true : false;
       const noAsiste = formData?.get("noAsiste") === "on" ? true : false;
       const tipoInvitacion = sanitize(formData.get("tipoInvitacion") as string);
+      const mensajePersonalizado = vip ? sanitize(formData.get("mensajePersonalizado") as string) : null;
 
       const req = await fetch("/api/addInvitados.json", {
         method: "POST",
@@ -202,6 +224,7 @@ const { usuarioId } = Astro.props;
           InvitacionEnviada,
           noAsiste,
           tipoInvitacion,
+          mensajePersonalizado,
         }),
       });
 
@@ -260,11 +283,32 @@ const { usuarioId } = Astro.props;
       color: $acento;
     }
     input,
-    select {
+    select,
+    textarea {
       border-radius: 5px;
       width: 100%;
       margin: 0.5rem 0;
       padding: 0.6rem;
+    }
+  }
+
+  .mensaje-vip-container {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #fff3cd;
+    border-radius: 5px;
+    border: 1px solid #ffeeba;
+    
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      width: 100%;
+      border: 1px solid #ddd;
+      &:focus {
+        outline: none;
+        border-color: $acento;
+      }
     }
   }
 

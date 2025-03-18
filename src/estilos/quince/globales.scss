@@ -196,14 +196,14 @@ b {
   color: white;
   border: 1px solid white;
   margin: 0.5rem 0.5rem 0.5rem 0;
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
   &:hover {
     background: white;
     border-radius: $margen-min;
     color: var(--primario);
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
   }
   @if $claro {
     background: var(--secundario);
@@ -229,6 +229,8 @@ b {
 .gale {
   // $numero : var(--num);
   /* Firefox */
+  margin: 0rem 0 $margen 0;
+
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--gris) var(--acento);
@@ -265,7 +267,6 @@ b {
     background-color: var(--acento);
   }
 
-  margin: 0rem 0 $margen 0;
 
   $min: -16deg;
   $max: 16deg;

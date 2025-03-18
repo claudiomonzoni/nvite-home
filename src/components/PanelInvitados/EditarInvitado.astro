@@ -69,14 +69,132 @@ import Checkbox from "./Checkbox.astro";
         />
       </div>
 
+      <div id="mensaje-vip-container" class="mensaje-vip-container" style="display: none;">
+        <label for="mensajePersonalizado">Mensaje personalizado para invitado VIP</label>
+        <textarea
+          name="mensajePersonalizado"
+          placeholder="Escribe un mensaje especial para este invitado VIP"
+          rows="3"
+        ></textarea>
+      </div>
+
       <input type="submit" value="Editar invitado" />
     </form>
   </div>
   <a href="#" id="cerrar-dialog-editar">X</a>
 </dialog>
 
+<style lang="scss">
+  @use "../../estilos/_variables.scss" as *;
+  dialog {
+    border: none;
+    border-radius: $margen-cel;
+    padding: $margen-cel;
+    width: 100%;
+    max-width: 70%;
+    text-align: center;
+    @include cel {
+      max-width: 90%;
+      padding: $margen-min;
+      form {
+        width: 90%;
+      }
+    }
+    @extend .sombra;
+  }
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
+
+    label {
+      flex: 1 0 70%;
+      text-align: left;
+      font-weight: bold;
+      color: $acento;
+    }
+    input,
+    select,
+    textarea {
+      border-radius: 5px;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.6rem;
+    }
+  }
+
+  .mensaje-vip-container {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #fff3cd;
+    border-radius: 5px;
+    border: 1px solid #ffeeba;
+    
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+      width: 100%;
+      border: 1px solid #ddd;
+      &:focus {
+        outline: none;
+        border-color: $acento;
+      }
+    }
+  }
+
+  button,
+  input[type="submit"] {
+    background-color: $acento;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.3rem 0.8rem;
+    font-weight: bold;
+
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
+    }
+    @include cel {
+      margin-top: 0.5rem;
+    }
+  }
+  #check {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: $margen-min;
+    gap: 1.5rem;
+  }
+  #cerrar-dialog-editar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: $acento;
+    border-radius: 100px;
+    color: #fff;
+  }
+</style>
+
 <script>
   import sanitize from "sanitize-html";
+  
+  // Función para obtener los datos del invitado
+  const getInvitadoData = async (id, uid) => {
+    const baseURL = window.location.origin;
+    const response = await fetch(
+      `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`
+    );
+    const idInvitacion = await response.json();
+    return idInvitacion;
+  };
+
   const dialoged = document.querySelector(
     "#editar-invitado-dialog"
   ) as HTMLFormElement;
@@ -88,6 +206,19 @@ import Checkbox from "./Checkbox.astro";
   const dialogeditar = document.querySelector(
     "#editar-invitado-dialog"
   ) as HTMLDialogElement;
+  const mensajeVipContainer = document.querySelector(
+    "#mensaje-vip-container"
+  ) as HTMLDivElement;
+  const vipCheckbox = document.querySelector(
+    "input[name='vip']"
+  ) as HTMLInputElement;
+
+  // Mostrar/ocultar campo de mensaje VIP cuando cambia el checkbox
+  vipCheckbox?.addEventListener("change", () => {
+    if (mensajeVipContainer) {
+      mensajeVipContainer.style.display = vipCheckbox.checked ? "block" : "none";
+    }
+  });
 
   // form submit
   addFormEdit.addEventListener("submit", async (e) => {
@@ -126,6 +257,7 @@ import Checkbox from "./Checkbox.astro";
         numeroWhats: sanitize(formData.get("numeroWhats") as string),
         confirmado: formData.get("confirmado") === "on",
         vip: formData.get("vip") === "on",
+        mensajePersonalizado: formData.get("vip") === "on" ? sanitize(formData.get("mensajePersonalizado") as string) : null,
         InvitacionEnviada: formData.get("InvitacionEnviada") === "on",
         noAsiste: formData.get("noAsiste") === "on",
         tipoInvitacion: sanitize(formData.get("tipoInvitacion") as string),
@@ -165,6 +297,7 @@ import Checkbox from "./Checkbox.astro";
       alert(e.message);
     }
   });
+
   const dialogEditar = document.querySelector(
     "#editar-invitado-dialog"
   ) as HTMLDialogElement;
@@ -172,87 +305,60 @@ import Checkbox from "./Checkbox.astro";
     "cerrar-dialog-editar"
   ) as HTMLButtonElement;
   closeDialogBtn.addEventListener("click", () => dialogEditar.close());
-</script>
 
-<style lang="scss">
-  @use "../../estilos/_variables.scss" as *;
-  dialog {
-    border: none;
-    border-radius: $margen-cel;
-    padding: $margen-cel;
-    width: 100%;
-    max-width: 70%;
-    text-align: center;
-    @include cel {
-      max-width: 90%;
-      padding: $margen-min;
-      form {
-        width: 90%;
+  // Función para llenar el formulario con los datos del invitado
+  const llenar = (dialogo, id, uid) => {
+    const nombreInput = dialogo.querySelector(
+      "input[name='nombre']"
+    ) as HTMLInputElement;
+    const pasesInput = dialogo.querySelector(
+      "input[name='pases']"
+    ) as HTMLInputElement;
+    const mesaInput = dialogo.querySelector(
+      "input[name='mesa']"
+    ) as HTMLInputElement;
+    const numeroWhatsInput = dialogo.querySelector(
+      "input[name='numeroWhats']"
+    ) as HTMLInputElement;
+    const confirmadoCheckbox = dialogo.querySelector(
+      "input[name='confirmado']"
+    ) as HTMLInputElement;
+    const vipCheckbox = dialogo.querySelector(
+      "input[name='vip']"
+    ) as HTMLInputElement;
+    const invitacionEnviadaCheckbox = dialogo.querySelector(
+      "input[name='InvitacionEnviada']"
+    ) as HTMLInputElement;
+    const noAsisteCheckbox = dialogo.querySelector(
+      "input[name='noAsiste']"
+    ) as HTMLInputElement;
+    const mensajePersonalizadoTextarea = dialogo.querySelector(
+      "textarea[name='mensajePersonalizado']"
+    ) as HTMLTextAreaElement;
+
+    const invitadoDataPromise = getInvitadoData(id, uid);
+    invitadoDataPromise.then((invitadoData) => {
+      if (invitadoData && invitadoData[0]) {
+        dialogo.dataset.refedit = invitadoData[0].id;
+        nombreInput.value = invitadoData[0].nombre;
+        pasesInput.value = invitadoData[0].pases;
+        mesaInput.value = invitadoData[0].mesa?.toString() || "";
+        numeroWhatsInput.value = invitadoData[0].numeroWhats?.toString() || "";
+        confirmadoCheckbox.checked = invitadoData[0].confirmado;
+        vipCheckbox.checked = invitadoData[0].vip;
+        invitacionEnviadaCheckbox.checked = invitadoData[0].InvitacionEnviada;
+        noAsisteCheckbox.checked = invitadoData[0].noAsiste;
+        
+        if (mensajePersonalizadoTextarea) {
+          mensajePersonalizadoTextarea.value = invitadoData[0].mensajePersonalizado || "";
+          // Mostrar/ocultar el contenedor de mensaje VIP según el estado del checkbox
+          if (mensajeVipContainer) {
+            mensajeVipContainer.style.display = invitadoData[0].vip ? "block" : "none";
+          }
+        }
       }
-    }
-    @extend .sombra;
-  }
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 70%;
-    margin: 0 auto;
-
-    label {
-      flex: 1 0 70%;
-      text-align: left;
-      font-weight: bold;
-      color: $acento;
-    }
-    input,
-    select {
-      border-radius: 5px;
-      width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.6rem;
-    }
-  }
-
-  button,
-  input[type="submit"] {
-    background-color: $acento;
-    border-radius: 5px;
-    color: #fff;
-    border: none;
-    display: inline-block;
-    text-align: center;
-    padding: 0.3rem 0.8rem;
-    font-weight: bold;
-
-    svg {
-      vertical-align: middle;
-      margin-right: 0.2rem;
-    }
-    @include cel {
-      margin-top: 0.5rem;
-    }
-  }
-  #check {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: $margen-min;
-    gap: 1.5rem;
-  }
-  #cerrar-dialog-editar {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: $acento;
-    border-radius: 100px;
-    color: #fff;
-    border: none;
-    display: inline-block;
-    text-align: center;
-    padding: 0.5rem 0.8rem;
-    font-weight: bold;
-    @extend .sombra;
-  }
-</style>
+    });
+  };
+  // Asegurarse de que la función llenar esté disponible globalmente
+  (window as any).llenar = llenar;
+</script>

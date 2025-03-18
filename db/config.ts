@@ -1,4 +1,3 @@
-
 import { column, defineDb, defineTable } from "astro:db";
 
 const Usuario = defineTable({
@@ -33,6 +32,7 @@ const Invitados = defineTable({
     tipoInvitacion: column.text({
       optional: true,
     }),
+    mensajePersonalizado: column.text({ optional: true }),
   },
 });
 

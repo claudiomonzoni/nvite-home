@@ -32,6 +32,7 @@ export default async function seed() {
       numeroWhats: 7551048550,
       confirmado: true,
       vip: true,
+      mensajePersonalizado: "Estimado Ricardo, es un honor tenerte como invitado especial en nuestra boda. Tu presencia hará este día aún más memorable.",
       InvitacionEnviada: true,
       noAsiste: false,
       tipoInvitacion: "individual"
@@ -45,6 +46,7 @@ export default async function seed() {
       numeroWhats: 323456782,
       confirmado: false,
       vip: true,
+      mensajePersonalizado: "Querida Familia Slim, su presencia en nuestra boda significa el mundo para nosotros. Será un honor compartir este momento tan especial con ustedes.",
       InvitacionEnviada: false,
       noAsiste: false,
       tipoInvitacion: "familiar"
@@ -111,6 +113,7 @@ export default async function seed() {
       numeroWhats: 7553456789,
       confirmado: true,
       vip: true,
+      mensajePersonalizado: "Querido Carlos, tu amistad es muy valiosa para nosotros. Estamos emocionados de compartir este día tan especial contigo.",
       InvitacionEnviada: true,
       noAsiste: false,
       tipoInvitacion: "individual"
@@ -189,6 +192,7 @@ export default async function seed() {
       numeroWhats: 7559012345,
       confirmado: true,
       vip: true,
+      mensajePersonalizado: "Querida Familia Vargas, su presencia en nuestra boda es un regalo muy especial. Los esperamos con alegría en este día tan importante.",
       InvitacionEnviada: true,
       noAsiste: false,
       tipoInvitacion: "familiar"

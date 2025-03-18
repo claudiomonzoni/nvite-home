@@ -16,6 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
       InvitacionEnviada,
       noAsiste,
       tipoInvitacion,
+      mensajePersonalizado,
     } = body;
 
     // comprobamos que los campos no esten vacios
@@ -46,6 +47,7 @@ export const POST: APIRoute = async ({ request }) => {
       InvitacionEnviada,
       noAsiste,
       tipoInvitacion,
+      mensajePersonalizado: vip ? sanitize(mensajePersonalizado) : null,
     });
 
     return new Response(
