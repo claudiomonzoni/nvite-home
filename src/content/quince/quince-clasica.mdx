@@ -32,6 +32,8 @@ paleta: invierno
 
 import Encabezados from "../../components/quince/Encabezados.astro";
 import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Cartas from "../../components/quince/Cartas.astro";
 import Galeria from "../../components/quince/Galeria.astro";
 import Frase from "../../components/quince/Frase.astro";
@@ -40,10 +42,11 @@ import Regalos from "../../components/quince/Regalos.astro";
 import Contador from "../../components/quince/Contador.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
-import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import Ventas from "../../components/comunes/Ventas.astro"
 
-
+<section class="grid contenido"> 
+  <MensajeVip />
+</section>
 <ProgresoInvitados
   email="claudiomonzoni@hotmail.com"
   porcentajeMostrarInvitados={20}

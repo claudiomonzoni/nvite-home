@@ -76,6 +76,7 @@ import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
 import Pases from "../../components/bodas/Pases";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
@@ -92,8 +93,12 @@ import Ventas from "../../components/comunes/Ventas.astro"
 <Audio src="/bodas/nvitaPlus/love-story" />
 </section>
 
- <section class="grid contenido">
+ <section class="grid pantalla">
 <Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>
+</section>
+
+<section class="grid contenido"> 
+  <MensajeVip />
 </section>
 
 <Pases folder={frontmatter.json} client:load />

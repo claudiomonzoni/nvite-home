@@ -62,6 +62,8 @@ iterario: [
 paleta: otono
 ---
 
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
 import Encabezados from "../../components/quince/Encabezados.astro";
 import Cartas from "../../components/quince/Cartas.astro";
@@ -74,9 +76,12 @@ import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Audio from "../../components/quince/Audio.astro";
-import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import Ventas from "../../components/comunes/Ventas.astro"
 
+
+<section class="grid contenido"> 
+  <MensajeVip />
+</section>
 <ProgresoInvitados
   email="nvitacionluxquince@nvitaciones.com"
   porcentajeMostrarInvitados={20}

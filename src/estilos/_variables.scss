@@ -5,6 +5,22 @@ $acento: #ee6a6a;
 $gris: #555556;
 $fondo: #ffce95;
 
+@use 'paletas/invierno' as *;
+@use 'paletas/base' as *;
+@use 'paletas/otono' as *;
+
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+
+:root[data-paleta="base"] {
+  @include base();
+}
+:root[data-paleta="otono"] {
+  @include otono();
+}
+
+
 //media query
 $cel: 479px;
 $nocel: 479px;
@@ -24,6 +40,7 @@ $margen-top-cel: 6rem;
 
 $fuenteA: "Montserrat Alternates";
 $fuenteB: "Averia Serif Libre";
+$garigol: "Playwrite CU";
 
 @mixin cel {
   @media (max-width: #{$cel}) {

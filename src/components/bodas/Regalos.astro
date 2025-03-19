@@ -72,12 +72,6 @@ import Anchor from "../comunes/Anchor.astro";
     margin: 0;
   }
   #regalo {
-    h2 {
-      color: white;
-      border-bottom: 1px solid white;
-      margin-bottom: $margen-min;
-      padding-bottom: $margen-min;
-    }
     margin-top: $margen;
     padding: $margen;
     background: url("/bg-floral-regalos-izq.svg") var(--primario);
@@ -86,6 +80,15 @@ import Anchor from "../comunes/Anchor.astro";
     background-blend-mode: color-burn;
     color: white;
     text-align: center;
+   :global(b) {
+      color: var(--terciario);
+    }
+    h2 {
+      color: white;
+      border-bottom: 1px solid white;
+      margin-bottom: $margen-min;
+      padding-bottom: $margen-min;
+    }
     svg {
       max-width: 2.5rem;
       height: auto;
@@ -114,13 +117,14 @@ import Anchor from "../comunes/Anchor.astro";
     border-radius: $radio;
     @extend .sombra;
     h3 {
-      color: var(--terciario);
+      color: white;
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
     b {
-      color: var(--terciario);
+      color: white;
     }
     ul {
+      color: white;
       text-align: left;
     }
     padding: $margen $margen-min;

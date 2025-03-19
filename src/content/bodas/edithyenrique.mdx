@@ -85,7 +85,8 @@ tipoRegalo: [ "efectivo"]
 # ]
 paleta: base
 ---
-
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
@@ -102,13 +103,24 @@ import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import Ventas from "../../components/comunes/Ventas.astro";
 
-{" "}
+
+
+<section class="grid contenido"> 
+  <MensajeVip />
+</section>
+<ProgresoInvitados
+  email="berenicejc94@gmail.com"
+  porcentajeMostrarInvitados={50}
+  frase="¡Ya casi completamos la lista de invitados!"
+  mostrarSiempre={false}
+/>
+
 
 <section class="grid contenido">
   <Audio src="/bodas/edithyenrique/brunogaga" />
 </section>
 
-{" "}
+
 
 <section class="grid contenido">
   <Padres
@@ -121,7 +133,7 @@ import Ventas from "../../components/comunes/Ventas.astro";
 
 <Pases folder={frontmatter.json} client:load />
 
-{" "}
+
 
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
@@ -132,8 +144,6 @@ import Ventas from "../../components/comunes/Ventas.astro";
     <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
 
   </section>
-
-{" "}
 
 <section class="grid contenido">
   <div class="bandejaLugares">
@@ -199,4 +209,3 @@ import Ventas from "../../components/comunes/Ventas.astro";
 />
 
 
-{" "}
