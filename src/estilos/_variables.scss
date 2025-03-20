@@ -1,19 +1,11 @@
+$primario: #656a8d;
+$secundario: #ffce95;
+$terciario: #dae3ea;
+$acento: #ee6a6a;
+$gris: #555556;
+$fondo: #ffce95;
 
 
-@use 'paletas/invierno' as *;
-@use 'paletas/base' as *;
-@use 'paletas/otono' as *;
-
-:root[data-paleta="invierno"] {
-  @include invierno();
-}
-
-:root[data-paleta="base"] {
-  @include base();
-}
-:root[data-paleta="otono"] {
-  @include otono();
-}
 
 
 //media query
