@@ -16,7 +16,9 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import SplitType from "split-type";
 
-  gsap.registerPlugin(ScrollTrigger);
+  if (typeof ScrollTrigger === "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+  }
 
   const getMensajeVip = async () => {
     // Obtener los parámetros de la URL
@@ -41,42 +43,54 @@
           container.style.display = 'block';
         }
 
-        // Dividir el texto en letras
-        const splitText = new SplitType('.mensaje-texto', { 
-          types: 'words,chars',
-          tagName: 'span'
-        });
-        
-        // Establecer opacidad inicial
-        gsap.set(splitText.chars, { 
-          opacity: 0.2
-        });
+        const initMensajeVip = () => {
+          const context = gsap.context(() => {
+            const mensajeElement = document.querySelector(".mensaje-texto") as HTMLElement;
+            const container = document.querySelector("#mensaje-vip-container");
 
-        // Animar cada letra cuando el contenedor entre en el viewport
-        gsap.to(splitText.chars, {
-          scrollTrigger: {
-            trigger: '.mensaje-vip',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          },
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.03,
-          ease: 'power2.out'
-        });
+            if (mensajeElement && container) {
+              // Split text into words and characters
+              const splitText = new SplitType(mensajeElement, {
+                types: "words,chars",
+                tagName: "span",
+              });
 
-        // Animar la etiqueta VIP
-        gsap.from('.etiqueta-vip', {
-          scrollTrigger: {
-            trigger: '.mensaje-vip',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-          },
-          opacity: 0,
-          x: 20,
-          duration: 0.5,
-          ease: 'power2.out'
-        });
+              // Set initial opacity for characters
+              gsap.set(splitText.chars, { opacity: 0.2 });
+
+              // Animate characters when the container enters the viewport
+              gsap.to(splitText.chars, {
+                scrollTrigger: {
+                  trigger: ".mensaje-vip",
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                },
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.03,
+                ease: "power2.out",
+              });
+
+              // Animate the VIP label
+              gsap.from(".etiqueta-vip", {
+                scrollTrigger: {
+                  trigger: ".mensaje-vip",
+                  start: "top 80%",
+                  toggleActions: "play none none reverse",
+                },
+                opacity: 0,
+                x: 20,
+                duration: 0.5,
+                ease: "power2.out",
+              });
+            }
+          });
+
+          // Cleanup animations when the component is removed
+          return () => context.revert();
+        };
+
+        initMensajeVip();
       }
     } catch (error) {
       console.error('Error al obtener el mensaje VIP:', error);
@@ -123,7 +137,7 @@
     text-align: center;
     margin: 0;
     font-size: clamp(2rem, 3vw, 4.5rem);
-    line-height: 1.2;
+    line-height: 1.2!important;
 
     :global(.word) {
       display: inline-block;

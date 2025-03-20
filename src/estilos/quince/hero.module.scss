@@ -1,5 +1,5 @@
 
-@import "../../estilos/quince/_variables.scss";
+@use "../../estilos/quince/_variables.scss" as *;
 
  
 #hero {
@@ -47,6 +47,10 @@
   font-size: clamp(1.2rem, 1vw, 3vw);
   position: relative;
   padding: $margen-top $margen-min;
+  span {
+    padding-bottom: $margen-min;
+    margin-bottom: $margen-min;
+  }  
   @include cel {
     grid-column: 2 ;
     grid-row: 6 / -1;
@@ -57,11 +61,6 @@
 h1{
   padding: $margen-min 0 $margen-min 0;
   color: var(--secundario);
-}
-span {
-  padding-bottom: $margen-min;
-  margin-bottom: $margen-min;
- 
 }
 .familia {
   font-size: clamp(1.3rem, 2vw, 5vw);
