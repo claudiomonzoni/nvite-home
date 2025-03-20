@@ -85,9 +85,7 @@ import Ventas from "../../components/comunes/Ventas.astro";
   <Audio src="/quince/quincePlus/quince-musica" />
 </section>
 
-<section class="grid contenido">
-  <MensajeVip />
-</section>
+
 
 <ProgresoInvitados
   email="nvitacionluxquince@nvitaciones.com"
@@ -182,11 +180,14 @@ import Ventas from "../../components/comunes/Ventas.astro";
   <Contador fecha={frontmatter.fecha} />
 </section>
 
+<section class="grid contenido">
+  <MensajeVip />
+</section>
 
 <section>
   <Confirmacion
     whatsapp={frontmatter.whatsapp}
-    dias_antes={7}
+    dias_antes={15}
     version={frontmatter.version}
     client:only="react"
   />

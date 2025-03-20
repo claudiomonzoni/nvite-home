@@ -68,9 +68,7 @@ import Ventas from "../../components/comunes/Ventas.astro";
   />
 </section>
 
-<section class="grid contenido"> 
-  <MensajeVip />
-</section>
+
 
 <Pases folder={frontmatter.json} client:load />
 
@@ -145,9 +143,13 @@ import Ventas from "../../components/comunes/Ventas.astro";
   </Galeria>
 </section>
 
+<section class="grid contenido"> 
+  <MensajeVip />
+</section>
+
 <Confirmacion
   whatsapp={frontmatter.whatsapp}
-  dias_antes={7}
+  dias_antes={15}
   version={frontmatter.version}
   tipoEvento="boda"
   client:only="react"
