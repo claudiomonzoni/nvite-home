@@ -100,7 +100,7 @@ svg {
     height: 0;
 
     &:checked + .slider {
-      background-color: $acento;
+      background-color: var(--acento);
 
       &:before {
         transform: translateX(22px);
@@ -108,7 +108,7 @@ svg {
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px $acento;
+      box-shadow: 0 0 1px var(--acento);
     }
   }
 }
@@ -153,7 +153,7 @@ svg {
 .asistira {
   background-color: rgba($primario, 0.1);
   .slider {
-    background-color: $acento !important;
+    background-color: var(--acento) !important;
   }
 }
 
@@ -171,5 +171,5 @@ small{
 }
 span{
   font-weight: bolder;
-  color: $acento;
+  color: var(--acento);
 }

@@ -5,7 +5,6 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Hero from "../../components/bodas/Hero";
 import Footer from "../../components/bodas/Footer.astro";
-// import "../../estilos/paletas/invierno.scss";
 import "../../estilos/bodas/globales.scss";
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {

@@ -76,10 +76,10 @@ const tipos = ["lux", "clasica", "esencial"];
 <style lang="scss">
   @use "../../estilos/_variables.scss" as *;
   #bloqueventas {
-    background-color: $secundario;
+    background-color: var(--secundario);
     margin: $margen 0;
     padding: $margen $margen-cel;
-    color: $primario;
+    color: var(--primario);
     min-height: 20vh;
     display: flex;
     flex-wrap: wrap;
@@ -104,7 +104,7 @@ const tipos = ["lux", "clasica", "esencial"];
     }
     h3 {
       span {
-        color:$acento;
+        color:var(--acento);
         font-weight: bold;
       }
     //   flex: 1 0 100%;
@@ -112,7 +112,7 @@ const tipos = ["lux", "clasica", "esencial"];
       justify-content: center;
       font-family: Montserrat, sans-serif;
       font-weight: 100;
-      color: $primario;
+      color: var(--primario);
     //   flex: 1 0 100%;
       text-align: center;
       padding: 0;
@@ -132,7 +132,7 @@ const tipos = ["lux", "clasica", "esencial"];
     border-bottom: solid;
     a {
       vertical-align: middle;
-      color: $primario;
+      color: var(--primario);
       margin: 1rem;
       text-decoration: underline;
  

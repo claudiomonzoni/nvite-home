@@ -1,22 +1,6 @@
 @use 'sass:math';
 @use "variables" as *;
 
-@use '../paletas/invierno' as *;
-@use '../paletas/otono' as *;
-@use '../paletas/base' as *;
-
-
-
-:root[data-paleta="otono"] {
-  @include otono();
-}
-:root[data-paleta="invierno"] {
-  @include invierno();
-}
-
-:root[data-paleta="base"] {
-  @include base();
-}
 
 
 // @import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
@@ -271,10 +255,10 @@ b {
   background: var(--acento);
   padding: $margen-min $margen-cel;
   @if $conBorde {
-    border: 1px solid $acento;
+    border: 1px solid var(--acento);
     background: white !important;
     opacity: 0.8;
-    color: $acento !important;
+    color: var(--acento) !important;
   }
   @if $redondo {
     border-radius: $radio;
@@ -305,7 +289,7 @@ b {
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: $gris $acento;
+    scrollbar-color: var(--gris) var(--acento);
   }
 
   /* Chrome, Edge and Safari */
@@ -315,28 +299,28 @@ b {
   }
   *::-webkit-scrollbar-track {
     border-radius: 5px;
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-track:hover {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-track:active {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: $gris;
+    background-color: var(--gris);
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
   *::-webkit-scrollbar-thumb:active {
-    background-color: $acento;
+    background-color: var(--acento);
   }
 
     margin: 0rem 0 $margen 0;

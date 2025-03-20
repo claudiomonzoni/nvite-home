@@ -1,9 +1,10 @@
 @mixin invierno() {
-    --primario: rgb(156, 101, 196);
-    --secundario: rgb(183, 143, 105);
-    --terciario: rgb(249, 243, 243);
-    --acento: rgba(94, 153, 201, 1);
-    --gris: rgb(120, 87, 137);
-    --sombra: rgba(177, 178, 207, 0.5);
-    --fondoBurn: #fef1f1;
+  --primario: #768992;
+  --secundario: #8dacb8;
+  --terciario: #fff3d3;
+  --acento: #a68eaf;
+  --gris: #6e818c;
+  --fondo: #dce9e9;
+  --sombra: rgba(122, 132, 140, 0.5);
+  --fondoBurn: #fef1f1;
   }

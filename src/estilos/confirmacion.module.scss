@@ -101,7 +101,7 @@ svg {
     height: 0;
 
     &:checked + .slider {
-      background-color: $acento;
+      background-color: var(--acento);
 
       &:before {
         transform: translateX(22px);
@@ -110,7 +110,7 @@ svg {
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px $acento;
+      box-shadow: 0 0 1px var(--acento);
     }
   }
 }
@@ -121,7 +121,7 @@ svg {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $acento;
+  background-color: var(--acento);
   transition: 0.3s;
   border-radius: 24px;
 
@@ -144,7 +144,7 @@ svg {
   padding: 1rem $margen-cel;
   color: white !important;
   margin: 1rem 0.5rem 0.5rem 0;
-  background-color: $acento;
+  background-color: var(--acento);
   img {
     width: 1.5rem;
     height: auto;
@@ -163,24 +163,24 @@ svg {
   pointer-events: none;
 }
 .asistira {
-  background-color: rgba($primario, 0.2);
+  background-color: rgba(var(--primario), 0.2);
   .slider {
-    background-color: $acento !important;
+    background-color: var(--acento) !important;
   }
   svg,
   path {
-    fill: $acento;
+    fill: var(--acento);
   }
 }
 
 .noAsistira {
-  background-color: rgba($gris, 0.3);
+  background-color: rgba(var(--gris), 0.3);
   .slider {
-    background-color: $gris !important;
+    background-color: var(--gris) !important;
   }
   svg,
   path {
-    fill: $terciario;
+    fill: var(--terciario);
   }
 }
 
@@ -190,7 +190,7 @@ small {
 }
 span {
   font-weight: bolder;
-  color: $acento;
+  color: var(--acento);
 }
 
 dialog {
