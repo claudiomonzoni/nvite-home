@@ -9,10 +9,13 @@ import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro
 import { Usuario, Invitados, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
+// Ensure the user is authenticated
 if (!NvitaAuth.currentUser) {
   alert("No estás autenticado. Por favor, inicia sesión.");
-  return;
+  // return
+  throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
 }
+
 const usuarioEmail = NvitaAuth.currentUser.email;
 
 if (!usuarioEmail) {
