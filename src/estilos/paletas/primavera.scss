@@ -1,0 +1,10 @@
+@mixin primavera() {
+    --primario: #8796a7;       // Verde menta suave, fresco y elegante
+    --secundario: #d8b59a;     // Melocotón cálido y romántico
+    --terciario: #fff2e5;      // Beige claro con un toque cálido y delicado
+    --acento: #c99265;         // Rosa pastel suave, inspirado en flores
+    --gris: #d8e1e3;           // Gris claro y neutro para balance
+    --fondo: #e7e9dd;          // Fondo blanco puro, clásico para bodas
+    --sombra: rgba(163, 201, 168, 0.3); // Sombra verde menta translúcida
+    --fondoBurn: #fef6f0;      // Fondo cálido y suave, como la luz del atardecer
+}

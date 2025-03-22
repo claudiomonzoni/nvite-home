@@ -5,6 +5,12 @@
 html {
   box-sizing: border-box;
   font-size: clamp(10px, 0.9vw, 22px);
+  font-family: $fuenteA, sans-serif;
+  font-weight: 100;
+  background: #fff6f0;
+  scroll-behavior: smooth;
+  letter-spacing: 0.02em;
+  line-height: 1.3em;
   @include hd {
     font-size: clamp(10px, 0.9vw, 20px);
   }
@@ -14,13 +20,6 @@ html {
   @include hdplus {
     font-size: clamp(14px, 7vw, 22px);
   }
-
-  font-family: $fuenteA, sans-serif;
-  font-weight: 100;
-  background: #fff6f0;
-  scroll-behavior: smooth;
-  letter-spacing: 0.02em;
-  line-height: 1.3em;
 }
 
 *,
@@ -214,14 +213,14 @@ mark {
     width: 100%;
     height: auto;
   }
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
   &:hover {
     border-radius: $margen-cel;
     background: $secundario;
     color: $primario;
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -278,6 +277,7 @@ mark {
     flex-wrap: wrap;
     position: relative;
     padding-bottom: 2rem;
+    order: 2;
     .bloqueImg {
       max-width: 100%;
       &:first-child {
@@ -288,7 +288,6 @@ mark {
         }
       }
     }
-    order: 2;
   }
 }
 
@@ -319,17 +318,12 @@ mark {
   align-items: center;
   flex: 1 0 30%;
   padding: $margen-cel $margen-cel 0 $margen-cel;
-  @include cel {
-    h2 {
-      font-size: 1.7rem;
-    }
+  .imaCelular{
+    max-width: 16vw;
+    @include cel {
+     max-width: 60vw;
+   }
   }
- .imaCelular{
-   max-width: 16vw;
-   @include cel {
-    max-width: 60vw;
-  }
- }
   img {
     position: relative;
     margin-top: 0;
@@ -344,8 +338,8 @@ mark {
   p {
     flex: 1 0 100%;
   }
-
-  @extend .sombra;
+  
+ 
 
   &:last-child {
     flex: 1 0 30%;
@@ -378,6 +372,12 @@ mark {
     height: auto;
     padding: 0;
     margin: 0;
+  }
+  @extend .sombra;
+  @include cel {
+    h2 {
+      font-size: 1.7rem;
+    }
   }
 }
 

@@ -1,14 +1,13 @@
 
 
 
-  @mixin invierno() {
-    --primario: #768992;
-    --secundario: #8dacb8;
-    --terciario: #fff3d3;
-    --acento: #a68eaf;
-    --gris: #e1e8ec;
-    --fondo: #dce9e9;
-    --sombra: rgba(122, 132, 140, 0.5);
-    --fondoBurn: #fef1f1;
-  }
-  
+@mixin invierno() {
+  --primario: #4a6a75;       // Un tono más suave y equilibrado
+  --secundario: #7fa3b2;     // Un azul más claro para complementar
+  --terciario: #eae4df;      // Un beige más cálido para contraste
+  --acento: #b49dbd;         // Un tono más suave de morado
+  --gris: #cbd5db;           // Gris más neutro y menos saturado
+  --fondo: #f0f9fc;          // Fondo más claro y fresco
+  --sombra: rgba(100, 120, 130, 0.4); // Sombra más sutil
+  --fondoBurn: #fde8e8;      // Fondo cálido más suave
+}

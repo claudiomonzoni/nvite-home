@@ -1,6 +1,7 @@
 @use '../paletas/invierno' as *;
 @use '../paletas/base' as *;
 @use '../paletas/otono' as *;
+@use '../paletas/primavera' as *;
 
 :root[data-paleta="invierno"] {
   @include invierno();
@@ -11,6 +12,9 @@
 }
 :root[data-paleta="otono"] {
   @include otono();
+}
+:root[data-paleta="primavera"] {
+  @include primavera();
 }
 
 
