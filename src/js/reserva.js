@@ -30,7 +30,7 @@ const enviar = (e) => {
 
 const envio = (whats, nombre, fecha, email) => {
   const url = `
-  ${whats}Hola,%20me%20contacto%20desde%20nvitaciones.com,%20deseo%20obtener%20una%20invitación%20para%20mi%20boda:%0aNombre:%20${nombre}%0afecha%20del%20evento:%20${fecha},%0aMi%20correo%20electrónico:%20${email}.%0aComentarios:%20
+  ${whats}Hola,%20me%20contacto%20desde%20nvitaciones.com,%20deseo%20obtener%20una%20invitación%20para%20mi%20evento:%0aNombre:%20${nombre}%0afecha%20del%20evento:%20${fecha},%0aMi%20correo%20electrónico:%20${email}.%0aTipo%20de%20evento:%20
   `;
 
   empezar.href = url;

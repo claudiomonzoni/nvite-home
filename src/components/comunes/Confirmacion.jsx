@@ -321,6 +321,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                 // Formulario para confirmar asistencia
                 <>
                   <label htmlFor="pases">¿Cuántos pases usarán?</label>
+                  {/* <small>Selecciona el número de pases para activar el botón de confirmación</small> */}
                   <select
                     name="pases"
                     id="Confipases"
@@ -334,7 +335,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                   {mostrarCampoNoAsisten && (
                     <>
                       <label htmlFor="personasNoAsisten">
-                        ¿Nombre de las personas que no podrán acompañarnos?
+                        ¿Nombre de las personas que no podrán acompañarnos? (opcional)
                       </label>
                       <textarea
                         name="personasNoAsisten"
