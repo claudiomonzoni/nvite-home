@@ -289,7 +289,7 @@ b {
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--gris) var(--acento);
+    scrollbar-color: var(--primario) var(--fondo);
   }
 
   /* Chrome, Edge and Safari */
@@ -298,7 +298,7 @@ b {
     width: 10px;
   }
   *::-webkit-scrollbar-track {
-    border-radius: 5px;
+    border-radius: 50px;
     background-color: var(--acento);
   }
 

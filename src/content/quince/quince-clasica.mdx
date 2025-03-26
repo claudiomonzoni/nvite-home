@@ -48,12 +48,7 @@ import Ventas from "../../components/comunes/Ventas.astro";
 
 
 
-<ProgresoInvitados
-  email="claudiomonzoni@hotmail.com"
-  porcentajeMostrarInvitados={20}
-  frase="¡Ya casi completamos la lista de invitados!"
-  mostrarSiempre={true}
-/>
+
 
 <Encabezados texto="Mis 15 años" />
 
@@ -131,9 +126,18 @@ import Ventas from "../../components/comunes/Ventas.astro";
   />
 </section>
 
+<ProgresoInvitados
+  email="claudiomonzoni@hotmail.com"
+  porcentajeMostrarInvitados={20}
+  frase="¿Listos para el evento?"
+  mostrarSiempre={true}
+/>
+
 <section class="grid contenido">
   <Contador fecha={frontmatter.fecha} />
 </section>
+
+
 <section class="grid contenido">
   <MensajeVip />
 </section>

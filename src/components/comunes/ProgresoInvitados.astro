@@ -1,4 +1,6 @@
 ---
+import Btn from '../Btn.astro';
+
 interface Props {
     porcentajeMostrarInvitados: number;
     mostrarSiempre: boolean;
@@ -49,19 +51,25 @@ const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeM
 
 {mostrarComponente && (
     <div class="progreso-invitados">
-        {frase && <h2>{frase}</h2>}
-        <div class="estadisticas">
-            <div class="barra-progreso">
-                <div class="barra" style={`--progress: ${porcentajeConfirmados}%`}></div>
-            </div>
+        {porcentajeConfirmados === 100 ?(
+            <h2>¡Que empiece la fiesta, estamos todos listos!</h2>
+        ):(
+            frase &&  <h2>{frase}</h2>
+        )
+        }
             <p class="porcentaje">
                 <span class="numero">{porcentajeConfirmados}%</span>
                 <span class="texto">de invitados han confirmado</span>
             </p>
+        <div class="estadisticas">
+            <div class="barra-progreso">
+                <div class="barra" style={`--progress: ${porcentajeConfirmados}%`}></div>
+            </div>
             <p class="detalles">
-                <span class="confirmados">{pasesConfirmados}</span> de <span class="total">{totalPases}</span> Invitaciones confirmados
+                <span class="confirmados">{pasesConfirmados}</span> de <span class="total">{totalPases}</span> pases confirmados
             </p>
         </div>
+        <Btn liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-bordes '}   />
     </div>
 )}
 
@@ -70,9 +78,9 @@ const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeM
 
     .progreso-invitados {
         text-align: center;
-        padding: 2rem;
-        margin: 2rem auto;
         max-width: 600px;
+        margin: 0 auto;
+        padding-bottom:$margen;
     }
 
     .barra-progreso {
@@ -135,8 +143,6 @@ const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeM
     .detalles {
         font-size: 1.1rem;
         color: var(--primario);
-        border-top: solid 2px var(--secundario);
-        padding-top: 1rem;
     }
 
     .detalles .confirmados,

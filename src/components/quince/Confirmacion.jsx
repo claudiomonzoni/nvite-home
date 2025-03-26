@@ -279,7 +279,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
   return (
     <>
-      <div className="grid pantalla">
+      <div className="grid pantalla" id="Confirmacion-comun">
         <div
           className={`${estilo.confirmacion} ${
             asistira ? estilo.asistira : estilo.noAsistira
