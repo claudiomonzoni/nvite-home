@@ -1,0 +1,169 @@
+---
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+---
+
+<section class="testimonios">
+  <div class="testimonios__container">
+    <h2 class="testimonios__title">Lo que dicen nuestros clientes</h2>
+    
+    <div class="swiper testimonios-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div class="testimonios__card">
+            <img src="https://lh3.googleusercontent.com/a-/ALV-UjXmoVWw6nsrNe1efzBInej_NPnj5jfaEl9zibKvXPgy2Gg4JquS=s50-c-rp-mo-br100" alt="Cliente 1" class="testimonios__image">
+            <h3 class="testimonios__name">Berenice Jimenez</h3>
+            <p class="testimonios__text">
+              "Nos hicieron unas invitaciones para boda y nos encantaron, están súper lindas y practicas, me las entregaron muy rápido y tienen muy buen estilo. Los súper recomiendo✨🤩 100/10"
+            </p>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonios__card">
+            <img src="https://lh3.googleusercontent.com/a-/ALV-UjXo4JUASbjgi76039aHG8vnbYGWYwWbLFXzi159ciP60lmteUQK=s50-c-rp-mo-br100" alt="Cliente 2" class="testimonios__image">
+            <h3 class="testimonios__name">Chuchito González</h3>
+            <p class="testimonios__text">
+              "Estuvieron excelentes, a todos mis amigos les encantaron, saludos"
+            </p>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonios__card">
+            <img src="https://lh3.googleusercontent.com/a/ACg8ocJzrSiEJc6JE_GX_v4va33Nf9VLdrofwZIeBBK15bn1V2SE_w=s50-c-rp-mo-br100" alt="Cliente 3" class="testimonios__image">
+            <h3 class="testimonios__name">Gabriela Mon</h3>
+            <p class="testimonios__text">
+              "Bellísimas invitaciones 😍 fueron enviadas para nuestra boda y encantaron, súper profesionales en toda la atención"
+            </p>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonios__card">
+            <img src="https://lh3.googleusercontent.com/a/ACg8ocIG-V7JGfPOyLHWPrYHFfou9TneSnSewqb2aHe_5dr47n9EvA=s50-c-rp-mo-br100" alt="Cliente 4" class="testimonios__image">
+            <h3 class="testimonios__name">Wen Jira</h3>
+            <p class="testimonios__text">
+              "Fueron atentos, rápidos y siempre dispuestos. Las invitaciones fueron hermosas y funcionales, facilitando el control de invitados. Sin duda, los volverías a contratar."
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .testimonios {
+    padding: 5rem 0;
+    background: linear-gradient(180deg, $fondoGlobal, $terciario);
+
+    &__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    &__title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: $acento;
+    }
+
+    &__card {
+      background-color: $fondoGlobal;
+      padding: 2rem;
+      border-radius:$radio;
+    //  @extend .sombra;
+    }
+
+    &__image {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: block;
+    }
+
+    &__name {
+      font-size: 1.25rem;
+      text-align: center;
+      color: $primario;
+    }
+
+    &__text {
+      text-align: center;
+      margin-top: 1rem;
+      color: $primario;
+    }
+  }
+
+  :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    color: $acento;
+    top: 2rem;
+    
+    &::after {
+      font-size: 1.3rem; // Reduce el tamaño del ícono
+      font-weight: bold;
+    }
+    
+    @include cel {
+        display: none;
+    }
+  }
+
+  :global(.swiper-button-next) {
+    right: 1rem; // Ajustado de la posición original
+  }
+
+  :global(.swiper-button-prev) {
+    left: 1rem; // Ajustado de la posición original
+  }
+
+  :global(.swiper-pagination-bullet-active) {
+
+    background: $acento;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+  new Swiper('.testimonios-swiper', {
+    modules: [Navigation, Pagination, Autoplay],
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+  });
+</script>

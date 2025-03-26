@@ -23,6 +23,7 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
         text-decoration: none;
         border-radius: 5px;
         margin: $margen-min 0;
+        border: none;
        
         @include cel {
             margin-top: $margen-min;
@@ -31,8 +32,8 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
         }
     }
     .btn-claro {
-        color: $primario;
-        border: 1px solid $primario;
+        background-color: $primario;
+        color:$fondoGlobal;
         font-weight: 700;
         @include btn;
     }
@@ -43,8 +44,8 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
         @include btn;
     }
     .btn-bordes{
-        border: 1px solid $primario;
-        color: $primario;
+        border: 1px solid $acento;
+        color: $secundario;
         font-weight: 700;
         @include btn;
     }
