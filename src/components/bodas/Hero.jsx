@@ -31,6 +31,7 @@ export default function Hero({
     tl.from(".avatarConte", {
       opacity: 0,
       y: -30,
+      scale: 0.5, // Empieza más pequeño
       delay: 0.6,
       duration: 2,
       ease: "power4.out",
@@ -38,39 +39,40 @@ export default function Hero({
       onComplete: () => {
         let mm = gsap.matchMedia();
         mm.add("(min-width: 800px)", () => {
-
-          gsap.to(".avatarConte", {
+          const tl = gsap.timeline();
+          tl.to(".avatarConte", {
             delay: 1,
             duration: 2,
             ease: "power4.out",
             transformOrigin:'center',
-            clipPath:'polygon(0 0%, 100% 0, 100% 100%, 0% 100%)',
-            width:'83%',
-            height:'90%',
-         
+            width:'100%',
+            height:'100%',
+            scale: 1,
           })
+          .to(".avatarConte img", {
+            scale: 1.2,
+            duration: 2.2,
+            ease: "power4.out",
+          }, "-=2"); // Iniciar al mismo tiempo que la animación anterior
         });
         
         mm.add("(max-width: 799px)", () => {
-          gsap.to(".avatarConte", {
+          const tl = gsap.timeline();
+          tl.to(".avatarConte", {
             delay: 1,
             duration: 2,
             ease: "power4.out",
             transformOrigin:'center',
-            clipPath:'polygon(0 0%, 100% 0, 100% 100%, 0% 100%)',
-            width:'85%',
-            height:'90%',
-            marginTop: 20, // para que se vea el avatar
-         
+            width:'100%',
+            height:'100%',
+            scale: 1,
           })
-
-
+          .to(".avatarConte img", {
+            scale: 1.2,
+            duration: 2.2,
+            ease: "power4.out",
+          }, "-=2"); // Iniciar al mismo tiempo que la animación anterior
         });
-        // gsap.to(".avatarConte", {
-        //   duration: .01,
-        //   transformOrigin:'center',
-        //   clipPath:'circle(100% at 50% 50%)',
-        // })
       }
     });
 
@@ -107,10 +109,10 @@ export default function Hero({
                 {invitado}
               </span> */}
               <img src={divisor.src} alt="divisor bodas nvita" />
-              <p className={Style["casamos"]}> nos casamos </p>
+              <p className={Style["casamos"]}> Nos casamos </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
               <p>
-                deseamos invitarte a <b>celebrar nuestra boda el:</b>
+                Deseamos invitarte a <b>celebrar nuestra boda</b>
               </p>
               <ul id={Style["fecha"]}>
                 <li className={Style.fecha}>{dia}</li>

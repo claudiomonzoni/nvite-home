@@ -5,7 +5,7 @@ interface Props {
   cover?: string;
   paleta?: string;
 }
-
+import "../../estilos/bodas/globales.scss";
 const { title, url, paleta, cover } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const portadaOG = `https://nvitaciones.com${cover}`;
@@ -71,22 +71,6 @@ const portadaOG = `https://nvitaciones.com${cover}`;
       }
     </script>
   </head>
-  <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
-  <script>
-    (function (h, o, t, j, a, r) {
-      h.hj =
-        h.hj ||
-        function () {
-          (h.hj.q = h.hj.q || []).push(arguments);
-        };
-      h._hjSettings = { hjid: 5048561, hjsv: 6 };
-      a = o.getElementsByTagName("head")[0];
-      r = o.createElement("script");
-      r.async = 1;
-      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-      a.appendChild(r);
-    })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
-  </script>
 
   <body>
     <slot />
