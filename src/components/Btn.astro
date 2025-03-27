@@ -1,53 +1,58 @@
 ---
 interface Props {
-    liga: string;
-    texto: string;
-    claro: boolean;
-    blank?: boolean;
-    clases?: string;
-    id?: string;
-    rel?: string;
+  liga: string;
+  texto: string;
+  claro: boolean;
+  blank?: boolean;
+  clases?: string;
+  id?: string;
+  rel?: string;
 }
 const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
 ---
 
-    <a href={liga} class:list= {clases}  target={blank ? '_blank' : ''} {...rest} rel={rel} set:html={texto}>
-    <slot />
+<a
+  href={liga}
+  class:list={clases}
+  target={blank ? "_blank" : ""}
+  {...rest}
+  rel={rel}
+  set:html={texto}
+>
+  <slot />
 </a>
 
 <style lang="scss">
-    @use '../estilos/_variables.scss' as *;
-    @mixin btn {
-        padding: 10px 20px;
-        display: inline-block;
-        text-decoration: none;
-        border-radius: 5px;
-        margin: $margen-min 0;
-        border: none;
-       
-        @include cel {
-            margin-top: $margen-min;
-            text-align: center;
-            width: max-content;
-        }
+  @use "../estilos/_variables.scss" as *;
+  @mixin btn {
+    padding: 8px 15px;
+    display: inline-flex; // Cambiado de inline-block a inline-flex
+    align-items: center; // Centrar verticalmente
+    justify-content: center;
+    gap: 0.5rem; // Espacio entre icono y texto
+    text-decoration: none;
+    border-radius: 5px;
+    margin: $margen-min 0;
+    border: none;
+    font-weight:600;
+    @include cel {
+      margin-top: $margen-min;
+      width: max-content;
     }
-    .btn-claro {
-        background-color: $primario;
-        color:$fondoGlobal;
-        font-weight: 700;
-        @include btn;
-    }
-    .btn-oscuro {
-        background-color: $acento;
-        color: white;
-        font-weight: 700;
-        @include btn;
-    }
-    .btn-bordes{
-        border: 1px solid $secundario!important;
-        color: $secundario;
-        font-weight: 700;
-        @include btn;
-    }
-
+  }
+  .btn-claro {
+    background-color: $primario;
+    color: $fondoGlobal;
+    @include btn;
+}
+.btn-oscuro {
+    background-color: $acento;
+    color: white;
+    @include btn;
+  }
+  .btn-bordes {
+    border: 1px solid $secundario !important;
+    color: $secundario;
+    @include btn;
+  }
 </style>

@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import Anchor from "./Anchor.astro"
+import Btn from "../Btn.astro";
 
 interface Props {
   costo: number;
@@ -10,59 +10,56 @@ interface Props {
 }
 const { costo, version, stripe, tipo } = Astro.props;
 const url = Astro.url.origin;
-const tipos = ["lux", "clasica", "esencial"];	
-
+const tipos = ["lux", "clasica", "esencial"];
 ---
 
 <div class="grid pantalla">
   <div class="flex" id="bloqueventas">
     <div class="info">
-      <h3><b>Nvitación</b> de {tipo} / <span> {version === "clasica" ? "clasica" : version}</span></h3>
-      <Anchor
-      url={stripe}
-      id={"estilo"}
-      clases={"large"}
-      conBorde={false}
-      redondo={false}
-      sombra={true}
-      tema={"secundario"}
-      texto={`Comprar $${costo} MXN.`}
-      />
+      <h3>
+        <b
+          >Nvitación de {tipo} / <span>
+            {version === "clasica" ? "clasica" : version}</span
+          ></b
+        >
+      </h3>
+      <Btn liga={stripe} texto={`Comprar $${costo} MXN.`} clases="btn-oscuro" claro={false} blank={true}  >
+        <Icon name="mdi:add-shopping-cart" size={25} />
+      </Btn>
+
 
       <div id="whats">
-        <a href=`https://api.whatsapp.com/send/?phone=5217551132468&text=%20me%20contacto%20desde%20nvitaciones.com%20me%20interesa%20la%20invitación%20de%20${tipo}%20${version}` target="_blank"><Icon name={"whatsapp"} size={40} /> Contáctanos por whatsapp</a>
+        <a
+          href=`https://api.whatsapp.com/send/?phone=5217551132468&text=%20me%20contacto%20desde%20nvitaciones.com%20me%20interesa%20la%20invitación%20de%20${tipo}%20${version}`
+          target="_blank"
+          ><Icon name={"whatsapp"} size={40} /> Contáctanos por whatsapp</a
+        >
       </div>
     </div>
-      
-    <div id="version">
-      <h4>Conoces otras versiones de <b>Nvitaciones de {tipo}:</b> </h4>
-      {
-        tipos.map(
-          (ver) => (
-            ver !== version ? (
-              <div class="item">
 
-              <Anchor
-                url={`${url}/${tipo}/nvita-${tipo}-${ver}?id=2`}
-                id={"estilo"}
-                clases={"large"}
-                conBorde={true}
-                redondo={false}
-                sombra={false}
-                tema={"primario"}
+    <div id="version">
+      <h4>Conoces otras versiones de <b>Nvitaciones de {tipo}:</b></h4>
+      {
+        tipos.map((ver) =>
+          ver !== version ? (
+            <div class="item">
+              <Btn
+                liga={`${url}/${tipo}/nvita-${tipo}-${ver}?id=2`}
                 texto={`Nvitación ${ver}`}
-                />
-                </div>
-            ) : null
-          )
+                clases="btn-bordes"
+                claro={true}
+                blank={false}
+              >
+                <Icon name="mdi:chevron-right" size={20} />
+              </Btn>
+            </div>
+          ) : null
         )
       }
     </div>
-
-
-  </div>
   </div>
 </div>
+
 <!-- <script>
   const ua = navigator.userAgent;
   let whats = "";
@@ -75,11 +72,12 @@ const tipos = ["lux", "clasica", "esencial"];
 
 <style lang="scss">
   @use "../../estilos/_variables.scss" as *;
+
+
   #bloqueventas {
-    background-color: var(--secundario);
+    background-color: $primario;
     margin: $margen 0;
     padding: $margen $margen-cel;
-    color: var(--primario);
     min-height: 20vh;
     display: flex;
     flex-wrap: wrap;
@@ -90,11 +88,11 @@ const tipos = ["lux", "clasica", "esencial"];
     flex-wrap: wrap;
     align-content: space-evenly;
     position: relative;
-    .info{
-        text-align: center;
+    .info {
+      text-align: center;
     }
     .item {
-      padding: .5rem;
+      padding: 0.5rem;
     }
     #version {
       flex: 1 0 100%;
@@ -103,25 +101,25 @@ const tipos = ["lux", "clasica", "esencial"];
       display: flex;
     }
     h3 {
-      span {
-        color:var(--acento);
-        font-weight: bold;
-      }
-    //   flex: 1 0 100%;
-    //   display: flex;
       justify-content: center;
-      font-family: Montserrat, sans-serif;
+      font-family: "Playwrite CU", serif;
       font-weight: 100;
-      color: var(--primario);
-    //   flex: 1 0 100%;
       text-align: center;
       padding: 0;
       margin: 0;
       font-size: clamp(1.5rem, 2.5vw, 3rem);
+      span {
+        color: $fondo;
+        font-weight: bold;
+      }
+      b {
+        color: $acento !important;
+      }
     }
 
     h4 {
-      font-family: Montserrat, sans-serif;
+      color: wheat;
+      font-family: $fuenteB, sans-serif;
       flex: 1 0 100%;
       justify-content: center;
       text-align: center;
@@ -129,17 +127,17 @@ const tipos = ["lux", "clasica", "esencial"];
     }
   }
   #whats {
-    border-bottom: solid;
+    border-bottom: solid 1px $fondo;
     a {
-      vertical-align: middle;
-      color: var(--primario);
+      display: inline-flex;
+      gap: 1rem;
+      color: wheat;
       margin: 1rem;
       text-decoration: underline;
- 
     }
-    svg {
-      vertical-align: middle;
-      margin-right: .5rem;
-    }
+   
+  }
+  svg{
+    fill: $fondo;
   }
 </style>

@@ -14,19 +14,19 @@ import Anchor from "../comunes/Anchor.astro";
 
 <div id="bandeja">
   <div id="regalo">
-    <Icon name={"regalo"} size={40} />
+    <Icon name={"mdi:wallet-giftcard"} size={40} />
     <h2>Regalos</h2>
-
+    
     <p set:html={frase} />
     <Anchor
-      url={"https://www.amazon.com.mx/registries"}
-      id={"estilo"}
-      clases={"large"}
-      conBorde={false}
-      redondo={true}
-      sombra={false}
-      tema={"primario"}
-      texto={"Amazon"}
+    url={"https://www.amazon.com.mx/registries"}
+    id={"estilo"}
+    clases={"large"}
+    conBorde={false}
+    redondo={true}
+    sombra={false}
+    tema={"primario"}
+    texto={"Amazon"}
     />
     <Anchor
       url={"https://meli.uniko.co/Home"}
@@ -37,8 +37,8 @@ import Anchor from "../comunes/Anchor.astro";
       sombra={false}
       tema={"primario"}
       texto={"Mercado Libre"}
-    />
-    <Anchor
+      />
+      <Anchor
       url={"https://mesaderegalos.liverpool.com.mx/"}
       id={"estilo"}
       clases={"large"}
@@ -47,16 +47,17 @@ import Anchor from "../comunes/Anchor.astro";
       sombra={false}
       tema={"primario"}
       texto={"Liverpool"}
-    />
-  </div>
-  <div id="lluvia">
-    <h3>Lluvia de sobres</h3>
-    <p>
-      Preferimos que los presentes que deseen hacernos sean en efectivo, los
-      cuales podrán colocar en un sobre
-    </p>
-  </div>
-  <div id="transferencias">
+      />
+    </div>
+    <div id="lluvia">
+      <h3>Lluvia de sobres</h3>
+      <p>
+        Preferimos que los presentes que deseen hacernos sean en efectivo, los
+        cuales podrán colocar en un sobre
+      </p>
+    </div>
+    <div id="transferencias">
+   
     <h3>Transferencias:</h3>
     <ul>
       <li><b>Beneficiario</b>: {beneficiario}</li>
@@ -102,11 +103,9 @@ import Anchor from "../comunes/Anchor.astro";
       color: var(--acento);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
-    background: url("/bg-floral-regalos-der.svg") var(--terciario);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: color-dodge;
-
+    background: url("/lluvia.webp") var(--fondoBurn) repeat;
+    background-size: contain;
+    background-blend-mode:overlay;
     margin: $margen-cel 0;
     padding: $margen $margen-cel;
     text-align: center;
@@ -115,18 +114,6 @@ import Anchor from "../comunes/Anchor.astro";
   }
   #transferencias {
     border-radius: $radio;
-    @extend .sombra;
-    h3 {
-      color: white;
-      font-size: clamp(2.2rem, 1.5vw, 2rem);
-    }
-    b {
-      color: white;
-    }
-    ul {
-      color: white;
-      text-align: left;
-    }
     padding: $margen $margen-min;
     display: flex;
     flex-wrap: wrap;
@@ -141,13 +128,24 @@ import Anchor from "../comunes/Anchor.astro";
     background-size: 40%;
     background-blend-mode: color-burn;
     color: var(--terciario);
+    @extend .sombra;
+
+    h3 {
+      color: white;
+      font-size: clamp(2rem, 1vw, 2rem);
+    }
+    b {
+      color: white;
+    }
+    ul {
+      color: white;
+      text-align: left;
+    }
   }
   #regalo,
   #lluvia,
   #transferencias {
     @include cel {
-      // background-size: 70%;
-      // background-repeat: repeat-y;
       background-size: cover;
       background-blend-mode: soft-light;
     }
