@@ -44,7 +44,7 @@ html {
   font-family: $txt, serif;
   font-weight: 100;
   scroll-behavior: smooth;
-  background: url('./textuta-bg-2.webp') repeat;
+  background: url('textuta-bg-2.webp') repeat;
   @include hd {
     font-size: clamp(10px, 0.9vw, 20px);
   }
