@@ -8,13 +8,14 @@ interface Props {
   img: string;
   link?: string;
   horasValidez?: number; // Horas que durará la oferta
+  porcentaje?: number; // Porcentaje de descuento
 }
-const { img, encabezado, texto, link, small, horasValidez = 24 } = Astro.props;
+const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = Astro.props;
 ---
 
 <div id="oferta">
   <div class="cta">
-    <h3 set:html={encabezado} />
+    <h3 id="ofertaHeader" set:html={encabezado} />
     <Btn
       liga="#precios"
       texto="Comprar ahora"
@@ -164,10 +165,17 @@ const { img, encabezado, texto, link, small, horasValidez = 24 } = Astro.props;
   }
 </style>
 
-<script define:vars={{ horasValidez }}>
+<script define:vars={{ horasValidez, encabezado, porcentaje }}>
+  function getRandomMinutesVariation() {
+    // Generar variación aleatoria entre -15 y 15 minutos
+    return (Math.random() * 30 - 15) * 60 * 1000; // Convertir a milisegundos
+  }
+
   function setCookie(name, value, hours) {
     const d = new Date();
-    d.setTime(d.getTime() + hours * 60 * 60 * 1000);
+    // Añadir variación aleatoria al tiempo
+    const variation = getRandomMinutesVariation();
+    d.setTime(d.getTime() + (hours * 60 * 60 * 1000) + variation);
     document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
   }
 
@@ -179,16 +187,35 @@ const { img, encabezado, texto, link, small, horasValidez = 24 } = Astro.props;
 
   function startCountdown() {
     let deadline = getCookie("ofertaDeadline");
+    let lastVisit = getCookie("lastVisit");
+    const now = new Date().getTime();
+
+    // Establecer la cookie de última visita
+    setCookie("lastVisit", now, horasValidez);
+
+    // Comprobar si han pasado más de 5 minutos desde la última visita
+    if (lastVisit && deadline) {
+      const timeSinceLastVisit = now - lastVisit;
+      const fiveMinutes = 5 * 60 * 1000;
+
+      if (timeSinceLastVisit > fiveMinutes) {
+        document.getElementById("ofertaHeader").innerHTML = 
+          `¡Última oportunidad! ${porcentaje}% menos`;
+      }
+    }
 
     if (!deadline) {
       const now = new Date();
       const endOfDay = new Date(now);
       endOfDay.setHours(23, 59, 59, 999);
+      
+      // Añadir variación al hoursDeadline
+      const variation = getRandomMinutesVariation();
       const hoursDeadline = new Date(
-        now.getTime() + horasValidez * 60 * 60 * 1000
+        now.getTime() + (horasValidez * 60 * 60 * 1000) + variation
       );
+      
       deadline = Math.min(endOfDay.getTime(), hoursDeadline.getTime());
-
       setCookie("ofertaDeadline", deadline, horasValidez);
     }
 
