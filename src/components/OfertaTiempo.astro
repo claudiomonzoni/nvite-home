@@ -1,0 +1,226 @@
+---
+import Btn from "./Btn.astro";
+
+interface Props {
+  encabezado: string;
+  small: string;
+  texto: string;
+  img: string;
+  link?: string;
+  horasValidez?: number; // Horas que durará la oferta
+}
+const { img, encabezado, texto, link, small, horasValidez = 24 } = Astro.props;
+---
+
+<div id="oferta">
+  <div class="cta">
+    <h3 set:html={encabezado} />
+    <Btn
+      liga="#precios"
+      texto="Comprar ahora"
+      clases="btn-claro"
+      claro={true}
+      blank={false}
+    />
+  </div>
+  <div class="info">
+    <p set:html={texto} />
+    <small set:html={small} />
+    <div class="countdown">
+      <div class="time-block">
+        <span id="hours">00</span>
+        <label>H</label>
+      </div>
+      <div class="time-block">
+        <span id="minutes">00</span>
+        <label>Min</label>
+      </div>
+      <div class="time-block">
+        <span id="seconds">00</span>
+        <label>S</label>
+      </div>
+    </div>
+  </div>
+  <div id="bandejaImagen">
+    <div id="imagen">
+      <img src={img} alt={encabezado} loading="lazy" decoding="async" />
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/variables" as *;
+
+  #oferta {
+    display: flex;
+    gap: 1rem;
+    border-radius: $radio;
+    background: $acento;
+    margin: $margen 0 0;
+    justify-content: center;
+    align-items: center;
+  }
+  h3,
+  p,
+  small {
+    color: #fff;
+  }
+  .cta {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h3 {
+    font-size: clamp(2.2rem, 2.5vw, 3rem);
+    text-align: center;
+  }
+  .info {
+    flex: 2;
+  }
+  #bandejaImagen {
+    flex: 1;
+    height: 100%;
+    background: $secundario;
+    border-radius: $radio;
+  }
+  #imagen {
+    position: relative;
+    width: 100%;
+    height: calc(100% + 30px);
+    top: -30px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: $radio;
+    }
+  }
+  @include cel {
+    #oferta {
+      flex-wrap: wrap;
+    }
+    h3,
+    .info,
+    #bandejaImagen {
+      flex: 1 0 100%;
+    }
+    h3,
+    .info {
+      text-align: center;
+    }
+    .cta {
+      order: 1;
+      padding: $margen-cel $margen-cel 0;
+    }
+    .info {
+      order: 2;
+      padding: $margen-min $margen-cel $margen-cel;
+    }
+    #bandejaImagen {
+      order: 0;
+      height: 20vh;
+    }
+
+    #imagen {
+      width: 100%;
+      height: calc(100% + 30px);
+      top: -30px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: $radio;
+      }
+    }
+  } // Cierre del @include cel
+
+  .countdown {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: $radio;
+
+    span {
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      font-weight: bold;
+      color: #fff;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+</style>
+
+<script define:vars={{ horasValidez }}>
+  function setCookie(name, value, hours) {
+    const d = new Date();
+    d.setTime(d.getTime() + hours * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  }
+
+  function startCountdown() {
+    let deadline = getCookie("ofertaDeadline");
+
+    if (!deadline) {
+      const now = new Date();
+      const endOfDay = new Date(now);
+      endOfDay.setHours(23, 59, 59, 999);
+      const hoursDeadline = new Date(
+        now.getTime() + horasValidez * 60 * 60 * 1000
+      );
+      deadline = Math.min(endOfDay.getTime(), hoursDeadline.getTime());
+
+      setCookie("ofertaDeadline", deadline, horasValidez);
+    }
+
+    function updateCountdown() {
+      const currentTime = new Date().getTime();
+      const distance = deadline - currentTime;
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("hours").textContent = hours
+        .toString()
+        .padStart(2, "0");
+      document.getElementById("minutes").textContent = minutes
+        .toString()
+        .padStart(2, "0");
+      document.getElementById("seconds").textContent = seconds
+        .toString()
+        .padStart(2, "0");
+
+      if (distance < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById("oferta").style.display = "none";
+      }
+    }
+
+    updateCountdown();
+    const countdownInterval = setInterval(updateCountdown, 1000);
+  }
+
+  document.addEventListener("DOMContentLoaded", startCountdown);
+</script>

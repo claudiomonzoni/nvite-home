@@ -13,6 +13,7 @@ import Faq from "../components/Faq.astro";
 import Ofertashome from "../components/Ofertashome.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Testimonios from "../components/Testimonios.astro";
+import OfertaTiempo from "../components/OfertaTiempo.astro";
 
 ---
 
@@ -60,7 +61,17 @@ import Testimonios from "../components/Testimonios.astro";
     texto="Durante el mes de febrero <b>aplica el cupón: AMOR30</b> a la hora de adquirir tu invitación de boda o 15 años."
     small="Solo aplica para pagos en línea, promoción valida hasta el 28 de febrero."
     img="/promo.webp"
-     /> -->
+    /> -->
+  </div>
+  <div class="grid contenido">
+
+    <OfertaTiempo
+    encabezado="<b>Aprovecha 15% </b>de descuento"
+    texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
+    small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
+    horasValidez={1}
+    img="/promo.webp"
+    />
   </div>
 
   <div class="grid contenido">
