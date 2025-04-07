@@ -6,13 +6,14 @@ import Btn from "./Btn.astro";
 interface Props {
   h1: string;
   Spanh1: string;
+  Spanh2?: string;
   description: string;
   imagen?: string;
   imagencel?: string;
   fondo: string;
   tema?: string;
 }
-const { description, h1, imagen, imagencel, fondo, Spanh1, tema } = Astro.props;
+const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema } = Astro.props;
 
 import { Icon } from "astro-icon/components";
 console.log(fondo);
@@ -23,7 +24,7 @@ console.log(fondo);
     <div class="izq anime">
       <div class="bandeja anime">
         <h1 class={tema}>
-          <span set:html={Spanh1} />{h1}
+          <span set:html={Spanh1} />{h1} <span set:html={Spanh2}></span>
         </h1>
         <p class={tema} set:html={description} />
         <div class="cta">
@@ -88,6 +89,11 @@ console.log(fondo);
         font-weight: 100;
         transform: translateX(0.5rem);
       }
+      span:nth-child(2) {
+        
+        font-size: clamp(1.3rem, 1.3vw, 2rem);
+
+      }
     
       @include cel {
         justify-content: center;
@@ -108,6 +114,9 @@ console.log(fondo);
     .bandeja {
       width: fit-content;
       max-width: 80%;
+      p{
+        margin: 0 0 $margen-cel 0;
+      }
       @include cel {
         max-width: 100%;
       }
@@ -167,11 +176,12 @@ console.log(fondo);
     p {
       font-size: 0.8rem;
       color: $acento;
+      margin: 0!important;
     }
     @include cel {
       justify-content: center;
       p {
-        margin: 0 !important;
+        margin: 0!important;
         font-size: 1rem;
       }
     }
