@@ -1,0 +1,343 @@
+---
+export const prerender = true;
+import { Icon } from "astro-icon/components";
+import Btn from "../components/Btn.astro";
+import Caracteristicas from "../components/Caracteristicas.astro";
+import Herointerior from "../components/Herointerior.astro";
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+import BannerGeneral from "../components/BannerGeneral.astro";
+import Footer from "../components/Footer.astro";
+import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
+import Banner from "../components/Banner.astro";
+import Ofertashome from "../components/Ofertashome.astro";
+---
+
+<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, Modernas y Originales - Nvitaciones">
+  <div class="grid contenido">
+    <Nav />
+  </div>
+
+  <Herointerior
+    Spanh1="<b>Invitaciones</b> "
+    h1="PDF"
+    Spanh2="Bodas, XV años y Cumpleaños"
+    description="<b>Sorprende a tus invitados</b>. Personaliza tu invitación y gestiona tu evento sin complicaciones con Nvitaciones."
+    fondo="#ffce95"
+    imagen="/Nvitaciones-invitaciones-digitales-quince.webp"
+    imagencel="/Nvitaciones-invitaciones-digitales-quince-cel.webp"
+  />
+
+  <div class="grid contenido">
+    <div id="choro">
+      <div id="info">
+        <div class="bande">
+          <h2>Preparar tu fiesta de 15 años debería ser emocionante, no estresante.</h2>
+          <p>
+            Horas coordinando invitados, confirmaciones que no llegan y cambios de último minuto… <b>Organizar tu XV no tiene por qué ser un dolor de cabeza.</b>
+          </p>
+          <p>
+            Con nuestras <b>invitaciones digitales para XV años</b>, todo es más fácil: diseña una invitación única, recibe confirmaciones en tiempo real y envía los detalles con un solo clic. Haz que tu gran noche comience con la invitación perfecta.
+          </p>
+        </div>
+      </div>
+      <div id="video-home">
+        <div id="play">
+          <Icon name="mdi:play-circle" size={70} />
+        </div>
+        <video
+          preload="metadata"
+          poster="/video-poster-quince.webp"
+          loop
+          id="video-quince-cel"
+        >
+          <source
+            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009715/quince_fq3r0w.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="grid contenido">
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+      encabezado="Administra"
+      texto="Agrega, borra y edita tus invitados."
+      icono="mdi:gear"
+      fondo="/fondo-nvite-caracteristicas-3.png"
+      colorBg="#fff"
+    />
+
+    <Caracteristicas
+      encabezado="Envia"
+      texto="Por whatsapp, correo o redes sociales."
+      icono="mdi:send-check"
+      fondo="/fondo-nvite-caracteristicas-3.png"
+      
+    />
+
+    <Caracteristicas
+      encabezado="Recibe"
+      texto="Confirmaciones y mensajes de tus invitados."
+      icono="mdi:human-hello-variant"
+      fondo="/fondo-nvite-caracteristicas-4.png"
+      colorBg="#fff"
+    />
+
+    <Caracteristicas
+      encabezado="Ilimitado"
+      texto="Envia a todos tus invitados sin límite."
+      icono="mdi:infinity"
+      fondo="/fondo-nvite-caracteristicas-2.png"
+ 
+    />
+    </div>
+  </div>
+
+  <section class="grid contenido">
+    <p class="intro">
+      Una invitación que refleje el amor y la emoción de ese día tan especial.
+      En nvitaciones.com, te ayudamos a crear <b
+        >invitaciones digitales únicas</b
+      >, elegantes y personalizadas que dejarán una impresión inolvidable en tus
+      invitados.
+    </p>
+  </section>
+
+  <CaracteristicasGrid
+    matriz={[
+      {
+        imagen: "/quince-caracteristicas.webp",
+        titulo: "Invitaciones <span>personalizadas</span>",
+        texto:
+          "Tus invitados sabrán lo especiales que son para ti, cada invitación se envía con su nombre y los pases asignados",
+        enlace: "#precios",
+      },
+      {
+        imagen: "mdi:email-check",
+        titulo: "Confirmación de asistencia",
+        texto:
+          "Ten control de los asistentes a tu evento, facilítale a tus invitados su confirmación.",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:
+          "Invitaciones ilimitadas, envialas a todos tus amigos y seres queridos.",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "Con <span>toda la información</span> necesaria de tus 15 años",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "<span>Cero</span> estrés enviando invitaciones",
+      },
+    ]}
+  />
+
+  <section class="grid contenido" id="colores">
+    <h2>Tu <b>invitación</b>, justo como la quieres</h2>
+    <p>
+      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b>colores</b> o envíanos los tonos de tu evento para que combinen a la perfección.
+    </p>
+    <div id="bandejacolor">
+      <div class="item">
+        <h3>Invierno</h3>
+        <img
+          src="/invierno-quince.webp"
+          alt="invitaciones de quince años invierno / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="item">
+        <h3>Primavera</h3>
+        <img
+          src="/primavera-quince.webp"
+          alt="invitaciones de quince años primavera / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="item">
+        <h3>Otoño</h3>
+        <img
+          src="/otono-quince.webp"
+          alt="invitaciones de quince años otoño / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <!-- <div class="item">
+        <h3>Verano</h3>
+        <img
+          src="/otono.webp"
+          alt="invitaciones de bodas verano / Nvitaciones.com"
+          loading="lazy"
+          decoding="async"
+        />
+      </div> -->
+    </div>
+  </section>
+
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu invitación de <b>Nvita:</b>"
+      texto={`
+    <ul>
+    <li><b>Trato personalizado</b> durante y después de tu compra</li>
+    <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> después de tu compra</li>
+    <li>
+    Acceso a un <b>panel de invitados</b> para tener control total de tus
+    invitaciones
+    </li>
+        <li>Tu invitación, sin importar la versión, <mark>tiene envíos ilimitados</mark></li>
+        <li>
+        Tu invitación queda en línea <b>hasta 1 semana</b> después de la fecha de tu
+        evento
+        </li>
+        <li>
+        Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+        </li>
+        </ul>
+        <small>*Panel de invitados no aplica en la versión "basic"</small>
+        <br>
+        `}
+      tema="terciario"
+      icono="mdi:deal"
+      urlImagen="../assets/home/gale/recibes.webp"
+      margenAbajo={true}
+    >
+      <Btn
+        liga="#formu"
+        texto="Obtén tu invitación"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="bag" size={25} />
+      </Btn>
+    </BannerGeneral>
+  </div>
+
+  <div id="precios" class="grid contenido">
+    <Banner dondeEstoy="quince" />
+  </div>
+
+  <section class="grid contenido">
+    <div class="flex">
+      <div class="fondo-formu">
+        <div class="bande">
+          <h2>Obtén tu invitación</h2>
+          <p>
+            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso
+            para que obtengas tu invitación.
+          </p>
+          <small
+            >Usa el formulario para hablar con nuestra asistente de <b
+              >whatsapp</b
+            ></small
+          >
+        </div>
+
+        <div id="formu">
+          <form>
+            <!-- <h3>
+            <img src="/whatsapp.png" alt="logo whatsapp">
+           <b>whatsapp</b></h3> -->
+            <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" />
+            <label for="fecha">Fecha del evento</label>
+            <input type="date" name="fecha" id="fecha" />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="agrega un email valido"
+            />
+            <!-- <a href="#" id="empezar" class="desactivado"
+              ><img src="/whatsapp.png" alt="logo whatsapp" /> Hola <b>Aida</b></a
+            > -->
+            <Btn
+              liga="#"
+              id="empezar"
+              texto="<b>Hola</b> Aida"
+              clases="desactivado, btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:whatsapp" />
+            </Btn>
+            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .intro {
+    line-height: 1.1em;
+    text-align: center;
+    font-size: clamp(1.3rem, 1.7vw, 2.7rem);
+    margin: $margen $margen-min;
+  }
+  #colores {
+    padding-top: $margen;
+    text-align: center;
+    padding-bottom: $margen;
+    h2{
+      color: $primario;
+      b{
+        color: $acento;
+      }
+    }
+  }
+  #bandejacolor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: $margen-cel;
+    h3 {
+      color: $acento;
+      padding: 0 0 $margen-min 0;
+      border-bottom: dashed .1rem $terciario;
+    }
+    .item {
+      padding: $margen;
+      @include cel {
+        padding: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  const mivideoquince = document.getElementById(
+    "video-quince-cel"
+  ) as HTMLVideoElement;
+  const play = document.getElementById("play") as HTMLDivElement;
+  console.log(mivideoquince);
+
+  play.addEventListener("click", playPause);
+
+  function playPause() {
+    if (mivideoquince.paused) mivideoquince.play();
+    else mivideoquince.pause();
+  }
+</script>
