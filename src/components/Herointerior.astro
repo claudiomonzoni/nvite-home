@@ -13,26 +13,29 @@ interface Props {
   fondo: string;
   tema?: string;
 }
-const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema } = Astro.props;
+const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema } =
+  Astro.props;
 
 import { Icon } from "astro-icon/components";
 console.log(fondo);
 ---
 
 <section class="grid pantalla-der">
-  <div id="hero" >
+  <div id="hero">
     <div class="izq anime">
       <div class="bandeja anime">
         <h1 class={tema}>
-          <span set:html={Spanh1} />{h1} <span set:html={Spanh2}></span>
+          <span set:html={Spanh1} />{h1}
+          <span set:html={Spanh2} />
         </h1>
         <p class={tema} set:html={description} />
-        <div class="cta">
+        <div class={`cta ${tema}`}>
           <Btn
             liga="#precios"
             texto="Ver invitaciones"
             claro={false}
-            clases="btn-oscuro"
+            clases={tema !== "rojo" ? "btn-oscuro" : "btn-claro"}
+            blank={false}
           >
             <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
@@ -90,11 +93,9 @@ console.log(fondo);
         transform: translateX(0.5rem);
       }
       span:nth-child(2) {
-        
         font-size: clamp(1.3rem, 1.3vw, 2rem);
-
       }
-    
+
       @include cel {
         justify-content: center;
         line-height: 0.7em;
@@ -114,7 +115,7 @@ console.log(fondo);
     .bandeja {
       width: fit-content;
       max-width: 80%;
-      p{
+      p {
         margin: 0 0 $margen-cel 0;
       }
       @include cel {
@@ -176,12 +177,12 @@ console.log(fondo);
     p {
       font-size: 0.8rem;
       color: $acento;
-      margin: 0!important;
+      margin: 0 !important;
     }
     @include cel {
       justify-content: center;
       p {
-        margin: 0!important;
+        margin: 0 !important;
         font-size: 1rem;
       }
     }
@@ -191,12 +192,21 @@ console.log(fondo);
     font-weight: 700;
     font-family: "Montserrat Alternates", sans-serif;
   }
-  .oscuro{
+  .oscuro {
     color: white;
   }
-  .oscuro span{
-        color:$secundario !important;
-      }
+  .oscuro span {
+    color: $secundario !important;
+  }
+  .rojo {
+    color: white;
+    span {
+      color: $fondoGlobal !important;
+    }
+     p {
+      color: $fondoGlobal !important;
+    }
+  }
 </style>
 <!-- <script>
   import SplitType from "split-type";
