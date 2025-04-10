@@ -11,6 +11,7 @@ import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Banner from "../components/Banner.astro";
 import Ofertashome from "../components/Ofertashome.astro";
+import PreciosPdf from "../components/PreciosPdf.astro";
 ---
 
 <Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, Modernas y Originales - Nvitaciones">
@@ -21,9 +22,9 @@ import Ofertashome from "../components/Ofertashome.astro";
   <Herointerior
     Spanh1="<b>Invitaciones</b> "
     h1="PDF"
-    Spanh2="Bodas, XV años y Cumpleaños"
-    description="<b>Sorprende a tus invitados</b>. Personaliza tu invitación y gestiona tu evento sin complicaciones con Nvitaciones."
-    fondo="#ffce95"
+    Spanh2="Modernas, Elegantes y Originales"
+    description="<b>Impresiona a tus invitados</b>. Diseña invitaciones en PDF personalizadas y listas para imprimir o enviar digitalmente."
+    fondo="#dae3ea"
     imagen="/Nvitaciones-invitaciones-digitales-quince.webp"
     imagencel="/Nvitaciones-invitaciones-digitales-quince-cel.webp"
   />
@@ -32,27 +33,32 @@ import Ofertashome from "../components/Ofertashome.astro";
     <div id="choro">
       <div id="info">
         <div class="bande">
-          <h2>Preparar tu fiesta de 15 años debería ser emocionante, no estresante.</h2>
+          <h2>Invitaciones PDF: Elegancia y practicidad en un solo archivo.</h2>
           <p>
-            Horas coordinando invitados, confirmaciones que no llegan y cambios de último minuto… <b>Organizar tu XV no tiene por qué ser un dolor de cabeza.</b>
+            ¿Cansado de las invitaciones tradicionales? Con nuestras <b>invitaciones en PDF</b>, tendrás diseños únicos y personalizables que puedes imprimir o enviar digitalmente.
           </p>
           <p>
-            Con nuestras <b>invitaciones digitales para XV años</b>, todo es más fácil: diseña una invitación única, recibe confirmaciones en tiempo real y envía los detalles con un solo clic. Haz que tu gran noche comience con la invitación perfecta.
+            Ahorra tiempo y dinero mientras sorprendes a tus invitados con invitaciones modernas y elegantes. Perfectas para bodas, XV años, cumpleaños y cualquier evento especial.
           </p>
         </div>
       </div>
       <div id="video-home">
         <div id="play">
-          <Icon name="mdi:play-circle" size={70} />
+          <div class="mostrado">
+            <Icon name="mdi:play-circle" size={70} />
+          </div>
+          <div class="escondido">
+            <Icon name="mdi:pause-circle" size={70} />
+          </div>
         </div>
         <video
           preload="metadata"
-          poster="/video-poster-quince.webp"
+          poster="/video-poster-pdf.webp"
           loop
           id="video-quince-cel"
         >
           <source
-            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1740009715/quince_fq3r0w.mp4"
+            src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov"
             type="video/mp4"
           />
         </video>
@@ -65,8 +71,8 @@ import Ofertashome from "../components/Ofertashome.astro";
   <div class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-      encabezado="Administra"
-      texto="Agrega, borra y edita tus invitados."
+      encabezado="Datos"
+      texto="Personaliza las invitaciones con tu información."
       icono="mdi:gear"
       fondo="/fondo-nvite-caracteristicas-3.png"
       colorBg="#fff"
@@ -100,78 +106,128 @@ import Ofertashome from "../components/Ofertashome.astro";
 
   <section class="grid contenido">
     <p class="intro">
-      Una invitación que refleje el amor y la emoción de ese día tan especial.
       En nvitaciones.com, te ayudamos a crear <b
-        >invitaciones digitales únicas</b
-      >, elegantes y personalizadas que dejarán una impresión inolvidable en tus
-      invitados.
+        >invitaciones PDF únicas</b
+      >, modernas y personalizadas, listas compartir por whhatsapp. No pierdas la oportunidad de sorprender con tus invitados.
     </p>
   </section>
 
   <CaracteristicasGrid
     matriz={[
       {
-        imagen: "/quince-caracteristicas.webp",
-        titulo: "Invitaciones <span>personalizadas</span>",
+        imagen: "/pdf-caracteristicas.webp",
+        titulo: "Invitaciones <span>economicas</span>",
         texto:
-          "Tus invitados sabrán lo especiales que son para ti, cada invitación se envía con su nombre y los pases asignados",
+          "Tus invitados recibirán una invitación PDF con su nombre y detalles personalizados, incluyendo fecha, hora, ubicación y más.",
         enlace: "#precios",
       },
       {
-        imagen: "mdi:email-check",
+        imagen: "mdi:whatsapp",
         titulo: "Confirmación de asistencia",
         texto:
-          "Ten control de los asistentes a tu evento, facilítale a tus invitados su confirmación.",
+          "Facilita la confirmación de asistencia con un botón que conecta directamente a WhatsApp.",
         enlace: "#",
       },
       {
-        imagen: "mdi:infinity-box",
+        imagen: "mdi:check-circle",
         texto:
-          "Invitaciones ilimitadas, envialas a todos tus amigos y seres queridos.",
+          "Incluye enlaces a Google Maps para la recepción y ceremonia, asegurando que tus invitados lleguen sin problemas.",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "Con <span>toda la información</span> necesaria de tus 15 años",
+        texto: "Toda la información de tu evento en un solo lugar: itinerarios, mesa de regalos y más.",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "<span>Cero</span> estrés enviando invitaciones",
+        texto: "Ahorra tiempo y estrés con invitaciones listas para compartir digitalmente o imprimir.",
       },
     ]}
   />
 
   <section class="grid contenido" id="colores">
-    <h2>Tu <b>invitación</b>, justo como la quieres</h2>
+    <h2><b>Invitaciónes PDF</b>, modernas y economicas</h2>
     <p>
-      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b>colores</b> o envíanos los tonos de tu evento para que combinen a la perfección.
+      <b>Personaliza</b> tu invitación con tu foto y los detalles de tu evento.
     </p>
     <div id="bandejacolor">
       <div class="item">
-        <h3>Invierno</h3>
-        <img
-          src="/invierno-quince.webp"
-          alt="invitaciones de quince años invierno / Nvitaciones.com"
-          loading="lazy"
-          decoding="async"
-        />
+        <h3>Bodas Lux PDF</h3>
+  
+       <div class="video-pdf">
+          <div id="play">
+            <div class="mostrado">
+              <Icon name="mdi:play-circle" size={70} />
+            </div>
+            <div class="escondido">
+              <Icon name="mdi:pause-circle" size={70} />
+            </div>
+          </div>
+          <video
+            preload="metadata"
+            poster="/video-poster-pdf.webp"
+            loop
+            id="video-quince-cel"
+          >
+            <source
+              src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov"
+              type="video/mp4"
+            />
+          </video>
+     
+       </div>
+      
       </div>
       <div class="item">
-        <h3>Primavera</h3>
-        <img
-          src="/primavera-quince.webp"
-          alt="invitaciones de quince años primavera / Nvitaciones.com"
-          loading="lazy"
-          decoding="async"
-        />
+        <h3>Xv años Lux PDF</h3>
+        <div class="video-pdf">
+         
+            <div id="play">
+              <div class="mostrado">
+                <Icon name="mdi:play-circle" size={70} />
+              </div>
+              <div class="escondido">
+                <Icon name="mdi:pause-circle" size={70} />
+              </div>
+            </div>
+            <video
+              preload="metadata"
+              poster="/video-poster-pdf.webp"
+              loop
+              id="video-quince-cel"
+            >
+              <source
+                src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov"
+                type="video/mp4"
+              />
+            </video>
+       
+         </div>
       </div>
       <div class="item">
-        <h3>Otoño</h3>
-        <img
-          src="/otono-quince.webp"
-          alt="invitaciones de quince años otoño / Nvitaciones.com"
-          loading="lazy"
-          decoding="async"
-        />
+        <h3>Cumpleanos Lux PDF</h3>
+        <div class="video-pdf">
+      
+            <div id="play">
+              <div class="mostrado">
+                <Icon name="mdi:play-circle" size={70} />
+              </div>
+              <div class="escondido">
+                <Icon name="mdi:pause-circle" size={70} />
+              </div>
+            </div>
+            <video
+              preload="metadata"
+              poster="/video-poster-pdf.webp"
+              loop
+              id="video-quince-cel"
+            >
+              <source
+                src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov"
+                type="video/mp4"
+              />
+            </video>
+     
+         </div>
       </div>
       <!-- <div class="item">
         <h3>Verano</h3>
@@ -185,27 +241,27 @@ import Ofertashome from "../components/Ofertashome.astro";
     </div>
   </section>
 
+ 
+
+  <div id="precios" class="grid contenido">
+    <PreciosPdf dondeEstoy="quince" />
+  </div>
+
   <div class="grid contenido">
     <BannerGeneral
-      encabezado="Recibes con tu invitación de <b>Nvita:</b>"
+      encabezado="Recibes con tu <b>Nvitación PDF</b>"
       texto={`
     <ul>
     <li><b>Trato personalizado</b> durante y después de tu compra</li>
-    <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> después de tu compra</li>
-    <li>
-    Acceso a un <b>panel de invitados</b> para tener control total de tus
-    invitaciones
-    </li>
+    <li>Recibes tu Nvitación PDF, con los datos de tu evento <b> 2 días hábiles</b> después de tu compra</li>
+ 
         <li>Tu invitación, sin importar la versión, <mark>tiene envíos ilimitados</mark></li>
+   
         <li>
-        Tu invitación queda en línea <b>hasta 1 semana</b> después de la fecha de tu
-        evento
-        </li>
-        <li>
-        Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+        Tu invitación <b>se verá bien en celulares</b>
         </li>
         </ul>
-        <small>*Panel de invitados no aplica en la versión "basic"</small>
+        <small>*Panel de invitados no aplica en la versión "basic o PDF"</small>
         <br>
         `}
       tema="terciario"
@@ -223,10 +279,6 @@ import Ofertashome from "../components/Ofertashome.astro";
         <Icon name="bag" size={25} />
       </Btn>
     </BannerGeneral>
-  </div>
-
-  <div id="precios" class="grid contenido">
-    <Banner dondeEstoy="quince" />
   </div>
 
   <section class="grid contenido">
@@ -307,37 +359,113 @@ import Ofertashome from "../components/Ofertashome.astro";
   }
   #bandejacolor {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Ajustar el tamaño mínimo y máximo de los videos
     gap: 1rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-bottom: $margen-cel;
-    h3 {
-      color: $acento;
-      padding: 0 0 $margen-min 0;
-      border-bottom: dashed .1rem $terciario;
+
+    .mostrando {
+      display: block;
+    }
+    .escondido {
+      display: none;
     }
     .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: $margen;
       @include cel {
         padding: 0;
+      }
+
+      .video-pdf {
+        width: 100%;
+        aspect-ratio: 16 / 9; // Mantener proporción de video
+        position: relative;
+
+        video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover; // Asegurar que el video se ajuste al contenedor
+          border-radius: $radio;
+        }
+
+        #play {
+          position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    @extend .sombra;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    path {
+      fill:$acento;
+    }
+        }
       }
     }
   }
 </style>
 
 <script>
-  const mivideoquince = document.getElementById(
-    "video-quince-cel"
-  ) as HTMLVideoElement;
-  const play = document.getElementById("play") as HTMLDivElement;
-  console.log(mivideoquince);
+  document.addEventListener("DOMContentLoaded", () => {
+    const items = document.querySelectorAll("#bandejacolor .item");
 
-  play.addEventListener("click", playPause);
+    items.forEach((item) => {
+      const video = item.querySelector("video") as HTMLVideoElement;
+      const playButton = item.querySelector("#play") as HTMLElement;
+      const mostrando = playButton.querySelector(".mostrado") as HTMLElement;
+      const escondido = playButton.querySelector(".escondido") as HTMLElement;
 
-  function playPause() {
-    if (mivideoquince.paused) mivideoquince.play();
-    else mivideoquince.pause();
-  }
+      playButton.addEventListener("click", () => {
+        if (video.paused) {
+          video.play();
+          mostrando.style.display = "none"; // Esconder el ícono de play
+          escondido.style.display = "flex"; // Mostrar el ícono de pausa
+        } else {
+          video.pause();
+          mostrando.style.display = "flex"; // Mostrar el ícono de play
+          escondido.style.display = "none"; // Esconder el ícono de pausa
+        }
+      });
+
+      video.addEventListener("ended", () => {
+        mostrando.style.display = "flex"; // Restaurar el ícono de play al finalizar
+        escondido.style.display = "none"; // Esconder el ícono de pausa
+      });
+    });
+
+    // Hacer que funcione el botón de play/pausa en el div #choro
+    const choroPlayButton = document.querySelector("#video-home #play") as HTMLElement;
+    const choroVideo = document.querySelector("#video-home video") as HTMLVideoElement;
+    const choroMostrando = choroPlayButton.querySelector(".mostrado") as HTMLElement;
+    const choroEscondido = choroPlayButton.querySelector(".escondido") as HTMLElement;
+
+    choroPlayButton.addEventListener("click", () => {
+      if (choroVideo.paused) {
+        choroVideo.play();
+        choroMostrando.style.display = "none"; // Esconder el ícono de play
+        choroEscondido.style.display = "flex"; // Mostrar el ícono de pausa
+      } else {
+        choroVideo.pause();
+        choroMostrando.style.display = "flex"; // Mostrar el ícono de play
+        choroEscondido.style.display = "none"; // Esconder el ícono de pausa
+      }
+    });
+
+    choroVideo.addEventListener("ended", () => {
+      choroMostrando.style.display = "flex"; // Restaurar el ícono de play al finalizar
+      choroEscondido.style.display = "none"; // Esconder el ícono de pausa
+    });
+  });
 </script>

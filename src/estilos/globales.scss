@@ -668,11 +668,18 @@ input::placeholder {
       background-size: 110%;
     }
   }
+
   #video-home {
     position: relative;
     flex: 1;
     justify-content: left;
     padding: $margen-cel 0 0 0;
+    .mostrando {
+      display: block;
+    }
+    .escondido {
+      display: none;
+    }
     video {
       width: 70%;
       height: auto;
