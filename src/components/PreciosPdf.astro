@@ -1,5 +1,5 @@
 ---
-const{dondeEstoy} = Astro.props
+const { dondeEstoy } = Astro.props;
 
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
@@ -8,148 +8,89 @@ import Btn from "./Btn.astro";
 <div class="banner azulBG">
   <div class="der">
     <div class="bande">
-   
-      <article class="lista destacada">
+      <article class="lista ">
         <div class="bandeDestacada">
           <small>Bodas, 15 Años y Cumpleaños</small>
-          <h2> 
+          <h2>
             Nvitación PDF Clásica
-            <div id="masvendido">Más vendida</div>
           </h2>
           <div class="precio">$250</div>
           <ul>
-         
             <li><b>Foto principal</b></li>
             <li><b>Nombre del invitado</b></li>
             <li><b>Mapas de ubicación</b></li>
             <li>Fecha del evento</li>
             <li>Detalles del evento</li>
-        
           </ul>
 
-          <div class="conteBtn">
-            {
-              dondeEstoy === 'home' ? (
-              <Btn
-              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Bodas"
-              claro={true}
-            />
-            <Btn
-              liga="/quince/nvita-quince-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver 15 Años"
-              claro={true}
-            />
-            ) : (
-
-              dondeEstoy === "bodas"  ? (
-              <Btn
-              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Clásica"
-              claro={true}
-            />
-              ):(
-              <Btn
-              liga="/quince/nvita-quince-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Clásica"
-              claro={true}
-            />
-              )
-            )}
-          
-           
-          </div>
-
           <Btn
-            liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
+            liga="https://buy.stripe.com/eVa3etbAofejewU149"
             clases="btn-oscuro"
-            texto="Obténla ahora"
+            texto="Comprar"
             claro={false}
           >
             <Icon name="bag" size={25} />
           </Btn>
+
+          <Btn
+            liga="https://wa.link/65jj5u"
+            clases="btn-claro"
+            texto="Solicitar ahora"
+            claro={true}
+            blank={true}
+          >
+            <Icon name="mdi:whatsapp" size={25} />
+          </Btn>
         </div>
       </article>
 
-      <article class="lista">
+      <article class="lista destacada">
         <small>Bodas, 15 Años y Cumpleaños</small>
-        <h2>Nvitación PDF Lux</h2>
+        <h2>Nvitación PDF Lux  <div id="masvendido">Más vendida</div></h2>
         <div class="precio">$490</div>
         <ul>
-            <li><b>Foto principal</b></li>
-            <li><b>Nombre del invitado</b></li>
-            <li><b>Confirmación de asistencia</b></li>
-            <li><b>Mapas de ubicación</b></li>
-            <li><b>Sugerencia de regalos</b></li>
-            <li><b>Codigo de vestir</b></li>
-            <li><b>Itinerario</b></li>
-            <li>Fecha del evento</li>
-            <li>Frase afectiva</li>
-            <li>Detalles del evento</li>
+          <li><b>Foto principal</b></li>
+          <li><b>Nombre del invitado</b></li>
+          <li><b>Confirmación de asistencia</b></li>
+          <li><b>Mapas de ubicación</b></li>
+          <li><b>Sugerencia de regalos</b></li>
+          <li><b>Codigo de vestir</b></li>
+          <li><b>Itinerario</b></li>
+          <li>Fecha del evento</li>
+          <li>Frase afectiva</li>
+          <li>Detalles del evento</li>
         </ul>
-        <div class="conteBtn">
-          {
-            dondeEstoy === 'home' ? (
-              <Btn
-              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Bodas"
-              claro={true}
-            />
-            <Btn
-              liga="/quince/nvita-quince-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver 15 Años"
-              claro={true}
-            />
-            ) : (
-              dondeEstoy === "bodas"  ? (
-              <Btn
-              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Lux"
-              claro={true}
-            />
-              ):(
-              <Btn
-              liga="/quince/nvita-quince-lux?id=1&uid=1"
-              clases="btn-claro"  
-              texto="Ver Nvitacion Lux"
-              claro={true}
-            />
-              )
-            )
-          }
-         
-        </div>
-
         <Btn
-          liga="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
+          liga="https://buy.stripe.com/8wM6qF7k82rx1K814a"
           clases="btn-oscuro"
-          texto="Obtenla ahora"
+          texto="Comprar"
           claro={false}
         >
           <Icon name="bag" size={25} />
         </Btn>
+        <Btn
+          liga="https://wa.link/l03byi"
+          clases="btn-claro"
+          texto="Solicitar ahora"
+          claro={true}
+          blank={true}
+        >
+          <Icon name="mdi:whatsapp" size={25} />
+        </Btn>
+
       </article>
     </div>
   </div>
   {
-    dondeEstoy === 'home' ? (
-
-    <div class="izq">
-    <img
-      src="novios-cover-invitacion-digital-nvite.webp"
-      alt="Invitaciones de bodas"
-    />
-  </div>
-  
+    dondeEstoy === "home" ? (
+      <div class="izq">
+        <img
+          src="novios-cover-invitacion-digital-nvite.webp"
+          alt="Invitaciones de bodas"
+        />
+      </div>
     ) : (
-      ''
+      ""
     )
   }
 </div>
@@ -215,25 +156,24 @@ import Btn from "./Btn.astro";
     flex: 1;
     // border-right: solid 1px $primario;
     padding: 0 1.5rem;
-    @include hd{
+    @include hd {
       padding: 0 3rem;
     }
     a {
-
       justify-self: flex-start;
       svg {
         vertical-align: middle;
       }
     }
-    
-      @include cel {
-        flex:1 0 100%;
-        border-right: none;
-        // border-bottom: solid 1px $primario;
-        padding: 2rem 1.5rem;
-        position: relative;
-        a {
-       width: 100%;
+
+    @include cel {
+      flex: 1 0 100%;
+      border-right: none;
+      // border-bottom: solid 1px $primario;
+      padding: 2rem 1.5rem;
+      position: relative;
+      a {
+        width: 100%;
       }
     }
   }
@@ -268,7 +208,7 @@ import Btn from "./Btn.astro";
     flex-wrap: wrap;
     gap: 0.5rem;
     @include cel {
-      gap: .2rem;
+      gap: 0.2rem;
     }
   }
   .conteBtn > * {
