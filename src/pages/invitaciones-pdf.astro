@@ -428,62 +428,55 @@ import PreciosPdf from "../components/PreciosPdf.astro";
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+  function initializeVideoButtons() {
     const items = document.querySelectorAll("#bandejacolor .item");
 
     items.forEach((item) => {
-      const video = item.querySelector("video") as HTMLVideoElement;
-      const playButton = item.querySelector("#play") as HTMLElement;
+      const video = item.querySelector("video");
+      const playButton = item.querySelector("#play");
       const mostrando = playButton.querySelector(".mostrado") as HTMLElement;
       const escondido = playButton.querySelector(".escondido") as HTMLElement;
 
       playButton.addEventListener("click", () => {
         if (video.paused) {
           video.play();
-          mostrando.style.display = "none"; // Esconder el ícono de play
-          escondido.style.display = "flex"; // Mostrar el ícono de pausa
+          mostrando.style.display = "none";
+          escondido.style.display = "flex";
         } else {
           video.pause();
-          mostrando.style.display = "flex"; // Mostrar el ícono de play
-          escondido.style.display = "none"; // Esconder el ícono de pausa
+          mostrando.style.display = "flex";
+          escondido.style.display = "none";
         }
       });
 
       video.addEventListener("ended", () => {
-        mostrando.style.display = "flex"; // Restaurar el ícono de play al finalizar
-        escondido.style.display = "none"; // Esconder el ícono de pausa
+        mostrando.style.display = "flex";
+        escondido.style.display = "none";
       });
     });
 
-    // Hacer que funcione el botón de play/pausa en el div #choro
-    const choroPlayButton = document.querySelector(
-      "#video-home #play"
-    ) as HTMLElement;
-    const choroVideo = document.querySelector(
-      "#video-home video"
-    ) as HTMLVideoElement;
-    const choroMostrando = choroPlayButton.querySelector(
-      ".mostrado"
-    ) as HTMLElement;
-    const choroEscondido = choroPlayButton.querySelector(
-      ".escondido"
-    ) as HTMLElement;
+    const choroPlayButton = document.querySelector("#video-home #play");
+    const choroVideo = document.querySelector("#video-home video") as HTMLVideoElement;
+    const choroMostrando = choroPlayButton.querySelector(".mostrado") as HTMLElement;
+    const choroEscondido = choroPlayButton.querySelector(".escondido") as HTMLElement;
 
     choroPlayButton.addEventListener("click", () => {
       if (choroVideo.paused) {
         choroVideo.play();
-        choroMostrando.style.display = "none"; // Esconder el ícono de play
-        choroEscondido.style.display = "flex"; // Mostrar el ícono de pausa
+        choroMostrando.style.display = "none";
+        choroEscondido.style.display = "flex";
       } else {
         choroVideo.pause();
-        choroMostrando.style.display = "flex"; // Mostrar el ícono de play
-        choroEscondido.style.display = "none"; // Esconder el ícono de pausa
+        choroMostrando.style.display = "flex";
+        choroEscondido.style.display = "none";
       }
     });
 
     choroVideo.addEventListener("ended", () => {
-      choroMostrando.style.display = "flex"; // Restaurar el ícono de play al finalizar
-      choroEscondido.style.display = "none"; // Esconder el ícono de pausa
+      choroMostrando.style.display = "flex";
+      choroEscondido.style.display = "none";
     });
-  });
+  }
+
+  document.addEventListener("astro:page-load", initializeVideoButtons);
 </script>
