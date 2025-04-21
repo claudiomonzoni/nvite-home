@@ -94,7 +94,6 @@ import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import Ventas from "../../components/comunes/Ventas.astro";
 
-
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
 </section>
@@ -107,8 +106,6 @@ import Ventas from "../../components/comunes/Ventas.astro";
     papaNovio={frontmatter.padres.papaNovio}
   />
 </section>
-
-
 
 <Pases folder={frontmatter.json} client:load />
 <ProgresoInvitados
@@ -123,8 +120,8 @@ import Ventas from "../../components/comunes/Ventas.astro";
 </section>
 
 <section class="grid contenido">
-    <Encabezados texto="Nuestra Boda"/>
-    <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
+  <Encabezados texto="Nuestra Boda" />
+  <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
 </section>
 
 <section class="grid contenido">
