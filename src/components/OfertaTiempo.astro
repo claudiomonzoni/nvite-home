@@ -29,6 +29,10 @@ const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = A
     <small set:html={small} />
     <div class="countdown">
       <div class="time-block">
+        <span id="days">00</span>
+        <label>D</label>
+      </div>
+      <div class="time-block">
         <span id="hours">00</span>
         <label>H</label>
       </div>
@@ -167,13 +171,11 @@ const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = A
 
 <script define:vars={{ horasValidez, encabezado, porcentaje }}>
   function getRandomMinutesVariation() {
-    // Generar variación aleatoria entre -15 y 15 minutos
-    return (Math.random() * 30 - 15) * 60 * 1000; // Convertir a milisegundos
+    return (Math.random() * 30 - 15) * 60 * 1000;
   }
 
   function setCookie(name, value, hours) {
     const d = new Date();
-    // Añadir variación aleatoria al tiempo
     const variation = getRandomMinutesVariation();
     d.setTime(d.getTime() + (hours * 60 * 60 * 1000) + variation);
     document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
@@ -190,10 +192,8 @@ const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = A
     let lastVisit = getCookie("lastVisit");
     const now = new Date().getTime();
 
-    // Establecer la cookie de última visita
     setCookie("lastVisit", now, horasValidez);
 
-    // Comprobar si han pasado más de 5 minutos desde la última visita
     if (lastVisit && deadline) {
       const timeSinceLastVisit = now - lastVisit;
       const fiveMinutes = 5 * 60 * 1000;
@@ -206,16 +206,12 @@ const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = A
 
     if (!deadline) {
       const now = new Date();
-      const endOfDay = new Date(now);
-      endOfDay.setHours(23, 59, 59, 999);
-      
-      // Añadir variación al hoursDeadline
       const variation = getRandomMinutesVariation();
       const hoursDeadline = new Date(
         now.getTime() + (horasValidez * 60 * 60 * 1000) + variation
       );
       
-      deadline = Math.min(endOfDay.getTime(), hoursDeadline.getTime());
+      deadline = hoursDeadline.getTime();
       setCookie("ofertaDeadline", deadline, horasValidez);
     }
 
@@ -223,12 +219,16 @@ const { img, encabezado, texto, link, small, porcentaje, horasValidez = 24 } = A
       const currentTime = new Date().getTime();
       const distance = deadline - currentTime;
 
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+      document.getElementById("days").textContent = days
+        .toString()
+        .padStart(2, "0");
       document.getElementById("hours").textContent = hours
         .toString()
         .padStart(2, "0");
