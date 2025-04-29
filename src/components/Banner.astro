@@ -26,126 +26,62 @@ import Btn from "./Btn.astro";
             dondeEstoy === 'home' ? (
             <Btn
             liga="/bodas/nvita-bodas-esencial"
-            clases="btn-claro"
-            texto="Ver Bodas"
+            clases="btn-ver-nvitaciones "
+            texto="Ver Nvitación de Bodas"
+            icono="mdi:chevron-double-right"
             claro={true}
-          />
-          <Btn
-            liga="/quince/nvita-quince-esencial"
-            clases="btn-claro"
-            texto="Ver 15 Años"
-            claro={true}
-          />
-          ) : (
-
-            dondeEstoy === "bodas"  ? (
-                <Btn
-            liga="/bodas/nvita-bodas-esencial"
-            clases="btn-claro"
-            texto="Ver Nvitacion Esencial"
-            claro={true}
-          />
-            ):(
+            />
             <Btn
             liga="/quince/nvita-quince-esencial"
-            clases="btn-claro"
-            texto="Ver Nvitacion Esencial"
+            clases="btn-ver-nvitaciones "
+            texto="Ver Nvitación de 15 Años"
+            icono="mdi:chevron-double-right"
             claro={true}
-          />
+            />
+          ) : (
+            
+            dondeEstoy === "bodas"  ? (
+              <Btn
+              liga="/bodas/nvita-bodas-esencial"
+              clases="btn-ver-nvitaciones "
+              texto="Ver Nvitacion Esencial"
+              icono="mdi:chevron-double-right"
+              claro={true}
+              />
+            ):(
+              <Btn
+              liga="/quince/nvita-quince-esencial"
+              clases="btn-ver-nvitaciones "
+              texto="Ver Nvitacion Esencial"
+              icono="mdi:chevron-double-right"
+              claro={true}
+              />
             )
           )
-          }
+        }
          
         </div>
-
+        
         <Btn
-          liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
-          clases="btn-oscuro"
-          texto="Obténla ahora"
-          claro={false}
+        liga="https://buy.stripe.com/9AQ5mBdIwaY374s6os"
+        clases="btn-oscuro"
+        texto="Obténla ahora"
+        claro={false}
         >
-          <Icon name="bag" size={25} />
-        </Btn>
-      </article>
-
-      <article class="lista destacada">
-        <div class="bandeDestacada">
-          <small>Bodas & 15 Años</small>
-          <h2> 
-            Nvitación Clásica
-            <div id="masvendido">Más vendida</div>
-          </h2>
-          <div class="precio">$990</div>
-          <ul>
-            <li><b>Panel de invitados</b></li>
-            <li><b>Nombre del invitado</b></li>
-            <li><b>Pases del invitado</b></li>
-            <li><b>Galería de imágenes</b></li>
-            <li><b>Sugerencia de regalos</b></li>
-            <li>Detalles del evento</li>
-            <li>Cuenta regresiva</li>
-            <li>Datos de tu evento</li>
-            <li>Mapas de ubicación</li>
-            <li>Frase animada</li>
-            <li>Formulario de confirmación</li>
-          </ul>
-
-          <div class="conteBtn">
-            {
-              dondeEstoy === 'home' ? (
-              <Btn
-              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Bodas"
-              claro={true}
-            />
-            <Btn
-              liga="/quince/nvita-quince-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver 15 Años"
-              claro={true}
-            />
-            ) : (
-
-              dondeEstoy === "bodas"  ? (
-              <Btn
-              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Clásica"
-              claro={true}
-            />
-              ):(
-              <Btn
-              liga="/quince/nvita-quince-clasica?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Clásica"
-              claro={true}
-            />
-              )
-            )}
-          
-           
-          </div>
-
-          <Btn
-            liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
-            clases="btn-oscuro"
-            texto="Obténla ahora"
-            claro={false}
-          >
-            <Icon name="bag" size={25} />
-          </Btn>
-        </div>
-      </article>
-
-      <article class="lista">
+        <Icon name="bag" size={25} />
+      </Btn>
+    </article>
+    
+    <article class="lista destacada">
+      <div class="bandeDestacada">
         <small>Bodas & 15 Años</small>
-        <h2>Nvitación Lux</h2>
-        <div class="precio">$1290</div>
+        <h2> 
+          Nvitación Clásica
+          <div id="masvendido">Más vendida</div>
+        </h2>
+        <div class="precio">$990</div>
         <ul>
           <li><b>Panel de invitados</b></li>
-          <li><b>Música ambiental</b></li>
-          <li><b>Itinerario</b></li>
           <li><b>Nombre del invitado</b></li>
           <li><b>Pases del invitado</b></li>
           <li><b>Galería de imágenes</b></li>
@@ -157,35 +93,111 @@ import Btn from "./Btn.astro";
           <li>Frase animada</li>
           <li>Formulario de confirmación</li>
         </ul>
+        
         <div class="conteBtn">
           {
             dondeEstoy === 'home' ? (
               <Btn
-              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Bodas"
+              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
+              clases="btn-ver-nvitaciones "
+              texto="Ver Nvitación de Bodas"
+              icono="mdi:chevron-double-right"
               claro={true}
-            />
-            <Btn
-              liga="/quince/nvita-quince-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver 15 Años"
+              />
+              <Btn
+              liga="/quince/nvita-quince-clasica?id=1&uid=1"
+              clases="btn-ver-nvitaciones"
+              texto="Ver Nvitación de 15 Años"
+              icono="mdi:chevron-double-right"
               claro={true}
-            />
+              />
             ) : (
+              
               dondeEstoy === "bodas"  ? (
-              <Btn
-              liga="/bodas/nvita-bodas-lux?id=1&uid=1"
-              clases="btn-claro"
-              texto="Ver Nvitacion Lux"
-              claro={true}
-            />
+                <Btn
+                liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
+                clases="btn-ver-nvitaciones"
+                texto="Ver Nvitacion Clásica"
+                icono="mdi:chevron-double-right"
+                claro={true}
+                />
               ):(
-              <Btn
-              liga="/quince/nvita-quince-lux?id=1&uid=1"
-              clases="btn-claro"  
-              texto="Ver Nvitacion Lux"
-              claro={true}
+                <Btn
+                liga="/quince/nvita-quince-clasica?id=1&uid=1"
+                clases="btn-ver-nvitaciones "
+                texto="Ver Nvitacion Clásica"
+                icono="mdi:chevron-double-right"
+                claro={true}
+                />
+              )
+            )}
+          
+          
+        </div>
+        
+        <Btn
+        liga="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
+        clases="btn-oscuro"
+        texto="Obténla ahora"
+        claro={false}
+        >
+        <Icon name="bag" size={25} />
+      </Btn>
+    </div>
+  </article>
+  
+  <article class="lista">
+    <small>Bodas & 15 Años</small>
+    <h2>Nvitación Lux</h2>
+    <div class="precio">$1290</div>
+    <ul>
+      <li><b>Panel de invitados</b></li>
+      <li><b>Música ambiental</b></li>
+      <li><b>Itinerario</b></li>
+      <li><b>Nombre del invitado</b></li>
+      <li><b>Pases del invitado</b></li>
+      <li><b>Galería de imágenes</b></li>
+      <li><b>Sugerencia de regalos</b></li>
+      <li>Detalles del evento</b></li>
+      <li>Cuenta regresiva</li>
+      <li>Datos de tu evento</li>
+      <li>Mapas de ubicación</li>
+      <li>Frase animada</li>
+      <li>Formulario de confirmación</li>
+    </ul>
+    <div class="conteBtn">
+      {
+        dondeEstoy === 'home' ? (
+          <Btn
+          liga="/bodas/nvita-bodas-lux?id=1&uid=1"
+          clases="btn-ver-nvitaciones "
+          texto="Ver Nvitación de Bodas"
+          icono="mdi:chevron-double-right"
+          claro={true}
+          />
+          <Btn
+          liga="/quince/nvita-quince-lux?id=1&uid=1"
+          clases="btn-ver-nvitaciones"
+          texto="Ver Nvitación de 15 Años"
+          icono="mdi:chevron-double-right"
+          claro={true}
+          />
+        ) : (
+          dondeEstoy === "bodas"  ? (
+            <Btn
+            liga="/bodas/nvita-bodas-lux?id=1&uid=1"
+            clases="btn-ver-nvitaciones "
+            texto="Ver Nvitacion Lux"
+            icono="mdi:chevron-double-right"
+            claro={true}
+            />
+          ):(
+            <Btn
+            liga="/quince/nvita-quince-lux?id=1&uid=1"
+            clases="btn-ver-nvitaciones "  
+            texto="Ver Nvitacion Lux"
+            icono="mdi:chevron-double-right"
+            claro={true}
             />
               )
             )

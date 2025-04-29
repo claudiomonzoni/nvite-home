@@ -1,4 +1,6 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   liga: string;
   texto: string;
@@ -7,8 +9,9 @@ interface Props {
   clases?: string;
   id?: string;
   rel?: string;
+  icono?: string;
 }
-const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
+const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
 ---
 
 <a
@@ -19,33 +22,37 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
   rel={rel}
   set:html={texto}
 >
+
+  {icono ? (
+    <Icon name={icono} size={25} />
+  ) : (
+    ""
+  )}
   <slot />
 </a>
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
   @mixin btn {
-    padding: 8px 15px;
-    display: inline-flex; // Cambiado de inline-block a inline-flex
-    align-items: center; // Centrar verticalmente
-    justify-content: center;
-    gap: 0.5rem; // Espacio entre icono y texto
+    padding: 8px 20px;
+    display: inline-block;
     text-decoration: none;
     border-radius: 5px;
-    margin: $margen-min 0;
+    margin: 0 0 $margen-min 0;
     border: none;
-    font-weight:600;
+    font-weight: 600;
+    white-space: nowrap;
+    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
     @include cel {
       margin-top: $margen-min;
-      width: max-content;
     }
   }
   .btn-claro {
     background-color: $primario;
     color: $fondoGlobal;
     @include btn;
-}
-.btn-oscuro {
+  }
+  .btn-oscuro {
     background-color: $acento;
     color: white;
     @include btn;
@@ -54,5 +61,13 @@ const { liga, texto, claro, blank, clases, rel, ...rest } = Astro.props;
     border: 1px solid $secundario !important;
     color: $secundario;
     @include btn;
+  }
+  .btn-ver-nvitaciones {
+    background: linear-gradient(178deg, $fondoGlobal, $secundario);
+    border: 1px solid $secundario !important;
+    color: $primario;
+    justify-content: left!important;
+    @include btn;
+    @extend .sombra;
   }
 </style>
