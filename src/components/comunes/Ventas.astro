@@ -23,9 +23,11 @@ const tipos = ["lux", "clasica", "esencial"];
           ></b
         >
       </h3>
+     <div id="compra">
       <Btn liga={stripe} texto={`Comprar $${costo} MXN.`} clases="btn-oscuro" claro={false} blank={true}  >
         <Icon name="mdi:add-shopping-cart" size={25} />
       </Btn>
+     </div>
 
 
       <div id="whats">
@@ -125,6 +127,12 @@ const tipos = ["lux", "clasica", "esencial"];
       text-align: center;
       line-height: 2rem;
     }
+  }
+  #compra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1.5rem 0;
   }
   #whats {
     border-bottom: solid 1px $fondo;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import estilo from "../../estilos/quince/confirmacion.module.scss";
+import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
@@ -162,6 +163,10 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     setSelectedPases(0);
     setMostrarCampoNoAsisten(false);
     setPersonasNoAsisten("");
+
+    if (checked ) {
+      shootConfetti();
+    }
 
     if (!checked && btnconfirmarRef.current) {
       btnconfirmarRef.current.classList.remove(`${estilo.desactivado}`);
