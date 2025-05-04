@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 
 interface Props {
   liga: string;
@@ -22,12 +22,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   rel={rel}
   set:html={texto}
 >
-
-  {icono ? (
-    <Icon name={icono} size={25} />
-  ) : (
-    ""
-  )}
+  {icono ? <Icon name={icono} size={25} /> : ""}
   <slot />
 </a>
 
@@ -42,7 +37,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     border: none;
     font-weight: 600;
     white-space: nowrap;
-    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+
     @include cel {
       margin-top: $margen-min;
     }
@@ -55,6 +50,8 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   .btn-oscuro {
     background-color: $acento;
     color: white;
+    text-align: center;
+    max-width: fit-content;
     @include btn;
   }
   .btn-bordes {
@@ -66,8 +63,13 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     background: linear-gradient(178deg, $fondoGlobal, $secundario);
     border: 1px solid $secundario !important;
     color: $primario;
-    justify-content: left!important;
+    justify-content: left !important;
     @include btn;
     @extend .sombra;
+  }
+  .centrado {
+    position: relative;
+    left: 50%;
+    transform: translateX( -50%);
   }
 </style>
