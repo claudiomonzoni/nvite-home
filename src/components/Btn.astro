@@ -59,6 +59,12 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     color: $secundario;
     @include btn;
   }
+  .btn-bordes-oscuro {
+    margin-top: 1rem !important;
+    background-color: $acento;
+    color: white;
+    @include btn;
+  }
   .btn-ver-nvitaciones {
     background: linear-gradient(178deg, $fondoGlobal, $secundario);
     border: 1px solid $secundario !important;

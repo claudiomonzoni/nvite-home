@@ -36,6 +36,13 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
             Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados,
             edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
           </p>
+          <Btn 
+            liga="#precios"
+            texto="Ver ejemplos"
+            clases="btn-bordes-oscuro "
+            claro={false}>
+            <Icon name="mdi:envelope-heart-outline" size={25} />
+          </Btn>
         </div>
       </div>
       <div id="video-home">
@@ -205,17 +212,7 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
     </BannerGeneral>
   </div>
 
-  <div class="grid contenido">
-
-    <OfertaTiempo
-    encabezado="<b>Aprovecha 15% </b>de descuento"
-    texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
-    small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
-    horasValidez={25}
-    img="/promo.webp"
-    porcentaje={15}
-    />
-  </div>
+ 
 
   <!-- <div class="grid contenido">
     <Recibes />
@@ -256,6 +253,18 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
       />
     </div>
   </section>
+
+  <div class="grid contenido">
+
+    <OfertaTiempo
+    encabezado="<b>Aprovecha 15% </b>de descuento"
+    texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
+    small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
+    horasValidez={25}
+    img="/promo.webp"
+    porcentaje={15}
+    />
+  </div>
 
   <div id="precios" class="grid pantalla-der">
     <Banner dondeEstoy="home" />
