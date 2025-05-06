@@ -46,6 +46,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/invitaciones-quince(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/invitaciones-pdf(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/terminos-condiciones(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
+        /^\/404(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
     ];
 
     const esRutaPublica = rutasPublicas.some((ruta) => ruta.test(pathname));
