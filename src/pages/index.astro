@@ -14,7 +14,10 @@ import Ofertashome from "../components/Ofertashome.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Testimonios from "../components/Testimonios.astro";
 import OfertaTiempo from "../components/OfertaTiempo.astro";
+import { getCollection } from "astro:content";
 
+const productos = await getCollection("productos")
+console.log(productos)
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
