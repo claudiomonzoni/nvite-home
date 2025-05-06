@@ -1,0 +1,24 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getProductPrice } from "../../js/cart";
+
+type Props = {
+  producto: CollectionEntry<"productos">;
+};
+
+const { producto } = Astro.props;
+const precio = getProductPrice(producto);
+---
+
+<li class="producto-card grid-xs">
+  <Image
+    src={producto.data.images[0]}
+    alt={producto.data.name}
+    height={320}
+    width={320}
+  />
+  <h2>{producto.data.name}</h2>
+  <p>{precio}</p>
+  <a href={`/producto/${producto.id}`} class="btn">View More</a>
+</li>

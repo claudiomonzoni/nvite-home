@@ -5,6 +5,9 @@ import Stripe from "stripe";
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
 import { glob, file } from "astro/loaders";
+import type { desc } from "astro:db";
+import { optional } from "astro:schema";
+import { Version } from "sass";
 
 // 3. Define your collection(s)
 const bodas = defineCollection({
@@ -137,10 +140,24 @@ const quince = defineCollection({
 
 const productos = defineCollection({
   loader: stripeProductLoader(stripe),
+  schema: z.object({
+    id: z.string(),
+    active: z.boolean(),
+    name: z.string(),
+    description: z.string(),
+    images: z.array(z.string()),
+    metadata: z.record(z.string()).optional(),  // Cambiado para aceptar cualquier clave-valor string
+    default_price: z.string().nullable().optional(),
+  }),
 });
 
 const precios = defineCollection({
   loader: stripePriceLoader(stripe),
+  schema: z.object({
+    id: z.string(),
+    currency: z.string(),
+    unit_amount: z.number(),
+  })
 });
 
 

@@ -1,10 +1,23 @@
 ---
-const{dondeEstoy} = Astro.props
+import { getCollection } from "astro:content";
+const productos = await getCollection("productos");
 
+const{dondeEstoy} = Astro.props
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+import ProductoCard from "./Pagos/ProductoCard.astro";
 ---
 
+<div id="productos">
+  {
+    productos.map((producto) => (
+    <li>{producto.data.metadata.Version}</li>
+    // producto.data.metadata.Categoria === 'bodas' ? (<ProductoCard producto={producto} />) : ('')
+    // <ProductoCard producto={producto} />
+    )
+    )
+  }
+</div>
 <div class="banner azulBG">
   <div class="der">
     <div class="bande">
