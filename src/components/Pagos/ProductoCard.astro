@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getProductPrice } from "../../js/cart";
+import Btn from "../Btn.astro";
 
 type Props = {
   producto: CollectionEntry<"productos">;
@@ -20,5 +21,14 @@ const precio = getProductPrice(producto);
   />
   <h2>{producto.data.name}</h2>
   <p>{precio}</p>
-  <a href={`/producto/${producto.id}`} class="btn">View More</a>
+  <Btn
+    liga="#"
+    clases="btn-ver-nvitaciones"
+    texto="Agregar al carrito"
+    icono="mdi:cart"
+    claro={true}
+    data-action="increment"
+    data-product-id={producto.data.id}
+  />
+  <!-- <a href={`/producto/${producto.id}`} class="btn">View More</a> -->
 </li>

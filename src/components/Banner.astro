@@ -11,9 +11,12 @@ import ProductoCard from "./Pagos/ProductoCard.astro";
 <div id="productos">
   {
     productos.map((producto) => (
-    <li>{producto.data.metadata.Version}</li>
-    // producto.data.metadata.Categoria === 'bodas' ? (<ProductoCard producto={producto} />) : ('')
-    // <ProductoCard producto={producto} />
+    // <li>{producto.data.metadata.Version}</li>
+    <ProductoCard producto={producto} />
+  //   producto.data.metadata.Categoria === 'bodas' ? (
+  //   <ProductoCard producto={producto} />
+  // ) : ('')
+
     )
     )
   }
