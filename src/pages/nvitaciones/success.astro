@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Stripe from "stripe";
+
+const sessionId = Astro.url.searchParams.get("session_id");
+
+if (!sessionId) {
+  return Astro.redirect("/");
+}
+
+const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
+const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+if (!session || !session.customer_details) {
+  return Astro.redirect("/");
+}
+
+const { name, email } = session.customer_details;
+
+Astro.cookies.delete("cartItems");
+---
+
+<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones">
+  <div class="success">
+    <h1>Thank you for your purchase, {name}!</h1>
+    <p>We've sent a receipt to {email}.</p>
+    <a href="/" class="btn">Go home</a>
+  </div>
+</Layout>

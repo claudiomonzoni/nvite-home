@@ -1,0 +1,39 @@
+---
+import CartItem from "../../components/Pagos/CartItem.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getTotalCartItems } from  "../../js/cart";
+
+const cartCookie = Astro.cookies.get("cartItems")?.value as unknown as string;
+
+const totalCartItems = await getTotalCartItems(
+  cartCookie ? JSON.parse(cartCookie) : []
+);
+---
+
+<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones">
+  <h1>Cart</h1>
+
+  {totalCartItems.length === 0 && <p>Cart is empty</p>}
+
+  {totalCartItems.length > 0 && (
+    <ul class="cart-list">
+      {totalCartItems.map((cartItem) => <CartItem cartItem={cartItem} />)}
+    </ul>
+
+    <div class="flex-sm flex-wrap">
+      <button id="delete-cart-btn" class="btn warning">Remove All</button>
+      <a href="/nvitaciones/checkout" class="btn">Checkout</a>
+    </div>
+  )}
+</Layout>
+
+<script>
+import { deleteCartCookie } from "../../js/utils";
+
+  const deleteCartBtn = document.querySelector("#delete-cart-btn");
+
+  deleteCartBtn?.addEventListener("click", () => {
+    deleteCartCookie();
+    window.location.href = "/"
+  })
+</script>

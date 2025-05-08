@@ -17,7 +17,7 @@ console.log(cartItemsCount + " items in cart");
 <nav >
   <a href="/"
     ><img
-      src="nvita-logo.svg"
+      src="/nvita-logo.svg"
       alt="Nvita invitaciones digitales"
       id="logo"
     /></a
@@ -35,7 +35,7 @@ console.log(cartItemsCount + " items in cart");
     }
   </ul>
   <li>
-    <a href="/cart" class="btn icon" aria-label="Go to Checkout">
+    <a href="/nvitaciones/cart" class="btn icon" aria-label="Go to Checkout">
       <Icon name="mdi:cart" width="32" height="32" />
       <span class="count" id="cart-count"
         >{cartItemsCount > 0 ? cartItemsCount : ""}</span
@@ -102,15 +102,31 @@ console.log(cartItemsCount + " items in cart");
 <script>
     import { getCartCookie } from "../../src/js/utils";
 
-const countCartSpan = document.querySelector(
-  "#cart-count"
-) as HTMLSpanElement;
+function initializeCartCount() {
+    const countCartSpan = document.querySelector(
+        "#cart-count"
+    ) as HTMLSpanElement;
 
-const updateCartValue = () => {
-  const cartItems = getCartCookie();
-  countCartSpan.textContent =
-    cartItems.length === 0 ? "" : cartItems.length.toString();
-};
+    if (!countCartSpan) return;
 
-document.addEventListener("cart:updated", updateCartValue);
+    const updateCartValue = () => {
+        const cartItems = getCartCookie();
+        countCartSpan.textContent =
+            cartItems.length === 0 ? "" : cartItems.length.toString();
+    };
+
+    // Eliminar listener existente si hay alguno
+    document.removeEventListener("cart:updated", updateCartValue);
+    // Agregar nuevo listener
+    document.addEventListener("cart:updated", updateCartValue);
+    
+    // Actualizar el valor inicial
+    updateCartValue();
+}
+
+// Inicializar en la carga inicial
+initializeCartCount();
+
+// Reinicializar después de la navegación
+document.addEventListener("astro:page-load", initializeCartCount);
 </script>

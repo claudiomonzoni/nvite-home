@@ -5,6 +5,9 @@ const { id } = Astro.params;
 import { getProductPrice } from "../../js/cart";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import Nav from "../../components/Nav.astro";
 
 const product = await getEntry("productos", id as string);
 
@@ -17,11 +20,15 @@ if (!product) {
 
 const price = await getProductPrice(product);
 ---
+<Layout
+  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
+>
+ 
+<Nav> </Nav>
 
-
-  <div class="product-container">
-    <Image
-      src={product.data.images[0]}
+<div class="product-container">
+  <Image
+  src={product.data.images[0]}
       loading="eager"
       alt={product.data.name}
       height={450}
@@ -35,13 +42,16 @@ const price = await getProductPrice(product);
       <div class="grid-sm">
         <p class="price">{price}</p>
         <button
-          class="btn"
-          data-cart
-          data-action="increment"
-          data-productid={product.data.id}
+        class="btn"
+        data-cart
+        data-action="increment"
+        data-productid={product.data.id}
         >
-          Add to cart
-        </button>
-      </div>
+        Add to cart
+      </button>
     </div>
   </div>
+</div>
+
+<Footer />
+</Layout>
