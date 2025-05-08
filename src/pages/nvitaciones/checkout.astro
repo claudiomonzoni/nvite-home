@@ -31,6 +31,7 @@ const lineItems = totalCartItems.map((item) => ({
 const checkoutSession = await stripe.checkout.sessions.create({
   ui_mode: "embedded",
   mode: "payment",
+  allow_promotion_codes: true,
   line_items: lineItems,
   return_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
   // automatic_tax: { enabled: true },
