@@ -3,6 +3,15 @@ import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 const url = Astro.url.pathname;
 
+let cartItemsCount = 0;
+
+if (Astro.cookies.has("cartItems")) {
+  const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
+  cartItemsCount = JSON.parse(cookie).length;
+}
+
+console.log(cartItemsCount + " items in cart");
+
 ---
 
 <nav >
@@ -25,6 +34,14 @@ const url = Astro.url.pathname;
       )
     }
   </ul>
+  <li>
+    <a href="/cart" class="btn icon" aria-label="Go to Checkout">
+      <Icon name="mdi:cart" width="32" height="32" />
+      <span class="count" id="cart-count"
+        >{cartItemsCount > 0 ? cartItemsCount : ""}</span
+      >
+    </a>
+  </li>
   <li>
     <Btn
       liga="/panel"
@@ -81,3 +98,19 @@ const url = Astro.url.pathname;
     list-style: none;
   }
 </style>
+
+<script>
+    import { getCartCookie } from "../../src/js/utils";
+
+const countCartSpan = document.querySelector(
+  "#cart-count"
+) as HTMLSpanElement;
+
+const updateCartValue = () => {
+  const cartItems = getCartCookie();
+  countCartSpan.textContent =
+    cartItems.length === 0 ? "" : cartItems.length.toString();
+};
+
+document.addEventListener("cart:updated", updateCartValue);
+</script>
