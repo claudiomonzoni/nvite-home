@@ -33,7 +33,7 @@ const checkoutSession = await stripe.checkout.sessions.create({
   mode: "payment",
   allow_promotion_codes: true,
   line_items: lineItems,
-  return_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+  return_url: `${origin}/nvitaciones/success?session_id={CHECKOUT_SESSION_ID}`,
   // automatic_tax: { enabled: true },
 });
 ---
