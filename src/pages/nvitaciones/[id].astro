@@ -8,6 +8,7 @@ import { getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
+import Btn from "../../components/Btn.astro";
 
 const product = await getEntry("productos", id as string);
 
@@ -20,38 +21,44 @@ if (!product) {
 
 const price = await getProductPrice(product);
 ---
+
 <Layout
   title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
 >
- 
-<Nav> </Nav>
+  <div class="grid contenido">
+    <Nav />
 
-<div class="product-container">
-  <Image
-  src={product.data.images[0]}
-      loading="eager"
-      alt={product.data.name}
-      height={450}
-      width={450}
-    />
-    <div class="grid-md">
-      <div class="grid-sm">
-        <h1>{product.data.name}</h1>
-        <p>{product.data.description}</p>
+    <div class="product-container">
+      <Image
+        src={product.data.images[0]}
+        loading="eager"
+        alt={product.data.name}
+        height={450}
+        width={450}
+      />
+      <div class="grid-md">
+        <div class="grid-sm">
+          <h1>{product.data.name}</h1>
+          <p>{product.data.description}</p>
+        </div>
+        <div class="grid-sm">
+          <p class="price">{price}</p>
+     
+
+          <Btn
+            data-cart
+            data-action="increment"
+            data-productid={product.data.id}
+            liga="#"
+            texto="Agregar al carrito"
+            clases="btn-oscuro" 
+            claro={false}
+            icono="mdi:cart"
+          />
+        </div>
       </div>
-      <div class="grid-sm">
-        <p class="price">{price}</p>
-        <button
-        class="btn"
-        data-cart
-        data-action="increment"
-        data-productid={product.data.id}
-        >
-        Add to cart
-      </button>
     </div>
-  </div>
-</div>
 
-<Footer />
+    <Footer />
+  </div>
 </Layout>

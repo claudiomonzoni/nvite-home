@@ -4,6 +4,8 @@ import { getTotalCartItems } from "../../js/cart";
 import { getCollection } from "astro:content";
 
 import Stripe from "stripe";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
 
 const PUBLIC_STRIPE_KEY = import.meta.env.PUBLIC_STRIPE_KEY;
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
@@ -38,15 +40,107 @@ const checkoutSession = await stripe.checkout.sessions.create({
 });
 ---
 
-<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones">
-  <div
-    id="checkout"
-    class="checkout-container"
-    data-stripe-key={PUBLIC_STRIPE_KEY}
-    data-client-secret={checkoutSession.client_secret}
-  >
+<Layout title="Checkout - Nvitaciones">
+  <div class="grid contenido">
+    <Nav />
+    
+    <div class="checkout-section">
+      <div class="checkout-header">
+        <h1>Obtén tu Nvitación</h1>
+      </div>
+      
+      <div class="checkout-wrapper">
+        <div id="loading" class="loading-container">
+          <div class="spinner"></div>
+          <p>Cargando checkout...</p>
+        </div>
+
+        <div id="error-message" class="error-message" style="display: none;">
+          <p>Hubo un error al cargar el checkout. Por favor, intenta de nuevo.</p>
+          <a href="/cart" class="button">Volver al carrito</a>
+        </div>
+
+        <div
+          id="checkout"
+          class="checkout-container"
+          data-stripe-key={PUBLIC_STRIPE_KEY}
+          data-client-secret={checkoutSession.client_secret}
+        >
+        </div>
+      </div>
+    </div>
+
+    <Footer />
   </div>
-</Layout >
+</Layout>
+
+<style>
+
+  .checkout-section {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .checkout-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+ 
+
+  .checkout-wrapper {
+    background: white;
+    border-radius: 10px;
+
+    position: relative;
+    margin: 0 auto;
+
+  }
+
+  .loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #e74c3c;
+    display: none;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+  }
+
+  .checkout-container {
+    min-height: 400px;
+  }
+</style>
 
 <script>
   import { loadStripe } from "@stripe/stripe-js";
@@ -61,11 +155,20 @@ const checkoutSession = await stripe.checkout.sessions.create({
     throw new Error("Error loading checkout");
   }
 
-  const stripe = await loadStripe(stripeKey);
+  const loadingElement = document.getElementById('loading');
+  const errorElement = document.getElementById('error-message');
 
-  const checkout = await stripe?.initEmbeddedCheckout({
-    fetchClientSecret: () => Promise.resolve(clientSecret),
-  });
+  try {
+    const stripe = await loadStripe(stripeKey);
+    const checkout = await stripe?.initEmbeddedCheckout({
+      fetchClientSecret: () => Promise.resolve(clientSecret),
+    });
 
-  checkout?.mount("#checkout");
+    checkout?.mount('#checkout');
+    loadingElement?.style.setProperty('display', 'none');
+  } catch (error) {
+    loadingElement?.style.setProperty('display', 'none');
+    errorElement?.style.setProperty('display', 'block');
+    console.error('Error loading checkout:', error);
+  }
 </script>

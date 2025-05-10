@@ -2,6 +2,7 @@
 import { getProductPrice, type FinalCartItem } from "../../js/cart";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
+import Btn from "../Btn.astro";
 
 type Props = {
   cartItem: FinalCartItem;
@@ -20,25 +21,38 @@ const finalPrice = await getProductPrice(cartItem.product);
     <p>{finalPrice}</p>
     <h2>{data.name}</h2>
     <div class="cart-button-wrapper">
-      <button
-        class="btn cart"
-        data-cart
+   
+      <Btn 
+         data-cart
         data-action="decrement"
         data-productid={data.id}
         aria-label={`Remove one ${data.name} from cart`}
-      >
-        <Icon name="mdi:minus" width="16" height="16" />
-      </button>
+        liga="#"
+        texto=""
+        clases="btn-oscuro"
+        claro={false}
+        icono="mdi:minus"
+      />
       <p data-quantity data-productId={data.id}>{cartItem.quantity}</p>
-      <button
-        class="btn cart"
-        data-cart
+      <Btn
+         data-cart
         data-action="increment"
         data-productid={data.id}
         aria-label={`Add one ${data.name} to cart`}
-      >
-        <Icon name="mdi:plus" width="16" height="16" />
-      </button>
+        liga="#"
+        texto=""
+        clases="btn-oscuro"
+        claro={false}
+        icono="mdi:plus"
+      />
+    
     </div>
   </div>
 </li>
+<style>
+  .cart-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+</style>

@@ -21,16 +21,12 @@ const precio = getProductPrice(producto);
   />
   <h2>{producto.data.name}</h2>
   <p>{precio}</p>
-  <!-- <Btn
-    liga="#"
-    clases="btn-ver-nvitaciones"
-    texto="Agregar al carrito"
-    icono="mdi:cart"
+  <Btn
+    liga={`/nvitaciones/${producto.id}`}
+    clases="btn-oscuro"
+    texto="Ver Nvitación"
+    icono="mdi:chevron-double-right"
     claro={true} 
-    data-cart = ""
-    data-action="increment"
-    data-productid={producto.data.id}
-    aria-label={`Agrega  ${producto.data.name} al carrito`}
-  /> -->
-  <a href={`/nvitaciones/${producto.id}`} class="btn">View More</a>
+  />
+
 </li>
