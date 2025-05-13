@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+const productos = await getCollection("productos");
+import ProductoCard from "../Pagos/ProductoCard.astro";
+const desdedonde = Astro.props
+
+---
+
+<div id="productos">
+    {
+      productos.map((producto) => (
+      // <li>{producto.data.metadata.Version}</li>
+      <ProductoCard producto={producto} />
+     <li>{producto.data.metadata.Tipo}</li>
+     <li>{producto.data.metadata.Version}</li>
+     <li>{producto.data.metadata.Categoria}</li>
+      //producto.data.metadata.Categoria === 'bodas' ? (
+     // <ProductoCard producto={producto} />
+    //) : ('')
+  
+      )
+      )
+    }
+  </div>

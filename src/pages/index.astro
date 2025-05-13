@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+//export const prerender = true;
 import Banner from "../components/Banner.astro";
 import Caracteristicas from "../components/Caracteristicas.astro";
 import Hero from "../components/Hero.astro";
@@ -12,18 +12,17 @@ import Faq from "../components/Faq.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Testimonios from "../components/Testimonios.astro";
 import OfertaTiempo from "../components/OfertaTiempo.astro";
-
-
-
+import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 ---
 
 <!-- <Layout title="Invitaciones de bodas, 15 años, fiestas y eventos digitales."> -->
-<Layout title="Invitaciones Digitales Fáciles | RSVP y Gestión de Invitados - Nvitaciones">
+<Layout
+  title="Invitaciones Digitales Fáciles | RSVP y Gestión de Invitados - Nvitaciones"
+>
   <Hero
     description="<b>Las Nvitaciones son faciles de enviar</b> y con todo lo que necesitas: confirmaciones de asistencia, galerías, etc. Y un práctico panel para organizar e invitar sin esfuerzo"
   />
   <div class="grid contenido">
-  
     <div id="choro">
       <div id="info">
         <div class="bande">
@@ -36,11 +35,12 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
             Con nuestras <b>invitaciones personalizadas</b> digitales, registra invitados,
             edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
           </p>
-          <Btn 
+          <Btn
             liga="#precios"
             texto="Ver ejemplos"
             clases="btn-bordes-oscuro "
-            claro={false}>
+            claro={false}
+          >
             <Icon name="mdi:envelope-heart-outline" size={25} />
           </Btn>
         </div>
@@ -70,7 +70,10 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
     img="/promo.webp"
     /> -->
   </div>
- 
+
+  <div class="grid contenido">
+    <MostrarNvitaciones desdedonde="home" />
+  </div>
 
   <div class="grid contenido">
     <div id="conteCaracteristicas">
@@ -132,44 +135,37 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
     </div>
   </section> -->
 
-
-
   <CaracteristicasGrid
-     
-  matriz={[
-    {
-      imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
-      titulo: "Olvídate del <span>desorden</span> al invitar",
-      texto:
-        "<b>Te damos herramientas para gestionar tus invitados</b>, ten control total de tus invitados con el panel de invitados de Nvitaciones.com",
-      txtbtn: "Ver Nvitaciones",
-      icono: "mdi:tag-arrow-up-outline",
-      enlace: "#precios",
-    },
-    {
-      imagen: "mdi:infinity",
-      titulo: "Invitaciones ilimitadas",
-      texto:
-        "Personalizadas con nombre y pases asignados.",
-      enlace: "#",
-    },
-    {
-      imagen: "mdi:whatsapp",
-      texto:
-        "Recibe mensajes de tus invitados desde la invitación",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "Invitados <span>confirmados</span> en tiempo real",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "total <span>control</span> de tus pases",  
-    },
-  ]}
-  
+    matriz={[
+      {
+        imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
+        titulo: "Olvídate del <span>desorden</span> al invitar",
+        texto:
+          "<b>Te damos herramientas para gestionar tus invitados</b>, ten control total de tus invitados con el panel de invitados de Nvitaciones.com",
+        txtbtn: "Ver Nvitaciones",
+        icono: "mdi:tag-arrow-up-outline",
+        enlace: "#precios",
+      },
+      {
+        imagen: "mdi:infinity",
+        titulo: "Invitaciones ilimitadas",
+        texto: "Personalizadas con nombre y pases asignados.",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:whatsapp",
+        texto: "Recibe mensajes de tus invitados desde la invitación",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "Invitados <span>confirmados</span> en tiempo real",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "total <span>control</span> de tus pases",
+      },
+    ]}
   />
-
 
   <!-- <Galeriaslide /> -->
   <div class="grid contenido">
@@ -212,8 +208,6 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
     </BannerGeneral>
   </div>
 
- 
-
   <!-- <div class="grid contenido">
     <Recibes />
   </div> -->
@@ -255,21 +249,19 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
   </section>
 
   <div class="grid contenido">
-
     <OfertaTiempo
-    encabezado="<b>Aprovecha 15% </b>de descuento"
-    texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
-    small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
-    horasValidez={25}
-    img="/promo.webp"
-    porcentaje={15}
+      encabezado="<b>Aprovecha 15% </b>de descuento"
+      texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
+      small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
+      horasValidez={25}
+      img="/promo.webp"
+      porcentaje={15}
     />
   </div>
 
   <div id="precios" class="grid pantalla-der">
     <Banner dondeEstoy="home" />
   </div>
-
 
   <section class="grid contenido">
     <BannerGeneral
@@ -298,7 +290,6 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
       >
         <Icon name="mdi:find-love" size={25} />
       </Btn>
-
     </BannerGeneral>
     <BannerGeneral
       encabezado="Invitación digital con Música"
@@ -340,7 +331,7 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
           decoding="async"
         />
         <img
-        class="imaCelular"
+          class="imaCelular"
           src="/muestra-invitacion-digital-nvite-personalizada.webp"
           alt="invitacion personalizada"
           loading="lazy"
@@ -350,8 +341,8 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
       <div class="cartaBase2">
         <h2>Gestiona tus pases</h2>
         <p>
-          <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente desde
-          su invitación digital, dándote tranquilidad y el control que necesitas
+          <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente
+          desde su invitación digital, dándote tranquilidad y el control que necesitas
           para organizar tu evento."
         </p>
         <img
@@ -399,7 +390,6 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
       texto="Obtén tu invitación"
       clases="btn-oscuro centrado"
       claro={false}
-   
     />
   </section>
   <Testimonios />
@@ -416,50 +406,51 @@ import OfertaTiempo from "../components/OfertaTiempo.astro";
         <div class="bande">
           <h2>Obtén tu invitación</h2>
           <p>
-          <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso para
-          que obtengas tu invitación.
-        </p>
-        <small
-        >Usa el formulario para hablar con nuestra asistente de <b>whatsapp</b
-          ></small
+            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso
+            para que obtengas tu invitación.
+          </p>
+          <small
+            >Usa el formulario para hablar con nuestra asistente de <b
+              >whatsapp</b
+            ></small
           >
         </div>
-        
+
         <div id="formu">
           <form>
             <!-- <h3>
           <img src="/whatsapp.png" alt="logo whatsapp">
           <b>whatsapp</b></h3> -->
-          <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Tu nombre" />
-          <label for="fecha">Fecha del evento</label>
-          <input type="date" name="fecha" id="fecha" />
-          <label for="email">Email</label>
-          <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="agrega un email valido"
-          />
+            <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" />
+            <label for="fecha">Fecha del evento</label>
+            <input type="date" name="fecha" id="fecha" />
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="agrega un email valido"
+            />
 
-          <Btn
-          liga="#"
-          id="empezar"
-          texto="<b>Hola</b> Aida"
-          clases="desactivado, btn-oscuro"
-          claro={false}
-          blank={true}
-          >
-          <Icon name="mdi:whatsapp" />
-        </Btn>
-        <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
-      </form>
+            <Btn
+              liga="#"
+              id="empezar"
+              texto="<b>Hola</b> Aida"
+              clases="desactivado, btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:whatsapp" />
+            </Btn>
+            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+          </form>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-</section>
-<Footer />
+  </section>
+  <Footer />
 </Layout>
 
 <script>

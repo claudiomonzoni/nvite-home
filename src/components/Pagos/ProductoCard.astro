@@ -9,7 +9,7 @@ type Props = {
 };
 
 const { producto } = Astro.props;
-const precio = getProductPrice(producto);
+const precio = await getProductPrice(producto);
 ---
 
 <li class="producto-card grid-xs">
@@ -20,6 +20,7 @@ const precio = getProductPrice(producto);
     width={320}
   />
   <h2>{producto.data.name}</h2>
+  <p>{producto.data.description}</p>
   <p>{precio}</p>
   <Btn
     liga={`/nvitaciones/${producto.id}`}
@@ -28,5 +29,65 @@ const precio = getProductPrice(producto);
     icono="mdi:chevron-double-right"
     claro={true} 
   />
-
+  <Btn
+    data-cart
+    data-action="buy-now"
+    data-productid={producto.id}
+    liga="#"
+    clases="btn-claro"
+    texto="Comprar ahora"
+    icono="mdi:cart"
+    claro={true} 
+  />
 </li>
+
+<script>
+  function initializeBuyNowButtons() {
+    const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
+    
+    buyNowButtons.forEach(button => {
+      button.addEventListener('click', handleBuyNow);
+    });
+  }
+
+  async function handleBuyNow(event: Event) {
+    event.preventDefault();
+    const button = event.currentTarget as HTMLElement;
+    const productId = button.getAttribute('data-productid');
+
+    if (!productId) return;
+
+    // Obtener los items actuales del carrito
+    const cartItems = getCartItemsFromCookie();
+    
+    // Verificar si el producto ya existe en el carrito
+    if (!cartItems.includes(productId)) {
+      // Solo agregar si no existe
+      cartItems.push(productId);
+      
+      // Guardar el carrito actualizado
+      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+      
+      // Disparar evento de actualización del carrito
+      document.dispatchEvent(new CustomEvent("cart:updated"));
+    }
+    
+    // Redirigir al checkout
+    window.location.href = '/nvitaciones/checkout';
+  }
+
+  function getCartItemsFromCookie() {
+    const cookie = document.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("cartItems="))
+      ?.split("=")[1];
+    
+    return cookie ? JSON.parse(cookie) : [];
+  }
+
+  // Inicializar en la carga inicial
+  initializeBuyNowButtons();
+
+  // Reinicializar después de la navegación
+  document.addEventListener("astro:page-load", initializeBuyNowButtons);
+</script>
