@@ -85,10 +85,7 @@ const totalCartItems = await getTotalCartItems(
     text-align: center;
   }
 
-  .cart-header h1 {
-    font-size: 2rem;
-    color: #333;
-  }
+ 
 
   .empty-cart {
     text-align: center;
@@ -181,10 +178,25 @@ const totalCartItems = await getTotalCartItems(
 <script>
 import { deleteCartCookie } from "../../js/utils";
 
+function initializeDeleteCart() {
   const deleteCartBtn = document.querySelector("#delete-cart-btn");
 
-  deleteCartBtn?.addEventListener("click", () => {
-    deleteCartCookie();
-    window.location.href = "/"
-  })
+  deleteCartBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    
+    if (confirm("¿Estás seguro que deseas vaciar el carrito?")) {
+      deleteCartCookie();
+      // Dispatch evento para actualizar el contador del carrito
+      document.dispatchEvent(new CustomEvent('cart:updated'));
+      // Recargar la página
+      window.location.reload();
+    }
+  });
+}
+
+// Inicializar en carga inicial
+initializeDeleteCart();
+
+// Reinicializar después de la navegación
+document.addEventListener('astro:page-load', initializeDeleteCart);
 </script>

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "prod_S6z2ksD9axDHG1", 
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
+    "beneficios": ["Personaliza invitados", "Controla confirmaciones"],
+    "categoria": "Bodas",
+    "tipo":"pdf",
+    "version":"lux"
+  },
+  {
+    "id": "prod_S6yybHJMahkBD0", 
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
+    "beneficios": ["Personaliza invitados", "Controla confirmaciones", "Envía por WhatsApp", "Envía por email"],
+    "categoria": "Xv años",
+    "tipo":"pdf",
+    "version":"clásica"
+  }
+]

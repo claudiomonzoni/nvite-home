@@ -9,8 +9,11 @@ import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import Btn from "../../components/Btn.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import nvitacionesData from './nvitaciones.json';
 
 const product = await getEntry("productos", id as string);
+const nvitacionInfo = nvitacionesData.find(item => item.id === product?.data.id);
 
 if (!product) {
   return new Response(null, {
@@ -27,38 +30,203 @@ const price = await getProductPrice(product);
 >
   <div class="grid contenido">
     <Nav />
+    
+    <div class="breadcrumb-container">
+      <Breadcrumb 
+        categoria={nvitacionInfo?.categoria || 'pdf'} 
+        nombre={product.data.name}
+      />
+    </div>
 
-    <div class="product-container">
-      <Image
+    <div id="producto-conte">
+      <div id="izq">
+        <Image
         src={product.data.images[0]}
         loading="eager"
         alt={product.data.name}
         height={450}
         width={450}
-      />
-      <div class="grid-md">
-        <div class="grid-sm">
-          <h1>{product.data.name}</h1>
-          <p>{product.data.description}</p>
-        </div>
-        <div class="grid-sm">
-          <p class="price">{price}</p>
+        />
+      </div>
+      <div id="der">
      
-
-          <Btn
-            data-cart
-            data-action="increment"
-            data-productid={product.data.id}
-            liga="#"
-            texto="Agregar al carrito"
-            clases="btn-oscuro" 
-            claro={false}
-            icono="mdi:cart"
-          />
+        <div>
+          <div>
+            <h1>{product.data.name}</h1>
+            <p>{product.data.description}</p>
+          </div>
+          <div>
+            <p class="price">{price}</p>
+            
+            <div id="datosjson">
+              {nvitacionInfo && (
+                <div class="info-adicional">
+                {nvitacionInfo.video && (
+                  <div class="video-container">
+                    <video src={nvitacionInfo.video} controls></video>
+                  </div>
+                )}
+                {nvitacionInfo.beneficios && (
+                  <ul class="beneficios">
+                    {nvitacionInfo.beneficios.map((beneficio) => (
+                      <li>{beneficio}</li>
+                    ))}
+                  </ul>
+                )}
+                <div class="metadata">
+                  <p>Categoría: {nvitacionInfo.categoria}</p>
+                  <p>Tipo: {nvitacionInfo.tipo}</p>
+                  <p>Versión: {nvitacionInfo.version}</p>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <div class="buttons-container">
+            <Btn
+              data-cart
+              data-action="increment"
+              data-productid={product.data.id}
+              liga="#"
+              texto="Agregar al carrito"
+              clases="btn-oscuro"
+              claro={false}
+              icono="mdi:cart"
+            />
+            <Btn
+              data-cart
+              data-action="buy-now"
+              data-productid={product.data.id}
+              liga="#"
+              clases="btn-claro"
+              texto="Comprar ahora"
+              icono="mdi:cart"
+              claro={true}
+            />
+          </div>
         </div>
       </div>
     </div>
-
+  </div>
+    
     <Footer />
   </div>
 </Layout>
+
+<script>
+  function initializeBuyNowButtons() {
+    const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
+    
+    buyNowButtons.forEach(button => {
+      button.addEventListener('click', handleBuyNow);
+    });
+  }
+
+  async function handleBuyNow(event: Event) {
+    event.preventDefault();
+    const button = event.currentTarget as HTMLElement;
+    const productId = button.getAttribute('data-productid');
+
+    if (!productId) return;
+
+    // Obtener los items actuales del carrito
+    const cartItems = getCartItemsFromCookie();
+    
+    // Verificar si el producto ya existe en el carrito
+    if (!cartItems.includes(productId)) {
+      // Solo agregar si no existe
+      cartItems.push(productId);
+      
+      // Guardar el carrito actualizado
+      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+      
+      // Disparar evento de actualización del carrito
+      document.dispatchEvent(new CustomEvent("cart:updated"));
+    }
+    
+    // Redirigir al checkout
+    window.location.href = '/nvitaciones/checkout';
+  }
+
+  function getCartItemsFromCookie() {
+    const cookie = document.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("cartItems="))
+      ?.split("=")[1];
+    
+    return cookie ? JSON.parse(cookie) : [];
+  }
+
+  // Inicializar en la carga inicial
+  initializeBuyNowButtons();
+
+  // Reinicializar después de la navegación
+  document.addEventListener("astro:page-load", initializeBuyNowButtons);
+</script>
+
+<style>
+#producto-conte {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+  .info-adicional {
+    margin: 2rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+
+  .video-container {
+    margin-bottom: 1rem;
+  }
+
+  .video-container video {
+    width: 20%;
+    border-radius: 8px;
+  }
+
+  .beneficios {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .beneficios li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .beneficios li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #4CAF50;
+  }
+
+  .metadata {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .metadata p {
+    margin: 0.5rem 0;
+    color: #6c757d;
+    text-transform: capitalize;
+  }
+
+  .buttons-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .buttons-container {
+      flex-direction: column;
+    }
+  }
+</style>

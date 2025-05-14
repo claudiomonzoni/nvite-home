@@ -1,0 +1,64 @@
+---
+interface Props {
+  categoria: string;
+  nombre: string;
+}
+
+const { categoria, nombre } = Astro.props;
+
+const rutaCategoria = {
+  'boda': 'Invitaciones de Boda',
+  'quince': 'Invitaciones de XV Años',
+  'pdf': 'Invitaciones PDF'
+};
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ul>
+    <li><a href="/">Inicio</a></li>
+    <li><a href={`/${categoria}`}>{rutaCategoria[categoria] || categoria}</a></li>
+    <li><span aria-current="page">{nombre}</span></li>
+  </ul>
+</nav>
+
+<style>
+  .breadcrumb {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+  }
+
+  .breadcrumb ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .breadcrumb li {
+    display: flex;
+    align-items: center;
+  }
+
+  .breadcrumb li:not(:last-child)::after {
+    content: "/";
+    margin: 0 0.5rem;
+    color: #6c757d;
+  }
+
+  .breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  .breadcrumb span {
+    color: #6c757d;
+  }
+</style>

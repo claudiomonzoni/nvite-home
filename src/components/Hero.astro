@@ -1,6 +1,5 @@
 ---
-// @ts-ignore
-import { Picture } from "astro:assets";
+
 import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
 
@@ -12,9 +11,8 @@ const { description } = Astro.props;
 import { Icon } from "astro-icon/components";
 ---
 
-<div class="grid contenido">
-  <Nav />
-</div>
+<Nav />
+
 <section class="grid pantalla-der">
   <div id="hero">
     <div class="izq anime">
@@ -67,6 +65,7 @@ import { Icon } from "astro-icon/components";
     border-top-left-radius: $margen-min;
     border-bottom-left-radius: $margen-min;
     display: flex;
+    margin-top: 5rem;
     @include cel {
       border-radius: 1.5rem;
     }
