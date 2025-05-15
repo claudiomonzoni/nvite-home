@@ -1,7 +1,6 @@
 ---
 const { id } = Astro.params;
 
-// import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getProductPrice } from "../../js/cart";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
@@ -11,9 +10,38 @@ import Nav from "../../components/Nav.astro";
 import Btn from "../../components/Btn.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import nvitacionesData from './nvitaciones.json';
+// import foto from '../../assets/cart/pdf/bodas/bodas-pdf-1.jpg';
+
+// Importar todas las imágenes posibles
+const imageModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/cart/**/*.{jpg,jpeg,png,gif,webp}', {
+  eager: true // Carga las imágenes inmediatamente
+});
+
+// Función para cargar las imágenes del producto desde el JSON
+async function getProductImages(nvitacionInfo) {
+  if (!nvitacionInfo || !nvitacionInfo.imagenes) return [];
+  
+  try {
+    const imagenes = [];
+    for (const imagePath of nvitacionInfo.imagenes) {
+      // Las rutas en el JSON ya incluyen "../../"
+      if (imagePath in imageModules) {
+        imagenes.push(imageModules[imagePath].default);
+      } else {
+        console.error(`No se encontró la imagen: ${imagePath}`);
+        console.error('Rutas disponibles:', Object.keys(imageModules));
+      }
+    }
+    return imagenes;
+  } catch (error) {
+    console.error('Error cargando imágenes:', error);
+    return [];
+  }
+}
 
 const product = await getEntry("productos", id as string);
 const nvitacionInfo = nvitacionesData.find(item => item.id === product?.data.id);
+const imagenes = await getProductImages(nvitacionInfo);
 
 if (!product) {
   return new Response(null, {
@@ -47,6 +75,19 @@ const price = await getProductPrice(product);
         height={450}
         width={450}
         />
+
+        <div class="slider">
+          {imagenes.map((imagen) => (
+            <Image 
+              src={imagen} 
+              alt={`Imagen de ${product.data.name}`}
+              height={100}
+              width={100}
+              class="slider-thumbnail"
+              quality="max"
+            />
+          ))}
+        </div>
       </div>
       <div id="der">
      
@@ -222,6 +263,25 @@ const price = await getProductPrice(product);
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+  }
+
+  .slider {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  .slider-thumbnail {
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .slider-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   @media (max-width: 640px) {

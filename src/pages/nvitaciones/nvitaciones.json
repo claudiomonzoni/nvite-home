@@ -4,8 +4,9 @@
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
     "beneficios": ["Personaliza invitados", "Controla confirmaciones"],
     "categoria": "Bodas",
-    "tipo":"pdf",
-    "version":"lux"
+    "tipo":"PDF",
+    "version":"Lux",
+    "imagenes": ["../../assets/cart/pdf/bodas/bodas-pdf-1.jpg","../../assets/cart/pdf/bodas/bodas-pdf-2.jpg", "../../assets/cart/pdf/bodas/bodas-pdf-3.jpg"]
   },
   {
     "id": "prod_S6yybHJMahkBD0", 
@@ -13,6 +14,52 @@
     "beneficios": ["Personaliza invitados", "Controla confirmaciones", "Envía por WhatsApp", "Envía por email"],
     "categoria": "Xv años",
     "tipo":"pdf",
-    "version":"clásica"
+    "version":"clásica",
+    "imagenes": ["../../assets/cart/pdf/quince/1.jpg", "../../assets/cart/pdf/quince/2.jpg", "../../assets/cart/pdf/quince/3.jpg"]
+  },
+  {
+    "id": "prod_QNpXQx0LWRjRFh",
+    "video": "https://example.com/video3.mp4",
+    "beneficios": ["Accesible", "Fácil de usar"],
+    "categoria": "Bodas",
+    "tipo": "Digital",
+    "version": "Esencial",
+    "imagenes": ["../../assets/cart/bodas/esencial/1.jpg", "../../assets/cart/bodas/esencial/2.jpg"]
+  },
+  {
+    "id": "prod_QNpO0T7kRp1zkL",
+    "video": "https://example.com/video4.mp4",
+    "beneficios": ["Balanceada", "Características regulares"],
+    "categoria": "Bodas",
+    "tipo": "Digital",
+    "version": "Clásica",
+    "imagenes": ["../../assets/cart/bodas/clasica/1.jpg", "../../assets/cart/bodas/clasica/2.jpg", "../../assets/cart/bodas/clasica/3.jpg"]
+  },
+  {
+    "id": "prod_QLJkNCXvs8egN9",
+    "video": "https://example.com/video5.mp4",
+    "beneficios": ["Completa", "Alta calidad"],
+    "categoria": "Bodas",
+    "tipo": "Digital",
+    "version": "Lux",
+    "imagenes": ["../../assets/cart/bodas/lux/1.jpg", "../../assets/cart/bodas/lux/2.jpg", "../../assets/cart/bodas/lux/3.jpg"]
+  },
+  {
+    "id": "prod_Q42WJO0oMaU98G",
+    "video": "https://example.com/video6.mp4",
+    "beneficios": ["Versión Plus", "Diseño exclusivo"],
+    "categoria": "Bodas",
+    "tipo": "Digital",
+    "version": "Plus",
+    "imagenes": ["../../assets/cart/bodas/plus/1.jpg", "../../assets/cart/bodas/plus/2.jpg", "../../assets/cart/bodas/plus/3.jpg"]
+  },
+  {
+    "id": "prod_SJS7Pij7pMSLo4",
+    "video": "https://example.com/video7.mp4",
+    "beneficios": ["Económica", "Gran diseño"],
+    "categoria": "Xv años",
+    "tipo": "PDF",
+    "version": "Lux",
+    "imagenes": ["../../assets/cart/pdf/quince/lux/1.jpg", "../../assets/cart/pdf/quince/lux/2.jpg", "../../assets/cart/pdf/quince/lux/3.jpg"]
   }
 ]
