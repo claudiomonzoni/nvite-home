@@ -53,15 +53,16 @@ console.log(cartItemsCount + " items in cart");
               </li>
               <li>
                 <Btn
-                  liga="/panel"
-                  texto="Mi panel"
-                  clases="btn-oscuro panel-home"
+                  liga="https://wa.link/kex8vd"
+                  texto="755113 2468"
+                  clases="btn-whatsapp panel-home"
                   claro={false}
                   blank={true}
                   rel="nofollow"
                 >
-                  <Icon name="bag" size={25} />
+                  <Icon name="whatsapp" size={25} />
                 </Btn>
+              
               </li>
             </>
           )
@@ -123,6 +124,7 @@ console.log(cartItemsCount + " items in cart");
       display: flex;
       align-items: center;
       gap: $margen-min;
+
     }
     @include cel {
      ul li:last-child{
@@ -202,6 +204,9 @@ console.log(cartItemsCount + " items in cart");
   li {
     list-style: none;
     align-items: center;
+    @include cel {
+      margin: .4rem;
+    }
   }
   #carrito {
     position: relative;
@@ -231,23 +236,23 @@ console.log(cartItemsCount + " items in cart");
   import { getCartCookie } from "../../src/js/utils";
 
   function initializeCartCount() {
-    const countCartSpan = document.querySelector(
-      "#cart-count"
-    ) as HTMLSpanElement;
-
+    const countCartSpan = document.querySelector("#cart-count") as HTMLSpanElement;
     if (!countCartSpan) return;
 
     const updateCartValue = () => {
       const cartItems = getCartCookie();
-      countCartSpan.textContent =
-        cartItems.length === 0 ? "" : cartItems.length.toString();
+      if (cartItems && cartItems.length > 0) {
+        countCartSpan.textContent = cartItems.length.toString();
+        countCartSpan.classList.remove("hidden");
+      } else {
+        countCartSpan.textContent = "";
+        countCartSpan.classList.add("hidden");
+      }
     };
 
-    // Eliminar listener existente si hay alguno
-    document.removeEventListener("cart:updated", updateCartValue);
-    // Agregar nuevo listener
+    // Actualizar cuando cambie el carrito
     document.addEventListener("cart:updated", updateCartValue);
-
+    
     // Actualizar el valor inicial
     updateCartValue();
   }
@@ -255,8 +260,8 @@ console.log(cartItemsCount + " items in cart");
   // Inicializar en la carga inicial
   initializeCartCount();
 
-  // Reinicializar después de la navegación
-  document.addEventListener("astro:page-load", initializeCartCount);
+  // Reinicializar después de la navegación manteniendo el valor de la cookie
+  document.addEventListener("astro:after-swap", initializeCartCount);
 
   function initializeNavScroll() {
     const nav = document.getElementById("main-nav");

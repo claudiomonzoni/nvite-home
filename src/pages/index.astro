@@ -69,12 +69,8 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     small="Solo aplica para pagos en línea, promoción valida hasta el 28 de febrero."
     img="/promo.webp"
     /> -->
-  </div>
-
-  <div class="grid contenido">
-    <MostrarNvitaciones desdedonde="home" />
-  </div>
-
+  </div>    <MostrarNvitaciones dondeEstoy="home" />
+  
   <div class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
@@ -259,7 +255,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     />
   </div>
 
-  <div id="precios" class="grid pantalla-der">
+  <div id="precios" class="grid contenido">
     <Banner dondeEstoy="home" />
   </div>
 

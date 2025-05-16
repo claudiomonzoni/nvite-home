@@ -32,7 +32,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     padding: 8px 20px;
     display: inline-block;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: $radio;
     margin: 0 0 $margen-min 0;
     border: none;
     font-weight: 600;
@@ -48,8 +48,8 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     @include btn;
   }
   .btn-oscuro {
-    background-color: $acento;
-    color: white;
+    background-color: $secundario;
+    color: $primario;
     text-align: center;
     max-width: fit-content;
     @include btn;
@@ -72,6 +72,12 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     justify-content: left !important;
     @include btn;
     @extend .sombra;
+  }
+  .btn-whatsapp {
+
+   background-color: $fondoGlobal;
+    color: $acento;
+    @include btn;
   }
   .centrado {
     position: relative;

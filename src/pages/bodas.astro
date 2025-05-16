@@ -11,6 +11,7 @@ import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Banner from "../components/Banner.astro";
 import SaveTheDate from "../components/SaveTheDate.astro";
+import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 ---
 
 <Layout title="Invitaciones Digitales para Boda Originales | RSVP y Gestión Fácil - Nvitaciones">
@@ -114,6 +115,8 @@ import SaveTheDate from "../components/SaveTheDate.astro";
       invitados.
     </p>
   </section>
+
+  <MostrarNvitaciones dondeEstoy="bodas" />
 
   <CaracteristicasGrid
     matriz={[

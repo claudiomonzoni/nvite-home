@@ -12,7 +12,7 @@ const { producto } = Astro.props;
 const precio = await getProductPrice(producto);
 ---
 
-<li class="producto-card grid-xs">
+<article class="producto-card">
   <Image
     src={producto.data.images[0]}
     alt={producto.data.name}
@@ -39,7 +39,16 @@ const precio = await getProductPrice(producto);
     icono="mdi:cart"
     claro={true} 
   />
-</li>
+<article/>
+
+<style>
+  .producto-card {
+    border: 1px solid #484848;
+    padding: 1rem;
+    margin: 1rem;
+    text-align: center;
+  }
+</style>
 
 <script>
   function initializeBuyNowButtons() {

@@ -2,23 +2,129 @@
 import { getCollection } from "astro:content";
 const productos = await getCollection("productos");
 import ProductoCard from "../Pagos/ProductoCard.astro";
-const desdedonde = Astro.props
+const { dondeEstoy } = Astro.props;
 
+// Filtrado de productos mejorado
+const filteredProducts = productos.filter(producto => {
+  // Obtener la categoría del producto, asegurándonos de que sea string y en minúsculas
+  const categoria = (producto.data.metadata?.Categoria || '').toLowerCase();
+  const dondeEstoyLower = (dondeEstoy || '').toLowerCase();
+  
+  // En la página principal, mostrar todos los productos excepto los PDF
+  if (!dondeEstoy || dondeEstoy === 'home') {
+    return !categoria.includes('pdf');
+  }
+  
+  // Para las páginas de categoría, filtrar según la categoría
+  return categoria.includes(dondeEstoyLower);
+});
+
+console.log(productos[3].data.metadata.Categoria);
 ---
 
-<div id="productos">
-    {
-      productos.map((producto) => (
-      // <li>{producto.data.metadata.Version}</li>
-      <ProductoCard producto={producto} />
-     <li>{producto.data.metadata.Tipo}</li>
-     <li>{producto.data.metadata.Version}</li>
-     <li>{producto.data.metadata.Categoria}</li>
-      //producto.data.metadata.Categoria === 'bodas' ? (
-     // <ProductoCard producto={producto} />
-    //) : ('')
-  
-      )
-      )
-    }
+<div class="grid pantalla-der">
+  <div class="swiper productos-swiper">
+    <div class="swiper-wrapper">
+      {
+        filteredProducts.map((producto) => (
+          <div class="swiper-slide">
+            <ProductoCard producto={producto} />
+          </div>
+        ))
+      }
+    </div>    <div class="swiper-pagination"></div>
   </div>
+</div>
+
+<style>
+  .productos-swiper {
+    width: 100%;
+    padding: 1rem 0;
+  }
+  
+  :root {
+    --swiper-pagination-color: var(--primario, #333);
+    --swiper-pagination-bullet-size: 10px;
+    --swiper-pagination-bullet-inactive-color: #cccccc;
+  }
+  
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto; /* Let the slides grow with their content */
+  }
+
+  .swiper-pagination {
+    position: relative;
+    margin-top: 1rem;
+  }
+</style>
+
+<script>  import Swiper from 'swiper';
+  import { Pagination, Autoplay } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
+  interface SwiperElement extends HTMLElement {
+    swiper?: Swiper;
+  }
+
+  function initSwiper() {
+    const swipers = document.querySelectorAll<SwiperElement>('.productos-swiper');
+    swipers.forEach(swiperEl => {
+      if (swiperEl.swiper) {
+        swiperEl.swiper.destroy(true, true);
+      }      new Swiper(swiperEl, {
+        modules: [Pagination, Autoplay],
+        slidesPerView: 1.2,
+        spaceBetween: 10,
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          dynamicBullets: true, // Hace que los bullets sean más dinámicos
+          dynamicMainBullets: 3, // Muestra 3 bullets principales
+        },
+        breakpoints: {
+          320: {
+            slidesPerView: 1.2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 2.2,
+            spaceBetween: 10,
+          },
+          1024: {
+            slidesPerView: 3.2,
+            spaceBetween: 10,
+          },
+          1440: {
+            slidesPerView: 4.2,
+            spaceBetween: 10,
+          }
+        }
+      });
+    });
+  }
+
+  // Inicializar cuando el DOM está listo
+  document.addEventListener('DOMContentLoaded', initSwiper);
+  
+  // Reinicializar en transiciones de página
+  document.addEventListener('astro:page-load', initSwiper);
+  
+  // Limpiar cuando se desmonta
+  document.addEventListener('astro:before-swap', () => {
+    const swipers = document.querySelectorAll<SwiperElement>('.productos-swiper');
+    swipers.forEach(swiperEl => {
+      if (swiperEl.swiper) {
+        swiperEl.swiper.destroy(true, true);
+      }
+    });
+  });
+</script>
