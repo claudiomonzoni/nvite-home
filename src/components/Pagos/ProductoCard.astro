@@ -13,21 +13,42 @@ const precio = await getProductPrice(producto);
 ---
 
 <article class="producto-card">
-  <Image
+
+<div class="portada">
+    <a href={`/nvitaciones/${producto.id}`}>
+    <Image
     src={producto.data.images[0]}
     alt={producto.data.name}
     height={320}
     width={320}
+    />
+  </a>
+</div>
+  <div class="info">
+    <span>{producto.data.metadata?.Tipo || "Sin categoría"}</span>
+    <div class="headinfo">
+      <h2>{producto.data.name}</h2>
+      <p class="precio">{precio}</p>
+    </div>
+    <p set:html={producto.data.description}></p>
+      <Btn
+    data-cart
+    data-action="increment"
+    data-productid={producto.data.id}
+    liga="#"
+    texto="Agregar al carrito"
+    clases="btn-oscuro"
+    claro={false}
+    icono="mdi:cart"
   />
-  <h2>{producto.data.name}</h2>
-  <p>{producto.data.description}</p>
-  <p>{precio}</p>
+  </div>
+  <!-- 
   <Btn
     liga={`/nvitaciones/${producto.id}`}
     clases="btn-oscuro"
     texto="Ver Nvitación"
     icono="mdi:chevron-double-right"
-    claro={true} 
+    claro={true}
   />
   <Btn
     data-cart
@@ -38,65 +59,133 @@ const precio = await getProductPrice(producto);
     texto="Comprar ahora"
     icono="mdi:cart"
     claro={true} 
-  />
-<article/>
+  /> -->
 
-<style>
-  .producto-card {
-    border: 1px solid #484848;
-    padding: 1rem;
-    margin: 1rem;
-    text-align: center;
-  }
-</style>
+  </article>
 
-<script>
-  function initializeBuyNowButtons() {
-    const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-    
-    buyNowButtons.forEach(button => {
-      button.addEventListener('click', handleBuyNow);
-    });
-  }
+  <style lang="scss">
+    @use "../../estilos/variables" as *;
+    .producto-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 1rem;
+      border-radius: $radio;
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+      background-color: white;
+    }
 
-  async function handleBuyNow(event: Event) {
-    event.preventDefault();
-    const button = event.currentTarget as HTMLElement;
-    const productId = button.getAttribute('data-productid');
-
-    if (!productId) return;
-
-    // Obtener los items actuales del carrito
-    const cartItems = getCartItemsFromCookie();
-    
-    // Verificar si el producto ya existe en el carrito
-    if (!cartItems.includes(productId)) {
-      // Solo agregar si no existe
-      cartItems.push(productId);
+ 
       
-      // Guardar el carrito actualizado
-      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+      .portada {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        background-color:$gris;
+        border-top-left-radius: $radio;
+        border-top-right-radius: $radio;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      //   position: relative;
+      // height: calc(100% + 74px);
+      // top: -74px;
       
-      // Disparar evento de actualización del carrito
-      document.dispatchEvent(new CustomEvent("cart:updated"));
+      a {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
     }
     
-    // Redirigir al checkout
-    window.location.href = '/nvitaciones/checkout';
-  }
+    .info {
+      padding: 0 $margen-min;
+    }
+    .headinfo {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: $margen-min;
+      border-bottom: solid 1px $gris;
+      padding-bottom: $margen-min;
+      margin-bottom: $margen-min;
+    }
+    .precio {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $primario;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 1.6vw + 1rem, 1.7rem);
+      margin: 0;
+      padding: 0;
+    }
+    .categoria {
+      text-transform: capitalize;
+      color: $gris;
+      font-size: 0.7rem;
+      font-weight: lighter;
+    }
+    a {
+    margin-bottom: 0;
+    }
+  </style>
 
-  function getCartItemsFromCookie() {
-    const cookie = document.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith("cartItems="))
-      ?.split("=")[1];
-    
-    return cookie ? JSON.parse(cookie) : [];
-  }
+  <script>
+    function initializeBuyNowButtons() {
+      const buyNowButtons = document.querySelectorAll(
+        '[data-action="buy-now"]'
+      );
 
-  // Inicializar en la carga inicial
-  initializeBuyNowButtons();
+      buyNowButtons.forEach((button) => {
+        button.addEventListener("click", handleBuyNow);
+      });
+    }
 
-  // Reinicializar después de la navegación
-  document.addEventListener("astro:page-load", initializeBuyNowButtons);
-</script>
+    async function handleBuyNow(event: Event) {
+      event.preventDefault();
+      const button = event.currentTarget as HTMLElement;
+      const productId = button.getAttribute("data-productid");
+
+      if (!productId) return;
+
+      // Obtener los items actuales del carrito
+      const cartItems = getCartItemsFromCookie();
+
+      // Verificar si el producto ya existe en el carrito
+      if (!cartItems.includes(productId)) {
+        // Solo agregar si no existe
+        cartItems.push(productId);
+
+        // Guardar el carrito actualizado
+        document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+
+        // Disparar evento de actualización del carrito
+        document.dispatchEvent(new CustomEvent("cart:updated"));
+      }
+
+      // Redirigir al checkout
+      window.location.href = "/nvitaciones/checkout";
+    }
+
+    function getCartItemsFromCookie() {
+      const cookie = document.cookie
+        .split(";")
+        .find((c) => c.trim().startsWith("cartItems="))
+        ?.split("=")[1];
+
+      return cookie ? JSON.parse(cookie) : [];
+    }
+
+    // Inicializar en la carga inicial
+    initializeBuyNowButtons();
+
+    // Reinicializar después de la navegación
+    document.addEventListener("astro:page-load", initializeBuyNowButtons);
+  </script>
+</article>

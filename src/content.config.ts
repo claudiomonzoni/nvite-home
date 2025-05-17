@@ -4,10 +4,8 @@ import { stripePriceLoader, stripeProductLoader } from "stripe-astro-loader";
 import Stripe from "stripe";
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
-import { glob, file } from "astro/loaders";
-import type { desc } from "astro:db";
-import { optional } from "astro:schema";
-import { Version } from "sass";
+import { glob } from "astro/loaders";
+
 
 // 3. Define your collection(s)
 const bodas = defineCollection({

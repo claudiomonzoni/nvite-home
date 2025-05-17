@@ -6,20 +6,31 @@ const { dondeEstoy } = Astro.props;
 
 // Filtrado de productos mejorado
 const filteredProducts = productos.filter(producto => {
-  // Obtener la categoría del producto, asegurándonos de que sea string y en minúsculas
   const categoria = (producto.data.metadata?.Categoria || '').toLowerCase();
   const dondeEstoyLower = (dondeEstoy || '').toLowerCase();
   
-  // En la página principal, mostrar todos los productos excepto los PDF
+  // En la página principal mostrar todo
   if (!dondeEstoy || dondeEstoy === 'home') {
-    return !categoria.includes('pdf');
+    return true;
   }
   
-  // Para las páginas de categoría, filtrar según la categoría
-  return categoria.includes(dondeEstoyLower);
+  // En la página de PDF
+  if (dondeEstoyLower === 'pdf') {
+    return producto.data.metadata?.Tipo?.toLowerCase() === 'pdf';
+  }
+  
+  // En las páginas de categoría (bodas, quince)
+  return categoria === dondeEstoyLower;
 });
 
-console.log(productos[3].data.metadata.Categoria);
+// Logs para depuración
+// console.log('Página actual:', dondeEstoy);
+// console.log('Total productos sin filtrar:', productos.length);
+// console.log('Total productos filtrados:', filteredProducts.length);
+// console.log('Productos filtrados:', filteredProducts.map(p => ({
+//   categoria: p.data.metadata?.Categoria,
+//   tipo: p.data.metadata?.Tipo
+// })));
 ---
 
 <div class="grid pantalla-der">
