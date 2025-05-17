@@ -148,9 +148,58 @@ const price = await getProductPrice(product);
     </div>
   </div>
     
-    <Footer />
-  </div>
+</div>
+<Footer />
 </Layout>
+
+<style lang="scss">
+  @use "../../estilos/variables" as *;
+  .breadcrumb-container{
+    margin-top:7rem ;
+    @include cel{
+      margin-top: 12rem;
+    }
+  }
+  #producto-conte{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  #izq{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #der{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  #datosjson{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .info-adicional {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .video-container {
+    display: flex;
+    justify-content: center;
+  }
+  .beneficios {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+  }
+  .metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+</style>
 
 <script>
   function initializeBuyNowButtons() {

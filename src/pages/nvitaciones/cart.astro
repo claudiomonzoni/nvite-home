@@ -68,14 +68,13 @@ const totalCartItems = await getTotalCartItems(
       )}
     </div>
 
-    <Footer />
   </div>
+  <Footer />
 </Layout>
 
 <style>
   .cart-section {
     width: 100%;
-    padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -160,11 +159,15 @@ const totalCartItems = await getTotalCartItems(
   }
 
   .btn.primary {
-    background: #3498db;
+    background: #ffce95;
     color: white;
   }
 
   @media (max-width: 768px) {
+    .cart-section {
+      margin-top: 8rem;
+    }
+
     .cart-buttons {
       justify-content: center;
     }
