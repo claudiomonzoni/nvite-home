@@ -56,7 +56,7 @@ const filteredProducts = productos.filter(producto => {
   :root {
     --swiper-pagination-color: var(--primario, #333);
     --swiper-pagination-bullet-size: 10px;
-    --swiper-pagination-bullet-inactive-color: #cccccc;
+    --swiper-pagination-bullet-inactive-color: #c9a56c;
   }
   
   .swiper-slide {
@@ -68,7 +68,7 @@ const filteredProducts = productos.filter(producto => {
 
   .swiper-pagination {
     position: relative;
-    margin-top: 1rem;
+    margin-top: .2rem;
   }
 </style>
 
@@ -89,7 +89,7 @@ const filteredProducts = productos.filter(producto => {
       }      new Swiper(swiperEl, {
         modules: [Pagination, Autoplay],
         slidesPerView: 1.2,
-        spaceBetween: 10,
+        spaceBetween: 15,
         loop: true,
         autoplay: {
           delay: 5000,

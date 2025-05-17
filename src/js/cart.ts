@@ -21,7 +21,7 @@ export const getTotalCartItems = async (
 };
 
 export const getProductPrice = async (product: CollectionEntry<"productos">) => {
-  if (!product.data.default_price) return "Price not available";
+  if (!product.data.default_price) return "Sin precio";
   
   const priceItem = await getEntry("precios", product.data.default_price);
 

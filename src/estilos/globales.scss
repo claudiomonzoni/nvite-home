@@ -45,7 +45,6 @@ ul {
   font-weight: normal;
 }
 
-
 h1,
 h2,
 h3,
@@ -132,7 +131,7 @@ mark {
 // grid
 .grid {
   display: grid;
-  grid-template-columns: [pantalla-start] .5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] .5vw [pantalla-end];
+  grid-template-columns: [pantalla-start] 0.5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 0.5vw [pantalla-end];
   @include hd {
     grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
   }
@@ -319,11 +318,11 @@ mark {
   align-items: center;
   flex: 1 0 30%;
   padding: $margen-cel $margen-cel 0 $margen-cel;
-  .imaCelular{
+  .imaCelular {
     max-width: 16vw;
     @include cel {
-     max-width: 60vw;
-   }
+      max-width: 60vw;
+    }
   }
   img {
     position: relative;
@@ -339,8 +338,6 @@ mark {
   p {
     flex: 1 0 100%;
   }
-  
- 
 
   &:last-child {
     flex: 1 0 30%;
@@ -410,13 +407,7 @@ mark {
     background-size: cover;
     background-blend-mode: color-dodge;
     aspect-ratio: 3 / 2;
-    @include cel {
-      flex: 1 0 47%;
-      flex-direction: column;
-      padding: $margen-cel 0;
 
-      // aspect-ratio: 3 / 5;
-    }
     .conte {
       position: relative;
       max-width: 70%;
@@ -441,6 +432,11 @@ mark {
         max-width: 1.5rem;
         margin: $margen-min 0;
       }
+    }
+    @include cel {
+      flex: 1 0 47%;
+      flex-direction: column;
+      padding: $margen-cel 0;
     }
   }
 }
@@ -545,11 +541,6 @@ input::placeholder {
 }
 
 .fondo-formu {
-  // background: url("/fondo-nvite-caracteristicas-2.png"),
-  //   linear-gradient(330deg, $fondo 0%, white 70%) $fondo;
-  // background-size: contain, contain;
-  // background-blend-mode: color-dodge, normal;
-
   background: url("/fondo-formu.webp"),
     linear-gradient(330deg, $fondo 0%, white 70%) white;
   background-repeat: no-repeat;
@@ -641,7 +632,7 @@ input::placeholder {
     aspect-ratio: 1/1;
     cursor: pointer;
     path {
-      fill:$acento;
+      fill: $acento;
     }
   }
   #info {
@@ -704,10 +695,6 @@ input::placeholder {
 }
 
 #video {
-  // clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
-  @include cel {
-    display: none;
-  }
   margin-bottom: $margen-cel;
   display: flex;
   justify-content: center;
@@ -717,10 +704,21 @@ input::placeholder {
     width: 100% !important;
     height: auto;
   }
+  @include cel {
+    display: none;
+  }
 }
 
 #videoCel {
-  // clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  margin-bottom: $margen-cel;
+  display: flex;
+  justify-content: center;
+  iframe {
+    border-radius: $radio;
+    aspect-ratio: 9 / 16;
+    width: 100% !important;
+    height: auto;
+  }
   @include hd {
     display: none;
   }
@@ -732,14 +730,5 @@ input::placeholder {
   }
   @include tableta_land {
     display: none;
-  }
-  margin-bottom: $margen-cel;
-  display: flex;
-  justify-content: center;
-  iframe {
-    border-radius: $radio;
-    aspect-ratio: 9 / 16;
-    width: 100% !important;
-    height: auto;
   }
 }

@@ -28,7 +28,9 @@ const precio = await getProductPrice(producto);
     <span>{producto.data.metadata?.Tipo || "Sin categoría"}</span>
     <div class="headinfo">
       <h2>{producto.data.name}</h2>
-      <p class="precio">{precio}</p>
+      <p class="precio">
+        {precio.replace(/\.00$/, '')}<sup>.00</sup>
+      </p>
     </div>
     <p set:html={producto.data.description}></p>
       <Btn
@@ -69,10 +71,10 @@ const precio = await getProductPrice(producto);
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr auto;
-      gap: 1rem;
+      gap: .5rem;
       border-radius: $radio;
-      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
-      background-color: white;
+      // box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+      // background-color: white;
     }
 
  
@@ -80,9 +82,15 @@ const precio = await getProductPrice(producto);
       .portada {
         grid-column: 1 / -1;
         grid-row: 1;
-        background-color:$gris;
-        border-top-left-radius: $radio;
-        border-top-right-radius: $radio;
+        background: linear-gradient(
+          to bottom,
+          rgba($gris, 0.3) 0%,
+          rgba($gris, 0.6) 50%,
+          rgba($gris, 1) 100%
+        );
+        // border-top-left-radius: $radio;
+        // border-top-right-radius: $radio;
+        border-radius: $radio;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -94,12 +102,13 @@ const precio = await getProductPrice(producto);
         display: flex;
         justify-content: center;
         width: 100%;
+        transform-origin: bottom;
       }
 
       img {
         object-fit: cover;
-        width: 100%;
-        height: 100%;
+        width: 60%;
+        height: auto;
       }
     }
     
@@ -116,12 +125,19 @@ const precio = await getProductPrice(producto);
       margin-bottom: $margen-min;
     }
     .precio {
-      font-size: 1.2rem;
+      font-size: clamp(1.1rem, 1.6vw + 0.5rem, 1.5rem);
       font-weight: bold;
       color: $primario;
+    
+      
+      sup {
+        font-size: 0.4em;
+        font-weight: normal;
+        color: $gris;
+      }
     }
     h2 {
-      font-size: clamp(1.5rem, 1.6vw + 1rem, 1.7rem);
+      font-size: clamp(1.3rem, 1.6vw + 1rem, 1.7rem);
       margin: 0;
       padding: 0;
     }

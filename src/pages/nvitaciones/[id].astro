@@ -29,7 +29,7 @@ async function getProductImages(nvitacionInfo) {
         imagenes.push(imageModules[imagePath].default);
       } else {
         console.error(`No se encontró la imagen: ${imagePath}`);
-        console.error('Rutas disponibles:', Object.keys(imageModules));
+        // console.error('Rutas disponibles:', Object.keys(imageModules));
       }
     }
     return imagenes;
@@ -53,9 +53,7 @@ if (!product) {
 const price = await getProductPrice(product);
 ---
 
-<Layout
-  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
->
+<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones">
   <div class="grid contenido">
     <Nav />
     
@@ -69,11 +67,11 @@ const price = await getProductPrice(product);
     <div id="producto-conte">
       <div id="izq">
         <Image
-        src={product.data.images[0]}
-        loading="eager"
-        alt={product.data.name}
-        height={450}
-        width={450}
+          src={product.data.images[0]}
+          loading="eager"
+          alt={product.data.name}
+          height={450}
+          width={450}
         />
 
         <div class="slider">
