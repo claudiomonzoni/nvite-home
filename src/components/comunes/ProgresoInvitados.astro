@@ -10,78 +10,100 @@ interface Props {
 }
 
 const { porcentajeMostrarInvitados, mostrarSiempre, frase, email } = Astro.props;
-
-// Valores por defecto
-let totalPases = 0;
-let pasesConfirmados = 0;
-let porcentajeConfirmados = 0;
-
-try {
-    // Obtener los datos de la API https://nvitaciones.com/api/getInvitados.json?email=pruebas@pruebas.com
-    const response = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`);
-    const data = await response.json();
-    
-    // Asegurarnos de que tenemos un array
-    const invitados = Array.isArray(data) ? data : [];
-
-    if (invitados.length > 0) {
-        // Calcular totales
-        totalPases = invitados.reduce((sum: number, invitado: any) => {
-            const pases = parseInt(invitado.pases) || 0;
-            return sum + pases;
-        }, 0);
-
-        pasesConfirmados = invitados.reduce((sum: number, invitado: any) => {
-            if (invitado.confirmado && !invitado.noAsiste) {
-                const pases = parseInt(invitado.pases) || 0;
-                return sum + pases;
-            }
-            return sum;
-        }, 0);
-
-        // Calcular el porcentaje de confirmados
-        porcentajeConfirmados = totalPases > 0 ? Math.round((pasesConfirmados / totalPases) * 100) : 0;
-    }
-} catch (error) {
-    console.error('Error al obtener o procesar los datos:', error);
-}
-
-// Determinar si se debe mostrar el componente
-const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMostrarInvitados;
 ---
 
-{mostrarComponente && (
-    <div class="progreso-invitados">
-        {porcentajeConfirmados === 100 ?(
-            <h2>¡Que empiece la fiesta, estamos todos listos!</h2>
-        ):(
-            frase &&  <h2>{frase}</h2>
-        )
-        }
-            <p class="porcentaje">
-                <span class="numero">{porcentajeConfirmados}%</span>
-                <span class="texto">de invitados han confirmado</span>
-            </p>
+<div id="progreso-invitados" class="progreso-invitados" data-email={email} data-porcentaje-minimo={porcentajeMostrarInvitados} data-mostrar-siempre={mostrarSiempre} data-frase={frase}>
+    <div class="contenido">
+        <h2 id="frase-titulo"></h2>
+        <p class="porcentaje">
+            <span class="numero" id="porcentaje-numero">0%</span>
+            <span class="texto">de invitados han confirmado</span>
+        </p>
         <div class="estadisticas">
             <div class="barra-progreso">
-                <div class="barra" style={`--progress: ${porcentajeConfirmados}%`}></div>
+                <div class="barra" id="barra-progreso"></div>
             </div>
             <p class="detalles">
-                <span class="confirmados">{pasesConfirmados}</span> de <span class="total">{totalPases}</span> pases confirmados
+                <span class="confirmados" id="pases-confirmados">0</span> de <span class="total" id="total-pases">0</span> pases confirmados
             </p>
         </div>
-        <Boton liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-oscuro '}   />
+        <Boton liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-oscuro '} />
     </div>
-)}
+</div>
+
+<script>
+    async function actualizarProgreso() {
+        const contenedor = document.getElementById('progreso-invitados');
+        if (!contenedor) return;
+
+        const email = contenedor.dataset.email;
+        const porcentajeMinimo = parseInt(contenedor.dataset.porcentajeMinimo);
+        const mostrarSiempre = contenedor.dataset.mostrarSiempre === 'true';
+        const frase = contenedor.dataset.frase;
+
+        try {
+            const response = await fetch(`${window.location.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`);
+            const invitados = await response.json();
+
+            if (!Array.isArray(invitados)) {
+                throw new Error('Datos inválidos recibidos');
+            }
+
+            // Calcular totales
+            const totalPases = invitados.reduce((sum, invitado) => {
+                const pases = parseInt(invitado.pases) || 0;
+                return sum + pases;
+            }, 0);
+
+            const pasesConfirmados = invitados.reduce((sum, invitado) => {
+                if (invitado.confirmado && !invitado.noAsiste) {
+                    const pases = parseInt(invitado.pases) || 0;
+                    return sum + pases;
+                }
+                return sum;
+            }, 0);
+
+            // Calcular el porcentaje de confirmados
+            const porcentajeConfirmados = totalPases > 0 ? Math.round((pasesConfirmados / totalPases) * 100) : 0;
+
+            // Actualizar la UI
+            const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMinimo;
+            contenedor.style.display = mostrarComponente ? 'block' : 'none';
+
+            if (mostrarComponente) {
+                const fraseTitulo = document.getElementById('frase-titulo');
+                const porcentajeNumero = document.getElementById('porcentaje-numero');
+                const barraProgreso = document.getElementById('barra-progreso');
+                const pasesConfirmadosEl = document.getElementById('pases-confirmados');
+                const totalPasesEl = document.getElementById('total-pases');
+
+                if (fraseTitulo) fraseTitulo.textContent = porcentajeConfirmados === 100 ? 
+                    '¡Que empiece la fiesta, estamos todos listos!' : 
+                    frase;
+
+                if (porcentajeNumero) porcentajeNumero.textContent = `${porcentajeConfirmados}%`;
+                if (barraProgreso) barraProgreso.style.setProperty('--progress', `${porcentajeConfirmados}%`);
+                if (pasesConfirmadosEl) pasesConfirmadosEl.textContent = pasesConfirmados.toString();
+                if (totalPasesEl) totalPasesEl.textContent = totalPases.toString();
+            }
+        } catch (error) {
+            console.error('Error al obtener o procesar los datos:', error);
+            contenedor.style.display = 'none';
+        }
+    }
+
+    // Actualizar solo al cargar la página
+    actualizarProgreso();
+</script>
 
 <style lang="scss">
-      @use "../../estilos/_variables.scss" as *;
+    @use "../../estilos/_variables.scss" as *;
 
     .progreso-invitados {
         text-align: center;
         max-width: 600px;
         margin: 0 auto;
-        padding-bottom:$margen;
+        padding-bottom: $margen;
     }
 
     .barra-progreso {
