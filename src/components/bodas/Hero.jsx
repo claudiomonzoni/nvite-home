@@ -21,14 +21,6 @@ export default function Hero({
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
 
-  // Debug date values
-  useEffect(() => {
-    console.log('Fecha components:', {
-      raw: diaNum,
-      adjusted: adjustedDiaNum,
-      fullDate: `${ano}-${mes}-${adjustedDiaNum}`
-    });
-  }, [diaNum, mes, ano]);
 
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("invisible");
