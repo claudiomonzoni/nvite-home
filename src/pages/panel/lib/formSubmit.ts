@@ -3,24 +3,33 @@ export const formSubmit = (form: HTMLFormElement) => {
       e.preventDefault();
   
       const formData = new FormData(form);
-  
+      const isLogout = form.action.includes('salir.json');
+      
       try {
         const response = await fetch(form.action, {
           method: "POST",
-          body: JSON.stringify(Object.fromEntries(formData)),
+          ...(isLogout ? {} : {
+            body: JSON.stringify(Object.fromEntries(formData))
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
         });
-  
+
+        const data = await response.json();
+
         if (!response.ok) {
-          const { error } = await response.json();
-          throw new Error(error.code);
+          throw new Error(data.error?.code || data.message || 'Error desconocido');
         }
-        form.reset();
-        window.location.reload();
+
+        if (isLogout) {
+          window.location.href = '/panel/ingresar';
+        } else {
+          window.location.reload();
+        }
       } catch (error) {
-        if (error instanceof Error) {
-          return alert(error.message);
-        }
-        return alert("Error desconocido, por favor intenta de nuevo");
+        console.error('Error:', error);
+        alert(error instanceof Error ? error.message : "Error desconocido, por favor intenta de nuevo");
       }
     });
   };

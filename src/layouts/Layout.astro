@@ -16,14 +16,28 @@ import Analytics from '@vercel/analytics/astro'
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9F01PXXVK"></script>
 <script>
+  // Declare dataLayer type for TypeScript
+  interface Window {
+    dataLayer: any[];
+  }
+
+  // Initialize dataLayer if it doesn't exist
   window.dataLayer = window.dataLayer || [];
+
+  // Now use dataLayer safely
+  if ('dataLayer' in window) {
+    window.dataLayer.push({
+      'event': 'pageView'
+    });
+  }
+
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-D9F01PXXVK');
 </script>
     <meta charset="UTF-8" />
-    <meta name="description" content=`Simplifica la organización de tu evento con invitaciones digitales interactivas. Envía por WhatsApp, confirma asistencia y gestiona tus invitados fácilmente con Nvitaciones. ¡Descubre cómo!` />
+    <meta name="description" content=`Organiza de tu evento con invitaciones digitales interactivas. Envía por WhatsApp tu invitación, confirma asistencia y gestiona tus invitados fácilmente con Nvitaciones.` />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -59,6 +73,7 @@ import Analytics from '@vercel/analytics/astro'
       }
       </script>
       <ClientRouter />
+ 
   </head>
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
 <script>

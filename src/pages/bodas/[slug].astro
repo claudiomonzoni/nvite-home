@@ -24,18 +24,24 @@ const { boda } = Astro.props;
 const { Content } = await render(boda);
 const base = new URL(Astro.url.pathname, Astro.site);
 
+// Fix date handling
 const Nfecha = new Date(boda.data.fecha);
-const dia = Nfecha.toLocaleDateString(["es-MX"], {
+// Adjust for timezone offset
+Nfecha.setMinutes(Nfecha.getMinutes() + Nfecha.getTimezoneOffset());
+
+const dia = Nfecha.toLocaleDateString("es-MX", {
   weekday: "long",
 });
-const diaNum = Nfecha.toLocaleDateString(["es-MX"], {
-  day: "numeric",
-});
-const mes = Nfecha.toLocaleDateString(["es-MX"], {
+const diaNum = Nfecha.getDate().toString(); // Get actual date number
+const mes = Nfecha.toLocaleDateString("es-MX", {
   month: "long",
 });
-const ano = Nfecha.toLocaleDateString(["es-MX"], {
-  year: "numeric",
+const ano = Nfecha.getFullYear().toString();
+
+console.log('Date debug:', {
+  original: boda.data.fecha,
+  parsed: Nfecha.toISOString(),
+  components: { dia, diaNum, mes, ano }
 });
 
 ---

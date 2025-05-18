@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import Boton from "../comunes/Boton.astro";
+import Btn from "../Btn.astro";
 
 interface Props {
   tipo: string;
@@ -15,11 +16,10 @@ const { tipo, ruta } = Astro.props;
       ><img src="/nvita-logo-panel.svg" alt="nvitaciones" id="logo" /></a
     >
     <li>{tipo} de {ruta}</li>
-    <li>
-      <form data-authForm action="../api/salir.json">
-        <Boton texto="Salir" clases="btn-claro" claro={false}>
-          <Icon name="mdi:logout" size={20} />
-        </Boton>
+    <li>      <form data-authForm action="../api/salir.json" method="POST">
+        <button type="submit" class="btn-claro">
+          <Icon name="mdi:logout" size={20} /> Salir
+        </button>
       </form>
     </li>
   </ul>

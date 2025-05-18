@@ -1,5 +1,6 @@
 ---
 import Btn from '../Btn.astro';
+import Boton from './Boton.astro';
 
 interface Props {
     porcentajeMostrarInvitados: number;
@@ -16,7 +17,7 @@ let pasesConfirmados = 0;
 let porcentajeConfirmados = 0;
 
 try {
-    // Obtener los datos de la API
+    // Obtener los datos de la API https://nvitaciones.com/api/getInvitados.json?email=pruebas@pruebas.com
     const response = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`);
     const data = await response.json();
     
@@ -69,7 +70,7 @@ const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeM
                 <span class="confirmados">{pasesConfirmados}</span> de <span class="total">{totalPases}</span> pases confirmados
             </p>
         </div>
-        <Btn liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-bordes '}   />
+        <Boton liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-oscuro '}   />
     </div>
 )}
 
@@ -90,6 +91,7 @@ const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeM
         border-radius: 10px;
         overflow: hidden;
         margin: 1rem 0;
+        @extend .sombra;
     }
 
     .barra {

@@ -12,14 +12,20 @@ const base = import.meta.env.BASE_URL
 <div id={mapName}></div>
 <style lang="scss">
   @use "../../estilos/quince/_variables.scss" as *;
-    #mapa1, #mapa2 {
-      @extend .sombra;
-        min-height: 27dvw;
-        @include cel {
-          height: 100dvw;
-        }
+  #mapa1, #mapa2 {
+    @extend .sombra;
+    min-height: 27dvw;
+    @include cel {
+      height: 100dvw;
     }
+  }
+
+  :global(.custom-marker) {
+    color: var(--acento);
+    font-size: 2.5rem;
+  }
 </style>
+
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
@@ -27,20 +33,48 @@ const base = import.meta.env.BASE_URL
   crossorigin=""
 />
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" is:inline></script>
+<link 
+  rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
 <script define:vars={{ lat, lng, mapName }}>
-    var map = L.map(mapName).setView([lat, lng], 15);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 27,
- 
-    }).addTo(map);
-    L.marker([lat, lng]).addTo(map)
-    .bindPopup('Justo Aqui')
-    .openPopup();
+  let map = L.map(mapName, {
+    zoomControl: false,
+    attributionControl: false
+  }).setView([lat, lng], 16);
 
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-if (isMobile) {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 27,
+    subdomains: 'abcd',
+  }).addTo(map);
 
-  map.dragging.disable();
-}
-    map.scrollWheelZoom.disable();
-  </script>
+  const customIcon = L.divIcon({
+    html: `<i class="fa-solid fa-location-dot custom-marker"></i>`,
+    className: 'custom-div-icon',
+    iconSize: [30, 42],
+    iconAnchor: [15, 42]
+  });
+
+  L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+  L.control.zoom({
+    position: 'topright'
+  }).addTo(map);
+
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 100);
+
+  window.addEventListener('resize', () => {
+    if (map) {
+      map.invalidateSize();
+    }
+  });
+
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    map.dragging.disable();
+  }
+  map.scrollWheelZoom.disable();
+</script>

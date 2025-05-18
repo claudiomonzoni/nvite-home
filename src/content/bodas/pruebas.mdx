@@ -1,30 +1,30 @@
 ---
 version: lux
 titulo: Nvite Plus muestra
-slug: nvita-bodas-lux
+slug: pruebas
 extracto: Muestra de la invitación de bodas nvite plus
 descripcion: Muestra de la invitación de bodas nvite plus, la más completa de las invitaciones que te ofrecemos.
 cover: /bodas/nvitaPlus/cover.webp
 json: nvitaPlus
 whatsapp: 8488493900
-novios: Elena & Marcos
-ellaIniciales: E
-elIniciales: M
+novios: Pruebas & Pruebos
+ellaIniciales: P
+elIniciales: P
 padres:
   {
-    "mamaNovia": "Martha Murray",
-    "papaNovia": "Teodoro Almansa",
-    "mamaNovio": "Eloísa Martínez",
-    "papaNovio": "Armando Hernández",
+    "mamaNovia": "Pruebas Murray",
+    "papaNovia": "Pruebas Almansa",
+    "mamaNovio": "Eloísa Pruebas",
+    "papaNovio": "Armando Pruebas",
   }
-fecha: 2025-12-13
+fecha: 2025-12-20
 vestimenta: Formal casual
 frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
 frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
-consideraciones: ["No vestir de blanco", "Favor de no llevar bebes"]
+consideraciones: ["No vestir de blanco", "Favor de no llevar bebes", "No llevar niños menores de 12 años"]
 ceremonia:
   {
     "lat": 17.665128,
@@ -109,7 +109,7 @@ import Ventas from "../../components/comunes/Ventas.astro";
 
 <Pases folder={frontmatter.json} client:load />
 <ProgresoInvitados
-  email="nvitaplusboda@nvita.me"
+  email="pruebas@pruebas.com"
   porcentajeMostrarInvitados={20}
   frase="¡Ya casi completamos la lista de invitados!"
   mostrarSiempre={true}
@@ -192,9 +192,4 @@ import Ventas from "../../components/comunes/Ventas.astro";
   client:only="react"
 />
 
-<Ventas
-  costo="1290"
-  stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
-  version={frontmatter.version}
-  tipo="bodas"
-/>
+

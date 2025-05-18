@@ -1,0 +1,50 @@
+---
+export const prerender = true;
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+import Btn from "../components/Btn.astro";
+---
+
+<Layout
+  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
+>
+  <div class="grid contenido">
+    <Nav />
+    <div class="error404">
+      <h1>404</h1>
+      <h2>Página no encontrada</h2>
+      <p>Lo sentimos, la página que buscas no existe.</p>
+      <Btn
+        liga="/"
+        clases="btn-claro"
+        texto="Ir a Nvitaciones"
+        claro={true}
+        blank={false}
+      />
+  </div>
+
+
+  <Footer />
+</Layout>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+  .error404 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    text-align: center;
+    color: $secundario;
+  }
+  h1 {
+    font-size: 12rem;
+    color: $acento;
+    text-align: center;
+    margin: 0;
+    font-weight: 900;
+  }
+
+</style>

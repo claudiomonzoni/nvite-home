@@ -16,8 +16,11 @@ export default function Hero({
   ano,
   cover
 }) {
+  // Ensure correct day number
+  const adjustedDiaNum = String(diaNum).padStart(2, '0');
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
+
 
   useEffect(() => {
     document.querySelector(".contenido").classList.remove("invisible");
@@ -117,7 +120,7 @@ export default function Hero({
               <ul id={Style["fecha"]}>
                 <li className={Style.fecha}>{dia}</li>
                 <hr className={Style.linea1} />
-                <li className={Style.fechaNum}>{diaNum}</li>
+                <li className={Style.fechaNum}>{adjustedDiaNum}</li>
                 <hr className={Style.linea2} />
                 <li className={Style.fechaMes}>{mes}</li>
                 <li className={Style.fechaAno}>{ano}</li>

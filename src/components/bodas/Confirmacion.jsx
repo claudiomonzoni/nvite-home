@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import estilo from "../../estilos/bodas/confirmacion.module.scss";
-
+import { shootConfetti } from "../../js/confetti";
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
@@ -128,11 +128,22 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
   }, [actualizarUrlWhatsapp, selectedPases]);
 
   const handleSwitchChange = useCallback((checked) => {
+    console.log('handleSwitchChange ejecutado, checked:', checked);
     setAsistira(checked);
     setSelectedPases("0");
     setMostrarCampoNoAsisten(false);
     setPersonasNoAsisten("");
     
+    if (checked) {
+      console.log('Intentando ejecutar confetti...');
+      try {
+        shootConfetti();
+        console.log('Confetti ejecutado');
+      } catch (error) {
+        console.error('Error ejecutando confetti:', error);
+      }
+    }
+
     if (!checked && btnconfirmarRef.current) {
       btnconfirmarRef.current.classList.remove("desactivado");
     }

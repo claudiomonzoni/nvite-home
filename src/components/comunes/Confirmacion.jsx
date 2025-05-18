@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import styles from "../../estilos/confirmacion.module.scss";
+import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
   const [invitado, setInvitado] = useState("sin datos");
@@ -160,6 +161,14 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
     setSelectedPases(0);
     setMostrarCampoNoAsisten(false);
     setPersonasNoAsisten("");
+    
+    if (checked && typeof window !== 'undefined') {
+      try {
+        shootConfetti();
+      } catch (error) {
+        console.error('Error ejecutando confetti:', error);
+      }
+    }
 
     if (!checked && btnconfirmarRef.current) {
       btnconfirmarRef.current.classList.remove(`${styles.desactivado}`);

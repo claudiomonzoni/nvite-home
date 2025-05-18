@@ -1,0 +1,215 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { getProductPrice } from "../../js/cart";
+import Btn from "../Btn.astro";
+
+type Props = {
+  producto: CollectionEntry<"productos">;
+};
+
+const { producto } = Astro.props;
+const precio = await getProductPrice(producto);
+---
+
+<article class="producto-card">
+  <div class="portada">
+    <a href={`/nvitaciones/${producto.id}`}>
+      <div class="crop">
+        <Image
+          src={producto.data.images[0]}
+          alt={producto.data.name}
+          height={320}
+          width={320}
+        />
+      </div>
+    </a>
+  </div>
+  <div class="info">
+    <span>{producto.data.metadata?.Tipo || "Sin categoría"}</span>
+    <div class="headinfo">
+      <h2>{producto.data.name}</h2>
+      <p class="precio">
+        {precio.replace(/\.00$/, "")}<sup>.00</sup>
+      </p>
+    </div>
+    <p set:html={producto.data.description} />
+  </div>
+  <Btn
+    data-cart
+    data-action="increment"
+    data-productid={producto.data.id}
+    liga="#"
+    texto="Agregar al carrito"
+    clases="btn-oscuro"
+    claro={false}
+    icono="mdi:cart"
+  />
+  <!-- 
+  <Btn
+    liga={`/nvitaciones/${producto.id}`}
+    clases="btn-oscuro"
+    texto="Ver Nvitación"
+    icono="mdi:chevron-double-right"
+    claro={true}
+  />
+  <Btn
+    data-cart
+    data-action="buy-now"
+    data-productid={producto.id}
+    liga="#"
+    clases="btn-claro"
+    texto="Comprar ahora"
+    icono="mdi:cart"
+    claro={true} 
+  /> -->
+</article>
+
+<style lang="scss">
+  @use "../../estilos/variables" as *;
+  .producto-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.5rem;
+    border-radius: $radio;
+    // box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    // background-color: white;
+    height: 100%;
+    .btn-oscuro {
+      margin-bottom: 0;
+      margin-bottom: $margen-cel;
+
+  }
+  }
+
+  .portada {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba($terciario, 0.3) 0%,
+      rgba($terciario, 0.6) 50%,
+      rgba($terciario, 1) 100%
+    );
+    // border-top-left-radius: $radio;
+    // border-top-right-radius: $radio;
+    border-radius: $radio;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //   position: relative;
+    // height: calc(100% + 74px);
+    // top: -74px;
+
+    a {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      transform-origin: bottom;
+    }
+    .crop {
+      width: 100%;
+      height: 70%;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items:flex-start;
+    }
+    img {
+      object-fit: cover;
+      width: 60%;
+      height: auto;
+    }
+  }
+
+  
+  .info {
+    padding: 0 $margen-min;
+  }
+  .headinfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: $margen-min;
+    border-bottom: solid 1px $secundario;
+    padding-bottom: $margen-min;
+    margin-bottom: $margen-min;
+  }
+  .precio {
+    font-size: clamp(1.1rem, 1.6vw + 0.5rem, 1.5rem);
+    font-weight: bold;
+    color: $primario;
+
+    sup {
+      font-size: 0.4em;
+      font-weight: normal;
+      color: $gris;
+    }
+  }
+  h2 {
+    font-size: clamp(1.3rem, 1.6vw + 1rem, 1.7rem);
+    margin: 0;
+    padding: 0;
+  }
+  .categoria {
+    text-transform: capitalize;
+    color: $gris;
+    font-size: 0.7rem;
+    font-weight: lighter;
+  }
+  
+</style>
+
+<script>
+  function initializeBuyNowButtons() {
+    const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
+
+    buyNowButtons.forEach((button) => {
+      button.addEventListener("click", handleBuyNow);
+    });
+  }
+
+  async function handleBuyNow(event: Event) {
+    event.preventDefault();
+    const button = event.currentTarget as HTMLElement;
+    const productId = button.getAttribute("data-productid");
+
+    if (!productId) return;
+
+    // Obtener los items actuales del carrito
+    const cartItems = getCartItemsFromCookie();
+
+    // Verificar si el producto ya existe en el carrito
+    if (!cartItems.includes(productId)) {
+      // Solo agregar si no existe
+      cartItems.push(productId);
+
+      // Guardar el carrito actualizado
+      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+
+      // Disparar evento de actualización del carrito
+      document.dispatchEvent(new CustomEvent("cart:updated"));
+    }
+
+    // Redirigir al checkout
+    window.location.href = "/nvitaciones/checkout";
+  }
+
+  function getCartItemsFromCookie() {
+    const cookie = document.cookie
+      .split(";")
+      .find((c) => c.trim().startsWith("cartItems="))
+      ?.split("=")[1];
+
+    return cookie ? JSON.parse(cookie) : [];
+  }
+
+  // Inicializar en la carga inicial
+  initializeBuyNowButtons();
+
+  // Reinicializar después de la navegación
+  document.addEventListener("astro:page-load", initializeBuyNowButtons);
+</script>

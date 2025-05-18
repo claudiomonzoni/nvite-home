@@ -72,13 +72,7 @@ import Anchor from "../comunes/Anchor.astro";
     padding-bottom: 0 !important;
     margin: 0;
   }
-  #regalo {
-    h2 {
-      color: white;
-      border-bottom: 1px solid white;
-      margin-bottom: $margen-min;
-      padding-bottom: $margen-min;
-    }
+   #regalo {
     margin-top: $margen;
     padding: $margen;
     background: url("/bg-floral-regalos-izq.svg") var(--primario);
@@ -87,6 +81,15 @@ import Anchor from "../comunes/Anchor.astro";
     background-blend-mode: color-burn;
     color: white;
     text-align: center;
+   :global(b) {
+      color: var(--terciario);
+    }
+    h2 {
+      color: white;
+      border-bottom: 1px solid white;
+      margin-bottom: $margen-min;
+      padding-bottom: $margen-min;
+    }
     svg {
       max-width: 2.5rem;
       height: auto;
@@ -97,19 +100,12 @@ import Anchor from "../comunes/Anchor.astro";
   }
   #lluvia {
     h3 {
-      color: var(--primario);
+      color: var(--acento);
       font-size: clamp(2.2rem, 1.5vw, 2rem);
     }
-    p{
-        color: var(--primario);
-        font-size: clamp(1.4rem, 1.5vw, 1.8rem);
-    }
-   
-    background: url("/lluvia.webp") var(--terciario);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode: color-burn;
-
+    background: url("/lluvia.webp") var(--fondoBurn) repeat;
+    background-size: contain;
+    background-blend-mode:overlay;
     margin: $margen-cel 0;
     padding: $margen $margen-cel;
     text-align: center;
@@ -118,17 +114,6 @@ import Anchor from "../comunes/Anchor.astro";
   }
   #transferencias {
     border-radius: $radio;
-    @extend .sombra;
-    h3 {
-      color: var(--primario);
-      font-size: clamp(2.2rem, 1.5vw, 2rem);
-    }
-    b {
-      color: var(--terciario);
-    }
-    ul {
-      text-align: left;
-    }
     padding: $margen $margen-min;
     display: flex;
     flex-wrap: wrap;
@@ -142,14 +127,25 @@ import Anchor from "../comunes/Anchor.astro";
     background-repeat: no-repeat;
     background-size: 40%;
     background-blend-mode: color-burn;
-    color: var(--primario);
+    color: var(--terciario);
+    @extend .sombra;
+
+    h3 {
+      color: white;
+      font-size: clamp(2rem, 1vw, 2rem);
+    }
+    b {
+      color: white;
+    }
+    ul {
+      color: white;
+      text-align: left;
+    }
   }
-  #regalo,
+ #regalo,
   #lluvia,
   #transferencias {
     @include cel {
-      // background-size: 70%;
-      // background-repeat: repeat-y;
       background-size: cover;
       background-blend-mode: soft-light;
     }
