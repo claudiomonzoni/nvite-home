@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { porcentajeMostrarInvitados, mostrarSiempre, frase, email } = Astro.props;
+console.log('ProgresoInvitados - Props recibidos:', { porcentajeMostrarInvitados, mostrarSiempre, frase, email });
 
 // Valores por defecto
 let totalPases = 0;
@@ -17,18 +18,24 @@ let pasesConfirmados = 0;
 let porcentajeConfirmados = 0;
 
 try {
+    console.log('[ProgresoInvitados] Iniciando fetch de invitados para email:', email);
     // Obtener los datos de la API usando una ruta relativa
     const response = await fetch(`/api/getInvitados.json?email=${encodeURIComponent(email)}`);
+    console.log('[ProgresoInvitados] Status de la respuesta:', response.status, response.statusText);
+    
     if (!response.ok) {
         throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
     }
+    
     const data = await response.json();
+    console.log('[ProgresoInvitados] Datos recibidos:', JSON.stringify(data));
     
     // Asegurarnos de que tenemos un array y manejar posibles errores
     if (!data) {
         throw new Error('No se recibieron datos de la API');
     }
     const invitados = Array.isArray(data) ? data : [];
+    console.log('[ProgresoInvitados] Número de invitados procesados:', invitados.length);
 
     if (invitados.length > 0) {
         // Calcular totales
@@ -47,13 +54,28 @@ try {
 
         // Calcular el porcentaje de confirmados
         porcentajeConfirmados = totalPases > 0 ? Math.round((pasesConfirmados / totalPases) * 100) : 0;
+        console.log('[ProgresoInvitados] Cálculos finales:', {
+            totalPases,
+            pasesConfirmados,
+            porcentajeConfirmados
+        });
     }
 } catch (error) {
-    console.error('Error al obtener o procesar los datos:', error);
+    console.error('[ProgresoInvitados] Error detallado:', {
+        message: error.message,
+        stack: error.stack,
+        email: email
+    });
 }
 
 // Determinar si se debe mostrar el componente
 const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMostrarInvitados;
+console.log('[ProgresoInvitados] Estado final:', {
+    mostrarComponente,
+    mostrarSiempre,
+    porcentajeConfirmados,
+    porcentajeMostrarInvitados
+});
 ---
 
 {mostrarComponente && (
