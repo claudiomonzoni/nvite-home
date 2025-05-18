@@ -17,11 +17,17 @@ let pasesConfirmados = 0;
 let porcentajeConfirmados = 0;
 
 try {
-    // Obtener los datos de la API
-    const response = await fetch(`${Astro.url.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`);
+    // Obtener los datos de la API usando una ruta relativa
+    const response = await fetch(`/api/getInvitados.json?email=${encodeURIComponent(email)}`);
+    if (!response.ok) {
+        throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+    }
     const data = await response.json();
     
-    // Asegurarnos de que tenemos un array
+    // Asegurarnos de que tenemos un array y manejar posibles errores
+    if (!data) {
+        throw new Error('No se recibieron datos de la API');
+    }
     const invitados = Array.isArray(data) ? data : [];
 
     if (invitados.length > 0) {
