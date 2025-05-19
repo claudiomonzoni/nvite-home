@@ -10,7 +10,11 @@ import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import Btn from "../../components/Btn.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
+import SocialShare from "../../components/SocialShare.astro";
+
 import nvitacionesData from "./nvitaciones.json";
+import RelatedProducts from "../../components/Pagos/RelatedProducts.astro";
+import Testimonios from "../../components/Testimonios.astro";
 // import foto from '../../assets/cart/pdf/bodas/bodas-pdf-1.jpg';
 
 // Importar todas las imágenes posibles
@@ -110,7 +114,8 @@ const productId = product.data.id;
                   </div>
                 ))
               }
-            </div>            <div class="main-image-container">
+            </div>            
+            <div class="main-image-container">
               <Image
                 src={imagenes[0]}
                 loading="eager"
@@ -144,7 +149,8 @@ const productId = product.data.id;
           </div>
           <p>{product.data.id}</p>
           <h1>{product.data.name}</h1>
-          <p>{product.data.description}</p>          <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
+          <p>{product.data.description}</p>         
+          <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
           <div id="vendidos"></div>
 
           <div id="datosjson">
@@ -199,11 +205,19 @@ const productId = product.data.id;
             <a id="terminos" href="/terminos-condiciones"
               >ver terminos y condiciones</a
             >
-          </div>
+          </div>          <SocialShare 
+            url={Astro.url.toString()} 
+            title={`Mira esta ${nvitacionInfo?.tipo || 'invitación'} en Nvitaciones.com: ${product.data.name}`}
+          />
         </div>
-      </div>
-    </div>
+      </div>    </div>
+    
+    <RelatedProducts
+      currentProductId={product.id}
+      category={nvitacionInfo?.categoria || product.data.metadata?.Categoria || ""}
+    />
   </div>
+   <Testimonios />
   <Footer />
 </Layout>
 
@@ -431,7 +445,7 @@ const productId = product.data.id;
 </script>
 
 <script>
-  import { initImageZoom } from "../../js/utils";
+  // import { initImageZoom } from "../../js/utils";
 
   function initializeGallery() {
     const mainImage = document.querySelector('.main-image') as HTMLImageElement;
@@ -444,7 +458,7 @@ const productId = product.data.id;
     thumbnails[0].classList.add('active');
 
     // Inicializar zoom
-    initImageZoom(mainImageContainer);
+    // initImageZoom(mainImageContainer);
 
     // Agregar eventos de clic a las miniaturas
     thumbnails.forEach(thumb => {
@@ -473,7 +487,8 @@ const productId = product.data.id;
   document.addEventListener('astro:page-load', initializeGallery);
 </script>
 
-<style>
+<style lang="scss">
+  @use "../../estilos/_variables" as *;
   #producto-conte {
     display: flex;
     align-items: center;
@@ -535,12 +550,12 @@ const productId = product.data.id;
   .gallery-container {
     display: flex;
     gap: 1rem;
-    width: 100%;
-    max-width: 800px;
     margin: 0 auto;
+
   }
 
   .thumbnails-container {
+    width: 59px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -550,23 +565,28 @@ const productId = product.data.id;
   .thumbnail-wrapper {
     cursor: pointer;
     border: 2px solid transparent;
-    border-radius: 4px;
+    border-radius: $radio;
     overflow: hidden;
     transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
 
     &:hover {
-      border-color: $primario;
+      background: #c8c8c8;
     }
 
     &.active {
-      border-color: $primario;
+      border: $acento;
     }
   }
 
   .thumbnail {
-    width: 100%;
+    width: 60%;
     height: auto;
     display: block;
+    @include cel {
+      width: 40%;
+    }
   }
   .main-image-container {
     flex: 1;

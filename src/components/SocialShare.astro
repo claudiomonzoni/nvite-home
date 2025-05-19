@@ -1,0 +1,86 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+
+const shareLinks = {
+  facebook: `https://www.facebook.com/dialog/send?app_id=YOUR_APP_ID&link=${encodedUrl}&redirect_uri=${encodedUrl}`,
+  instagram: `https://instagram.com/direct/inbox?text=${encodedTitle}%20${encodedUrl}`,
+  whatsapp: `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`
+};
+---
+
+<div class="social-share">
+  <p><b>Enviame:</b></p>
+  <div class="social-icons">
+    <button onclick="share('facebook')" aria-label="Compartir">
+      <Icon name="mdi:share" size={25} />
+    </button>
+    <a href={shareLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">
+      <Icon name="mdi:whatsapp" size={25} />
+    </a>
+  </div>
+</div>
+
+<script define:vars={{ title, url }}>
+function share(platform) {
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      url: url
+    })
+    .catch((error) => console.log('Error compartiendo:', error));
+  } else {
+    // Fallback para navegadores que no soportan Web Share API
+    window.open(shareLinks.whatsapp, '_blank');
+  }
+}
+</script>
+
+<style lang="scss">
+  @use "../estilos/variables" as *;
+  
+  .social-share {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: .5rem;
+    border-top: solid 1px $gris;
+    
+    p {
+      font-size: 0.8rem;
+      color: $primario;
+      margin: 0;
+    }
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 1rem;
+      a, button {
+      color: $primario;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 50%;
+      background: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      
+      &:hover {
+        color: $acento;
+        transform: translateY(-2px);
+      }
+    }
+  }
+</style>

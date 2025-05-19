@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import ProductoCard from "./ProductoCard.astro";
+
+interface Props {
+  currentProductId: string;
+  category: string;
+}
+
+const { currentProductId, category } = Astro.props;
+
+// Obtener todos los productos
+const allProducts = await getCollection("productos");
+
+// Filtrar productos relacionados y limitar a 3
+const relatedProducts = allProducts
+  .filter((product) => {
+    // Obtener la categoría del producto de las posibles fuentes
+    const productCategory = (
+      product.data.metadata?.Categoria ||
+      product.data.metadata?.categoria ||
+      ""
+    ).toLowerCase();
+    return (
+      productCategory === category.toLowerCase() &&
+      product.id !== currentProductId
+    );
+  })
+  .slice(0, 3); // Tomar solo 3 productos
+---
+
+{relatedProducts.length > 0 && (
+  <section class="related-products">
+    <h2>Productos relacionados</h2>
+    <div class="products-grid">
+      {relatedProducts.map((producto) => <ProductoCard producto={producto} />)}
+    </div>
+  </section>
+)}
+
+<style lang="scss">
+  @use "../../estilos/variables" as *;
+
+  .related-products {
+    margin-top: 4rem;
+    padding: 2rem 0;
+
+    h2 {
+      text-align: center;
+      color: $primario;
+      margin-bottom: 2rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+
+    @include cel {
+      grid-template-columns: 1fr;
+    }
+  }
+  .products-grid :global(.producto-card) {
+    height: 100%;
+  }
+</style>
