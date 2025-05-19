@@ -2,6 +2,7 @@
 const { id } = Astro.params;
 
 import { getProductPrice } from "../../js/cart";
+import { calculateDeliveryDate } from "../../js/utils";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
@@ -9,38 +10,63 @@ import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import Btn from "../../components/Btn.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import nvitacionesData from './nvitaciones.json';
+import nvitacionesData from "./nvitaciones.json";
 // import foto from '../../assets/cart/pdf/bodas/bodas-pdf-1.jpg';
 
 // Importar todas las imágenes posibles
-const imageModules = import.meta.glob<{ default: ImageMetadata }>('../../assets/cart/**/*.{jpg,jpeg,png,gif,webp}', {
-  eager: true // Carga las imágenes inmediatamente
-});
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/cart/**/*.{jpg,jpeg,png,gif,webp}",
+  {
+    eager: true, // Carga las imágenes inmediatamente
+  }
+);
 
 // Función para cargar las imágenes del producto desde el JSON
 async function getProductImages(nvitacionInfo) {
-  if (!nvitacionInfo || !nvitacionInfo.imagenes) return [];
+  if (!product) return [];
   
   try {
     const imagenes = [];
-    for (const imagePath of nvitacionInfo.imagenes) {
-      // Las rutas en el JSON ya incluyen "../../"
-      if (imagePath in imageModules) {
-        imagenes.push(imageModules[imagePath].default);
-      } else {
-        console.error(`No se encontró la imagen: ${imagePath}`);
-        // console.error('Rutas disponibles:', Object.keys(imageModules));
+    
+    // Add Stripe product image first if available
+    if (product.data.images && product.data.images.length > 0) {
+      imagenes.push(product.data.images[0]);
+    }
+
+    // Then add images from nvitacionInfo
+    if (nvitacionInfo && nvitacionInfo.imagenes) {
+      for (const imagePath of nvitacionInfo.imagenes) {
+        // Normalize the path 
+        const normalizedPath = imagePath.replace(/\\/g, '/');
+        
+        // Find the matching image in the available modules
+        const moduleKey = Object.keys(imageModules).find(key => {
+          const keyLower = key.toLowerCase();
+          const pathLower = normalizedPath.toLowerCase();
+          return keyLower.endsWith(pathLower.replace('../../assets/', ''));
+        });
+
+        if (moduleKey && moduleKey in imageModules) {
+          imagenes.push(imageModules[moduleKey].default);
+        } else {
+          console.error(`No se pudo cargar la imagen: ${imagePath}`);
+          console.error('Módulo no encontrado. Path buscado:', normalizedPath);
+        }
       }
     }
+    
     return imagenes;
   } catch (error) {
-    console.error('Error cargando imágenes:', error);
-    return [];
+    console.error("Error cargando imágenes:", error);
+    // Return Stripe product images as fallback
+    return product.data.images || [];
   }
 }
 
 const product = await getEntry("productos", id as string);
-const nvitacionInfo = nvitacionesData.find(item => item.id === product?.data.id);
+const nvitacionInfo = nvitacionesData.find(
+  (item) => item.id === product?.data.id
+);
 const imagenes = await getProductImages(nvitacionInfo);
 
 if (!product) {
@@ -51,131 +77,224 @@ if (!product) {
 }
 
 const price = await getProductPrice(product);
+const productId = product.data.id;
 ---
 
-<Layout title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones">
+<Layout
+  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
+>
   <div class="grid contenido">
     <Nav />
-    
+
     <div class="breadcrumb-container">
-      <Breadcrumb 
-        categoria={nvitacionInfo?.categoria || 'pdf'} 
+      <Breadcrumb
+        categoria={nvitacionInfo?.categoria || "pdf"}
         nombre={product.data.name}
       />
     </div>
 
-    <div id="producto-conte">
-      <div id="izq">
-        <Image
-          src={product.data.images[0]}
-          loading="eager"
-          alt={product.data.name}
-          height={450}
-          width={450}
-        />
-
-        <div class="slider">
-          {imagenes.map((imagen) => (
-            <Image 
-              src={imagen} 
-              alt={`Imagen de ${product.data.name}`}
-              height={100}
-              width={100}
-              class="slider-thumbnail"
-              quality="max"
-            />
-          ))}
+    <div id="producto-conte">      <div id="izq">
+        <div id="fix">
+          <div class="gallery-container">
+            <div class="thumbnails-container">
+              {                imagenes.map((imagen) => (
+                  <div class="thumbnail-wrapper" data-full-img={imagen.src}>
+                    <Image
+                      src={imagen}
+                      alt={`Imagen de ${product.data.name}`}
+                      height={80}
+                      width={80}
+                      class="thumbnail"
+                      quality="max"
+                    />
+                  </div>
+                ))
+              }
+            </div>            <div class="main-image-container">
+              <Image
+                src={imagenes[0]}
+                loading="eager"
+                alt={product.data.name}
+                height={800}
+                width={800}
+                class="main-image"
+                quality="max"
+              />
+            </div>
+          </div>
         </div>
       </div>
+
       <div id="der">
-     
-        <div>
-          <div>
-            <h1>{product.data.name}</h1>
-            <p>{product.data.description}</p>
+        <div id="titulo">
+          <div class="metadata">
+            {
+              nvitacionInfo && (
+                <>
+                  {nvitacionInfo.categoria && (
+                    <li>Categoría: {nvitacionInfo.categoria}</li>
+                  )}
+                  {nvitacionInfo.tipo && <li>Tipo: {nvitacionInfo.tipo}</li>}
+                  {nvitacionInfo.version && (
+                    <li>Versión: {nvitacionInfo.version}</li>
+                  )}
+                </>
+              )
+            }
           </div>
-          <div>
-            <p class="price">{price}</p>
-            
-            <div id="datosjson">
-              {nvitacionInfo && (
+          <p>{product.data.id}</p>
+          <h1>{product.data.name}</h1>
+          <p>{product.data.description}</p>          <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
+          <div id="vendidos"></div>
+
+          <div id="datosjson">
+            {
+              nvitacionInfo && (
                 <div class="info-adicional">
-                {nvitacionInfo.video && (
-                  <div class="video-container">
-                    <video src={nvitacionInfo.video} controls></video>
-                  </div>
-                )}
-                {nvitacionInfo.beneficios && (
-                  <ul class="beneficios">
-                    {nvitacionInfo.beneficios.map((beneficio) => (
-                      <li>{beneficio}</li>
-                    ))}
-                  </ul>
-                )}
-                <div class="metadata">
-                  <p>Categoría: {nvitacionInfo.categoria}</p>
-                  <p>Tipo: {nvitacionInfo.tipo}</p>
-                  <p>Versión: {nvitacionInfo.version}</p>
+                  {nvitacionInfo.video && (
+                    <div class="video-container">
+                      <video src={nvitacionInfo.video} controls />
+                    </div>
+                  )}
+                  {nvitacionInfo.beneficios && (
+                    <ul class="beneficios">
+                      {nvitacionInfo.beneficios.map((beneficio) => (
+                        <li>{beneficio}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </div>
-            )}
+              )
+            }
           </div>
-          
-          <div class="buttons-container">
-            <Btn
-              data-cart
-              data-action="increment"
-              data-productid={product.data.id}
-              liga="#"
-              texto="Agregar al carrito"
-              clases="btn-oscuro"
-              claro={false}
-              icono="mdi:cart"
-            />
-            <Btn
-              data-cart
-              data-action="buy-now"
-              data-productid={product.data.id}
-              liga="#"
-              clases="btn-claro"
-              texto="Comprar ahora"
-              icono="mdi:cart"
-              claro={true}
-            />
+        </div>
+
+        <div class="buttons-container">
+          <Btn
+            data-cart
+            data-action="increment"
+            data-productid={product.data.id}
+            liga="#"
+            texto="Agregar al carrito"
+            clases="btn-oscuro"
+            claro={false}
+            icono="mdi:cart"
+          />
+          <Btn
+            data-cart
+            data-action="buy-now"
+            data-productid={product.data.id}
+            liga="#"
+            clases="btn-claro"
+            texto="Comprar ahora"
+            icono="mdi:cart"
+            claro={true}
+          />
+          <div id="ahora">
+            <p>
+              Compra ahora y <b>recibe tu invitación</b>a más tardar el {
+                calculateDeliveryDate()
+              }
+            </p>
+            <a id="terminos" href="/terminos-condiciones"
+              >ver terminos y condiciones</a
+            >
           </div>
         </div>
       </div>
     </div>
   </div>
-    
-</div>
-<Footer />
+  <Footer />
 </Layout>
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
-  .breadcrumb-container{
-    margin-top:7rem ;
-    @include cel{
+  .breadcrumb-container {
+    margin-top: 7rem;
+    @include cel {
       margin-top: 12rem;
     }
   }
-  #producto-conte{
+  h1 {
+    color: $primario;
+    font-size: clamp(2rem, 5vw, 3rem);
+    border-bottom: solid 1px $primario;
+  }
+  #producto-conte {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
     gap: 2rem;
+    align-items: stretch;
+
+    @include cel {
+      grid-template-columns: 1fr;
+    }
   }
-  #izq{
+  #izq {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    height: 100%;
+    position: relative;
+    overflow: visible; // Allow sticky content to overflow
   }
-  #der{
+  #fix {
+    position: sticky;
+    top: 4rem; // Distance from top of viewport
+  }
+  #der {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    height: 100%;
+
+    #titulo {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .buttons-container {
+      display: grid;
+      align-self: flex-start;
+      background: white;
+      border-radius: $radio;
+      a {
+        max-width: 100%;
+        margin: 0;
+      }
+      p {
+        font-size: 0.8rem;
+      }
+      @extend .sombra;
+      padding: $margen-min;
+    }
+    @include cel {
+      grid-template-columns: 1fr;
+      gap: 0;
+      height: auto;
+    }
+  }
+  .buttons-container {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
+    margin-top: 1rem;
+    align-items: flex-start;
   }
-  #datosjson{
+  #vendidos {
+    font-size: 0.8rem;
+    color: $gris;
+  }
+  #ahora {
+    p {
+      font-size: 0.8rem;
+      color: $acento;
+      margin-top: 1rem;
+      b {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+  #datosjson {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -195,45 +314,104 @@ const price = await getProductPrice(product);
   }
   .metadata {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    color: $acento;
+    font-size: 0.8rem;
+    gap: 0.7rem;
+    li {
+      list-style: none;
+      margin: 0;
+    }
+  }
+  #terminos {
+    font-size: 0.6rem;
+    color: $gris;
+    text-decoration: underline;
+  }
+  .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $primario;
+    sup {
+      font-size: 0.5em;
+      vertical-align: super;
+    }
+  }
+</style>
+
+<script>
+  import { generateRandomSales } from "../../js/utils";
+
+  function initializeSalesMessage() {
+    const vendidosDiv = document.getElementById('vendidos');
+    const productId = document.querySelector('[data-productid]')?.getAttribute('data-productid');
+    
+    if (!vendidosDiv || !productId) return;
+
+    const cookieKey = `sales_${productId}`;
+    
+    // Check if we already have a number stored for this product
+    const existingNumber = document.cookie
+      .split(';')
+      .find(c => c.trim().startsWith(`${cookieKey}=`))
+      ?.split('=')[1];
+
+    let salesNumber;
+    if (existingNumber) {
+      salesNumber = parseInt(existingNumber);
+    } else {
+      // Generate new random number and store in cookie
+      salesNumber = generateRandomSales();
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 7);
+      document.cookie = `${cookieKey}=${salesNumber};expires=${expires.toUTCString()};path=/`;
+    }
+
+    // Show message if number is not 0
+    if (salesNumber > 0) {
+      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el ultimo mes.`;
+    }
   }
 
-</style>
+  // Initialize on page load
+  initializeSalesMessage();
+
+  // Reinitialize after navigation
+  document.addEventListener('astro:page-load', initializeSalesMessage);
+</script>
 
 <script>
   function initializeBuyNowButtons() {
     const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-    
-    buyNowButtons.forEach(button => {
-      button.addEventListener('click', handleBuyNow);
+
+    buyNowButtons.forEach((button) => {
+      button.addEventListener("click", handleBuyNow);
     });
   }
 
   async function handleBuyNow(event: Event) {
     event.preventDefault();
     const button = event.currentTarget as HTMLElement;
-    const productId = button.getAttribute('data-productid');
+    const productId = button.getAttribute("data-productid");
 
     if (!productId) return;
 
     // Obtener los items actuales del carrito
     const cartItems = getCartItemsFromCookie();
-    
+
     // Verificar si el producto ya existe en el carrito
     if (!cartItems.includes(productId)) {
       // Solo agregar si no existe
       cartItems.push(productId);
-      
+
       // Guardar el carrito actualizado
       document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
-      
+
       // Disparar evento de actualización del carrito
       document.dispatchEvent(new CustomEvent("cart:updated"));
     }
-    
+
     // Redirigir al checkout
-    window.location.href = '/nvitaciones/checkout';
+    window.location.href = "/nvitaciones/checkout";
   }
 
   function getCartItemsFromCookie() {
@@ -241,7 +419,7 @@ const price = await getProductPrice(product);
       .split(";")
       .find((c) => c.trim().startsWith("cartItems="))
       ?.split("=")[1];
-    
+
     return cookie ? JSON.parse(cookie) : [];
   }
 
@@ -252,12 +430,55 @@ const price = await getProductPrice(product);
   document.addEventListener("astro:page-load", initializeBuyNowButtons);
 </script>
 
+<script>
+  import { initImageZoom } from "../../js/utils";
+
+  function initializeGallery() {
+    const mainImage = document.querySelector('.main-image') as HTMLImageElement;
+    const mainImageContainer = document.querySelector('.main-image-container') as HTMLElement;
+    const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
+    
+    if (!mainImage || !thumbnails.length || !mainImageContainer) return;
+
+    // Marcar la primera miniatura como activa
+    thumbnails[0].classList.add('active');
+
+    // Inicializar zoom
+    initImageZoom(mainImageContainer);
+
+    // Agregar eventos de clic a las miniaturas
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const fullSizeImage = thumb.getAttribute('data-full-img');
+        if (!fullSizeImage) return;
+        
+        mainImage.src = fullSizeImage;
+        
+        // Actualizar clase activa
+        thumbnails.forEach(t => {
+          if (t === thumb) {
+            t.classList.add('active');
+          } else {
+            t.classList.remove('active');
+          }
+        });
+      });
+    });
+  }
+
+  // Inicializar en la carga inicial
+  initializeGallery();
+
+  // Reinicializar después de la navegación
+  document.addEventListener('astro:page-load', initializeGallery);
+</script>
+
 <style>
-#producto-conte {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
+  #producto-conte {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
 
   .info-adicional {
     margin: 2rem 0;
@@ -291,7 +512,7 @@ const price = await getProductPrice(product);
     content: "✓";
     position: absolute;
     left: 0;
-    color: #4CAF50;
+    color: #4caf50;
   }
 
   .metadata {
@@ -311,24 +532,58 @@ const price = await getProductPrice(product);
     gap: 1rem;
     margin-top: 1rem;
   }
-
-  .slider {
+  .gallery-container {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
-    overflow-x: auto;
-    padding: 1rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
   }
 
-  .slider-thumbnail {
+  .thumbnails-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100px;
+  }
+
+  .thumbnail-wrapper {
     cursor: pointer;
-    border-radius: 8px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    overflow: hidden;
     transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $primario;
+    }
+
+    &.active {
+      border-color: $primario;
+    }
   }
 
-  .slider-thumbnail:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  .thumbnail {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .main-image-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: white;
+
+    .main-image {
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
   }
 
   @media (max-width: 640px) {

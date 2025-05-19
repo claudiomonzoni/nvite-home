@@ -23,39 +23,41 @@ const rutaCategoria = {
 
 <style>
   .breadcrumb {
-    padding: 1rem 0;
+    padding: .4rem 0;
     margin-bottom: 1rem;
+    font-size: .8rem;
+
   }
 
   .breadcrumb ul {
-    list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
-
+  
   .breadcrumb li {
+    list-style: none;
     display: flex;
-    align-items: center;
+  
   }
 
   .breadcrumb li:not(:last-child)::after {
-    content: "/";
-    margin: 0 0.5rem;
-    color: #6c757d;
+    content: "\203A";
+    font-size: 1rem;
+    margin: 0 0.2rem;
+    color: #ee6a6a;
   }
 
   .breadcrumb a {
-    color: #007bff;
+    color: #ee6a6a;
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .breadcrumb a:hover {
     color: #0056b3;
-    text-decoration: underline;
   }
 
   .breadcrumb span {

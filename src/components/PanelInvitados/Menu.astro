@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import Boton from "../comunes/Boton.astro";
+import Btn from "../Btn.astro";
 
 interface Props {
   tipo: string;
@@ -17,9 +17,9 @@ const { tipo, ruta } = Astro.props;
     <li>{tipo} de {ruta}</li>
     <li>
       <form data-authForm action="../api/salir.json">
-        <Boton texto="Salir" clases="btn-claro" claro={false}>
+        <Btn liga="#" texto="Salir" claro={false} clases="btn-claro" >
           <Icon name="mdi:logout" size={20} />
-        </Boton>
+        </Btn>
       </form>
     </li>
   </ul>
