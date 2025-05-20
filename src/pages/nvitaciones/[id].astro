@@ -1,50 +1,47 @@
 ---
+// Importaciones principales
 const { id } = Astro.params;
-
 import { getProductPrice } from "../../js/cart";
 import { calculateDeliveryDate } from "../../js/utils";
 import { Image } from "astro:assets";
 import { getEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+// Componentes
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import Btn from "../../components/Btn.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import SocialShare from "../../components/SocialShare.astro";
-
-import nvitacionesData from "./nvitaciones.json";
 import RelatedProducts from "../../components/Pagos/RelatedProducts.astro";
 import Testimonios from "../../components/Testimonios.astro";
-import { Icon } from "astro-icon/components";
-// import foto from '../../assets/cart/pdf/bodas/bodas-pdf-1.jpg';
 
-// Importar todas las imágenes posibles
+// Datos
+import nvitacionesData from "./nvitaciones.json";
+
+// Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
   "../../assets/cart/**/*.{jpg,jpeg,png,gif,webp}",
-  {
-    eager: true, // Carga las imágenes inmediatamente
-  }
+  { eager: true }
 );
 
-// Función para cargar las imágenes del producto desde el JSON
+// Función para cargar las imágenes del producto
 async function getProductImages(nvitacionInfo) {
   if (!product) return [];
   
   try {
     const imagenes = [];
     
-    // Add Stripe product image first if available
-    if (product.data.images && product.data.images.length > 0) {
+    // Primero añadir la imagen de Stripe si está disponible
+    if (product.data.images?.length > 0) {
       imagenes.push(product.data.images[0]);
     }
 
-    // Then add images from nvitacionInfo
-    if (nvitacionInfo && nvitacionInfo.imagenes) {
+    // Luego añadir imágenes desde nvitacionInfo
+    if (nvitacionInfo?.imagenes) {
       for (const imagePath of nvitacionInfo.imagenes) {
-        // Normalize the path 
         const normalizedPath = imagePath.replace(/\\/g, '/');
-        
-        // Find the matching image in the available modules
         const moduleKey = Object.keys(imageModules).find(key => {
           const keyLower = key.toLowerCase();
           const pathLower = normalizedPath.toLowerCase();
@@ -55,7 +52,6 @@ async function getProductImages(nvitacionInfo) {
           imagenes.push(imageModules[moduleKey].default);
         } else {
           console.error(`No se pudo cargar la imagen: ${imagePath}`);
-          console.error('Módulo no encontrado. Path buscado:', normalizedPath);
         }
       }
     }
@@ -63,22 +59,18 @@ async function getProductImages(nvitacionInfo) {
     return imagenes;
   } catch (error) {
     console.error("Error cargando imágenes:", error);
-    // Return Stripe product images as fallback
     return product.data.images || [];
   }
 }
 
+// Obtener datos del producto
 const product = await getEntry("productos", id as string);
-const nvitacionInfo = nvitacionesData.find(
-  (item) => item.id === product?.data.id
-);
+const nvitacionInfo = nvitacionesData.find(item => item.id === product?.data.id);
 const imagenes = await getProductImages(nvitacionInfo);
 
+// Manejo de 404
 if (!product) {
-  return new Response(null, {
-    status: 404,
-    statusText: "Not Found",
-  });
+  return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
 const price = await getProductPrice(product);
@@ -86,7 +78,7 @@ const productId = product.data.id;
 ---
 
 <Layout
-  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
+  title=`${product.data.name} - Invitación Digitales para tu evento`
 >
   <div class="grid contenido">
     <Nav />
@@ -168,19 +160,20 @@ const productId = product.data.id;
                 </div>
               )
             }
+            
               <div id="video-home">
                 {nvitacionInfo && nvitacionInfo.video && (
                   <div id="play">
                     <Icon name="mdi:play-circle" color="white" size={70} />
                   </div>
-                )}
                 <video
-                  preload="metadata"
-                  poster={product.data.images[0]}
-                  id="video-producto"
+                preload="metadata"
+                poster={product.data.images[0]}
+                id="video-producto"
                 >
                   <source src={nvitacionInfo.video} type="video/mp4" />
                 </video>
+                  )}
               </div>
           </div>
         </div>
@@ -393,6 +386,7 @@ const productId = product.data.id;
 <script>
   import { generateRandomSales } from "../../js/utils";
 
+  // Inicialización de mensajes de ventas
   function initializeSalesMessage() {
     const vendidosDiv = document.getElementById('vendidos');
     const productId = document.querySelector('[data-productid]')?.getAttribute('data-productid');
@@ -400,72 +394,86 @@ const productId = product.data.id;
     if (!vendidosDiv || !productId) return;
 
     const cookieKey = `sales_${productId}`;
-    
-    // Check if we already have a number stored for this product
     const existingNumber = document.cookie
       .split(';')
       .find(c => c.trim().startsWith(`${cookieKey}=`))
       ?.split('=')[1];
 
-    let salesNumber;
-    if (existingNumber) {
-      salesNumber = parseInt(existingNumber);
-    } else {
-      // Generate new random number and store in cookie
-      salesNumber = generateRandomSales();
+    let salesNumber = existingNumber ? 
+      parseInt(existingNumber) : 
+      generateRandomSales();
+
+    if (!existingNumber) {
       const expires = new Date();
       expires.setDate(expires.getDate() + 7);
       document.cookie = `${cookieKey}=${salesNumber};expires=${expires.toUTCString()};path=/`;
     }
 
-    // Show message if number is not 0
     if (salesNumber > 0) {
-      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> in el ultimo mes.`;
+      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el último mes.`;
     }
   }
 
-  // Initialize on page load
-  initializeSalesMessage();
-
-  // Reinitialize after navigation
-  document.addEventListener('astro:page-load', initializeSalesMessage);
-</script>
-
-<script>
+  // Inicialización de botones de compra
   function initializeBuyNowButtons() {
     const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-
-    buyNowButtons.forEach((button) => {
-      button.addEventListener("click", handleBuyNow);
-    });
+    buyNowButtons.forEach(button => button.addEventListener("click", handleBuyNow));
   }
 
   async function handleBuyNow(event: Event) {
     event.preventDefault();
     const button = event.currentTarget as HTMLElement;
     const productId = button.getAttribute("data-productid");
-
     if (!productId) return;
 
-    // Obtener los items actuales del carrito
     const cartItems = getCartItemsFromCookie();
-
-    // Verificar si el producto ya existe en el carrito
     if (!cartItems.includes(productId)) {
-      // Solo agregar si no existe
       cartItems.push(productId);
-
-      // Guardar el carrito actualizado
       document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
-
-      // Disparar evento de actualización del carrito
       document.dispatchEvent(new CustomEvent("cart:updated"));
     }
 
-    // Redirigir al checkout
     window.location.href = "/nvitaciones/checkout";
   }
 
+  // Inicialización de la galería
+  function initializeGallery() {
+    const mainImage = document.querySelector('.main-image') as HTMLImageElement;
+    const mainImageContainer = document.querySelector('.main-image-container') as HTMLElement;
+    const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
+    
+    if (!mainImage || !thumbnails.length || !mainImageContainer) return;
+
+    thumbnails[0].classList.add('active');
+
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const fullSizeImage = thumb.getAttribute('data-full-img');
+        if (!fullSizeImage) return;
+        
+        mainImage.src = fullSizeImage;
+        
+        thumbnails.forEach(t => {
+          t.classList[t === thumb ? 'add' : 'remove']('active');
+        });
+      });
+    });
+  }
+
+  // Inicialización del reproductor de video
+  function initializeVideoPlayer() {
+    const video = document.getElementById("video-producto") as HTMLVideoElement;
+    const play = document.getElementById("play") as HTMLDivElement;
+
+    if (!play || !video) return;
+
+    play.addEventListener("click", () => {
+      if (video.paused) video.play();
+      else video.pause();
+    });
+  }
+
+  // Funciones auxiliares
   function getCartItemsFromCookie() {
     const cookie = document.cookie
       .split(";")
@@ -475,69 +483,20 @@ const productId = product.data.id;
     return cookie ? JSON.parse(cookie) : [];
   }
 
-  // Inicializar en la carga inicial
-  initializeBuyNowButtons();
+  // Eventos de inicialización
+  document.addEventListener('astro:page-load', () => {
+    initializeSalesMessage();
+    initializeBuyNowButtons();
+    initializeGallery();
+    initializeVideoPlayer();
+  });
 
-  // Reinicializar después de la navegación
-  document.addEventListener("astro:page-load", initializeBuyNowButtons);
-</script>
-
-<script>
-  // import { initImageZoom } from "../../js/utils";
-
-  function initializeGallery() {
-    const mainImage = document.querySelector('.main-image') as HTMLImageElement;
-    const mainImageContainer = document.querySelector('.main-image-container') as HTMLElement;
-    const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
-    
-    if (!mainImage || !thumbnails.length || !mainImageContainer) return;
-
-    // Marcar la primera miniatura como activa
-    thumbnails[0].classList.add('active');
-
-    // Inicializar zoom
-    // initImageZoom(mainImageContainer);
-
-    // Agregar eventos de clic a las miniaturas
-    thumbnails.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        const fullSizeImage = thumb.getAttribute('data-full-img');
-        if (!fullSizeImage) return;
-        
-        mainImage.src = fullSizeImage;
-        
-        // Actualizar clase activa
-        thumbnails.forEach(t => {
-          if (t === thumb) {
-            t.classList.add('active');
-          } else {
-            t.classList.remove('active');
-          }
-        });
-      });
-    });
-  }
-
-  // Inicializar en la carga inicial
-  initializeGallery();
-
-  // Reinicializar después de la navegación
-  document.addEventListener('astro:page-load', initializeGallery);
-</script>
-
-<script>
-  const mivideoproducto = document.getElementById(
-    "video-producto"
-  ) as HTMLVideoElement;
-  const play = document.getElementById("play") as HTMLDivElement;
-
-  if (play && mivideoproducto) {
-    play.addEventListener("click", playPause);
-
-    function playPause() {
-      if (mivideoproducto.paused) mivideoproducto.play();
-      else mivideoproducto.pause();
-    }
+  // Inicialización inmediata si el documento ya está cargado
+  if (document.readyState === 'complete') {
+    initializeSalesMessage();
+    initializeBuyNowButtons();
+    initializeGallery();
+    initializeVideoPlayer();
   }
 </script>
 
