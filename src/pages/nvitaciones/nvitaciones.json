@@ -27,27 +27,48 @@
   },
   {
     "id": "prod_QNpXQx0LWRjRFh",
+    "titulo": "Invitación Bodas esencial",
     "video": "https://example.com/video3.mp4",
-    "beneficios": ["Accesible", "Fácil de usar"],
+"beneficios": [
+  "Detalles del evento",
+  "Cuenta regresiva",
+  "Datos de tu evento",
+  "Mapas de ubicación",
+  "Frase animada",
+  "Formulario sencillo de confirmación"
+],
     "categoria": "Bodas",
     "tipo": "Digital",
     "version": "Esencial",
     "imagenes": [
-      "../../assets/cart/bodas/clasica/1.jpg",
-      "../../assets/cart/bodas/clasica/2.jpg",
-      "../../assets/cart/bodas/clasica/3.jpg"
+      "../../assets/cart/bodas/esencial/ubicacion-Nvitaciones-bodas-esencial.webp",
+      "../../assets/cart/bodas/esencial/confirmacion-Nvitaciones-bodas-esencial.webp"
     ]
   },
   {
     "id": "prod_QNpO0T7kRp1zkL",
-    "beneficios": ["Balanceada", "Características regulares"],
+    "beneficios": [
+      "Panel de invitados",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
     "categoria": "Bodas",
     "tipo": "Digital",
     "version": "Clásica",
     "imagenes": [
-      "../../assets/cart/bodas/clasica/1.jpg",
-      "../../assets/cart/bodas/clasica/2.jpg",
-      "../../assets/cart/bodas/clasica/3.jpg"
+      "../../assets/cart/bodas/clasica/pases-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/ubicacion-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/regalos-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/galeria-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/confirmacion-Nvitaciones-bodas-clasica.webp"
     ]
   },
   {
@@ -64,14 +85,32 @@
   },
   {
     "id": "prod_Q42WJO0oMaU98G",
-    "beneficios": ["Versión Plus", "Diseño exclusivo"],
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
+    "beneficios": [
+      "Panel de invitados",
+      "Música ambiental",
+      "Itinerario",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
     "categoria": "Bodas",
     "tipo": "Digital",
-    "version": "Plus",
+    "version": "Lux",
     "imagenes": [
-      "../../assets/cart/bodas/lux/1.jpg",
-      "../../assets/cart/bodas/lux/2.jpg",
-      "../../assets/cart/bodas/lux/3.jpg"
+      "../../assets/cart/bodas/lux/pases-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/ubicacion-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/regalos-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/cuenta-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/itinerario-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/confirmacion-Nvitaciones-bodas-lux.webp"
     ]
   },
   {

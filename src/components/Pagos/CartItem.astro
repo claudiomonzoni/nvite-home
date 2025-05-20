@@ -79,7 +79,8 @@ const finalPrice = await getProductPrice(cartItem.product);
 
     @include cel {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
+      text-align: center;
       gap: 1rem;
       padding: 1rem;
     }
@@ -120,8 +121,9 @@ const finalPrice = await getProductPrice(cartItem.product);
     align-items: center;
     gap: 0.8rem;
     background-color: $fondo;
-    padding: 0.5rem;
-    border-radius: $radio-cel;
+    // padding: 0.5rem 0;
+    border-radius: $radio;
+    height: 40px;
 
     .quantity {
       font-size: 1.1rem;
@@ -129,12 +131,16 @@ const finalPrice = await getProductPrice(cartItem.product);
       font-weight: bold;
       min-width: 2rem;
       text-align: center;
+      padding: 0;
+      margin: 0;
     }
 
     :global(.btn-oscuro) {
+      border: solid 2px white;
       padding: 0.4rem;
+      margin: 0;
       min-width: 2rem;
-      height: 2rem;
+        height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;

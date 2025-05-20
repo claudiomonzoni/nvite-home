@@ -15,6 +15,7 @@ import SocialShare from "../../components/SocialShare.astro";
 import nvitacionesData from "./nvitaciones.json";
 import RelatedProducts from "../../components/Pagos/RelatedProducts.astro";
 import Testimonios from "../../components/Testimonios.astro";
+import { Icon } from "astro-icon/components";
 // import foto from '../../assets/cart/pdf/bodas/bodas-pdf-1.jpg';
 
 // Importar todas las imágenes posibles
@@ -151,27 +152,36 @@ const productId = product.data.id;
           <h1>{product.data.name}</h1>
           <p>{product.data.description}</p>         
           <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
-          <div id="vendidos"></div>
-
+      
+          
           <div id="datosjson">
             {
               nvitacionInfo && (
                 <div class="info-adicional">
-                  {nvitacionInfo.video && (
-                    <div class="video-container">
-                      <video src={nvitacionInfo.video} controls />
-                    </div>
-                  )}
                   {nvitacionInfo.beneficios && (
                     <ul class="beneficios">
                       {nvitacionInfo.beneficios.map((beneficio) => (
-                        <li>{beneficio}</li>
+                        <li class="check-item">{beneficio}</li>
                       ))}
                     </ul>
                   )}
                 </div>
               )
             }
+              <div id="video-home">
+                {nvitacionInfo && nvitacionInfo.video && (
+                  <div id="play">
+                    <Icon name="mdi:play-circle" color="white" size={70} />
+                  </div>
+                )}
+                <video
+                  preload="metadata"
+                  poster={product.data.images[0]}
+                  id="video-producto"
+                >
+                  <source src={nvitacionInfo.video} type="video/mp4" />
+                </video>
+              </div>
           </div>
         </div>
 
@@ -322,10 +332,7 @@ const productId = product.data.id;
     display: flex;
     justify-content: center;
   }
-  .beneficios {
-    list-style-type: disc;
-    margin-left: 1.5rem;
-  }
+
   .metadata {
     display: flex;
     color: $acento;
@@ -348,6 +355,37 @@ const productId = product.data.id;
     sup {
       font-size: 0.5em;
       vertical-align: super;
+    }
+  }
+  #video-home {
+    width: 100%;
+    max-width: 337px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: $radio;
+    overflow: hidden;
+
+    video {
+      width: 100%;
+      display: block;
+      border-radius: $radio;
+    }
+
+    #play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      cursor: pointer;
+
+      svg {
+        width: 70px;
+        height: 70px;
+        path {
+          fill: $acento;
+        }
+      }
     }
   }
 </style>
@@ -382,7 +420,7 @@ const productId = product.data.id;
 
     // Show message if number is not 0
     if (salesNumber > 0) {
-      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el ultimo mes.`;
+      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> in el ultimo mes.`;
     }
   }
 
@@ -487,6 +525,22 @@ const productId = product.data.id;
   document.addEventListener('astro:page-load', initializeGallery);
 </script>
 
+<script>
+  const mivideoproducto = document.getElementById(
+    "video-producto"
+  ) as HTMLVideoElement;
+  const play = document.getElementById("play") as HTMLDivElement;
+
+  if (play && mivideoproducto) {
+    play.addEventListener("click", playPause);
+
+    function playPause() {
+      if (mivideoproducto.paused) mivideoproducto.play();
+      else mivideoproducto.pause();
+    }
+  }
+</script>
+
 <style lang="scss">
   @use "../../estilos/_variables" as *;
   #producto-conte {
@@ -502,34 +556,97 @@ const productId = product.data.id;
     background-color: #f8f9fa;
   }
 
-  .video-container {
-    margin-bottom: 1rem;
-  }
 
-  .video-container video {
-    width: 20%;
-    border-radius: 8px;
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
   }
 
   .beneficios {
     list-style: none;
     padding: 0;
     margin: 1rem 0;
+    
+    .check-item {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 0.5rem;
+      
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: $acento;
+        font-weight: bold;
+      }
+    }
+  }
+  #producto-conte {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
   }
 
-  .beneficios li {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
+  .info-adicional {
+    margin: 2rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+
+ 
+
+  .video-wrapper {
     position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
   }
 
-  .beneficios li:before {
-    content: "✓";
-    position: absolute;
-    left: 0;
-    color: #4caf50;
+  .beneficios {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    
+    .check-item {
+      position: relative;
+      padding-left: 1.8rem;
+      margin-bottom: 0.5rem;
+      
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: $acento;
+        font-weight: bold;
+      }
+    }
   }
-
   .metadata {
     margin-top: 1rem;
     padding-top: 1rem;
@@ -593,7 +710,7 @@ const productId = product.data.id;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    background-color: white;
+
 
     .main-image {
       max-width: 100%;
