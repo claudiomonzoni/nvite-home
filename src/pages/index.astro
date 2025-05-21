@@ -36,7 +36,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
             edita y envía en segundos. Haz que tu evento sea único y libre de complicaciones.
           </p>
           <Btn
-            liga="#precios"
+            liga="#nvitaciones"
             texto="Ver ejemplos"
             clases="btn-bordes-oscuro "
             claro={false}
@@ -80,7 +80,10 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
      porcentaje={15}
    />
  </div>
-  <MostrarNvitaciones dondeEstoy="home" />
+ <div id="nvitaciones">
+
+   <MostrarNvitaciones dondeEstoy="home" />
+  </div>
   
 
   <!-- <section class="grid contenido">
@@ -258,9 +261,9 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 
  
 
-  <div id="precios" class="grid contenido">
+  <!-- <div id="precios" class="grid contenido">
     <Banner dondeEstoy="home" />
-  </div>
+  </div> -->
 
   <section class="grid contenido">
     <BannerGeneral
