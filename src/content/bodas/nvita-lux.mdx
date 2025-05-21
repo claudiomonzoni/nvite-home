@@ -92,7 +92,6 @@ import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/comunes/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
-import Ventas from "../../components/comunes/Ventas.astro";
 
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
@@ -192,9 +191,3 @@ import Ventas from "../../components/comunes/Ventas.astro";
   client:only="react"
 />
 
-<Ventas
-  costo="1290"
-  stripe="https://buy.stripe.com/5kA8yN0VK2rxgF27su"
-  version={frontmatter.version}
-  tipo="bodas"
-/>

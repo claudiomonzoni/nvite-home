@@ -16,6 +16,7 @@ import Breadcrumb from "../../components/Breadcrumb.astro";
 import SocialShare from "../../components/SocialShare.astro";
 import RelatedProducts from "../../components/Pagos/RelatedProducts.astro";
 import Testimonios from "../../components/Testimonios.astro";
+import PreviewModal from "../../components/PreviewModal.astro";
 
 // Datos
 import nvitacionesData from "./nvitaciones.json";
@@ -153,15 +154,19 @@ const productId = product.data.id;
 
           {
             nvitacionInfo && nvitacionInfo.muestra && (
-              <div class="liga-muetra">
-                <Btn
-                  liga={nvitacionInfo.muestra}
-                  texto="Ver Nvitación de Muestra"
-                  icono="mdi:eye"
-                  clases="btn-oscuro"
-                  claro={false}
-                />
-              </div>
+              <>
+                <div class="liga-muetra">
+                  <Btn
+                    id="preview-btn"
+                    liga="#"
+                    texto="Ver Nvitación de Muestra"
+                    icono="mdi:eye"
+                    clases="btn-oscuro"
+                    claro={false}
+                  />
+                </div>
+                <PreviewModal url={nvitacionInfo.muestra} />
+              </>
             )
           }
 
@@ -415,9 +420,9 @@ const productId = product.data.id;
     margin: 1rem 0;
 
     .check-item {
-      list-style: none;
       position: relative;
       margin-bottom: 0.5rem;
+      list-style: none;
 
       &::before {
         content: "✓";
@@ -524,6 +529,7 @@ const productId = product.data.id;
       this.initializeBuyNowButtons();
       this.initializeGallery();
       this.initializeVideoPlayer();
+      this.initializePreviewModal();
     }
 
     // Manejo de ventas aleatorias
@@ -660,6 +666,34 @@ const productId = product.data.id;
         ?.split("=")[1];
 
       return cookie ? JSON.parse(cookie) : [];
+    }
+
+    // Manejo del modal de previsualización
+    initializePreviewModal() {
+      const previewBtn = document.getElementById('preview-btn');
+      const modal = document.getElementById('preview-modal');
+      const closeBtn = modal?.querySelector('.close-btn');
+      const backdrop = modal?.querySelector('.modal-backdrop');
+
+      const openModal = () => {
+        modal?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        modal?.dispatchEvent(new CustomEvent('modal:open'));
+      };
+
+      const closeModal = () => {
+        modal?.classList.remove('active');
+        document.body.style.overflow = '';
+        modal?.dispatchEvent(new CustomEvent('modal:close'));
+      };
+
+      previewBtn?.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+      });
+
+      closeBtn?.addEventListener('click', closeModal);
+      backdrop?.addEventListener('click', closeModal);
     }
   }
 
