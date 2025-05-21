@@ -11,6 +11,7 @@ import Footer from "../components/Footer.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 
 import PreciosPdf from "../components/PreciosPdf.astro";
+import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 ---
 
 <Layout
@@ -22,8 +23,8 @@ import PreciosPdf from "../components/PreciosPdf.astro";
 
   <Herointerior
     Spanh1="<b>Invitaciones PDF</b> "
-    h1="Baratas"
-    Spanh2="Modernas, Elegantes y Originales"
+    h1="baratas"
+    Spanh2="Senciilas de enviar"
     description="<b>Impresiona a tus invitados</b>. Diseña invitaciones en PDF personalizadas y listas para imprimir o enviar digitalmente."
     fondo="#ee6a6a"
     imagen="/Nvitaciones-invitaciones-pdf.webp"
@@ -115,6 +116,7 @@ import PreciosPdf from "../components/PreciosPdf.astro";
     </p>
   </section>
 
+    <MostrarNvitaciones dondeEstoy="pdf" />
   <CaracteristicasGrid
     matriz={[
       {

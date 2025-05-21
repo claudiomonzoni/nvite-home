@@ -45,6 +45,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/quince(\/.*)?$/,                   // Cualquier subruta en /bodas
         /^\/invitaciones-quince(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/invitaciones-pdf(\/.*)?$/,                  // Cualquier subruta en /quince
+        /^\/nvitaciones(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/terminos-condiciones(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
         /^\/404(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
     ];

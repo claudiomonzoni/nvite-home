@@ -3,61 +3,176 @@ import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 const url = Astro.url.pathname;
 
+let cartItemsCount = 0;
+
+if (Astro.cookies.has("cartItems")) {
+  const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
+  cartItemsCount = JSON.parse(cookie).length;
+}
+
+console.log(cartItemsCount + " items in cart");
 ---
 
-<nav >
-  <a href="/"
-    ><img
-      src="nvita-logo.svg"
-      alt="Nvita invitaciones digitales"
-      id="logo"
-    /></a
-  >
-  <ul>
-    {
-      url === "/terminos-condiciones" ? (
-        <li><a href="/" class="selected">Regresar</a></li>
-      ) : (
-        <li><a href="/bodas" class={url == '/bodas/' ? 'selected' : 'none'}>Bodas</a></li>
-        <li><a href="/invitaciones-quince" class={url == '/invitaciones-quince/' ? 'selected' : 'none'}>15 años</a></li>
-        <li><a href="/invitaciones-pdf" class={url == '/invitaciones-pdf/' ? 'selected' : 'none'}>Invitaciones PDF</a></li>
-        // <li><a href="/eventos" class={url == '/eventos' ? 'selected' : 'none'}>Eventos</a></li>
-      )
-    }
-  </ul>
-  <li>
-    <Btn
-      liga="/panel"
-      texto="Mi panel de invitados"
-      clases="btn-claro"
-      claro={false}
-      blank={true}
-      rel="nofollow"   
-       >
-    <Icon name="bag" size={25} />
-    </Btn>
-  </li>
+<nav id="main-nav">
+  <div class="nav-content">
+    <a href="/" class="logo-container">
+      <img src="/nvita-logo.svg" alt="Nvita invitaciones digitales" id="logo" />
+    </a>
+
+    <div class="menu-items">
+      <ul>
+        {
+          url === "/terminos-condiciones" ? (
+            <li>
+              <a href="/" class="selected">
+                Regresar
+              </a>
+            </li>
+          ) : (
+            <>
+              <li>
+                <a href="/bodas" class={url == "/bodas/" ? "selected" : "none"}>
+                  Bodas
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/invitaciones-quince"
+                  class={url == "/invitaciones-quince/" ? "selected" : "none"}
+                >
+                  15 años
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/invitaciones-pdf"
+                  class={url == "/invitaciones-pdf/" ? "selected" : "none"}
+                >
+                  Invitaciones PDF
+                </a>
+              </li>
+              <li>
+                <Btn
+                  liga="https://wa.link/kex8vd"
+                  texto="755113 2468"
+                  clases="btn-whatsapp panel-home"
+                  claro={false}
+                  blank={true}
+                  rel="nofollow"
+                >
+                  <Icon name="whatsapp" size={25} />
+                </Btn>
+              
+              </li>
+            </>
+          )
+        }
+      </ul>
+    </div>
+    <li id="carrito">
+      <a href="/nvitaciones/cart" aria-label="Ir al carrito">
+        <Icon name="mdi:cart" width="32" height="32" />
+        <span
+          class="count"
+          id="cart-count"
+          class:list={[{ hidden: cartItemsCount === 0 }]}
+        >
+          {cartItemsCount > 0 ? cartItemsCount : ""}
+        </span>
+      </a>
+    </li>
+  </div>
 </nav>
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
-  #logo {
-
-    width: 15vw;
-    transform: translateY(-0.5rem);
-    @include cel {
-      width: 70vw;
-      padding-top: 1rem;
-      transform: translateY(0rem);
-    }
+  .panel-home{
+    margin: 0;
   }
 
-  nav {
-    flex: 1 0 100%;
+  .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: $margen-cel 0;
+    transition: all 0.3s ease;
+   
+    
+    @include cel {
+      margin: 0 $margen-cel;
+      align-items: center;
+    }
+
+  }
+
+  #logo {
+    width: 15vw;
+    transition: all 0.3s ease;
+    @include cel {
+      width: 50vw;
+      padding: 0.5rem 0;
+    }
+  }
+
+
+
+  .menu-items {
+    display: flex;
+    align-items: center;
+    gap: $margen-min;
+
+    ul {
+      display: flex;
+      align-items: center;
+      gap: $margen-min;
+
+    }
+    @include cel {
+     ul li:last-child{
+       padding: 0 0 1rem 0;
+       margin: 0;
+     }
+    }
+
+  }
+
+  nav {
+    position: fixed;
+    z-index: 9999;
+    background-color: $secundario;
+    width: 100%;
+    padding: $margen-min $margen-cel;
+    transition: all 0.3s ease;
+     border-bottom-right-radius: $radio;
+     border-bottom-left-radius: $radio;
+
+    &.collapsed {
+      background-color: rgba($secundario, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem $margen-cel;
+
+      #logo {
+        width: 8vw;
+        @include cel {
+          width: 37vw;
+        }
+      }
+
+      ul {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        
+      }
+      @include cel {
+        .nav-content {
+            margin: 0;
+        }
+      }
+    }
+
+    &.hide-nav {
+      transform: translateY(-100%);
+    }
     @include cel {
       padding: $margen-min 0;
       flex-wrap: wrap;
@@ -67,17 +182,122 @@ const url = Astro.url.pathname;
         margin-top: 1rem;
         flex-wrap: wrap;
         gap: 0.4rem;
+        position: fixed;
+        left: 0;
+        top: 4rem;
+        background-color: $secundario;
+        border-bottom-right-radius: $radio;
+     border-bottom-left-radius: $radio;
       }
-      li {
-        margin: 0 0.7rem;
-      }
+
     }
   }
+
+  ul {
+    transition: all 0.3s ease;
+  }
+
   ul {
     display: flex;
     gap: $margen-min;
   }
   li {
     list-style: none;
+    align-items: center;
+    @include cel {
+      margin: .4rem;
+    }
+  }
+  #carrito {
+    position: relative;
+    span {
+      background-color: $acento;
+      color: #fff;
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+      width: 1.2rem;
+      height: 1.2rem;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: -0.5rem;
+      right: -0.6rem;
+
+      &.hidden {
+        display: none;
+      }
+    }
   }
 </style>
+
+<script>
+  import { getCartCookie } from "../../src/js/utils";
+
+  function initializeCartCount() {
+    const countCartSpan = document.querySelector("#cart-count") as HTMLSpanElement;
+    if (!countCartSpan) return;
+
+    const updateCartValue = () => {
+      const cartItems = getCartCookie();
+      if (cartItems && cartItems.length > 0) {
+        countCartSpan.textContent = cartItems.length.toString();
+        countCartSpan.classList.remove("hidden");
+      } else {
+        countCartSpan.textContent = "";
+        countCartSpan.classList.add("hidden");
+      }
+    };
+
+    // Actualizar cuando cambie el carrito
+    document.addEventListener("cart:updated", updateCartValue);
+    
+    // Actualizar el valor inicial
+    updateCartValue();
+  }
+
+  // Inicializar en la carga inicial
+  initializeCartCount();
+
+  // Reinicializar después de la navegación manteniendo el valor de la cookie
+  document.addEventListener("astro:after-swap", initializeCartCount);
+
+  function initializeNavScroll() {
+    const nav = document.getElementById("main-nav");
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        // Scrolling down - collapse nav
+        nav?.classList.add("collapsed");
+      } else {
+        // Scrolling up - expand nav
+        nav?.classList.remove("collapsed");
+      }
+
+      lastScroll = currentScroll;
+    });
+  }
+
+  // Inicializar en la carga inicial
+  initializeNavScroll();
+
+  // Reinicializar después de la navegación
+  document.addEventListener("astro:page-load", initializeNavScroll);
+
+  function initializeMenuToggle() {
+    const menuItems = document.querySelector(".menu-items");
+
+    menuItems?.classList.toggle("active");
+
+  }
+
+  // Inicializar en la carga inicial
+  initializeMenuToggle();
+
+  // Reinicializar después de la navegación
+  document.addEventListener("astro:page-load", initializeMenuToggle);
+</script>

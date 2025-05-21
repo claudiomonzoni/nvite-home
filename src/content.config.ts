@@ -1,8 +1,11 @@
 // 1. Import utilities from `astro:content`
 import { defineCollection, z } from "astro:content";
-
+import { stripePriceLoader, stripeProductLoader } from "stripe-astro-loader";
+import Stripe from "stripe";
+const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
-import { glob, file } from "astro/loaders";
+import { glob } from "astro/loaders";
+
 
 // 3. Define your collection(s)
 const bodas = defineCollection({
@@ -133,6 +136,29 @@ const quince = defineCollection({
   }),
 });
 
+const productos = defineCollection({
+  loader: stripeProductLoader(stripe),
+  schema: z.object({
+    id: z.string(),
+    active: z.boolean(),
+    name: z.string(),
+    description: z.string(),
+    images: z.array(z.string()),
+    metadata: z.record(z.string()).optional(),  // Cambiado para aceptar cualquier clave-valor string
+    default_price: z.string().nullable().optional(),
+  }),
+});
+
+const precios = defineCollection({
+  loader: stripePriceLoader(stripe),
+  schema: z.object({
+    id: z.string(),
+    currency: z.string(),
+    unit_amount: z.number(),
+  })
+});
+
+
 const imagenes = defineCollection({
   schema: ({ image }) =>
     z.object({
@@ -145,4 +171,4 @@ const imagenes = defineCollection({
 });
 
 // 4. Export a single `collections` object to register your collection(s)
-export const collections = { bodas, quince, imagenes };
+export const collections = { bodas, quince, imagenes, productos, precios };

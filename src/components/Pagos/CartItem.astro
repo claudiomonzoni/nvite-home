@@ -1,0 +1,149 @@
+---
+import { getProductPrice, type FinalCartItem } from "../../js/cart";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import Btn from "../Btn.astro";
+
+type Props = {
+  cartItem: FinalCartItem;
+};
+
+const { cartItem } = Astro.props;
+
+const { data } = cartItem.product;
+
+const finalPrice = await getProductPrice(cartItem.product);
+---
+
+<li class="cart-item">
+  <Image src={data.images[0]} alt={data.name} height={150} width={150} />  <div class="cart-item-details">
+    <div class="cart-item-info">
+      <h2>{data.name}</h2>
+      <p class="price">{finalPrice}</p>
+    </div>
+    <div class="cart-button-wrapper">
+      <Btn 
+        data-cart
+        data-action="decrement"
+        data-productid={data.id}
+        aria-label={`Remove one ${data.name} from cart`}
+        liga="#"
+        texto=""
+        clases="btn-oscuro"
+        claro={false}
+        icono="mdi:minus"
+      />
+      <p data-quantity data-productId={data.id} class="quantity">{cartItem.quantity}</p>
+      <Btn
+        data-cart
+        data-action="increment"
+        data-productid={data.id}
+        aria-label={`Add one ${data.name} to cart`}
+        liga="#"
+        texto=""
+        clases="btn-oscuro"
+        claro={false}
+        icono="mdi:plus"
+      />
+    
+    </div>
+  </div>
+</li>
+<style lang="scss">  @use "../../estilos/_variables.scss" as *;
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: $radio;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: $radio-cel;
+
+      @include cel {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    @include cel {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+  }
+
+  .cart-item-details {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    @include cel {
+      width: 100%;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .cart-item-info {
+    flex: 1;
+
+    h2 {
+      font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+      color: $primario;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      color: $acento;
+      font-weight: bold;
+    }
+  }
+
+  .cart-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background-color: $fondo;
+    // padding: 0.5rem 0;
+    border-radius: $radio;
+    height: 40px;
+
+    .quantity {
+      font-size: 1.1rem;
+      color: $primario;
+      font-weight: bold;
+      min-width: 2rem;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    :global(.btn-oscuro) {
+      border: solid 2px white;
+      padding: 0.4rem;
+      margin: 0;
+      min-width: 2rem;
+        height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+</style>

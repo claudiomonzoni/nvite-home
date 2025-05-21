@@ -1,0 +1,230 @@
+[
+  {
+    "id": "prod_S6z2ksD9axDHG1",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
+    "beneficios": [
+      "Foto principal",
+      "Nombre del invitado",
+      "Botón de confirmación",
+      "Botón de ubicación",
+      "Sugerencia de regalos",
+      "Codigo de vestir",
+      "Itinerario",
+      "Fecha del evento",
+      "Frase afectiva",
+      "Detalles del evento"
+    ],
+    "categoria": "Bodas",
+    "tipo": "PDF",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/pdf/bodas/detalles-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/itinerario-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/ubicacion-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/confirmacion-Nvitaciones-bodas-pdf.webp"
+    ]
+  },
+  {
+    "id": "prod_SK7Bqg9HjOSmhW",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
+    "muestra": "/quince/nvita-quince-clasica?id=1&uid=1",
+    "beneficios": [
+      "Panel de invitados",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Quince",
+    "tipo": "Sitio web",
+    "version": "Clásica",
+    "imagenes": [
+      "../../assets/cart/quince/clasica/detalles-Nvitaciones-quince-clasica.webp",
+      "../../assets/cart/quince/clasica/ubicacion-Nvitaciones-quince-clasica.webp",
+      "../../assets/cart/quince/clasica/regalos-Nvitaciones-quince-clasica.webp",
+      "../../assets/cart/quince/clasica/frase-Nvitaciones-quince-clasica.webp",
+      "../../assets/cart/quince/clasica/contador-Nvitaciones-quince-clasica.webp",
+      "../../assets/cart/quince/clasica/confirmacion-Nvitaciones-quince-clasica.webp"
+    ]
+  },
+  {
+    "id": "prod_QNpXQx0LWRjRFh",
+    "titulo": "Invitación Bodas esencial",
+    "video": "https://example.com/video3.mp4",
+    "muestra": "/bodas/nvita-bodas-esencial",
+    "beneficios": [
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario sencillo de confirmación"
+    ],
+    "categoria": "Bodas",
+    "tipo": "Sitio web",
+    "version": "Esencial",
+    "imagenes": [
+      "../../assets/cart/bodas/esencial/ubicacion-Nvitaciones-bodas-esencial.webp",
+      "../../assets/cart/bodas/esencial/confirmacion-Nvitaciones-bodas-esencial.webp"
+    ]
+  },
+  {
+    "id": "prod_QNpO0T7kRp1zkL",
+    "muestra": "/bodas/nvita-bodas-clasica?id=1&uid=1",
+    "beneficios": [
+      "Panel de invitados",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Bodas",
+    "tipo": "Sitio web",
+    "version": "Clásica",
+    "imagenes": [
+      "../../assets/cart/bodas/clasica/pases-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/ubicacion-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/regalos-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/galeria-Nvitaciones-bodas-clasica.webp",
+      "../../assets/cart/bodas/clasica/confirmacion-Nvitaciones-bodas-clasica.webp"
+    ]
+  },
+  {
+    "id": "prod_QLJkNCXvs8egN9",
+    "muestra": "/quince/nvita-quince-lux?id=1&uid=1",
+    "beneficios": [
+      "Panel de invitados",
+      "Música ambiental",
+      "Itinerario",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Quince",
+    "tipo": "Sitio web",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/quince/lux/detalles-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/ubicacion-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/frase-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/galeria-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/itinerario-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/avance-Nvitaciones-quince-lux.webp",
+      "../../assets/cart/quince/lux/confirmacion-Nvitaciones-quince-lux.webp"
+    ]
+  },
+  {
+    "id": "prod_Q42WJO0oMaU98G",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
+    "muestra": "/bodas/nvita-bodas-lux?id=1&uid=1",
+    "beneficios": [
+      "Panel de invitados",
+      "Música ambiental",
+      "Itinerario",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Bodas",
+    "tipo": "Sitio web",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/bodas/lux/pases-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/ubicacion-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/regalos-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/cuenta-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/itinerario-Nvitaciones-bodas-lux.webp",
+      "../../assets/cart/bodas/lux/confirmacion-Nvitaciones-bodas-lux.webp"
+    ]
+  },
+  {
+    "id": "prod_SJS7Pij7pMSLo4",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
+    "beneficios": [
+      "Foto principal",
+      "Nombre del invitado",
+      "Botón de confirmación",
+      "Botón de ubicación",
+      "Sugerencia de regalos",
+      "Codigo de vestir",
+      "Itinerario",
+      "Fecha del evento",
+      "Frase afectiva",
+      "Detalles del evento"
+    ],
+    "categoria": "Quince",
+    "tipo": "PDF",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/pdf/quince/detalles-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/itinerario-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/ubicacion-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/confirmacion-Nvitaciones-quince-pdf.webp"
+    ]
+  },
+  {
+    "id": "prod_SK7ICkqFPPgSuJ",
+    "muestra": "/quince/nvita-quince-esencial",
+    "beneficios": [
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Datos de tu evento",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario sencillo de confirmación"
+    ],
+    "categoria": "Quince",
+    "tipo": "Sitio web",
+    "version": "Esencial",
+    "imagenes": [
+      "../../assets/cart/quince/esencial/detalles-Nvitaciones-quince-esencial.webp",
+      "../../assets/cart/quince/esencial/ubicacion-Nvitaciones-quince-esencial.webp",
+      "../../assets/cart/quince/esencial/confirmacion-Nvitaciones-quince-esencial.webp"
+    ]
+  },
+  {
+    "id": "prod_S6yybHJMahkBD0",
+    "video":"https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
+    "beneficios": [
+      "Detalles del evento",
+      "Datos de tu evento",
+      "Botón de ubicación",
+      "Botón de confirmación",
+      "Juego de preguntas"
+    ],
+    "categoria": "Cumpleaños",
+    "tipo": "PDF",
+    "version": "Regular",
+    "imagenes": [
+      "../../assets/cart/pdf/cumples/2-Nvitaciones-cummple-pdf.webp",
+      "../../assets/cart/pdf/cumples/3-Nvitaciones-cummple-pdf.webp",
+      "../../assets/cart/pdf/cumples/4-Nvitaciones-cummple-pdf.webp"
+    ]
+  }
+]

@@ -1,0 +1,171 @@
+---
+import { Icon } from "astro-icon/components";
+const { url } = Astro.props;
+---
+
+<div id="preview-modal" class="modal-preview" data-url={url}>
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="close-btn">
+      <Icon name="mdi:close" size={24} />
+    </button>
+    <div class="iframe-container"></div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/variables" as *;
+
+  .modal-preview {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; // Aumentado significativamente
+    
+    &.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9999; // Mismo nivel que el modal
+  }
+
+  .modal-content {
+    position: relative;
+    background: white;
+    @extend .sombra;
+    z-index: 10000; // Un nivel más alto que el backdrop
+
+    @include cel {
+      width: 95%;
+      height: 90%;
+      margin: auto;
+      border-radius: $radio;
+    }
+
+    @include desktop {
+      width: 390px;
+      height: 844px;
+      border-radius: $radio;
+      overflow: hidden;
+    
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    @extend .sombra;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10001; // El más alto para asegurar que esté sobre todo
+
+    [data-icon] {
+      color: $primario;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      background: $primario;
+      [data-icon] {
+        color: white;
+      }
+    }
+
+    @include cel {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+  }
+
+  .iframe-container {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: inherit;
+  }
+</style>
+
+<script>
+  class PreviewModal {
+    constructor() {
+      // Inicializar en la carga inicial y después de las transiciones
+      document.addEventListener('astro:page-load', () => this.init());
+      if (document.readyState === 'complete') {
+        this.init();
+      }
+    }
+
+    init() {
+      const modal = document.getElementById('preview-modal');
+      if (!modal) return;
+
+      const url = modal.getAttribute('data-url');
+      const container = modal.querySelector('.iframe-container');
+      const closeBtn = modal.querySelector('.close-btn');
+      const backdrop = modal.querySelector('.modal-backdrop');
+      let iframe = null;
+
+      const createIframe = () => {
+        if (!url || !container || iframe) return;
+        iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = 'none';
+        iframe.style.borderRadius = 'inherit';
+        container.appendChild(iframe);
+      };
+
+      const removeIframe = () => {
+        if (iframe && iframe.parentNode) {
+          iframe.parentNode.removeChild(iframe);
+          iframe = null;
+        }
+      };
+
+      const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        modal.dispatchEvent(new CustomEvent('modal:close'));
+      };
+
+      // Limpiar listeners anteriores
+      const newCloseBtn = closeBtn?.cloneNode(true);
+      const newBackdrop = backdrop?.cloneNode(true);
+      closeBtn?.parentNode?.replaceChild(newCloseBtn, closeBtn);
+      backdrop?.parentNode?.replaceChild(newBackdrop, backdrop);
+
+      // Agregar nuevos listeners
+      newCloseBtn?.addEventListener('click', closeModal);
+      newBackdrop?.addEventListener('click', closeModal);
+      
+      modal.addEventListener('modal:open', createIframe);
+      modal.addEventListener('modal:close', removeIframe);
+    }
+  }
+
+  new PreviewModal();
+</script>

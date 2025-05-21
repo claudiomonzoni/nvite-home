@@ -44,7 +44,6 @@ import Regalos from "../../components/quince/Regalos.astro";
 import Contador from "../../components/quince/Contador.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
-import Ventas from "../../components/comunes/Ventas.astro";
 
 
 
@@ -149,10 +148,3 @@ import Ventas from "../../components/comunes/Ventas.astro";
     client:only
   />
 </section>
-
-<Ventas
-  costo="990"
-  stripe="https://buy.stripe.com/7sIbKZfQE5DJ1K8eUX"
-  version={frontmatter.version}
-  tipo="quince"
-/>

@@ -1,0 +1,30 @@
+---
+import { calculateDeliveryDate } from "../js/utils";
+
+const deliveryDate = calculateDeliveryDate(2);
+---
+
+<div id="ahora">
+  <p><b>Compra ahora y recibe tu invitación:</b></p>
+  <p class="delivery-date">
+    {deliveryDate}
+  </p>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  #ahora {
+    margin-top: 1rem;
+    text-align: center;
+    b {
+      color: $primario;
+    }
+    .delivery-date {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: $acento;
+      margin-top: 0.5rem;
+    }
+  }
+</style>

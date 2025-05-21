@@ -2,7 +2,7 @@ $primario: #656a8d;
 $secundario: #ffce95;
 $terciario: #dae3ea;
 $acento: #ee6a6a;
-$gris: #555556;
+$gris: #5b5b65;
 $fondo: #ffce95;
 $fondoGlobal: #fff6f0;
 
@@ -23,7 +23,7 @@ $margen-cel: 2rem;
 $margen-min: 1rem;
 $margen-top-cel: 6rem;
 
-$fuenteA: "Montserrat Alternates";
+$fuenteA: "Montserrat", sans-serif;
 $fuenteB: "Averia Serif Libre";
 $garigol: "Playwrite CU";
 
@@ -62,6 +62,13 @@ $garigol: "Playwrite CU";
     @content;
   }
 }
+
+@mixin desktop {
+  @media screen and (min-width: 1024px) {
+    @content;
+  }
+}
+
 // animaciones
 .anime {
   transition: all 0.2s ease-in-out;
