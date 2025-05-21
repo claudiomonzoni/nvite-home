@@ -139,32 +139,49 @@ import 'swiper/css/navigation';
 <script>
   import Swiper from 'swiper';
   import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+  function initializeTestimonios() {
+    // Destruir instancia existente si hay alguna
+    const swiperElement = document.querySelector('.testimonios-swiper');
+    const existingSwiper = swiperElement && (swiperElement as any).swiper;
+    if (existingSwiper) {
+      existingSwiper.destroy(true, true);
+    }
 
-  new Swiper('.testimonios-swiper', {
-    modules: [Navigation, Pagination, Autoplay],
-    slidesPerView: 1,
-    spaceBetween: 30,
-    loop: true,
-    autoplay: {
-      delay: 4000,
-      disableOnInteraction: false,
-      pauseOnMouseEnter: true, // Pausa al hacer hover
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-      640: {
-        slidesPerView: 2,
+    // Crear nueva instancia
+    new Swiper('.testimonios-swiper', {
+      modules: [Navigation, Pagination, Autoplay],
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       },
-      1024: {
-        slidesPerView: 3,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
       },
-    },
-  });
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+    });
+  }
+
+  // Inicializar en transiciones de página
+  document.addEventListener('astro:page-load', initializeTestimonios);
+
+  // Inicializar si el documento ya está cargado
+  if (document.readyState === 'complete') {
+    initializeTestimonios();
+  }
 </script>

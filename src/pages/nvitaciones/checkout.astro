@@ -46,7 +46,7 @@ const checkoutSession = await stripe.checkout.sessions.create({
     
     <div class="checkout-section">
       <div class="checkout-header">
-        <h1>Obtén tu Nvitación</h1>
+        <h2>Comprar ahora</h2>
       </div>
       
       <div class="checkout-wrapper">
@@ -74,11 +74,20 @@ const checkoutSession = await stripe.checkout.sessions.create({
   <Footer />
 </Layout>
 
-<style>
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
 
+  h2 {
+    font-size: clamp(2rem, 2vw, 3rem);
+    color: $primario;
+    margin-bottom: 1rem;
+  }
   .checkout-section {
     width: 100%;
-    padding: 2rem;
+    margin-top: 8rem;
+    @include cel {
+      margin-top: 14rem;
+    }
   }
 
   .checkout-header {

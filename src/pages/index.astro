@@ -69,43 +69,19 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     small="Solo aplica para pagos en línea, promoción valida hasta el 28 de febrero."
     img="/promo.webp"
     /> -->
-  </div>    <MostrarNvitaciones dondeEstoy="home" />
-  
+  </div>    
   <div class="grid contenido">
-    <div id="conteCaracteristicas">
-      <Caracteristicas
-        encabezado="fácil"
-        texto="Agrega tus <b>invitados</b> de manera fácil."
-        icono="mdi:account-multiple-add-outline"
-        fondo="/fondo-nvite-caracteristicas-3.png"
-        colorBg="#FFF1E1"
-      />
-
-      <Caracteristicas
-        encabezado="rápido"
-        texto="Envia tu invitación con un <b>solo clic.</b>"
-        icono="mdi:message-text-fast"
-        fondo="/fondo-nvite-caracteristicas-2.png"
-        colorBg="#FFF1E1"
-      />
-
-      <Caracteristicas
-        encabezado="útil"
-        texto="<b>Organiza</b> todo en un solo lugar."
-        icono="mdi:bookmark-check"
-        fondo="/fondo-nvite-caracteristicas-4.png"
-        colorBg="#FFF1E1"
-      />
-
-      <Caracteristicas
-        encabezado="único"
-        texto="Invitaciones con <b>estilo.</b>"
-        icono="mdi:vector-bezier"
-        fondo="/fondo-nvite-caracteristicas-4.png"
-        colorBg="#FFF1E1"
-      />
-    </div>
-  </div>
+   <OfertaTiempo
+     encabezado="<b>Aprovecha 15% </b>de descuento"
+     texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
+     small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
+     horasValidez={25}
+     img="/promo.webp"
+     porcentaje={15}
+   />
+ </div>
+  <MostrarNvitaciones dondeEstoy="home" />
+  
 
   <!-- <section class="grid contenido">
       <div id="video">
@@ -162,6 +138,42 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
       },
     ]}
   />
+
+  <div class="grid contenido">
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="fácil"
+        texto="Agrega tus <b>invitados</b> de manera fácil."
+        icono="mdi:account-multiple-add-outline"
+        fondo="/fondo-nvite-caracteristicas-3.png"
+        colorBg="#FFF1E1"
+      />
+
+      <Caracteristicas
+        encabezado="rápido"
+        texto="Envia tu invitación con un <b>solo clic.</b>"
+        icono="mdi:message-text-fast"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+        colorBg="#FFF1E1"
+      />
+
+      <Caracteristicas
+        encabezado="útil"
+        texto="<b>Organiza</b> todo en un solo lugar."
+        icono="mdi:bookmark-check"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#FFF1E1"
+      />
+
+      <Caracteristicas
+        encabezado="único"
+        texto="Invitaciones con <b>estilo.</b>"
+        icono="mdi:vector-bezier"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#FFF1E1"
+      />
+    </div>
+  </div>
 
   <!-- <Galeriaslide /> -->
   <div class="grid contenido">
@@ -244,16 +256,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     </div>
   </section>
 
-  <div class="grid contenido">
-    <OfertaTiempo
-      encabezado="<b>Aprovecha 15% </b>de descuento"
-      texto="Oferta relampago. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años."
-      small="Solo aplica para pagos en línea, <b>la oferta se acaba:</b>"
-      horasValidez={25}
-      img="/promo.webp"
-      porcentaje={15}
-    />
-  </div>
+ 
 
   <div id="precios" class="grid contenido">
     <Banner dondeEstoy="home" />

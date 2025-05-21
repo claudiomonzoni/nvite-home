@@ -396,7 +396,7 @@ mark {
   flex-wrap: wrap;
   gap: $margen-min;
   justify-content: space-around;
-  margin: $margen-cel 0;
+  margin-bottom: $margen;
 
   & > * {
     position: relative;

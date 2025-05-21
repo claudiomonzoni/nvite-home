@@ -66,7 +66,7 @@ export const dispatchCartUpdateEvent = () => {
  * @returns A number between 0 and 5
  */
 export const generateRandomSales = (): number => {
-  return Math.floor(Math.random() * 5); // 0 to 5
+  return Math.floor(Math.random() * 6); // 0 to 5 (inclusive)
 };
 
 /**

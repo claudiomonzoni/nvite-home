@@ -29,10 +29,10 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
 // Función para cargar las imágenes del producto
 async function getProductImages(nvitacionInfo) {
   if (!product) return [];
-  
+
   try {
     const imagenes = [];
-    
+
     // Primero añadir la imagen de Stripe si está disponible
     if (product.data.images?.length > 0) {
       imagenes.push(product.data.images[0]);
@@ -41,11 +41,11 @@ async function getProductImages(nvitacionInfo) {
     // Luego añadir imágenes desde nvitacionInfo
     if (nvitacionInfo?.imagenes) {
       for (const imagePath of nvitacionInfo.imagenes) {
-        const normalizedPath = imagePath.replace(/\\/g, '/');
-        const moduleKey = Object.keys(imageModules).find(key => {
+        const normalizedPath = imagePath.replace(/\\/g, "/");
+        const moduleKey = Object.keys(imageModules).find((key) => {
           const keyLower = key.toLowerCase();
           const pathLower = normalizedPath.toLowerCase();
-          return keyLower.endsWith(pathLower.replace('../../assets/', ''));
+          return keyLower.endsWith(pathLower.replace("../../assets/", ""));
         });
 
         if (moduleKey && moduleKey in imageModules) {
@@ -55,7 +55,7 @@ async function getProductImages(nvitacionInfo) {
         }
       }
     }
-    
+
     return imagenes;
   } catch (error) {
     console.error("Error cargando imágenes:", error);
@@ -65,7 +65,9 @@ async function getProductImages(nvitacionInfo) {
 
 // Obtener datos del producto
 const product = await getEntry("productos", id as string);
-const nvitacionInfo = nvitacionesData.find(item => item.id === product?.data.id);
+const nvitacionInfo = nvitacionesData.find(
+  (item) => item.id === product?.data.id
+);
 const imagenes = await getProductImages(nvitacionInfo);
 
 // Manejo de 404
@@ -77,24 +79,23 @@ const price = await getProductPrice(product);
 const productId = product.data.id;
 ---
 
-<Layout
-  title=`${product.data.name} - Invitación Digitales para tu evento`
->
+<Layout title=`${product.data.name} - Invitación Digitales para tu evento`>
   <div class="grid contenido">
     <Nav />
 
-    <div class="breadcrumb-container">
-      <Breadcrumb
-        categoria={nvitacionInfo?.categoria || "pdf"}
+    <div class="breadcrumb-container">    <Breadcrumb
+        categoria={nvitacionInfo?.tipo === "PDF" ? "pdf" : nvitacionInfo?.categoria?.toLowerCase()}
         nombre={product.data.name}
       />
     </div>
 
-    <div id="producto-conte">      <div id="izq">
+    <div id="producto-conte">
+      <div id="izq">
         <div id="fix">
           <div class="gallery-container">
             <div class="thumbnails-container">
-              {                imagenes.map((imagen) => (
+              {
+                imagenes.map((imagen) => (
                   <div class="thumbnail-wrapper" data-full-img={imagen.src}>
                     <Image
                       src={imagen}
@@ -107,7 +108,7 @@ const productId = product.data.id;
                   </div>
                 ))
               }
-            </div>            
+            </div>
             <div class="main-image-container">
               <Image
                 src={imagenes[0]}
@@ -140,12 +141,12 @@ const productId = product.data.id;
               )
             }
           </div>
-          <p>{product.data.id}</p>
-          <h1>{product.data.name}</h1>
-          <p>{product.data.description}</p>         
+          <!-- <p>{product.data.id}</p> -->          <h1>{product.data.name}</h1>
+          <p>{product.data.description}</p>
+
+          <p id="vendidos"></p>
           <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
-      
-          
+
           <div id="datosjson">
             {
               nvitacionInfo && (
@@ -160,21 +161,23 @@ const productId = product.data.id;
                 </div>
               )
             }
-            
-              <div id="video-home">
-                {nvitacionInfo && nvitacionInfo.video && (
+            {
+              nvitacionInfo && nvitacionInfo.video && (
+                <div id="video-home">
                   <div id="play">
                     <Icon name="mdi:play-circle" color="white" size={70} />
                   </div>
-                <video
-                preload="metadata"
-                poster={product.data.images[0]}
-                id="video-producto"
-                >
-                  <source src={nvitacionInfo.video} type="video/mp4" />
-                </video>
-                  )}
-              </div>
+                  <video
+                    preload="auto"
+                    poster={product.data.images[0]}
+                    id="video-producto"
+                    playsinline
+                  >
+                    <source src={nvitacionInfo.video} type="video/mp4" />
+                  </video>
+                </div>
+              )
+            }
           </div>
         </div>
 
@@ -187,7 +190,7 @@ const productId = product.data.id;
             texto="Agregar al carrito"
             clases="btn-oscuro"
             claro={false}
-            icono="mdi:cart"
+            icono="mdi:cart-plus"
           />
           <Btn
             data-cart
@@ -196,7 +199,7 @@ const productId = product.data.id;
             liga="#"
             clases="btn-claro"
             texto="Comprar ahora"
-            icono="mdi:cart"
+            icono="mdi:cart-check"
             claro={true}
           />
           <div id="ahora">
@@ -208,19 +211,23 @@ const productId = product.data.id;
             <a id="terminos" href="/terminos-condiciones"
               >ver terminos y condiciones</a
             >
-          </div>          <SocialShare 
-            url={Astro.url.toString()} 
-            title={`Mira esta ${nvitacionInfo?.tipo || 'invitación'} en Nvitaciones.com: ${product.data.name}`}
+          </div>
+          <SocialShare
+            url={Astro.url.toString()}
+            title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
           />
         </div>
-      </div>    </div>
-    
+      </div>
+    </div>
+
     <RelatedProducts
       currentProductId={product.id}
-      category={nvitacionInfo?.categoria || product.data.metadata?.Categoria || ""}
+      category={nvitacionInfo?.categoria ||
+        product.data.metadata?.Categoria ||
+        ""}
     />
   </div>
-   <Testimonios />
+  <Testimonios />
   <Footer />
 </Layout>
 
@@ -388,36 +395,41 @@ const productId = product.data.id;
 
   // Inicialización de mensajes de ventas
   function initializeSalesMessage() {
-    const vendidosDiv = document.getElementById('vendidos');
-    const productId = document.querySelector('[data-productid]')?.getAttribute('data-productid');
-    
+    const vendidosDiv = document.getElementById("vendidos");
+    const productId = document
+      .querySelector("[data-productid]")
+      ?.getAttribute("data-productid");
+
     if (!vendidosDiv || !productId) return;
 
     const cookieKey = `sales_${productId}`;
     const existingNumber = document.cookie
-      .split(';')
-      .find(c => c.trim().startsWith(`${cookieKey}=`))
-      ?.split('=')[1];
+      .split(";")
+      .find((c) => c.trim().startsWith(`${cookieKey}=`))
+      ?.split("=")[1];
 
-    let salesNumber = existingNumber ? 
-      parseInt(existingNumber) : 
-      generateRandomSales();
-
-    if (!existingNumber) {
+    let salesNumber = existingNumber
+      ? parseInt(existingNumber)
+      : generateRandomSales();    if (!existingNumber) {
       const expires = new Date();
       expires.setDate(expires.getDate() + 7);
       document.cookie = `${cookieKey}=${salesNumber};expires=${expires.toUTCString()};path=/`;
     }
 
+    // Solo mostrar el mensaje si hay ventas
     if (salesNumber > 0) {
       vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el último mes.`;
+    } else {
+      vendidosDiv.innerHTML = ''; // Limpiar el contenido si no hay ventas
     }
   }
 
   // Inicialización de botones de compra
   function initializeBuyNowButtons() {
     const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-    buyNowButtons.forEach(button => button.addEventListener("click", handleBuyNow));
+    buyNowButtons.forEach((button) =>
+      button.addEventListener("click", handleBuyNow)
+    );
   }
 
   async function handleBuyNow(event: Event) {
@@ -438,24 +450,29 @@ const productId = product.data.id;
 
   // Inicialización de la galería
   function initializeGallery() {
-    const mainImage = document.querySelector('.main-image') as HTMLImageElement;
-    const mainImageContainer = document.querySelector('.main-image-container') as HTMLElement;
-    const thumbnails = document.querySelectorAll('.thumbnail-wrapper');
-    
+    const mainImage = document.querySelector(".main-image") as HTMLImageElement;
+    const mainImageContainer = document.querySelector(".main-image-container") as HTMLElement;
+    const thumbnails = document.querySelectorAll(".thumbnail-wrapper");
+
     if (!mainImage || !thumbnails.length || !mainImageContainer) return;
 
-    thumbnails[0].classList.add('active');
+    // Almacenar la imagen original de Stripe
+    const stripeImage = mainImage.src;
 
-    thumbnails.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        const fullSizeImage = thumb.getAttribute('data-full-img');
+    // Marcar el primer thumbnail como activo inicialmente
+    thumbnails[0].classList.add("active");
+
+    thumbnails.forEach((thumb, index) => {
+      thumb.addEventListener("click", () => {
+        // Si es el primer thumbnail (imagen de Stripe), usar la URL original
+        const fullSizeImage = index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
         if (!fullSizeImage) return;
-        
+
         mainImage.src = fullSizeImage;
-        
-        thumbnails.forEach(t => {
-          t.classList[t === thumb ? 'add' : 'remove']('active');
-        });
+
+        // Actualizar la clase active
+        thumbnails.forEach((t) => t.classList.remove("active"));
+        thumb.classList.add("active");
       });
     });
   }
@@ -463,14 +480,63 @@ const productId = product.data.id;
   // Inicialización del reproductor de video
   function initializeVideoPlayer() {
     const video = document.getElementById("video-producto") as HTMLVideoElement;
-    const play = document.getElementById("play") as HTMLDivElement;
+    const playButton = document.getElementById("play") as HTMLDivElement;
+    const videoContainer = document.getElementById(
+      "video-home"
+    ) as HTMLDivElement;
 
-    if (!play || !video) return;
+    if (!video || !playButton || !videoContainer) return;
 
-    play.addEventListener("click", () => {
-      if (video.paused) video.play();
-      else video.pause();
+    // Limpiar eventos previos
+    const newVideo = video.cloneNode(true) as HTMLVideoElement;
+    const newPlayButton = playButton.cloneNode(true) as HTMLDivElement;
+
+    video.parentNode?.replaceChild(newVideo, video);
+    playButton.parentNode?.replaceChild(newPlayButton, playButton);
+
+    // Función para alternar reproducción
+    function togglePlay(e: Event) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (newVideo.paused) {
+        const playPromise = newVideo.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              newPlayButton.style.display = "none";
+            })
+            .catch((error) => {
+              console.error("Error reproduciendo video:", error);
+              newPlayButton.style.display = "flex";
+            });
+        }
+      } else {
+        newVideo.pause();
+        newPlayButton.style.display = "flex";
+      }
+    }
+
+    // Eventos del video
+    newVideo.addEventListener("play", () => {
+      newPlayButton.style.display = "none";
     });
+
+    newVideo.addEventListener("pause", () => {
+      newPlayButton.style.display = "flex";
+    });
+
+    newVideo.addEventListener("ended", () => {
+      newVideo.currentTime = 0;
+      newPlayButton.style.display = "flex";
+    });
+
+    // Agregar eventos de clic
+    newPlayButton.addEventListener("click", togglePlay);
+    newVideo.addEventListener("click", togglePlay);
+
+    // Asegurar estado inicial correcto
+    newPlayButton.style.display = "flex";
   }
 
   // Funciones auxiliares
@@ -484,18 +550,15 @@ const productId = product.data.id;
   }
 
   // Eventos de inicialización
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     initializeSalesMessage();
     initializeBuyNowButtons();
     initializeGallery();
     initializeVideoPlayer();
   });
 
-  // Inicialización inmediata si el documento ya está cargado
-  if (document.readyState === 'complete') {
-    initializeSalesMessage();
-    initializeBuyNowButtons();
-    initializeGallery();
+  // También ejecutar cuando el documento ya está cargado
+  if (document.readyState === "complete") {
     initializeVideoPlayer();
   }
 </script>
@@ -514,8 +577,6 @@ const productId = product.data.id;
     border-radius: 8px;
     background-color: #f8f9fa;
   }
-
-
 
   .video-wrapper {
     position: relative;
@@ -539,12 +600,12 @@ const productId = product.data.id;
     list-style: none;
     padding: 0;
     margin: 1rem 0;
-    
+
     .check-item {
       position: relative;
       padding-left: 1.8rem;
       margin-bottom: 0.5rem;
-      
+
       &::before {
         content: "✓";
         position: absolute;
@@ -567,8 +628,6 @@ const productId = product.data.id;
     background-color: #f8f9fa;
   }
 
- 
-
   .video-wrapper {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
@@ -591,12 +650,12 @@ const productId = product.data.id;
     list-style: none;
     padding: 0;
     margin: 1rem 0;
-    
+
     .check-item {
       position: relative;
       padding-left: 1.8rem;
       margin-bottom: 0.5rem;
-      
+
       &::before {
         content: "✓";
         position: absolute;
@@ -627,7 +686,6 @@ const productId = product.data.id;
     display: flex;
     gap: 1rem;
     margin: 0 auto;
-
   }
 
   .thumbnails-container {
@@ -669,7 +727,6 @@ const productId = product.data.id;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-
 
     .main-image {
       max-width: 100%;

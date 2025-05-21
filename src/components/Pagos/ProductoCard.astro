@@ -33,7 +33,7 @@ const precio = await getProductPrice(producto);
         {precio.replace(/\.00$/, "")}<sup>.00</sup>
       </p>
     </div>
-    <p set:html={producto.data.description} />
+    <!-- <p set:html={producto.data.description} /> -->
   </div>
   <Btn
     data-cart
@@ -43,7 +43,7 @@ const precio = await getProductPrice(producto);
     texto="Agregar al carrito"
     clases="btn-oscuro"
     claro={false}
-    icono="mdi:cart"
+    icono="mdi:cart-plus"
   />
   <!-- 
   <Btn
@@ -79,6 +79,7 @@ const precio = await getProductPrice(producto);
     .btn-oscuro {
       margin-bottom: 0;
       margin-bottom: $margen-cel;
+      margin-top: 0;
 
   }
   }
@@ -107,6 +108,7 @@ const precio = await getProductPrice(producto);
       justify-content: center;
       width: 100%;
       transform-origin: bottom;
+      
     }
     .crop {
       width: 100%;
@@ -136,7 +138,7 @@ const precio = await getProductPrice(producto);
     gap: $margen-min;
     border-bottom: solid 1px $secundario;
     padding-bottom: $margen-min;
-    margin-bottom: $margen-min;
+    // margin-bottom: $margen-min;
   }
   .precio {
     font-size: clamp(1.1rem, 1.6vw + 0.5rem, 1.5rem);

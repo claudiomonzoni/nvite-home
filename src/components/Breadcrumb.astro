@@ -6,17 +6,31 @@ interface Props {
 
 const { categoria, nombre } = Astro.props;
 
-const rutaCategoria = {
-  'boda': 'Invitaciones de Boda',
-  'quince': 'Invitaciones de XV Años',
-  'pdf': 'Invitaciones PDF'
+// Mapeo de categorías a sus rutas y nombres
+const categoriaMap = {
+  'bodas': {
+    ruta: '/bodas',
+    nombre: 'Invitaciones de Boda'
+  },
+  'quince': {
+    ruta: '/invitaciones-quince',
+    nombre: 'Invitaciones de XV Años'
+  },
+  'cumpleaños': {
+    ruta: '/invitaciones-pdf',
+    nombre: 'Invitaciones PDF'
+  },
+  'pdf': {
+    ruta: '/invitaciones-pdf',
+    nombre: 'Invitaciones PDF'
+  }
 };
+console.log(categoria)
 ---
 
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <ul>
-    <li><a href="/">Inicio</a></li>
-    <li><a href={`/${categoria}`}>{rutaCategoria[categoria] || categoria}</a></li>
+    <li><a href="/">Inicio</a></li>    <li><a href={categoriaMap[categoria]?.ruta || `/${categoria}`}>{categoriaMap[categoria]?.nombre || categoria}</a></li>
     <li><span aria-current="page">{nombre}</span></li>
   </ul>
 </nav>

@@ -23,14 +23,6 @@ const filteredProducts = productos.filter(producto => {
   return categoria === dondeEstoyLower;
 });
 
-// Logs para depuración
-// console.log('Página actual:', dondeEstoy);
-// console.log('Total productos sin filtrar:', productos.length);
-// console.log('Total productos filtrados:', filteredProducts.length);
-// console.log('Productos filtrados:', filteredProducts.map(p => ({
-//   categoria: p.data.metadata?.Categoria,
-//   tipo: p.data.metadata?.Tipo
-// })));
 ---
 
 <div class="grid pantalla-der">
@@ -49,6 +41,7 @@ const filteredProducts = productos.filter(producto => {
 
 <style>
   .productos-swiper {
+    margin: 4rem 0 6rem 0;
     width: 100%;
     padding: 1rem 0;
   }
