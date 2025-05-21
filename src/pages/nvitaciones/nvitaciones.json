@@ -27,6 +27,7 @@
   {
     "id": "prod_SK7Bqg9HjOSmhW",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
+    "muestra": "/quince/nvita-quince-clasica?id=1&uid=1",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -56,6 +57,7 @@
     "id": "prod_QNpXQx0LWRjRFh",
     "titulo": "Invitación Bodas esencial",
     "video": "https://example.com/video3.mp4",
+    "muestra": "/bodas/nvita-bodas-esencial",
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
@@ -74,6 +76,7 @@
   },
   {
     "id": "prod_QNpO0T7kRp1zkL",
+    "muestra": "/bodas/nvita-bodas-clasica?id=1&uid=1",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -100,6 +103,7 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
+    "muestra": "/quince/nvita-quince-lux?id=1&uid=1",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -131,6 +135,7 @@
   {
     "id": "prod_Q42WJO0oMaU98G",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
+    "muestra": "/bodas/nvita-bodas-lux?id=1&uid=1",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -185,6 +190,7 @@
   },
   {
     "id": "prod_SK7ICkqFPPgSuJ",
+    "muestra": "/quince/nvita-quince-esencial",
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",

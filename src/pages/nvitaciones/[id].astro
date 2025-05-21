@@ -83,8 +83,11 @@ const productId = product.data.id;
   <div class="grid contenido">
     <Nav />
 
-    <div class="breadcrumb-container">    <Breadcrumb
-        categoria={nvitacionInfo?.tipo === "PDF" ? "pdf" : nvitacionInfo?.categoria?.toLowerCase()}
+    <div class="breadcrumb-container">
+      <Breadcrumb
+        categoria={nvitacionInfo?.tipo === "PDF"
+          ? "pdf"
+          : nvitacionInfo?.categoria?.toLowerCase()}
         nombre={product.data.name}
       />
     </div>
@@ -141,11 +144,26 @@ const productId = product.data.id;
               )
             }
           </div>
-          <!-- <p>{product.data.id}</p> -->          <h1>{product.data.name}</h1>
+          <!-- <p>{product.data.id}</p> -->
+          <h1>{product.data.name}</h1>
           <p>{product.data.description}</p>
 
           <p id="vendidos"></p>
           <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
+
+          {
+            nvitacionInfo && nvitacionInfo.muestra && (
+              <div class="liga-muetra">
+                <Btn
+                  liga={nvitacionInfo.muestra}
+                  texto="Ver Nvitación de Muestra"
+                  icono="mdi:eye"
+                  clases="btn-oscuro"
+                  claro={false}
+                />
+              </div>
+            )
+          }
 
           <div id="datosjson">
             {
@@ -161,6 +179,7 @@ const productId = product.data.id;
                 </div>
               )
             }
+
             {
               nvitacionInfo && nvitacionInfo.video && (
                 <div id="video-home">
@@ -233,17 +252,15 @@ const productId = product.data.id;
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
+
+  // Layout & Container styles
   .breadcrumb-container {
     margin-top: 7rem;
     @include cel {
       margin-top: 12rem;
     }
   }
-  h1 {
-    color: $primario;
-    font-size: clamp(2rem, 5vw, 3rem);
-    border-bottom: solid 1px $primario;
-  }
+
   #producto-conte {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -254,18 +271,23 @@ const productId = product.data.id;
       grid-template-columns: 1fr;
     }
   }
+
+  // Left column styles
   #izq {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     height: 100%;
     position: relative;
-    overflow: visible; // Allow sticky content to overflow
+    overflow: visible;
   }
+
   #fix {
     position: sticky;
-    top: 4rem; // Distance from top of viewport
+    top: 4rem;
   }
+
+  // Right column styles
   #der {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -282,406 +304,47 @@ const productId = product.data.id;
       align-self: flex-start;
       background: white;
       border-radius: $radio;
+      padding: $margen-min;
+      @extend .sombra;
+
       a {
         max-width: 100%;
-        margin: 0;
+      }
+      a:first-child {
+        margin-bottom: 1rem;
       }
       p {
         font-size: 0.8rem;
+        margin: 0;
       }
-      @extend .sombra;
-      padding: $margen-min;
     }
+
     @include cel {
       grid-template-columns: 1fr;
       gap: 0;
       height: auto;
     }
   }
-  .buttons-container {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-    align-items: flex-start;
-  }
-  #vendidos {
-    font-size: 0.8rem;
-    color: $gris;
-  }
-  #ahora {
-    p {
-      font-size: 0.8rem;
-      color: $acento;
-      margin-top: 1rem;
-      b {
-        margin-right: 0.5rem;
-      }
-    }
-  }
-  #datosjson {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .info-adicional {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .video-container {
-    display: flex;
-    justify-content: center;
+
+  // Typography styles
+  h1 {
+    color: $primario;
+    font-size: clamp(2rem, 5vw, 3rem);
+    border-bottom: solid 1px $primario;
   }
 
-  .metadata {
-    display: flex;
-    color: $acento;
-    font-size: 0.8rem;
-    gap: 0.7rem;
-    li {
-      list-style: none;
-      margin: 0;
-    }
-  }
-  #terminos {
-    font-size: 0.6rem;
-    color: $gris;
-    text-decoration: underline;
-  }
   .price {
     font-size: 1.5rem;
     font-weight: bold;
     color: $primario;
+    
     sup {
       font-size: 0.5em;
       vertical-align: super;
     }
   }
-  #video-home {
-    width: 100%;
-    max-width: 337px;
-    margin: 0 auto;
-    position: relative;
-    border-radius: $radio;
-    overflow: hidden;
 
-    video {
-      width: 100%;
-      display: block;
-      border-radius: $radio;
-    }
-
-    #play {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      cursor: pointer;
-
-      svg {
-        width: 70px;
-        height: 70px;
-        path {
-          fill: $acento;
-        }
-      }
-    }
-  }
-</style>
-
-<script>
-  import { generateRandomSales } from "../../js/utils";
-
-  // Inicialización de mensajes de ventas
-  function initializeSalesMessage() {
-    const vendidosDiv = document.getElementById("vendidos");
-    const productId = document
-      .querySelector("[data-productid]")
-      ?.getAttribute("data-productid");
-
-    if (!vendidosDiv || !productId) return;
-
-    const cookieKey = `sales_${productId}`;
-    const existingNumber = document.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith(`${cookieKey}=`))
-      ?.split("=")[1];
-
-    let salesNumber = existingNumber
-      ? parseInt(existingNumber)
-      : generateRandomSales();    if (!existingNumber) {
-      const expires = new Date();
-      expires.setDate(expires.getDate() + 7);
-      document.cookie = `${cookieKey}=${salesNumber};expires=${expires.toUTCString()};path=/`;
-    }
-
-    // Solo mostrar el mensaje si hay ventas
-    if (salesNumber > 0) {
-      vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el último mes.`;
-    } else {
-      vendidosDiv.innerHTML = ''; // Limpiar el contenido si no hay ventas
-    }
-  }
-
-  // Inicialización de botones de compra
-  function initializeBuyNowButtons() {
-    const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-    buyNowButtons.forEach((button) =>
-      button.addEventListener("click", handleBuyNow)
-    );
-  }
-
-  async function handleBuyNow(event: Event) {
-    event.preventDefault();
-    const button = event.currentTarget as HTMLElement;
-    const productId = button.getAttribute("data-productid");
-    if (!productId) return;
-
-    const cartItems = getCartItemsFromCookie();
-    if (!cartItems.includes(productId)) {
-      cartItems.push(productId);
-      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
-      document.dispatchEvent(new CustomEvent("cart:updated"));
-    }
-
-    window.location.href = "/nvitaciones/checkout";
-  }
-
-  // Inicialización de la galería
-  function initializeGallery() {
-    const mainImage = document.querySelector(".main-image") as HTMLImageElement;
-    const mainImageContainer = document.querySelector(".main-image-container") as HTMLElement;
-    const thumbnails = document.querySelectorAll(".thumbnail-wrapper");
-
-    if (!mainImage || !thumbnails.length || !mainImageContainer) return;
-
-    // Almacenar la imagen original de Stripe
-    const stripeImage = mainImage.src;
-
-    // Marcar el primer thumbnail como activo inicialmente
-    thumbnails[0].classList.add("active");
-
-    thumbnails.forEach((thumb, index) => {
-      thumb.addEventListener("click", () => {
-        // Si es el primer thumbnail (imagen de Stripe), usar la URL original
-        const fullSizeImage = index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
-        if (!fullSizeImage) return;
-
-        mainImage.src = fullSizeImage;
-
-        // Actualizar la clase active
-        thumbnails.forEach((t) => t.classList.remove("active"));
-        thumb.classList.add("active");
-      });
-    });
-  }
-
-  // Inicialización del reproductor de video
-  function initializeVideoPlayer() {
-    const video = document.getElementById("video-producto") as HTMLVideoElement;
-    const playButton = document.getElementById("play") as HTMLDivElement;
-    const videoContainer = document.getElementById(
-      "video-home"
-    ) as HTMLDivElement;
-
-    if (!video || !playButton || !videoContainer) return;
-
-    // Limpiar eventos previos
-    const newVideo = video.cloneNode(true) as HTMLVideoElement;
-    const newPlayButton = playButton.cloneNode(true) as HTMLDivElement;
-
-    video.parentNode?.replaceChild(newVideo, video);
-    playButton.parentNode?.replaceChild(newPlayButton, playButton);
-
-    // Función para alternar reproducción
-    function togglePlay(e: Event) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (newVideo.paused) {
-        const playPromise = newVideo.play();
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              newPlayButton.style.display = "none";
-            })
-            .catch((error) => {
-              console.error("Error reproduciendo video:", error);
-              newPlayButton.style.display = "flex";
-            });
-        }
-      } else {
-        newVideo.pause();
-        newPlayButton.style.display = "flex";
-      }
-    }
-
-    // Eventos del video
-    newVideo.addEventListener("play", () => {
-      newPlayButton.style.display = "none";
-    });
-
-    newVideo.addEventListener("pause", () => {
-      newPlayButton.style.display = "flex";
-    });
-
-    newVideo.addEventListener("ended", () => {
-      newVideo.currentTime = 0;
-      newPlayButton.style.display = "flex";
-    });
-
-    // Agregar eventos de clic
-    newPlayButton.addEventListener("click", togglePlay);
-    newVideo.addEventListener("click", togglePlay);
-
-    // Asegurar estado inicial correcto
-    newPlayButton.style.display = "flex";
-  }
-
-  // Funciones auxiliares
-  function getCartItemsFromCookie() {
-    const cookie = document.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith("cartItems="))
-      ?.split("=")[1];
-
-    return cookie ? JSON.parse(cookie) : [];
-  }
-
-  // Eventos de inicialización
-  document.addEventListener("astro:page-load", () => {
-    initializeSalesMessage();
-    initializeBuyNowButtons();
-    initializeGallery();
-    initializeVideoPlayer();
-  });
-
-  // También ejecutar cuando el documento ya está cargado
-  if (document.readyState === "complete") {
-    initializeVideoPlayer();
-  }
-</script>
-
-<style lang="scss">
-  @use "../../estilos/_variables" as *;
-  #producto-conte {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .info-adicional {
-    margin: 2rem 0;
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-  }
-
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-
-    video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-    }
-  }
-
-  .beneficios {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-
-    .check-item {
-      position: relative;
-      padding-left: 1.8rem;
-      margin-bottom: 0.5rem;
-
-      &::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: $acento;
-        font-weight: bold;
-      }
-    }
-  }
-  #producto-conte {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .info-adicional {
-    margin: 2rem 0;
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-  }
-
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-
-    video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-    }
-  }
-
-  .beneficios {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-
-    .check-item {
-      position: relative;
-      padding-left: 1.8rem;
-      margin-bottom: 0.5rem;
-
-      &::before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: $acento;
-        font-weight: bold;
-      }
-    }
-  }
-  .metadata {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e9ecef;
-  }
-
-  .metadata p {
-    margin: 0.5rem 0;
-    color: #6c757d;
-    text-transform: capitalize;
-  }
-
-  .buttons-container {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
+  // Gallery styles
   .gallery-container {
     display: flex;
     gap: 1rem;
@@ -689,7 +352,6 @@ const productId = product.data.id;
   }
 
   .thumbnails-container {
-    width: 59px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -722,6 +384,7 @@ const productId = product.data.id;
       width: 40%;
     }
   }
+
   .main-image-container {
     flex: 1;
     position: relative;
@@ -739,9 +402,267 @@ const productId = product.data.id;
     }
   }
 
+  // Additional info styles
+  .info-adicional {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+  }
+
+  .beneficios {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+
+    .check-item {
+      list-style: none;
+      position: relative;
+      margin-bottom: 0.5rem;
+
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: -1.3rem;
+        color: $acento;
+        font-weight: bold;
+      }
+    }
+  }
+
+  // Metadata styles
+  .metadata {
+    display: flex;
+    color: $acento;
+    font-size: 0.8rem;
+    gap: 0.7rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+
+    li {
+      list-style: none;
+      margin: 0;
+    }
+  }
+
+  // Video styles
+  #video-home {
+    width: 100%;
+    max-width: 337px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: $radio;
+    overflow: hidden;
+
+    video {
+      width: 100%;
+      display: block;
+      border-radius: $radio;
+    }
+
+    #play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      cursor: pointer;
+
+      svg {
+        width: 70px;
+        height: 70px;
+        path {
+          fill: $acento;
+        }
+      }
+    }
+  }
+
+  // Utility styles
+  #vendidos {
+    font-size: 0.8rem;
+    color: $gris;
+  }
+
+  #terminos {
+    font-size: 0.6rem;
+    color: $gris;
+    text-decoration: underline;
+  }
+
+  #ahora p {
+    font-size: 0.8rem;
+    color: $acento;
+    margin-top: 1rem;
+    
+    b {
+      margin-right: 0.5rem;
+    }
+  }
+
   @media (max-width: 640px) {
     .buttons-container {
       flex-direction: column;
     }
   }
 </style>
+
+<script>
+  import { generateRandomSales } from "../../js/utils";
+
+  class ProductPage {
+    constructor() {
+      // Inicializar cuando el documento esté listo
+      document.addEventListener("astro:page-load", () => this.init());
+      if (document.readyState === "complete") {
+        this.init();
+      }
+    }
+
+    init() {
+      this.initializeSalesMessage();
+      this.initializeBuyNowButtons();
+      this.initializeGallery();
+      this.initializeVideoPlayer();
+    }
+
+    // Manejo de ventas aleatorias
+    initializeSalesMessage() {
+      const vendidosDiv = document.getElementById("vendidos");
+      const productId = document
+        .querySelector("[data-productid]")
+        ?.getAttribute("data-productid");
+
+      if (!vendidosDiv || !productId) return;
+
+      const cookieKey = `sales_${productId}`;
+      const existingNumber = document.cookie
+        .split(";")
+        .find((c) => c.trim().startsWith(`${cookieKey}=`))
+        ?.split("=")[1];
+
+      let salesNumber = existingNumber
+        ? parseInt(existingNumber)
+        : generateRandomSales();
+
+      if (!existingNumber) {
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 7);
+        document.cookie = `${cookieKey}=${salesNumber};expires=${expires.toUTCString()};path=/`;
+      }
+
+      if (salesNumber > 0) {
+        vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el último mes.`;
+      } else {
+        vendidosDiv.innerHTML = "";
+      }
+    }
+
+    // Manejo de galería de imágenes
+    initializeGallery() {
+      const mainImage = document.querySelector(".main-image") as HTMLImageElement;
+      const mainImageContainer = document.querySelector(".main-image-container") as HTMLElement;
+      const thumbnails = document.querySelectorAll(".thumbnail-wrapper");
+
+      if (!mainImage || !thumbnails.length || !mainImageContainer) return;
+
+      const stripeImage = mainImage.src;
+      thumbnails[0].classList.add("active");
+
+      thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener("click", () => {
+          const fullSizeImage = index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
+          if (!fullSizeImage) return;
+
+          mainImage.src = fullSizeImage;
+          thumbnails.forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+        });
+      });
+    }
+
+    // Manejo del reproductor de video
+    initializeVideoPlayer() {
+      const video = document.getElementById("video-producto") as HTMLVideoElement;
+      const playButton = document.getElementById("play") as HTMLDivElement;
+      const videoContainer = document.getElementById("video-home") as HTMLDivElement;
+
+      if (!video || !playButton || !videoContainer) return;
+
+      const newVideo = video.cloneNode(true) as HTMLVideoElement;
+      const newPlayButton = playButton.cloneNode(true) as HTMLDivElement;
+
+      video.parentNode?.replaceChild(newVideo, video);
+      playButton.parentNode?.replaceChild(newPlayButton, playButton);
+
+      const togglePlay = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (newVideo.paused) {
+          const playPromise = newVideo.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                newPlayButton.style.display = "none";
+              })
+              .catch((error) => {
+                console.error("Error reproduciendo video:", error);
+                newPlayButton.style.display = "flex";
+              });
+          }
+        } else {
+          newVideo.pause();
+          newPlayButton.style.display = "flex";
+        }
+      };
+
+      newVideo.addEventListener("play", () => newPlayButton.style.display = "none");
+      newVideo.addEventListener("pause", () => newPlayButton.style.display = "flex");
+      newVideo.addEventListener("ended", () => {
+        newVideo.currentTime = 0;
+        newPlayButton.style.display = "flex";
+      });
+
+      newPlayButton.addEventListener("click", togglePlay);
+      newVideo.addEventListener("click", togglePlay);
+      newPlayButton.style.display = "flex";
+    }
+
+    // Manejo de botones de compra
+    initializeBuyNowButtons() {
+      const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
+      buyNowButtons.forEach(button =>
+        button.addEventListener("click", this.handleBuyNow)
+      );
+    }
+
+    private handleBuyNow(event: Event) {
+      event.preventDefault();
+      const button = event.currentTarget as HTMLElement;
+      const productId = button.getAttribute("data-productid");
+      if (!productId) return;
+
+      const cartItems = this.getCartItemsFromCookie();
+      if (!cartItems.includes(productId)) {
+        cartItems.push(productId);
+        document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+        document.dispatchEvent(new CustomEvent("cart:updated"));
+      }
+
+      window.location.href = "/nvitaciones/checkout";
+    }
+
+    private getCartItemsFromCookie(): string[] {
+      const cookie = document.cookie
+        .split(";")
+        .find((c) => c.trim().startsWith("cartItems="))
+        ?.split("=")[1];
+
+      return cookie ? JSON.parse(cookie) : [];
+    }
+  }
+
+  // Inicializar la página
+  new ProductPage();
+</script>
