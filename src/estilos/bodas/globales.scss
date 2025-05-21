@@ -265,50 +265,50 @@ b {
   visibility: hidden;
 }
 
-.gale{
+.gale {
+  margin: 0rem 0 $margen 0;
 
-  // $numero : var(--num);
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primario) var(--fondo);
+  // Reglas de scrollbar movidas antes de las reglas anidadas
+  & {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primario) var(--fondo);
+    }
+
+    *::-webkit-scrollbar {
+      height: 10px;
+      width: 10px;
+    }
+    *::-webkit-scrollbar-track {
+      border-radius: 50px;
+      background-color: var(--acento);
+    }
+
+    *::-webkit-scrollbar-track:hover {
+      background-color: var(--acento);
+    }
+
+    *::-webkit-scrollbar-track:active {
+      background-color: var(--acento);
+    }
+
+    *::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      background-color: var(--gris);
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+      background-color: var(--acento);
+    }
+
+    *::-webkit-scrollbar-thumb:active {
+      background-color: var(--acento);
+    }
   }
 
-  /* Chrome, Edge and Safari */
-  *::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
-  }
-  *::-webkit-scrollbar-track {
-    border-radius: 50px;
-    background-color: var(--acento);
-  }
-
-  *::-webkit-scrollbar-track:hover {
-    background-color: var(--acento);
-  }
-
-  *::-webkit-scrollbar-track:active {
-    background-color: var(--acento);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: var(--gris);
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background-color: var(--acento);
-  }
-
-  *::-webkit-scrollbar-thumb:active {
-    background-color: var(--acento);
-  }
-
-    margin: 0rem 0 $margen 0;
-
-  $min : -16deg;
-  $max : 16deg;
+  // Resto de las reglas
+  $min: -16deg;
+  $max: 16deg;
   @for $i from 1 through 10 {
     img:nth-child(#{$i}) {
       transform: rotate(
