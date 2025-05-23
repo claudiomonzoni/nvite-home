@@ -20,6 +20,8 @@ import PreviewModal from "../../components/PreviewModal.astro";
 
 // Datos
 import nvitacionesData from "./nvitaciones.json";
+import BannerGeneral from "../../components/BannerGeneral.astro";
+import Caracteristicas from "../../components/Caracteristicas.astro";
 
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -244,6 +246,60 @@ const productId = product.data.id;
       </div>
     </div>
 
+       {
+      nvitacionInfo.version === 'Esencial' ? (
+        null
+      ) : (
+         nvitacionInfo && nvitacionInfo.muestra && (
+          <div class="BannerGeneralProducto">
+            <BannerGeneral
+              encabezado="Confirmación de asistencia"
+              texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+              tema="secundario azul"
+              icono="mdi:archive-clock-outline"
+              urlImagen="../assets/home/gale/confirmacion.webp"
+              izquierda={true}
+            >
+            </BannerGeneral>
+
+                <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="Invitación con mapas"
+        texto="Tus invitados sabrán exactamente como llegar."
+        icono="mdi:map-check"
+        fondo="/fondo-nvite-caracteristicas.png"
+      />
+
+      <Caracteristicas
+        encabezado="Invitación con mesa de regalos"
+        texto="Sugiere que te gustaría de regalo."
+        icono="mdi:gift-open"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+      />
+
+      <Caracteristicas
+        encabezado="Invitación con itinerario"
+        texto="Lista cada momento importante de tu evento"
+        icono="mdi:gift-open"
+        fondo="fondo-nvite-caracteristicas-3.png"
+      />
+
+      <!-- <Caracteristicas
+        encabezado="animacón"
+        texto="Agrega hasta 6 fotos."
+        icono="/ico-nvite-fotos.svg"
+        fondo="fondo-nvite-caracteristicas-4.png"
+      /> -->
+    </div>
+          </div>
+  
+  
+      )
+     )
+     }
+
+  
+
     <RelatedProducts
       currentProductId={product.id}
       category={nvitacionInfo?.categoria ||
@@ -303,7 +359,29 @@ const productId = product.data.id;
       display: grid;
       gap: 1rem;
     }
-
+    .liga-muetra {
+      display: flex;
+      align-items: center;
+      height: 3rem;
+      background-color: $gris;
+      border-radius: calc($radio + 0.5rem);
+      padding: $margen-min .6rem;
+      a{
+        margin: 0;
+        transform-origin: left;
+      }
+      @include cel {
+        height: auto;
+        padding: $margen-min;
+        justify-content: center;
+        border-radius: calc($radio + 0.7rem);
+        a{
+          width: 100%;
+          text-align: center;
+          transform-origin: center;
+        }
+      }
+    }
     .buttons-container {
       display: grid;
       align-self: flex-start;
@@ -330,7 +408,11 @@ const productId = product.data.id;
       height: auto;
     }
   }
+// banner general
+  .BannerGeneralProducto {
+    margin: $margen 0 0 0;
 
+  }
   // Typography styles
   h1 {
     color: $primario;
@@ -342,7 +424,7 @@ const productId = product.data.id;
     font-size: 1.5rem;
     font-weight: bold;
     color: $primario;
-    
+
     sup {
       font-size: 0.5em;
       vertical-align: super;
@@ -499,7 +581,7 @@ const productId = product.data.id;
     font-size: 0.8rem;
     color: $acento;
     margin-top: 1rem;
-    
+
     b {
       margin-right: 0.5rem;
     }
@@ -566,8 +648,12 @@ const productId = product.data.id;
 
     // Manejo de galería de imágenes
     initializeGallery() {
-      const mainImage = document.querySelector(".main-image") as HTMLImageElement;
-      const mainImageContainer = document.querySelector(".main-image-container") as HTMLElement;
+      const mainImage = document.querySelector(
+        ".main-image"
+      ) as HTMLImageElement;
+      const mainImageContainer = document.querySelector(
+        ".main-image-container"
+      ) as HTMLElement;
       const thumbnails = document.querySelectorAll(".thumbnail-wrapper");
 
       if (!mainImage || !thumbnails.length || !mainImageContainer) return;
@@ -577,7 +663,8 @@ const productId = product.data.id;
 
       thumbnails.forEach((thumb, index) => {
         thumb.addEventListener("click", () => {
-          const fullSizeImage = index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
+          const fullSizeImage =
+            index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
           if (!fullSizeImage) return;
 
           mainImage.src = fullSizeImage;
@@ -589,9 +676,13 @@ const productId = product.data.id;
 
     // Manejo del reproductor de video
     initializeVideoPlayer() {
-      const video = document.getElementById("video-producto") as HTMLVideoElement;
+      const video = document.getElementById(
+        "video-producto"
+      ) as HTMLVideoElement;
       const playButton = document.getElementById("play") as HTMLDivElement;
-      const videoContainer = document.getElementById("video-home") as HTMLDivElement;
+      const videoContainer = document.getElementById(
+        "video-home"
+      ) as HTMLDivElement;
 
       if (!video || !playButton || !videoContainer) return;
 
@@ -623,8 +714,14 @@ const productId = product.data.id;
         }
       };
 
-      newVideo.addEventListener("play", () => newPlayButton.style.display = "none");
-      newVideo.addEventListener("pause", () => newPlayButton.style.display = "flex");
+      newVideo.addEventListener(
+        "play",
+        () => (newPlayButton.style.display = "none")
+      );
+      newVideo.addEventListener(
+        "pause",
+        () => (newPlayButton.style.display = "flex")
+      );
       newVideo.addEventListener("ended", () => {
         newVideo.currentTime = 0;
         newPlayButton.style.display = "flex";
@@ -637,8 +734,10 @@ const productId = product.data.id;
 
     // Manejo de botones de compra
     initializeBuyNowButtons() {
-      const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
-      buyNowButtons.forEach(button =>
+      const buyNowButtons = document.querySelectorAll(
+        '[data-action="buy-now"]'
+      );
+      buyNowButtons.forEach((button) =>
         button.addEventListener("click", this.handleBuyNow)
       );
     }
@@ -670,30 +769,30 @@ const productId = product.data.id;
 
     // Manejo del modal de previsualización
     initializePreviewModal() {
-      const previewBtn = document.getElementById('preview-btn');
-      const modal = document.getElementById('preview-modal');
-      const closeBtn = modal?.querySelector('.close-btn');
-      const backdrop = modal?.querySelector('.modal-backdrop');
+      const previewBtn = document.getElementById("preview-btn");
+      const modal = document.getElementById("preview-modal");
+      const closeBtn = modal?.querySelector(".close-btn");
+      const backdrop = modal?.querySelector(".modal-backdrop");
 
       const openModal = () => {
-        modal?.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        modal?.dispatchEvent(new CustomEvent('modal:open'));
+        modal?.classList.add("active");
+        document.body.style.overflow = "hidden";
+        modal?.dispatchEvent(new CustomEvent("modal:open"));
       };
 
       const closeModal = () => {
-        modal?.classList.remove('active');
-        document.body.style.overflow = '';
-        modal?.dispatchEvent(new CustomEvent('modal:close'));
+        modal?.classList.remove("active");
+        document.body.style.overflow = "";
+        modal?.dispatchEvent(new CustomEvent("modal:close"));
       };
 
-      previewBtn?.addEventListener('click', (e) => {
+      previewBtn?.addEventListener("click", (e) => {
         e.preventDefault();
         openModal();
       });
 
-      closeBtn?.addEventListener('click', closeModal);
-      backdrop?.addEventListener('click', closeModal);
+      closeBtn?.addEventListener("click", closeModal);
+      backdrop?.addEventListener("click", closeModal);
     }
   }
 

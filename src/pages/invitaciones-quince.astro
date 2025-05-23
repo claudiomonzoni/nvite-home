@@ -230,6 +230,131 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
   <div id="precios" class="grid contenido">
     <Banner dondeEstoy="quince" />
   </div>
+  
+  <section class="grid contenido">
+    <BannerGeneral
+      encabezado="Confirmación de asistencia"
+      texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+      tema="primario azul"
+      icono="mdi:archive-clock-outline"
+      urlImagen="../assets/home/gale/confirmacion.webp"
+    >
+      <Btn
+        liga="/bodas"
+        texto="Bodas"
+        clases="btn-claro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="mdi:find-love" size={25} />
+      </Btn>
+
+      <Btn
+        liga="/invitaciones-quince"
+        texto="XV años"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="mdi:find-love" size={25} />
+      </Btn>
+    </BannerGeneral>
+    <BannerGeneral
+      encabezado="Invitación digital con Música"
+      texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
+      tema="secundario "
+      icono="mdi:music"
+      izquierda={true}
+      urlImagen="../assets/home/gale/musica.webp"
+    />
+
+    <BannerGeneral
+      encabezado="Invitación digital con Frase de amor y galería de fotos"
+      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
+      tema="primario"
+      icono="mdi:image-plus"
+      urlImagen="../assets/home/gale/frase.webp"
+    />
+    <!-- <BannerGeneral
+      encabezado="Administra tus invitados"
+      texto="De manera <b>fácil y eficiente</b>, agrega, edita, envía y controla todo desde el panel de invitados"
+      tema="secundario"
+      izquierda={true}
+      icono="mdi:book-edit"
+      urlImagen="../assets/home/gale/panel.webp"
+    /> -->
+    <div class="flex">
+      <div class="cartaBase2">
+        <h2>Invitación personalizada para cada invitado</h2>
+        <p>
+          Haz que tus invitados se sientan especiales desde el primer momento. <b
+            >Cada invitación llevará el nombre del invitado o su familia,</b
+          > creando una experiencia única y personal para tu evento."
+        </p>
+        <img
+          id="decor"
+          src="/decoracion-muestra-invitacion-digital-nvite.webp"
+          alt="decoracion invitacion"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="imaCelular"
+          src="/muestra-invitacion-digital-nvite-personalizada.webp"
+          alt="invitacion personalizada"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="cartaBase2">
+        <h2>Gestiona tus pases</h2>
+        <p>
+          <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente
+          desde su invitación digital, dándote tranquilidad y el control que necesitas
+          para organizar tu evento."
+        </p>
+        <img
+          src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
+          alt="invitacion con confirmación de asistencia"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <!-- carcateristicas -->
+
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="Invitación con mapas"
+        texto="Tus invitados sabrán exactamente como llegar."
+        icono="mdi:map-check"
+        fondo="/fondo-nvite-caracteristicas.png"
+      />
+
+      <Caracteristicas
+        encabezado="Invitación con mesa de regalos"
+        texto="Sugiere que te gustaría de regalo."
+        icono="mdi:gift-open"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+      />
+
+      <Caracteristicas
+        encabezado="Invitación con itinerario"
+        texto="Lista cada momento importante de tu evento"
+        icono="mdi:gift-open"
+        fondo="fondo-nvite-caracteristicas-3.png"
+      />
+
+      <!-- <Caracteristicas
+        encabezado="animacón"
+        texto="Agrega hasta 6 fotos."
+        icono="/ico-nvite-fotos.svg"
+        fondo="fondo-nvite-caracteristicas-4.png"
+      /> -->
+    </div>
+
+  </section>
 
   <section class="grid contenido">
     <div class="flex">
