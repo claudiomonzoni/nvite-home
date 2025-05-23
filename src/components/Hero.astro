@@ -13,7 +13,7 @@ import { Icon } from "astro-icon/components";
 
 <Nav />
 
-<section class="grid pantalla-der">
+<section class="grid contenido">
   <div id="hero">
     <div class="izq anime">
       <div class="bandeja anime">
@@ -62,10 +62,11 @@ import { Icon } from "astro-icon/components";
 
   #hero {
     background: white;
-    border-top-left-radius: $margen-min;
-    border-bottom-left-radius: $margen-min;
+    border-radius: $radio;
+    // border-top-left-radius: $margen-min;
+    // border-bottom-left-radius: $margen-min;
     display: flex;
-    margin-top: 8rem;
+    margin-top: 6rem;
     @include cel {
       margin-top: 13rem;
       border-radius: 1.5rem;

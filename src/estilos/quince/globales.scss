@@ -186,8 +186,9 @@ b {
     text-align: center;
   }
   @if $claro {
-    background: var(--secundario);
+    background: var(--acento);
     color: var(--primario);
+    border-radius: $radio;
     border: none !important;
   }
 }

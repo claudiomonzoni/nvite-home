@@ -62,7 +62,6 @@ console.log(cartItemsCount + " items in cart");
                 >
                   <Icon name="whatsapp" size={25} />
                 </Btn>
-              
               </li>
             </>
           )
@@ -86,7 +85,7 @@ console.log(cartItemsCount + " items in cart");
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
-  .panel-home{
+  .panel-home {
     margin: 0;
   }
 
@@ -95,13 +94,10 @@ console.log(cartItemsCount + " items in cart");
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
-   
-    
     @include cel {
       margin: 0 $margen-cel;
       align-items: center;
     }
-
   }
 
   #logo {
@@ -113,8 +109,6 @@ console.log(cartItemsCount + " items in cart");
     }
   }
 
-
-
   .menu-items {
     display: flex;
     align-items: center;
@@ -124,29 +118,30 @@ console.log(cartItemsCount + " items in cart");
       display: flex;
       align-items: center;
       gap: $margen-min;
-
+      
     }
     @include cel {
-     ul li:last-child{
-       padding: 0 0 1rem 0;
-       margin: 0;
-     }
+      ul li:last-child {
+        padding: 0 0 1rem 0;
+        margin: 0;
+      }
     }
-
   }
 
   nav {
     position: fixed;
     z-index: 9999;
-    background-color: $secundario;
+    // background-color: $secundario;
+    background-color: rgba($fondoGlobal, 1);
+    backdrop-filter: blur(8px);
     width: 100%;
     padding: $margen-min $margen-cel;
     transition: all 0.3s ease;
-     border-bottom-right-radius: $radio;
-     border-bottom-left-radius: $radio;
+    border-bottom-right-radius: $radio;
+    border-bottom-left-radius: $radio;
 
     &.collapsed {
-      background-color: rgba($secundario, 0.85);
+      background-color: rgba($fondoGlobal, 0.85);
       backdrop-filter: blur(8px);
       padding: 0.5rem $margen-cel;
 
@@ -161,11 +156,10 @@ console.log(cartItemsCount + " items in cart");
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
-        
       }
       @include cel {
         .nav-content {
-            margin: 0;
+          margin: 0;
         }
       }
     }
@@ -185,11 +179,12 @@ console.log(cartItemsCount + " items in cart");
         position: fixed;
         left: 0;
         top: 4rem;
-        background-color: $secundario;
+    
+        background: linear-gradient(0deg, rgba($fondoGlobal, .5) 0%, rgba($fondoGlobal, 1) 50%);
+         backdrop-filter: blur(8px);
         border-bottom-right-radius: $radio;
-     border-bottom-left-radius: $radio;
+        border-bottom-left-radius: $radio;
       }
-
     }
   }
 
@@ -205,7 +200,7 @@ console.log(cartItemsCount + " items in cart");
     list-style: none;
     align-items: center;
     @include cel {
-      margin: .4rem;
+      margin: 0.4rem;
     }
   }
   #carrito {
@@ -236,7 +231,9 @@ console.log(cartItemsCount + " items in cart");
   import { getCartCookie } from "../../src/js/utils";
 
   function initializeCartCount() {
-    const countCartSpan = document.querySelector("#cart-count") as HTMLSpanElement;
+    const countCartSpan = document.querySelector(
+      "#cart-count"
+    ) as HTMLSpanElement;
     if (!countCartSpan) return;
 
     const updateCartValue = () => {
@@ -252,7 +249,7 @@ console.log(cartItemsCount + " items in cart");
 
     // Actualizar cuando cambie el carrito
     document.addEventListener("cart:updated", updateCartValue);
-    
+
     // Actualizar el valor inicial
     updateCartValue();
   }
@@ -292,7 +289,6 @@ console.log(cartItemsCount + " items in cart");
     const menuItems = document.querySelector(".menu-items");
 
     menuItems?.classList.toggle("active");
-
   }
 
   // Inicializar en la carga inicial

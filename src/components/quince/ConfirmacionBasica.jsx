@@ -57,7 +57,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
         
               <label for="comentarios">Escribenos tu <b>nombre completo</b> y cuantas personas asistiran:</label>
               <textarea name="comentarios" id="comentarios"></textarea>
-              <a href="#" className="btn desactivado" id="btnconfirmar">
+              <a href="#" className="btn-claro desactivado" id="btnconfirmar">
                 Confirmar
               </a>
             </form>

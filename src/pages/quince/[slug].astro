@@ -6,6 +6,7 @@ import Layout from "../../layouts/quince/Layout.astro";
 import Hero from "../../components/quince/Hero";
 import Footer from "../../components/quince/Footer.astro";
 import "../../estilos/quince/globales.scss";
+
 export async function getStaticPaths() {
   const quinces = await getCollection("quince", ({ data }) => {
     return !data.draft;
@@ -47,7 +48,6 @@ const { Content } = await render(quince);
     client:load
   />
 
-  <!--(esto estaba arriba): folder={quince.data.json} -->
 
   <Content />
   <section class="grid contenido">
