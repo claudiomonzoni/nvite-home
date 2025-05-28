@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import sanitize from "sanitize-html";
 import { Invitados, db } from "astro:db";
+import { v4 as uuidv4 } from 'uuid';
 
 export const POST: APIRoute = async ({ request }) => {
   const body = await request.json();
@@ -38,6 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
     // hacemos el reg en la bd
     const req = await db.insert(Invitados).values({
       usuarioId,
+      uuid: uuidv4(),
       nombre: sanitize(nombre),
       pases: sanitize(pases),
       mesa: sanitize(mesa),

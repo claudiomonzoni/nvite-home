@@ -2,9 +2,7 @@ import type { APIRoute } from "astro";
 import { Invitados, db, eq, and } from "astro:db";
 import { NvitaAuth } from "../../firebase/config";
 const usuarioEmail = NvitaAuth.currentUser?.email;
-
-
-
+console.log(Invitados)
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
@@ -24,7 +22,7 @@ export const GET: APIRoute = async ({ request }) => {
     //donde el id de la invitación debe de existir con el id del usuario que la creo
     const response = await db.select()
     .from(Invitados)
-    .where(and(eq(Invitados.id, Number(id)), eq(Invitados.usuarioId, Number(uid)))
+    .where(and(eq(Invitados.uuid, id), eq(Invitados.usuarioId, Number(uid)))
     )
    if (response.length === 0) {
     return new Response(JSON.stringify({ error: 'No invitado found' }), {
