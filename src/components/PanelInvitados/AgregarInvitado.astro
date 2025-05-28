@@ -35,7 +35,7 @@ const { usuarioId } = Astro.props;
 
 <dialog id="agrega-invitado-dialog" data-ref={usuarioId}>
   <div class="formulario">
-    <h2>Agrega un invitado a tu panel</h2>
+    <h2>Agregar invitado</h2>
     <form id="agregar-formu">
       <label for="nombre"
         >Nombre del invitado
@@ -112,13 +112,18 @@ const { usuarioId } = Astro.props;
         />
       </div>
 
-      <div id="mensaje-vip-container" class="mensaje-vip-container" style="display: none;">
-        <label for="mensajePersonalizado">Mensaje personalizado para invitado VIP</label>
+      <div
+        id="mensaje-vip-container"
+        class="mensaje-vip-container"
+        style="display: none;"
+      >
+        <label for="mensajePersonalizado"
+          >Mensaje personalizado para invitado VIP</label
+        >
         <textarea
           name="mensajePersonalizado"
           placeholder="Escribe un mensaje especial para este invitado VIP"
-          rows="3"
-        ></textarea>
+          rows="3"></textarea>
       </div>
 
       <input type="submit" value="Agregar invitación" />
@@ -155,7 +160,9 @@ const { usuarioId } = Astro.props;
   // Mostrar/ocultar campo de mensaje VIP cuando cambia el checkbox
   vipCheckbox?.addEventListener("change", () => {
     if (mensajeVipContainer) {
-      mensajeVipContainer.style.display = vipCheckbox.checked ? "block" : "none";
+      mensajeVipContainer.style.display = vipCheckbox.checked
+        ? "block"
+        : "none";
     }
   });
 
@@ -206,7 +213,9 @@ const { usuarioId } = Astro.props;
         formData?.get("InvitacionEnviada") === "on" ? true : false;
       const noAsiste = formData?.get("noAsiste") === "on" ? true : false;
       const tipoInvitacion = sanitize(formData.get("tipoInvitacion") as string);
-      const mensajePersonalizado = vip ? sanitize(formData.get("mensajePersonalizado") as string) : null;
+      const mensajePersonalizado = vip
+        ? sanitize(formData.get("mensajePersonalizado") as string)
+        : null;
 
       const req = await fetch("/api/addInvitados.json", {
         method: "POST",
@@ -255,102 +264,227 @@ const { usuarioId } = Astro.props;
   @use "../../estilos/_variables.scss" as *;
   dialog {
     border: none;
-    border-radius: $margen-cel;
-    padding: $margen-cel;
+    border-radius: 16px;
+    padding: 2.5rem;
     width: 100%;
-    max-width: 70%;
-    text-align: center;
+    max-width: min(90vw, 800px);
+    height: max-content;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $acento;
+      border-radius: 4px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 3rem;
+    }
+
     @include cel {
-      max-width: 90%;
-      padding: $margen-min;
-      form {
-        width: 90%;
+      max-width: 95%;
+      padding: 1.5rem;
+    }
+  }
+
+  .formulario {
+    h2 {
+      color: $acento;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 2.5rem;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: clamp(40px, 10%, 80px);
+        height: 3px;
+        background: $acento;
+        border-radius: 2px;
       }
     }
-    @extend .sombra;
   }
+
   form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
 
-    label {
-      flex: 1 0 70%;
-      text-align: left;
-      font-weight: bold;
-      color: $acento;
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
     }
-    input,
+
+    @include cel {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: $primario;
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+
+      &[for="tipoInvitacion"] {
+        @media (min-width: 768px) {
+          grid-column: span 2;
+        }
+      }
+    }
+    input {
+    padding:0 1rem;
+    }
+    input[type="submit"] {
+    padding:.4rem 1rem;
+    }
     select,
     textarea {
-      border-radius: 5px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: clamp(0.6rem, 1vw, 1rem);
+      font-size: clamp(0.9rem, 1.5vw, 1rem);
+      transition: all 0.2s ease;
+      background: white;
       width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.6rem;
+
+      &:focus {
+        border-color: $acento;
+        box-shadow: 0 0 0 3px rgba($acento, 0.1);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #999;
+        font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+      }
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+      padding-right: 2.5rem;
+
+      @media (min-width: 768px) {
+        grid-column: span 2;
+        max-width: 100%;
+      }
+    }
+  }
+
+  #check {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin: 1rem 0;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include cel {
+      grid-template-columns: 1fr;
     }
   }
 
   .mensaje-vip-container {
-    width: 100%;
+    grid-column: 1 / -1;
+    background: rgba($secundario, 0.05);
+    border: 1px solid rgba($secundario, 0.1);
+    border-radius: 12px;
+    padding: clamp(1rem, 2vw, 1.5rem);
     margin: 1rem 0;
-    padding: 1rem;
-    background-color: #fff3cd;
-    border-radius: 5px;
-    border: 1px solid #ffeeba;
-    
+    transition: all 0.3s ease;
+
     textarea {
+      min-height: clamp(100px, 15vh, 150px);
       resize: vertical;
-      min-height: 100px;
+      margin-top: 0.5rem;
       width: 100%;
-      border: 1px solid #ddd;
+
       &:focus {
-        outline: none;
-        border-color: $acento;
+        border-color: $secundario;
+        box-shadow: 0 0 0 3px rgba($secundario, 0.1);
       }
     }
   }
 
-  button,
   input[type="submit"] {
-    background-color: $acento;
-    border-radius: 5px;
-    color: #fff;
+    grid-column: 1 / -1;
+    background: $acento !important;
+    color: white;
+    font-weight: 600;
+    padding: clamp(0.8rem, 2vw, 1.2rem);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
     border: none;
-    display: inline-block;
-    text-align: center;
-    padding: 0.3rem 0.8rem;
-    font-weight: bold;
+    margin-top: 1rem;
+    width: 100%;
+    font-size: clamp(1rem, 1.5vw, 1.1rem);
 
-    svg {
-      vertical-align: middle;
-      margin-right: 0.2rem;
+    @media (min-width: 768px) {
+      max-width: 300px;
+      justify-self: center;
     }
-    @include cel {
-      margin-top: 0.5rem;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba($acento, 0.2);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
-  #check {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: $margen-min;
-    gap: 1.5rem;
-  }
+
   #cerrar-dialog {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: $acento;
-    border-radius: 100px;
-    color: #fff;
-    border: none;
-    display: inline-block;
-    text-align: center;
-    padding: 0.5rem 0.8rem;
-    font-weight: bold;
-    @extend .sombra;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: white;
+    color: $primario;
+    width: clamp(32px, 4vw, 40px);
+    height: clamp(32px, 4vw, 40px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f8f9fa;
+      transform: rotate(90deg);
+    }
   }
 </style>
