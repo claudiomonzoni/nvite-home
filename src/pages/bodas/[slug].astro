@@ -38,7 +38,6 @@ const mes = Nfecha.toLocaleDateString("es-MX", {
 });
 const ano = Nfecha.getFullYear().toString();
 
-console.log(boda.data.theme)
 
 ---
 
@@ -47,6 +46,7 @@ console.log(boda.data.theme)
   url={base.toString()}
   cover={boda.data.cover}
   paleta={boda.data.paleta}
+  theme={boda.data.theme}
 >
   <Hero
     nombres={boda.data.novios}

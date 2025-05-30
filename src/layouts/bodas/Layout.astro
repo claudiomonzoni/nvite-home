@@ -1,18 +1,35 @@
 ---
+interface Theme {
+  name?: string;
+  colors?: {
+    primary?: string;
+    secondary?: string;
+    accent?: string;
+    background?: string;
+    text?: string;
+  };
+  typography?: {
+    heading?: string;
+    body?: string;
+  };
+}
+
 interface Props {
   title: string;
   url?: string;
   cover?: string;
   paleta?: string;
+  theme?: Theme;
 }
 import "../../estilos/bodas/globales.scss";
-const { title, url, paleta, cover } = Astro.props;
+const { title, url, paleta, cover, theme } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const portadaOG = `https://nvitaciones.com${cover}`;
+const {name, colors, typography} = theme
 ---
 
 <!doctype html>
-<html lang="es" id=`paleta-${paleta}` data-paleta={paleta}>
+<html lang="es" id=`paleta-${paleta}` data-paleta={paleta} data-theme={name}>
   <head>
     <meta charset="UTF-8" />
     <meta

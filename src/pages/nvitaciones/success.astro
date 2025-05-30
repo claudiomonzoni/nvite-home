@@ -26,7 +26,8 @@ Astro.cookies.delete("cartItems");
       <div class="success-icon">✓</div>
       <h1>¡Gracias por tu compra, {name}!</h1>
       <p>Hemos enviado el recibo a {email}</p>
-      <p class="cart-info">Tu carrito ha sido vaciado</p>
+      <p class="cart-info">Por favor, guarda tu numero de compra para futuras consultas</p>
+      <p class="cart-info">Tu numero de compra es: {session.metadata.reservation_number}</p>
       <a href="/" class="success-btn">Volver al inicio</a>
     </div>
   </div>
