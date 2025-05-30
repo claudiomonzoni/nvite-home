@@ -6,6 +6,21 @@ const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
 
+// Definir el esquema del theme
+const themeSchema = z.object({
+  name: z.string(),
+  colors: z.object({
+    primary: z.string().optional(),
+    secondary: z.string().optional(),
+    accent: z.string().optional(),
+    background: z.string().optional(),
+    text: z.string().optional()
+  }).optional(),
+  typography: z.object({
+    heading: z.string().optional(),
+    body: z.string().optional()
+  }).optional()
+}).optional();
 
 // 3. Define your collection(s)
 const bodas = defineCollection({
@@ -75,6 +90,7 @@ const bodas = defineCollection({
           })
         )
         .optional(),
+      theme: themeSchema
     }),
 });
 
@@ -133,6 +149,7 @@ const quince = defineCollection({
     banco: z.string().optional(),
     cuenta: z.number().optional(),
     paleta: z.string().optional(),
+    theme: themeSchema
   }),
 });
 
