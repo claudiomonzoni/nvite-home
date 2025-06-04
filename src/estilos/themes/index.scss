@@ -1,0 +1,30 @@
+// Importar variables base
+@use '_variables' as *;
+
+// Importar temas
+@use 'minimalista/bodas' as minimalista-bodas;
+@use 'elegante/bodas' as elegante-bodas;
+// @use 'minimalista/quince' as minimalista-quince;
+// @use 'moderno/bodas' as moderno-bodas;
+// @use 'moderno/quince' as moderno-quince;
+
+// Estilos base para el contenedor de temas
+[data-theme] {
+  @include theme-container;
+}
+
+// Debug para verificar que los temas se están cargando
+[data-theme="elegante"] {
+  border: 2px solid red !important; // Temporal para debug
+  background-color: var(--color-background) !important;
+}
+
+[data-theme="minimalista"] {
+  border: 2px solid blue !important; // Temporal para debug
+}
+
+// Asegurar que los estilos del tema elegante tengan prioridad
+.theme-elegante {
+  border: 2px solid red !important;
+  background-color: var(--color-background) !important;
+} 

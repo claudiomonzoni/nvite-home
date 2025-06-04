@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 
 export type InvitadoProps = {
   id: number;
+  uuid: string;
   usuarioId: number;
   nombre: string;
   pases: string;
@@ -106,13 +107,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
         <button
           class="btn-icon"
           data-edit
-          data-id={invitadoData.id}
+          data-id={invitadoData.uuid}
           data-uid={invitadoData.usuarioId}
         >
           <Icon name="mdi:account-edit-outline" size={20} />
           <span>Editar</span>
         </button>
-        <button class="btn-icon delete" data-delete data-id={invitadoData.id}>
+        <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
           <Icon name="borrar" size={20} />
           <span>Borrar</span>
         </button>
@@ -137,7 +138,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
           href="#"
           class="btn-action copy"
           id="copiar"
-          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}&uid=${invitadoData.usuarioId}`}
+          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}&uid=${invitadoData.usuarioId}`}
         >
           <Icon name="mdi:content-copy" size={20} />
           <span>Copiar enlace</span>

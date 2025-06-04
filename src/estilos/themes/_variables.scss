@@ -1,0 +1,26 @@
+// Variables base para todos los temas
+$theme-transition: all 0.3s ease-in-out;
+
+// Mixins comunes para temas
+@mixin theme-transition {
+  transition: $theme-transition;
+}
+
+@mixin theme-container {
+  @include theme-transition;
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Funciones de utilidad para temas
+@function get-theme-color($theme, $color-name) {
+  @return map-get(map-get($theme, 'colors'), $color-name);
+}
+
+@function get-theme-typography($theme, $type) {
+  @return map-get(map-get($theme, 'typography'), $type);
+}
+
+@function get-theme-spacing($theme, $size) {
+  @return map-get(map-get($theme, 'spacing'), $size);
+} 

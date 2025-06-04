@@ -2,14 +2,14 @@ import type { APIRoute } from "astro";
 import { db, Invitados, eq } from "astro:db";
 
 export const DELETE: APIRoute = async ({ params }) => {
-  const id = params.id;
+  const uuid = params.id;
   try {
-    if (!id) {
-      throw new Error("no existe o fue enviado el id del usuario");
+    if (!uuid) {
+      throw new Error("no existe o fue enviado el uuid del usuario");
     }
     await db
       .delete(Invitados)
-      .where(eq(Invitados.id, Number(id)));
+      .where(eq(Invitados.uuid, uuid));
 
     return new Response(null, { status: 204 });
   } catch (e) {

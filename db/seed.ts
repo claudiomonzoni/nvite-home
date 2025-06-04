@@ -25,6 +25,7 @@ export default async function seed() {
   await db.insert(Invitados).values([
     {
       id: 1,
+      uuid: "00000000-0000-0000-0000-000000000001",
       usuarioId: 1,
       nombre: "Ricardo Salinas Pliego",
       pases: "3",
@@ -39,6 +40,7 @@ export default async function seed() {
     },
     {
       id: 2,
+      uuid: "00000000-0000-0000-0000-000000000002",
       usuarioId: 2,
       nombre: "Familia Slim",
       pases: "20",
@@ -53,6 +55,7 @@ export default async function seed() {
     },
     {
       id: 3,
+      uuid: "00000000-0000-0000-0000-000000000003",
       usuarioId: 2,
       nombre: "Los gorrones",
       pases: "209",
@@ -66,6 +69,7 @@ export default async function seed() {
     },
     {
       id: 4,
+      uuid: "00000000-0000-0000-0000-000000000004",
       usuarioId: 3,
       nombre: "Los Familiares de la quinceañera",
       pases: "20",
@@ -77,9 +81,9 @@ export default async function seed() {
       noAsiste: false,
       tipoInvitacion: "grupal"
     },
-    // Nuevos invitados para usuario 1
     {
       id: 5,
+      uuid: "00000000-0000-0000-0000-000000000005",
       usuarioId: 1,
       nombre: "Familia Martínez",
       pases: "4",
@@ -93,6 +97,7 @@ export default async function seed() {
     },
     {
       id: 6,
+      uuid: "00000000-0000-0000-0000-000000000006",
       usuarioId: 1,
       nombre: "Ana López y Familia",
       pases: "3",
@@ -106,6 +111,7 @@ export default async function seed() {
     },
     {
       id: 7,
+      uuid: "00000000-0000-0000-0000-000000000007",
       usuarioId: 1,
       nombre: "Carlos Ramírez",
       pases: "2",
@@ -120,6 +126,7 @@ export default async function seed() {
     },
     {
       id: 8,
+      uuid: "00000000-0000-0000-0000-000000000008",
       usuarioId: 1,
       nombre: "Grupo de la Universidad",
       pases: "6",
@@ -133,6 +140,7 @@ export default async function seed() {
     },
     {
       id: 9,
+      uuid: "00000000-0000-0000-0000-000000000009",
       usuarioId: 1,
       nombre: "Patricia Hernández",
       pases: "1",
@@ -146,6 +154,7 @@ export default async function seed() {
     },
     {
       id: 10,
+      uuid: "00000000-0000-0000-0000-000000000010",
       usuarioId: 1,
       nombre: "Familia González",
       pases: "5",
@@ -159,6 +168,7 @@ export default async function seed() {
     },
     {
       id: 11,
+      uuid: "00000000-0000-0000-0000-000000000011",
       usuarioId: 1,
       nombre: "Roberto Díaz y Esposa",
       pases: "2",
@@ -172,6 +182,7 @@ export default async function seed() {
     },
     {
       id: 12,
+      uuid: "00000000-0000-0000-0000-000000000012",
       usuarioId: 1,
       nombre: "María Torres",
       pases: "2",
@@ -185,6 +196,7 @@ export default async function seed() {
     },
     {
       id: 13,
+      uuid: "00000000-0000-0000-0000-000000000013",
       usuarioId: 1,
       nombre: "Familia Vargas",
       pases: "4",
@@ -199,6 +211,7 @@ export default async function seed() {
     },
     {
       id: 14,
+      uuid: "00000000-0000-0000-0000-000000000014",
       usuarioId: 1,
       nombre: "Grupo del Trabajo",
       pases: "8",

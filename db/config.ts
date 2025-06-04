@@ -11,8 +11,8 @@ const Usuario = defineTable({
 
 const Invitados = defineTable({
   columns: {
-    // id: column.number({ default: sql`RANDOM()` }),
     id: column.number({ primaryKey: true }),
+    uuid: column.text({ unique: true, optional: true }),
     usuarioId: column.number({references: () => Usuario.columns.id}),
     nombre: column.text(),
     pases: column.text(),

@@ -1,0 +1,42 @@
+@use '../_variables' as *;
+@use './_variables' as *;
+
+[data-theme="minimalista"] {
+  // Estilos base
+  background-color: get-theme-color($minimalista-theme, 'background');
+  color: get-theme-color($minimalista-theme, 'text');
+  font-family: get-theme-typography($minimalista-theme, 'body');
+
+  // Estilos para el hero
+  .hero {
+    background-color: get-theme-color($minimalista-theme, 'background');
+    padding: get-theme-spacing($minimalista-theme, 'large');
+    
+    &__title {
+      color: get-theme-color($minimalista-theme, 'primary');
+      font-family: get-theme-typography($minimalista-theme, 'heading');
+    }
+
+    &__subtitle {
+      color: get-theme-color($minimalista-theme, 'accent');
+      font-family: get-theme-typography($minimalista-theme, 'accent');
+    }
+  }
+
+  // Estilos para contenido
+  .contenido {
+    padding: get-theme-spacing($minimalista-theme, 'medium');
+  }
+
+  // Estilos para encabezados
+  h1, h2, h3, h4, h5, h6 {
+    color: get-theme-color($minimalista-theme, 'primary');
+    font-family: get-theme-typography($minimalista-theme, 'heading');
+  }
+
+  // Estilos para elementos de acento
+  .accent-text {
+    color: get-theme-color($minimalista-theme, 'accent');
+    font-family: get-theme-typography($minimalista-theme, 'accent');
+  }
+} 
