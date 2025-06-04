@@ -615,77 +615,15 @@ input::placeholder {
 }
 
 #choro {
-  display: flex;
+
   position: relative;
-
-  #play {
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1em;
-    @extend .sombra;
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-    cursor: pointer;
-    path {
-      fill: $acento;
-    }
-  }
-  #info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 2;
-    text-align: left;
-    color: $primario;
-    padding: $margen;
-    
-    @include cel {
-      p {
-        max-width: 100%;
-      }
-      padding: $margen-cel;
-      background-position: top center;
-      background-size: 110%;
-    }
-  }
-
-  #video-home {
-    position: relative;
-    flex: 1;
-    justify-content: left;
-    padding: $margen-cel 0 0 0;
-    .mostrando {
-      display: block;
-    }
-    .escondido {
-      display: none;
-    }
-    video {
-      width: 70%;
-      height: auto;
-    }
-  }
+  padding: $margen;
+  text-align: center;
   @include cel {
-    flex-wrap: wrap;
-    #info,
-    #video-home {
-      flex: 1 0 100%;
-    }
-    #video-home {
-      padding: 0 0 0 0;
-      display: flex;
-      justify-content: center;
-      video {
-        width: 85%;
-      }
-    }
+    padding: $margen $margen-cel;
   }
+
+ 
 }
 
 #video {
