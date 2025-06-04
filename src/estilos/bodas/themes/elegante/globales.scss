@@ -1,0 +1,728 @@
+@use "../../variables" as *;
+
+// @import url("https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@300;400;700&family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+html {
+  box-sizing: border-box;
+  font-size: clamp(10px, 0.9vw, 22px);
+  font-family: $encabezados, sans-serif;
+  font-weight: 100;
+  background: #fff6f0;
+  scroll-behavior: smooth;
+  letter-spacing: 0.02em;
+  line-height: 1.3em;
+  @include hd {
+    font-size: clamp(10px, 0.9vw, 20px);
+  }
+  @include cel {
+    font-size: clamp(16px, 1.8vw, 18px);
+  }
+  @include hdplus {
+    font-size: clamp(14px, 7vw, 22px);
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  position: relative;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1em;
+  font-family: $encabezados, serif;
+  font-weight: bold;
+  padding-bottom: 0.7rem;
+  color: var(--secundario);
+}
+h1 {
+  font-size: clamp(2rem, 3.6vw, 6vw);
+}
+h2 {
+  font-size: clamp(2.2em, 2vw, 30vw);
+  color: var(--acento);
+  @include hd {
+    font-size: clamp(3em, 2vw, 50vw);
+  }
+}
+
+ol,
+ul {
+  list-style: none;
+}
+li {
+  list-style: disc;
+  /* list-style-position: inside; */
+  margin-left: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-size: cover;
+  shape-margin: 0.75rem;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  color: var(--primario);
+  @extend .anime;
+  &:hover {
+    transform: scale(1.05);
+  }
+  img,
+  svg {
+    vertical-align: middle;
+  }
+}
+.selected {
+  color: var(--acento);
+  text-decoration: underline;
+  font-weight: 700;
+}
+p {
+  margin-bottom: 0.6rem;
+  @include cel {
+    line-height: 1.4;
+  }
+  color: var(--primario);
+}
+p:last-child {
+  margin-bottom: 0rem;
+}
+b {
+  font-weight: bold;
+}
+mark {
+  background-color: var(--acento);
+  color: white;
+  padding: 0 0.3rem;
+  border-radius: 0.2rem;
+}
+//flex
+.flex {
+  display: flex;
+  gap: $margen-min;
+  flex-wrap: wrap;
+}
+// grid
+.grid {
+  display: grid;
+  grid-template-columns: [pantalla-start] 0.5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 0.5vw [pantalla-end];
+  @include hd {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+  @include hdplus {
+    grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+  }
+}
+.contenido > * {
+  grid-column: contenido;
+}
+.extra > * {
+  grid-column: extra;
+}
+.pantalla > * {
+  grid-column: pantalla;
+}
+.pantalla-izq > * {
+  grid-column: pantalla-start / contenido-end;
+  @include cel {
+    grid-column: contenido;
+  }
+}
+.pantalla-der > * {
+  grid-column: contenido-start / pantalla-end;
+  @include cel {
+    grid-column: contenido;
+  }
+}
+.pantalla-der-especial > * {
+  grid-column: contenido-start / pantalla-end;
+  @include cel {
+    grid-column: contenido / pantalla-end;
+  }
+}
+
+.conte-cartas {
+  display: flex;
+  gap: $margen-min;
+  margin: $margen 0;
+  flex-wrap: wrap;
+}
+
+#zigzag {
+  padding: $margen 0;
+  .bloqueMapa:last-child {
+    z-index: 400;
+    transform: translateY(-2rem);
+    @include cel {
+      transform: translateY(0);
+    }
+    .izq {
+      order: 2;
+    }
+    .der {
+      order: 1;
+    }
+  }
+}
+
+.fondo-mitad {
+  background: var(--fondoBurn);
+  background: linear-gradient(
+    0deg,
+    var(--fondoBurn) 50%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.btn {
+  border: solid 3px var(--primario);
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  background: var(--acento);
+  border-radius: 40rem;
+  color: var(--fondo);
+  display: flex;
+  padding: 1rem;
+  svg {
+    width: 100%;
+    height: auto;
+  }
+  &:hover {
+    border-radius: var(--margen-cel);
+    background: var(--secundario);
+    color: var(--primario);
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.desactivado {
+  pointer-events: none;
+}
+
+.cartaBase {
+  background: white;
+  border-radius: $margen-min;
+  position: relative;
+  @extend .sombra;
+  margin: $margen 0;
+  @include cel {
+    margin: $margen-cel 0;
+  }
+}
+
+.cartaBaseTxt {
+  padding: 0 $margen $margen;
+  @include cel {
+    order: 1;
+    padding-top: $margen-cel;
+  }
+}
+.cartasBaseImagenes {
+  width: 100%;
+  display: flex;
+  left: 0;
+  top: -7rem;
+  gap: 1rem;
+  justify-content: center;
+  transform: translateY(-3rem);
+  .bloqueImg {
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+    border-radius: $margen-min;
+    background: rgba(94, 206, 221, 0.4);
+    flex: 1 0 fit-content;
+    display: flex;
+    max-width: 50%;
+    @extend .sombra;
+    &:first-child {
+      max-width: 20%;
+      background: rgba(255, 136, 0, 0.4);
+    }
+  }
+
+  @include cel {
+    top: 0dvh;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    flex-wrap: wrap;
+    position: relative;
+    padding-bottom: 2rem;
+    order: 2;
+    .bloqueImg {
+      max-width: 100%;
+      &:first-child {
+        max-width: 100%;
+        justify-content: center;
+        img {
+          height: 70vw;
+        }
+      }
+    }
+  }
+}
+
+.baseA {
+  --baseAPadd: 35dvh;
+  text-align: center;
+
+  img {
+    object-fit: cover;
+  }
+  @include cel {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.cartaBase2 {
+  text-align: center;
+  background: url("/fondo-nvite-caracteristicas-2.png"),
+    linear-gradient(330deg, var(--fondo) 0%, white 70%) var(--fondo);
+  background-size: cover, contain;
+  background-blend-mode: color-dodge, normal;
+  border-radius: $margen-min;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 30%;
+  padding: $margen-cel $margen-cel 0 $margen-cel;
+  .imaCelular {
+    max-width: 16vw;
+    @include cel {
+      max-width: 60vw;
+    }
+  }
+  img {
+    position: relative;
+    margin-top: 0;
+    padding: 0;
+    align-self: flex-end;
+    padding-top: $margen-cel;
+    @include cel {
+      max-width: 60vw;
+    }
+  }
+  h2,
+  p {
+    flex: 1 0 100%;
+  }
+
+  &:last-child {
+    flex: 1 0 30%;
+    padding: $margen-cel $margen-cel 0 $margen-cel;
+    background: url("/fondo-nvite-caracteristicas-2.png") no-repeat var(--secundario);
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    // img {
+    //   margin-top: 0;
+    //   padding: 0;
+    //   align-self: flex-end;
+    // }
+  }
+  #decor {
+    position: absolute;
+    left: 0%;
+    bottom: 20%;
+    z-index: 10;
+    width: 10vw;
+
+    @include hdplus {
+      left: 6rem;
+    }
+    @include cel {
+      width: 27vw;
+    }
+  }
+  .bande {
+    max-width: 80%;
+    height: auto;
+    padding: 0;
+    margin: 0;
+  }
+  @extend .sombra;
+  @include cel {
+    h2 {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+.cartaBase3 {
+  padding: 0 !important;
+  .bande-2 {
+    padding: $margen-cel;
+  }
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+#conteCaracteristicas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $margen-min;
+  justify-content: space-around;
+  margin: $margen 0;
+
+  & > * {
+    position: relative;
+    flex: 1;
+    border-radius: $margen-min;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-blend-mode: color-dodge;
+    aspect-ratio: 3 / 2;
+
+    .conte {
+      position: relative;
+      max-width: 70%;
+      text-align: center;
+      @include cel {
+        max-width: 80%;
+      }
+    }
+    h3 {
+      color: var(--acento);
+      font-size: clamp(2.3vh, 2vw, 3vw);
+    }
+    .icono {
+      max-width: 1.7rem;
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      @include cel {
+        right: auto;
+        top: auto;
+        position: relative;
+        max-width: 1.5rem;
+        margin: $margen-min 0;
+      }
+    }
+    @include cel {
+      flex: 1 0 47%;
+      flex-direction: column;
+      padding: $margen-cel 0;
+    }
+  }
+}
+
+.azulBG {
+  border-radius: $radio;
+  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+    linear-gradient(43deg, #fff6f0 30%, var(--terciario) 100%) no-repeat;
+  background-position: center right, top left;
+  background-size: 50%, 100%;
+  @include cel {
+    background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+      linear-gradient(43deg, var(--secundario) 0%, rgb(255, 255, 255) 100%) no-repeat;
+    background-position: center bottom;
+    background-size: 120%;
+  }
+  margin-bottom: $margen-min;
+}
+.texto-izq {
+  text-align: left;
+}
+.mini {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--primario);
+}
+
+#formu {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  padding: $margen-cel;
+  border-radius: $margen-min;
+  backdrop-filter: blur(5px);
+  background: rgba(255, 136, 0, 0.3);
+  text-align: left;
+
+  img {
+    width: 30px;
+    vertical-align: middle;
+    margin: 0;
+  }
+  @include cel {
+    width: 100%;
+    margin-top: 2rem;
+    img {
+      width: 20px;
+    }
+  }
+  @extend .sombra;
+  form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  h3 {
+    vertical-align: middle;
+    flex: 1 0 100%;
+    color: var(--primario);
+    padding: 0;
+    margin: 0;
+  }
+  label {
+    text-align: left;
+  }
+}
+
+label {
+  flex: 1 0 100%;
+  font-size: clamp(0.9rem, 0.8vw, 1rem);
+  color: var(--primario);
+  padding-top: $margen-min;
+}
+input {
+  flex: 1 0 100%;
+  padding: 0.5rem;
+  border: none;
+  background: white;
+  border-radius: $radio;
+  @extend .sombra;
+}
+button[type="submit"],
+#empezar {
+  margin-top: $margen-min;
+  border-radius: 0.5rem;
+  padding: 0.1rem $margen-cel;
+  color: white;
+  border: 1px solid white;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  background-color: var(--acento);
+  @include cel {
+    width: 100%;
+    margin: 1rem 0;
+    text-align: center;
+  }
+  &:hover {
+    background: var(--secundario);
+    color: var(--primario);
+  }
+}
+input::placeholder {
+  color: var(--primario);
+}
+
+.fondo-formu {
+  background: url("/fondo-formu.webp"),
+    linear-gradient(330deg, var(--fondo) 0%, white 70%) white;
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: right bottom, center;
+  .bande {
+    padding: $margen-cel 0;
+  }
+  text-align: center;
+  border-radius: $margen-min;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 30%;
+  padding: $margen-cel $margen-cel 0 $margen-cel;
+
+  @include cel {
+    background-size: 90%;
+    background-position: 500% bottom;
+    order: 2;
+  }
+}
+
+.fondo-alegre {
+  background: url("/fondo-cover-nviteme-invitaciones-digitales.webp") repeat-x
+    white;
+  background-size: 50%;
+  background-position: 0% 300%;
+  @include cel {
+    background-size: 100%;
+    background-position: 0% 150%;
+  }
+}
+
+.desactivado {
+  opacity: 0.4;
+  cursor: not-allowed !important;
+}
+
+@keyframes desaparecer {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes aparecer {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+}
+
+.desapareceH1 {
+  animation-name: desaparecer;
+  animation-duration: 1s;
+}
+.apareceH1 {
+  animation-name: aparecer;
+  animation-duration: 1s;
+}
+
+#choro {
+  display: flex;
+  position: relative;
+
+  #play {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    @extend .sombra;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    path {
+      fill: var(--acento);
+    }
+  }
+  #info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+    text-align: left;
+    color: var(--primario);
+    padding: $margen;
+    
+    @include cel {
+      p {
+        max-width: 100%;
+      }
+      padding: $margen-cel;
+      background-position: top center;
+      background-size: 110%;
+    }
+  }
+
+  #video-home {
+    position: relative;
+    flex: 1;
+    justify-content: left;
+    padding: $margen-cel 0 0 0;
+    .mostrando {
+      display: block;
+    }
+    .escondido {
+      display: none;
+    }
+    video {
+      width: 70%;
+      height: auto;
+    }
+  }
+  @include cel {
+    flex-wrap: wrap;
+    #info,
+    #video-home {
+      flex: 1 0 100%;
+    }
+    #video-home {
+      padding: 0 0 0 0;
+      display: flex;
+      justify-content: center;
+      video {
+        width: 85%;
+      }
+    }
+  }
+}
+
+#video {
+  margin-bottom: $margen-cel;
+  display: flex;
+  justify-content: center;
+  iframe {
+    border-radius: $radio;
+    aspect-ratio: 16 / 9;
+    width: 100% !important;
+    height: auto;
+  }
+  @include cel {
+    display: none;
+  }
+}
+
+#videoCel {
+  margin-bottom: $margen-cel;
+  display: flex;
+  justify-content: center;
+  iframe {
+    border-radius: $radio;
+    aspect-ratio: 9 / 16;
+    width: 100% !important;
+    height: auto;
+  }
+  @include hd {
+    display: none;
+  }
+  @include hdplus {
+    display: none;
+  }
+  @include tableta {
+    display: none;
+  }
+  @include tableta_land {
+    display: none;
+  }
+}

@@ -21,15 +21,18 @@ interface Props {
   paleta?: string;
   theme?: Theme;
 }
-import "../../estilos/bodas/globales.scss";
 const { title, url, paleta, cover, theme } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const portadaOG = `https://nvitaciones.com${cover}`;
-const {name, colors, typography} = theme
+const { name, colors, typography } = theme;
+
+// import "../../estilos/bodas/themes/elegante/globales.scss"
+import "../../estilos/bodas/globales.scss"
+
 ---
 
 <!doctype html>
-<html lang="es" id=`paleta-${paleta}` data-paleta={paleta} data-theme={name}>
+<html lang="es"  data-paleta={paleta} data-theme={name}>
   <head>
     <meta charset="UTF-8" />
     <meta
