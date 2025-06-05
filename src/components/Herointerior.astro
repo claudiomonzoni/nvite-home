@@ -12,15 +12,16 @@ interface Props {
   imagencel?: string;
   fondo: string;
   tema?: string;
+  confianza?: string
 }
-const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema } =
+const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema, confianza } =
   Astro.props;
 
 import { Icon } from "astro-icon/components";
 console.log(fondo);
 ---
 
-<section class="grid pantalla-der">
+<section class="grid contenido">
   <div id="hero">
     <div class="izq anime">
       <div class="bandeja anime">
@@ -39,7 +40,7 @@ console.log(fondo);
           >
             <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
-          <p><b>Invita</b> con estilo</p>
+          <p id="confianza" set:html={confianza}></p>
         </div>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
@@ -67,8 +68,7 @@ console.log(fondo);
 
   #hero {
     background: var(--fondo);
-    border-top-left-radius: $margen-min;
-    border-bottom-left-radius: $margen-min;
+    border-radius: $radio;
     display: flex;
     margin-top: 8rem;
     @include cel {
@@ -111,9 +111,13 @@ console.log(fondo);
       }
     }
     p {
-      margin: $margen-cel 0;
+      margin: 0 0 $margen-cel 0;
     }
-    @extend .sombra;
+    a{
+      margin: 0;
+    }
+
+  
     .bandeja {
       width: fit-content;
       max-width: 80%;
@@ -196,6 +200,9 @@ console.log(fondo);
   }
   .oscuro {
     color: white;
+      #confianza {
+     color: white
+    } 
   }
   .oscuro span {
     color: $secundario !important;
@@ -210,36 +217,3 @@ console.log(fondo);
     }
   }
 </style>
-<!-- <script>
-  import SplitType from "split-type";
-  const encabezado = document.getElementById("nvitePalabras");
-
-  const remplazo = new SplitType(encabezado, {
-    types: "chars",
-  });
-
-  const timeout = setTimeout(() => {
-    eliminarTxt();
-  }, 2000);
-
-  function eliminarTxt() {
-    var index = 0;
-    const inter = setInterval(() => {
-      remplazo.chars[index++].classList.add("desapareceH1");
-
-      if (index >= remplazo.chars.length) {
-        clearInterval(inter);
-        mostrarTxt();
-      }
-    }, 50);
-  }
-
-  function mostrarTxt() {
-    const delay = setInterval(() => {
-      encabezado.classList.add("apareceH1");
-      encabezado.innerText = "Invita";
-      clearInterval(delay);
-    }, 600);
-    clearTimeout(timeout);
-  }
-</script> -->

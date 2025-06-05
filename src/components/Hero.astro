@@ -30,7 +30,7 @@ import { Icon } from "astro-icon/components";
           >
             <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
-          <p>Más de 10 años de experiencia</p>
+          <p>Tecnología que facilita tu evento</p>
         </div>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
@@ -74,14 +74,17 @@ import { Icon } from "astro-icon/components";
     h1 {
       width: 100%;
       color: $primario;
-      font-size: clamp(1.7rem, 3.6vw, 6vw);
+      font-size: clamp(2rem, 3.6vw, 6vw);
 
       span {
         color: $acento;
       }
     }
     p {
-      margin: $margen-cel 0;
+      margin: 0 0 $margen-cel 0;
+    }
+    a{
+      margin: 0;
     }
     // @extend .sombra;
     .bandeja {
@@ -132,7 +135,7 @@ import { Icon } from "astro-icon/components";
       }
     }
   }
-  .cta {
+ .cta {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -142,6 +145,7 @@ import { Icon } from "astro-icon/components";
     p {
       font-size: 0.8rem;
       color: $acento;
+      margin: 0 !important;
     }
     @include cel {
       justify-content: center;
