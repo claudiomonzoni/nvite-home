@@ -26,7 +26,7 @@
   },
   {
     "id": "prod_SK7Bqg9HjOSmhW",
-    "muestra": "/quince/nvita-quince-clasica?id=1&uid=1",
+    "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -35,7 +35,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -59,7 +58,6 @@
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario sencillo de confirmación"
@@ -74,7 +72,7 @@
   },
   {
     "id": "prod_QNpO0T7kRp1zkL",
-    "muestra": "/bodas/nvita-bodas-clasica?id=1&uid=1",
+    "muestra": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -83,7 +81,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -101,7 +98,7 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
-    "muestra": "/quince/nvita-quince-lux?id=1&uid=1",
+    "muestra": "/quince/nvita-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -112,7 +109,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -132,7 +128,7 @@
   },
   {
     "id": "prod_Q42WJO0oMaU98G",
-    "muestra": "/bodas/nvita-bodas-lux?id=1&uid=1",
+    "muestra": "/bodas/elenaymarcos?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -143,7 +139,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -191,7 +186,6 @@
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario sencillo de confirmación"
@@ -210,7 +204,6 @@
     "video":"https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
     "beneficios": [
       "Detalles del evento",
-      "Datos de tu evento",
       "Botón de ubicación",
       "Botón de confirmación",
       "Juego de preguntas"
