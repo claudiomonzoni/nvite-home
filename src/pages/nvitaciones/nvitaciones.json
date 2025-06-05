@@ -1,6 +1,7 @@
 [
   {
     "id": "prod_S6z2ksD9axDHG1",
+    "slug": "invitacion-bodas-pdf-lux",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
     "beneficios": [
       "Foto principal",
@@ -26,6 +27,7 @@
   },
   {
     "id": "prod_SK7Bqg9HjOSmhW",
+    "slug": "invitacion-quince-clasica",
     "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
     "beneficios": [
       "Panel de invitados",
@@ -53,6 +55,7 @@
   },
   {
     "id": "prod_QNpXQx0LWRjRFh",
+    "slug": "invitacion-bodas-esencial",
     "titulo": "Invitación Bodas esencial",
     "muestra": "/bodas/nvita-bodas-esencial",
     "beneficios": [
@@ -72,6 +75,7 @@
   },
   {
     "id": "prod_QNpO0T7kRp1zkL",
+    "slug": "invitacion-bodas-clasica",
     "muestra": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
     "beneficios": [
       "Panel de invitados",
@@ -98,6 +102,7 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
+    "slug": "invitacion-quince-lux",
     "muestra": "/quince/nvita-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
       "Panel de invitados",
@@ -128,6 +133,7 @@
   },
   {
     "id": "prod_Q42WJO0oMaU98G",
+    "slug": "invitacion-bodas-lux",
     "muestra": "/bodas/nvita-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
       "Panel de invitados",
@@ -157,6 +163,7 @@
   },
   {
     "id": "prod_SJS7Pij7pMSLo4",
+    "slug": "invitacion-quince-pdf-lux",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
     "beneficios": [
       "Foto principal",
@@ -182,6 +189,7 @@
   },
   {
     "id": "prod_SK7ICkqFPPgSuJ",
+    "slug": "invitacion-quince-esencial",
     "muestra": "/quince/nvita-quince-esencial",
     "beneficios": [
       "Detalles del evento",
@@ -201,6 +209,7 @@
   },
   {
     "id": "prod_S6yybHJMahkBD0",
+    "slug": "invitacion-cumpleanos-pdf",
     "video":"https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
     "beneficios": [
       "Detalles del evento",
