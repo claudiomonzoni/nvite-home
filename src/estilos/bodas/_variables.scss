@@ -1,12 +1,16 @@
+//paletas
 @use '../paletas/invierno' as *;
 @use '../paletas/base' as *;
 @use '../paletas/otono' as *;
 @use '../paletas/primavera' as *;
+//temas
+
+@use '../temas/clasico/bodas/clasico' as *;
+
 
 :root[data-paleta="invierno"] {
   @include invierno();
 }
-
 :root[data-paleta="base"] {
   @include base();
 }
@@ -15,6 +19,17 @@
 }
 :root[data-paleta="primavera"] {
   @include primavera();
+}
+
+//temas
+:root[data-theme="clasico"] {
+  @include tema-clasico();
+}
+:root[data-theme="elegante"] {
+  @include base();
+}
+:root[data-theme="moderno"] {
+  @include otono();
 }
 
 
