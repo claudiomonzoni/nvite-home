@@ -6,9 +6,10 @@
 
 
 //fuentes
-
-
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Playwrite+CU:wght@100..400&display=swap");
+
+
+
 
 :root[data-paleta="invierno"] {
   @include invierno();
@@ -48,6 +49,8 @@ $margen-top-cel: 6rem;
 $encabezados: "DM Serif Display";
 $garigol: "Playwrite CU";
 $txt: "Didact Gothic";
+
+
 
 
 @mixin cel {

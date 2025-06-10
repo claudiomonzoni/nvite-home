@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import styles from "../../estilos/confirmacion.module.scss";
+import styles from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {

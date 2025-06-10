@@ -1,5 +1,6 @@
 @use "_variables.scss" as *;
 @use "globales.scss" as *;
+
 h2 {
   padding-top: $margen-min;
   font-size: clamp(2.5rem, 1.5vw, 2rem);
@@ -81,9 +82,9 @@ svg {
   justify-content: center;
   gap: 1rem;
   width: 100%;
-  margin: 1rem 0;
-  p {
-    margin: 0;
+  margin: 2rem 0;
+  p, label{
+    margin: 0!important;
     font-size: 1.2rem;
     font-weight: bold;
   }
@@ -92,8 +93,8 @@ svg {
   position: relative;
   display: inline-block;
   max-width: 46px;
-  height: 24px;
-
+  height: 9px;
+top: 0;
   input {
     opacity: 0;
     width: 0;
@@ -140,12 +141,7 @@ svg {
   @extend .btn;
   display: flex;
   border-radius: $radio;
-  img{
-    max-width: 1.5rem;
-    height: auto;
-    vertical-align: middle;
-    margin-right: .5rem;
-  }
+
 }
 .desactivado {
   pointer-events: none;
