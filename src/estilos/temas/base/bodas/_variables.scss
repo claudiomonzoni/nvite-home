@@ -3,9 +3,12 @@
 @use '../../../paletas/base' as *;
 @use '../../../paletas/otono' as *;
 @use '../../../paletas/primavera' as *;
-//temas
 
 
+//fuentes
+
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Playwrite+CU:wght@100..400&display=swap");
 
 :root[data-paleta="invierno"] {
   @include invierno();
