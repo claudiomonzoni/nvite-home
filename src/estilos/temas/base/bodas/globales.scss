@@ -1,0 +1,35 @@
+
+// Mixins para el tema base
+@use "_variables.scss" as *;
+@mixin tema-base() {
+
+// h1{
+//   font-size: 2rem;
+//   color: var(--color-primary);
+// }
+
+#itinerario {
+  background-color: var(--primario);
+   ol {
+    text-align: center;
+    padding-bottom: $margen;
+    font-size: clamp(1.3rem, 2vw, 3rem);
+    list-style: none;
+
+    h4 {
+      color: var(--acento);
+      font-family: $garigol, serif;
+      line-height: 2.2rem;
+    }
+    p {
+      color: white;
+      margin-bottom: none;
+    }
+    li {
+      margin: $margen 0;
+    }
+  }
+}
+
+}
+

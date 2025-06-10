@@ -1,3 +1,26 @@
+//paletas
+@use '../../../paletas/invierno' as *;
+@use '../../../paletas/base' as *;
+@use '../../../paletas/otono' as *;
+@use '../../../paletas/primavera' as *;
+//temas
+
+
+
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+:root[data-paleta="base"] {
+  @include base();
+}
+:root[data-paleta="otono"] {
+  @include otono();
+}
+:root[data-paleta="primavera"] {
+  @include primavera();
+}
+
+
 
 //media query
 $cel: 479px;

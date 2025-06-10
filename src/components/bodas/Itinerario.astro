@@ -5,7 +5,7 @@ interface Props {
 const { listado } = Astro.props;
 ---
 
-<section class="grid contenido">
+<section class="grid contenido" id="itinerario">
   <ol>
     {
       listado.map((item, index) => (
@@ -19,27 +19,7 @@ const { listado } = Astro.props;
   </ol>
 </section>
 
-<style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
-  ol {
-    text-align: center;
-    padding-bottom: $margen;
-    font-size: clamp(1.3rem, 2vw, 3rem);
 
-    h4 {
-      color: var(--acento);
-      font-family: $garigol, serif;
-      line-height: 2.2rem;
-    }
-    p {
-      color: white;
-      margin-bottom: none;
-    }
-    li {
-      margin: $margen 0;
-    }
-  }
-</style>
 
 <script>
   // aqui el modal del mapa

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
-import Style from "../../estilos/bodas/hero.module.scss";
+import Style from "../../estilos/temas/base/bodas/hero.module.scss";
 
 // imagenes
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";

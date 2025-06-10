@@ -1,5 +1,5 @@
 // import fondoFloral from "../../assets/bodas/imas/flores-fondo-a.png";
-import Style from "../../estilos/bodas/pases.module.scss";
+import Style from "../../estilos/temas/base/bodas/pases.module.scss";
 
 import { useEffect, useState } from "react";
 

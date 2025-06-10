@@ -1,21 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+// @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+// @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+ @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
 // Mixins para el tema clásico
 @mixin tema-clasico() {
   // Tipografía
-  --font-headers: "Cormorant Garamond";
-  --font-body: "Libre Baskerville";
-  
+  --font-headers: "Montserrat";
+  --font-body: "Sacramento";
   // Fondos y texturas
   --bg-pattern: url('/bodas/texturas/clasico-bg.webp');
-  --bg-overlay: url('/bodas/texturas/clasico-overlay.png');
-  
+  --bg-overlay: url('fondo-formu.webp');
+
   // Espaciados específicos
   --section-spacing: 4rem;
   --component-spacing: 2rem;
 
   // Estilos base
   html {
+    border: solid 400px black;
     font-family: var(--font-body), serif;
-    background: var(--bg-pattern) repeat;
+    // background: var(--bg-pattern) repeat;
+     background: white!important;
     color: var(--primario);
   }
 
@@ -23,7 +34,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-headers), serif;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 1.05em;
   }
 
   h1 {
@@ -47,7 +58,7 @@
     border-radius: 0;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    
+
     &:hover {
       background: var(--primario);
       color: white;
@@ -63,7 +74,7 @@
   // Hero section
   #hero {
     position: relative;
-    
+
     &:before {
       content: '';
       position: absolute;
@@ -83,7 +94,7 @@
     background: var(--acento);
     margin: 2rem auto;
     position: relative;
-    
+
     &:before, &:after {
       content: '♦';
       position: absolute;
@@ -91,7 +102,7 @@
       transform: translateY(-50%);
       color: var(--acento);
     }
-    
+
     &:before { left: -20px; }
     &:after { right: -20px; }
   }
