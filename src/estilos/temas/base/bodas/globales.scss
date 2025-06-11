@@ -1,170 +1,150 @@
-
 // Mixins para el tema base
-@use 'sass:math';
+@use "sass:math";
 @use "_variables.scss" as *;
 
-
 @mixin tema-base() {
-
-html {
-  box-sizing: border-box;
-  
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-body {
-  background: url('/bodas/textuta-bg-2.webp') repeat;
-  font-family: $txt, serif;
-  position: relative;
-  font-size: clamp(10px, 0.9vw, 22px);
-  color: var(--primario);
-  font-weight: 100;
-  scroll-behavior: smooth;
-  @include hd {
-    font-size: clamp(10px, 0.9vw, 20px);
-  }
-  @include cel {
-    font-size: clamp(16px, 1.8vw, 18px);
-  }
-  @include hdplus {
-    font-size: clamp(14px, 7vw, 22px);
+  html {
+    box-sizing: border-box;
   }
 
-  &:before {
-    content: "";
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50.6%);
-    background: url("../../assets/bodas/imas/corona-flores-negro.png")
-      no-repeat;
-    background-size: contain;
-    background-position: center;
-    background-blend-mode: overlay;
-    z-index: -1;
-    opacity: 0.1;
-
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  body {
+    background: url("/bodas/textuta-bg-2.webp") repeat;
+    font-family: $txt, serif;
+    position: relative;
+    font-size: clamp(10px, 0.9vw, 22px);
+    color: var(--primario);
+    font-weight: 100;
+    scroll-behavior: smooth;
+    @include hd {
+      font-size: clamp(10px, 0.9vw, 20px);
+    }
     @include cel {
-      left: 0;
-      transform: translateX(0%);
-      background-position: 15% center;
-      background-size: cover;
+      font-size: clamp(16px, 1.8vw, 18px);
+    }
+    @include hdplus {
+      font-size: clamp(14px, 7vw, 22px);
+    }
+
+    &:before {
+      content: "";
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50.6%);
+      background: url("../../assets/bodas/imas/corona-flores-negro.png")
+        no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-blend-mode: overlay;
+      z-index: -1;
+      opacity: 0.1;
+
+      @include cel {
+        left: 0;
+        transform: translateX(0%);
+        background-position: 15% center;
+        background-size: cover;
+      }
     }
   }
-}
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-ol,
-ul {
-  margin: 0;
-  padding: 0;
-  font-weight: normal;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1em;
-  font-family: $encabezados, serif;
-  padding-bottom: 0.7rem;
-  color: var(--secundario);
-}
-h1 {
-  color: white;
-  font-size: clamp(3rem, 6vw, 30vw);
-}
-h2 {
-  font-size: clamp(2.2em, 2vw, 30vw);
-  @include hd {
-    font-size: clamp(3em, 2vw, 50vw);
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ol,
+  ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
   }
-}
 
-ol,
-ul {
-  list-style: none;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-  font-style: italic;
-  background-size: cover;
-  shape-margin: 0.75rem;
-}
-a {
-  text-decoration: none;
-  display: inline-block;
-  @extend .anime;
-  &:hover {
-    transform: scale(0.9);
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1em;
+    font-family: $encabezados, serif;
+    padding-bottom: 0.7rem;
+    color: var(--secundario);
   }
-}
-p {
-  margin-bottom: 1rem;
-}
-p:last-child {
-  margin-bottom: 0rem;
-}
-b {
-  font-weight: bold;
-  color: var(--acento);
-  font-style: normal;
-  font-size: clamp(1.3em, 1vw, 2vw);
-  font-family: $encabezados, serif;
-}
+  h1 {
+    color: white;
+    font-size: clamp(3rem, 6vw, 30vw);
+  }
+  h2 {
+    font-size: clamp(2.2em, 2vw, 30vw);
+    @include hd {
+      font-size: clamp(3em, 2vw, 50vw);
+    }
+  }
 
+  ol,
+  ul {
+    list-style: none;
+  }
 
-.bandejaLugares {
-  margin-top: $margen;
-  display: flex;
-  flex-wrap: wrap;
-  background: rgb(255, 255, 255, 0.4);
-  border-radius: $radio;
-  backdrop-filter: blur(3px);
-  padding: $margen-min;
-  z-index: 30;
-  @extend .sombra;
-  position: relative;
-  z-index: 30;
-}
-
-#BaseItinerario {
-  h2{
+  img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-size: cover;
+    shape-margin: 0.75rem;
+  }
+  a {
+    text-decoration: none;
+    display: inline-block;
+    @extend .anime;
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+  p {
+    margin-bottom: 1rem;
+  }
+  p:last-child {
+    margin-bottom: 0rem;
+  }
+  b {
+    font-weight: bold;
     color: var(--acento);
+    font-style: normal;
+    font-size: clamp(1.3em, 1vw, 2vw);
+    font-family: $encabezados, serif;
   }
-  background: var(--primario);
-  position: relative;
-  z-index: -1;
-  overflow: hidden;
-  // border-radius: $radio;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: $radio;
-  border-bottom-right-radius: $radio;
 
+  #BaseItinerario {
+    h2 {
+      color: var(--acento);
+    }
+    background: var(--primario);
+    position: relative;
+    z-index: -1;
+    overflow: hidden;
+    // border-radius: $radio;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: $radio;
+    border-bottom-right-radius: $radio;
 
-     ol {
+    ol {
       text-align: center;
       padding-bottom: $margen;
       font-size: clamp(1.3rem, 2vw, 3rem);
       list-style: none;
-  
+
       h4 {
         color: var(--acento);
         font-family: $garigol, serif;
@@ -178,171 +158,940 @@ b {
         margin: $margen 0;
       }
     }
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url("../../assets/bodas/imas/corona-flores-negro.png")
-      no-repeat;
-    background-size: 40%;
-    background-position: center 110%;
-    mix-blend-mode: multiply;
-    opacity: 0.2;
-    transform: rotate(180deg);
-    @include cel {
-      background-position: center 105%;
-      background-size: 120%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("../../assets/bodas/imas/corona-flores-negro.png")
+        no-repeat;
+      background-size: 40%;
+      background-position: center 110%;
+      mix-blend-mode: multiply;
+      opacity: 0.2;
+      transform: rotate(180deg);
+      @include cel {
+        background-position: center 105%;
+        background-size: 120%;
+        padding-top: $margen;
+      }
+    }
+  }
+
+  .flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .margen-arriba-abajo {
+    margin: $margen 0;
+  }
+  .desactivado {
+    pointer-events: none;
+  }
+
+  .centrado {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .invisible {
+    visibility: hidden;
+  }
+
+  .gale {
+    margin: 0rem 0 $margen 0;
+
+    // Reglas de scrollbar movidas antes de las reglas anidadas
+    & {
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--primario) var(--fondo);
+      }
+
+      *::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+      }
+      *::-webkit-scrollbar-track {
+        border-radius: 50px;
+        background-color: var(--acento);
+      }
+
+      *::-webkit-scrollbar-track:hover {
+        background-color: var(--acento);
+      }
+
+      *::-webkit-scrollbar-track:active {
+        background-color: var(--acento);
+      }
+
+      *::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: var(--gris);
+      }
+
+      *::-webkit-scrollbar-thumb:hover {
+        background-color: var(--acento);
+      }
+
+      *::-webkit-scrollbar-thumb:active {
+        background-color: var(--acento);
+      }
+    }
+
+    // Resto de las reglas
+    $min: -16deg;
+    $max: 16deg;
+    @for $i from 1 through 10 {
+      img:nth-child(#{$i}) {
+        transform: rotate(
+          math.max(
+            math.min(
+              (math.random() * 2 - 1) *
+                math.random(math.div($max, 1deg)) *
+                1deg,
+              $max
+            ),
+            -$max
+          )
+        );
+      }
+    }
+
+    img {
+      border: solid;
+      object-fit: cover;
+      aspect-ratio: 6/5;
+      border: solid 15px white;
+      @extend .sombra;
+      @include cel {
+        aspect-ratio: 5/5;
+      }
+    }
+    p {
+      overflow-x: auto;
+      // overflow-behavior-inline: contain;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: inline mandatory;
+      display: grid;
+      gap: 0px;
+      grid-auto-flow: column;
+      gap: 0;
+      grid-auto-columns: 30%;
+      padding: $margen 0;
+      justify-content: space-evenly;
+
+      @include cel {
+        grid-auto-columns: 80%;
+      }
+    }
+  }
+  #lluvia {
+    b {
+      color: var(--secundario);
+    }
+  }
+  .conte-cartas {
+    display: flex;
+    gap: $margen-min;
+    margin: $margen 0;
+    flex-wrap: wrap;
+  }
+
+  #zigzag {
+    padding: $margen 0;
+    .bloqueMapa:last-child {
+      z-index: 400;
+      transform: translateY(-2rem);
+      @include cel {
+        transform: translateY(0);
+      }
+      .izq {
+        order: 2;
+      }
+      .der {
+        order: 1;
+      }
+    }
+  }
+
+  // compoenente padres
+  #padres {
+    h2 {
+      text-align: center;
+      font-family: $garigol, serif;
+      font-size: clamp(1.5rem, 2vw, 3rem);
+      color: var(--acento);
+    }
+    .bande {
+      background: rgb(254, 241, 241);
+      background: linear-gradient(
+        0deg,
+        var(--terciario) -10%,
+        rgba(255, 255, 255, 0) 40%
+      );
+      border-radius: $radio;
+      font-size: clamp(1.5rem, 1.7vw, 2.4vw);
+      z-index: -2;
       padding-top: $margen;
     }
-  }
-}
-
-.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.margen-arriba-abajo {
-  margin: $margen 0;
-}
-.desactivado {
-  pointer-events: none;
-}
-
-
-
-.centrado{
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.invisible {
-  visibility: hidden;
-}
-
-.gale {
-  margin: 0rem 0 $margen 0;
-
-  // Reglas de scrollbar movidas antes de las reglas anidadas
-  & {
-    * {
-      scrollbar-width: thin;
-      scrollbar-color: var(--primario) var(--fondo);
+    .conte {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      padding: $margen;
+      position: relative;
+      @include cel {
+        flex-wrap: wrap;
+        text-align: center;
+        .padre:last-child {
+          margin-top: $margen-cel;
+        }
+      }
     }
-
-    *::-webkit-scrollbar {
-      height: 10px;
-      width: 10px;
+    @include cel {
+      li {
+        padding: $margen-min 0 0 0;
+      }
     }
-    *::-webkit-scrollbar-track {
-      border-radius: 50px;
-      background-color: var(--acento);
+    hr {
+      position: absolute;
+      left: 0;
+      top: 8%;
+      width: 100%;
+      z-index: -1;
+      @include cel {
+        top: 2%;
+      }
     }
+    .padre {
+      position: relative;
 
-    *::-webkit-scrollbar-track:hover {
-      background-color: var(--acento);
-    }
+      h3 {
+        color: var(--acento);
+        display: inline-block;
+        position: relative;
+        padding: 0em 0.6em;
 
-    *::-webkit-scrollbar-track:active {
-      background-color: var(--acento);
-    }
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgb(254, 241, 241);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          z-index: -1;
+          border-radius: 4px;
+        }
 
-    *::-webkit-scrollbar-thumb {
-      border-radius: 5px;
-      background-color: var(--gris);
-    }
-
-    *::-webkit-scrollbar-thumb:hover {
-      background-color: var(--acento);
-    }
-
-    *::-webkit-scrollbar-thumb:active {
-      background-color: var(--acento);
+        @include cel {
+          padding: 0em 0.6em;
+        }
+      }
+      width: fit-content;
     }
   }
+  // ... componente audio
 
-  // Resto de las reglas
-  $min: -16deg;
-  $max: 16deg;
-  @for $i from 1 through 10 {
-    img:nth-child(#{$i}) {
-      transform: rotate(
-        math.max(
-          math.min(
-            (math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg,
-            $max
-          ),
-          -$max
-        )
-      );
+  #rola {
+    margin: 6rem auto;
+    text-align: center;
+    max-width: 400px;
+    padding: 2rem;
+
+    h3 {
+      font-family: var(--font-headers, "Montserrat Alternates"), sans-serif;
+      margin-bottom: 1.5rem;
+      color: var(--primario);
+
+      b {
+        color: var(--acento);
+      }
     }
   }
 
- img {
-    border: solid;
-    object-fit: cover;
-    aspect-ratio: 6/5;
-    border: solid 15px white;
+  /* Estilos personalizados para el reproductor de audio */
+  audio {
+    width: 100%;
+    height: 40px;
+
+    &::-webkit-media-controls-panel {
+      background: var(--fondo, #ffffff);
+    }
+
+    &::-webkit-media-controls-play-button {
+      background-color: var(--acento);
+      border-radius: 50%;
+      transform: scale(1);
+    }
+
+    &::-webkit-media-controls-play-button:hover {
+      background-color: var(--secundario);
+    }
+
+    &::-webkit-media-controls-timeline {
+      background: var(--terciario);
+      border-radius: 25px;
+      margin: 0 15px;
+    }
+  }
+
+  @media (max-width: 479px) {
+    #rola {
+      margin: 4rem auto;
+      padding: 1rem;
+    }
+
+    audio {
+      height: 35px;
+    }
+  }
+
+  //componente pases...
+  #pases {
+    #bande {
+      text-align: center;
+      padding: $margen;
+      margin: $margen 0;
+      position: relative;
+      background: url("/bodas/flores-fondo-a.webp") no-repeat;
+      background-size: contain;
+      background-position: center;
+      @include cel {
+        padding: $margen-cel;
+      }
+    }
+    #bande {
+      hr {
+        width: 50%;
+        border: none;
+        border-top: 1px solid var(--acento);
+        position: absolute;
+        bottom: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        @include cel {
+          bottom: 22%;
+          width: 80%;
+        }
+      }
+    }
+    h3 {
+      margin-bottom: $margen-cel;
+    }
+    #pase {
+      z-index: 10;
+      font-family: $garigol, serif;
+      font-size: clamp(1.8rem, 2.5vw, 3.5rem);
+      border: solid 0.5px var(--acento);
+      display: inline-block;
+      padding: $margen-min;
+      border-radius: $margen-min;
+      background-color: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(2px);
+    }
+  }
+
+  //componete progreso invitados
+
+  .progreso-invitados {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: $margen;
+  }
+
+  .barra-progreso {
+    width: 100%;
+    height: 8px;
+    background-color: var(--fondo);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
     @extend .sombra;
-    @include cel {
-      aspect-ratio: 5/5;
+  }
+
+  .barra {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, var(--terciario), var(--acento));
+    animation: crecer 1.5s ease-out forwards;
+    border-radius: $radio;
+  }
+
+  @keyframes crecer {
+    from {
+      width: 0;
+    }
+    to {
+      width: var(--progress);
     }
   }
- p  {
-    overflow-x: auto;
-    // overflow-behavior-inline: contain;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: inline mandatory;
-    display: grid;
-    gap: 0px;
-    grid-auto-flow: column;
-    gap: 0;
-    grid-auto-columns: 30%;
-    padding:$margen 0;
-    justify-content: space-evenly;
 
-    @include cel {
-      grid-auto-columns: 80%;
+  h2 {
+    color: var(--primario);
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 2vw, 2rem);
+  }
+
+  .estadisticas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .porcentaje {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .porcentaje .numero {
+    font-family: $garigol, serif;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--acento);
+  }
+
+  .porcentaje .texto {
+    font-size: 1.2rem;
+    color: var(--primario);
+  }
+
+  .detalles {
+    font-size: 1.1rem;
+    color: var(--primario);
+  }
+
+  .detalles .confirmados,
+  .detalles .total {
+    font-weight: bold;
+    color: var(--acento);
+  }
+
+  @media (max-width: 768px) {
+    .progreso-invitados {
+      padding: 1rem;
+    }
+
+    .porcentaje .numero {
+      font-size: 2.5rem;
+    }
+
+    .porcentaje .texto {
+      font-size: 1rem;
+    }
+
+    .detalles {
+      font-size: 1rem;
+    }
+
+    .barra-progreso {
+      height: 15px;
     }
   }
-}
-#lluvia {
-  b{
-      color: var(--secundario);
-  }      
-}
-.conte-cartas {
-  display: flex;
-  gap: $margen-min;
-  margin: $margen 0;
-  flex-wrap: wrap;
-}
+  //componente frase animada
+  .frase {
+    color: var(--acento);
+    font-family: $garigol, serif;
+    font-size: clamp(1.8rem, 5vw, 7vw);
+    text-align: center;
+    margin: $margen-min $margen-min 0 $margen-min;
+    padding: $margen $margen-min;
+    border-top: 1px solid var(--acento);
+    border-bottom: 1px solid var(--acento);
+  }
 
-#zigzag {
-  padding: $margen 0;
-  .bloqueMapa:last-child {
-    z-index: 400;
-    transform: translateY(-2rem);
-    @include cel {
-      transform: translateY(0);
+  // Componente Titulos
+
+  #titulos {
+    path {
+      fill: var(--secundario);
     }
-    .izq {
-      order: 2;
+    .titulo {
+      margin: $margen-top $margen $margen-cel $margen;
+      text-align: center;
+      @include cel {
+        margin: $margen-cel $margen-min $margen-min $margen-min;
+      }
+      h2 {
+        color: var(--secundario);
+        font-size: clamp(2.4rem, 3vw, 4vw);
+      }
     }
+    img {
+      margin: $margen-min;
+      filter: saturate(2951%) contrast(52%);
+    }
+  }
+  // Componente parrafos libres
+
+  #parrafos {
+    p {
+      padding: 0 10%;
+      text-align: center !important;
+    }
+  }
+  // componente Bloque Mapa
+
+  #bloqueMapa {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    .modal {
+      width: 100%;
+      height: 100%;
+    }
+    dialog [open] {
+      position: relative;
+
+      z-index: 100;
+      position: absolute;
+      border-radius: calc(5px * var($radio));
+      box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      padding: 1.6rem;
+      scale: 1;
+      transition: scale 0.5s ease-in-out;
+      // transform: scale(1);
+      @starting-style {
+        border: none !important;
+        scale: 0;
+        // transform: scale(0);
+      }
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+    }
+    #close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 2000;
+    }
+
     .der {
-      order: 1;
-      
+      padding: $margen-cel;
+      flex: 0.6;
+      display: inherit;
+      justify-content: center;
+      align-items: center;
+    }
+    time,
+    address {
+      svg {
+        width: 15px;
+        height: auto;
+        vertical-align: middle;
+        margin: 10px 3px;
+      }
+      path {
+        // filter: invert(1);
+        fill: var(--primario);
+      }
+    }
+    @include cel {
+      flex-wrap: wrap;
+      .izq,
+      .der {
+        flex: 1 0 100%;
+        text-align: center;
+      }
+      .izq {
+        order: 2;
+      }
+      .der {
+        order: 1;
+      }
+    }
+
+    h3 {
+      color: var(--secundario);
+      font-size: clamp(2.5rem, 2.5vw, 3rem);
+    }
+    [data-icon] {
+      color: var(--acento);
+    }
+
+    #bandeReloj {
+      text-align: center;
+      margin-top: $margen-min;
+      hr {
+        position: absolute;
+        top: 7px;
+        width: 100%;
+        z-index: -1;
+      }
+      .linea1 {
+        border-top: solid 1px var(--primario);
+        position: absolute;
+        width: 40%;
+        left: 0%;
+        top: 18%;
+      }
+      .linea2 {
+        border-top: solid 1px var(--primario);
+        position: absolute;
+        width: 40%;
+        right: 0%;
+        top: 18%;
+      }
+      position: relative;
+    }
+    time {
+      font-family: $encabezados, serif;
+      font-size: clamp(1.5rem, 1.5vw, 2rem);
+      color: var(--acento);
     }
   }
-}
 
+  //bandeja mapas
 
-// ... existing code ...
+  .bandejaLugares {
+    margin-top: $margen;
+    display: flex;
+    flex-wrap: wrap;
+    background: rgb(255, 255, 255, 0.4);
+    border-radius: $radio;
+    backdrop-filter: blur(3px);
+    padding: $margen-min;
+    z-index: 30;
+    @extend .sombra;
+    position: relative;
+    z-index: 30;
+  }
+
+  // Componente detalles (dress code y sugerencias)
+  #detalles {
+    text-align: center;
+    flex: 1 0 50%;
+    h2 {
+      font-size: clamp(2rem, 2.5vw, 3rem);
+    }
+    .conte {
+      padding: $margen-cel $margen;
+    }
+    ul {
+      margin-top: $margen-min;
+      li {
+        padding: $margen-min 0;
+        border-bottom: 0.5px solid var(--terciario);
+        font-size: clamp(1.6rem, 1.5vw, 2rem);
+        @include cel {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    #vestimenta {
+      font-family: $garigol, serif;
+      font-size: clamp(2rem, 2.5vw, 3rem);
+    }
+  }
+  // Componente Regalos
+
+  #Regalos {
+    h3 {
+      padding-bottom: 0 !important;
+      margin: 0;
+    }
+    #regalo {
+      margin-top: $margen;
+      padding: $margen;
+      background: url("/bg-floral-regalos-izq.svg") var(--primario);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-blend-mode: color-burn;
+      color: white;
+      text-align: center;
+      :global(b) {
+        color: var(--terciario);
+      }
+      h2 {
+        color: white;
+        border-bottom: 1px solid white;
+        margin-bottom: $margen-min;
+        padding-bottom: $margen-min;
+      }
+      svg {
+        max-width: 2.5rem;
+        height: auto;
+        margin: 0 auto;
+      }
+      border-radius: $radio;
+      @extend .sombra;
+    }
+    #lluvia {
+      h3 {
+        color: var(--acento);
+        font-size: clamp(2.2rem, 1.5vw, 2rem);
+      }
+      background: url("/lluvia.webp") var(--fondoBurn) repeat;
+      background-size: contain;
+      background-blend-mode: overlay;
+      margin: $margen-cel 0;
+      padding: $margen $margen-cel;
+      text-align: center;
+      border-radius: $radio;
+      @extend .sombra;
+    }
+    #transferencias {
+      border-radius: $radio;
+      padding: $margen $margen-min;
+      display: flex;
+      flex-wrap: wrap;
+      gap: $margen-cel;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: $margen-cel;
+      background: url("/bg-floral-regalos-der.svg") var(--acento);
+      background-position: top right;
+      background-repeat: no-repeat;
+      background-size: 40%;
+      background-blend-mode: color-burn;
+      color: var(--terciario);
+      @extend .sombra;
+
+      h3 {
+        color: white;
+        font-size: clamp(2rem, 1vw, 2rem);
+      }
+      b {
+        color: white;
+      }
+      ul {
+        color: white;
+        text-align: left;
+      }
+    }
+    #regalo,
+    #lluvia,
+    #transferencias {
+      @include cel {
+        background-size: cover;
+        background-blend-mode: soft-light;
+      }
+    }
+    margin: 0 auto;
+    max-width: 70%;
+    padding-bottom: $margen;
+    @include cel {
+      max-width: 100%;
+      padding: 0;
+      padding-bottom: $margen;
+    }
+  }
+
+  // Componente contador (cuenta regresiva)
+
+  #contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secundario);
+    border: 0.5px solid var(--acento);
+    position: relative;
+    padding: $margen;
+    margin-bottom: $margen;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0%;
+      right: 0px;
+      transform: translate(-50%, 50%);
+      width: 130px;
+      height: 130px;
+      transform-origin: center;
+      rotate: 180deg;
+      background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
+      background-size: contain;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0%;
+      left: 0px;
+      transform: translate(-50%, 50%);
+      width: 130px;
+      height: 130px;
+      background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
+      background-size: contain;
+    }
+    &:before,
+    &:after {
+      @include cel {
+        width: 70px;
+        height: 70px;
+      }
+    }
+
+    h3 {
+      color: var(--primario);
+      font-family: $garigol, serif;
+      text-align: center;
+      margin-top: $margen-cel;
+      font-size: clamp(1.8rem, 2vw, 3rem);
+    }
+    #dias {
+      transform: translateY(-60%);
+    }
+
+    .tiempo-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      @include cel {
+        flex-direction: column;
+        align-items: center;
+        gap: 0rem;
+      }
+    }
+    .tiempo-item {
+      text-align: center;
+      padding-right: 2rem;
+      margin-right: 2rem;
+      border-right: solid 1px var(--secundario);
+      &:last-child {
+        border-right: none;
+      }
+      @include cel {
+        padding-right: 0;
+        margin-right: 0;
+        border-right: none;
+        border-bottom: solid 1px var(--secundario);
+      }
+    }
+    .numero {
+      margin-top: $margen-cel;
+      font-size: clamp(3rem, 5vw, 7rem);
+      color: var(--acento);
+      font-family: $encabezados, serif;
+    }
+    p:first-child {
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--acento);
+      border: solid 0.5px var(--secundario);
+      background: url("./textuta-bg-2.webp") repeat;
+      padding: $margen-min;
+      text-align: center;
+    }
+    p {
+      font-family: $encabezados, serif;
+      color: var(--primario);
+      font-size: clamp(1.5rem, 1.5vw, 1.5rem);
+      margin: 0;
+    }
+  }
+  // Componente galeria Gsap
+
+  #galeriaGsap {
+    .progress-bar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--fondo);
+      z-index: 1000;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      height: 10px;
+      background: var(--acento);
+      border-radius: $radio;
+    }
+
+    .galeSlider {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .galeSlider p img {
+      aspect-ratio: 1/1;
+      width: 50%;
+      height: 90%;
+      object-fit: cover;
+      position: absolute;
+      border: solid 1.2rem white;
+      @extend .sombra;
+      @include cel {
+        width: 90%;
+        height: 70%;
+      }
+    }
+
+    @include cel {
+      :global(.galeSlider p img) {
+        width: 90%;
+        height: 70%;
+        object-fit: cover;
+        position: absolute;
+      }
+    }
+  }
+
+  //componente mensaje Vip
+  #mensaje-vip-container{
+    display: none;
+    margin: $margen;
+    .mensaje-vip {
+    padding-top: $margen;
+    margin-top: $margen ;
+    position: relative;
+  }
+
+  .etiqueta-vip {
+    position: absolute;
+    top: 0rem;
+    right: 0.5rem;
+    background-color: var(--acento);
+    color: white;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .mensaje-contenido {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .mensaje-texto {
+    font-family: $txt, serif;
+    text-align: center;
+    font-size: clamp(2rem, 3vw, 4.5rem);
+    line-height: 1.2!important;
+
+    :global(.word) {
+      display: inline-block;
+
+      :global(.char) {
+        color: var(--primario);
+        display: inline-block;
+      }
+    }
+  }
+  }
 }
 
 @mixin liga($conBorde, $redondo) {
@@ -350,11 +1099,11 @@ b {
   color: white;
   background: var(--acento);
   padding: $margen-min $margen-cel;
-  img{
-    max-width: 1.5rem!important;
+  img {
+    max-width: 1.5rem !important;
     height: auto;
     vertical-align: middle;
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
   @if $conBorde {
     border: 1px solid var(--acento);
@@ -373,6 +1122,6 @@ b {
 .con-borde {
   @include liga(true, null);
 }
-.redondo{
+.redondo {
   @include liga(null, true);
 }

@@ -8,10 +8,12 @@ const { lista, encabezado, vestimenta } = Astro.props;
 
 import { Image } from "astro:assets";
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
+import { Icon } from "astro-icon/components";
 ---
 
-<div id="bandeja">
+<div id="detalles">
   <div class="conte">
+    {vestimenta ? <Icon name="mdi:clothes-hanger" size={200} />  : ""}
     <h2>{encabezado}</h2>
     <Image src={divisor} alt="vestimenta" />
     <ul>
@@ -19,6 +21,7 @@ import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
         lista ? (
           lista.map((item) => <li>{item}</li>)
         ) : (
+          
           <span id="vestimenta">{vestimenta}</span>
         )
       }
@@ -26,31 +29,3 @@ import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
   </div>
 </div>
 
-<style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
-  #bandeja {
-    text-align: center;
-    flex: 1 0 50%;
-}
-h2{
-  font-size: clamp(2rem, 2.5vw, 3rem);
-}
-.conte {
-    padding: $margen-cel $margen;
-}
-ul {
-    margin-top: $margen-min;
-    li{
-      padding: $margen-min 0;
-      border-bottom: .5px solid var(--terciario);
-      font-size: clamp(1.6rem, 1.5vw, 2rem);
-      @include cel {
-        font-size: 1.2rem;
-    }
-    }
-}
-#vestimenta {
-    font-family: $garigol, serif; 
-    font-size: clamp(2rem, 2.5vw, 3rem);
-  }
-</style>

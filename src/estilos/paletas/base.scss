@@ -1,12 +1,11 @@
-
 @mixin base() {
-    --primario: #292e5a;
-    --secundario: #e65288;
-    --terciario: #fef1f1;
-    --acento: #de8080;
-    --gris: #f2eee7;
-    --fondo: #eee3e3;
-    --sombra: rgba(151, 141, 126, 0.5);
-    --fondoBurn: #fef1f1;
+    --primario: #1d3557;     // Azul marino más elegante
+    --secundario: #e5989b;   // Rosa suave y romántico
+    --terciario: #f7ede2;    // Crema cálido
+    --acento: #af7e61;       // Dorado suave
+    --gris: #f5ebe0;         // Gris cálido
+    --fondo: #faf9f9;        // Blanco roto
+    --sombra: rgba(211, 196, 185, 0.5);  // Sombra más suave
+    --fondoBurn: #fff1e6;    // Fondo cálido
   }
-  
+

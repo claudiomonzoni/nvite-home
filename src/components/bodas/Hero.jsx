@@ -19,8 +19,7 @@ export default function Hero({
 }) {
   // Ensure correct day number
   const adjustedDiaNum = String(diaNum).padStart(2, '0');
-  const [invitado, setInvitado] = useState("-");
-  const [pase, setPase] = useState(0);
+  
 
 
   useEffect(() => {

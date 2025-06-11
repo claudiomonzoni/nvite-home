@@ -1,58 +1,16 @@
 ---
 ---
+<div id="galeriaGsap">
 
-<div class="galeSlider">
-  <div class="progress-bar-container">
-    <div class="progress-bar"></div>
+  <div class="galeSlider">
+    <div class="progress-bar-container">
+      <div class="progress-bar"></div>
+    </div>
+    <slot />
   </div>
-  <slot />
 </div>
 
-<style lang="scss">
-  @use "../../estilos/variables" as *;
-  .progress-bar-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--fondo);
-      z-index: 1000;
-    }
-  
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      height: 5px;
-      background: var(--primario);
-    }
-  
-    .galeSlider {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-    }
 
-    :global(.galeSlider p img) {
-      aspect-ratio: 1/1;
-      width: 50%;
-      height: 90%;
-      object-fit: cover;
-      position: absolute;
-      border: solid 1.2rem white;
-      @extend .sombra
-    }
-    
-    @include cel{
-      :global(.galeSlider p img) {
-      width: 90%;
-      height: 70%;
-      object-fit: cover;
-      position: absolute;
-    }
-    }
-  </style>
 
     <script>
       import { gsap } from "gsap";

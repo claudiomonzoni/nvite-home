@@ -8,22 +8,8 @@ const { src } = Astro.props;
 <div id="rola">
   <h3>Escucha la <b>canción</b> de nuestra boda</h3>
   <audio controls autoplay>
-    <!-- <source src="horse.ogg"  type="audio/ogg"> -->
     <source src={`${src}.mp3`} type="audio/mpeg" />
     Tu dispositivo no soporta el audio
   </audio>
 </div>
 
-<style>
-  #rola {
-    margin: 6rem 0;
-    text-align: center;
-    text-align: center;
-  }
-  h3 {
-    font-family: "Montserrat Alternates", sans-serif;
-  }
-  audio {
-    text-align: center;
-  }
-</style>

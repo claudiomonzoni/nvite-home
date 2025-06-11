@@ -8,19 +8,7 @@ const { frase } = Astro.props;
 <p class="frase">
   {frase}
 </p>
-<style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
-  .frase {
-    color: var(--acento);
-    font-family: $garigol, serif;
-    font-size: clamp(1.8rem, 5vw, 7vw);
-    text-align: center;
-    margin: $margen-min $margen-min 0 $margen-min;
-    padding: $margen $margen-min;
-    border-top: 1px solid var(--acento);
-    border-bottom: 1px solid var(--acento);
-  }
-</style>
+
 <script>
   import SplitType from "split-type";
   import gsap from "gsap";

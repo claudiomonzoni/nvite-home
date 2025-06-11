@@ -31,19 +31,19 @@ export default function Pases({ folder }) {
       });
   }, []);
   return (
-    <section className="grid contenido">
-      <div id={Style["bande"]}>
-        <h2 id={Style["invitados"]}>{invitado}</h2>
+    <section className="grid contenido" id="pases">
+      <div id="bande">
+        <h2 id="invitados">{invitado}</h2>
         <p>
           <b> Su asistencia</b> a nuestra boda será una alegría más para
           nosotros en este día tan especial.
         </p>
         <h3>
-          <span id={Style["varios"]} className="variosSpan"></span> entregamos
+          <span id="varios" className="variosSpan"></span> entregamos
         </h3>
         <hr />
         <div>
-          <li id={Style["pase"]}>
+          <li id="pase">
             {pase} <span className="paseSpan"></span>
           </li>
         </div>

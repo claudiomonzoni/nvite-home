@@ -1,13 +1,11 @@
-// Import base styles and themes
+// Importo temas
+@use "_variables" as *;
 @use "../temas/base/bodas/globales" as *;
 @use "../temas/clasico/bodas/clasico" as *;
-// @use "../temas/moderno/bodas/moderno" as moderno;
-// @use "../temas/clasico/bodas/clasico" as clasico;
-@use "_variables" as *;
 
 
 
-// Theme specific styles using data-theme attribute
+// temas
 :root[data-theme="base"] {
   @include tema-base();
 }

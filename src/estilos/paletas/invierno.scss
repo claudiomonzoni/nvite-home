@@ -1,13 +1,10 @@
-
-
-
 @mixin invierno() {
-  --primario: #4a6a75;       // Un tono más suave y equilibrado
-  --secundario: #7fa3b2;     // Un azul más claro para complementar
-  --terciario: #eae4df;      // Un beige más cálido para contraste
-  --acento: #b49dbd;         // Un tono más suave de morado
-  --gris: #cbd5db;           // Gris más neutro y menos saturado
-  --fondo: #f0f9fc;          // Fondo más claro y fresco
-  --sombra: rgba(100, 120, 130, 0.4); // Sombra más sutil
-  --fondoBurn: #fde8e8;      // Fondo cálido más suave
+  --primario: #445566;       // Azul marino desaturado, elegante
+  --secundario: #8299a6;     // Azul grisáceo suave
+  --terciario: #f5e6d3;      // Beige cálido para balance
+  --acento: #d4b08c;         // Dorado suave para elegancia
+  --gris: #e2e4e6;          // Gris perla neutro
+  --fondo: #faf7f5;         // Blanco cálido
+  --sombra: rgba(137, 150, 165, 0.3); // Sombra azul desaturada
+  --fondoBurn: #fff1e6;     // Fondo melocotón muy suave
 }
