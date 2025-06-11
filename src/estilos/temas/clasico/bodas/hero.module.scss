@@ -1,0 +1,182 @@
+@use "_variables.scss" as *;
+
+#hero {
+  height: 90dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+  border-radius: $radio;
+  position: relative;
+  z-index: 1;
+
+  ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @extend .sombra;
+  background: linear-gradient(
+    0deg,
+    var(--gris) 0%,
+   var(--fondo) 30%
+  );
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../../../../assets/bodas/imas/corona-flores-negro.png")
+      no-repeat;
+    background-size: 50%;
+    background-position: 90% 90%;
+    // background-blend-mode: color-burn;
+    mix-blend-mode: overlay;
+    // opacity: 0.7;
+    border-radius: $radio;
+    @include cel {
+      background-size: 160%;
+      background-position: center center;
+    }
+  }
+  @include cel {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+
+    .izq,
+    .der {
+      flex: 1 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .izq {
+      // padding: $margen-cel;
+      margin-bottom: $margen-cel;
+      height: auto;
+    }
+    .der {
+      padding: 0 $margen-min $margen-cel $margen-min;
+    }
+  }
+}
+.izq {
+  flex: 1 0 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.der {
+  height: fit-content;
+  h1 {
+    color: var(--primario);
+    font-size: clamp(3rem, 6vw, 7.5rem);
+    text-shadow: 2px 2px 8px #cab9ae;
+  }
+  font-size: clamp(1.3rem, 1vw, 1rem);
+  flex: 1 0 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .bandeja {
+    text-align: center;
+  }
+}
+.casamos {
+  color: var(--acento);
+  font-family: $garigol, serif;
+  font-size: clamp(1.4rem, 2vw, 3rem);
+}
+#avatar {
+  width: 83%;
+  height: 90%;
+  position: relative;
+  border-radius: $radio;
+  overflow: hidden; // Para contener el clip-path
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $radio;
+    position: relative;
+    z-index: 1;
+  }
+  --tamano: 40%;
+  // @include cel {
+  //   width: var(--tamano);
+  //   clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
+  // }
+}
+#fecha {
+  .linea1 {
+    border-top: solid 1px var(--primario);
+    position: absolute;
+    width:20%;
+    left: 5%;
+    top: 33%;
+  }
+  .linea2 {
+    border-top: solid 1px var(--primario);
+    position: absolute;
+    width:20%;
+    right: 5%;
+    top: 33%;
+  }
+  position: relative;
+  font-size: clamp(2rem, 2vw, 4rem);
+  .fechaNum {
+    font-size: clamp(5rem, 6vw, 7rem);
+    color: var(--acento);
+    font-family: $encabezados, serif;
+    line-height: 0.9em;
+    
+  }
+  .fechaAno {
+    font-family: $encabezados, serif;
+  }
+}
+
+#iniciales{
+
+  .amp{
+    font-size: clamp(2.5rem, 3.5vw, 4.5rem);
+    font-family: $encabezados, serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-shadow: 2px 2px 8px #cab9ae;
+  
+    span{
+      z-index: -1;
+      color: var(--acento);
+      font-size: clamp(3rem, 4vw, 5rem);
+    }
+    span:first-child{
+      position: relative;
+      top: -15px;
+      left: 10px;
+    }
+    span:last-child{
+      position: relative;
+      top: 10px;
+      right: 13px;
+    }
+  }
+}

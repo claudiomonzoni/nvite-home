@@ -126,3 +126,17 @@ $margen-riel: calc((100% - (100% - 5rem)) / 2 );
     grid-column: contenido / pantalla-end;
   }
 }
+
+.error {
+  background-color: var(--acento);
+  padding: 1rem;
+  border-radius: $radio;
+  margin: 1rem auto;
+  font-weight: bold;
+  color: var(--fondo);
+  max-width: 80%;
+  text-align: center;
+  @include cel {
+    max-width: 100%;
+  }
+}

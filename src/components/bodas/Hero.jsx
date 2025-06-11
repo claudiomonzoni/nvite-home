@@ -14,7 +14,8 @@ export default function Hero({
   diaNum,
   mes,
   ano,
-  cover
+  cover,
+  tema
 }) {
   // Ensure correct day number
   const adjustedDiaNum = String(diaNum).padStart(2, '0');
