@@ -71,6 +71,7 @@ import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro"
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Footer from "../../components/bodas/Footer.astro";
 
+
   <Hero
     nombres={frontmatter.novios}
     fecha={frontmatter.fecha}
@@ -80,8 +81,7 @@ import Footer from "../../components/bodas/Footer.astro";
     tema={frontmatter.theme}
     client:load
   /> 
-
-
+  
 <section class="grid pantalla">
   <Padres
     mamaNovia={frontmatter.padres.mamaNovia}
