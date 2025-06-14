@@ -2,6 +2,7 @@
 @use "_variables" as *;
 @use "../temas/base/bodas/globales" as *;
 @use "../temas/clasico/bodas/clasico" as *;
+@use "../temas/elegante/bodas/globales" as *;
 
 
 
@@ -12,5 +13,9 @@
 
 :root[data-theme="clasico"] {
   @include tema-clasico();
+}
+
+:root[data-theme="elegante"] {
+  @include tema-elegante();
 }
 

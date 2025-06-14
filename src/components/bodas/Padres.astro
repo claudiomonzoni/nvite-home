@@ -1,26 +1,47 @@
 ---
 interface Props {
-  mamaNovia: string;
-  papaNovia: string;
-  mamaNovio: string;
-  papaNovio: string;
+  mamaNovia?: string;
+  papaNovia?: string;
+  mamaNovio?: string;
+  papaNovio?: string;
+  fotopapasNovia?: string;
+  fotopapasNovio?: string;
 }
 
-const { mamaNovia, papaNovia, mamaNovio, papaNovio } = Astro.props;
+const { mamaNovia, papaNovia, mamaNovio, papaNovio, fotopapasNovia, fotopapasNovio } = Astro.props;
 ---
 <div id="padres">
 
   <div class="bande" >
     <h2>Nuestros Padres</h2>
     <div class="conte">
+  
       <ul class="padre">
-        <hr />
+      {
+        fotopapasNovia ? (
+          <div class="padre">
+            <img src={fotopapasNovia} alt="Foto de los padres de la novia" />
+          </div>
+        ) : (
+          ""
+        )
+      }
+ 
         <h3>Novia</h3>
         <li>{mamaNovia}</li>
         <li>{papaNovia}</li>
       </ul>
       <ul class="padre">
-        <hr />
+        {
+          fotopapasNovio ? (
+            <div class="padre">
+              <img src={fotopapasNovio} alt="Foto de los padres del novio" />
+            </div>
+          ) : (
+            ""
+          )
+        }
+    
         <h3>Novio</h3>
         <li>{mamaNovio}</li>
         <li>{papaNovio}</li>
