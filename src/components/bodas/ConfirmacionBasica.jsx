@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import estilo from "../../estilos/bodas/confirmacion.module.scss";
+import estilo from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 
 
 export default function Confirmacion({ whatsapp, dias_antes }) {

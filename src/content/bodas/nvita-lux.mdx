@@ -85,7 +85,7 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
-
+import Hero from "../../components/bodas/Hero.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
@@ -104,6 +104,15 @@ import Confirmacion from "../../components/comunes/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 
+  <Hero
+    nombres={frontmatter.novios}
+    fecha={frontmatter.fecha}
+    ellaIniciales={frontmatter.ellaIniciales}
+    elIniciales={frontmatter.elIniciales}
+    cover={frontmatter.cover}
+    tema={frontmatter.theme}
+    client:load
+  /> 
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
 </section>

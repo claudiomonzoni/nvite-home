@@ -37,7 +37,7 @@ recepcion: {
     }
 paleta: base
 theme:
-  name: "minimalista"
+  name: "elegante"
   colors:
     primary: "#2C3E50"
     secondary: "#E74C3C"
@@ -48,7 +48,7 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
-
+import Hero from "../../components/bodas/Hero.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Padres from "../../components/bodas/Padres.astro";
 import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
@@ -59,7 +59,15 @@ import Contador from "../../components/bodas/Contador.astro";
 import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Footer from "../../components/bodas/Footer.astro";
 
-
+  <Hero
+    nombres={frontmatter.novios}
+    fecha={frontmatter.fecha}
+    ellaIniciales={frontmatter.ellaIniciales}
+    elIniciales={frontmatter.elIniciales}
+    cover={frontmatter.cover}
+    tema={frontmatter.theme}
+    client:load
+  /> 
 
  <section class="grid contenido">
 <Padres mamaNovia={frontmatter.padres.mamaNovia} papaNovia={frontmatter.padres.papaNovia} mamaNovio={frontmatter.padres.mamaNovio} papaNovio={frontmatter.padres.papaNovio}/>

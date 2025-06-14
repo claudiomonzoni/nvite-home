@@ -7,7 +7,7 @@ extracto: Muestra de la invitación de bodas nvita
 descripcion: Muestra de la invitación de bodas nvita, la invitación que tiene más de lo básico.
 whatsapp: 8488493900
 novios: Elena & Marcos
-fecha: 2025-01-29
+fecha: 2025-06-21
 consideraciones: ["No vestir de blanco", "Favor de no llevar bebes"]
 vestimenta: Formal casual
 frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
@@ -55,6 +55,7 @@ theme:
     body: "Lora"
 ---
 
+import Hero from "../../components/bodas/Hero.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Padres from "../../components/bodas/Padres.astro";
 import Pases from "../../components/bodas/Pases";
@@ -69,6 +70,16 @@ import Confirmacion from "../../components/comunes/Confirmacion";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Footer from "../../components/bodas/Footer.astro";
+
+  <Hero
+    nombres={frontmatter.novios}
+    fecha={frontmatter.fecha}
+    ellaIniciales={frontmatter.ellaIniciales}
+    elIniciales={frontmatter.elIniciales}
+    cover={frontmatter.cover}
+    tema={frontmatter.theme}
+    client:load
+  /> 
 
 
 <section class="grid pantalla">

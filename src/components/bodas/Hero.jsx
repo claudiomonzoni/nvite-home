@@ -10,14 +10,26 @@ export default function Hero({
   nombres,
   ellaIniciales,
   elIniciales,
-  dia,
-  diaNum,
-  mes,
-  ano,
+  fecha,
   cover,
-  tema
 }) {
-  // Ensure correct day number
+
+  
+  // Asegurarnos que fecha sea string y tenga el formato correcto
+  const fechaString = String(fecha);
+  const [year, month, day] = fechaString.split('-').map(num => parseInt(num, 10));
+
+  
+  const fechaObj = new Date(year, month - 1, day);
+
+  
+  const diaSemana = fechaObj.toLocaleString('es-ES', { weekday: 'long' });
+  const dia = fechaObj.getDate();
+  const mes = fechaObj.toLocaleString('es-ES', { month: 'long' });
+  const ano = fechaObj.getFullYear();
+  const diaNum = dia;
+
+  // asegurar el numero correcto
   const adjustedDiaNum = String(diaNum).padStart(2, '0');
   
 
@@ -118,7 +130,7 @@ export default function Hero({
                 Deseamos invitarte a <b>celebrar nuestra boda</b>
               </p>
               <ul id={Style["fecha"]}>
-                <li className={Style.fecha}>{dia}</li>
+                <li className={Style.fecha}>{`${diaSemana}`}</li>
                 <hr className={Style.linea1} />
                 <li className={Style.fechaNum}>{adjustedDiaNum}</li>
                 <hr className={Style.linea2} />
