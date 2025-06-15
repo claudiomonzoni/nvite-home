@@ -305,10 +305,6 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
               mucho con la organización al hacerlo.
             </p>
-            <p>
-              Mueve el <span>switch a la derecha </span>para confirmar tu
-              asistencia
-            </p>
 
             <form
               id={styles["formulario"]}
@@ -316,6 +312,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
             >
               <div className={styles.conteCheck}>
                 <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
+               
                 <label className={styles.switch}>
                   <input
                     type="checkbox"
@@ -326,6 +323,10 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                 </label>
               </div>
 
+            <p id={styles["mueve"]}>
+              Mueve el <span>switch a la derecha </span>para confirmar tu
+              asistencia
+            </p>
               {asistira ? (
                 // Formulario para confirmar asistencia
                 <>

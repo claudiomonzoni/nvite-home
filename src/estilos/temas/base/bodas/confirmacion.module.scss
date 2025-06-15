@@ -17,9 +17,10 @@ h2 {
   border-radius: $radio;
   transition: all 0.3s ease;
   @include cel {
-    background-position: -20% top, right bottom;
-    background-size: 50%, 100%;
+    background-position: -30% top, right bottom;
+    background-size: 35%, 80%;
     background-blend-mode: color-burn, normal;
+    background-blend-mode: overlay, color-burn;
   }
   @extend .sombra;
 }
@@ -76,17 +77,29 @@ svg {
   }
  
 }
+#mueve{
+  border: solid var(--secundario) .9px;
+  padding: $margen-min;
+text-align: center;
+
+}
 .conteCheck {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   width: 100%;
   margin: 2rem 0;
+  p{
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+  }
   p, label{
     margin: 0!important;
-    font-size: 1.2rem;
     font-weight: bold;
+    flex: 1 0 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
 .switch {
