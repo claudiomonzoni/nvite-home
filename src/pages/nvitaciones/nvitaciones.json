@@ -1,6 +1,7 @@
 [
   {
     "id": "prod_S6z2ksD9axDHG1",
+    "slug": "invitacion-bodas-pdf-lux",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217604/PDF-bodas_ogxxe5.mov",
     "beneficios": [
       "Foto principal",
@@ -26,7 +27,8 @@
   },
   {
     "id": "prod_SK7Bqg9HjOSmhW",
-    "muestra": "/quince/nvita-quince-clasica?id=1&uid=1",
+    "slug": "invitacion-quince-clasica",
+    "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -35,7 +37,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -54,12 +55,12 @@
   },
   {
     "id": "prod_QNpXQx0LWRjRFh",
+    "slug": "invitacion-bodas-esencial",
     "titulo": "Invitación Bodas esencial",
     "muestra": "/bodas/nvita-bodas-esencial",
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario sencillo de confirmación"
@@ -74,7 +75,8 @@
   },
   {
     "id": "prod_QNpO0T7kRp1zkL",
-    "muestra": "/bodas/nvita-bodas-clasica?id=1&uid=1",
+    "slug": "invitacion-bodas-clasica",
+    "muestra": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
     "beneficios": [
       "Panel de invitados",
       "Nombre del invitado",
@@ -83,7 +85,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -101,7 +102,8 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
-    "muestra": "/quince/nvita-quince-lux?id=1&uid=1",
+    "slug": "invitacion-quince-lux",
+    "muestra": "/quince/nvita-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -112,7 +114,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -132,7 +133,8 @@
   },
   {
     "id": "prod_Q42WJO0oMaU98G",
-    "muestra": "/bodas/nvita-bodas-lux?id=1&uid=1",
+    "slug": "invitacion-bodas-lux",
+    "muestra": "/bodas/nvita-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
       "Panel de invitados",
       "Música ambiental",
@@ -143,7 +145,6 @@
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario de confirmación"
@@ -162,6 +163,7 @@
   },
   {
     "id": "prod_SJS7Pij7pMSLo4",
+    "slug": "invitacion-quince-pdf-lux",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
     "beneficios": [
       "Foto principal",
@@ -187,11 +189,11 @@
   },
   {
     "id": "prod_SK7ICkqFPPgSuJ",
+    "slug": "invitacion-quince-esencial",
     "muestra": "/quince/nvita-quince-esencial",
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
-      "Datos de tu evento",
       "Mapas de ubicación",
       "Frase animada",
       "Formulario sencillo de confirmación"
@@ -207,10 +209,10 @@
   },
   {
     "id": "prod_S6yybHJMahkBD0",
+    "slug": "invitacion-cumpleanos-pdf",
     "video":"https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
     "beneficios": [
       "Detalles del evento",
-      "Datos de tu evento",
       "Botón de ubicación",
       "Botón de confirmación",
       "Juego de preguntas"
