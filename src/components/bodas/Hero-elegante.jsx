@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
-import Style from "../../estilos/temas/base/bodas/hero.module.scss";
+import Style from "../../estilos/temas/elegante/bodas/hero.module.scss";
 
 // imagenes
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
@@ -41,63 +41,93 @@ export default function Hero({
 
   useEffect(() => {
     if (!isLoading) {
-      const tl = gsap.timeline();
-      
-      // Animación inicial del contenido
-      tl.from(".contenido", {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-      })
-      .from(".avatarConte", {
-        opacity: 0,
-        y: -30,
-        scale: 0.5,
-        duration: 2,
-        ease: "power4.out",
-      })
-      .from("#bande *", {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-        ease: "power4.out",
-        stagger: { amount: 1.6 },
-      }, "-=1.5");
-
-      // Animación responsive
+      // Configuración de matchMedia para animaciones responsivas
       let mm = gsap.matchMedia();
+
+      // Animaciones para Desktop (800px y más)
       mm.add("(min-width: 800px)", () => {
-        tl.to(".avatarConte", {
+        const tl = gsap.timeline();
+        
+        tl.from(".contenido", {
+          opacity: 0,
+          y: -30,
+          duration: 1
+        })
+        .from(".avatarConte", {
+          opacity: 0,
+          y: -30,
+          scale: 0.5,
+          duration: 2,
+          ease: "power4.out"
+        })
+        .from("#bande *", {
+          opacity: 0,
+          y: -30,
+          duration: 1,
+          ease: "power4.out",
+          stagger: { amount: 1.6 }
+        }, "-=1.5")
+        .to(".avatarConte", {
           delay: 1,
           duration: 2,
           ease: "power4.out",
-          transformOrigin:'center',
-          width:'100%',
-          height:'100%',
-          scale: 1,
+          transformOrigin: 'center',
+          width: '100%',
+          height: '100%',
+          scale: 1
         })
         .to(".avatarConte img", {
           scale: 1.2,
           duration: 2.2,
-          ease: "power4.out",
+          ease: "power4.out"
         }, "-=2");
       });
-      
+
+      // Animaciones para Móvil (menos de 800px)
       mm.add("(max-width: 799px)", () => {
-        tl.to(".avatarConte", {
-          delay: 1,
-          duration: 2,
-          ease: "power4.out",
-          transformOrigin:'center',
-          width:'100%',
-          height:'100%',
-          scale: 1,
+        const tl = gsap.timeline();
+        
+        // Primero anima el contenido
+        tl.from(".contenido", {
+          opacity: 0,
+          y: -30,
+          duration: 1
         })
-        .to(".avatarConte img", {
-          scale: 1.2,
-          duration: 2.2,
+        .from("#bande *", {
+          opacity: 0,
+          y: -30,
+          duration: 1,
           ease: "power4.out",
-        }, "-=2");
+          stagger: { amount: 1.6 }
+        });
+
+        // Animación del avatar con ScrollTrigger
+        gsap.from(".avatarConte", {          scrollTrigger: {
+            trigger: ".avatarConte",
+            start: "top 80%", // Esto hará que la animación comience cuando el elemento esté al 80% de la altura de la ventana
+            toggleActions: "play none none reverse"
+          },
+          opacity: 0,
+          y: 30,
+          scale: 0.5,
+          duration: 1.5,
+          ease: "power4.out",
+          onComplete: () => {
+            gsap.to(".avatarConte", {
+              duration: 2,
+              ease: "power4.out",
+              transformOrigin: 'center',
+              width: '100%',
+              height: '100%',
+              scale: 1
+            });
+            gsap.to(".avatarConte img", {
+              scale: 1.2,
+              duration: 2.2,
+              ease: "power4.out"
+            });
+          }
+        });
       });
     }
   }, [isLoading]);
@@ -112,7 +142,7 @@ export default function Hero({
   }
 
   return (
-    <section className="grid contenido">
+    <section className="grid pantalla">
       <div id={Style["hero"]} >
         <div className={Style["izq"]} id="izq">
           <div id={Style["avatar"]} className="avatarConte">
