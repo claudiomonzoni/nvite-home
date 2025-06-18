@@ -1,0 +1,91 @@
+---
+
+---
+
+<div class="sliderVentana">
+  <div class="progress-bar-container">
+    <div class="progress-bar"></div>
+  </div>
+  <slot />
+</div>
+
+<style lang="scss">
+  @use "../../estilos/temas/base/bodas/_variables.scss" as *;
+
+  .sliderVentana {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 14rem;
+    @include cel {
+      padding-top: 8rem;
+    }
+  }
+  :global(.sliderVentana .img-window) {
+    width: 40%;
+    overflow: hidden;
+    margin: -5rem auto 0 auto;
+    aspect-ratio: 2 / 3;
+    position: relative;
+    z-index: 1;
+    @include cel {
+      width: 90%;
+    }
+  }
+
+  :global(.sliderVentana .img-window img) {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  window.addEventListener("load", () => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const windows = document.querySelectorAll(".sliderVentana .img-window");
+
+    windows.forEach((win, index) => {
+      const img = win.querySelector("img");
+
+      // Escala el contenedor al entrar al viewport, transición más suave
+      gsap.fromTo(
+        win,
+        { scale: 1.4 },
+        {
+          scale: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: win,
+            start: "top 100%",   // inicia antes, más suave
+            end: "bottom 10%",  // termina después, más suave
+            scrub: 1.2,         // suaviza la animación
+            toggleActions: "play reverse play reverse",
+            //markers: true,    // quita markers para producción
+          },
+        }
+      );
+
+      // Parallax en la imagen al hacer scroll, solo hacia arriba
+      gsap.fromTo(
+        img,
+        { yPercent: -30 },
+        {
+          yPercent: 0,
+          ease: "power2.out",
+          scrollTrigger: {
+            toggleActions: "play reverse play reverse",
+            trigger: win,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
+    });
+  });
+</script>
+</script>

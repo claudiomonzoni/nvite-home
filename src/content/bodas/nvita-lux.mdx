@@ -96,7 +96,8 @@ import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
-import SliderGsap from "../../components/comunes/SilderGsap.astro";
+// import SliderGsap from "../../components/comunes/SilderGsap.astro";
+import SliderVentana from "../../components/comunes/SliderVentana.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
@@ -126,25 +127,8 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
   />
 </section>
 
-<Pases folder={frontmatter.json} client:load />
-<ProgresoInvitados
-  email="nvitaplusboda@nvita.me"
-  porcentajeMostrarInvitados={20}
-  frase="¡Ya casi completamos la lista de invitados!"
-  mostrarSiempre={true}
-/>
-
 <section class="grid contenido">
-  <Frase frase={frontmatter.frase_amor} />
-</section>
-
-<section class="grid contenido">
-  <Encabezados texto="Nuestra Boda" />
-  <ParrafosLibres texto="Te damos los detalles del evento, el cual queremos disfrutemos juntos." />
-</section>
-
-<section class="grid contenido">
-  <div class="bandejaLugares">
+  <div class="c">
     <BloqueMapa
       encabezado="Ceremonia"
       dir={frontmatter.ceremonia.lugar}
@@ -161,10 +145,26 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
       lat={frontmatter.recepcion.lat}
       lng={frontmatter.recepcion.lang}
       mapName="mapa2"
-      icono="espantasuegras"
+      icono="brindis"
     />
   </div>
 </section>
+
+<Pases folder={frontmatter.json} client:load />
+<section class="grid contenido">
+  <Contador fecha={frontmatter.fecha} />
+</section>
+<ProgresoInvitados
+  email="nvitaplusboda@nvita.me"
+  porcentajeMostrarInvitados={20}
+  frase="¡Ya casi completamos la lista de invitados!"
+  mostrarSiempre={true}
+/>
+
+<section class="grid contenido">
+  <Frase frase={frontmatter.frase_amor} />
+</section>
+
 
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
@@ -174,6 +174,17 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 <section class="grid pantalla flex margen-arriba-abajo">
   <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />
   <Detalles encabezado="Codigo de vestir" vestimenta={frontmatter.vestimenta} />
+</section>
+
+<section class="grid pantalla">
+  <SliderVentana>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp)</div> 
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda1.webp) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda3.webp) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda4.webp) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda5.webp)</div>
+  </SliderVentana>
 </section>
 
 <section class="grid contenido">
@@ -186,18 +197,11 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
     />
 </section>
 
-<section class="grid contenido">
-  <Contador fecha={frontmatter.fecha} />
-</section>
-<section class="grid pantalla">
-  <SliderGsap>
-    ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp) ![Boda
-    Nvita](../../assets/bodas/nvitaPlus/gale/boda1.webp) ![Boda
-    Nvita](../../assets/bodas/nvitaPlus/gale/boda3.webp) ![Boda
-    Nvita](../../assets/bodas/nvitaPlus/gale/boda4.webp) ![Boda
-    Nvita](../../assets/bodas/nvitaPlus/gale/boda5.webp)
-  </SliderGsap>
-</section>
+
+
+
+
+
 
 <section class="grid contenido">
   <MensajeVip />
@@ -210,4 +214,5 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
   tipoEvento="boda"
   client:only="react"
 />
+
 

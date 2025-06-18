@@ -766,7 +766,7 @@
     backdrop-filter: blur(3px);
     padding: $margen-min;
     z-index: 30;
-    @extend .sombra;
+    // @extend .sombra;
     position: relative;
     z-index: 30;
   }
@@ -997,55 +997,55 @@
   }
   // Componente galeria Gsap
 
-  #galeriaGsap {
-    .progress-bar-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--fondo);
-      z-index: 1000;
-    }
+  // #galeriaGsap {
+  //   .progress-bar-container {
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     width: 100%;
+  //     height: 2px;
+  //     background: var(--fondo);
+  //     z-index: 1000;
+  //   }
 
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      height: 10px;
-      background: var(--acento);
-      border-radius: $radio;
-    }
+  //   .progress-bar {
+  //     height: 100%;
+  //     width: 0;
+  //     height: 10px;
+  //     background: var(--acento);
+  //     border-radius: $radio;
+  //   }
 
-    .galeSlider {
-      position: relative;
-      height: 100vh;
-      width: 100%;
-      overflow: hidden;
-    }
+  //   .galeSlider {
+  //     position: relative;
+  //     height: 100vh;
+  //     width: 100%;
+  //     overflow: hidden;
+  //   }
 
-    .galeSlider p img {
-      aspect-ratio: 1/1;
-      width: 50%;
-      height: 90%;
-      object-fit: cover;
-      position: absolute;
-      border: solid 1.2rem white;
-      @extend .sombra;
-      @include cel {
-        width: 90%;
-        height: 70%;
-      }
-    }
+  //   .galeSlider p img {
+  //     aspect-ratio: 1/1;
+  //     width: 50%;
+  //     height: 90%;
+  //     object-fit: cover;
+  //     position: absolute;
+  //     border: solid 1.2rem white;
+  //     @extend .sombra;
+  //     @include cel {
+  //       width: 90%;
+  //       height: 70%;
+  //     }
+  //   }
 
-    @include cel {
-      :global(.galeSlider p img) {
-        width: 90%;
-        height: 70%;
-        object-fit: cover;
-        position: absolute;
-      }
-    }
-  }
+  //   @include cel {
+  //     :global(.galeSlider p img) {
+  //       width: 90%;
+  //       height: 70%;
+  //       object-fit: cover;
+  //       position: absolute;
+  //     }
+  //   }
+  // }
 
   //componente mensaje Vip
   #mensaje-vip-container {
