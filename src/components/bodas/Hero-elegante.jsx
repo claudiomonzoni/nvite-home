@@ -115,7 +115,7 @@ export default function Hero({
           scrollTrigger: {
             trigger: ".avatarConte",
             start: "top 80%", // Esto hará que la animación comience cuando el elemento esté al 80% de la altura de la ventana
-            toggleActions: "play none none reverse",
+            // toggleActions: "play none none reverse",
           },
           opacity: 0,
           y: 30,

@@ -46,6 +46,9 @@
   window.addEventListener("load", () => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Soluciona problemas de ScrollTrigger en móviles con barra de navegador
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
     const windows = document.querySelectorAll(".sliderVentana .img-window");
 
     windows.forEach((win, index) => {
@@ -87,5 +90,4 @@
       );
     });
   });
-</script>
 </script>

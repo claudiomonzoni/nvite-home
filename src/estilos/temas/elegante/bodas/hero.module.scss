@@ -2,6 +2,7 @@
 
 #hero {
   height: 90dvh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,8 +17,8 @@
     margin: 0;
     padding: 0;
   }
-  p{
-    padding: 0!important;
+  p {
+    padding: 0 !important;
   }
 
   &::before {
@@ -40,10 +41,9 @@
     }
   }
   @include cel {
+    min-height: 90dvh;
     flex-wrap: wrap;
     justify-content: center;
-    height: auto;
-
     background: linear-gradient(180deg, var(--gris) 0%, var(--fondo) 70%);
 
     .izq,
@@ -84,17 +84,16 @@
   align-items: center;
   h1 {
     color: var(--primario) !important;
-    font-size: clamp(5rem, 6vw, 7.5rem)!important;
+    font-size: clamp(5rem, 6vw, 7.5rem) !important;
     text-shadow: 2px 2px 8px #cab9ae;
     @include cel {
-      font-size:18vw!important;
+      font-size: 18vw !important;
     }
   }
   .bandeja {
     text-align: center;
     padding: $margen-cel;
   }
-
 }
 .casamos {
   color: var(--acento);
