@@ -1,16 +1,12 @@
 @use "_variables.scss" as *;
 
 #hero {
-  height: 90dvh;
-  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: $radio;
   position: relative;
   z-index: 1;
   background: linear-gradient(0deg, var(--gris) 0%, var(--fondo) 30%);
-
   ul,
   li {
     list-style: none;
@@ -41,10 +37,9 @@
     }
   }
   @include cel {
-    min-height: 90dvh;
     flex-wrap: wrap;
     justify-content: center;
-    background: linear-gradient(180deg, var(--gris) 0%, var(--fondo) 70%);
+    background: linear-gradient(180deg, var(--gris) 0%, var(--fondo) 30%);
 
     .izq,
     .der {
@@ -61,7 +56,6 @@
     }
     .der {
       order: 1;
-      height: 100dvh;
       p {
         padding: $margen-cel;
       }
@@ -84,21 +78,42 @@
   align-items: center;
   h1 {
     color: var(--primario) !important;
-    font-size: clamp(5rem, 6vw, 7.5rem) !important;
-    text-shadow: 2px 2px 8px #cab9ae;
+    font-size: clamp(4rem, 6vw, 7.5rem) !important;
+    // text-shadow: 2px 2px 8px #cab9ae;
     @include cel {
-      font-size: 18vw !important;
+      font-size: 13vw !important;
     }
   }
   .bandeja {
     text-align: center;
+    border: solid 1px var(--secundario);
+    width: 70%;
     padding: $margen-cel;
+    margin: $margen-cel 0;
+    position: relative;
+
+    @include cel {
+      padding: $margen $margen-cel;
+    }
+  }
+  .flecha {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    border: solid 1px var(--secundario);
+    border-radius: 100%;
+    background-color: var(--fondo);
+    width: 30px;
+    height: 30px;
   }
 }
 .casamos {
   color: var(--acento);
   font-family: $garigol, serif;
   font-size: clamp(2.4rem, 2vw, 3rem);
+  line-height: 2.1rem;
+  margin-top: $margen-min !important;
 }
 #avatar {
   width: 83%;
@@ -117,7 +132,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: $radio;
+    // border-radius: $radio;
     position: relative;
     z-index: 1;
   }
@@ -128,38 +143,38 @@
   // }
 }
 #fecha {
-  .linea1 {
-    border-top: solid 1px var(--primario);
-    position: absolute;
-    width: 20%;
-    left: 5%;
-    top: 33%;
-  }
-  .linea2 {
-    border-top: solid 1px var(--primario);
-    position: absolute;
-    width: 20%;
-    right: 5%;
-    top: 33%;
-  }
   position: relative;
-  font-size: clamp(2rem, 2vw, 4rem);
+  #fechaConte {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fecha,
+  .fechaMes {
+    border-top: solid 1px var(--secundario);
+    border-bottom: solid 1px var(--secundario);
+    padding: 0.4rem 0;
+  }
   .fechaNum {
     font-size: clamp(5rem, 6vw, 7rem);
     color: var(--acento);
-    font-family: $encabezados, serif;
-    line-height: 0.9em;
+    font-family: $txt, serif;
+    line-height: 1.1em;
+    padding: 0 $margen-min;
   }
   .fechaAno {
     font-family: $encabezados, serif;
+    font-size: clamp(1.2rem, 2vw, 3rem);
   }
 }
 
 #iniciales {
+  margin-bottom: $margen-cel;
   .amp {
-    font-size: clamp(3.5rem, 3.5vw, 4.5rem);
+    font-size: clamp(2.5rem, 3.5vw, 4.5rem);
     font-family: $encabezados, serif;
-    color: var(--acento);
+    font-weight: 300;
+    color: var(--primario);
     display: flex;
     justify-content: center;
     align-items: center;

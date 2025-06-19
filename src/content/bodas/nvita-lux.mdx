@@ -7,15 +7,17 @@ descripcion: Muestra de la invitación de bodas nvite plus, la más completa de 
 cover: /bodas/nvitaPlus/cover.webp
 json: nvitaPlus
 whatsapp: 8488493900
-novios: Elena & Marcos
+novios: Marielena & Antonio
 ellaIniciales: E
 elIniciales: M
 padres:
   {
-    "mamaNovia": "Martha Murray",
+    "mamaNovia": "Martha Fernández",
     "papaNovia": "Teodoro Almansa",
+    "fotopapasNovia": "/bodas/nvitaReg/papasnovia.png",
     "mamaNovio": "Eloísa Martínez",
     "papaNovio": "Armando Hernández",
+    "fotopapasNovio": "/bodas/nvitaReg/papasnovio.png",
   }
 fecha: 2025-12-07
 vestimenta: Formal casual
@@ -28,14 +30,14 @@ consideraciones: ["No vestir de blanco", "Favor de no llevar bebes"]
 ceremonia:
   {
     "lat": 17.665128,
-    "lang": -101.597448,
+    "lng": -101.597448,
     "hora": 6:00 P.M.,
     "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)",
   }
 recepcion:
   {
     "lat": 17.661152,
-    "lang": -101.603728,
+    "lng": -101.603728,
     "hora": 7:30 P.M.,
     "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.",
   }
@@ -72,7 +74,7 @@ iterario:
       "hora": "3:00",
     },
   ]
-paleta: primavera
+paleta: base
 theme:
   name: "elegante"
   colors:
@@ -96,7 +98,7 @@ import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
 import Frase from "../../components/bodas/Frase.astro";
 import Detalles from "../../components/bodas/Detalles.astro";
 import Galeria from "../../components/bodas/Galeria.astro";
-// import SliderGsap from "../../components/comunes/SilderGsap.astro";
+import SliderGsap from "../../components/comunes/SilderGsap.astro";
 import SliderVentana from "../../components/comunes/SliderVentana.astro";
 import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/bodas/Regalos.astro";
@@ -105,7 +107,9 @@ import Confirmacion from "../../components/comunes/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 
-  <Hero
+
+ 
+ <Hero
     nombres={frontmatter.novios}
     fecha={frontmatter.fecha}
     ellaIniciales={frontmatter.ellaIniciales}
@@ -114,27 +118,32 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
     tema={frontmatter.theme}
     client:load
   /> 
+
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
 </section>
+
 
 <section class="grid pantalla">
   <Padres
     mamaNovia={frontmatter.padres.mamaNovia}
     papaNovia={frontmatter.padres.papaNovia}
+    fotopapasNovia={frontmatter.padres.fotopapasNovia}
     mamaNovio={frontmatter.padres.mamaNovio}
     papaNovio={frontmatter.padres.papaNovio}
+    fotopapasNovio={frontmatter.padres.fotopapasNovio}
   />
 </section>
 
+
 <section class="grid contenido">
-  <div class="c">
+  <div class="bandejaLugares">
     <BloqueMapa
       encabezado="Ceremonia"
       dir={frontmatter.ceremonia.lugar}
       horario={frontmatter.ceremonia.hora}
       lat={frontmatter.ceremonia.lat}
-      lng={frontmatter.ceremonia.lang}
+      lng={frontmatter.ceremonia.lng}
       mapName="mapa1"
       icono="iglesia"
     />
@@ -143,7 +152,7 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
       dir={frontmatter.recepcion.lugar}
       horario={frontmatter.recepcion.hora}
       lat={frontmatter.recepcion.lat}
-      lng={frontmatter.recepcion.lang}
+      lng={frontmatter.recepcion.lng}
       mapName="mapa2"
       icono="brindis"
     />
@@ -157,14 +166,13 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 <ProgresoInvitados
   email="nvitaplusboda@nvita.me"
   porcentajeMostrarInvitados={20}
-  frase="¡Ya casi completamos la lista de invitados!"
+  frase="Estás en la lista, ¿Ya confirmaste?"
   mostrarSiempre={true}
 />
 
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
 </section>
-
 
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
@@ -187,6 +195,8 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
   </SliderVentana>
 </section>
 
+
+
 <section class="grid contenido">
 
   <Regalos
@@ -196,10 +206,6 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
       cuenta={frontmatter.cuenta}
     />
 </section>
-
-
-
-
 
 
 

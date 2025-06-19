@@ -14,11 +14,12 @@ import { Icon } from "astro-icon/components";
 import Mapa from "../comunes/Mapa.astro";
 
 import Anchor from "../comunes/Anchor.astro";
+import Boton from "../comunes/Boton.astro";
+console.log(lat);
 ---
 
 <div id="bloqueMapa">
   <dialog class="modal" data-mapa={mapName}>
-
     <a href="#" id="close"><Icon name={"cerrar"} size={40} /></a>
     <Mapa lat={lat} lng={lng} mapName={mapName} />
   </dialog>
@@ -42,12 +43,32 @@ import Anchor from "../comunes/Anchor.astro";
       <time datetime="{horario}">{horario}</time>
     </div>
     <!-- <a href="#" class="btn">Ver mapa</a> -->
-    <Anchor url={"#"} id={`${mapName}-btn`} clases={"large"} conBorde={false} redondo={true} sombra={true} tema={"primario"} texto={"Ver mapa"} />
-   
-    
+
+    <Anchor
+      url={"#"}
+      id={`${mapName}-btn`}
+      icono="mdi:map-marker-outline"
+      clases={"large"}
+      conBorde={true}
+      redondo={false}
+      sombra={false}
+      tema={"primario"}
+      texto={"ver mapa"}
+    />
+    <Anchor
+      url={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
+      id={`${mapName}-btn-googlemaps`}
+      icono={"solar:map-arrow-right-outline"}
+      clases={"large"}
+      conBorde={true}
+      redondo={false}
+      sombra={false}
+      tema={"primario"}
+      texto={"iniciar viaje"}
+      target="_blank"
+    />
   </div>
 </div>
-
 
 <script>
   // aqui el modal del mapa
@@ -60,7 +81,7 @@ import Anchor from "../comunes/Anchor.astro";
 
   bloqueMapa.forEach((bMapa: HTMLElement, id) => {
     let mm = gsap.matchMedia();
-    let suma = 5 * id+1;
+    let suma = 5 * id + 1;
 
     mm.add("(min-width: 800px)", () => {
       // desktop setup code here...
@@ -76,7 +97,7 @@ import Anchor from "../comunes/Anchor.astro";
         ease: "power2.out",
         x: -30 + suma++ * 1,
         opacity: 0,
-        delay: 0 + suma++ ,
+        delay: 0 + suma++,
       });
       tl.from(bMapa.children, {
         opacity: 0,
@@ -108,19 +129,19 @@ import Anchor from "../comunes/Anchor.astro";
     });
 
     // dentro del bucle encuentro el mapa del modal
-    const btn = bMapa.querySelector(".large");  // Changed from .btn to .large
+    const btn = bMapa.querySelector(".large"); // Changed from .btn to .large
     const dialog = bMapa.querySelector("dialog");
     const cerrar = bMapa.querySelector("#close");
-    
+
     if (btn && dialog) {
       btn.addEventListener("click", (e) => {
         e.preventDefault();
         dialog.showModal();
-        
+
         // Dispatch custom event when dialog opens
         setTimeout(() => {
-          const showEvent = new CustomEvent('map-dialog-opened', {
-            detail: { mapName: dialog.getAttribute('data-mapa') }
+          const showEvent = new CustomEvent("map-dialog-opened", {
+            detail: { mapName: dialog.getAttribute("data-mapa") },
           });
           document.dispatchEvent(showEvent);
         }, 100);
@@ -134,5 +155,4 @@ import Anchor from "../comunes/Anchor.astro";
       });
     }
   });
-
 </script>

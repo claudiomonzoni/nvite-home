@@ -167,21 +167,29 @@ export default function Hero({
                 <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
               </div>
             </div>
-            <p>NOS COMPLACE INVITARTE A NUESTRO GRAN DÍA</p>
+            <p>NOS COMPLACE INVITARTE</p>
             {/* <span className={Style.familia} id="invitado">
               {invitado}
             </span> */}
             <img src={divisor.src} alt="divisor bodas nvita" />
-            <p className={Style["casamos"]}> Y celebrar juntos nuestra unión </p>
+            <p className={Style["casamos"]}>
+              {" "}
+              A la celebración de nuestra unión{" "}
+            </p>
             <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
             <ul id={Style["fecha"]}>
-              <li className={Style.fecha}>{`${diaSemana}`}</li>
-              <hr className={Style.linea1} />
-              <li className={Style.fechaNum}>{adjustedDiaNum}</li>
-              <hr className={Style.linea2} />
-              <li className={Style.fechaMes}>{mes}</li>
               <li className={Style.fechaAno}>{ano}</li>
+              <li id={Style["fechaConte"]}>
+                <li className={Style.fecha}>{`${diaSemana}`}</li>
+
+                <li className={Style.fechaNum}>{adjustedDiaNum}</li>
+
+                <li className={Style.fechaMes}>{mes}</li>
+              </li>
             </ul>
+            <div className={Style.flecha}>
+              <img src="/bodas/elegante/abajo.svg" alt="flecha bodas nvitaciones" />
+            </div>
           </div>
         </div>
       </div>

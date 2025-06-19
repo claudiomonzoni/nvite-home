@@ -1,4 +1,6 @@
 ---
+import { Icon } from 'astro-icon/components';
+
 interface Props {
   id?: string;
   clases?: string;
@@ -8,30 +10,36 @@ interface Props {
   tema?: string;
   url: string;
   texto?: string;
+  target?: string;
+  icono?: string;
 }
-const { clases, conBorde, redondo, sombra, tema, url, texto,  ...rest } = Astro.props;
+const { clases, conBorde, redondo, sombra, tema, url, texto, icono,  ...rest } = Astro.props;
 ---
 
 <a
   href={url}
   class:list={["btn", clases, tema, { "con-borde": conBorde, "redondo": redondo, "sombra": sombra }]}
   {...rest}>
-  {texto}
+  {icono && <Icon name={icono} size={22} />}
+ {texto}
 </a>
 
 <style lang="scss">
-  @use "../../estilos/quince/_variables.scss" as *;
+  @use "../../estilos/bodas/_variables.scss" as *;
 
   @mixin liga($conBorde, $redondo) {
   margin: $margen-min 0;
-  color: white;
-  background: var(--acento);
-  padding: $margen-min $margen-cel;
+  color: var(--primario);
+  background: var(--terciario);
+  padding: .7rem $margen-cel;
+  svg {
+    vertical-align: middle;
+  }
   @if $conBorde {
     border: 1px solid var(--acento);
     background: var(--secundario);
     opacity: 0.8;
-    color: var(--primario);
+    color: var(--primario)!important;
   }
   @if $redondo {
     border-radius: $radio;

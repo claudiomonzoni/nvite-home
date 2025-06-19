@@ -76,7 +76,6 @@
   h4 {
     line-height: 1em;
     font-family: $encabezados, serif;
-    font-weight: 600;
     padding-bottom: 0.7rem;
     color: var(--secundario);
   }
@@ -134,11 +133,6 @@
     position: relative;
     z-index: -1;
     overflow: hidden;
-    // border-radius: $radio;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: $radio;
-    border-bottom-right-radius: $radio;
 
     ol {
       text-align: center;
@@ -147,13 +141,22 @@
       list-style: none;
 
       h4 {
-        color: var(--acento);
+        color: var(--fondo);
         font-family: $garigol, serif;
         line-height: 2.2rem;
+        font-size: clamp(2.5rem, 2vw, 2.5rem)!important;
       }
       p {
-        color: white;
+        color: var(--secundario);
         margin-bottom: none;
+        font-size: clamp(1.2rem, 1.5vw, 2rem)!important;
+      }
+      P:last-child {
+        margin: 0 auto;
+        font-size: clamp(1.6rem, 1.8vw, 2rem)!important;
+       border-top: 1px solid;
+       padding-top: $margen-min;
+       max-width: 30%;
       }
       li {
         margin: $margen 0;
@@ -172,7 +175,7 @@
       background-size: 40%;
       background-position: center 110%;
       mix-blend-mode: multiply;
-      opacity: 0.2;
+      opacity: 0.1;
       transform: rotate(180deg);
       @include cel {
         background-position: center 105%;
@@ -327,7 +330,7 @@
       text-align: center;
       font-family: $garigol, serif;
       font-size: clamp(2.5rem, 2vw, 3rem);
-      color: var(--acento);
+      color: var(--primario);
     }
     .bande {
       background: rgb(254, 241, 241);
@@ -367,12 +370,12 @@
       img {
         max-width: 20%;
         height: auto;
-        border-radius: 3rem;
+        border: solid 1.2rem var(--fondo);
+        
         @extend .sombra;
         margin-bottom: $margen-cel;
         @include cel {
           max-width: 60%;
-          border-radius: 1rem;
         }
       }
 
@@ -381,6 +384,7 @@
         display: inline-block;
         position: relative;
         padding: 0em 0.6em;
+        margin-bottom: $margen-min;
 
         &::before {
           content: "";
@@ -389,7 +393,7 @@
           left: 0;
           width: 100%;
           height: 100%;
-          border-bottom: solid;
+          border-bottom: solid 1px var(--primario);
           padding-bottom: 0.4rem;
           z-index: -1;
           border-radius: 4px;
@@ -473,12 +477,12 @@
         border: none;
         border-top: 1px solid var(--acento);
         position: absolute;
-        bottom: 30%;
+        bottom: 25%;
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: -1;
         @include cel {
-          bottom: 22%;
+          bottom: 19%;
           width: 80%;
         }
       }
@@ -493,7 +497,6 @@
       border: solid 0.5px var(--acento);
       display: inline-block;
       padding: $margen-min;
-      border-radius: $margen-min;
       background-color: rgba(255, 255, 255, 0.4);
       backdrop-filter: blur(2px);
     }
@@ -557,37 +560,30 @@
 
   .porcentaje .numero {
     font-family: $encabezados, serif;
-    font-size: clamp(5rem, 4vw, 5vw);
-    font-weight: bold;
-    color: var(--acento);
+    font-size: clamp(5rem, 4vw, 5vw)!important;
+    font-weight: 100;
+    padding-bottom: $margen-min;
   }
-
-  .porcentaje .texto {
-    font-size: 1.2rem;
-    color: var(--primario);
-  }
-
-  .detalles {
-    font-size: 1.1rem;
-    color: var(--primario);
-  }
-
+  
+  
+  
   .detalles .confirmados,
   .detalles .total {
     font-weight: bold;
     color: var(--acento);
   }
-
+  
   @media (max-width: 768px) {
     .progreso-invitados {
       padding: 1rem;
     }
-
+    
     .porcentaje .numero {
       font-size: 2.5rem;
     }
-
+    
     .porcentaje .texto {
+      font-weight: 100;
       font-size: 1rem;
     }
 
@@ -951,7 +947,6 @@
       justify-content: center;
       flex-wrap: wrap;
       @include cel {
-        flex-direction: column;
         align-items: center;
         gap: 0rem;
       }
@@ -965,10 +960,12 @@
         border-right: none;
       }
       @include cel {
+        flex: 1 0 40%;
+        margin: 0 $margen-min;
         padding-right: 0;
         margin-right: 0;
         border-right: none;
-        border-bottom: solid 1px var(--secundario);
+        // border-bottom: solid 1px var(--secundario);
       }
     }
     .numero {
@@ -977,6 +974,7 @@
       color: var(--acento);
       font-family: $encabezados, serif;
     }
+    // este es el encabezado
     p:first-child {
       position: absolute;
       top: 0%;
@@ -984,8 +982,8 @@
       transform: translate(-50%, -50%);
       color: var(--acento);
       border: solid 0.5px var(--secundario);
-      background: url("./textuta-bg-2.webp") repeat;
-      padding: $margen-min;
+      background: var(--fondo);
+      padding: .7rem $margen-min;
       text-align: center;
     }
     p {
@@ -993,6 +991,16 @@
       color: var(--primario);
       font-size: clamp(1.5rem, 1.5vw, 1.5rem);
       margin: 0;
+    }
+    @include cel {
+      padding: $margen-cel;
+      h3 {
+        font-size: clamp(1.5rem, 2vw, 2.5rem);
+      }
+      .numero {
+        font-size: clamp(3rem, 4vw, 4rem);
+        margin-top: $margen-min;
+      }
     }
   }
   // Componente galeria Gsap

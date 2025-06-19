@@ -41,7 +41,7 @@ const { listado } = Astro.props;
           start: "top 100%",
           end: "bottom 70%",
           scrub: true,
-          // markers: true,
+         // markers: true,
         },
       });
       tl.from(evento.children, {
@@ -71,5 +71,15 @@ const { listado } = Astro.props;
         stagger: 0.1,
       });
     });
+  });
+
+  // Forzar recalculo de ScrollTrigger después de un pequeño delay
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 500);
+
+  // También refrescar en resize
+  window.addEventListener('resize', () => {
+    ScrollTrigger.refresh();
   });
 </script>

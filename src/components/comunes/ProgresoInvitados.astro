@@ -1,5 +1,6 @@
 ---
 import Btn from '../Btn.astro';
+import Anchor from './Anchor.astro';
 import Boton from './Boton.astro';
 
 interface Props {
@@ -27,7 +28,17 @@ const { porcentajeMostrarInvitados, mostrarSiempre, frase, email } = Astro.props
                 <span class="confirmados" id="pases-confirmados">0</span> de <span class="total" id="total-pases">0</span> pases confirmados
             </p>
         </div>
-        <Boton liga='#Confirmacion-comun' texto='Confirmar mi asistencia' claro={false} clases={'btn-oscuro '} />
+          <Anchor
+      url={"#Confirmacion-comun"}
+      id="confirmacion-btn-progreso"
+      icono="solar:check-read-outline"
+      clases={"large"}
+      conBorde={true}
+      redondo={false}
+      sombra={false}
+      tema={"primario"}
+      texto={"confirmar asistencia"}
+    />
     </div>
 </div>
 
