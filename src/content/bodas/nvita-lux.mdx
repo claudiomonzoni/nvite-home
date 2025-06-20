@@ -32,14 +32,14 @@ ceremonia:
     "lat": 17.665128,
     "lng": -101.597448,
     "hora": 6:00 P.M.,
-    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)",
+    "lugar": "<b>Iglesia de la Santa Cruz</b>,</br> Calle Paseo de los Pelicanos 40883, Ixtapa Gro.",
   }
 recepcion:
   {
     "lat": 17.661152,
     "lng": -101.603728,
     "hora": 7:30 P.M.,
-    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.",
+    "lugar": "<b>Hotel SunScape Ixtapa </b>,</br> Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa",
   }
 iterario:
   [
@@ -106,8 +106,10 @@ import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/comunes/Confirmacion";
 import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
-
-
+import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
+//importamos las imagenes solitarias que van entre las secciones
+import foto1 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-1.png';
+import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
  
  <Hero
     nombres={frontmatter.novios}
@@ -159,8 +161,13 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
   </div>
 </section>
 
+<FotoSolitaria arriba={false}gradientePorciento={30} src={foto1} />
+
 <Pases folder={frontmatter.json} client:load />
+
+
 <section class="grid contenido">
+
   <Contador fecha={frontmatter.fecha} />
 </section>
 <ProgresoInvitados
@@ -173,6 +180,7 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
 </section>
+<FotoSolitaria arriba={true}gradientePorciento={30} src={foto2} />
 
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
@@ -186,12 +194,10 @@ import Itinerario from "../../components/bodas/Itinerario.astro";
 
 <section class="grid pantalla">
   <SliderVentana>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp)</div> 
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda1.webp) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda3.webp) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda4.webp) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda.webp) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/boda5.webp)</div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria1.png) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria2.png)</div> 
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria3.png) </div>
+    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria4.png) </div>
   </SliderVentana>
 </section>
 

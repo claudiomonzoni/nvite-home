@@ -29,15 +29,11 @@ console.log(lat);
       <Icon name={icono} size={35} />
       <h3>{encabezado}</h3>
       <address set:html={dir}>
-        <svg viewBox="0 0 29 41" fill="ffffff">
-          <path
-            d="M14.5 0C6.48357 0 0 6.4165 0 14.35C0 25.1125 14.5 41 14.5 41C14.5 41 29 25.1125 29 14.35C29 6.4165 22.5164 0 14.5 0ZM14.5 19.475C11.6414 19.475 9.32143 17.179 9.32143 14.35C9.32143 11.521 11.6414 9.225 14.5 9.225C17.3586 9.225 19.6786 11.521 19.6786 14.35C19.6786 17.179 17.3586 19.475 14.5 19.475Z"
-            fill="#864E4E"></path>
-        </svg>
+       
       </address>
       <div id="bandeReloj">
         <hr class="linea1" />
-        <Icon name="reloj" size={30} />
+        <Icon name="solar:clock-circle-linear" size={30} />
         <hr class="linea2" />
       </div>
       <time datetime="{horario}">{horario}</time>
