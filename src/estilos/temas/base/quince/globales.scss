@@ -98,32 +98,7 @@
     font-weight: bold;
   }
 
-  // grid
-  .grid {
-    display: grid;
-    grid-template-columns: [pantalla-start] 5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 5vw [pantalla-end];
-    @include hd {
-      grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
-    }
-    @include hdplus {
-      grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
-    }
-  }
-  .contenido > * {
-    grid-column: contenido;
-  }
-  .extra > * {
-    grid-column: extra;
-  }
-  .pantalla > * {
-    grid-column: pantalla;
-  }
-  .pantalla-izq > * {
-    grid-column: pantalla-start / contenido-end;
-  }
-  .pantalla-der > * {
-    grid-column: contenido-start / pantalla-end;
-  }
+  
 
   #zigzag {
     padding: $margen 0;

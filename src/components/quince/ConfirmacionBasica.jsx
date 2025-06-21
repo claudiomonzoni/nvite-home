@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import estilo from "../../estilos/quince/confirmacion.module.scss";
+import estilo from "../../estilos/temas/base/quince/confirmacion.module.scss";
 
 export default function Confirmacion({ whatsapp, dias_antes }) {
 
