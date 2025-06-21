@@ -64,7 +64,7 @@ iterario:
   ]
 paleta: otono
 theme:
-  name: "minimalista"
+  name: "base"
   colors:
     primary: "#2C3E50"
     secondary: "#E74C3C"
@@ -75,7 +75,8 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
-
+import Hero from "../../components/quince/Hero";
+import Audio from "../../components/quince/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
@@ -86,10 +87,16 @@ import SilderGsap from "../../components/comunes/SilderGsap.astro";
 import BloqueMapa from "../../components/quince/BloqueMapa.astro";
 import Regalos from "../../components/quince/Regalos.astro";
 import Contador from "../../components/quince/Contador.astro";
+import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
-import Itinerario from "../../components/quince/Itinerario.astro";
-import Audio from "../../components/quince/Audio.astro";
+
+  <Hero
+    nombres={frontmatter.quinceanera}
+    fecha={frontmatter.fecha}
+    cover={frontmatter.cover}
+    client:load
+  />
 
 <section class="grid contenido">
   <Audio src="/quince/quincePlus/quince-musica" />
@@ -104,7 +111,7 @@ import Audio from "../../components/quince/Audio.astro";
   <div class="conte-cartas">
     <Cartas
       icono="mdi:clipboard-text-date-outline"
-      titulo="Fecha de mis XV años"
+      titulo="Fecha"
       fecha={frontmatter.fecha}
     />
     <Cartas
@@ -114,7 +121,7 @@ import Audio from "../../components/quince/Audio.astro";
     />
     <Cartas
       icono="mdi:clothes-hanger"
-      titulo="Código de vestimenta"
+      titulo="Dress code"
       codigo={frontmatter.vestimenta}
     />
   </div>
@@ -192,11 +199,10 @@ import Audio from "../../components/quince/Audio.astro";
   <MensajeVip />
 </section>
 
-<section>
+
   <Confirmacion
     whatsapp={frontmatter.whatsapp}
     dias_antes={15}
     version={frontmatter.version}
     client:only="react"
   />
-</section>

@@ -3,9 +3,7 @@ export const prerender = true;
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/quince/Layout.astro";
-import Hero from "../../components/quince/Hero";
 import Footer from "../../components/quince/Footer.astro";
-import "../../estilos/quince/globales.scss";
 
 export async function getStaticPaths() {
   const quinces = await getCollection("quince", ({ data }) => {
@@ -25,12 +23,12 @@ const { quince } = Astro.props;
 
 const base = new URL(Astro.url.pathname, Astro.site);
 const Nfecha = new Date(quince.data.fecha);
-const fecha = Nfecha.toLocaleDateString(["es-MX"], {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+// const fecha = Nfecha.toLocaleDateString(["es-MX"], {
+//   weekday: "long",
+//   year: "numeric",
+//   month: "long",
+//   day: "numeric",
+// });
 
 const { Content } = await render(quince);
 ---
@@ -40,13 +38,14 @@ const { Content } = await render(quince);
   url={base.toString()}
   cover={quince.data.cover}
   paleta={quince.data.paleta}
+  theme={quince.data.theme}
 >
-  <Hero
+  <!-- <Hero
     nombres={quince.data.quinceanera}
     fecha={fecha}
     cover={quince.data.cover}
     client:load
-  />
+  /> -->
 
 
   <Content />

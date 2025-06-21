@@ -1,0 +1,23 @@
+// Importo temas
+@use "_variables" as *;
+@use "../temas/base/quince/globales" as *;
+// @use "../temas/clasico/quince/clasico" as *;
+// @use "../temas/elegante/quince/globales" as *;
+
+
+
+// temas
+:root[data-theme="base"] {
+  @include tema-base();
+}
+
+// :root[data-theme="clasico"] {
+//   @include tema-clasico();
+// }
+
+// :root[data-theme="elegante"] {
+//   @include tema-elegante();
+// }
+
+
+

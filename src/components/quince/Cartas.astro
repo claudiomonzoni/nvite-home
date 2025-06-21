@@ -31,67 +31,7 @@ const formattedFecha = fecha
   {codigo ? <p>{codigo}</p> : <slot />}
 </div>
 
-<style lang="scss">
-  @use "../../estilos/quince/_variables.scss" as *;
-  .overlay {
-    // filter: ;
-    // color: white;
-    // filter: invert(20%);
-    // mix-blend-mode: screen;
-  }
 
-  .carta {
-    aspect-ratio: 1/1;
-    flex: 1;
-    text-align: center;
-    background: $urlPatron, var(--fondoBurn);
-    background-blend-mode: color-burn;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--gris);
-    padding: $margen-min;
-    position: relative;
-    font-size: clamp(1.3rem, 1.3vw, 2vw);
-    li {
-      list-style: none;
-      padding-bottom: $margen-min;
-      color: var(--primario);
-    }
-    p{
-      color: var(--primario);
-    }
-    h3 {
-      width: fit-content;
-      color: var(--secundario);
-      border-bottom: solid .5px var(--primario);
-      margin: $margen-min 0;
-      font-size: clamp(2.5rem, 1.6vw, 3rem);
-      @include cel {
-        border-bottom: solid 1px var(--secundario);
-      }
-    }
-
-    img {
-      max-width: 2.5rem;
-      height: auto;
-      margin: 0 auto;
-    }
-    @extend .sombra;
-
-    @include cel {
-      flex: 1 0 100%;
-    }
-  }
-
-  .icono  {
-      path{
-        fill: var(--acento)!important;
-      }
-    }
-</style>
 <script>
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
