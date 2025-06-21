@@ -118,11 +118,10 @@
     margin-bottom: 0rem;
   }
   b {
-    font-weight: bold;
     color: var(--acento);
     font-style: normal;
-    font-size: clamp(1.3em, 1vw, 2vw);
     font-family: $encabezados, serif;
+    font-weight: 300;
   }
 
   #BaseItinerario {
@@ -1106,34 +1105,46 @@
   }
 }
 
-@mixin liga($conBorde, $redondo) {
-  margin: $margen-min 0;
-  color: white;
-  background: var(--acento);
-  padding: $margen-min $margen-cel;
-  img {
-    max-width: 1.5rem !important;
-    height: auto;
-    vertical-align: middle;
-    margin-right: 0.5rem;
+ @mixin liga($conBorde, $redondo) {
+    margin: $margen-min 0;
+    color: var(--primario);
+    background: var(--terciario);
+    padding: 0.7rem $margen-cel;
+    
+    svg {
+      vertical-align: middle;
+    }
+    img {
+      max-width: 1.5rem !important;
+      height: auto;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @if $conBorde {
+      border: 1px solid var(--acento);
+      background: var(--secundario);
+      opacity: 0.8;
+      color: var(--primario) !important;
+    }
+    @if $redondo {
+      border-radius: $radio;
+    }
+    @include cel {
+      display: block;
+      width: 100%;
+      max-width: 70%;
+      box-sizing: border-box;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
-  @if $conBorde {
-    border: 1px solid var(--acento);
-    background: white !important;
-    opacity: 0.8;
-    color: var(--acento) !important;
-  }
-  @if $redondo {
-    border-radius: $radio;
-  }
-}
 
-.btn {
-  @include liga(false, false);
-}
-.con-borde {
-  @include liga(true, null);
-}
-.redondo {
-  @include liga(null, true);
-}
+  .btn {
+    @include liga(false, false);
+  }
+  .con-borde {
+    @include liga(true, null);
+  }
+  .redondo {
+    @include liga(null, true);
+  }

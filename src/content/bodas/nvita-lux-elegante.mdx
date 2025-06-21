@@ -1,7 +1,7 @@
 ---
 version: lux
-titulo: Nvite Plus muestra
-slug: nvita-bodas-lux
+titulo: Nvite Plus elegante
+slug: nvita-bodas-lux-elegante
 extracto: Muestra de la invitación de bodas nvite plus
 descripcion: Muestra de la invitación de bodas nvite plus, la más completa de las invitaciones que te ofrecemos.
 cover: /bodas/nvitaPlus/cover.webp
@@ -80,9 +80,9 @@ iterario:
       "hora": "3:00",
     },
   ]
-paleta: base
+paleta: invierno
 theme:
-  name: "base"
+  name: "elegante"
   colors:
     primary: "#2C3E50"
     secondary: "#E74C3C"
@@ -93,7 +93,7 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
-import Hero from "../../components/bodas/Hero.jsx";
+import Hero from "../../components/bodas/Hero-elegante.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
@@ -196,7 +196,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
 <section class="grid pantalla flex margen-arriba-abajo">
   <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />
   <Detalles encabezado="Codigo de vestir" vestimenta={frontmatter.vestimenta} />
-  <Detalles encabezado="Sugerencia de colores" colores={frontmatter.coloresVestimenta} />
+  <Detalles encabezado="Sugerencia de tonos" colores={frontmatter.coloresVestimenta} />
 </section>
 
 <section class="grid pantalla">

@@ -325,7 +325,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
 
             <p id={styles["mueve"]}>
               Mueve el <span>switch a la derecha </span>para confirmar tu
-              asistencia
+              asistencia y despues completa el formulario de confirmación.
             </p>
               {asistira ? (
                 // Formulario para confirmar asistencia
@@ -420,7 +420,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
-                    Confirmar que no podré asistir
+                    No podré asistir
                   </a>
                 </>
               )}

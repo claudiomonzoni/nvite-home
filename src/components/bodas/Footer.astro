@@ -57,7 +57,7 @@ const { base } = Astro.props;
 </footer>
 
 <style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
+  @use "../../estilos/temas/base/bodas/variables" as *;
   footer {
     border-top: solid 1px var(--secundario);
     padding: $margen 0;
@@ -77,12 +77,19 @@ const { base } = Astro.props;
   }
   li {
     list-style: none;
+    padding: $margen-min 0;
     svg {
       width: 2rem;
       height: auto
     }
     path{
         fill: var(--primario);
+    }
+
+    @include cel{
+      svg {
+        width: 1.3rem;
+      }
     }
   }
 </style>

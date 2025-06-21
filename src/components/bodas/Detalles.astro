@@ -3,17 +3,20 @@ interface Props {
   encabezado: string;
   vestimenta?: string;
   lista?: Array<any>;
+  colores?: Array<any>;
 }
-const { lista, encabezado, vestimenta } = Astro.props;
+const { lista, encabezado, vestimenta, colores } = Astro.props;
 
 import { Image } from "astro:assets";
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 import { Icon } from "astro-icon/components";
+console.log(colores, "colores en detalles");
 ---
 
 <div id="detalles">
   <div class="conte">
     {vestimenta ? <Icon name="mdi:clothes-hanger" size={200} />  : ""}
+    {colores ? <Icon name="mdi:color" size={200} />  : ""}
     <h2>{encabezado}</h2>
     <Image src={divisor} alt="vestimenta" />
     <ul>
@@ -21,11 +24,46 @@ import { Icon } from "astro-icon/components";
         lista ? (
           lista.map((item) => <li>{item}</li>)
         ) : (
-          
-          <span id="vestimenta">{vestimenta}</span>
+          <li>
+            <span id="vestimenta">{vestimenta}</span>
+          </li>
         )
+      }
+      {
+        colores && colores.length > 0 ? (
+          <li>
+            <div class="colores-circulos">
+              {colores.map((color) => (
+                <span
+                  class="color-circulo"
+                  style={`background-color: ${color};`}
+                  title={color}
+                ></span>
+              ))}
+            </div>
+          </li>
+        ) : null  
       }
     </ul>
   </div>
 </div>
+
+<style>
+.colores-circulos {
+  display: flex;
+  gap: 0; /* Sin gap para que se encimen */
+  margin-top: 1rem;
+  justify-content: center;
+}
+.color-circulo {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: -0.2rem; /* Encima los círculos */
+}
+.color-circulo:first-child {
+  margin-left: 0; /* El primero no se encime */
+}
+</style>
 

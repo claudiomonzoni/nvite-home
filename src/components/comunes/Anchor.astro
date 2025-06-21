@@ -1,5 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 
 interface Props {
   id?: string;
@@ -13,47 +13,67 @@ interface Props {
   target?: string;
   icono?: string;
 }
-const { clases, conBorde, redondo, sombra, tema, url, texto, icono,  ...rest } = Astro.props;
+const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
+  Astro.props;
 ---
 
 <a
   href={url}
-  class:list={["btn", clases, tema, { "con-borde": conBorde, "redondo": redondo, "sombra": sombra }]}
-  {...rest}>
+  class:list={[
+    "btn",
+    clases,
+    tema,
+    { "con-borde": conBorde, redondo: redondo, sombra: sombra },
+  ]}
+  {...rest}
+>
   {icono && <Icon name={icono} size={22} />}
- {texto}
+  {texto}
 </a>
 
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
 
   @mixin liga($conBorde, $redondo) {
-  margin: $margen-min 0;
-  color: var(--primario);
-  background: var(--terciario);
-  padding: .7rem $margen-cel;
-  svg {
-    vertical-align: middle;
+    margin: $margen-min 0;
+    color: var(--primario);
+    background: var(--terciario);
+    padding: 0.7rem $margen-cel;
+    svg {
+      vertical-align: middle;
+    }
+    img {
+      max-width: 1.5rem !important;
+      height: auto;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+    @if $conBorde {
+      border: 1px solid var(--acento);
+      background: var(--secundario);
+      opacity: 0.8;
+      color: var(--primario) !important;
+    }
+    @if $redondo {
+      border-radius: $radio;
+    }
+    @include cel {
+      display: block;
+      width: 100%;
+      max-width: 70%;
+      box-sizing: border-box;
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
-  @if $conBorde {
-    border: 1px solid var(--acento);
-    background: var(--secundario);
-    opacity: 0.8;
-    color: var(--primario)!important;
-  }
-  @if $redondo {
-    border-radius: $radio;
-  }
-}
 
-.btn {
-  @include liga(false, false);
-}
-.con-borde {
-  @include liga(true, null);
-}
-.redondo{
-  @include liga(null, true);
-}
-
+  .btn {
+    @include liga(false, false);
+  }
+  .con-borde {
+    @include liga(true, null);
+  }
+  .redondo {
+    @include liga(null, true);
+  }
 </style>
