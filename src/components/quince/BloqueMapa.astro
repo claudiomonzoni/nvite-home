@@ -33,60 +33,7 @@ import Mapa from "./Mapa.astro";
   </div>
 </div>
 
-<style lang="scss">
-  @use "../../estilos/quince/_variables.scss" as *;
-  h3 {
-    color: var(--acento);
-    font-size: clamp(3rem, 2.5vw, 3rem);
-  }
 
-  .bloqueMapa {
-    display: flex;
-    position: relative;
-    align-items: center;
-    .izq {
-      flex: 1.3;
-      height: auto;
-    }
-    .der {
-      padding: $margen-cel;
-      flex: .6;
-      display: inherit;
-      justify-content: center;
-      align-items: center;
-    }
-    time, address {
-      color: var(--secundario);
-      svg{
-        width: 15px;
-        height: auto;
-        vertical-align: middle;
-        margin: 10px 3px;
-      }
-      path {
-    
-        // filter: invert(1);
-        fill: var(--primario);
-      
-      }
-    }
-    @include cel {
-      flex-wrap: wrap;
-      .izq,
-      .der {
-        flex: 1 0 100%;
-        text-align: center;
-        margin-top: 3rem ;
-      }
-      .izq {
-        order: 2;
-      }
-      .der {
-        order: 1;
-      }
-    }
-  }
-</style>
 
 
 

@@ -50,7 +50,15 @@
       margin-bottom: $margen-min;
     }
     #pases{
-      display: none;
+      // display: none;
+      position: absolute;
+      background-color: var(--acento);
+      bottom: -20px;
+      padding: $margen-min;
+      color: white;
+    }
+    #NumeroPases{
+      font-size: clamp(1.5rem, 2vw, 3rem);
     }
     @include cel {
       grid-column: 2 / span 1;

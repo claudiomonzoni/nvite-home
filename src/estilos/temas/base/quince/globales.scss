@@ -98,8 +98,6 @@
     font-weight: bold;
   }
 
-  
-
   #zigzag {
     padding: $margen 0;
     .bloqueMapa:last-child {
@@ -113,6 +111,7 @@
       }
     }
     @include cel {
+      padding: $margen-min 0;
       transform: translateY(0);
     }
   }
@@ -125,6 +124,14 @@
       rgba(255, 255, 255, 0) 88%,
       rgba(255, 255, 255, 0) 100%
     );
+    @include cel{
+      background: linear-gradient(
+        0deg,
+        var(--fondoBurn) 80%,
+        rgba(255, 255, 255, 0) 100%,
+        rgba(255, 255, 255, 0) 100%
+      )
+    }
   }
 
   .desactivado {
@@ -218,6 +225,83 @@
 
       @include cel {
         grid-auto-columns: 80%;
+      }
+    }
+  }
+  // componente audio
+  // ... componente audio
+
+  #rola {
+    margin: 6rem auto 0rem;
+    text-align: center;
+    max-width: 700px;
+    
+    h3 {
+      font-family: $txt, sans-serif;
+      margin-bottom: 1.5rem;
+      color: var(--primario);
+      font-size: clamp(1.6rem, 2vw, 2.5rem);
+      font-weight: 300;
+      b {
+        color: var(--acento);
+      }
+    }
+    @include cel{
+      max-width: auto;
+       margin: 0rem auto 1rem;
+    }
+  }
+
+  //bloque Mapa compoonente
+
+  h3 {
+    color: var(--acento);
+    font-size: clamp(3rem, 2.5vw, 3rem);
+  }
+
+  .bloqueMapa {
+    display: flex;
+    position: relative;
+    align-items: center;
+    .izq {
+      flex: 1.3;
+      height: auto;
+    }
+    .der {
+      padding: $margen-cel 0;
+      flex: .6;
+      display: inherit;
+      justify-content: center;
+      align-items: center;
+    }
+    time, address {
+      color: var(--secundario);
+      svg{
+        width: 15px;
+        height: auto;
+        vertical-align: middle;
+        margin: 10px 3px;
+      }
+      path {
+    
+        // filter: invert(1);
+        fill: var(--primario);
+      
+      }
+    }
+    @include cel {
+      flex-wrap: wrap;
+      .izq,
+      .der {
+        flex: 1 0 100%;
+        text-align: center;
+        margin-top: 3rem ;
+      }
+      .izq {
+        order: 2;
+      }
+      .der {
+        order: 1;
       }
     }
   }

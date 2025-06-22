@@ -69,8 +69,15 @@ export default function Hero({ nombres, fecha, cover }) {
             <p>
             <span className="variosSpan"></span>  invitamos a mis <b>XV años</b>
             </p>
-            <p className={Style.fecha}>{fecha.toLocaleString()}</p>
-          </div>{
+            <p className={Style.fecha}>
+              {new Date(fecha).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+              })}
+            </p>
+          {
             pase ? (
               <div id={Style["pases"]}>
               No. de pases <p id={Style["NumeroPases"]}>{pase}</p>
@@ -79,8 +86,7 @@ export default function Hero({ nombres, fecha, cover }) {
               ""
             )
           }
-              
-       
+          </div>
         </div>
       </section>
     </>
