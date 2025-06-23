@@ -62,20 +62,26 @@ export default function Hero({ nombres, fecha, cover }) {
         </div>
         <div className={Style.bandeja} id="bande">
           <div className={Style.centro} id="centro">
-            <span className={Style.familia} id="invitado">
+            
+            <p className={Style.familia} id="invitado">
               {invitado}
-            </span>
-            <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
+            </p>
             <p>
-            <span className="variosSpan"></span>  invitamos a mis <b>XV años</b>
+            Tengo el honor de invitarte a celebrar mis XV años
             </p>
             <p className={Style.fecha}>
-              {new Date(fecha).toLocaleDateString('es-ES', {
+            La cita es el día  
+            <b>
+              {'\u00A0' + new Date(fecha).toLocaleDateString('es-ES', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
                 weekday: 'long'
-              })}
+              }) + '\u00A0'}
+              </ b>
+                y me encantará compartirlo contigo.
+               Con cariño,
+              <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
             </p>
           {
             pase ? (

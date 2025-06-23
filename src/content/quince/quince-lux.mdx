@@ -8,9 +8,25 @@ cover: /quince/quincePlus/cover.webp
 json: quincePlus
 whatsapp: 7551048550
 quinceanera: Maria Elena Olvera
-fecha: 2024-12-14
+fecha: 2025-12-20T00:00:00-06:00
 vestimenta: Formal elegante
 frase_amor: Desde pequeña esperabas con ansias este día, imaginabas compartirlo con todas las personas que amas. Por fin llegó el día y es tal y como lo soñaste.
+frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
+regalos: [
+
+  {
+  
+    "titulo": "Amazon",
+   "url": "https://www.amazon.com.mx/registries"
+  }
+  ,
+{
+
+  "titulo": "Liverpool",
+ "url": "https://mesaderegalos.liverpool.com.mx/"
+}
+]
+tipoRegalos: ["mesa", "lluvia", "transferencia"]
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
@@ -75,6 +91,7 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
+
 import Hero from "../../components/quince/Hero";
 import Audio from "../../components/quince/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
@@ -85,27 +102,31 @@ import Cartas from "../../components/quince/Cartas.astro";
 import Frase from "../../components/quince/Frase.astro";
 import SilderGsap from "../../components/comunes/SilderGsap.astro";
 import BloqueMapa from "../../components/quince/BloqueMapa.astro";
-import Regalos from "../../components/quince/Regalos.astro";
-import Contador from "../../components/quince/Contador.astro";
+import Regalos from "../../components/comunes/Regalos.astro";
+import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";
 import Footer from "../../components/quince/Footer.astro";
 
-  <Hero
-    nombres={frontmatter.quinceanera}
-    fecha={frontmatter.fecha}
-    cover={frontmatter.cover}
-    client:load
-  />
+{" "}
+
+<Hero
+  nombres={frontmatter.quinceanera}
+  fecha={frontmatter.fecha}
+  cover={frontmatter.cover}
+  client:load
+/>
 
 <section class="grid contenido">
   <Audio src="/quince/quincePlus/quince-musica" />
 </section>
 
-
 <Encabezados texto="Mis 15 años" />
 
-<ParrafosLibres texto="El anhelo de todo padre es ver a su hija transformarse de una niña feliz a una mujer segura de sí. Y más orgulloso no podría estar y por eso contigo quiero celebra." />
+<ParrafosLibres
+  texto="He soñado mucho con este día, y me llena de ilusión compartirlo contigo.
+Para que no se te pase nada, revisa todos los detalles aquí abajo:"
+/>
 
 <section class="grid contenido">
   <div class="conte-cartas">
@@ -127,28 +148,15 @@ import Footer from "../../components/quince/Footer.astro";
   </div>
 </section>
 
-
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
 </section>
-
-
-<section class="grid pantalla">
-  <SilderGsap>
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince1.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince2.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince3.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince4.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince5.webp)
-  </SilderGsap>
-</section>
-
 
 <Encabezados texto="El Lugar" />
 <section class="grid contenido fondo-mitad">
   <ParrafosLibres
     texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la fiesta de XV años"
+      la fiesta de XV años, ¡No faltes!"
   />
   <div id="zigzag">
     <BloqueMapa
@@ -170,39 +178,52 @@ import Footer from "../../components/quince/Footer.astro";
   </div>
 </section>
 
+<section class="grid contenido">
+  <Contador fecha={frontmatter.fecha} />
+</section>
+<section class="grid pantalla">
+  <ProgresoInvitados
+    email="nvitacionluxquince@nvitaciones.com"
+    porcentajeMostrarInvitados={20}
+    frase="¡Ya casi completamos la lista de invitados!"
+    mostrarSiempre={true}
+  />
+</section>
 
 <Encabezados texto="Itinerario" />
 <Itinerario listado={frontmatter.iterario} />
 
-
-<section class="grid contenido">
-  <Regalos
-    frase="El regalo más importante será tu presencia, te agradecemos si aparte nos deseas hacer un regalo en este día tan especial."
-    beneficiario={frontmatter.beneficiario}
-    banco={frontmatter.banco}
-    cuenta={frontmatter.cuenta}
-  />
+<section class="grid pantalla">
+  <SilderGsap>
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince1.webp)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince2.webp)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince3.webp)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince4.webp)
+    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince5.webp)
+  </SilderGsap>
 </section>
 
-<ProgresoInvitados
-  email="nvitacionluxquince@nvitaciones.com"
-  porcentajeMostrarInvitados={20}
-  frase="¡Ya casi completamos la lista de invitados!"
-  mostrarSiempre={true}
-/>
-
 <section class="grid contenido">
-  <Contador fecha={frontmatter.fecha} />
+
+  <Regalos
+  tipo={frontmatter.tipoRegalos}
+  mesas={frontmatter.regalos}
+      frase={frontmatter.frase_regalos}
+      beneficiario={frontmatter.beneficiario}
+      banco={frontmatter.banco}
+      cuenta={frontmatter.cuenta}
+    />
 </section>
 
 <section class="grid contenido">
   <MensajeVip />
 </section>
 
+{" "}
 
-  <Confirmacion
-    whatsapp={frontmatter.whatsapp}
-    dias_antes={15}
-    version={frontmatter.version}
-    client:only="react"
-  />
+<Confirmacion
+  whatsapp={frontmatter.whatsapp}
+  dias_antes={15}
+  version={frontmatter.version}
+  client:only="react"
+/>

@@ -1,4 +1,3 @@
-
 @use "_variables.scss" as *;
 
 #hero {
@@ -42,22 +41,25 @@
     font-size: clamp(1.2rem, 1vw, 3vw);
     position: relative;
     padding: $margen-top $margen-min;
-    h1{
+    h1 {
       color: var(--primario) !important;
+      padding: $margen-cel 0 0;
     }
     span {
       padding-bottom: $margen-min;
       margin-bottom: $margen-min;
     }
-    #pases{
+    #pases {
       // display: none;
       position: absolute;
       background-color: var(--acento);
-      bottom: -20px;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, 0%);
       padding: $margen-min;
       color: white;
     }
-    #NumeroPases{
+    #NumeroPases {
       font-size: clamp(1.5rem, 2vw, 3rem);
     }
     @include cel {
@@ -67,6 +69,18 @@
       padding: $margen-cel $margen-cel $margen $margen-cel;
       max-height: content;
     }
+    .centro {
+      position: relative;
+      padding: $margen-cel 0;
+      border-bottom: solid 1px var(--acento);
+      .familia{
+        font-size: clamp(1.5rem, 2vw, 3rem);
+        margin-bottom: $margen-cel;
+        padding-bottom: $margen-cel;
+        border-bottom: solid 1px var(--acento);
+      }
+  
+    }
   }
 
   @include cel {
@@ -74,5 +88,6 @@
     grid-template-columns: 10% 1fr 10%;
     height: auto;
     margin-bottom: $margen;
+    
   }
 }

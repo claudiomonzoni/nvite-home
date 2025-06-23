@@ -22,6 +22,16 @@ padres:
 fecha: 2025-12-07
 frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
 frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
+regalos: {
+[
+ "titulo": "Amazon",
+ "Url": "https://www.amazon.com.mx/registries"
+],
+[
+ "titulo": "Liverpool",
+ "Url": "https://mesaderegalos.liverpool.com.mx/"
+]
+}
 beneficiario: Elena Ramirez
 banco: Banco Santander
 cuenta: 123456789
@@ -93,6 +103,7 @@ theme:
     heading: "Playfair Display"
     body: "Lora"
 ---
+
 import Hero from "../../components/bodas/Hero.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import Audio from "../../components/bodas/Audio.astro";
@@ -114,23 +125,22 @@ import Footer from "../../components/bodas/Footer.astro";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 //importamos las imagenes solitarias que van entre las secciones
-import foto1 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-1.png';
-import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
- 
- <Hero
-    nombres={frontmatter.novios}
-    fecha={frontmatter.fecha}
-    ellaIniciales={frontmatter.ellaIniciales}
-    elIniciales={frontmatter.elIniciales}
-    cover={frontmatter.cover}
-    tema={frontmatter.theme}
-    client:load
-  /> 
+import foto1 from "../../assets/bodas/nvitaPlus/gale/fotosolitaria-1.png";
+import foto2 from "../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png";
+
+<Hero
+  nombres={frontmatter.novios}
+  fecha={frontmatter.fecha}
+  ellaIniciales={frontmatter.ellaIniciales}
+  elIniciales={frontmatter.elIniciales}
+  cover={frontmatter.cover}
+  tema={frontmatter.theme}
+  client:load
+/>;
 
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
 </section>
-
 
 <section class="grid pantalla">
   <Padres
@@ -168,9 +178,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
   </div>
 </section>
 
-<FotoSolitaria arriba={false}gradientePorciento={30} src={foto1} />
-
-
+<FotoSolitaria arriba={false} gradientePorciento={30} src={foto1} />
 
 <section class="grid contenido">
 
@@ -186,7 +194,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
 </section>
-<FotoSolitaria arriba={true}gradientePorciento={30} src={foto2} />
+<FotoSolitaria arriba={true} gradientePorciento={30} src={foto2} />
 
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
@@ -196,31 +204,39 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
 <section class="grid pantalla flex margen-arriba-abajo">
   <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />
   <Detalles encabezado="Codigo de vestir" vestimenta={frontmatter.vestimenta} />
-  <Detalles encabezado="Sugerencia de colores" colores={frontmatter.coloresVestimenta} />
+  <Detalles
+    encabezado="Sugerencia de colores"
+    colores={frontmatter.coloresVestimenta}
+  />
 </section>
 
 <section class="grid pantalla">
   <SliderVentana>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria1.png) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria2.png)</div> 
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria3.png) </div>
-    <div class="img-window">![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria4.png) </div>
+    <div class="img-window">
+      ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria1.png){" "}
+    </div>
+    <div class="img-window">
+      ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria2.png)
+    </div>
+    <div class="img-window">
+      ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria3.png){" "}
+    </div>
+    <div class="img-window">
+      ![Boda Nvita](../../assets/bodas/nvitaPlus/gale/galeria4.png){" "}
+    </div>
   </SliderVentana>
 </section>
-
-
 
 <section class="grid contenido">
 
   <Regalos
       frase={frontmatter.frase_regalos}
+      regalos={frontmatter.regalos}
       beneficiario={frontmatter.beneficiario}
       banco={frontmatter.banco}
       cuenta={frontmatter.cuenta}
     />
 </section>
-
-
 
 <section class="grid contenido">
   <MensajeVip />
@@ -233,5 +249,3 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
   tipoEvento="boda"
   client:only="react"
 />
-
-

@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { encabezado, dir, lat, lng, mapName, horario } = Astro.props;
+import Anchor from "../comunes/Anchor.astro";
 import Mapa from "./Mapa.astro";
 ---
 
@@ -22,13 +23,27 @@ import Mapa from "./Mapa.astro";
       <time datetime="{horario}">
         <svg viewBox="0 0 37 37" fill="none">
           <path d="M18.4815 0C8.2695 0 0 8.288 0 18.5C0 28.712 8.2695 37 18.4815 37C28.712 37 37 28.712 37 18.5C37 8.288 28.712 0 18.4815 0ZM24.5865 27.2135L16.65 19.2585V9.25H20.35V17.7415L27.2135 24.605L24.5865 27.2135Z" fill="#864E4E"/>
-          </svg>
+          </svg></br>
            {horario}</time>
-      <address set:html={dir}>
+      <address>
         <svg  viewBox="0 0 29 41" fill="ffffff">
           <path d="M14.5 0C6.48357 0 0 6.4165 0 14.35C0 25.1125 14.5 41 14.5 41C14.5 41 29 25.1125 29 14.35C29 6.4165 22.5164 0 14.5 0ZM14.5 19.475C11.6414 19.475 9.32143 17.179 9.32143 14.35C9.32143 11.521 11.6414 9.225 14.5 9.225C17.3586 9.225 19.6786 11.521 19.6786 14.35C19.6786 17.179 17.3586 19.475 14.5 19.475Z" fill="#864E4E"/>
           </svg>
+        </br>
+        <p set:html={dir}></p>
         </address>
+        <Anchor
+        url={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
+        id={`${mapName}-btn-googlemaps`}
+        icono={"solar:map-arrow-right-outline"}
+        clases={"large"}
+        conBorde={false}
+        redondo={false}
+        sombra={true}
+        tema={"secundario"}
+        texto={"iniciar viaje"}
+        target="_blank"
+      />
     </div>
   </div>
 </div>

@@ -7,8 +7,6 @@ interface Props {
 }
 const { frase, beneficiario, banco, cuenta } = Astro.props;
 import { Icon } from "astro-icon/components";
-import Btn from "./Btn.astro";
-import Encabezados from "./Encabezados.astro";
 import Anchor from "../comunes/Anchor.astro";
 ---
 
@@ -22,8 +20,8 @@ import Anchor from "../comunes/Anchor.astro";
       url={"https://www.amazon.com.mx/registries"}
       id={"estilo"}
       clases={"large"}
-      conBorde={false}
-      redondo={true}
+      conBorde={true}
+      redondo={false}
       sombra={false}
       tema={"primario"}
       texto={"Amazon"}
@@ -32,8 +30,8 @@ import Anchor from "../comunes/Anchor.astro";
       url={"https://meli.uniko.co/Home"}
       id={"estilo"}
       clases={"large"}
-      conBorde={false}
-      redondo={true}
+     conBorde={true}
+      redondo={false}
       sombra={false}
       tema={"primario"}
       texto={"Mercado Libre"}
@@ -65,97 +63,7 @@ import Anchor from "../comunes/Anchor.astro";
     </ul>
   </div>
 </div>
-<style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
 
-  #regalo {
-    h2 {
-      color: white;
-      border-bottom: 1px solid white;
-      margin-bottom: $margen-min;
-      padding-bottom: $margen-min;
-    }
-    margin-top: $margen;
-    padding: $margen;
-    background: url("/bg-floral-regalos-izq.svg") var(--acento);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-blend-mode: color-burn;
-    color: white;
-    text-align: center;
-    svg {
-      max-width: 2.5rem;
-      height: auto;
-      margin: 0 auto;
-    }
-    border-radius: $radio;
-    @extend .sombra;
-  }
-
-  #lluvia {
-    h3 {
-      color: var(--primario);
-      font-size: clamp(2.2rem, 3.5vw, 4rem);
-    }
-    p{
-      color: var(--primario);
-    }
-    background: url("/lluvia.webp") var(--fondoBurn) repeat;
-    background-size: contain;
-    background-blend-mode:overlay;
-    margin: $margen-cel 0;
-    padding: $margen $margen-cel;
-    text-align: center;
-    border-radius: $radio;
-    @extend .sombra;
-  }
-
-  #transferencias {
-    border-radius: $radio;
-    @extend .sombra;
-    h3 {
-      color: var(--terciario);
-      font-size: clamp(2.2rem, 1.5vw, 2rem);
-    }
-    ul {
-      text-align: left;
-    }
-    padding: $margen $margen-min;
-    display: flex;
-    flex-wrap: wrap;
-    gap: $margen-cel;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: $margen-cel;
-    background: url("/bg-floral-regalos-der.svg") var(--secundario);
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: 40%;
-    background-blend-mode: color-burn;
-    color: var(--terciario);
-  }
-
-  #regalo,
-  #lluvia,
-  #transferencias {
-    @include cel {
-      background-size: cover;
-      background-blend-mode: soft-light;
-    }
-  }
-
-  #bandeja {
-    margin: 0 auto;
-    max-width: 70%;
-    padding-bottom: $margen;
-    @include cel {
-      max-width: 100%;
-      padding: 0;
-      padding-bottom: $margen;
-    }
-  }
-</style>
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";

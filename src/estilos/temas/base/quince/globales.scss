@@ -124,13 +124,13 @@
       rgba(255, 255, 255, 0) 88%,
       rgba(255, 255, 255, 0) 100%
     );
-    @include cel{
+    @include cel {
       background: linear-gradient(
         0deg,
         var(--fondoBurn) 80%,
         rgba(255, 255, 255, 0) 100%,
         rgba(255, 255, 255, 0) 100%
-      )
+      );
     }
   }
 
@@ -228,6 +228,37 @@
       }
     }
   }
+  //componente parrado libres
+
+  .parrafos-libres {
+    padding: 0 10%;
+    text-align: center !important;
+    color: var(--primario);
+    font-size: clamp(1.2rem, 2vw, 2rem);
+  }
+
+  //componente encabezados
+
+  .tituloEncabezados {
+    margin: $margen-top $margen $margen-cel $margen;
+    text-align: center;
+    @include cel {
+      margin: $margen-cel $margen-min $margen-min $margen-min;
+    }
+    h2 {
+      color: var(--secundario);
+      font-size: clamp(3.3rem, 3vw, 4vw);
+      margin-top: $margen-min;
+    }
+    path {
+      fill: var(--acento);
+    }
+    img {
+      margin: $margen-min;
+      filter: saturate(2951%) contrast(52%);
+    }
+  }
+
   // componente audio
   // ... componente audio
 
@@ -235,7 +266,7 @@
     margin: 6rem auto 0rem;
     text-align: center;
     max-width: 700px;
-    
+
     h3 {
       font-family: $txt, sans-serif;
       margin-bottom: 1.5rem;
@@ -246,9 +277,9 @@
         color: var(--acento);
       }
     }
-    @include cel{
+    @include cel {
       max-width: auto;
-       margin: 0rem auto 1rem;
+      margin: 0rem auto 1rem;
     }
   }
 
@@ -268,40 +299,46 @@
       height: auto;
     }
     .der {
-      padding: $margen-cel 0;
-      flex: .6;
+      padding: $margen;
+      flex: 0.6;
       display: inherit;
       justify-content: center;
       align-items: center;
+      text-align: center;
     }
-    time, address {
+    time,
+    address {
       color: var(--secundario);
-      svg{
-        width: 15px;
+      font-size: clamp(1.1rem, 1.2vw, 1.6rem);
+      svg {
+        width: 20px;
         height: auto;
         vertical-align: middle;
         margin: 10px 3px;
       }
       path {
-    
         // filter: invert(1);
         fill: var(--primario);
-      
       }
+    }
+    address {
+      margin: 1rem 0;
+      border-bottom: solid 1px var(--primario);
+      padding-bottom: $margen-min;
     }
     @include cel {
       flex-wrap: wrap;
       .izq,
       .der {
         flex: 1 0 100%;
-        text-align: center;
-        margin-top: 3rem ;
+        margin-top: 3rem;
       }
       .izq {
         order: 2;
       }
       .der {
         order: 1;
+        padding: $margen-cel 0;
       }
     }
   }
@@ -344,6 +381,83 @@
       height: 70%;
       object-fit: cover;
       position: absolute;
+    }
+  }
+  //componente de itinerario riel
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primario) var(--secundario);
+  }
+
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: var(--terciario);
+  }
+
+  *::-webkit-scrollbar-track:hover {
+    background-color: var(--terciario);
+  }
+
+  *::-webkit-scrollbar-track:active {
+    background-color: var(--terciario);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: var(--primario);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--acento);
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background-color: var(--secundario);
+  }
+
+  #riel {
+    ol {
+      list-style: none;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scroll-snap-type: inline mandatory;
+      display: grid;
+      grid-auto-flow: column;
+      padding-bottom: $margen-cel;
+    }
+    li {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--gris);
+      padding: $margen;
+      width: 22vw;
+      font-size: clamp(1rem, 1.5vw, 2vw);
+      border-right: 1px solid var(--gris);
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+      border-left: 1px solid transparent;
+      @include cel {
+        padding: $margen-cel;
+        width: 60vw;
+      }
+      // background: var(--urlPatron), var(--primario);
+      // background-blend-mode:overlay;
+      // background-size: cover;
+      // background-position: center;
+    }
+    h4 {
+      font-size: clamp(2.5rem, 3vw, 4vw);
+      color: var(--primario);
     }
   }
 
@@ -406,6 +520,322 @@
   .icono {
     path {
       fill: var(--acento) !important;
+    }
+  }
+
+  //componente progreso de confirmados
+
+  //componete progreso invitados
+
+  .progreso-invitados {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: $margen;
+  }
+
+  .barra-progreso {
+    width: 100%;
+    height: 8px;
+    background-color: var(--fondo);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+    @extend .sombra;
+  }
+
+  .barra {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(to right, var(--terciario), var(--acento));
+    animation: crecer 1.5s ease-out forwards;
+    border-radius: $radio;
+  }
+
+  @keyframes crecer {
+    from {
+      width: 0;
+    }
+    to {
+      width: var(--progress);
+    }
+  }
+
+  h2 {
+    color: var(--primario);
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 3vw, 7rem);
+  }
+
+  .estadisticas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .porcentaje {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .porcentaje .numero {
+    font-family: $encabezados, serif;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--acento);
+  }
+
+  .porcentaje .texto {
+    font-size: 1.2rem;
+    color: var(--primario);
+  }
+
+  .detalles {
+    font-size: 1.1rem;
+    color: var(--primario);
+  }
+
+  .detalles .confirmados,
+  .detalles .total {
+    font-weight: bold;
+    color: var(--acento);
+  }
+
+  @include cel {
+    .progreso-invitados {
+      padding: $margen-cel;
+    }
+
+    .porcentaje .numero {
+      font-size: 2.5rem;
+    }
+
+    .porcentaje .texto {
+      font-size: 1rem;
+    }
+
+    .detalles {
+      font-size: 1rem;
+    }
+
+    .barra-progreso {
+      height: 15px;
+    }
+  }
+
+  // Componente Regalos
+
+  
+    #bandejaRegalos {
+      h3 {
+        padding-bottom: 0 !important;
+        margin: 0;
+      }
+      #regalo {
+        margin-top: $margen;
+        padding: $margen;
+        // background: url("/bg-floral-regalos-izq.svg") var(--primario);
+        // background-repeat: no-repeat;
+        // background-size: contain;
+        // background-blend-mode: color-burn;
+        // color: white;
+        text-align: center;
+        border: solid 1px var(--acento);
+
+        h2 {
+          color: var(--primario);
+          border-bottom: 1px solid white;
+          font-size: clamp(2.5rem, 2vw, 3rem);
+          font-family: $encabezados, serif;
+          margin-bottom: $margen-min;
+          padding-bottom: $margen-min;
+        }
+        svg {
+          max-width: 2.5rem;
+          height: auto;
+          margin: 0 auto;
+        }
+      }
+      #lluvia {
+        h3 {
+          font-family: $encabezados, serif;
+          color: var(--primario);
+          font-size: clamp(2rem, 2vw, 3rem);
+        }
+        background: linear-gradient(
+            rgba(255, 255, 255, 0.4),
+            rgba(255, 255, 255, 0.4)
+          ),
+          // capa blanca semitransparente
+          url("/lluvia.webp") var(--fondoBurn) repeat;
+        background-size: contain;
+        background-blend-mode: overlay;
+        margin: $margen-cel 0;
+        padding: $margen $margen-cel;
+        text-align: center;
+        color: var(--primario);
+        @extend .sombra;
+        p {
+          max-width: 80%;
+          margin: 0 auto;
+        }
+      }
+      #transferencias {
+        padding: $margen $margen-min;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: $margen-cel;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom: $margen-cel;
+        background: url("/bg-floral-regalos-der.svg") var(--acento);
+        background-position: top right;
+        background-repeat: no-repeat;
+        background-size: 40%;
+        background-blend-mode: color-burn;
+        color: var(--terciario);
+        @extend .sombra;
+
+        h3 {
+          font-family: $encabezados, serif;
+          color: white;
+          font-size: clamp(2rem, 2vw, 3rem);
+        }
+        b {
+          color: white;
+        }
+        ul {
+          color: white;
+          text-align: left;
+          li {
+            text-align: center;
+          }
+        }
+      }
+      #regalo,
+      #lluvia,
+      #transferencias {
+        @include cel {
+          background-size: cover;
+          background-blend-mode: soft-light;
+        }
+      }
+      margin: 0 auto;
+      max-width: 70%;
+      padding-bottom: $margen;
+      @include cel {
+        max-width: 100%;
+        padding: 0;
+        padding-bottom: $margen;
+      }
+    }
+  
+  // Componente contador (cuenta regresiva)
+
+  #contador {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secundario);
+    border: 0.5px solid var(--acento);
+    position: relative;
+    padding: $margen;
+    margin: $margen 0;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0%;
+      right: 0px;
+      transform: translate(-50%, 50%);
+      width: 130px;
+      height: 130px;
+      transform-origin: center;
+      rotate: 180deg;
+      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
+      background-size: contain;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0%;
+      left: 0px;
+      transform: translate(-50%, 50%);
+      width: 130px;
+      height: 130px;
+      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
+      background-size: contain;
+    }
+    &:before,
+    &:after {
+      @include cel {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    h3 {
+      color: var(--primario);
+      font-family: $encabezados, serif;
+      text-align: center;
+      margin-top: $margen-cel;
+      font-size: clamp(1.8rem, 2vw, 3rem);
+    }
+    #dias {
+      transform: translateY(-60%);
+    }
+
+    .tiempo-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      @include cel {
+        flex-direction: column;
+        align-items: center;
+        gap: 0rem;
+      }
+    }
+    .tiempo-item {
+      text-align: center;
+      padding-right: 2rem;
+      margin-right: 2rem;
+      border-right: solid 1px var(--secundario);
+      &:last-child {
+        border-right: none;
+      }
+      @include cel {
+        padding-right: 0;
+        margin-right: 0;
+        border-right: none;
+        border-bottom: solid 1px var(--secundario);
+      }
+    }
+    .numero {
+      margin-top: $margen-cel;
+      font-size: clamp(3rem, 5vw, 7rem);
+      color: var(--acento);
+      font-family: $encabezados, serif;
+    }
+    //recuadro del encabezado
+    p:first-child {
+      position: absolute;
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: clamp(1.5rem, 2vw, 2rem);
+      background-color: var(--acento);
+      padding: $margen-min;
+      text-align: center;
+    }
+    p {
+      font-family: $encabezados, serif;
+      color: var(--primario);
+      font-size: clamp(1.5rem, 1.5vw, 1.5rem);
+      margin: 0;
     }
   }
 } //fin mixin tema

@@ -1,69 +1,68 @@
 ---
 // tipo se refiere al tipo de Regalos, si es mesas, efectivo o transferencia
+interface Mesa {
+  url: string;
+  titulo: string;
+}
+
 interface Props {
   frase: string;
   beneficiario?: string;
   banco?: string;
   cuenta?: string;
   tipo: Array<string>;
-  mesas?: Array<any>;
+  mesas?: Array<Mesa>;
 }
 const { frase, beneficiario, banco, cuenta, tipo, mesas } = Astro.props;
 import { Icon } from "astro-icon/components";
-// import Btn from "./Btn.astro";
-// import Encabezados from "./Encabezados.astro";
 import Anchor from "../comunes/Anchor.astro";
 ---
 
-<div id="bandeja">
+<div id="bandejaRegalos">
   <Icon name={"mdi:wallet-giftcard"} size={40} />
   <h2>Regalos</h2>
-  <!-- <p><b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.</p> -->
-  
-  {
-    tipo.map((item) =>
-      item === "mesa" ? (
-        <div id="regalo">
-          <h2>Mesa de regalos</h2>
-         {
-          mesas.map((mesa) => (
-          <Anchor
-            url={mesa.url}
-            id={"estilo"}
-            clases={"large"}
-            conBorde={false}
-            redondo={true}
-            sombra={false}
-            tema={"primario"}
-            texto={mesa.titulo}
-          />
-          ))
-         }
-       
-        </div>
-      ) : item === "efectivo" ? (
-        <div id="lluvia">
-          <h3>Lluvia de sobres</h3>
-          <p set:html={frase} />
-        </div>
-      ) : item === "transferencia" ? (
-        <div id="transferencias">
-          <h3>Transferencias:</h3>
-          <ul>
-            <li>
-              <b>Beneficiario</b>: {beneficiario}
-            </li>
-            <li>
-              <b>Banco</b>: {banco}
-            </li>
-            <li>
-              <b>Cuenta</b>: {cuenta}
-            </li>
-          </ul>
-        </div>
-      ) : null
-    )
-  }
+<p set:html={frase}></p>
+  {tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
+    <div id="regalo">
+      <h2>Mesa de regalos</h2>
+      {mesas.map((mesa) => (
+        <Anchor
+          url={mesa.url}
+          id={"estilo"}
+          clases={"large"}
+          conBorde={false}
+          redondo={true}
+          sombra={false}
+          tema={"primario"}
+          texto={mesa.titulo}
+        />
+      ))}
+    </div>
+  )}
+
+  {tipo.includes("lluvia") && (
+    <div id="lluvia">
+      <h3>Lluvia de sobres</h3>
+      <p set:html={frase} />
+    </div>
+  )}
+
+  {tipo.includes("transferencia") && (
+    <div id="transferencias">
+      <h3>Transferencias:</h3>
+      <ul>
+        <li>
+          <b>Beneficiario</b>: {beneficiario}
+        </li>
+        <li>
+          <b>Banco</b>: {banco}
+        </li>
+        <li>
+          <b>Cuenta</b>: {cuenta}
+        </li>
+      </ul>
+    </div>
+  )}
 </div>
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
