@@ -303,22 +303,22 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
               <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
               mucho con la organización al hacerlo.
             </p>
+
             <p>
               Mueve el <span>switch a la derecha </span>para confirmar tu
-              asistencia
+              asistencia, selecciona el numero de pases y envia tu confirmacion
             </p>
-
             <form className={estilo.formulario} onSubmit={(e) => e.preventDefault()}>
               <div className={estilo.conteCheck}>
-                <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
                 <label className={estilo.switch}>
                   <input
                     type="checkbox"
                     checked={asistira}
                     onChange={(e) => handleSwitchChange(e.target.checked)}
-                  />
+                    />
                   <span className={estilo.slider}></span>
                 </label>
+                    <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
               </div>
 
               {asistira ? (

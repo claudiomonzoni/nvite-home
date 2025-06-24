@@ -1093,10 +1093,10 @@
     font-size: clamp(2rem, 3vw, 4.5rem);
     line-height: 1.2!important;
 
-    :global(.word) {
+    .word {
       display: inline-block;
 
-      :global(.char) {
+      .char {
         color: var(--primario);
         display: inline-block;
       }

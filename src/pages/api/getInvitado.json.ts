@@ -18,8 +18,8 @@ export const GET: APIRoute = async ({ request }) => {
   
   try {
     // 
-    // se debe enviar una url como esta: http://localhost:4321/api/getInvitado.json?id=1&uid=1
-    //donde el id de la invitación debe de existir con el id del usuario que la creo
+    // se debe enviar una url como esta: http://localhost:4321/quince/nvita-quince-lux?id=c3503cbe-205b-43a7-bb2a-77989eb48714&uid=3
+    //donde el id de la invitación debe de existir con el uuid del usuario que la creo
     const response = await db.select()
     .from(Invitados)
     .where(and(eq(Invitados.uuid, id), eq(Invitados.usuarioId, Number(uid)))

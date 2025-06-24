@@ -56,33 +56,4 @@ const { base } = Astro.props;
   <p>© 2022 - {new Date().getFullYear()} Todos los derechos reservados</p>
 </footer>
 
-<style lang="scss">
-  @use "../../estilos/quince/_variables.scss" as *;
-  footer {
-    border-top: solid 1px var(--secundario);
-    padding: $margen 0;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .logo{
-    width: 200px;
-    max-width: 200px;
 
-  }
-  ul {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    padding: $margen-min;
-  }
-  li {
-    list-style: none;
-    svg {
-      width: 2rem;
-      height: auto
-    }
-    path{
-        fill: var(--primario);
-    }
-  }
-</style>
