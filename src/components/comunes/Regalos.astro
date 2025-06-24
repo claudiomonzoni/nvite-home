@@ -24,7 +24,7 @@ import Anchor from "../comunes/Anchor.astro";
 <p set:html={frase}></p>
   {tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
     <div id="regalo">
-      <h2>Mesa de regalos</h2>
+      <h3>Mesa de regalos</h3>
       {mesas.map((mesa) => (
         <Anchor
           url={mesa.url}
@@ -43,13 +43,18 @@ import Anchor from "../comunes/Anchor.astro";
   {tipo.includes("lluvia") && (
     <div id="lluvia">
       <h3>Lluvia de sobres</h3>
-      <p set:html={frase} />
+      <p >
+        Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre
+      </p>
     </div>
   )}
 
   {tipo.includes("transferencia") && (
     <div id="transferencias">
       <h3>Transferencias:</h3>
+      <p>
+        Si prefieres hacer una transferencia, puedes hacerlo a la siguiente cuenta bancaria:
+      </p>
       <ul>
         <li>
           <b>Beneficiario</b>: {beneficiario}
@@ -67,100 +72,100 @@ import Anchor from "../comunes/Anchor.astro";
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
 
-  h3 {
-    padding-bottom: 0 !important;
-    margin: 0;
-  }
-   #regalo {
-    margin-top: $margen;
-    padding: $margen;
-    background: url("/bg-floral-regalos-izq.svg") var(--primario);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-blend-mode: color-burn;
-    color: white;
-    text-align: center;
-   :global(b) {
-      color: var(--terciario);
-    }
-    h2 {
-      color: white;
-      border-bottom: 1px solid white;
-      margin-bottom: $margen-min;
-      padding-bottom: $margen-min;
-    }
-    svg {
-      max-width: 2.5rem;
-      height: auto;
-      margin: 0 auto;
-    }
-    border-radius: $radio;
-    @extend .sombra;
-  }
-  #lluvia {
-    h3 {
-      color: var(--acento);
-      font-size: clamp(2.2rem, 1.5vw, 2rem);
-    }
-    background: url("/lluvia.webp") var(--fondoBurn) repeat;
-    background-size: contain;
-    background-blend-mode:overlay;
-    margin: $margen-cel 0;
-    padding: $margen $margen-cel;
-    text-align: center;
-    border-radius: $radio;
-    @extend .sombra;
-  }
-  #transferencias {
-    border-radius: $radio;
-    padding: $margen $margen-min;
-    display: flex;
-    flex-wrap: wrap;
-    gap: $margen-cel;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-bottom: $margen-cel;
-    background: url("/bg-floral-regalos-der.svg") var(--acento);
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: 40%;
-    background-blend-mode: color-burn;
-    color: var(--terciario);
-    @extend .sombra;
+//   h3 {
+//     padding-bottom: 0 !important;
+//     margin: 0;
+//   }
+//    #regalo {
+//     margin-top: $margen;
+//     padding: $margen;
+//     background: url("/bg-floral-regalos-izq.svg") var(--primario);
+//     background-repeat: no-repeat;
+//     background-size: contain;
+//     background-blend-mode: color-burn;
+//     color: white;
+//     text-align: center;
+//    :global(b) {
+//       color: var(--terciario);
+//     }
+//     h2 {
+//       color: white;
+//       border-bottom: 1px solid white;
+//       margin-bottom: $margen-min;
+//       padding-bottom: $margen-min;
+//     }
+//     svg {
+//       max-width: 2.5rem;
+//       height: auto;
+//       margin: 0 auto;
+//     }
+//     border-radius: $radio;
+//     @extend .sombra;
+//   }
+//   #lluvia {
+//     h3 {
+//       color: var(--acento);
+//       font-size: clamp(2.2rem, 1.5vw, 2rem);
+//     }
+//     background: url("/lluvia.webp") var(--fondoBurn) repeat;
+//     background-size: contain;
+//     background-blend-mode:overlay;
+//     margin: $margen-cel 0;
+//     padding: $margen $margen-cel;
+//     text-align: center;
+//     border-radius: $radio;
+//     @extend .sombra;
+//   }
+//   #transferencias {
+//     border-radius: $radio;
+//     padding: $margen $margen-min;
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: $margen-cel;
+//     justify-content: center;
+//     align-items: center;
+//     text-align: center;
+//     margin-bottom: $margen-cel;
+//     background: url("/bg-floral-regalos-der.svg") var(--acento);
+//     background-position: top right;
+//     background-repeat: no-repeat;
+//     background-size: 40%;
+//     background-blend-mode: color-burn;
+//     color: var(--terciario);
+//     @extend .sombra;
 
-    h3 {
-      color: white;
-      font-size: clamp(2rem, 1vw, 2rem);
-    }
-    b {
-      color: white;
-    }
-    ul {
-      color: white;
-      text-align: left;
-    }
-  }
- #regalo,
-  #lluvia,
-  #transferencias {
-    @include cel {
-      background-size: cover;
-      background-blend-mode: soft-light;
-    }
-  }
+//     h3 {
+//       color: white;
+//       font-size: clamp(2rem, 1vw, 2rem);
+//     }
+//     b {
+//       color: white;
+//     }
+//     ul {
+//       color: white;
+//       text-align: left;
+//     }
+//   }
+//  #regalo,
+//   #lluvia,
+//   #transferencias {
+//     @include cel {
+//       background-size: cover;
+//       background-blend-mode: soft-light;
+//     }
+//   }
 
-  #bandeja {
-    margin: 0 auto;
-    max-width: 70%;
-    padding-bottom: $margen;
-    text-align: center;
-    @include cel {
-      max-width: 100%;
-      padding: 0;
-      padding-bottom: $margen;
-    }
-  }
+//   #bandeja {
+//     margin: 0 auto;
+//     max-width: 70%;
+//     padding-bottom: $margen;
+//     text-align: center;
+//     @include cel {
+//       max-width: 100%;
+//       padding: 0;
+//       padding-bottom: $margen;
+//     }
+//   }
 </style>
 <!-- <script>
   import { gsap } from "gsap";

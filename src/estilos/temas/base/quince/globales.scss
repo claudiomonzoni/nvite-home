@@ -629,81 +629,100 @@
 
   
     #bandejaRegalos {
+      svg {
+          max-width: 2.5rem;
+          height: auto;
+          position: relative;
+          left: 50%;
+          transform: translate(-50%, 0);
+          margin:$margen-min 0;
+          path{
+            fill: var(--primario);
+          }
+        }
+      h2{
+        color: var(--secundario);
+        text-align: center;
+        font-size: clamp(4.2rem, 4.5vw, 7rem);
+      }
       h3 {
         padding-bottom: 0 !important;
+        font-size: clamp(2rem, 3vw, 3rem)!important;
         margin: 0;
+      }
+      p, ul, li{
+        font-size: clamp(1.2rem, 1.5vw, 2rem);
+        text-align: center;
+        color: var(--primario);
       }
       #regalo {
         margin-top: $margen;
         padding: $margen;
-        // background: url("/bg-floral-regalos-izq.svg") var(--primario);
-        // background-repeat: no-repeat;
-        // background-size: contain;
-        // background-blend-mode: color-burn;
-        // color: white;
+        background: url("/bg-floral-regalos-izq.svg") var(--primario);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-blend-mode: color-burn;
         text-align: center;
         border: solid 1px var(--acento);
-
+        margin-bottom: $margen-cel;
+        
         h2 {
           color: var(--primario);
+          color: white!important;
           border-bottom: 1px solid white;
           font-size: clamp(2.5rem, 2vw, 3rem);
           font-family: $encabezados, serif;
           margin-bottom: $margen-min;
           padding-bottom: $margen-min;
         }
-        svg {
-          max-width: 2.5rem;
-          height: auto;
-          margin: 0 auto;
-        }
+        
       }
       #lluvia {
-        h3 {
-          font-family: $encabezados, serif;
-          color: var(--primario);
-          font-size: clamp(2rem, 2vw, 3rem);
-        }
+        
         background: linear-gradient(
-            rgba(255, 255, 255, 0.4),
-            rgba(255, 255, 255, 0.4)
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)
           ),
           // capa blanca semitransparente
           url("/lluvia.webp") var(--fondoBurn) repeat;
-        background-size: contain;
-        background-blend-mode: overlay;
-        margin: $margen-cel 0;
-        padding: $margen $margen-cel;
-        text-align: center;
-        color: var(--primario);
-        @extend .sombra;
-        p {
-          max-width: 80%;
-          margin: 0 auto;
+          background-size: contain;
+          background-blend-mode: overlay;
+          margin-bottom: $margen-cel;
+          padding: $margen $margen-cel;
+          text-align: center;
+          color: var(--primario);
+          @extend .sombra;
+          p {
+            max-width: 80%;
+            margin: 0 auto;
+          }
         }
-      }
-      #transferencias {
-        padding: $margen $margen-min;
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        gap: $margen-cel;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin-bottom: $margen-cel;
+        #transferencias {
+          padding: $margen $margen-min;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          gap: $margen-cel;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          margin-bottom: $margen-cel;
         background: url("/bg-floral-regalos-der.svg") var(--acento);
         background-position: top right;
         background-repeat: no-repeat;
         background-size: 40%;
         background-blend-mode: color-burn;
         color: var(--terciario);
+        p{
+          color: var(--fondo);
+          max-width: 80%;
+          margin: 0 auto;
+        }
         @extend .sombra;
 
         h3 {
-          font-family: $encabezados, serif;
           color: white;
-          font-size: clamp(2rem, 2vw, 3rem);
+   
         }
         b {
           color: white;
