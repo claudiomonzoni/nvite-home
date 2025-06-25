@@ -26,7 +26,9 @@ const precio = await getProductPrice(producto);
     </a>
   </div>
   <div class="info">
-    <span>{producto.data.metadata?.Tipo || "Sin categoría"}</span>
+    <span>
+      {(producto.data.metadata?.Categoria || "Sin categoría") + " | " + (producto.data.metadata?.Tipo || "Sin tipo")}
+    </span>
     <div class="headinfo">
       <h2>{producto.data.name}</h2>
       <p class="precio">
@@ -40,7 +42,7 @@ const precio = await getProductPrice(producto);
     data-action="increment"
     data-productid={producto.data.id}
     liga="#"
-    texto="Agregar al carrito"
+    texto="agregar al carrito"
     clases="btn-oscuro"
     claro={false}
     icono="mdi:cart-plus"
@@ -130,6 +132,12 @@ const precio = await getProductPrice(producto);
   
   .info {
     padding: 0 $margen-min;
+  }
+  .info span {
+    font-size: clamp(0.7rem, 1.1vw + 0.5rem, 0.8rem);
+    color: $gris;
+    text-transform: capitalize;
+    margin-bottom: $margen-min;
   }
   .headinfo {
     display: flex;
