@@ -106,11 +106,13 @@
     "muestra": "/quince/nvita-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
       "Panel de invitados",
+      "Mensaje para invitados especiales",
       "Música ambiental",
+      "Dress code y sugerencia de colores",
       "Itinerario",
       "Nombre del invitado",
       "Pases del invitado",
-      "Galería de imágenes",
+      "Galería de imágenes interactivas",
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
@@ -137,11 +139,13 @@
     "muestra": "/bodas/nvita-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
       "Panel de invitados",
+      "Mensaje para invitados especiales",
       "Música ambiental",
+      "Dress code y sugerencia de colores",
       "Itinerario",
       "Nombre del invitado",
       "Pases del invitado",
-      "Galería de imágenes",
+      "Galería de imágenes interactivas",
       "Sugerencia de regalos",
       "Detalles del evento",
       "Cuenta regresiva",
@@ -210,7 +214,7 @@
   {
     "id": "prod_S6yybHJMahkBD0",
     "slug": "invitacion-cumpleanos-pdf",
-    "video":"https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1746207135/cumple_exsoyo.mp4",
     "beneficios": [
       "Detalles del evento",
       "Botón de ubicación",

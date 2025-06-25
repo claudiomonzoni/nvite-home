@@ -64,16 +64,16 @@ const formattedFecha = fecha
       });
     });
 
+    // mobile setup code here...
     mm.add("(max-width: 799px)", () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: cart as HTMLElement,
           start: "top 100%",
-          end: "bottom 80%",
+          end: "top 50%",
           scrub: true,
         },
       });
-      // mobile setup code here...
       tl.from(cart as HTMLElement, {
         ease: "power2.out",
         y: 100,
@@ -82,7 +82,7 @@ const formattedFecha = fecha
       tl.from(cart.children, {
         opacity: 0,
         y: -30,
-        stagger: 0.1,
+        stagger: 0.2,
       });
     });
   });

@@ -627,132 +627,133 @@
 
   // Componente Regalos
 
-  
-    #bandejaRegalos {
-      svg {
-          max-width: 2.5rem;
-          height: auto;
-          position: relative;
-          left: 50%;
-          transform: translate(-50%, 0);
-          margin:$margen-min 0;
-          path{
-            fill: var(--primario);
-          }
-        }
-      h2{
-        color: var(--secundario);
-        text-align: center;
-        font-size: clamp(4.2rem, 4.5vw, 7rem);
-      }
-      h3 {
-        padding-bottom: 0 !important;
-        font-size: clamp(2rem, 3vw, 3rem)!important;
-        margin: 0;
-      }
-      p, ul, li{
-        font-size: clamp(1.2rem, 1.5vw, 2rem);
-        text-align: center;
-        color: var(--primario);
-      }
-      #regalo {
-        margin-top: $margen;
-        padding: $margen;
-        background: url("/bg-floral-regalos-izq.svg") var(--primario);
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-blend-mode: color-burn;
-        text-align: center;
-        border: solid 1px var(--acento);
-        margin-bottom: $margen-cel;
-        
-        h2 {
-          color: var(--primario);
-          color: white!important;
-          border-bottom: 1px solid white;
-          font-size: clamp(2.5rem, 2vw, 3rem);
-          font-family: $encabezados, serif;
-          margin-bottom: $margen-min;
-          padding-bottom: $margen-min;
-        }
-        
-      }
-      #lluvia {
-        
-        background: linear-gradient(
-          rgba(255, 255, 255, 0.4),
-          rgba(255, 255, 255, 0.4)
-          ),
-          // capa blanca semitransparente
-          url("/lluvia.webp") var(--fondoBurn) repeat;
-          background-size: contain;
-          background-blend-mode: overlay;
-          margin-bottom: $margen-cel;
-          padding: $margen $margen-cel;
-          text-align: center;
-          color: var(--primario);
-          @extend .sombra;
-          p {
-            max-width: 80%;
-            margin: 0 auto;
-          }
-        }
-        #transferencias {
-          padding: $margen $margen-min;
-          display: flex;
-          flex-direction: column;
-          flex-wrap: wrap;
-          gap: $margen-cel;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          margin-bottom: $margen-cel;
-        background: url("/bg-floral-regalos-der.svg") var(--acento);
-        background-position: top right;
-        background-repeat: no-repeat;
-        background-size: 40%;
-        background-blend-mode: color-burn;
-        color: var(--terciario);
-        p{
-          color: var(--fondo);
-          max-width: 80%;
-          margin: 0 auto;
-        }
-        @extend .sombra;
-
-        h3 {
-          color: white;
-   
-        }
-        b {
-          color: white;
-        }
-        ul {
-          color: white;
-          text-align: left;
-          li {
-            text-align: center;
-          }
-        }
-      }
-      #regalo,
-      #lluvia,
-      #transferencias {
-        @include cel {
-          background-size: cover;
-          background-blend-mode: soft-light;
-        }
-      }
-      margin: 0 auto;
-      max-width: 70%;
-      padding-bottom: $margen;
-      @include cel {
-        max-width: 100%;
-        padding: 0;
-        padding-bottom: $margen;
+  #bandejaRegalos {
+    svg {
+      max-width: 2.5rem;
+      height: auto;
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, 0);
+      margin: $margen-min 0;
+      path {
+        fill: var(--primario);
       }
     }
-  
+    h2 {
+      color: var(--secundario);
+      text-align: center;
+      font-size: clamp(4.2rem, 4.5vw, 7rem);
+    }
+    h3 {
+      padding-bottom: 0 !important;
+      font-size: clamp(2rem, 3vw, 3rem) !important;
+      margin: 0;
+    }
+    p,
+    ul,
+    li {
+      font-size: clamp(1.2rem, 1.5vw, 2rem);
+      text-align: center;
+      color: var(--primario);
+    }
+    #regalo {
+      margin-top: $margen;
+      padding: $margen $margen-cel;
+      background: url("/bg-floral-regalos-izq.svg") var(--primario);
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-blend-mode: color-burn;
+      text-align: center;
+      border: solid 1px var(--acento);
+      margin-bottom: $margen-cel;
+
+      h2 {
+        color: var(--primario);
+        color: white !important;
+        border-bottom: 1px solid white;
+        font-size: clamp(2.5rem, 2vw, 3rem);
+        font-family: $encabezados, serif;
+        margin-bottom: $margen-min;
+        padding-bottom: $margen-min;
+      }
+    }
+    #lluvia {
+      background: linear-gradient(
+          rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)
+        ),
+        // capa blanca semitransparente
+        url("/lluvia.webp") var(--fondoBurn) repeat;
+      background-size: contain;
+      background-blend-mode: overlay;
+      margin-bottom: $margen-cel;
+      padding: $margen $margen-cel;
+      text-align: center;
+      color: var(--primario);
+      @extend .sombra;
+      p {
+        max-width: 80%;
+        margin: 0 auto;
+      }
+    }
+    #transferencias {
+      padding: $margen $margen-min;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: $margen-cel;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-bottom: $margen-cel;
+      background: url("/bg-floral-regalos-der.svg") var(--acento);
+      background-position: top right;
+      background-repeat: no-repeat;
+      background-size: 40%;
+      background-blend-mode: color-burn;
+      color: var(--terciario);
+      p {
+        color: var(--fondo);
+        max-width: 80%;
+        margin: 0 auto;
+      }
+      @extend .sombra;
+
+      h3 {
+        color: white;
+      }
+      b {
+        color: white;
+      }
+      ul {
+        color: white;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        li {
+          text-align: center;
+          width: 100%;
+        }
+      }
+    }
+    #regalo,
+    #lluvia,
+    #transferencias {
+      @include cel {
+        background-size: cover;
+        background-blend-mode: soft-light;
+      }
+    }
+    margin: 0 auto;
+    max-width: 70%;
+    padding-bottom: $margen;
+    @include cel {
+      max-width: 100%;
+      padding: 0;
+      padding-bottom: $margen;
+    }
+  }
+
   // Componente contador (cuenta regresiva)
 
   #contador {
@@ -858,55 +859,54 @@
     }
   }
 
-   //componente mensaje Vip
-   #mensaje-vip-container{
+  //componente mensaje Vip
+  #mensaje-vip-container {
     display: none;
     margin: $margen;
     .mensaje-vip {
-    padding-top: $margen;
-    margin-top: $margen ;
-    position: relative;
-  }
+      padding-top: $margen;
+      margin-top: $margen;
+      position: relative;
+    }
 
-  .etiqueta-vip {
-    position: absolute;
-    top: 0rem;
-    right: 0.5rem;
-    background-color: var(--acento);
-    color: white;
-    font-size: 0.8rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+    .etiqueta-vip {
+      position: absolute;
+      top: 0rem;
+      right: 0.5rem;
+      background-color: var(--acento);
+      color: white;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-  .mensaje-contenido {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  .mensaje-texto {
-    width: 100%;
-    font-family: $txt, serif;
-    border-top: solid 1px var(--acento);
-    padding-top: $margen-cel;
-    text-align: center;
-    font-size: clamp(2rem, 3vw, 4.5rem);
-    line-height: 1.2!important;
+    .mensaje-contenido {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
 
-    .word {
-      display: inline-block;
+    .mensaje-texto {
+      width: 100%;
+      font-family: $txt, serif;
+      border-top: solid 1px var(--acento);
+      padding-top: $margen-cel;
+      text-align: center;
+      font-size: clamp(2rem, 3vw, 4.5rem);
+      line-height: 1.2 !important;
 
-      .char {
-        color: var(--primario);
+      .word {
         display: inline-block;
+
+        .char {
+          color: var(--primario);
+          display: inline-block;
+        }
       }
     }
   }
-  }
-
 } //fin mixin tema
 
 @mixin btn-mix($claro) {
@@ -938,17 +938,15 @@
   @include btn-mix($claro: true);
 }
 
-
 footer {
   border-top: solid 1px var(--secundario);
   padding: $margen 0;
   margin: 0 auto;
   text-align: center;
 }
-.logo{
+.logo {
   width: 200px;
   max-width: 200px;
-
 }
 ul {
   display: flex;
@@ -960,9 +958,9 @@ li {
   list-style: none;
   svg {
     width: 2rem;
-    height: auto
+    height: auto;
   }
-  path{
-      fill: var(--primario);
+  path {
+    fill: var(--primario);
   }
 }
