@@ -5,53 +5,96 @@ import ProductoCard from "../Pagos/ProductoCard.astro";
 const { dondeEstoy } = Astro.props;
 
 // Filtrado de productos mejorado
-const filteredProducts = productos.filter(producto => {
-  const categoria = (producto.data.metadata?.Categoria || '').toLowerCase();
-  const dondeEstoyLower = (dondeEstoy || '').toLowerCase();
-  
+const filteredProducts = productos.filter((producto) => {
+  const categoria = (producto.data.metadata?.Categoria || "").toLowerCase();
+  const dondeEstoyLower = (dondeEstoy || "").toLowerCase();
+
   // En la página principal mostrar todo
-  if (!dondeEstoy || dondeEstoy === 'home') {
+  if (!dondeEstoy || dondeEstoy === "home") {
     return true;
   }
-  
+
   // En la página de PDF
-  if (dondeEstoyLower === 'pdf') {
-    return producto.data.metadata?.Tipo?.toLowerCase() === 'pdf';
+  if (dondeEstoyLower === "pdf") {
+    return producto.data.metadata?.Tipo?.toLowerCase() === "pdf";
   }
-  
+
   // En las páginas de categoría (bodas, quince)
   return categoria === dondeEstoyLower;
 });
 
+const categorias = [
+  { key: "todos", label: "Todo" },
+  { key: "bodas", label: "Bodas" },
+  { key: "quince", label: "Xv años" },
+  { key: "cumple", label: "Cumples" },
+];
 ---
 
-<div class="grid pantalla-der">
-  <div class="swiper productos-swiper">
-    <div class="swiper-wrapper">
-      {
-        filteredProducts.map((producto) => (
-          <div class="swiper-slide">
-            <ProductoCard producto={producto} />
+{
+  !dondeEstoy || dondeEstoy === "home" ? (
+    <>
+      <div class="grid pantalla-der">
+        <div class="filtros-productos">
+          {categorias.map((cat, idx) => (
+            <button
+              type="button"
+              data-filtro={cat.key}
+              class={`filtro-btn${idx === 0 ? " filtro-activo" : ""}`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="grid pantalla-der">
+        <div class="swiper productos-swiper">
+          <div class="swiper-wrapper" id="productos-wrapper">
+            {productos.map((producto) => {
+              const categoria = (
+                producto.data.metadata?.Categoria || ""
+              ).toLowerCase();
+              return (
+                <div class="swiper-slide" data-categoria={categoria}>
+                  <ProductoCard producto={producto} />
+                </div>
+              );
+            })}
           </div>
-        ))
-      }
-    </div>    <div class="swiper-pagination"></div>
-  </div>
-</div>
+          <div class="swiper-pagination" />
+        </div>
+      </div>
+    </>
+  ) : (
+    <div class="grid pantalla-der">
+      <div class="swiper productos-swiper">
+        <div class="swiper-wrapper">
+          {filteredProducts.map((producto) => (
+            <div class="swiper-slide">
+              <ProductoCard producto={producto} />
+            </div>
+          ))}
+        </div>
+        <div class="swiper-pagination" />
+      </div>
+    </div>
+  )
+}
 
-<style>
+<style lang="scss">
+  @import "../../estilos/_variables.scss";
   .productos-swiper {
-    margin: 4rem 0 6rem 0;
+    margin: 1rem 0 6rem 0;
     width: 100%;
     padding: 1rem 0;
   }
-  
+
   :root {
     --swiper-pagination-color: var(--primario, #333);
     --swiper-pagination-bullet-size: 10px;
     --swiper-pagination-bullet-inactive-color: #c9a56c;
   }
-  
+
   .swiper-slide {
     display: flex;
     justify-content: center;
@@ -61,25 +104,57 @@ const filteredProducts = productos.filter(producto => {
 
   .swiper-pagination {
     position: relative;
-    margin-top: .2rem;
+    margin-top: 0.2rem;
+  }
+
+  .filtros-productos {
+    text-align: left;
+    margin-top: $margen;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .filtro-btn {
+    border: none;
+    flex: 0 1 fit-content;
+    border-radius: $radio;
+    color: $primario;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+
+  .filtro-btn.filtro-activo {
+    color: white;
+    background: $acento;
+  }
+
+  .filtro-btn:hover {
+    background: $acento;
+    color: #fff;
   }
 </style>
 
-<script>  import Swiper from 'swiper';
-  import { Pagination, Autoplay } from 'swiper/modules';
-  import 'swiper/css';
-  import 'swiper/css/pagination';
+<script>
+  import Swiper from "swiper";
+  import { Pagination, Autoplay } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/pagination";
 
   interface SwiperElement extends HTMLElement {
     swiper?: Swiper;
   }
 
   function initSwiper() {
-    const swipers = document.querySelectorAll<SwiperElement>('.productos-swiper');
-    swipers.forEach(swiperEl => {
+    const swipers =
+      document.querySelectorAll<SwiperElement>(".productos-swiper");
+    swipers.forEach((swiperEl) => {
       if (swiperEl.swiper) {
         swiperEl.swiper.destroy(true, true);
-      }      new Swiper(swiperEl, {
+      }
+      new Swiper(swiperEl, {
         modules: [Pagination, Autoplay],
         slidesPerView: 1.2,
         spaceBetween: 15,
@@ -89,7 +164,7 @@ const filteredProducts = productos.filter(producto => {
           disableOnInteraction: false,
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: ".swiper-pagination",
           clickable: true,
           dynamicBullets: true, // Hace que los bullets sean más dinámicos
           dynamicMainBullets: 3, // Muestra 3 bullets principales
@@ -110,25 +185,59 @@ const filteredProducts = productos.filter(producto => {
           1440: {
             slidesPerView: 4.2,
             spaceBetween: 10,
-          }
-        }
+          },
+        },
       });
     });
   }
 
   // Inicializar cuando el DOM está listo
-  document.addEventListener('DOMContentLoaded', initSwiper);
-  
+  document.addEventListener("DOMContentLoaded", initSwiper);
+
   // Reinicializar en transiciones de página
-  document.addEventListener('astro:page-load', initSwiper);
-  
+  document.addEventListener("astro:page-load", initSwiper);
+
   // Limpiar cuando se desmonta
-  document.addEventListener('astro:before-swap', () => {
-    const swipers = document.querySelectorAll<SwiperElement>('.productos-swiper');
-    swipers.forEach(swiperEl => {
+  document.addEventListener("astro:before-swap", () => {
+    const swipers =
+      document.querySelectorAll<SwiperElement>(".productos-swiper");
+    swipers.forEach((swiperEl) => {
       if (swiperEl.swiper) {
         swiperEl.swiper.destroy(true, true);
       }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const botones = document.querySelectorAll(".filtro-btn");
+    const slides = document.querySelectorAll(".swiper-slide");
+
+    botones.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        botones.forEach((b) => b.classList.remove("filtro-activo"));
+        btn.classList.add("filtro-activo");
+        const filtro = btn.getAttribute("data-filtro");
+        slides.forEach((slide) => {
+          const slideEl = slide;
+          if (
+            filtro === "todos" ||
+            (filtro === "cumple"
+              ? slideEl.getAttribute("data-categoria") === "cumple"
+              : slideEl.getAttribute("data-categoria") === filtro)
+          ) {
+            (slideEl as HTMLElement).style.display = "";
+          } else {
+            (slideEl as HTMLElement).style.display = "none";
+          }
+        });
+        // Actualiza Swiper para recalcular los slides visibles
+        const swiperEl = document.querySelector(
+          ".productos-swiper"
+        ) as SwiperElement | null;
+        if (swiperEl && swiperEl.swiper) {
+          swiperEl.swiper.update();
+        }
+      });
     });
   });
 </script>

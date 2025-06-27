@@ -157,9 +157,9 @@ mark {
 }
 .pantalla-der > * {
   grid-column: contenido-start / pantalla-end;
-  @include cel {
-    grid-column: contenido;
-  }
+  // @include cel {
+  //   grid-column: contenido;
+  // }
 }
 .pantalla-der-especial > * {
   grid-column: contenido-start / pantalla-end;
