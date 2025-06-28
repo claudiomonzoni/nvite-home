@@ -510,25 +510,24 @@ mark {
     flex: 1 0 100%;
     font-size: clamp(0.9rem, 0.8vw, 1rem);
     color: $primario;
-    padding-top: $margen-min;
+    padding-top: $margen-min!important;
   }
   input {
     flex: 1 0 100%;
     padding: 0.5rem;
     border: none;
     background: white;
-    border-radius: $radio;
+    border-radius: 10px;
     @extend .sombra;
   }
 }
 
 button[type="submit"],
 #empezar {
-  margin-top: $margen-min;
-  border-radius: 0.5rem;
-  padding: 0.1rem $margen-cel;
+  margin-top: $margen-min!important;
+  border-radius: 10px;
+  padding: 0.3rem $margen-cel;
   color: white;
-  border: 1px solid white;
   margin: 0.5rem 0.5rem 0.5rem 0;
   background-color: $acento;
   @include cel {
