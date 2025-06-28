@@ -70,7 +70,7 @@ console.log(cartItemsCount + " items in cart");
     </div>
     <li id="carrito">
       <a href="/nvitaciones/cart" aria-label="Ir al carrito">
-        <Icon name="mdi:cart" width="32" height="32" />
+        <Icon name="solar:cart-large-minimalistic-outline" width="32" height="32" />
         <span
           class="count"
           id="cart-count"
@@ -214,9 +214,11 @@ console.log(cartItemsCount + " items in cart");
   #carrito {
     position: relative;
     span {
-      background-color: $acento;
-      color: #fff;
+      background-color: $fondoGlobal;
+      font-weight: bold;
+      color: $acento;
       border-radius: 50%;
+      border: solid 2px $primario;
       aspect-ratio: 1/1;
       width: 1.2rem;
       height: 1.2rem;
@@ -231,6 +233,9 @@ console.log(cartItemsCount + " items in cart");
       &.hidden {
         display: none;
       }
+    }
+    :global(svg) {
+      color: $primario;
     }
   }
 </style>

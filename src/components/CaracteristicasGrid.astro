@@ -144,8 +144,8 @@ const { matriz } = Astro.props;
       h3 {
         color: $acento;
       }
-      :global(svg) {
-        color: currentColor!important;
+      svg {
+        color: $acento!important;
       }
     }
     #item-c {
@@ -155,8 +155,8 @@ const { matriz } = Astro.props;
       p {
         color: #fff;
       }
-      :global(svg) {
-        color: currentColor!important;
+      svg {
+        color: white!important;
       }
     }
     #item-d {
@@ -208,7 +208,7 @@ const { matriz } = Astro.props;
         height: auto;
         background: #fff;
         p,
-        :global(svg) {
+        svg {
           color: $acento!important;
         }
       }

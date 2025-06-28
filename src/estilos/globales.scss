@@ -95,6 +95,7 @@ a {
   img,
   svg {
     vertical-align: middle;
+    // color: currentColor !important;
   }
 }
 .selected {
@@ -211,6 +212,7 @@ mark {
   svg {
     width: 100%;
     height: auto;
+    color: currentColor!important;
   }
   &:hover {
     border-radius: $margen-cel;
@@ -466,7 +468,7 @@ mark {
   color: $primario;
 }
 
-#formuHome{
+#formu{
   width: 70%;
   display: flex;
   transform: translateY(2pc);
