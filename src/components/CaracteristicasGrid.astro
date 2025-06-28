@@ -86,7 +86,9 @@ const { matriz } = Astro.props;
 
   }
 
- 
+ h2{
+  font-weight: 600;
+ }
   #caracteristicas {
     @extend .sombra;
     margin: 0 auto;
@@ -142,7 +144,7 @@ const { matriz } = Astro.props;
       h3 {
         color: $acento;
       }
-      svg {
+      :global(svg) {
         color: currentColor!important;
       }
     }
@@ -153,7 +155,7 @@ const { matriz } = Astro.props;
       p {
         color: #fff;
       }
-      svg {
+      :global(svg) {
         color: currentColor!important;
       }
     }
@@ -206,7 +208,7 @@ const { matriz } = Astro.props;
         height: auto;
         background: #fff;
         p,
-        svg {
+        :global(svg) {
           color: $acento!important;
         }
       }

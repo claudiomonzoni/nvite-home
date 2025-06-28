@@ -92,8 +92,8 @@ if (!imagen[urlImagen])
   }
   .primario {
     background: linear-gradient(43deg, $secundario 10%, $primario 80%);
-    svg {
-      color: $fondo;
+     :global(svg) {
+    color: $fondo!important;
     }
     h2 {
       color: $fondo!important;
@@ -106,15 +106,15 @@ if (!imagen[urlImagen])
     }
   }
   .secundario {
-    svg {
-      	color: $acento!important;
+     :global(svg) {
+    color:$acento!important;
     }
   
     background: linear-gradient(43deg, $secundario 10%, rgb(255, 247, 233) 80%);
   }
   .terciario {
-    svg {
-      	color: $acento;
+      :global(svg) {
+    color:$acento!important;
     }
   
     h2{

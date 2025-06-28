@@ -44,10 +44,8 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
       margin-top: $margen-min;
       max-width:100%;  
     }
-    svg {
-      path {
-        fill: currentColor!important;
-      }
+   :global(svg) {
+    color:currentColor !important;
     }
   }
   .btn-claro {
