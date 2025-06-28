@@ -777,11 +777,10 @@ const productId = product.data.id;
       const closeBtn = modal?.querySelector(".close-btn");
       const backdrop = modal?.querySelector(".modal-backdrop");
 
-      const openModal = () => {
-        modal?.classList.add("active");
-        document.body.style.overflow = "hidden";
-        modal?.dispatchEvent(new CustomEvent("modal:open"));
-      };
+      // Limpia listeners previos
+      previewBtn?.removeEventListener("click", openModalHandler);
+
+      previewBtn?.addEventListener("click", openModalHandler);
 
       const closeModal = () => {
         modal?.classList.remove("active");
@@ -789,14 +788,18 @@ const productId = product.data.id;
         modal?.dispatchEvent(new CustomEvent("modal:close"));
       };
 
-      previewBtn?.addEventListener("click", (e) => {
-        e.preventDefault();
-        openModal();
-      });
-
       closeBtn?.addEventListener("click", closeModal);
       backdrop?.addEventListener("click", closeModal);
     }
+  }
+
+  // Fuera de la clase:
+  function openModalHandler(e) {
+    e.preventDefault();
+    const modal = document.getElementById("preview-modal");
+    modal?.classList.add("active");
+    document.body.style.overflow = "hidden";
+    modal?.dispatchEvent(new CustomEvent("modal:open"));
   }
 
   // Inicializar la página

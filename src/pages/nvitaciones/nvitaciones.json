@@ -57,13 +57,14 @@
     "id": "prod_QNpXQx0LWRjRFh",
     "slug": "invitacion-bodas-esencial",
     "titulo": "Invitación Bodas esencial",
-    "muestra": "/bodas/nvita-bodas-esencial",
+    "muestra": "/bodas/esencial",
     "beneficios": [
       "Detalles del evento",
       "Cuenta regresiva",
       "Mapas de ubicación",
       "Frase animada",
-      "Formulario sencillo de confirmación"
+      "Hasta 4 imágenes en galería",
+      "Formulario sencillo de confirmación por whatsapp"
     ],
     "categoria": "Bodas",
     "tipo": "Sitio web",
@@ -163,6 +164,38 @@
       "../../assets/cart/bodas/lux/cuenta-Nvitaciones-bodas-lux.webp",
       "../../assets/cart/bodas/lux/itinerario-Nvitaciones-bodas-lux.webp",
       "../../assets/cart/bodas/lux/confirmacion-Nvitaciones-bodas-lux.webp"
+    ]
+  },
+    {
+    "id": "prod_SZwAeRXTJGqFO8",
+    "slug": "invitacion-bodas-lux-elegante",
+    "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
+    "beneficios": [
+      "Panel de invitados",
+      "Mensaje para invitados especiales",
+      "Música ambiental",
+      "Dress code y sugerencia de colores",
+      "Itinerario",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes interactivas",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Bodas",
+    "tipo": "Sitio web",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/bodas/lux-elegante/padres-Nvitaciones-bodas-lux-elegante.webp",
+      "../../assets/cart/bodas/lux-elegante/detalles-Nvitaciones-bodas-lux-elegante.webp",
+      "../../assets/cart/bodas/lux-elegante/cuenta-Nvitaciones-bodas-lux-elegante.webp",
+      "../../assets/cart/bodas/lux-elegante/ubicacion-Nvitaciones-bodas-lux-elegante.webp",
+      "../../assets/cart/bodas/lux-elegante/progreso-Nvitaciones-bodas-lux-elegante.webp",
+      "../../assets/cart/bodas/lux-elegante/regalos-Nvitaciones-bodas-lux-elegante.webp"
     ]
   },
   {

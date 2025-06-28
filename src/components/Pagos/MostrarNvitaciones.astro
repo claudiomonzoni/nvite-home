@@ -191,11 +191,44 @@ const categorias = [
     });
   }
 
+  function initFiltroBotones() {
+    const botones = document.querySelectorAll(".filtro-btn");
+    const slides = document.querySelectorAll(".swiper-slide");
+
+    botones.forEach((btn) => {
+      (btn as HTMLElement).onclick = () => {
+        botones.forEach((b) => (b as HTMLElement).classList.remove("filtro-activo"));
+        (btn as HTMLElement).classList.add("filtro-activo");
+        const filtro = btn.getAttribute("data-filtro");
+        slides.forEach((slide) => {
+          const slideEl = slide as HTMLElement;
+          if (
+            filtro === "todos" ||
+            (filtro === "cumple"
+              ? slideEl.getAttribute("data-categoria") === "cumple"
+              : slideEl.getAttribute("data-categoria") === filtro)
+          ) {
+            slideEl.style.display = "";
+          } else {
+            slideEl.style.display = "none";
+          }
+        });
+        // Actualiza Swiper para recalcular los slides visibles
+        const swiperEl = document.querySelector(".productos-swiper") as SwiperElement | null;
+        if (swiperEl && swiperEl.swiper) {
+          swiperEl.swiper.update();
+        }
+      };
+    });
+  }
+
   // Inicializar cuando el DOM está listo
   document.addEventListener("DOMContentLoaded", initSwiper);
+  document.addEventListener("DOMContentLoaded", initFiltroBotones);
 
   // Reinicializar en transiciones de página
   document.addEventListener("astro:page-load", initSwiper);
+  document.addEventListener("astro:page-load", initFiltroBotones);
 
   // Limpiar cuando se desmonta
   document.addEventListener("astro:before-swap", () => {
@@ -205,39 +238,6 @@ const categorias = [
       if (swiperEl.swiper) {
         swiperEl.swiper.destroy(true, true);
       }
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const botones = document.querySelectorAll(".filtro-btn");
-    const slides = document.querySelectorAll(".swiper-slide");
-
-    botones.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        botones.forEach((b) => b.classList.remove("filtro-activo"));
-        btn.classList.add("filtro-activo");
-        const filtro = btn.getAttribute("data-filtro");
-        slides.forEach((slide) => {
-          const slideEl = slide;
-          if (
-            filtro === "todos" ||
-            (filtro === "cumple"
-              ? slideEl.getAttribute("data-categoria") === "cumple"
-              : slideEl.getAttribute("data-categoria") === filtro)
-          ) {
-            (slideEl as HTMLElement).style.display = "";
-          } else {
-            (slideEl as HTMLElement).style.display = "none";
-          }
-        });
-        // Actualiza Swiper para recalcular los slides visibles
-        const swiperEl = document.querySelector(
-          ".productos-swiper"
-        ) as SwiperElement | null;
-        if (swiperEl && swiperEl.swiper) {
-          swiperEl.swiper.update();
-        }
-      });
     });
   });
 </script>
