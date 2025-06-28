@@ -40,15 +40,16 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     text-align: center;
     max-width: fit-content;
     font-weight: 400;
+    svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include cel {
       margin-top: $margen-min;
-      max-width:100%;  
-    }
-   svg {
-    color:currentColor !important;
-    fill: currentColor !important;
+      max-width: 100%;
     }
   }
+
   .btn-claro {
     background-color: $primario;
     color: $fondoGlobal;
@@ -68,6 +69,10 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     margin-top: 1rem !important;
     background-color: $acento;
     color: white;
+    svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
   }
   .btn-ver-nvitaciones {

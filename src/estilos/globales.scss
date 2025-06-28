@@ -212,7 +212,7 @@ mark {
   svg {
     width: 100%;
     height: auto;
-    color: currentColor!important;
+    fill: currentColor!important;
   }
   &:hover {
     border-radius: $margen-cel;
