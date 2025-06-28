@@ -67,10 +67,7 @@ import { Icon } from "astro-icon/components";
     // border-bottom-left-radius: $margen-min;
     display: flex;
     margin-top: 6rem;
-    @include cel {
-      margin-top: 13rem;
-      border-radius: 1.5rem;
-    }
+ 
     h1 {
       width: 100%;
       color: $primario;
@@ -78,6 +75,8 @@ import { Icon } from "astro-icon/components";
 
       span {
         color: $acento;
+        font-weight: normal;
+        font-size: clamp(1.5rem, 2.4vw, 3.6vw);
       }
     }
     p {
@@ -122,8 +121,11 @@ import { Icon } from "astro-icon/components";
         }
       }
     }
-
-    @include cel {
+       
+      
+      @include cel {
+      margin-top: 13rem;
+      border-radius: 1.5rem;
       flex-wrap: wrap;
       .izq {
         padding: $margen-cel;

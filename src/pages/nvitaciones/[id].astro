@@ -772,13 +772,17 @@ const productId = product.data.id;
 
     // Manejo del modal de previsualización
     initializePreviewModal() {
-      const previewBtn = document.getElementById("preview-btn");
+      let previewBtn = document.getElementById("preview-btn");
       const modal = document.getElementById("preview-modal");
       const closeBtn = modal?.querySelector(".close-btn");
       const backdrop = modal?.querySelector(".modal-backdrop");
 
-      // Limpia listeners previos
-      previewBtn?.removeEventListener("click", openModalHandler);
+      // Reemplaza el botón por un clon para limpiar todos los listeners previos
+      if (previewBtn) {
+        const newBtn = previewBtn.cloneNode(true) as HTMLElement;
+        previewBtn.parentNode.replaceChild(newBtn, previewBtn);
+        previewBtn = newBtn;
+      }
 
       previewBtn?.addEventListener("click", openModalHandler);
 
@@ -793,13 +797,15 @@ const productId = product.data.id;
     }
   }
 
-  // Fuera de la clase:
+  // Fuera de la clase, define la función UNA SOLA VEZ
   function openModalHandler(e) {
     e.preventDefault();
     const modal = document.getElementById("preview-modal");
-    modal?.classList.add("active");
-    document.body.style.overflow = "hidden";
-    modal?.dispatchEvent(new CustomEvent("modal:open"));
+    if (!modal.classList.contains("active")) {
+      modal.classList.add("active");
+      document.body.style.overflow = "hidden";
+      modal.dispatchEvent(new CustomEvent("modal:open"));
+    }
   }
 
   // Inicializar la página

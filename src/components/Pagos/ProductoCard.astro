@@ -68,7 +68,7 @@ const precio = await getProductPrice(producto);
 </article>
 
 <style lang="scss">
-  @use "../../estilos/variables" as *;
+  @use "../../estilos/_variables.scss" as *;
   .producto-card {
     display: grid;
     grid-template-columns: 1fr;
@@ -135,7 +135,7 @@ const precio = await getProductPrice(producto);
   }
   .info span {
     font-size: clamp(0.7rem, 1.1vw + 0.5rem, 0.8rem);
-    color: $gris;
+    color: $acento;
     text-transform: capitalize;
     margin-bottom: $margen-min;
   }
@@ -149,9 +149,9 @@ const precio = await getProductPrice(producto);
     // margin-bottom: $margen-min;
   }
   .precio {
-    font-size: clamp(1.1rem, 1.6vw + 0.5rem, 1.5rem);
+    font-size: clamp(1.1rem, 1.1vw, 1.5rem);
     font-weight: bold;
-    color: $primario;
+    color: $gris;
 
     sup {
       font-size: 0.4em;
@@ -160,9 +160,10 @@ const precio = await getProductPrice(producto);
     }
   }
   h2 {
-    font-size: clamp(1.3rem, 1.6vw + 1rem, 1.7rem);
+    font-size: clamp(1.3rem, 1.2vw, 1.7rem);
     margin: 0;
     padding: 0;
+    color: $primario;
   }
   .categoria {
     text-transform: capitalize;
