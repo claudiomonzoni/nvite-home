@@ -28,7 +28,8 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 
 
 <!-- buscare en globales  -->
-<style define:vars={{url, colorBg}}>     
+<style define:vars={{url, colorBg}} lang="scss">     
+@use "../estilos/_variables.scss" as *;
 
 .carcateristicas{
     /* background: url("/fondo-nvite-caracteristicas.png") no-repeat #fceedf; */
@@ -41,6 +42,7 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
     height: 100%;
     object-fit: contain;
     object-position: center;
+    color: $primario;
   }
 }
 </style>
