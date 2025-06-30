@@ -40,7 +40,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     text-align: center;
     max-width: fit-content;
     font-weight: 400;
-    svg {
+    :global(svg){
       color: currentColor !important;
       fill: currentColor !important;
     }
@@ -53,17 +53,14 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   .btn-claro {
     background-color: $primario;
     color: $fondoGlobal;
-      svg {
-      color: currentColor !important;
-      fill: currentColor !important;
-    }
+   
     @include btn;
   }
   .btn-oscuro {
     background-color: $secundario;
     color: $primario;
-      svg {
-      color: currentColor !important;
+    svg {
+        color: currentColor !important;
       fill: currentColor !important;
     }
     @include btn;
@@ -71,20 +68,14 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   .btn-bordes {
     border: 1px solid $secundario !important;
     color: $secundario;
-      svg {
-      color: currentColor !important;
-      fill: currentColor !important;
-    }
+   
     @include btn;
   }
   .btn-bordes-oscuro {
     margin-top: 1rem !important;
     background-color: $acento;
     color: white;
-    svg {
-      color: currentColor !important;
-      fill: currentColor !important;
-    }
+ 
     @include btn;
   }
   .btn-ver-nvitaciones {
@@ -92,20 +83,14 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     border: 1px solid $secundario !important;
     color: $primario;
     justify-content: left !important;
-    svg {
-      color: currentColor !important;
-      fill: currentColor !important;
-    }
+ 
     @include btn;
     @extend .sombra;
   }
   .btn-whatsapp {
     background-color: $fondoGlobal;
     color: $acento;
-    svg {
-      color: currentColor !important;
-      fill: currentColor !important;
-    }
+ 
     @include btn;
   }
   .centrado {
