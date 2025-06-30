@@ -53,16 +53,28 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   .btn-claro {
     background-color: $primario;
     color: $fondoGlobal;
+      svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
   }
   .btn-oscuro {
     background-color: $secundario;
     color: $primario;
+      svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
   }
   .btn-bordes {
     border: 1px solid $secundario !important;
     color: $secundario;
+      svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
   }
   .btn-bordes-oscuro {
@@ -80,12 +92,20 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     border: 1px solid $secundario !important;
     color: $primario;
     justify-content: left !important;
+    svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
     @extend .sombra;
   }
   .btn-whatsapp {
     background-color: $fondoGlobal;
     color: $acento;
+    svg {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
     @include btn;
   }
   .centrado {
