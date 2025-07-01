@@ -50,8 +50,8 @@ const { url } = Astro.props;
     z-index: 10000; // Un nivel más alto que el backdrop
 
     @include cel {
-      width: 95%;
-      height: 90%;
+      width: 97%;
+      height: 98%;
       margin: auto;
       border-radius: $radio;
     }
@@ -109,14 +109,14 @@ const { url } = Astro.props;
 </style>
 
 <script>
-  class PreviewModal {
-    constructor() {
-      // Inicializar en la carga inicial y después de las transiciones
-      document.addEventListener('astro:page-load', () => this.init());
-      if (document.readyState === 'complete') {
-        this.init();
-      }
+class PreviewModal {
+  listenersAdded = false;
+  constructor() {
+    document.addEventListener('astro:page-load', () => this.init());
+    if (document.readyState === 'complete') {
+      this.init();
     }
+  }
 
     init() {
       const modal = document.getElementById('preview-modal');
@@ -126,11 +126,14 @@ const { url } = Astro.props;
       const container = modal.querySelector('.iframe-container');
       const closeBtn = modal.querySelector('.close-btn');
       const backdrop = modal.querySelector('.modal-backdrop');
-      let iframe = null;
 
+      // Limpia el contenedor antes de crear un nuevo iframe
       const createIframe = () => {
-        if (!url || !container || iframe) return;
-        iframe = document.createElement('iframe');
+        if (!url || !container) return;
+        // Elimina todos los iframes existentes
+        container.querySelectorAll('iframe').forEach((el) => el.remove());
+        // Crea y agrega el nuevo iframe
+        const iframe = document.createElement('iframe');
         iframe.src = url;
         iframe.style.width = '100%';
         iframe.style.height = '100%';
@@ -140,10 +143,8 @@ const { url } = Astro.props;
       };
 
       const removeIframe = () => {
-        if (iframe && iframe.parentNode) {
-          iframe.parentNode.removeChild(iframe);
-          iframe = null;
-        }
+        if (!container) return;
+        container.querySelectorAll('iframe').forEach((el) => el.remove());
       };
 
       const closeModal = () => {
@@ -152,18 +153,14 @@ const { url } = Astro.props;
         modal.dispatchEvent(new CustomEvent('modal:close'));
       };
 
-      // Limpiar listeners anteriores
-      const newCloseBtn = closeBtn?.cloneNode(true);
-      const newBackdrop = backdrop?.cloneNode(true);
-      closeBtn?.parentNode?.replaceChild(newCloseBtn, closeBtn);
-      backdrop?.parentNode?.replaceChild(newBackdrop, backdrop);
-
-      // Agregar nuevos listeners
-      newCloseBtn?.addEventListener('click', closeModal);
-      newBackdrop?.addEventListener('click', closeModal);
-      
-      modal.addEventListener('modal:open', createIframe);
-      modal.addEventListener('modal:close', removeIframe);
+      // Solo agrega listeners una vez
+      if (!this.listenersAdded) {
+        closeBtn?.addEventListener('click', closeModal);
+        backdrop?.addEventListener('click', closeModal);
+        modal.addEventListener('modal:open', createIframe);
+        modal.addEventListener('modal:close', removeIframe);
+        this.listenersAdded = true;
+      }
     }
   }
 

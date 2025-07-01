@@ -808,6 +808,21 @@ const productId = product.data.id;
     }
   }
 
+  // Elimina modales duplicados antes de inicializar
+  // const modals = document.querySelectorAll("#preview-modal");
+  // if (modals.length > 1) {
+  //   modals.forEach((modal, idx) => {
+  //     if (idx > 0) modal.remove();
+  //   });
+  // }
+
+  // const previewBtns = document.querySelectorAll("#preview-btn");
+  // if (previewBtns.length > 1) {
+  //   previewBtns.forEach((btn, idx) => {
+  //     if (idx > 0) btn.remove();
+  //   });
+  // }
+
   // Inicializar la página
   new ProductPage();
 </script>
