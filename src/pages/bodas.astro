@@ -92,8 +92,9 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
       invitados.
     </p>
   </section> -->
-
-  <MostrarNvitaciones dondeEstoy="bodas" />
+  <div id="nvitaciones">  
+    <MostrarNvitaciones dondeEstoy="bodas" />
+  </div>
 
   <CaracteristicasGrid
     matriz={[
@@ -127,7 +128,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     ]}
   />
 
-  <section class="grid contenido" id="colores">
+  <!-- <section class="grid contenido" id="colores">
     <h2>Tu <b>invitación</b>, justo como la quieres</h2>
     <p>
       <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b
@@ -172,7 +173,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         />
       </div> -->
     </div>
-  </section>
+  </section> -->
 
   <div class="grid contenido">
     <BannerGeneral
@@ -355,7 +356,6 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     <SaveTheDate
     h2="Save the date <span>Gratis</span>"
     p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Designer) o <b>contactanos y por $90 MXN lo editamos por ti. </b></i></small>"
-    fondo="/fondo-reserva-la-fecha.webp"
     imagenes={[
       {
         imagen: "/reserva-la-fecha-1.webp",

@@ -14,7 +14,9 @@ import Ofertashome from "../components/Ofertashome.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 ---
 
-<Layout title="Invitaciones Digitales para XV Años Modernas y Originales - Nvitaciones">
+<Layout
+  title="Invitaciones Digitales para XV Años Modernas y Originales - Nvitaciones"
+>
   <div class="grid contenido">
     <Nav />
   </div>
@@ -32,52 +34,47 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 
   <div class="grid contenido">
     <div id="choro">
-      
-          <h2>¡Tu fiesta de 15 años no debe ser estresante!</h2>
-       
-          <p>
-            Con nuestras <b>invitaciones digitales para XV años</b>, todo es más fácil: recibe confirmaciones en tiempo real y envía los detalles facilmente.
-          </p>
-    
-    
+      <h2>¡Tu fiesta de 15 años no debe ser estresante!</h2>
+
+      <p>
+        Con nuestras <b>invitaciones digitales para XV años</b>, todo es más
+        fácil: recibe confirmaciones en tiempo real y envía los detalles
+        facilmente.
+      </p>
     </div>
-
-
   </div>
 
   <div class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-      encabezado="Administra"
-      texto="Agrega, borra y edita tus invitados."
-      icono="mdi:gear"
-      fondo="/fondo-nvite-caracteristicas-3.png"
-      colorBg="#fff"
-    />
+        encabezado="Administra"
+        texto="Agrega, borra y edita tus invitados."
+        icono="mdi:gear"
+        fondo="/fondo-nvite-caracteristicas-3.png"
+        colorBg="#fff"
+      />
 
-    <Caracteristicas
-      encabezado="Envia"
-      texto="Por whatsapp, correo o redes sociales."
-      icono="mdi:send-check"
-      fondo="/fondo-nvite-caracteristicas-3.png"
-      
-    />
+      <Caracteristicas
+        encabezado="Envia"
+        texto="Por whatsapp, correo o redes sociales."
+        icono="mdi:send-check"
+        fondo="/fondo-nvite-caracteristicas-3.png"
+      />
 
-    <Caracteristicas
-      encabezado="Recibe"
-      texto="Confirmaciones y mensajes de tus invitados."
-      icono="mdi:human-hello-variant"
-      fondo="/fondo-nvite-caracteristicas-4.png"
-      colorBg="#fff"
-    />
+      <Caracteristicas
+        encabezado="Recibe"
+        texto="Confirmaciones y mensajes de tus invitados."
+        icono="mdi:human-hello-variant"
+        fondo="/fondo-nvite-caracteristicas-4.png"
+        colorBg="#fff"
+      />
 
-    <Caracteristicas
-      encabezado="Ilimitado"
-      texto="Envia a todos tus invitados sin límite."
-      icono="mdi:infinity"
-      fondo="/fondo-nvite-caracteristicas-2.png"
- 
-    />
+      <Caracteristicas
+        encabezado="Ilimitado"
+        texto="Envia a todos tus invitados sin límite."
+        icono="mdi:infinity"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+      />
     </div>
   </div>
 
@@ -90,8 +87,9 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
       invitados.
     </p>
   </section> -->
-
+  <div id="nvitaciones">
     <MostrarNvitaciones dondeEstoy="quince" />
+  </div>
   <CaracteristicasGrid
     matriz={[
       {
@@ -124,10 +122,12 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     ]}
   />
 
-  <section class="grid contenido" id="colores">
+  <!-- <section class="grid contenido" id="colores">
     <h2>Tu <b>invitación</b>, justo como la quieres</h2>
     <p>
-      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b>colores</b> o envíanos los tonos de tu evento para que combinen a la perfección.
+      <b>Personaliza</b> tu invitación eligiendo entre tres opciones de <b
+        >colores</b
+      > o envíanos los tonos de tu evento para que combinen a la perfección.
     </p>
     <div id="bandejacolor">
       <div class="item">
@@ -167,7 +167,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         />
       </div> -->
     </div>
-  </section>
+  </section> -->
 
   <div class="grid contenido">
     <BannerGeneral
@@ -212,7 +212,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
   <div id="precios" class="grid contenido">
     <Banner dondeEstoy="quince" />
   </div>
-  
+
   <section class="grid contenido">
     <BannerGeneral
       encabezado="Confirmación de asistencia"
@@ -335,7 +335,6 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         fondo="fondo-nvite-caracteristicas-4.png"
       /> -->
     </div>
-
   </section>
 
   <section class="grid contenido">
@@ -407,9 +406,9 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     padding-top: $margen;
     text-align: center;
     padding-bottom: $margen;
-    h2{
+    h2 {
       color: $primario;
-      b{
+      b {
         color: $acento;
       }
     }
@@ -425,7 +424,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     h3 {
       color: $acento;
       padding: 0 0 $margen-min 0;
-      border-bottom: dashed .1rem $terciario;
+      border-bottom: dashed 0.1rem $terciario;
     }
     .item {
       padding: $margen;
