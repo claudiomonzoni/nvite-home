@@ -36,22 +36,22 @@
       height: 100vh;
       overflow: hidden;
       position: absolute;
-      top: 40%;
+      top: 28%;
       left: 50%;
       transform: translateX(-50.6%);
-      background: url("../../assets/bodas/imas/corona-flores-negro.png")
-        no-repeat;
+      background: url("/bodas/floral-decor-eleggante-1.svg") no-repeat;
       background-size: contain;
       background-position: center;
       background-blend-mode: overlay;
       z-index: -1;
       opacity: 0.1;
-
+      
       @include cel {
         left: 0;
+        top: 40%;
         transform: translateX(0%);
         background-position: 15% center;
-        background-size: cover;
+        background-size: 240%;
       }
     }
   }
@@ -370,7 +370,7 @@
       img {
         max-width: 20%;
         height: auto;
-        border: solid 1.2rem var(--fondo);
+        border: solid .5rem var(--fondo);
         
         @extend .sombra;
         margin-bottom: $margen-cel;
@@ -472,6 +472,7 @@
       background-position: center;
       @include cel {
         padding: $margen-cel;
+        margin: $margen-cel 0;
       }
     }
     #bande {
@@ -757,7 +758,7 @@
   //bandeja mapas
 
   .bandejaLugares {
-    margin-top: $margen;
+    // margin-top: $margen;
     display: flex;
     flex-wrap: wrap;
     background: rgb(255, 255, 255, 0.4);
@@ -998,7 +999,7 @@
       transform: translate(-50%, -50%);
       color: var(--acento);
       border: solid 0.5px var(--secundario);
-      background: var(--fondo);
+      background: white;
       padding: .7rem $margen-min;
       text-align: center;
     }
