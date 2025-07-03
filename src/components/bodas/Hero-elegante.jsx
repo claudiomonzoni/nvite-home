@@ -5,6 +5,8 @@ import Style from "../../estilos/temas/elegante/bodas/hero.module.scss";
 // imagenes
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 
+
+
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,
@@ -44,6 +46,7 @@ export default function Hero({
   useEffect(() => {
     if (!isLoading) {
       // Configuración de matchMedia para animaciones responsivas
+
       let mm = gsap.matchMedia();
 
       // Animaciones para Desktop (800px y más)
@@ -112,34 +115,43 @@ export default function Hero({
 
         // Animación del avatar con ScrollTrigger
         gsap.from(".avatarConte", {
-          scrollTrigger: {
-            trigger: ".avatarConte",
-            start: "top 80%", // Esto hará que la animación comience cuando el elemento esté al 80% de la altura de la ventana
-            // toggleActions: "play none none reverse",
-          },
-          opacity: 0,
-          y: 30,
-          scale: 0.5,
-          duration: 1.5,
-          ease: "power4.out",
-          onComplete: () => {
-            gsap.to(".avatarConte", {
-              duration: 2,
-              ease: "power4.out",
-              transformOrigin: "center",
-              width: "100%",
-              height: "100%",
-              scale: 1,
-            });
-            gsap.to(".avatarConte img", {
-              scale: 1.2,
-              duration: 2.2,
-              ease: "power4.out",
-            });
-          },
-        });
+  scrollTrigger: {
+    trigger: ".avatarConte",
+    start: "top 80%",
+    // toggleActions: "play none none reverse",
+  },
+  opacity: 0,
+  y: 30,
+  scale: 0.5,
+  duration: 1.5,
+  ease: "power4.out",
+  onComplete: () => {
+    gsap.to(".avatarConte", {
+      duration: 2,
+      ease: "power4.out",
+      transformOrigin: "center",
+      width: "100%",
+      height: "100%",
+      scale: 1,
+    });
+    gsap.to(".avatarConte img", {
+      scale: 1.2,
+      duration: 2.2,
+      ease: "power4.out",
+      onComplete: () => {
+        // Refresca todos los triggers de la página
+        if (gsap && gsap.ScrollTrigger) {
+          gsap.ScrollTrigger.refresh();
+          alert("¡Animación completada!");
+        }
+    
+      }
+    });
+  },
+});
       });
     }
+  
   }, [isLoading]);
 
   if (isLoading) {
@@ -152,47 +164,48 @@ export default function Hero({
   }
 
   return (
-    <section className="grid pantalla">
-      <div id={Style["hero"]}>
-        <div className={Style["izq"]} id="izq">
-          <div id={Style["avatar"]} className="avatarConte">
-            <img src={cover} alt="Invitaciones de bodas cover" />
-          </div>
+    <div id={Style["hero"]}>
+      <div className={Style["izq"]} id="izq">
+        <div id={Style["avatar"]} className="avatarConte">
+          <img src={cover} alt="Invitaciones de bodas cover" />
         </div>
+      </div>
 
-        <div className={Style["der"]}>
-          <div className={Style.bandeja} id="bande">
-            <div id={Style["iniciales"]}>
-              <div className={Style.amp}>
-                <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
-              </div>
+      <div className={Style["der"]}>
+        <div className={Style.bandeja} id="bande">
+          <div id={Style["iniciales"]}>
+            <div className={Style.amp}>
+              <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
             </div>
-            <p>NOS COMPLACE INVITARTE</p>
-            {/* <span className={Style.familia} id="invitado">
+          </div>
+          <p>NOS COMPLACE INVITARTE</p>
+          {/* <span className={Style.familia} id="invitado">
               {invitado}
             </span> */}
-            <img src={divisor.src} alt="divisor bodas nvita" />
-            <p className={Style["casamos"]}>
-              {" "}
-              A la celebración de nuestra unión{" "}
-            </p>
-            <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
-            <ul id={Style["fecha"]}>
-              <li className={Style.fechaAno}>{ano}</li>
-              <li id={Style["fechaConte"]}>
-                <li className={Style.fecha}>{`${diaSemana}`}</li>
+          <img src={divisor.src} alt="divisor bodas nvita" />
+          <p className={Style["casamos"]}>
+            {" "}
+            A la celebración de nuestra unión{" "}
+          </p>
+          <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
+          <ul id={Style["fecha"]}>
+            <li className={Style.fechaAno}>{ano}</li>
+            <li id={Style["fechaConte"]}>
+              <li className={Style.fecha}>{`${diaSemana}`}</li>
 
-                <li className={Style.fechaNum}>{adjustedDiaNum}</li>
+              <li className={Style.fechaNum}>{adjustedDiaNum}</li>
 
-                <li className={Style.fechaMes}>{mes}</li>
-              </li>
-            </ul>
-            <div className={Style.flecha}>
-              <img src="/bodas/elegante/abajo.svg" alt="flecha bodas nvitaciones" />
-            </div>
+              <li className={Style.fechaMes}>{mes}</li>
+            </li>
+          </ul>
+          <div className={Style.flecha}>
+            <img
+              src="/bodas/elegante/abajo.svg"
+              alt="flecha bodas nvitaciones"
+            />
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -118,6 +118,7 @@ import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import foto1 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-1.png';
 import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
  
+<section id="hero-hero">
  <Hero
     nombres={frontmatter.novios}
     fecha={frontmatter.fecha}
@@ -127,6 +128,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
     tema={frontmatter.theme}
     client:load
   /> 
+</section>
 
 <section class="grid contenido">
   <Audio src="/bodas/nvitaPlus/love-story" />
@@ -193,6 +195,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
   <Encabezados texto="Itinerario" />
   <Itinerario listado={frontmatter.iterario} />
 </section>
+
 
 <section class="grid pantalla flex margen-arriba-abajo">
   <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />

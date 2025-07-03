@@ -74,12 +74,12 @@ const { listado } = Astro.props;
   });
 
   // Forzar recalculo de ScrollTrigger después de un pequeño delay
-  setTimeout(() => {
-    ScrollTrigger.refresh();
-  }, 500);
+  // setTimeout(() => {
+  //   ScrollTrigger.refresh();
+  // }, 500);
 
-  // También refrescar en resize
-  window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
-  });
+  // // También refrescar en resize
+  // window.addEventListener('resize', () => {
+  //   ScrollTrigger.refresh();
+  // });
 </script>
