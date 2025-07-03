@@ -254,7 +254,7 @@ const productId = product.data.id;
           <div class="BannerGeneralProducto">
             <BannerGeneral
               encabezado="Confirmación de asistencia"
-              texto="Enterate en tiempo real de las confirmaciones de tus invitados y lleva control de quien asiste y cuatos <b>pases usarán</b>"
+              texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
               tema="secundario azul"
               icono="mdi:archive-clock-outline"
               urlImagen="../assets/home/gale/confirmacion.webp"
@@ -264,23 +264,23 @@ const productId = product.data.id;
 
                 <div id="conteCaracteristicas">
       <Caracteristicas
-        encabezado="Mapa y GPS"
+        encabezado="Invitación con mapas"
         texto="Tus invitados sabrán exactamente como llegar."
         icono="mdi:map-check"
         fondo="/fondo-nvite-caracteristicas.png"
       />
 
       <Caracteristicas
-        encabezado="Regalos, Lluvia de sobres o transferencias"
+        encabezado="Invitación con mesa de regalos"
         texto="Sugiere que te gustaría de regalo."
-        icono="mdi:gift-open-outline"
+        icono="mdi:gift-open"
         fondo="/fondo-nvite-caracteristicas-2.png"
       />
 
       <Caracteristicas
-        encabezado="Mensaje a invitados VIP"
-        texto="Dedicale un mensaje especial a cada unos de tus invitados más cercanos."
-        icono="mdi:love-letter-open"
+        encabezado="Invitación con itinerario"
+        texto="Lista cada momento importante de tu evento"
+        icono="mdi:gift-open"
         fondo="fondo-nvite-caracteristicas-3.png"
       />
 
@@ -312,7 +312,7 @@ const productId = product.data.id;
 </Layout>
 
 <style lang="scss">
-  @use "../../estilos/_variables.scss" as *;
+  @use "../../estilos/variables" as *;
 
   // Layout & Container styles
   .breadcrumb-container {
@@ -772,19 +772,16 @@ const productId = product.data.id;
 
     // Manejo del modal de previsualización
     initializePreviewModal() {
-      let previewBtn = document.getElementById("preview-btn");
+      const previewBtn = document.getElementById("preview-btn");
       const modal = document.getElementById("preview-modal");
       const closeBtn = modal?.querySelector(".close-btn");
       const backdrop = modal?.querySelector(".modal-backdrop");
 
-      // Reemplaza el botón por un clon para limpiar todos los listeners previos
-      if (previewBtn) {
-        const newBtn = previewBtn.cloneNode(true) as HTMLElement;
-        previewBtn.parentNode.replaceChild(newBtn, previewBtn);
-        previewBtn = newBtn;
-      }
-
-      previewBtn?.addEventListener("click", openModalHandler);
+      const openModal = () => {
+        modal?.classList.add("active");
+        document.body.style.overflow = "hidden";
+        modal?.dispatchEvent(new CustomEvent("modal:open"));
+      };
 
       const closeModal = () => {
         modal?.classList.remove("active");
@@ -792,36 +789,15 @@ const productId = product.data.id;
         modal?.dispatchEvent(new CustomEvent("modal:close"));
       };
 
+      previewBtn?.addEventListener("click", (e) => {
+        e.preventDefault();
+        openModal();
+      });
+
       closeBtn?.addEventListener("click", closeModal);
       backdrop?.addEventListener("click", closeModal);
     }
   }
-
-  // Fuera de la clase, define la función UNA SOLA VEZ
-  function openModalHandler(e) {
-    e.preventDefault();
-    const modal = document.getElementById("preview-modal");
-    if (!modal.classList.contains("active")) {
-      modal.classList.add("active");
-      document.body.style.overflow = "hidden";
-      modal.dispatchEvent(new CustomEvent("modal:open"));
-    }
-  }
-
-  // Elimina modales duplicados antes de inicializar
-  // const modals = document.querySelectorAll("#preview-modal");
-  // if (modals.length > 1) {
-  //   modals.forEach((modal, idx) => {
-  //     if (idx > 0) modal.remove();
-  //   });
-  // }
-
-  // const previewBtns = document.querySelectorAll("#preview-btn");
-  // if (previewBtns.length > 1) {
-  //   previewBtns.forEach((btn, idx) => {
-  //     if (idx > 0) btn.remove();
-  //   });
-  // }
 
   // Inicializar la página
   new ProductPage();

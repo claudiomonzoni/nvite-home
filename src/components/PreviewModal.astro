@@ -165,4 +165,7 @@ class PreviewModal {
   }
 
   new PreviewModal();
+  document.addEventListener('astro:after-swap', () => {
+  new PreviewModal();
+  });
 </script>
