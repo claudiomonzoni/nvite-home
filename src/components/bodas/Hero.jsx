@@ -100,6 +100,7 @@ export default function Hero({
         }, "-=2");
       });
     }
+    
   }, [isLoading]);
 
   if (isLoading) {

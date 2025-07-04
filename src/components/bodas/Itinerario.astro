@@ -30,56 +30,52 @@ const { listado } = Astro.props;
   let eventoItinerario = gsap.utils.toArray("ol li");
   gsap.registerPlugin(ScrollTrigger);
 
-  eventoItinerario.map((evento: HTMLElement) => {
-    let mm = gsap.matchMedia();
+  // Inicializar animaciones con un delay simple
+  setTimeout(() => {
+    eventoItinerario.map((evento: HTMLElement) => {
+      let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 800px)", () => {
-      // desktop setup code here...
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: evento as HTMLElement,
-          start: "top 100%",
-          end: "bottom 70%",
-          scrub: true,
-         // markers: true,
-        },
+      mm.add("(min-width: 800px)", () => {
+        // desktop setup code here...
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: evento as HTMLElement,
+            start: "top 100%",
+            end: "bottom 70%",
+            scrub: true,
+           // markers: true,
+          },
+        });
+        tl.from(evento.children, {
+          ease: "power2.out",
+          y: 160,
+          opacity: 0,
+          filter: "blur(20px)",
+          stagger: 0.1,
+        });
       });
-      tl.from(evento.children, {
-        ease: "power2.out",
-        y: 160,
-        opacity: 0,
-        filter: "blur(20px)",
-        stagger: 0.1,
+
+      mm.add("(max-width: 799px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: evento as HTMLElement,
+            start: "top 100%",
+            end: "bottom 50%",
+            scrub: true,
+            //markers: true,
+          },
+        });
+        tl.from(evento.children, {
+          ease: "power2.out",
+          y: 100,
+          opacity: 0,
+          filter: "blur(10px)",
+          stagger: 0.1,
+        });
       });
     });
 
-    mm.add("(max-width: 799px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: evento as HTMLElement,
-          start: "top 100%",
-          end: "bottom 50%",
-          scrub: true,
-          //markers: true,
-        },
-      });
-      tl.from(evento.children, {
-        ease: "power2.out",
-        y: 100,
-        opacity: 0,
-        filter: "blur(10px)",
-        stagger: 0.1,
-      });
-    });
-  });
-
-  // Forzar recalculo de ScrollTrigger después de un pequeño delay
-  // setTimeout(() => {
-  //   ScrollTrigger.refresh();
-  // }, 500);
-
-  // // También refrescar en resize
-  // window.addEventListener('resize', () => {
-  //   ScrollTrigger.refresh();
-  // });
+    // Refrescar ScrollTrigger
+    ScrollTrigger.refresh();
+  }, 1000);
 </script>

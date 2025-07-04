@@ -13,46 +13,48 @@ const { frase } = Astro.props;
   import SplitType from "split-type";
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
   // split text
   const frase = document.querySelector(".frase") as HTMLElement;
   const texto = new SplitType(frase, {
     types: "words",
   });
-  // animacion al scroll
 
-  let mm = gsap.matchMedia();
-  mm.add("(min-width: 800px)", () => {
-    // desktop setup code here...
-    gsap.from(texto.words, {
-      scrollTrigger: {
-        trigger: frase,
-        start: "top 90%",
-        end: "top 40%",
-        scrub: true,
-      },
-      // scaleY: .5,
-      ease: "power2.out",
-      y: -30,
-      opacity: 0,
-      filter: "blur(20px)",
-      stagger: 0.1,
+  // Inicializar animaciones con un delay simple
+  setTimeout(() => {
+    let mm = gsap.matchMedia();
+    mm.add("(min-width: 800px)", () => {
+      gsap.from(texto.words, {
+        scrollTrigger: {
+          trigger: frase,
+          start: "top 90%",
+          end: "top 40%",
+          scrub: true,
+        },
+        y: -30,
+        opacity: 0,
+        filter: "blur(20px)",
+        stagger: 0.1,
+      });
     });
-  });
-  mm.add("(max-width: 799px)", () => {
-    // mobile setup code here...
-    gsap.from(texto.words, {
-      scrollTrigger: {
-        trigger: frase,
-        start: "top 90%",
-        end: "top 40%",
-        scrub: true,
-      },
-      // scaleY: .5,
-      ease: "power2.out",
-      y: -30,
-      opacity: 0,
-      filter: "blur(20px)",
-      stagger: 0.1,
+    mm.add("(max-width: 799px)", () => {
+      gsap.from(texto.words, {
+        scrollTrigger: {
+          trigger: frase,
+          start: "top 90%",
+          end: "top 40%",
+          scrub: true,
+        },
+        y: -30,
+        opacity: 0,
+        filter: "blur(20px)",
+        stagger: 0.1,
+      });
     });
-  });
+    
+    // Refrescar ScrollTrigger
+    ScrollTrigger.refresh();
+  }, 1000);
 </script>

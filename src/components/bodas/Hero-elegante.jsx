@@ -5,8 +5,6 @@ import Style from "../../estilos/temas/elegante/bodas/hero.module.scss";
 // imagenes
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 
-
-
 //---------------------------------------------------------------------------------------------
 export default function Hero({
   nombres,
@@ -115,43 +113,34 @@ export default function Hero({
 
         // Animación del avatar con ScrollTrigger
         gsap.from(".avatarConte", {
-  scrollTrigger: {
-    trigger: ".avatarConte",
-    start: "top 80%",
-    // toggleActions: "play none none reverse",
-  },
-  opacity: 0,
-  y: 30,
-  scale: 0.5,
-  duration: 1.5,
-  ease: "power4.out",
-  onComplete: () => {
-    gsap.to(".avatarConte", {
-      duration: 2,
-      ease: "power4.out",
-      transformOrigin: "center",
-      width: "100%",
-      height: "100%",
-      scale: 1,
-    });
-    gsap.to(".avatarConte img", {
-      scale: 1.2,
-      duration: 2.2,
-      ease: "power4.out",
-      onComplete: () => {
-        // Refresca todos los triggers de la página
-        if (gsap && gsap.ScrollTrigger) {
-          gsap.ScrollTrigger.refresh();
-          alert("¡Animación completada!");
-        }
-    
-      }
-    });
-  },
-});
+          scrollTrigger: {
+            trigger: ".avatarConte",
+            start: "top 80%",
+            // toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 30,
+          scale: 0.5,
+          duration: 1.5,
+          ease: "power4.out",
+          onComplete: () => {
+            gsap.to(".avatarConte", {
+              duration: 2,
+              ease: "power4.out",
+              transformOrigin: "center",
+              width: "100%",
+              height: "100%",
+              scale: 1,
+            });
+            gsap.to(".avatarConte img", {
+              scale: 1.2,
+              duration: 2.2,
+              ease: "power4.out",
+            });
+          },
+        });
       });
     }
-  
   }, [isLoading]);
 
   if (isLoading) {
