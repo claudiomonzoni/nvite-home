@@ -13,24 +13,24 @@ const { frase } = Astro.props;
   import SplitType from "split-type";
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
+ 
+    console.log("hero:ready frase");
+    gsap.registerPlugin(ScrollTrigger);
 
-  gsap.registerPlugin(ScrollTrigger);
 
-  // split text
-  const frase = document.querySelector(".frase") as HTMLElement;
-  const texto = new SplitType(frase, {
-    types: "words",
-  });
+    // split text
+    const frase = document.querySelector(".frase") as HTMLElement;
+    const texto = new SplitType(frase, {
+      types: "words",
+    });
 
-  // Inicializar animaciones con un delay simple
-  setTimeout(() => {
     let mm = gsap.matchMedia();
     mm.add("(min-width: 800px)", () => {
       gsap.from(texto.words, {
         scrollTrigger: {
           trigger: frase,
-          start: "top 90%",
-          end: "top 40%",
+          start: "top 80%",
+          end: "top 30%",
           scrub: true,
         },
         y: -30,
@@ -43,9 +43,10 @@ const { frase } = Astro.props;
       gsap.from(texto.words, {
         scrollTrigger: {
           trigger: frase,
-          start: "top 90%",
-          end: "top 40%",
+          start: "top 80%",
+          end: "top 30%",
           scrub: true,
+          
         },
         y: -30,
         opacity: 0,
@@ -53,8 +54,5 @@ const { frase } = Astro.props;
         stagger: 0.1,
       });
     });
-    
-    // Refrescar ScrollTrigger
-    ScrollTrigger.refresh();
-  }, 1000);
+
 </script>

@@ -140,7 +140,7 @@ import foto2 from "../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png";
   elIniciales={frontmatter.elIniciales}
   cover={frontmatter.cover}
   tema={frontmatter.theme}
-  client:only="react"
+  client:load
 />
 </section>
 
@@ -200,12 +200,12 @@ import foto2 from "../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png";
 <section class="grid contenido">
   <Frase frase={frontmatter.frase_amor} />
 </section>
-<FotoSolitaria arriba={true} gradientePorciento={30} src={foto2} />
 
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
   <Itinerario listado={frontmatter.iterario} />
 </section>
+<FotoSolitaria arriba={false} gradientePorciento={40} src={foto2} />
 
 <section class="grid pantalla flex margen-arriba-abajo">
   <Detalles lista={frontmatter.consideraciones} encabezado="Consideraciones" />

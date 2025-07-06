@@ -21,7 +21,7 @@ padres:
     "fotopapasNovio": "/bodas/nvitaReg/papasnovio.png",
   }
 fecha: 2025-12-07
-frase_amor: Solo hay una felicidad en la vida, amar y ser amado.
+frase_amor: Celebremos juntos el amor que nos une y el comienzo de nuestra nueva vida
 frase_regalos: <b>Lo más importante será tu presencia.</b></br> Te agradecemos si aparte nos deseas hacer un regalo en este día tan especial.
 beneficiario: Elena Ramirez
 banco: Banco Santander
@@ -126,7 +126,7 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
     elIniciales={frontmatter.elIniciales}
     cover={frontmatter.cover}
     tema={frontmatter.theme}
-    client:only="react"
+    client:load
   /> 
 </section>
 
@@ -171,9 +171,10 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
   </div>
 </section>
 
-<FotoSolitaria arriba={false}gradientePorciento={30} src={foto1} />
-
-
+<section class="grid contenido">
+  <Frase frase={frontmatter.frase_amor} />
+</section>
+<FotoSolitaria arriba={false} gradientePorciento={30} src={foto1} />
 
 <section class="grid contenido">
 
@@ -186,15 +187,12 @@ import foto2 from '../../assets/bodas/nvitaPlus/gale/fotosolitaria-2.png';
   mostrarSiempre={true}
 />
 
-<section class="grid contenido">
-  <Frase frase={frontmatter.frase_amor} />
-</section>
-<FotoSolitaria arriba={true}gradientePorciento={30} src={foto2} />
-
 <section class="grid pantalla" id="BaseItinerario">
   <Encabezados texto="Itinerario" />
   <Itinerario listado={frontmatter.iterario} />
 </section>
+<FotoSolitaria arriba={false}gradientePorciento={40} src={foto2} />
+
 
 
 <section class="grid pantalla flex margen-arriba-abajo">

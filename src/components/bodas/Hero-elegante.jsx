@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Style from "../../estilos/temas/elegante/bodas/hero.module.scss";
 
 // imagenes
@@ -82,6 +83,12 @@ export default function Hero({
             width: "100%",
             height: "100%",
             scale: 1,
+            onComplete: () => {
+               
+              window.dispatchEvent(new Event("hero:ready"));
+                ScrollTrigger.refresh();
+              
+            }
           })
           .to(
             ".avatarConte img",
@@ -92,6 +99,8 @@ export default function Hero({
             },
             "-=2"
           );
+
+       
       });
 
       // Animaciones para Móvil (menos de 800px)
@@ -129,8 +138,14 @@ export default function Hero({
               ease: "power4.out",
               transformOrigin: "center",
               width: "100%",
-              height: "100%",
+              height: "700px",
               scale: 1,
+              onComplete: () => {
+               
+                window.dispatchEvent(new Event("hero:ready"));
+                  ScrollTrigger.refresh();
+                
+              }
             });
             gsap.to(".avatarConte img", {
               scale: 1.2,
@@ -139,6 +154,8 @@ export default function Hero({
             });
           },
         });
+
+       
       });
     }
   }, [isLoading]);

@@ -135,11 +135,11 @@
     position: relative;
     z-index: 1;
   }
-  --tamano: 40%;
-  // @include cel {
-  //   width: var(--tamano);
-  //   clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
-  // }
+  @include cel {
+    width: 100%;
+    height: 700px;
+    //clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
+  }
 }
 #fecha {
   position: relative;

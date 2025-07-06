@@ -5,7 +5,7 @@ interface Props {
 const { listado } = Astro.props;
 ---
 
-<section class="grid contenido"  >
+<section class="grid contenido">
   <ol>
     {
       listado.map((item, index) => (
@@ -19,19 +19,17 @@ const { listado } = Astro.props;
   </ol>
 </section>
 
-
-
 <script>
   // aqui el modal del mapa
 
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
-  let eventoItinerario = gsap.utils.toArray("ol li");
-  gsap.registerPlugin(ScrollTrigger);
+  window.addEventListener("hero:ready", () => {
+    console.log("hero:ready itinerario");
+    let eventoItinerario = gsap.utils.toArray("ol li");
+    gsap.registerPlugin(ScrollTrigger);
 
-  // Inicializar animaciones con un delay simple
-  setTimeout(() => {
     eventoItinerario.map((evento: HTMLElement) => {
       let mm = gsap.matchMedia();
 
@@ -43,7 +41,7 @@ const { listado } = Astro.props;
             start: "top 100%",
             end: "bottom 70%",
             scrub: true,
-           // markers: true,
+            // markers: true,
           },
         });
         tl.from(evento.children, {
@@ -59,10 +57,9 @@ const { listado } = Astro.props;
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: evento as HTMLElement,
-            start: "top 100%",
-            end: "bottom 50%",
+            start: "top 80%",
+            end: "top 50%",
             scrub: true,
-            //markers: true,
           },
         });
         tl.from(evento.children, {
@@ -74,8 +71,5 @@ const { listado } = Astro.props;
         });
       });
     });
-
-    // Refrescar ScrollTrigger
-    ScrollTrigger.refresh();
-  }, 1000);
+  });
 </script>
