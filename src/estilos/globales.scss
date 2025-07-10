@@ -1,5 +1,5 @@
 @use "_variables" as *;
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 html {
   box-sizing: border-box;
@@ -105,10 +105,10 @@ a {
 }
 p {
   margin-bottom: 0.6rem;
+  color: $primario;
   @include cel {
     line-height: 1.4;
   }
-  color: $primario;
 }
 p:last-child {
   margin-bottom: 0rem;
@@ -212,7 +212,7 @@ mark {
   svg {
     width: 100%;
     height: auto;
-    fill: currentColor!important;
+    fill: currentColor !important;
   }
   &:hover {
     border-radius: $margen-cel;
@@ -335,7 +335,7 @@ mark {
       max-width: 60vw;
     }
   }
-  h2{
+  h2 {
     color: $gris;
   }
   h2,
@@ -451,13 +451,13 @@ mark {
     linear-gradient(43deg, #fff6f0 30%, $terciario 100%) no-repeat;
   background-position: center right, top left;
   background-size: 50%, 100%;
+  margin-bottom: $margen-min;
   @include cel {
     background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
       linear-gradient(43deg, $secundario 0%, rgb(255, 255, 255) 100%) no-repeat;
     background-position: center bottom;
     background-size: 120%;
   }
-  margin-bottom: $margen-min;
 }
 .texto-izq {
   text-align: left;
@@ -468,7 +468,7 @@ mark {
   color: $primario;
 }
 
-#formu{
+#formu {
   width: 70%;
   display: flex;
   transform: translateY(2pc);
@@ -510,7 +510,7 @@ mark {
     flex: 1 0 100%;
     font-size: clamp(0.9rem, 0.8vw, 1rem);
     color: $primario;
-    padding-top: $margen-min!important;
+    padding-top: $margen-min !important;
   }
   input {
     flex: 1 0 100%;
@@ -541,7 +541,7 @@ label {
   flex: 1 0 100%;
   font-size: clamp(0.9rem, 0.8vw, 1rem);
   color: $primario;
-  padding-top: $margen-min!important;
+  padding-top: $margen-min !important;
 }
 input {
   flex: 1 0 100%;
@@ -554,7 +554,7 @@ input {
 
 button[type="submit"],
 #empezar {
-  margin-top: $margen-min!important;
+  margin-top: $margen-min !important;
   border-radius: 10px;
   padding: 0.3rem $margen-cel;
   color: white;
@@ -575,7 +575,7 @@ input::placeholder {
 }
 
 .fondo-formu {
-  h2{
+  h2 {
     color: $acento;
   }
   background: url("/fondo-formu.webp"),
@@ -651,18 +651,15 @@ input::placeholder {
 }
 
 #choro {
-
   position: relative;
   padding: $margen;
   text-align: center;
-  h2{
+  h2 {
     color: $primario;
   }
   @include cel {
     padding: $margen $margen-cel;
   }
-
- 
 }
 
 #video {

@@ -13,23 +13,33 @@ interface Props {
   valorBoton?: string;
 }
 
-const { encabezado, texto, tema, icono, izquierda, urlImagen, margenAbajo, valorBoton, ...rest } =
-  Astro.props;
+const {
+  encabezado,
+  texto,
+  tema,
+  icono,
+  izquierda,
+  urlImagen,
+  margenAbajo,
+  valorBoton,
+  ...rest
+} = Astro.props;
 const imagen = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"
 );
 if (!imagen[urlImagen])
-  throw new Error(
-    `"${urlImagen}" no existe wey, checale bien"`
-  );
-
+  throw new Error(`"${urlImagen}" no existe wey, checale bien"`);
 ---
 
-<div id="banner" class:list={["flex", tema, { margenAbajo: margenAbajo }]} {...rest}>
+<div
+  id="banner"
+  class:list={["flex", tema, { margenAbajo: margenAbajo }]}
+  {...rest}
+>
   <div class="contenido flex">
     <div class="bande">
       <Icon name={icono} size={40} />
-      <h2 set:html={encabezado}></h2>
+      <h2 set:html={encabezado} />
       <p set:html={texto} />
       <slot />
     </div>
@@ -53,7 +63,7 @@ if (!imagen[urlImagen])
   }
   h2 {
     font-size: clamp(2.2rem, 3.5vw, 3.5rem);
-    color: $gris!important;
+    color: $gris !important;
   }
   .izq {
     order: 1 !important;
@@ -92,12 +102,12 @@ if (!imagen[urlImagen])
   }
   .primario {
     background: linear-gradient(43deg, $secundario 10%, $primario 80%);
-     svg {
-    // color: $fondo!important;
-    fill:$fondo!important;
+    svg {
+      // color: $fondo!important;
+      fill: $fondo !important;
     }
     h2 {
-      color: $fondo!important;
+      color: $fondo !important;
     }
     p {
       color: white;
@@ -107,26 +117,26 @@ if (!imagen[urlImagen])
     }
   }
   .secundario {
-     svg {
-    fill:$acento!important;
+    svg {
+      fill: $acento !important;
     }
-  
+
     background: linear-gradient(43deg, $secundario 10%, rgb(255, 247, 233) 80%);
   }
   .terciario {
-      svg {
-    fill:$acento!important;
+    svg {
+      fill: $acento !important;
     }
-  
-    h2{
-      color: $secundario!important;
+
+    h2 {
+      color: $secundario !important;
     }
-  
+
     background: linear-gradient(83deg, #a2a4ba 10%, $primario 60%);
+    color: #fff;
     @include cel {
       background: linear-gradient(123deg, #a2a4ba 10%, $primario 60%);
     }
-    color: #fff;
   }
 
   // Cel

@@ -9,13 +9,28 @@ if (!sessionId) {
 }
 
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
-const session = await stripe.checkout.sessions.retrieve(sessionId);
+// const session = await stripe.checkout.sessions.retrieve(sessionId);
+const session = await stripe.checkout.sessions.retrieve(sessionId, {
+  expand: ["line_items.data.price.product"],
+});
 
 if (!session || !session.customer_details) {
   return Astro.redirect("/");
 }
 
 const { name, email } = session.customer_details;
+// Obtén todos los productos comprados
+const productos = session.line_items.data.map((item) => item.price.product);
+
+// Opcional: elimina duplicados si pueden repetirse productos
+const productosUnicos = Object.values(
+  Object.fromEntries(
+    productos.map((p) => {
+      const product = p as any;
+      return [product.id, product];
+    })
+  )
+);
 
 Astro.cookies.delete("cartItems");
 ---
@@ -26,8 +41,40 @@ Astro.cookies.delete("cartItems");
       <div class="success-icon">✓</div>
       <h1>¡Gracias por tu compra, {name}!</h1>
       <p>Hemos enviado el recibo a {email}</p>
-      <p class="cart-info">Por favor, guarda tu numero de compra para futuras consultas</p>
-      <p class="cart-info">Tu numero de compra es: {session.metadata.reservation_number}</p>
+      <p class="cart-info">
+        Por favor, guarda tu numero de compra para futuras consultas
+      </p>
+      <p class="cart-info">
+        Tu numero de compra es: {session.metadata.reservation_number}
+      </p>
+
+      <h3>Necesitamos los datos de tu evento</h3>
+      <p>
+        Por favor, completa el formulario de datos de tu evento para que podamos
+        personalizar tu Nvitación.
+      </p>
+      {
+        productosUnicos.map(
+          (producto) =>
+            typeof producto === "object" &&
+            producto !== null &&
+            "metadata" in producto && (
+              <>
+                {(
+                  producto.metadata as { Tipo: string }
+                )?.Tipo?.toLowerCase() === "web" && (
+                  <p>Nvitaciones Web: https://tally.so/r/nGBDOZ</p>
+                )}
+                {(producto.metadata as { Tipo: string })?.Tipo?.toLowerCase() === "pdf" && (
+                  <p>Nvitaciones PDF: https://tally.so/r/mK2OyA</p>
+                )}
+                {/* Más condiciones según tus tipos */}
+              </>
+            )
+        )
+      }
+
+      <br />
       <a href="/" class="success-btn">Volver al inicio</a>
     </div>
   </div>
@@ -54,7 +101,7 @@ Astro.cookies.delete("cartItems");
 
   .success-icon {
     font-size: 3rem;
-    color: #4CAF50;
+    color: #4caf50;
     margin-bottom: 1rem;
   }
 
@@ -65,7 +112,7 @@ Astro.cookies.delete("cartItems");
 
   .success-btn {
     display: inline-block;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
