@@ -5,7 +5,7 @@ interface Props {
 const { listado } = Astro.props;
 ---
 
-<section class="grid contenido"  >
+<section class="grid contenido">
   <ol>
     {
       listado.map((item, index) => (
@@ -19,67 +19,57 @@ const { listado } = Astro.props;
   </ol>
 </section>
 
-
-
 <script>
   // aqui el modal del mapa
 
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
-  let eventoItinerario = gsap.utils.toArray("ol li");
-  gsap.registerPlugin(ScrollTrigger);
+  window.addEventListener("hero:ready", () => {
+    console.log("hero:ready itinerario");
+    let eventoItinerario = gsap.utils.toArray("ol li");
+    gsap.registerPlugin(ScrollTrigger);
 
-  eventoItinerario.map((evento: HTMLElement) => {
-    let mm = gsap.matchMedia();
+    eventoItinerario.map((evento: HTMLElement) => {
+      let mm = gsap.matchMedia();
 
-    mm.add("(min-width: 800px)", () => {
-      // desktop setup code here...
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: evento as HTMLElement,
-          start: "top 100%",
-          end: "bottom 70%",
-          scrub: true,
-         // markers: true,
-        },
+      mm.add("(min-width: 800px)", () => {
+        // desktop setup code here...
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: evento as HTMLElement,
+            start: "top 100%",
+            end: "bottom 70%",
+            scrub: true,
+            // markers: true,
+          },
+        });
+        tl.from(evento.children, {
+          ease: "power2.out",
+          y: 160,
+          opacity: 0,
+          filter: "blur(20px)",
+          stagger: 0.1,
+        });
       });
-      tl.from(evento.children, {
-        ease: "power2.out",
-        y: 160,
-        opacity: 0,
-        filter: "blur(20px)",
-        stagger: 0.1,
-      });
-    });
 
-    mm.add("(max-width: 799px)", () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: evento as HTMLElement,
-          start: "top 100%",
-          end: "bottom 50%",
-          scrub: true,
-          //markers: true,
-        },
-      });
-      tl.from(evento.children, {
-        ease: "power2.out",
-        y: 100,
-        opacity: 0,
-        filter: "blur(10px)",
-        stagger: 0.1,
+      mm.add("(max-width: 799px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: evento as HTMLElement,
+            start: "top 80%",
+            end: "top 50%",
+            scrub: true,
+          },
+        });
+        tl.from(evento.children, {
+          ease: "power2.out",
+          y: 100,
+          opacity: 0,
+          filter: "blur(10px)",
+          stagger: 0.1,
+        });
       });
     });
   });
-
-  // Forzar recalculo de ScrollTrigger después de un pequeño delay
-  // setTimeout(() => {
-  //   ScrollTrigger.refresh();
-  // }, 500);
-
-  // // También refrescar en resize
-  // window.addEventListener('resize', () => {
-  //   ScrollTrigger.refresh();
-  // });
 </script>

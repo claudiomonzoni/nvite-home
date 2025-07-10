@@ -92,6 +92,12 @@ export default function Hero({
           width:'100%',
           height:'100%',
           scale: 1,
+          onComplete: () => {
+               
+            window.dispatchEvent(new Event("hero:ready"));
+              ScrollTrigger.refresh();
+            
+          }
         })
         .to(".avatarConte img", {
           scale: 1.2,
@@ -100,6 +106,7 @@ export default function Hero({
         }, "-=2");
       });
     }
+    
   }, [isLoading]);
 
   if (isLoading) {

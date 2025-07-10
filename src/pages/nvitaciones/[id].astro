@@ -190,13 +190,15 @@ const productId = product.data.id;
             {
               nvitacionInfo && nvitacionInfo.video && (
                 <div id="video-home">
-                  <div id="play">
+                  <!-- <div id="play">
                     <Icon name="mdi:play-circle" color="white" size={70} />
                   </div>
+                  --!>
                   <video
                     preload="auto"
                     poster={product.data.images[0]}
                     id="video-producto"
+                    controls="true"
                     playsinline
                   >
                     <source src={nvitacionInfo.video} type="video/mp4" />

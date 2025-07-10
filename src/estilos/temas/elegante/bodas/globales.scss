@@ -124,9 +124,7 @@
     font-size: clamp(1.3em, 1vw, 2vw);
     font-family: $encabezados, serif;
   }
-  #hero-hero{
-    height: 156vh;
-  }
+  
 
   #BaseItinerario {
     h2 {
@@ -657,7 +655,6 @@
     }
     dialog [open] {
       position: relative;
-
       z-index: 100;
       position: absolute;
       border-radius: calc(5px * var($radio));
@@ -665,11 +662,11 @@
       padding: 1.6rem;
       scale: 1;
       transition: scale 0.5s ease-in-out;
-      // transform: scale(1);
-      @starting-style {
-        border: none !important;
+      border: none;
+      
+      // Estado inicial para animación
+      &:not([open]) {
         scale: 0;
-        // transform: scale(0);
       }
     }
 
