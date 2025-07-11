@@ -4,6 +4,7 @@ import Stripe from "stripe";
 
 const sessionId = Astro.url.searchParams.get("session_id");
 
+
 if (!sessionId) {
   return Astro.redirect("/");
 }
@@ -36,21 +37,22 @@ Astro.cookies.delete("cartItems");
 ---
 
 <Layout title="¡Compra Exitosa! - Nvitaciones">
+
   <div class="success-container">
     <div class="success-card">
-      <div class="success-icon">✓</div>
-      <h1>¡Gracias por tu compra, {name}!</h1>
-      <p>Hemos enviado el recibo a {email}</p>
-      <p class="cart-info">
-        Por favor, guarda tu numero de compra para futuras consultas
-      </p>
-      <p class="cart-info">
+      <img src="/nvita-logo.svg" alt="gracias por tu compra" class="logo" />
+      <h2>¡Gracias por tu compra, {name}!</h2>
+      <p class="cart-info chirris">
         Tu numero de compra es: {session.metadata.reservation_number}
       </p>
+      <p class="cart-info chirris">
+        Por favor, guarda tu numero de compra para futuras consultas
+      </p>
+      <p>Hemos enviado el recibo a {email}</p>
 
-      <h3>Necesitamos los datos de tu evento</h3>
-      <p>
-        Por favor, completa el formulario de datos de tu evento para que podamos
+      <h3>Siguiente paso</h3>
+      <p class="cart-info">
+        <b>Completa el formulario</b> de datos de tu evento para que podamos
         personalizar tu Nvitación.
       </p>
       {
@@ -63,16 +65,26 @@ Astro.cookies.delete("cartItems");
                 {(
                   producto.metadata as { Tipo: string }
                 )?.Tipo?.toLowerCase() === "web" && (
-                  <p>Nvitaciones Web: https://tally.so/r/nGBDOZ</p>
+                  <p><b>Formulario Nvitaciones Web:</b> https://tally.so/r/nGBDOZ</p>
                 )}
                 {(producto.metadata as { Tipo: string })?.Tipo?.toLowerCase() === "pdf" && (
-                  <p>Nvitaciones PDF: https://tally.so/r/mK2OyA</p>
+                  <p><b>Formulario Nvitaciones PDF:</b> https://tally.so/r/mK2OyA</p>
                 )}
                 {/* Más condiciones según tus tipos */}
               </>
             )
         )
       }
+      <p class="chirris">
+        <b>Tip:</b> guarda el enlace del formulario en tus favoritos para acceder fácilmente.
+      </p>
+      <p class="chirris borde">
+        <b>Nota:</b> Si pagaste por medio de OXXO, tu pago se reflejará en un plazo de 24 a 48 horas y el establecimiento aplica un cargo de servicio. 
+      </p>
+      <p class="cart-info">
+        Cualquier duda, puedes contactarnos por WhatsApp al número
+        <a href="https://wa.me/+527551132468" target="_blank"><b>755.1132.468</b></a>
+      </p>
 
       <br />
       <a href="/" class="success-btn">Volver al inicio</a>
@@ -81,6 +93,10 @@ Astro.cookies.delete("cartItems");
 </Layout>
 
 <style>
+  .logo {
+    width: 200px;
+    margin-bottom: 1rem;
+  }
   .success-container {
     min-height: 80vh;
     display: flex;
@@ -88,7 +104,9 @@ Astro.cookies.delete("cartItems");
     justify-content: center;
     padding: 2rem;
   }
-
+  b{
+    color: #ee6a6a;
+  }
   .success-card {
     background: white;
     padding: 2rem;
@@ -98,10 +116,19 @@ Astro.cookies.delete("cartItems");
     max-width: 500px;
     width: 100%;
   }
-
+  .chirris{
+    font-size: clamp(.8rem, .6rem, 1rem);
+  }
+  .borde {
+    border: 1px solid #ee6a6a;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    background-color: #f9f9f9;
+  }
   .success-icon {
     font-size: 3rem;
-    color: #4caf50;
+    color: #ee6a6a;
     margin-bottom: 1rem;
   }
 
@@ -112,7 +139,7 @@ Astro.cookies.delete("cartItems");
 
   .success-btn {
     display: inline-block;
-    background-color: #4caf50;
+    background-color: #656a8d;
     color: white;
     padding: 0.8rem 1.5rem;
     border-radius: 5px;
@@ -122,6 +149,6 @@ Astro.cookies.delete("cartItems");
   }
 
   .success-btn:hover {
-    background-color: #45a049;
+    background-color: #ee6a6a;
   }
 </style>
