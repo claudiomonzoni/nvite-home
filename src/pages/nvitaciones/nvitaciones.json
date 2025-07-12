@@ -15,6 +15,7 @@
       "Frase afectiva",
       "Detalles del evento"
     ],
+    "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tu boda y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu recepción y ceremonia, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
     "categoria": "Bodas",
     "tipo": "PDF",
     "version": "Lux",
@@ -166,7 +167,7 @@
       "../../assets/cart/bodas/lux/confirmacion-Nvitaciones-bodas-lux.webp"
     ]
   },
-    {
+  {
     "id": "prod_SZwAeRXTJGqFO8",
     "slug": "invitacion-bodas-lux-elegante",
     "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
@@ -214,6 +215,7 @@
       "Frase afectiva",
       "Detalles del evento"
     ],
+       "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tus quinceaños y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu recepción y ceremonia, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
     "categoria": "Quince",
     "tipo": "PDF",
     "version": "Lux",
@@ -254,6 +256,7 @@
       "Botón de confirmación",
       "Juego de preguntas"
     ],
+       "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tu cumpleaños y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu evento, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
     "categoria": "Cumpleaños",
     "tipo": "PDF",
     "version": "Regular",

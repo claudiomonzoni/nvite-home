@@ -153,6 +153,11 @@ const productId = product.data.id;
 
           <p id="vendidos"></p>
           <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
+          {
+            nvitacionInfo && nvitacionInfo.detalles && (
+                <div id="detalles" set:html={nvitacionInfo.detalles}></div>
+              )
+             }
 
           {
             nvitacionInfo && nvitacionInfo.muestra && (
@@ -315,6 +320,14 @@ const productId = product.data.id;
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
+  #detalles{
+
+    :global(h3) {
+      color: $acento;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
 
   // Layout & Container styles
   .breadcrumb-container {
