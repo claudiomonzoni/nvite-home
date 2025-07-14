@@ -10,7 +10,7 @@ const filteredProducts = productos.filter((producto) => {
   const dondeEstoyLower = (dondeEstoy || "").toLowerCase();
 
   // En la página principal mostrar todo
-  if (!dondeEstoy || dondeEstoy === "home") {
+  if (!dondeEstoy || dondeEstoy === "home" ) {
     return true;
   }
 
@@ -32,7 +32,7 @@ const categorias = [
 ---
 
 {
-  !dondeEstoy || dondeEstoy === "home" ? (
+  !dondeEstoy || dondeEstoy === "home" ||  dondeEstoy.toLowerCase() === "pdf" ? (
     <>
       <div class="grid pantalla-der">
         <div class="filtros-productos">
@@ -50,7 +50,14 @@ const categorias = [
       <div class="grid pantalla-der">
         <div class="swiper productos-swiper">
           <div class="swiper-wrapper" id="productos-wrapper">
-            {productos.map((producto) => {
+            {(
+              !dondeEstoy || dondeEstoy === "home"
+                ? productos
+                : productos.filter(
+                    (producto) =>
+                      producto.data.metadata?.Tipo?.toLowerCase() === "pdf"
+                  )
+            ).map((producto) => {
               const categoria = (
                 producto.data.metadata?.Categoria || ""
               ).toLowerCase();

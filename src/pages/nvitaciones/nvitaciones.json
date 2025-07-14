@@ -1,32 +1,5 @@
 [
   {
-    "id": "prod_S6z2ksD9axDHG1",
-    "slug": "invitacion-bodas-pdf-lux",
-    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752261282/bodas-pdf-etsy_zgvidn.mp4",
-    "beneficios": [
-      "Foto principal",
-      "Nombre del invitado",
-      "Botón de confirmación",
-      "Botón de ubicación",
-      "Sugerencia de regalos",
-      "Código de vestir",
-      "Itinerario",
-      "Fecha del evento",
-      "Frase afectiva",
-      "Detalles del evento"
-    ],
-    "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tu boda y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu recepción y ceremonia, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
-    "categoria": "Bodas",
-    "tipo": "PDF",
-    "version": "Lux",
-    "imagenes": [
-      "../../assets/cart/pdf/bodas/base/detalles-Nvitaciones-bodas-pdf.webp",
-      "../../assets/cart/pdf/bodas/base/itinerario-Nvitaciones-bodas-pdf.webp",
-      "../../assets/cart/pdf/bodas/base/ubicacion-Nvitaciones-bodas-pdf.webp",
-      "../../assets/cart/pdf/bodas/base/confirmacion-Nvitaciones-bodas-pdf.webp"
-    ]
-  },
-  {
     "id": "prod_SK7Bqg9HjOSmhW",
     "slug": "invitacion-quince-clasica",
     "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
@@ -199,13 +172,38 @@
       "../../assets/cart/bodas/lux-elegante/regalos-Nvitaciones-bodas-lux-elegante.webp"
     ]
   },
+   {
+    "id": "prod_S6z2ksD9axDHG1",
+    "slug": "invitacion-bodas-pdf-lux",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752261282/bodas-pdf-etsy_zgvidn.mp4",
+    "beneficios": [
+      "Foto principal",
+      "Botón de confirmación",
+      "Botón de ubicación",
+      "Sugerencia de regalos",
+      "Código de vestir",
+      "Itinerario",
+      "Fecha del evento",
+      "Frase afectiva",
+      "Detalles del evento"
+    ],
+    "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tu boda y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu recepción y ceremonia, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
+    "categoria": "Bodas",
+    "tipo": "PDF",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/pdf/bodas/base/detalles-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/base/itinerario-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/base/ubicacion-Nvitaciones-bodas-pdf.webp",
+      "../../assets/cart/pdf/bodas/base/confirmacion-Nvitaciones-bodas-pdf.webp"
+    ]
+  },
   {
     "id": "prod_SJS7Pij7pMSLo4",
     "slug": "invitacion-quince-pdf-lux",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
     "beneficios": [
       "Foto principal",
-      "Nombre del invitado",
       "Botón de confirmación",
       "Botón de ubicación",
       "Sugerencia de regalos",
@@ -272,7 +270,6 @@
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752429643/bodas-pdf-elegante_fxtgv1.mp4",
     "beneficios": [
       "Foto principal",
-      "Nombre del invitado",
       "Botón de confirmación",
       "Botón de ubicación",
       "Sugerencia de regalos",
@@ -291,6 +288,25 @@
       "../../assets/cart/pdf/bodas/elegante/detalles-Nvitaciones-bodas-pdf.webp",
       "../../assets/cart/pdf/bodas/elegante/itinerario-Nvitaciones-bodas-pdf.webp",
       "../../assets/cart/pdf/bodas/elegante/confirmacion-Nvitaciones-bodas-pdf.webp"
+    ]
+  },
+  {
+    "id": "prod_SgBIkt4zrBmefG",
+    "slug": "invitacion-cumple-kids-caricatura",
+    "beneficios": [
+      "Foto principal",
+      "Botón de confirmación",
+      "Fecha del evento",
+      "Hora del evento",
+      "Ubicación del evento"
+    ],
+    "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos del cumpleanos y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con un botón funcional para que tus invitados confirmen su asistencia.</p>",
+    "categoria": "Bodas",
+    "tipo": "PDF",
+    "version": "Lux",
+    "imagenes": [
+      "../../assets/cart/pdf/cumples/caricatura/nvitacion-kids-A-foto.webp",
+      "../../assets/cart/pdf/cumples/caricatura/nvitacion-kids-A-anime.webp"
     ]
   }
 ]
