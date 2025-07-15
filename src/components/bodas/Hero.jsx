@@ -43,77 +43,85 @@ export default function Hero({
 
   useEffect(() => {
     if (!isLoading) {
-      const tl = gsap.timeline();
+      let ScrollTrigger;
+      if (typeof window !== "undefined") {
+        import("gsap/ScrollTrigger").then((mod) => {
+          ScrollTrigger = mod.default;
+          gsap.registerPlugin(ScrollTrigger);
 
-      // Animación inicial del contenido
-      tl.from(".contenido", {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-      })
-        .from(".avatarConte", {
-          opacity: 0,
-          y: -30,
-          duration: 2,
-          ease: "power4.out",
-        })
-        .from(
-          "#bande *",
-          {
+          const tl = gsap.timeline();
+
+          // Animación inicial del contenido
+          tl.from(".contenido", {
             opacity: 0,
             y: -30,
             duration: 1,
-            ease: "power4.out",
-            stagger: { amount: 1.6 },
-          },
-          "-=1.5"
-        );
+          })
+            .from(".avatarConte", {
+              opacity: 0,
+              y: -30,
+              duration: 2,
+              ease: "power4.out",
+            })
+            .from(
+              "#bande *",
+              {
+                opacity: 0,
+                y: -30,
+                duration: 1,
+                ease: "power4.out",
+                stagger: { amount: 1.6 },
+              },
+              "-=1.5"
+            );
 
-      // Animación responsiva
-      let mm = gsap.matchMedia();
-      mm.add("(min-width: 800px)", () => {
-        tl.to(".avatarConte", {
-          delay: -.5,
-          duration: 2,
-          ease: "power4.out",
-          transformOrigin: "center",
-          width: "100%",
-          height: "100%",
-          scale: 1,
-        }).to(
-          ".avatarConte img",
-          {
-            scale: 1.2,
-            duration: 2.2,
-            ease: "power4.out",
-          },
-          "-=2"
-        );
-      });
+          // Animación responsiva
+          let mm = gsap.matchMedia();
+          mm.add("(min-width: 800px)", () => {
+            tl.to(".avatarConte", {
+              delay: -.5,
+              duration: 2,
+              ease: "power4.out",
+              transformOrigin: "center",
+              width: "100%",
+              height: "100%",
+              scale: 1,
+            }).to(
+              ".avatarConte img",
+              {
+                scale: 1.2,
+                duration: 2.2,
+                ease: "power4.out",
+              },
+              "-=2"
+            );
+          });
 
-      mm.add("(max-width: 799px)", () => {
-        tl.to(".avatarConte", {
-          delay: -2,
-          duration: 2,
-          ease: "power4.out",
-          transformOrigin: "center",
-          width: "100%",
-          height: "100%",
-          scale: 1,
-          onComplete: () => {
-            window.dispatchEvent(new Event("hero:ready"));
-            ScrollTrigger.refresh();
-          },
-        }).to(
-          ".avatarConte img",
-          {
-            scale: 1.2,
-            duration: 2.2,
-            ease: "power4.out",
-          },
-          "-=2"
-        );
-      });
+          mm.add("(max-width: 799px)", () => {
+            tl.to(".avatarConte", {
+              delay: -2,
+              duration: 2,
+              ease: "power4.out",
+              transformOrigin: "center",
+              width: "100%",
+              height: "100%",
+              scale: 1,
+              onComplete: () => {
+                window.dispatchEvent(new Event("hero:ready"));
+                ScrollTrigger.refresh();
+              },
+            }).to(
+              ".avatarConte img",
+              {
+                scale: 1.2,
+                duration: 2.2,
+                ease: "power4.out",
+              },
+              "-=2"
+            );
+          });
+        });
+      }
     }
   }, [isLoading]);
 

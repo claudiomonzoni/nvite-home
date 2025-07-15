@@ -124,11 +124,7 @@
     font-weight: 300;
   }
 
-  #hero-base{
-    @include cel{
-      height: 132vh;
-    }
-  }
+ 
   #BaseItinerario {
     h2 {
       color: var(--acento);
@@ -698,6 +694,9 @@
       display: inherit;
       justify-content: center;
       align-items: center;
+      @include cel {
+        padding: $margen-cel 0;
+      }
     }
     time,
     address {
@@ -986,7 +985,6 @@
       }
     }
     .numero {
-      margin-top: $margen-cel;
       font-size: clamp(2.5rem, 5vw, 7rem);
       color: var(--acento);
       font-family: $encabezados, serif;
@@ -1009,7 +1007,7 @@
       font-family: $encabezados, serif;
       color: var(--secundario);
       font-weight: 300;
-      font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+      font-size: clamp(1rem, 1.5vw, 1.5rem);
       margin: 0;
     }
     @include cel {

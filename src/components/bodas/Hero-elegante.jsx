@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Style from "../../estilos/temas/elegante/bodas/hero.module.scss";
-
-// imagenes
 import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 
 //---------------------------------------------------------------------------------------------
@@ -43,119 +40,120 @@ export default function Hero({
   }, []);
 
   useEffect(() => {
-    if (!isLoading) {
-      // Configuración de matchMedia para animaciones responsivas
+    let ScrollTrigger;
+    // Solo en cliente
+    if (typeof window !== "undefined") {
+      import("gsap/ScrollTrigger").then((mod) => {
+        ScrollTrigger = mod.default;
+        gsap.registerPlugin(ScrollTrigger);
 
-      let mm = gsap.matchMedia();
+        if (!isLoading) {
+          // Configuración de matchMedia para animaciones responsivas
 
-      // Animaciones para Desktop (800px y más)
-      mm.add("(min-width: 800px)", () => {
-        const tl = gsap.timeline();
+          let mm = gsap.matchMedia();
 
-        tl.from(".contenido", {
-          opacity: 0,
-          y: -30,
-          duration: 1,
-        })
-          .from(".avatarConte", {
-            opacity: 0,
-            y: -30,
-            scale: 0.5,
-            duration: 2,
-            ease: "power4.out",
-          })
-          .from(
-            "#bande *",
-            {
+          // Animaciones para Desktop (800px y más)
+          mm.add("(min-width: 800px)", () => {
+            const tl = gsap.timeline();
+
+            tl.from(".contenido", {
+              opacity: 0,
+              y: -30,
+              duration: 1,
+            })
+              .from(".avatarConte", {
+                opacity: 0,
+                y: -30,
+                scale: 0.5,
+                duration: 2,
+                ease: "power4.out",
+              })
+              .from(
+                "#bande *",
+                {
+                  opacity: 0,
+                  y: -30,
+                  duration: 1,
+                  ease: "power4.out",
+                  stagger: { amount: 1.6 },
+                },
+                "-=1.5"
+              )
+              .to(".avatarConte", {
+                delay: 1,
+                duration: 2,
+                ease: "power4.out",
+                transformOrigin: "center",
+                width: "100%",
+                height: "100%",
+                scale: 1,
+                onComplete: () => {
+                  window.dispatchEvent(new Event("hero:ready"));
+                  ScrollTrigger.refresh();
+                },
+              })
+              .to(
+                ".avatarConte img",
+                {
+                  scale: 1.2,
+                  duration: 2.2,
+                  ease: "power4.out",
+                },
+                "-=2"
+              );
+          });
+
+          // Animaciones para Móvil (menos de 800px)
+          mm.add("(max-width: 799px)", () => {
+            const tl = gsap.timeline();
+
+            // Primero anima el contenido
+            tl.from(".contenido", {
+              opacity: 0,
+              y: -30,
+              duration: 1,
+            }).from("#bande *", {
               opacity: 0,
               y: -30,
               duration: 1,
               ease: "power4.out",
               stagger: { amount: 1.6 },
-            },
-            "-=1.5"
-          )
-          .to(".avatarConte", {
-            delay: 1,
-            duration: 2,
-            ease: "power4.out",
-            transformOrigin: "center",
-            width: "100%",
-            height: "100%",
-            scale: 1,
-            onComplete: () => {
-               
-              window.dispatchEvent(new Event("hero:ready"));
-                ScrollTrigger.refresh();
-              
-            }
-          })
-          .to(
-            ".avatarConte img",
-            {
-              scale: 1.2,
-              duration: 2.2,
+            });
+
+            // Animación del avatar con ScrollTrigger
+            gsap.from(".avatarConte", {
+              scrollTrigger: {
+                trigger: ".avatarConte",
+                start: "top 80%",
+                // toggleActions: "play none none reverse",
+              },
+              opacity: 0,
+              y: 30,
+              scale: 0.5,
+              duration: 1.5,
               ease: "power4.out",
-            },
-            "-=2"
-          );
-
-       
-      });
-
-      // Animaciones para Móvil (menos de 800px)
-      mm.add("(max-width: 799px)", () => {
-        const tl = gsap.timeline();
-
-        // Primero anima el contenido
-        tl.from(".contenido", {
-          opacity: 0,
-          y: -30,
-          duration: 1,
-        }).from("#bande *", {
-          opacity: 0,
-          y: -30,
-          duration: 1,
-          ease: "power4.out",
-          stagger: { amount: 1.6 },
-        });
-
-        // Animación del avatar con ScrollTrigger
-        gsap.from(".avatarConte", {
-          scrollTrigger: {
-            trigger: ".avatarConte",
-            start: "top 80%",
-            // toggleActions: "play none none reverse",
-          },
-          opacity: 0,
-          y: 30,
-          scale: 0.5,
-          duration: 1.5,
-          ease: "power4.out",
-          onComplete: () => {
-            gsap.to(".avatarConte", {
-              duration: 2,
-              ease: "power4.out",
-              transformOrigin: "center",
-              width: "100%",
-              height: "700px",
-              scale: 1,
               onComplete: () => {
-               
-                window.dispatchEvent(new Event("hero:ready"));
-                  ScrollTrigger.refresh();
-                
-              }
+                gsap.to(".avatarConte", {
+                  duration: 2,
+                  ease: "power4.out",
+                  transformOrigin: "center",
+                  width: "100%",
+                  height: "700px",
+                  scale: 1,
+                  onComplete: () => {
+                    window.dispatchEvent(new Event("hero:ready"));
+                    ScrollTrigger.refresh();
+                  },
+                });
+                gsap.to(".avatarConte img", {
+                  scale: 1.2,
+                  duration: 2.2,
+                  ease: "power4.out",
+                });
+              },
             });
-            gsap.to(".avatarConte img", {
-              scale: 1.2,
-              duration: 2.2,
-              ease: "power4.out",
-            });
-          },
-        });
-
-       
+          });
+        }
       });
     }
   }, [isLoading]);

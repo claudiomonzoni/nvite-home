@@ -686,6 +686,9 @@
       display: inherit;
       justify-content: center;
       align-items: center;
+      @include cel {
+        padding: $margen-cel $margen-min;
+      }
     }
     time,
     address {
