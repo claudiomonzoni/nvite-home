@@ -16,13 +16,13 @@ h2 {
   background-blend-mode: color-burn, color-burn;
   border-radius: $radio;
   transition: all 0.3s ease;
+  @extend .sombra;
   @include cel {
     background-position: -30% top, right bottom;
     background-size: 35%, 80%;
     background-blend-mode: color-burn, normal;
     background-blend-mode: overlay, color-burn;
   }
-  @extend .sombra;
 }
 .bandeja {
   text-align: center;
@@ -51,6 +51,7 @@ form {
     margin-top: 0.6rem;
     padding: 0.5rem 0;
     border-radius: $radio;
+    text-align: center;
   }
   textarea {
     field-sizing: content;
@@ -60,7 +61,6 @@ form {
   select {
     border: none !important;
     opacity: 0.5;
-    padding: 0.5rem;
     @extend .sombra;
   }
   @include cel {
@@ -75,13 +75,11 @@ svg {
   path {
     fill: var(--acento);
   }
- 
 }
-#mueve{
-  border: solid var(--secundario) .9px;
+#mueve {
+  border: solid var(--secundario) 0.9px;
   padding: $margen-min;
-text-align: center;
-
+  text-align: center;
 }
 .conteCheck {
   display: flex;
@@ -91,11 +89,12 @@ text-align: center;
   gap: 1rem;
   width: 100%;
   margin: 2rem 0;
-  p{
+  p {
     font-size: clamp(1.2rem, 1.8vw, 1.8rem);
   }
-  p, label{
-    margin: 0!important;
+  p,
+  label {
+    margin: 0 !important;
     font-weight: bold;
     flex: 1 0 100%;
     justify-content: center;
@@ -107,14 +106,14 @@ text-align: center;
   display: inline-block;
   max-width: 46px;
   height: 9px;
-top: 0;
+  top: 0;
   input {
     opacity: 0;
     width: 0;
     height: 0;
 
     &:checked + .slider {
-      background-color: var(--acento);
+      background-color: var(--primario);
 
       &:before {
         transform: translateX(22px);
@@ -153,8 +152,11 @@ top: 0;
 .btnConfirmar {
   @extend .btn;
   display: flex;
-  border-radius: $radio;
-
+  border-radius: .3rem;
+  background-color: var(--acento);
+  color: var(--fondo);
+  width: 100%;
+  text-align: center;
 }
 .desactivado {
   pointer-events: none;
@@ -162,23 +164,23 @@ top: 0;
 .asistira {
   background-color: rgba(var(--primario), 0.1);
   .slider {
-    background-color: var(--acento) !important;
+    background-color: var(--secundario) !important;
   }
 }
 
 .noAsistira {
   background-color: rgba(var(--gris), 0.2);
   .slider {
-    background-color: var(--gris) !important;
+    background-color: var(--primario) !important;
   }
 }
 
-small{
+small {
   padding-top: $margen-min;
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
-span{
+span {
   font-weight: bolder;
   color: var(--acento);
 }

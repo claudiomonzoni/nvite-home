@@ -17,18 +17,20 @@ export default function Hero({
 
   // Asegurarnos que fecha sea string y tenga el formato correcto
   const fechaString = String(fecha);
-  const [year, month, day] = fechaString.split('-').map(num => parseInt(num, 10));
-  
+  const [year, month, day] = fechaString
+    .split("-")
+    .map((num) => parseInt(num, 10));
+
   const fechaObj = new Date(year, month - 1, day);
-  
-  const diaSemana = fechaObj.toLocaleString('es-ES', { weekday: 'long' });
+
+  const diaSemana = fechaObj.toLocaleString("es-ES", { weekday: "long" });
   const dia = fechaObj.getDate();
-  const mes = fechaObj.toLocaleString('es-ES', { month: 'long' });
+  const mes = fechaObj.toLocaleString("es-ES", { month: "long" });
   const ano = fechaObj.getFullYear();
   const diaNum = dia;
 
   // asegurar el numero correcto
-  const adjustedDiaNum = String(diaNum).padStart(2, '0');
+  const adjustedDiaNum = String(diaNum).padStart(2, "0");
 
   useEffect(() => {
     // Simular tiempo de carga
@@ -42,71 +44,77 @@ export default function Hero({
   useEffect(() => {
     if (!isLoading) {
       const tl = gsap.timeline();
-      
+
       // Animación inicial del contenido
       tl.from(".contenido", {
         opacity: 0,
         y: -30,
         duration: 1,
       })
-      .from(".avatarConte", {
-        opacity: 0,
-        y: -30,
-        scale: 0.5,
-        duration: 2,
-        ease: "power4.out",
-      })
-      .from("#bande *", {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-        ease: "power4.out",
-        stagger: { amount: 1.6 },
-      }, "-=1.5");
+        .from(".avatarConte", {
+          opacity: 0,
+          y: -30,
+          duration: 2,
+          ease: "power4.out",
+        })
+        .from(
+          "#bande *",
+          {
+            opacity: 0,
+            y: -30,
+            duration: 1,
+            ease: "power4.out",
+            stagger: { amount: 1.6 },
+          },
+          "-=1.5"
+        );
 
-      // Animación responsive
+      // Animación responsiva
       let mm = gsap.matchMedia();
       mm.add("(min-width: 800px)", () => {
         tl.to(".avatarConte", {
-          delay: 1,
+          delay: -.5,
           duration: 2,
           ease: "power4.out",
-          transformOrigin:'center',
-          width:'100%',
-          height:'100%',
+          transformOrigin: "center",
+          width: "100%",
+          height: "100%",
           scale: 1,
-        })
-        .to(".avatarConte img", {
-          scale: 1.2,
-          duration: 2.2,
-          ease: "power4.out",
-        }, "-=2");
+        }).to(
+          ".avatarConte img",
+          {
+            scale: 1.2,
+            duration: 2.2,
+            ease: "power4.out",
+          },
+          "-=2"
+        );
       });
-      
+
       mm.add("(max-width: 799px)", () => {
         tl.to(".avatarConte", {
-          delay: 1,
+          delay: -2,
           duration: 2,
           ease: "power4.out",
-          transformOrigin:'center',
-          width:'100%',
-          height:'100%',
+          transformOrigin: "center",
+          width: "100%",
+          height: "100%",
           scale: 1,
           onComplete: () => {
-               
             window.dispatchEvent(new Event("hero:ready"));
-              ScrollTrigger.refresh();
-            
-          }
-        })
-        .to(".avatarConte img", {
-          scale: 1.2,
-          duration: 2.2,
-          ease: "power4.out",
-        }, "-=2");
+            ScrollTrigger.refresh();
+          },
+        }).to(
+          ".avatarConte img",
+          {
+            scale: 1.2,
+            duration: 2.2,
+            ease: "power4.out",
+          },
+          "-=2"
+        );
       });
     }
-    
   }, [isLoading]);
 
   if (isLoading) {
@@ -120,7 +128,7 @@ export default function Hero({
 
   return (
     <section className="grid contenido">
-      <div id={Style["hero"]} >
+      <div id={Style["hero"]}>
         <div className={Style["izq"]} id="izq">
           <div id={Style["avatar"]} className="avatarConte">
             <img src={cover} alt="Invitaciones de bodas cover" />
