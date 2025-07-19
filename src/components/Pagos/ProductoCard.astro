@@ -3,13 +3,33 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { getProductPrice } from "../../js/cart";
 import Btn from "../Btn.astro";
+import nvitacionesData from "../../pages/nvitaciones/nvitaciones.json";
 
 type Props = {
   producto: CollectionEntry<"productos">;
 };
 
 const { producto } = Astro.props;
+const nvitacionInfo = nvitacionesData.find(
+  (item) => item.id === producto.data.id
+);
+
 const precio = await getProductPrice(producto);
+
+// Calcular precio tachado igual que en [id].astro
+let precioTachado = precio;
+if (nvitacionInfo?.precioTachado) {
+  const match = precio.match(/^([^\d]+)([\d,.]+)/);
+  if (match) {
+    const currency = match[1];
+    const priceNumber = Number(match[2].replace(/,/g, ""));
+    const priceTachadoNumber = Math.round(priceNumber * 1.4);
+    const priceTachadoStr = priceTachadoNumber.toLocaleString("es-MX", {
+      minimumFractionDigits: 0,
+    });
+    precioTachado = `${currency}${priceTachadoStr}`;
+  }
+}
 ---
 
 <article class="producto-card">
@@ -27,11 +47,19 @@ const precio = await getProductPrice(producto);
   </div>
   <div class="info">
     <span>
-      {(producto.data.metadata?.Categoria || "Sin categoría") + " | " + (producto.data.metadata?.Tipo || "Sin tipo")}
+      <b>{(producto.data.metadata?.Categoria || "Sin categoría")}</b> | {(producto.data.metadata?.Tipo || "Sin tipo")}
     </span>
     <div class="headinfo">
       <h2>{producto.data.name}</h2>
       <p class="precio">
+      {
+        nvitacionInfo?.precioTachado && (
+          <span class="precioTachado">
+            {precioTachado}
+            <sup>.00</sup>
+          </span>
+        )
+      }
         {precio.replace(/\.00$/, "")}<sup>.00</sup>
       </p>
     </div>
@@ -82,8 +110,7 @@ const precio = await getProductPrice(producto);
       margin-bottom: 0;
       margin-bottom: $margen-cel;
       margin-top: 0;
-
-  }
+    }
   }
 
   .portada {
@@ -110,7 +137,6 @@ const precio = await getProductPrice(producto);
       justify-content: center;
       width: 100%;
       transform-origin: bottom;
-      
     }
     .crop {
       width: 100%;
@@ -120,7 +146,7 @@ const precio = await getProductPrice(producto);
       position: relative;
       display: flex;
       justify-content: center;
-      align-items:flex-start;
+      align-items: flex-start;
     }
     img {
       object-fit: cover;
@@ -129,7 +155,6 @@ const precio = await getProductPrice(producto);
     }
   }
 
-  
   .info {
     padding: 0 $margen-min;
   }
@@ -149,10 +174,12 @@ const precio = await getProductPrice(producto);
     padding-bottom: $margen-min;
     // margin-bottom: $margen-min;
   }
-  .precio {
+
+  .precio,
+  .precioTachado {
     font-size: clamp(1.1rem, 1.1vw, 1.5rem);
     font-weight: bold;
-    color: $gris;
+    color: $primario;
 
     sup {
       font-size: 0.4em;
@@ -160,6 +187,14 @@ const precio = await getProductPrice(producto);
       color: $gris;
     }
   }
+
+  .precioTachado{
+  font-size: 0.7rem;
+  font-weight: bold!important;
+   color: $acento;
+   text-decoration: line-through;
+  }
+
   h2 {
     font-size: clamp(1.3rem, 1.2vw, 1.7rem);
     margin: 0;
@@ -172,7 +207,6 @@ const precio = await getProductPrice(producto);
     font-size: 0.7rem;
     font-weight: lighter;
   }
-  
 </style>
 
 <script>

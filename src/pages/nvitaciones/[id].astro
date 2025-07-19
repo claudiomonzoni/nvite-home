@@ -79,6 +79,22 @@ if (!product) {
 }
 
 const price = await getProductPrice(product);
+
+// Extraer símbolo de moneda y número (soporta decimales y separadores)
+const match = price.match(/^([^\d]+)([\d,.]+)/);
+let priceTachado = price;
+if (match) {
+  const currency = match[1]; // "MX$"
+  // Convertir a número (eliminando comas)
+  const priceNumber = Number(match[2].replace(/,/g, ""));
+  const priceTachadoNumber = Math.round(priceNumber * 1.4);
+
+  // Formatear con separador de miles y dos decimales si quieres
+  const priceTachadoStr = priceTachadoNumber
+    .toLocaleString("es-MX", { minimumFractionDigits: 0 });
+
+  priceTachado = `${currency}${priceTachadoStr}`;
+}
 const productId = product.data.id;
 ---
 
@@ -152,6 +168,14 @@ const productId = product.data.id;
           <p>{product.data.description}</p>
 
           <p id="vendidos"></p>
+          {
+            nvitacionInfo?.precioTachado && (
+            <p class="precioTachado">
+            {priceTachado + "."}<sup>00</sup>
+          </p>
+            )}
+         
+          
           <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
           {
             nvitacionInfo && nvitacionInfo.detalles && (
@@ -435,7 +459,7 @@ const productId = product.data.id;
     border-bottom: solid 1px $primario;
   }
 
-  .price {
+  .price, .precioTachado {
     font-size: 1.5rem;
     font-weight: bold;
     color: $primario;
@@ -444,6 +468,13 @@ const productId = product.data.id;
       font-size: 0.5em;
       vertical-align: super;
     }
+  }
+  .precioTachado{
+    font-size: 1rem;
+    color:$acento;
+    margin: 0;
+    text-decoration: line-through;
+    transform: translateY(70%);
   }
 
   // Gallery styles
