@@ -48,6 +48,26 @@
       "../../assets/cart/bodas/esencial/confirmacion-Nvitaciones-bodas-esencial.webp"
     ]
   },
+    {
+    "id": "prod_SK7ICkqFPPgSuJ",
+    "slug": "invitacion-quince-esencial",
+    "muestra": "/quince/nvita-quince-esencial",
+    "beneficios": [
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario sencillo de confirmación"
+    ],
+    "categoria": "Quince",
+    "tipo": "Sitio web",
+    "version": "Esencial",
+    "imagenes": [
+      "../../assets/cart/quince/esencial/detalles-Nvitaciones-quince-esencial.webp",
+      "../../assets/cart/quince/esencial/ubicacion-Nvitaciones-quince-esencial.webp",
+      "../../assets/cart/quince/esencial/confirmacion-Nvitaciones-quince-esencial.webp"
+    ]
+  },
   {
     "id": "prod_QNpO0T7kRp1zkL",
     "slug": "invitacion-bodas-clasica",
@@ -200,8 +220,8 @@
   },
   {
     "id": "prod_SJS7Pij7pMSLo4",
-    "slug": "invitacion-quince-pdf-lux",
-    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1744217636/PDF-15_v2x4a3.mov",
+    "slug": "invitacion-quince-pdf-base",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938679/quince-pdf_hpainy.mp4",
     "beneficios": [
       "Foto principal",
       "Botón de confirmación",
@@ -218,30 +238,36 @@
        "tipo": "PDF",
        "version": "Lux",
     "imagenes": [
-      "../../assets/cart/pdf/quince/detalles-Nvitaciones-quince-pdf.webp",
-      "../../assets/cart/pdf/quince/itinerario-Nvitaciones-quince-pdf.webp",
-      "../../assets/cart/pdf/quince/ubicacion-Nvitaciones-quince-pdf.webp",
-      "../../assets/cart/pdf/quince/confirmacion-Nvitaciones-quince-pdf.webp"
+      "../../assets/cart/pdf/quince/base/detalles-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/base/itinerario-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/base/ubicacion-Nvitaciones-quince-pdf.webp",
+      "../../assets/cart/pdf/quince/base/confirmacion-Nvitaciones-quince-pdf.webp"
     ]
   },
-  {
-    "id": "prod_SK7ICkqFPPgSuJ",
-    "slug": "invitacion-quince-esencial",
-    "muestra": "/quince/nvita-quince-esencial",
+    {
+    "id": "prod_Si2dLpSScZi9vl",
+    "slug": "invitacion-quince-pdf-elegante",
+    "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938726/quince-pdf-elegante_eiqgbo.mp4",
     "beneficios": [
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario sencillo de confirmación"
+      "Foto principal",
+      "Botón de confirmación",
+      "Botón de ubicación",
+      "Sugerencia de regalos",
+      "Código de vestir",
+      "Itinerario",
+      "Fecha del evento",
+      "Frase afectiva",
+      "Detalles del evento"
     ],
-    "categoria": "Quince",
-    "tipo": "Sitio web",
-    "version": "Esencial",
+       "detalles": "<h3>¿Qué recibo?</h3>\n<p>Hecha tu compra, recibes un formulario para que nos envíes los datos de tus quinceaños y foto de portada, en 24 horas hábiles o menos, te hacemos llegar tu invitación lista para enviarse por whatsapp</p>\n<h3>¿Cómo funciona?</h3>\n<p>Tu invitación es un Pdf interactivo, que puedes adjuntar a whatsapp y enviarlo a tus invitados fácil y rápidamente, con botones funcionales para mostrar mapas de tu recepción y ceremonia, además un botón que abre whatsapp para que tus invitados confirmen su asistencia.</p>",
+       "categoria": "Quince",
+       "tipo": "PDF",
+       "version": "Lux",
     "imagenes": [
-      "../../assets/cart/quince/esencial/detalles-Nvitaciones-quince-esencial.webp",
-      "../../assets/cart/quince/esencial/ubicacion-Nvitaciones-quince-esencial.webp",
-      "../../assets/cart/quince/esencial/confirmacion-Nvitaciones-quince-esencial.webp"
+      "../../assets/cart/pdf/quince/elegante/2.webp",
+      "../../assets/cart/pdf/quince/elegante/3.webp",
+      "../../assets/cart/pdf/quince/elegante/4.webp",
+      "../../assets/cart/pdf/quince/elegante/5.webp"
     ]
   },
   {
