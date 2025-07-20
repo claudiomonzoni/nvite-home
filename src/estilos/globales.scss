@@ -512,7 +512,7 @@ mark {
     color: $primario;
     padding-top: $margen-min !important;
   }
-  input {
+  input, select {
     flex: 1 0 100%;
     padding: 0.5rem;
     border: none;

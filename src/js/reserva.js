@@ -1,6 +1,6 @@
 const nombre = document.getElementById("nombre");
 const fecha = document.getElementById("fecha");
-const email = document.getElementById("email");
+const evento = document.getElementById("evento");
 const empezar = document.getElementById("empezar");
 const numeroWhats = 5217551132468;
 
@@ -25,12 +25,12 @@ const enviar = (e) => {
     whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=`;
   }
 
-  envio(whats, nombre.value, fecha.value, email.value);
+  envio(whats, nombre.value, fecha.value, evento.value);
 };
 
-const envio = (whats, nombre, fecha, email) => {
+const envio = (whats, nombre, fecha, evento) => {
   const url = `
-  ${whats}Hola,%20me%20contacto%20desde%20nvitaciones.com,%20deseo%20obtener%20una%20invitación%20para%20mi%20evento:%0aNombre:%20${nombre}%0afecha%20del%20evento:%20${fecha},%0aMi%20correo%20electrónico:%20${email}.%0aTipo%20de%20evento:%20
+  ${whats}Hola,%20me%20contacto%20desde%20nvitaciones.com,%20deseo%20obtener%20una%20invitación%20para%20mi%20evento:%0aNombre:%20${nombre}%0afecha%20del%20evento:%20${fecha},%0aTipo%20de%20evento:%20${evento}
   `;
 
   empezar.href = url;
@@ -38,4 +38,4 @@ const envio = (whats, nombre, fecha, email) => {
 
 nombre.addEventListener("focusout", enviar);
 fecha.addEventListener("focusout", enviar);
-email.addEventListener("focusout", enviar);
+evento.addEventListener("focusout", enviar);

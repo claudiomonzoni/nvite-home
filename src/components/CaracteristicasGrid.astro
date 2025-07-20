@@ -45,12 +45,12 @@ const { matriz } = Astro.props;
       </div>
     </div>
     <div id="item-b" class="item">
-      <Icon name={matriz[1].imagen} size={45} />
+      <Icon name={matriz[1].imagen} size={55} />
       <h3 set:html={matriz[1].titulo} />
       <p set:html={matriz[1].texto} />
     </div>
     <div id="item-c" class="item">
-      <Icon name={matriz[2].imagen} size={45} />
+      <Icon name={matriz[2].imagen} size={55} />
       <p>
         {matriz[2].texto}
       </p>
@@ -100,25 +100,28 @@ const { matriz } = Astro.props;
     border-radius: $radio;
     .item {
       place-content: center;
-      padding: $margen $margen-cel;
+      padding: $margen-cel $margen-min;
       text-align: center;
       line-height: 1.5rem;
+    
     }
     #item-a {
       grid-column: 1 / -1;
       display: flex;
       position: relative;
-
+      
       .info {
         border-top-left-radius: $radio;
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: $primario;
+        background: url("/fondo-nvite-caracteristicas-2.png") $primario no-repeat right center;
+        background-size: cover;
+        background-blend-mode: color-burn;
       }
       .conte {
-        width: 80%;
+        width: 70%;
         h2,
         p {
           color: #fff;
@@ -150,9 +153,11 @@ const { matriz } = Astro.props;
       }
     }
     #item-c {
-      background: $acento;
       grid-column: 3 / span 1;
       grid-row: 2 / span 2;
+       background: url("/fondo-nvite-caracteristicas.png") $acento no-repeat center;
+        background-size: cover;
+        background-blend-mode: color-burn;
       p {
         color: #fff;
       }
@@ -162,7 +167,7 @@ const { matriz } = Astro.props;
       }
     }
     #item-d {
-      background: #fff;
+      background: $fondoGlobal;
       grid-column: 4 / span 1;
       grid-row: 2 / span 1;
     }
@@ -208,7 +213,7 @@ const { matriz } = Astro.props;
         grid-column: 1 / -1;
         grid-row: 3 / span 1;
         height: auto;
-        background: #fff;
+        background: $fondoGlobal;
         p,
         svg {
           color: $acento!important;
@@ -218,8 +223,10 @@ const { matriz } = Astro.props;
       #item-d {
         grid-column: 1 / span 2;
         grid-row: 4 / span 1;
-        background: $acento;
         border-bottom-left-radius: $radio;
+         background: url("/fondo-nvite-caracteristicas-2.png") $acento no-repeat right center;
+        background-size: cover;
+        background-blend-mode: color-burn;
         p{
           color: #fff;}
       }
