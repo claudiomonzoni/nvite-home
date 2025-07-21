@@ -8,54 +8,65 @@ const { title, description } = Astro.props;
 import { ClientRouter, ViewTransitions } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-import Analytics from '@vercel/analytics/astro'
+import Analytics from "@vercel/analytics/astro";
 ---
 
 <!doctype html>
-<html lang="es" >
+<html lang="es">
   <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-D9F01PXXVK"></script>
-<script>
-  // Declare dataLayer type for TypeScript
-  interface Window {
-    dataLayer: any[];
-  }
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9F01PXXVK"
+    ></script>
+    <script>
+      // Declare dataLayer type for TypeScript
+      interface Window {
+        dataLayer: any[];
+      }
 
-  // Initialize dataLayer if it doesn't exist
-  window.dataLayer = window.dataLayer || [];
+      // Initialize dataLayer if it doesn't exist
+      window.dataLayer = window.dataLayer || [];
 
-  // Now use dataLayer safely
-  if ('dataLayer' in window) {
-    window.dataLayer.push({
-      'event': 'pageView'
-    });
-  }
+      // Now use dataLayer safely
+      if ("dataLayer" in window) {
+        window.dataLayer.push({
+          event: "pageView",
+        });
+      }
 
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'G-D9F01PXXVK');
-</script>
+      gtag("config", "G-D9F01PXXVK");
+    </script>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+    <!-- ANDROID -->
+    <meta name="theme-color" content="#fff6f0"  media="(prefers-color-scheme: light)" />
+    <!-- iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta property="og:site_name" content="Invitaciones Digitales ">
-    <title>{title}</title>
+    <meta property="og:site_name" content="Invitaciones Digitales " />
     <meta property="og:locale" content="es_MX" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp" />
+    <meta
+      property="og:image"
+      content="https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp"
+    />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/x-icon" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <title>{title}</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Invitaciones Digitales - Nvitaciones",
         "url": "https://www.nvitaciones.com",
-        "logo": "https://www.nvitaciones.com/nvita-logo.svg", 
+        "logo": "https://www.nvitaciones.com/nvita-logo.svg",
         "sameAs": [
           "https://www.facebook.com/nvitaciones",
           "https://www.instagram.com/nvitaciones"
@@ -72,50 +83,71 @@ import Analytics from '@vercel/analytics/astro'
           "contactType": "customer service"
         }
       }
-      </script>
-      <ClientRouter />
-      <ViewTransitions />
- 
-  </head>
-  <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
-<script>
-  (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:5048561,hjsv:6};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-      a.appendChild(r);
-  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-  
-</script>
-<script src="https://analytics.ahrefs.com/analytics.js" data-key="7D2knBNtoOK/DOcTrPLqPg" async></script>
+    </script>
+    <ClientRouter />
+    <ViewTransitions />
 
-<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window,document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-   fbq('init', '679188402488387'); 
-  fbq('track', 'PageView');
-  </script>
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 5048561, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script><script
+      src="https://analytics.ahrefs.com/analytics.js"
+      data-key="7D2knBNtoOK/DOcTrPLqPg"
+      async></script><script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      fbq("init", "679188402488387");
+      fbq("track", "PageView");
+    </script></head
+  >
+  <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
+
+  <!-- Facebook Pixel Code -->
+
   <noscript>
-   <img height="1" width="1" 
-  src="https://www.facebook.com/tr?id=679188402488387&ev=PageView
-  &noscript=1"/>
+    <img
+      height="1"
+      width="1"
+      src="https://www.facebook.com/tr?id=679188402488387&ev=PageView
+  &noscript=1"
+    />
   </noscript>
   <!-- End Facebook Pixel Code -->
-  <body >
-
+  <body>
     <slot />
     <Analytics />
-
-
   </body>
   <script src="../js/reserva.js"></script>
   <script src="../js/globals.js"></script>
