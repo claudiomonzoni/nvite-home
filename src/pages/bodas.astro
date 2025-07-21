@@ -14,7 +14,10 @@ import SaveTheDate from "../components/SaveTheDate.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 ---
 
-<Layout title="Invitaciones Digitales para Boda Originales | RSVP y Gestión Fácil - Nvitaciones">
+<Layout
+  title="Invitaciones Elegantes de Bodas  | RSVP y Gestión Fácil"
+  description="Invitaciones de bodas digitales elegantes con confirmación de asistencia, pases, cuenta regresiva, mapas y mensajes personalizados. Lista para enviar por WhatsApp"
+>
   <div class="grid contenido">
     <Nav />
   </div>
@@ -33,18 +36,14 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 
   <div class="grid contenido">
     <div id="choro">
-  
-          <h2>
-            Tu boda ya es un reto… ¿Y ahora, también las invitaciones?"
-          </h2>
-       
-          <p>
-            Con nuestras <b>invitaciones digitales de boda</b>, olvídate del
-            caos. Personaliza tu diseño, gestiona invitados desde un solo panel
-            y envía por WhatsApp en segundos. 
-          </p>
-        </div>
-   
+      <h2>Tu boda ya es un reto… ¿Y ahora, también las invitaciones?"</h2>
+
+      <p>
+        Con nuestras <b>invitaciones digitales de boda</b>, olvídate del caos.
+        Personaliza tu diseño, gestiona invitados desde un solo panel y envía
+        por WhatsApp en segundos.
+      </p>
+    </div>
   </div>
 
   <div class="grid contenido">
@@ -54,7 +53,6 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         texto="Agrega, borra y edita tus invitados."
         icono="mdi:gear-outline"
         fondo="/fondo-nvite-caracteristicas-3.png"
-        
       />
 
       <Caracteristicas
@@ -70,7 +68,6 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         texto="Confirmaciones y mensajes de tus invitados."
         icono="mdi:account-check-outline"
         fondo="/fondo-nvite-caracteristicas-4.png"
-       
       />
 
       <Caracteristicas
@@ -92,7 +89,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
       invitados.
     </p>
   </section> -->
-  <div id="nvitaciones">  
+  <div id="nvitaciones">
     <MostrarNvitaciones dondeEstoy="bodas" />
   </div>
 
@@ -172,13 +169,13 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
           decoding="async"
         />
       </div> -->
-    </div>
-  </section> -->
+</Layout>
+-->
 
-  <div class="grid contenido">
-    <BannerGeneral
-      encabezado="Recibes con tu <b>Nvitación</b>"
-       texto={`
+<div class="grid contenido">
+  <BannerGeneral
+    encabezado="Recibes con tu <b>Nvitación</b>"
+    texto={`
     <ul>
     <li><b>Trato personalizado.</b></li>
     <li>Tu invitación,<b> 2 días hábiles</b> después del envio de tus datos.</li>
@@ -194,73 +191,72 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
         <small>*Panel de invitados no aplica en la versión "basic"</small>
         <br>
         `}
-      tema="terciario"
-      icono="mdi:deal"
-      urlImagen="../assets/home/gale/recibes.webp"
-      margenAbajo={true}
+    tema="terciario"
+    icono="mdi:deal"
+    urlImagen="../assets/home/gale/recibes.webp"
+    margenAbajo={true}
+  >
+    <Btn
+      liga="#formu"
+      texto="Obtén tu invitación"
+      clases="btn-oscuro"
+      claro={true}
+      blank={false}
     >
-      <Btn
-        liga="#formu"
-        texto="Obtén tu invitación"
-        clases="btn-oscuro"
-        claro={true}
-        blank={false}
-      >
-        <Icon name="bag" size={25} />
-      </Btn>
-    </BannerGeneral>
-  </div>
+      <Icon name="bag" size={25} />
+    </Btn>
+  </BannerGeneral>
+</div>
 
-  <div id="precios" class="grid contenido">
-    <Banner dondeEstoy="bodas" />
-  </div>
+<div id="precios" class="grid contenido">
+  <Banner dondeEstoy="bodas" />
+</div>
 
-  
-  <section class="grid contenido">
-    <BannerGeneral
-      encabezado="Confirmación de asistencia"
-      texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
-      tema="primario azul"
-      icono="mdi:archive-clock-outline"
-      urlImagen="../assets/home/gale/confirmacion.webp"
+<section class="grid contenido">
+  <BannerGeneral
+    encabezado="Confirmación de asistencia"
+    texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+    tema="primario azul"
+    icono="mdi:archive-clock-outline"
+    urlImagen="../assets/home/gale/confirmacion.webp"
+  >
+    <Btn
+      liga="/bodas"
+      texto="Bodas"
+      clases="btn-claro"
+      claro={true}
+      blank={false}
     >
-      <Btn
-        liga="/bodas"
-        texto="Bodas"
-        clases="btn-claro"
-        claro={true}
-        blank={false}
-      >
-        <Icon name="mdi:find-love" size={25} />
-      </Btn>
+      <Icon name="mdi:find-love" size={25} />
+    </Btn>
 
-      <Btn
-        liga="/invitaciones-quince"
-        texto="XV años"
-        clases="btn-oscuro"
-        claro={true}
-        blank={false}
-      >
-        <Icon name="mdi:find-love" size={25} />
-      </Btn>
-    </BannerGeneral>
-    <BannerGeneral
-      encabezado="Invitación digital con Música"
-      texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
-      tema="secundario "
-      icono="mdi:music"
-      izquierda={true}
-      urlImagen="../assets/home/gale/musica.webp"
-    />
+    <Btn
+      liga="/invitaciones-quince"
+      texto="XV años"
+      clases="btn-oscuro"
+      claro={true}
+      blank={false}
+    >
+      <Icon name="mdi:find-love" size={25} />
+    </Btn>
+  </BannerGeneral>
+  <BannerGeneral
+    encabezado="Invitación digital con Música"
+    texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
+    tema="secundario "
+    icono="mdi:music"
+    izquierda={true}
+    urlImagen="../assets/home/gale/musica.webp"
+  />
 
-    <BannerGeneral
-      encabezado="Invitación digital con Frase de amor y galería de fotos"
-      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
-      tema="primario"
-      icono="mdi:image-plus"
-      urlImagen="../assets/home/gale/frase.webp"
-    />
-    <!-- <BannerGeneral
+  <BannerGeneral
+    encabezado="Invitación digital con Frase de amor y galería de fotos"
+    texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
+    tema="primario"
+    icono="mdi:image-plus"
+    urlImagen="../assets/home/gale/frase.webp"
+  />
+  <!-- <BannerGeneral
       encabezado="Administra tus invitados"
       texto="De manera <b>fácil y eficiente</b>, agrega, edita, envía y controla todo desde el panel de invitados"
       tema="secundario"
@@ -268,88 +264,86 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
       icono="mdi:book-edit"
       urlImagen="../assets/home/gale/panel.webp"
     /> -->
-    <div class="flex">
-      <div class="cartaBase2">
-        <h2>Invitación personalizada para cada invitado</h2>
-        <p>
-          Haz que tus invitados se sientan especiales desde el primer momento. <b
-            >Cada invitación llevará el nombre del invitado o su familia,</b
-          > creando una experiencia única y personal para tu evento."
-        </p>
-        <img
-          id="decor"
-          src="/decoracion-muestra-invitacion-digital-nvite.webp"
-          alt="decoracion invitacion"
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="imaCelular"
-          src="/muestra-invitacion-digital-nvite-personalizada.webp"
-          alt="invitacion personalizada"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <div class="cartaBase2">
-        <h2>Gestiona tus pases</h2>
-        <p>
-          <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente
-          desde su invitación digital, dándote tranquilidad y el control que necesitas
-          para organizar tu evento."
-        </p>
-        <img
-          src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
-          alt="invitacion con confirmación de asistencia"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
+  <div class="flex">
+    <div class="cartaBase2">
+      <h2>Invitación personalizada para cada invitado</h2>
+      <p>
+        Haz que tus invitados se sientan especiales desde el primer momento. <b
+          >Cada invitación llevará el nombre del invitado o su familia,</b
+        > creando una experiencia única y personal para tu evento."
+      </p>
+      <img
+        id="decor"
+        src="/decoracion-muestra-invitacion-digital-nvite.webp"
+        alt="decoracion invitacion"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        class="imaCelular"
+        src="/muestra-invitacion-digital-nvite-personalizada.webp"
+        alt="invitacion personalizada"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
-
-    <!-- carcateristicas -->
-
-    <div id="conteCaracteristicas">
-      <Caracteristicas
-        encabezado="Invitación con mapas"
-        texto="Tus invitados sabrán exactamente como llegar."
-        icono="mdi:map-check"
-        fondo="/fondo-nvite-caracteristicas.png"
+    <div class="cartaBase2">
+      <h2>Gestiona tus pases</h2>
+      <p>
+        <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente
+        desde su invitación digital, dándote tranquilidad y el control que necesitas
+        para organizar tu evento."
+      </p>
+      <img
+        src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
+        alt="invitacion con confirmación de asistencia"
+        loading="lazy"
+        decoding="async"
       />
+    </div>
+  </div>
 
-      <Caracteristicas
-        encabezado="Invitación con mesa de regalos"
-        texto="Sugiere que te gustaría de regalo."
-        icono="mdi:gift-open"
-        fondo="/fondo-nvite-caracteristicas-2.png"
-      />
+  <!-- carcateristicas -->
 
-      <Caracteristicas
-        encabezado="Invitación con itinerario"
-        texto="Lista cada momento importante de tu evento"
-        icono="mdi:gift-open"
-        fondo="fondo-nvite-caracteristicas-3.png"
-      />
+  <div id="conteCaracteristicas">
+    <Caracteristicas
+      encabezado="Invitación con mapas"
+      texto="Tus invitados sabrán exactamente como llegar."
+      icono="mdi:map-check"
+      fondo="/fondo-nvite-caracteristicas.png"
+    />
 
-      <!-- <Caracteristicas
+    <Caracteristicas
+      encabezado="Invitación con mesa de regalos"
+      texto="Sugiere que te gustaría de regalo."
+      icono="mdi:gift-open"
+      fondo="/fondo-nvite-caracteristicas-2.png"
+    />
+
+    <Caracteristicas
+      encabezado="Invitación con itinerario"
+      texto="Lista cada momento importante de tu evento"
+      icono="mdi:gift-open"
+      fondo="fondo-nvite-caracteristicas-3.png"
+    />
+
+    <!-- <Caracteristicas
         encabezado="animacón"
         texto="Agrega hasta 6 fotos."
         icono="/ico-nvite-fotos.svg"
         fondo="fondo-nvite-caracteristicas-4.png"
       /> -->
-    </div>
-    <Btn
-      liga="#formu"
-      texto="Obtén tu invitación"
-      clases="btn-oscuro centrado"
-      claro={false}
-    />
-  </section>
-  
+  </div>
+  <Btn
+    liga="#formu"
+    texto="Obtén tu invitación"
+    clases="btn-oscuro centrado"
+    claro={false}
+  />
+</section>
 
-  <div class="grid contenido">
-
-    <SaveTheDate
+<div class="grid contenido">
+  <SaveTheDate
     h2="Save the date <span>Gratis</span>"
     p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Designer) o <b>contactanos y por $90 MXN lo editamos por ti. </b></i></small>"
     imagenes={[
@@ -368,61 +362,51 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     ]}
   />
 </div>
-  <section class="grid contenido">
-    <div class="flex">
-      <div class="fondo-formu">
-        <div class="bande">
-          <h2>Obtén tu invitación</h2>
-          <p>
-            <b>Contáctanos</b>, para resolver tus dudas o iniciar el proceso
-            para que obtengas tu invitación.
-          </p>
-          <small
-            >Usa el formulario para hablar con nuestra asistente de <b
-              >whatsapp</b
-            ></small
-          >
-        </div>
+<section class="grid contenido" id="formulario">
+  <div class="flex">
+    <div class="fondo-formu">
+      <div class="bande">
+        <h2>Prueba tu Nvitación <br /> sin compromiso</h2>
+        <p>
+          <b>¿Tienes duadas o pedidos especiales?</b>, <br /> contáctanos y hagamos
+          que tu invitación sea perfecta <br />😊
+        </p>
+      </div>
 
-        <div id="formu">
-          <form>
-            <!-- <h3>
-            <img src="/whatsapp.png" alt="logo whatsapp">
-           <b>whatsapp</b></h3> -->
-            <p><b>Aida</b>, nuestra asistente,resolverá tus dudas 😊</p>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" placeholder="Tu nombre" />
-            <label for="fecha">Fecha del evento</label>
-            <input type="date" name="fecha" id="fecha" />
-            <label for="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="agrega un email valido"
-            />
-            <!-- <a href="#" id="empezar" class="desactivado"
-              ><img src="/whatsapp.png" alt="logo whatsapp" /> Hola <b>Aida</b></a
-            > -->
-            <Btn
-              liga="#"
-              id="empezar"
-              texto="<b>Hola</b> Aida"
-              clases="desactivado, btn-oscuro"
-              claro={false}
-              blank={true}
-            >
-              <Icon name="mdi:whatsapp" />
-            </Btn>
-            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
-          </form>
-        </div>
+      <div id="formu">
+        <form>
+          <!-- <h3>
+          <img src="/whatsapp.png" alt="logo whatsapp">
+          <b>whatsapp</b></h3> -->
+
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" placeholder="Tu nombre" />
+          <label for="fecha">Fecha del evento</label>
+          <input type="date" name="fecha" id="fecha" />
+          <label for="evento">Tipo de evento</label>
+          <select name="evento" id="evento">
+            <option value="Boda">Boda</option>
+            <option value="Xv">Xv años</option>
+            <option value="Cumple">Cumpleaños</option>
+          </select>
+
+          <Btn
+            liga="#"
+            id="empezar"
+            texto="<b>Enviar</b> ahora"
+            clases="desactivado, btn-oscuro"
+            claro={false}
+            blank={true}
+          >
+            <Icon name="mdi:whatsapp" />
+          </Btn>
+          <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+        </form>
       </div>
     </div>
-  </section>
-
-  <Footer />
-</Layout>
+  </div>
+</section>
+<Footer />
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;

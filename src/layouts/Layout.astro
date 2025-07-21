@@ -1,9 +1,10 @@
 ---
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 import { ClientRouter, ViewTransitions } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -37,13 +38,13 @@ import Analytics from '@vercel/analytics/astro'
   gtag('config', 'G-D9F01PXXVK');
 </script>
     <meta charset="UTF-8" />
-    <meta name="description" content=`Organiza de tu evento con invitaciones digitales interactivas. Envía por WhatsApp tu invitación, confirma asistencia y gestiona tus invitados fácilmente con Nvitaciones.` />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta property="og:site_name" content="Nvitaciones Digitales ">
+    <meta property="og:site_name" content="Invitaciones Digitales ">
     <title>{title}</title>
     <meta property="og:locale" content="es_MX" />
     <meta property="og:type" content="website" />
@@ -59,7 +60,7 @@ import Analytics from '@vercel/analytics/astro'
           "https://www.facebook.com/nvitaciones",
           "https://www.instagram.com/nvitaciones"
         ],
-        "description": "¡Que tu celebración sea inolvidable!, transforma las invitaciones de tu evento en una experiencia única con las invitaciones digitales de nvitaciones.com",
+        "description": "Organiza a tus invitados con invitaciones digitales. Envía por WhatsApp, confirma asistencias y gestiona tus invitados fácilmente con Nvitaciones.",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "México",
