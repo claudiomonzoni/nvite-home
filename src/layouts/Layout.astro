@@ -12,38 +12,18 @@ import Analytics from "@vercel/analytics/astro";
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es-MX">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9F01PXXVK"
-    ></script>
-    <script>
-      // Declare dataLayer type for TypeScript
-      interface Window {
-        dataLayer: any[];
-      }
-
-      // Initialize dataLayer if it doesn't exist
-      window.dataLayer = window.dataLayer || [];
-
-      // Now use dataLayer safely
-      if ("dataLayer" in window) {
-        window.dataLayer.push({
-          event: "pageView",
-        });
-      }
-
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-D9F01PXXVK");
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <!-- ANDROID -->
-    <meta name="theme-color" content="#fff6f0"  media="(prefers-color-scheme: light)" />
+    <!-- Color para la barra de navegación en Android -->
+    <meta name="theme-color" content="#f0eae7" />
+    <!-- (Opcional) Para modo oscuro, solo algunos navegadores lo soportan -->
+    <meta
+      name="theme-color"
+      content="#656a8d"
+      media="(prefers-color-scheme: dark)"
+    />
     <!-- iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -86,6 +66,33 @@ import Analytics from "@vercel/analytics/astro";
     </script>
     <ClientRouter />
     <ViewTransitions />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9F01PXXVK"
+    ></script>
+    <script>
+      // Declare dataLayer type for TypeScript
+      interface Window {
+        dataLayer: any[];
+      }
+
+      // Initialize dataLayer if it doesn't exist
+      window.dataLayer = window.dataLayer || [];
+
+      // Now use dataLayer safely
+      if ("dataLayer" in window) {
+        window.dataLayer.push({
+          event: "pageView",
+        });
+      }
+
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-D9F01PXXVK");
+    </script>
 
     <script>
       (function (h, o, t, j, a, r) {
@@ -130,8 +137,8 @@ import Analytics from "@vercel/analytics/astro";
       );
       fbq("init", "679188402488387");
       fbq("track", "PageView");
-    </script></head
-  >
+    </script>
+    </head >
   <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre) -->
 
   <!-- Facebook Pixel Code -->
@@ -148,7 +155,6 @@ import Analytics from "@vercel/analytics/astro";
   <body>
     <slot />
     <Analytics />
-  </body>
-  <script src="../js/reserva.js"></script>
+  </body><script src="../js/reserva.js"></script>
   <script src="../js/globals.js"></script>
 </html>
