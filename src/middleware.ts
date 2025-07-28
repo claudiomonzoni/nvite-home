@@ -41,6 +41,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/api\/getInvitados\.json$/,        // Ruta específica de la API
         /^\/panel\/ingresar$/,                // Página de ingreso
         /^\/panel\/registro$/,                // Página de registro
+        /^\/keystatic(\/.*)?$/,                   // Cualquier subruta en /bodas
         /^\/bodas(\/.*)?$/,                   // Cualquier subruta en /bodas
         /^\/quince(\/.*)?$/,                   // Cualquier subruta en /bodas
         /^\/invitaciones-quince(\/.*)?$/,                  // Cualquier subruta en /quince
