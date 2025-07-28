@@ -50,6 +50,19 @@ if (Astro.cookies.has("cartItems")) {
                   Invitaciones PDF
                 </a>
               </li>
+              {
+                url === "/"
+                  ? (
+                    <li>
+                      <a href="#faq">
+                        FAQ
+                      </a>
+                    </li>
+                  )
+                  : (
+                   ""
+                  )
+              }
               <li>
                 <Btn
                   liga="https://wa.link/kex8vd"
