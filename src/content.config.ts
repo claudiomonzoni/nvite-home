@@ -30,7 +30,7 @@ const bodas = defineCollection({
     //  ({ image }) =>
     z.object({
       draft: z.boolean().optional(),
-      slug: z.string(),
+      //slug: z.string(),
       cover: z.string(),
       ellaIniciales: z.string(),
       elIniciales: z.string(),
@@ -99,7 +99,7 @@ const quince = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/quince" }),
   schema: z.object({
     draft: z.boolean().optional(),
-    slug: z.string(),
+    //slug: z.string(),
     cover: z.string(),
     titulo: z
       .string()

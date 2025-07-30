@@ -9,7 +9,6 @@ if (Astro.cookies.has("cartItems")) {
   const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
   cartItemsCount = JSON.parse(cookie).length;
 }
-
 ---
 
 <nav id="main-nav">
@@ -50,19 +49,13 @@ if (Astro.cookies.has("cartItems")) {
                   Invitaciones PDF
                 </a>
               </li>
-              {
-                url === "/"
-                  ? (
-                    <li>
-                      <a href="#faq">
-                        FAQ
-                      </a>
-                    </li>
-                  )
-                  : (
-                   ""
-                  )
-              }
+              {url === "/" ? (
+                <li>
+                  <a href="#faq">FAQ</a>
+                </li>
+              ) : (
+                ""
+              )}
               <li>
                 <Btn
                   liga="https://wa.link/kex8vd"
@@ -82,7 +75,11 @@ if (Astro.cookies.has("cartItems")) {
     </div>
     <li id="carrito">
       <a href="/nvitaciones/cart" aria-label="Ir al carrito">
-        <Icon name="solar:cart-large-minimalistic-outline" width="32" height="32" />
+        <Icon
+          name="solar:cart-large-minimalistic-outline"
+          width="32"
+          height="32"
+        />
         <span
           class="count"
           id="cart-count"
@@ -97,13 +94,12 @@ if (Astro.cookies.has("cartItems")) {
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
-  .btn-whatsapp{
+  .btn-whatsapp {
     margin-bottom: 0;
     background-color: white;
   }
   .panel-home {
     margin: 0;
-
   }
 
   .nav-content {
@@ -135,7 +131,6 @@ if (Astro.cookies.has("cartItems")) {
       display: flex;
       align-items: center;
       gap: $margen-min;
-      
     }
     @include cel {
       ul li:last-child {
@@ -196,9 +191,13 @@ if (Astro.cookies.has("cartItems")) {
         position: fixed;
         left: 0;
         top: 4rem;
-    
-        background: linear-gradient(0deg, rgba($fondoGlobal, .0) 0%, rgba($fondoGlobal, 1) 50%);
-         backdrop-filter: blur(8px);
+
+        background: linear-gradient(
+          0deg,
+          rgba($fondoGlobal, 0) 0%,
+          rgba($fondoGlobal, 1) 50%
+        );
+        backdrop-filter: blur(8px);
         border-bottom-right-radius: $radio;
         border-bottom-left-radius: $radio;
       }
@@ -216,7 +215,7 @@ if (Astro.cookies.has("cartItems")) {
   li {
     list-style: none;
     align-items: center;
-    a{
+    a {
       margin-bottom: 0;
     }
     @include cel {
