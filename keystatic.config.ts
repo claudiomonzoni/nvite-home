@@ -17,7 +17,11 @@ export default config({
           label: "Slug",
           defaultValue: () => ''
         }),
-        cover: fields.text({ label: "Cover" }),
+        cover: fields.image({
+          label: "Imagen de portada",
+          directory: "public/images/bodas",
+          publicPath: "bodas/covers/",
+        }),
         ellaIniciales: fields.text({ label: "Iniciales de ella" }),
         elIniciales: fields.text({ label: "Iniciales de él" }),
         titulo: fields.text({ 
@@ -111,7 +115,11 @@ export default config({
         version: fields.text({ label: "Version" }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
         slug: fields.text({ label: "Slug" }),
-        cover: fields.text({ label: "Cover" }),
+        cover: fields.image({
+          label: "Imagen de portada",
+          directory: "public/quince/covers",
+          publicPath: "/images/quince/",
+        }),
         titulo: fields.slug({ name: { label: 'Titulo' } }),
         extracto: fields.text({ label: "Extracto" }),
         descripcion: fields.text({ label: "Descripción" }),
