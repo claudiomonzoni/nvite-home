@@ -3,6 +3,10 @@ import { config, fields, collection } from "@keystatic/core";
 export default config({
   storage: {
     kind: "local",
+   // repo: {
+   //   owner:'claudiomonzoni',
+   //   name:'nvite-home'
+   // }
   },
   collections: {
     bodas: collection({

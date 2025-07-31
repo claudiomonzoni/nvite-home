@@ -3,6 +3,7 @@
 @use "../temas/base/bodas/globales" as *;
 @use "../temas/clasico/bodas/clasico" as *;
 @use "../temas/elegante/bodas/globales" as *;
+@use "../temas/moderno/bodas/globales" as *;
 
 
 
@@ -17,5 +18,8 @@
 
 :root[data-theme="elegante"] {
   @include tema-elegante();
+}
+:root[data-theme="moderno"] {
+  @include tema-moderno();
 }
 

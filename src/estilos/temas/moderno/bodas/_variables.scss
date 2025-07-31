@@ -1,0 +1,108 @@
+//paletas
+@use '../../../paletas/invierno' as *;
+@use '../../../paletas/base' as *;
+@use '../../../paletas/otono' as *;
+@use '../../../paletas/primavera' as *;
+
+
+//fuentes
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Parisienne&family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+:root[data-paleta="base"] {
+  @include base();
+}
+:root[data-paleta="otono"] {
+  @include otono();
+}
+:root[data-paleta="primavera"] {
+  @include primavera();
+}
+
+
+
+//media query
+$cel: 479px;
+$nocel: 479px;
+$tableta: 768px;
+$tableta-land: 1024px;
+$hd:1600px;
+$hdplus:1990px;
+
+
+//extra
+$radio: .8rem;
+$margen: 4rem;
+$margen-top: 8rem;
+$radio-cel: 0.5rem;
+$margen-cel: 2rem;
+$margen-min: 1rem;
+$margen-top-cel: 6rem;
+
+// variable de css para rutas 
+
+$encabezados: "Cormorant Garamond";
+$garigol: "Parisienne";
+$txt: "Sorts Mill Goudy";
+
+
+
+
+@mixin cel {
+  @media (max-width: #{$cel}) {
+    @content;
+  }
+}
+
+@mixin nocel {
+  @media (min-width: #{$nocel}) {
+    @content;
+  }
+}
+
+@mixin tableta_land {
+  @media (min-width: #{$tableta-land}) and (max-width: #{$hd - 1px}) {
+    @content;
+  }
+}
+
+@mixin tableta {
+  @media (min-width: #{$tableta - 1px}) and (max-width: #{$tableta-land - 1px}) {
+    @content;
+  }
+}
+
+@mixin hd {
+  @media (min-width: #{$hd}) and (max-width: #{$hdplus}) {
+    @content;
+  }
+}
+
+@mixin hdplus {
+  @media (min-width: #{$hdplus}) {
+    @content;
+  }
+}
+// animaciones 
+.anime{
+  transition: all .5s ease-in-out;
+  }
+
+  @keyframes slide-in {
+    0% { max-height:0; }
+    // por si tenemos en auto la altura
+    100% { max-height:200rem; } 
+  }
+
+
+
+
+// intentar con min
+$margen-riel: calc((100% - (100% - 5rem)) / 2 );
+
+.sombra{
+  box-shadow: 0px 4px 20px 0px var(--sombra);
+}

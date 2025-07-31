@@ -1,0 +1,233 @@
+@use "_variables.scss" as *;
+
+#hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(0deg, var(--gris) 0%, var(--fondo) 30%);
+  ul,
+  li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  p {
+    padding: 0 !important;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/bodas/floral-decor-eleggante-1.svg") no-repeat;
+    background-size: 50%;
+    background-position: 90% 90%;
+    // background-blend-mode: multiply;
+    mix-blend-mode: overlay;
+    @include cel {
+      background-size: 200%;
+      background-position: center 50%;
+    }
+  }
+  @include cel {
+    flex-wrap: wrap;
+    justify-content: center;
+    background: linear-gradient(180deg, var(--gris) 0%, var(--fondo) 30%);
+
+    .izq,
+    .der {
+      flex: 1 0 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .izq {
+      // padding: $margen-cel;
+      margin-bottom: $margen-cel;
+      height: auto;
+      order: 2;
+    }
+    .der {
+      order: 1;
+      p {
+        padding: $margen-cel;
+      }
+    }
+  }
+}
+.izq {
+  flex: 1 0 40%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.der {
+  height: fit-content;
+  font-size: clamp(1.3rem, 1vw, 1rem);
+  flex: 1 0 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: var(--primario) !important;
+    font-size: clamp(4rem, 6vw, 7.5rem) !important;
+    // text-shadow: 2px 2px 8px #cab9ae;
+    @include cel {
+      font-size: 13vw !important;
+    }
+  }
+  .bandeja {
+    text-align: center;
+    border: solid 1px var(--secundario);
+    width: 70%;
+    padding: $margen-cel;
+    margin: $margen-cel 0;
+    position: relative;
+
+    @include cel {
+      padding: $margen $margen-cel;
+    }
+  }
+  .flecha {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    border: solid 1px var(--secundario);
+    border-radius: 100%;
+    background-color: var(--fondo);
+    width: 30px;
+    height: 30px;
+  }
+}
+.casamos {
+  color: var(--acento);
+  font-family: $garigol, serif;
+  font-size: clamp(2.4rem, 2vw, 3rem);
+  line-height: 2.1rem;
+  margin-top: $margen-min !important;
+}
+#avatar {
+  width: 83%;
+  height: 90%;
+  position: relative;
+  overflow: hidden; // Para contener el clip-path
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0%, 100% 0, 100% 100%, 0% 100%);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // border-radius: $radio;
+    position: relative;
+    z-index: 1;
+  }
+  @include cel {
+    width: 100%;
+    height: 700px;
+    //clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
+  }
+}
+#fecha {
+  position: relative;
+  #fechaConte {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .fecha,
+  .fechaMes {
+    border-top: solid 1px var(--secundario);
+    border-bottom: solid 1px var(--secundario);
+    padding: 0.4rem 0;
+  }
+  .fechaNum {
+    font-size: clamp(5rem, 6vw, 7rem);
+    color: var(--acento);
+    font-family: $txt, serif;
+    line-height: 1.1em;
+    padding: 0 $margen-min;
+  }
+  .fechaAno {
+    font-family: $encabezados, serif;
+    font-size: clamp(1.2rem, 2vw, 3rem);
+  }
+}
+
+#iniciales {
+  margin-bottom: $margen-cel;
+  .amp {
+    font-size: clamp(2.5rem, 3.5vw, 4.5rem);
+    font-family: $encabezados, serif;
+    font-weight: 300;
+    color: var(--primario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    // text-shadow: 2px 2px 8px #cab9ae;
+
+    span {
+      z-index: -1;
+      color: var(--secundario);
+      font-size: clamp(3rem, 4vw, 5rem);
+    }
+    span:first-child {
+      position: relative;
+      top: -15px;
+      left: 10px;
+    }
+    span:last-child {
+      position: relative;
+      top: 10px;
+      right: 13px;
+    }
+  }
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--acento);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.loadingText {
+  font-size: 1.6rem;
+  color: var(--acento);
+  font-family: $encabezados, sans-serif;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
