@@ -56,8 +56,8 @@ const bodas = defineCollection({
         .object({
           hora: z.string().optional(),
           lugar: z.string().optional(),
-          lat: z.number().optional(),
-          lng: z.number().optional(),
+          lat: z.string().optional(),
+          lng: z.string().optional(),
         })
         .optional(),
       recepcion: z
@@ -114,7 +114,7 @@ const quince = defineCollection({
     // }).optional(),
     extracto: z.string(),
     descripcion: z.string(),
-    whatsapp: z.number(),
+    whatsapp: z.string(),
     quinceanera: z.string(),
     fecha: z.date(),
     consideraciones: z.array(z.string()).optional(),
@@ -124,16 +124,16 @@ const quince = defineCollection({
       .object({
         hora: z.string().optional(),
         lugar: z.string().optional(),
-        lat: z.number().optional(),
-        lng: z.number().optional(),
+        lat: z.string().optional(),
+        lng: z.string().optional(),
       })
       .optional(),
     recepcion: z
       .object({
         hora: z.string().optional(),
         lugar: z.string().optional(),
-        lat: z.number().optional(),
-        lng: z.number().optional(),
+        lat: z.string().optional(),
+        lng: z.string().optional(),
       })
       .optional(),
     itinerario: z
