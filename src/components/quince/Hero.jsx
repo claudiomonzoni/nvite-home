@@ -81,8 +81,8 @@ export default function Hero({ nombres, fecha, cover }) {
               </ b>
                 y me encantará compartirlo contigo.
                Con cariño,
-              <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
             </p>
+              <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
           {
             pase ? (
               <div id={Style["pases"]}>

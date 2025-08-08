@@ -43,6 +43,8 @@ const base = new URL(Astro.url.pathname, Astro.site);
 const Nfecha = new Date(quince.data.fecha);
 
 const { Content } = await render(quince);
+// Tipado local para la galería mientras se regeneran los tipos de Keystatic
+const galeria: string[] = (quince.data as any).galeria ?? [];
 ---
 
 <Layout
@@ -123,7 +125,7 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 </section>
 
 <section class="grid contenido">
-  <Contador fecha={quince.data.fecha} />
+  <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
 </section>
 <section class="grid pantalla">
   <ProgresoInvitados
@@ -138,11 +140,9 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 
 <section class="grid pantalla">
   <SilderGsap>
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince1.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince2.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince3.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince4.webp)
-    ![Xv años Nina del casquito](../../assets/quince/nina-casquito/quince5.webp)
+    {galeria && galeria.map((src) => (
+      <img src={src} alt={`Galería de ${quince.data.quinceanera || 'XV Años'}`} loading="lazy" />
+    ))}
   </SilderGsap>
 </section>
 

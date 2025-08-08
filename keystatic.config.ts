@@ -343,6 +343,18 @@ export default config({
           },
           { label: "Tema" }
         ),
+        // Galería de imágenes (array de imágenes)
+        galeria: fields.array(
+          fields.image({
+            label: "Imagen",
+            directory: "public/quince/galeria",
+            publicPath: "/quince/galeria/",
+          }),
+          {
+            label: "Galería",
+            itemLabel: () => "Imagen",
+          }
+        ),
         content: fields.mdx({
           label: "Contenido",
           // components: {

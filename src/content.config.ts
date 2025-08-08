@@ -149,6 +149,8 @@ const quince = defineCollection({
     banco: z.string().optional(),
     cuenta: z.number().optional(),
     paleta: z.string().optional(),
+    // Galería de imágenes cargadas desde Keystatic/MDX
+    galeria: z.array(z.string()).optional(),
     theme: themeSchema
   }),
 });
