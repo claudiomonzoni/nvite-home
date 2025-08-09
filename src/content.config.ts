@@ -5,6 +5,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
 import { glob } from "astro/loaders";
+import { version } from "react";
 
 // Definir el esquema del theme
 const themeSchema = z.object({
@@ -29,6 +30,7 @@ const bodas = defineCollection({
   schema:
     //  ({ image }) =>
     z.object({
+      version: z.string(),
       draft: z.boolean().optional(),
       //slug: z.string(),
       cover: z.string(),
@@ -72,8 +74,8 @@ const bodas = defineCollection({
         .array(
           z.object({
             titulo: z.string(),
-            lugar: z.string(),
-            hora: z.number(),
+            lugar: z.string().optional(),
+            hora: z.string().optional(),
           })
         )
         .optional(),
@@ -98,6 +100,7 @@ const quince = defineCollection({
   // type: "content", // v2.5.0 and later
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/quince" }),
   schema: z.object({
+    version: z.string(),
     draft: z.boolean().optional(),
     //slug: z.string(),
     cover: z.string(),
@@ -120,6 +123,14 @@ const quince = defineCollection({
     consideraciones: z.array(z.string()).optional(),
     vestimenta: z.string(),
     frase_amor: z.string(),
+    frase_regalos: z.string().optional(),
+    // ProgresoInvitados
+    progresoEmail: z.string().email().optional(),
+    progresoPorcentaje: z.number().optional(),
+    progresoFrase: z.string().optional(),
+    progresoMostrarSiempre: z.boolean().optional(),
+    regalos: z.array(z.object({ titulo: z.string(), url: z.string() })).optional(),
+    tipoRegalos: z.array(z.string()).optional(),
     ceremonia: z
       .object({
         hora: z.string().optional(),
@@ -140,14 +151,14 @@ const quince = defineCollection({
       .array(
         z.object({
           titulo: z.string(),
-          lugar: z.string(),
-          hora: z.number(),
+          lugar: z.string().optional(),
+          hora: z.string().optional(),
         })
       )
       .optional(),
     beneficiario: z.string().optional(),
     banco: z.string().optional(),
-    cuenta: z.number().optional(),
+    cuenta: z.string().optional(),
     paleta: z.string().optional(),
     // Galería de imágenes cargadas desde Keystatic/MDX
     galeria: z.array(z.string()).optional(),

@@ -1,5 +1,5 @@
 ---
-export const prerender = true;
+// export const prerender = true;
 import { getCollection, render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/quince/Layout.astro";
@@ -19,7 +19,7 @@ import BloqueMapa from "../../components/quince/BloqueMapa.astro";
 import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
-import Confirmacion from "../../components/quince/Confirmacion";
+import Confirmacion from "../../components/quince/Confirmacion";  
 
 
 
@@ -45,6 +45,12 @@ const Nfecha = new Date(quince.data.fecha);
 const { Content } = await render(quince);
 // Tipado local para la galería mientras se regeneran los tipos de Keystatic
 const galeria: string[] = (quince.data as any).galeria ?? [];
+// Tipado y normalización local para mesas de regalos
+type Mesa = { url: string; titulo: string };
+const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
+  (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
+);
+
 ---
 
 <Layout
@@ -127,16 +133,18 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 <section class="grid contenido">
   <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
 </section>
+
+
 <section class="grid pantalla">
   <ProgresoInvitados
-    email="nvitacionluxquince@nvitaciones.com"
-    porcentajeMostrarInvitados={20}
-    frase="¡Ya casi completamos la lista de invitados!"
-    mostrarSiempre={true}
+    email={quince.data.progresoEmail ?? "nvitacionluxquince@nvitaciones.com"}
+    porcentajeMostrarInvitados={(quince.data.progresoPorcentaje ?? 20) as number}
+    frase={quince.data.progresoFrase ?? "¡Ya casi completamos la lista de invitados!"}
+    mostrarSiempre={quince.data.progresoMostrarSiempre ?? true}
   />
 </section>
 
-<!-- <Itinerario listado={quince.data.iterario} /> -->
+<Itinerario listado={quince.data.itinerario} />
 
 <section class="grid pantalla">
   <SilderGsap>
@@ -146,31 +154,29 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   </SilderGsap>
 </section>
 
-<!-- <section class="grid contenido">
+<section class="grid contenido">
 
   <Regalos
   tipo={quince.data.tipoRegalos}
-  mesas={quince.data.regalos}
+  mesas={mesas}
       frase={quince.data.frase_regalos}
       beneficiario={quince.data.beneficiario}
       banco={quince.data.banco}
       cuenta={quince.data.cuenta}
     />
-</section> -->
+</section>
 
-<!-- <section class="grid contenido">
+<section class="grid contenido">
   <MensajeVip />
-</section> -->
+</section>
 
 
-
-<!-- <Confirmacion
+ <Confirmacion
   whatsapp={quince.data.whatsapp}
   dias_antes={15}
   version={quince.data.version}
   client:only="react"
-/> -->
-
+/> 
 
   <section class="grid contenido">
     <Footer ruta={base} />

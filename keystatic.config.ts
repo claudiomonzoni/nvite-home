@@ -4,10 +4,10 @@ import { wrapper, block } from "@keystatic/core/content-components";
 export default config({
   storage: {
     kind: "local",
-   // repo: {
-   //   owner:'claudiomonzoni',
-   //   name:'nvite-home'
-   // }
+    // repo: {
+    //   owner:'claudiomonzoni',
+    //   name:'nvite-home'
+    // }
   },
   collections: {
     bodas: collection({
@@ -35,18 +35,29 @@ export default config({
         }),
         extracto: fields.text({ label: "Extracto" }),
         descripcion: fields.text({ label: "Descripción" }),
-        whatsapp: fields.text({ 
+        whatsapp: fields.text({
           label: "WhatsApp",
           validation: {
             length: { min: 10, max: 15 },
-            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" }
-          }
+            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
+          },
         }),
         email: fields.text({ label: "Email" }),
         novios: fields.text({ label: "Novios" }),
         fecha: fields.date({ label: "Fecha" }),
         frase_amor: fields.text({ label: "Frase de amor" }),
         frase_regalos: fields.text({ label: "Frase de regalos" }),
+        // Progreso de Invitados (para componente ProgresoInvitados)
+        progresoEmail: fields.text({ label: "Email para invitados" }),
+        progresoPorcentaje: fields.number({
+          label: "% mínimo para mostrar",
+          validation: { min: 0, max: 100 },
+        }),
+        progresoFrase: fields.text({ label: "Frase de progreso" }),
+        progresoMostrarSiempre: fields.checkbox({
+          label: "Mostrar siempre",
+          defaultValue: false,
+        }),
         padres: fields.object(
           {
             mamaNovia: fields.text({ label: "Mamá de la novia" }),
@@ -75,15 +86,21 @@ export default config({
               label: "Latitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
             lng: fields.text({
               label: "Longitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
           },
           { label: "Ceremonia" }
@@ -96,20 +113,26 @@ export default config({
               label: "Latitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
             lng: fields.text({
               label: "Longitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
           },
           { label: "Recepción" }
         ),
-        iterario: fields.array(
+        itinerario: fields.array(
           fields.object(
             {
               titulo: fields.text({ label: "Título" }),
@@ -125,7 +148,7 @@ export default config({
         ),
         beneficiario: fields.text({ label: "Beneficiario" }),
         banco: fields.text({ label: "Banco" }),
-        cuenta: fields.number({ label: "Cuenta" }),
+        cuenta: fields.text({ label: "Cuenta" }),
         paleta: fields.select({
           label: "Paleta",
           options: [
@@ -208,12 +231,12 @@ export default config({
         titulo: fields.slug({ name: { label: "Titulo" } }),
         extracto: fields.text({ label: "Extracto" }),
         descripcion: fields.text({ label: "Descripción" }),
-        whatsapp: fields.text({ 
+        whatsapp: fields.text({
           label: "WhatsApp",
           validation: {
             length: { min: 10, max: 15 },
-            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" }
-          }
+            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
+          },
         }),
         quinceanera: fields.text({ label: "Quinceañera" }),
         fecha: fields.date({ label: "Fecha" }),
@@ -236,6 +259,18 @@ export default config({
           label: "Tipos de regalos",
           itemLabel: (props) => props.value,
         }),
+        // Progreso de Invitados (para componente ProgresoInvitados)
+        progresoEmail: fields.text({ label: "Email del anfitrion" }),
+        progresoPorcentaje: fields.number({
+          label: "% mínimo para mostrar",
+          validation: { min: 0, max: 100 },
+        }),
+        progresoFrase: fields.text({ label: "Frase de progreso" }),
+        progresoMostrarSiempre: fields.checkbox({
+          label: "Mostrar siempre el progreso de invitados?",
+          defaultValue: false,
+        }),
+
         consideraciones: fields.array(fields.text({ label: "Consideración" }), {
           label: "Consideraciones",
           itemLabel: (props) => props.value,
@@ -249,15 +284,21 @@ export default config({
               label: "Latitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
             lng: fields.text({
               label: "Longitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
           },
           { label: "Ceremonia" }
@@ -270,20 +311,26 @@ export default config({
               label: "Latitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
             lng: fields.text({
               label: "Longitud",
               validation: {
                 length: { min: 1 },
-                pattern: { regex: /^-?\d+\.\d+$/, message: "Debe ser un número decimal válido" }
-              }
+                pattern: {
+                  regex: /^-?\d+\.\d+$/,
+                  message: "Debe ser un número decimal válido",
+                },
+              },
             }),
           },
           { label: "Recepción" }
         ),
-        iterario: fields.array(
+        itinerario: fields.array(
           fields.object(
             {
               titulo: fields.text({ label: "Título" }),
@@ -299,7 +346,7 @@ export default config({
         ),
         beneficiario: fields.text({ label: "Beneficiario" }),
         banco: fields.text({ label: "Banco" }),
-        cuenta: fields.number({ label: "Cuenta" }),
+        cuenta: fields.text({ label: "Cuenta" }),
         paleta: fields.select({
           label: "Paleta",
           options: [
