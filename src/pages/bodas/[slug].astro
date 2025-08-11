@@ -5,6 +5,28 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Footer from "../../components/bodas/Footer.astro";
 
+//componentes
+import HeroElegante from "../../components/bodas/Hero-elegante.jsx";
+import HeroBase from "../../components/bodas/Hero.jsx";
+import Encabezados from "../../components/bodas/Encabezados.astro";
+import Audio from "../../components/bodas/Audio.astro";
+import Padres from "../../components/bodas/Padres.astro";
+import Pases from "../../components/bodas/Pases";
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
+import ParrafosLibres from "../../components/bodas/ParrafosLibres.astro";
+import Frase from "../../components/bodas/Frase.astro";
+import Detalles from "../../components/bodas/Detalles.astro";
+import Galeria from "../../components/bodas/Galeria.astro";
+import SliderGsap from "../../components/comunes/SilderGsap.astro";
+import SliderVentana from "../../components/comunes/SliderVentana.astro";
+import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
+import Regalos from "../../components/bodas/Regalos.astro";
+import Contador from "../../components/bodas/Contador.astro";
+import Confirmacion from "../../components/comunes/Confirmacion";
+import Itinerario from "../../components/bodas/Itinerario.astro";
+import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
+
 export async function getStaticPaths() {
   const bodas = await getCollection("bodas", ({ data }) => {
     return !data.draft;
@@ -19,9 +41,12 @@ type boda = CollectionEntry<"bodas">;
 interface Props {
   boda: CollectionEntry<"bodas">;
 }
+
+
 const { boda } = Astro.props;
 const { Content } = await render(boda);
 const base = new URL(Astro.url.pathname, Astro.site);
+const galeria: string[] = (boda.data as any).galeria ?? [];
 ---
 
 <Layout
@@ -31,7 +56,122 @@ const base = new URL(Astro.url.pathname, Astro.site);
   paleta={boda.data.paleta}
   theme={boda.data.theme}
 >
-  <Content />
+<section id="hero-hero">
+  <HeroElegante
+     nombres={boda.data.novios}
+     fecha={boda.data.fecha}
+     ellaIniciales={boda.data.ellaIniciales}
+     elIniciales={boda.data.elIniciales}
+     cover={boda.data.cover}
+     client:load
+   /> 
+ </section>
+ 
+ <section class="grid contenido">
+   <Audio src="/bodas/nvitaPlus/love-story" />
+ </section>
+ 
+ 
+ <section class="grid pantalla">
+   <Padres
+     mamaNovia={boda.data.padres.mamaNovia}
+     papaNovia={boda.data.padres.papaNovia}
+     fotopapasNovia={boda.data.padres.fotopapasNovia}
+     mamaNovio={boda.data.padres.mamaNovio}
+     papaNovio={boda.data.padres.papaNovio}
+     fotopapasNovio={boda.data.padres.fotopapasNovio}
+   />
+ </section>
+ 
+ <Pases folder={boda.data.json} client:load />
+ 
+ <section class="grid contenido">
+   <div class="bandejaLugares">
+     <BloqueMapa
+       encabezado="Ceremonia"
+       dir={boda.data.ceremonia.lugar}
+       horario={boda.data.ceremonia.hora}
+       lat={boda.data.ceremonia.lat}
+       lng={boda.data.ceremonia.lng}
+       mapName="mapa1"
+       icono="iglesia"
+     />
+     <BloqueMapa
+       encabezado="Recepción"
+       dir={boda.data.recepcion.lugar}
+       horario={boda.data.recepcion.hora}
+       lat={boda.data.recepcion.lat}
+       lng={boda.data.recepcion.lng}
+       mapName="mapa2"
+       icono="brindis"
+     />
+   </div>
+ </section>
+ 
+ <section class="grid contenido">
+   <Frase frase={boda.data.frase_amor} />
+ </section>
+ 
+ <section class="grid contenido">
+ 
+   <Contador fecha={boda.data.fecha.toISOString()} />
+ </section>
+ <ProgresoInvitados
+   email={boda.data.email}
+   porcentajeMostrarInvitados={20}
+   frase="Estás en la lista, ¿Ya confirmaste?"
+   mostrarSiempre={true}
+ />
+ 
+ <section class="grid pantalla" id="BaseItinerario">
+   <Encabezados texto="Itinerario" />
+   <Itinerario listado={boda.data.itinerario} />
+ </section>
+ 
+ 
+ 
+ <section class="grid pantalla flex margen-arriba-abajo">
+   <Detalles lista={boda.data.consideraciones} encabezado="Consideraciones" />
+   <Detalles encabezado="Codigo de vestir" vestimenta={boda.data.vestimenta} />
+   <Detalles encabezado="Sugerencia de tonos" colores={boda.data.coloresVestimenta} />
+ </section>
+ 
+ <section class="grid pantalla">
+   <SliderVentana>
+    {galeria && galeria.map((src) => (
+      <div class="img-window">  
+      <img src={src} alt={`Galería de ${boda.data.novios || 'Bodas de Nvitaciones'}`} loading="lazy" />
+      </div>
+    ))}
+
+   </SliderVentana>
+ </section>
+ 
+ 
+ 
+ <section class="grid contenido">
+ 
+   <Regalos
+       frase={boda.data.frase_regalos}
+       beneficiario={boda.data.beneficiario}
+       banco={boda.data.banco}
+       cuenta={boda.data.cuenta}
+     />
+ </section>
+ 
+ 
+ 
+ <section class="grid contenido">
+   <MensajeVip />
+ </section>
+ 
+ <Confirmacion
+   whatsapp={boda.data.whatsapp}
+   dias_antes={15}
+   version={boda.data.version}
+
+   client:only="react"
+ />
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>

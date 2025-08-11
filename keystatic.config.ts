@@ -12,29 +12,21 @@ export default config({
   collections: {
     bodas: collection({
       label: "Bodas",
-      slugField: "slug",
+      slugField: "titulo",
       path: "src/content/bodas/*",
       format: { contentField: "content" },
       schema: {
         version: fields.text({ label: "Version" }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
-        slug: fields.text({
-          label: "Slug",
-          defaultValue: () => "",
-        }),
         cover: fields.image({
           label: "Imagen de portada",
-          directory: "public/images/bodas",
-          publicPath: "bodas/covers/",
+          directory: "public/bodas/covers",
+          publicPath: "/bodas/covers/",
         }),
         ellaIniciales: fields.text({ label: "Iniciales de ella" }),
         elIniciales: fields.text({ label: "Iniciales de él" }),
-        titulo: fields.text({
-          label: "Título",
-          validation: { length: { max: 80 } },
-        }),
-        extracto: fields.text({ label: "Extracto" }),
-        descripcion: fields.text({ label: "Descripción" }),
+        titulo: fields.slug({ name: { label: "Título" } }),
+
         whatsapp: fields.text({
           label: "WhatsApp",
           validation: {
@@ -62,10 +54,18 @@ export default config({
           {
             mamaNovia: fields.text({ label: "Mamá de la novia" }),
             papaNovia: fields.text({ label: "Papá de la novia" }),
-            fotopapasNovia: fields.text({ label: "Foto papás novia" }),
+            fotopapasNovia: fields.image({
+              label: "Foto papás novia",
+              directory: "public/bodas/padres",
+              publicPath: "/bodas/padres/",
+            }),
             mamaNovio: fields.text({ label: "Mamá del novio" }),
             papaNovio: fields.text({ label: "Papá del novio" }),
-            fotopapasNovio: fields.text({ label: "Foto papás novio" }),
+            fotopapasNovio: fields.image({
+              label: "Foto papás novio",
+              directory: "public/bodas/padres",
+              publicPath: "/bodas/padres/",
+            }),
           },
           { label: "Padres" }
         ),
@@ -174,8 +174,18 @@ export default config({
           ),
           {
             label: "Mesas de regalos",
-            itemLabel: (props) =>
-              props.fields.titulo.value || "Mesa de regalos",
+            itemLabel: (props) => props.fields.titulo.value || "Mesa",
+          }
+        ),
+        galeria: fields.array(
+          fields.image({
+            label: "Imagen",
+            directory: "public/bodas/galeria",
+            publicPath: "/bodas/galeria/",
+          }),
+          {
+            label: "Galería",
+            itemLabel: () => "Imagen",
           }
         ),
         theme: fields.object(
@@ -212,6 +222,7 @@ export default config({
         ),
         content: fields.mdx({ label: "Contenido" }),
       },
+      previewUrl: "http://127.0.0.1:4321/bodas/{slug}",
     }),
 
     quince: collection({
@@ -222,15 +233,12 @@ export default config({
       schema: {
         version: fields.text({ label: "Version" }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
-        slug: fields.text({ label: "Slug" }),
+        titulo: fields.slug({ name: { label: "Título" } }),
         cover: fields.image({
           label: "Imagen de portada",
           directory: "public/quince/covers",
           publicPath: "/quince/covers/",
         }),
-        titulo: fields.slug({ name: { label: "Titulo" } }),
-        extracto: fields.text({ label: "Extracto" }),
-        descripcion: fields.text({ label: "Descripción" }),
         whatsapp: fields.text({
           label: "WhatsApp",
           validation: {
@@ -414,6 +422,7 @@ export default config({
           // }
         }),
       },
+      previewUrl: "http://127.0.0.1:4321/quince/{slug}",
     }),
   },
 });

@@ -46,14 +46,29 @@ const bodas = defineCollection({
       //   message:
       //     "¡La imagen de portada debe tener al menos 200 píxeles de ancho!",
       // }),
-      extracto: z.string(),
-      descripcion: z.string(),
-      whatsapp: z.number(),
+      whatsapp: z.string(),
+      email: z.string().email(),
       novios: z.string().optional(),
-      fecha: z.date(),
+       fecha: z.date(),
+       frase_amor: z.string(),
+      frase_regalos: z.string(),
+      // Progreso de Invitados
+      progresoEmail: z.string().email().optional(),
+      progresoPorcentaje: z.number().optional(),
+      progresoFrase: z.string().optional(),
+      progresoMostrarSiempre: z.boolean().optional(),
+      // Padres
+      padres: z.object({
+        mamaNovia: z.string().optional(),
+        papaNovia: z.string().optional(),
+        fotopapasNovia: z.string().optional(),
+        mamaNovio: z.string().optional(),
+        papaNovio: z.string().optional(),
+        fotopapasNovio: z.string().optional(),
+      }).optional(),
       consideraciones: z.array(z.string()).optional(),
+      coloresVestimenta: z.array(z.string()).optional(),
       vestimenta: z.string(),
-      frase_amor: z.string(),
       ceremonia: z
         .object({
           hora: z.string().optional(),
@@ -66,8 +81,8 @@ const bodas = defineCollection({
         .object({
           hora: z.string().optional(),
           lugar: z.string().optional(),
-          lat: z.number().optional(),
-          lng: z.number().optional(),
+          lat: z.string().optional(),
+          lng: z.string().optional(),
         })
         .optional(),
       itinerario: z
@@ -81,7 +96,7 @@ const bodas = defineCollection({
         .optional(),
       beneficiario: z.string().optional(),
       banco: z.string().optional(),
-      cuenta: z.number().optional(),
+      cuenta: z.string().optional(),
       paleta: z.string().optional(),
       tipoRegalo: z.array(z.string()).optional(),
       mesaRegalos: z
@@ -92,6 +107,10 @@ const bodas = defineCollection({
           })
         )
         .optional(),
+      // Galería
+      galeria: z.array(z.string()).optional(),
+      // Carpeta de pases
+      json: z.string().optional(),
       theme: themeSchema
     }),
 });
@@ -102,7 +121,7 @@ const quince = defineCollection({
   schema: z.object({
     version: z.string(),
     draft: z.boolean().optional(),
-    //slug: z.string(),
+    slug: z.string().optional(),
     cover: z.string(),
     titulo: z
       .string()
@@ -115,8 +134,6 @@ const quince = defineCollection({
     //   message:
     //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
     // }).optional(),
-    extracto: z.string(),
-    descripcion: z.string(),
     whatsapp: z.string(),
     quinceanera: z.string(),
     fecha: z.date(),
