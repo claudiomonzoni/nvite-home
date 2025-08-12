@@ -16,40 +16,50 @@ export default config({
       path: "src/content/bodas/*",
       format: { contentField: "content" },
       schema: {
-        version: fields.text({ label: "Version" }),
+        // === INFORMACIÓN BÁSICA ===
+        titulo: fields.slug({ name: { label: "Título" } }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
+        version: fields.text({ label: "Version" }),
+        
+        // === DATOS DE LOS NOVIOS ===
+        novios: fields.text({ label: "Novios" }),
+        ellaIniciales: fields.text({ label: "Iniciales de ella" }),
+        elIniciales: fields.text({ label: "Iniciales de él" }),
+        fecha: fields.date({ label: "Fecha" }),
+        
+        // === IMÁGENES PRINCIPALES ===
         cover: fields.image({
           label: "Imagen de portada",
           directory: "public/bodas/covers",
           publicPath: "/bodas/covers/",
         }),
-        ellaIniciales: fields.text({ label: "Iniciales de ella" }),
-        elIniciales: fields.text({ label: "Iniciales de él" }),
-        titulo: fields.slug({ name: { label: "Título" } }),
-
+        galeria: fields.array(
+          fields.image({
+            label: "Imagen",
+            directory: "public/bodas/galeria",
+            publicPath: "/bodas/galeria/",
+          }),
+          {
+            label: "Galería",
+            itemLabel: () => "Imagen",
+          }
+        ),
+        
+        // === CONTACTO ===
         whatsapp: fields.text({
-          label: "WhatsApp",
+          label: "WhatsApp del anfitrion",
           validation: {
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
         }),
-        email: fields.text({ label: "Email" }),
-        novios: fields.text({ label: "Novios" }),
-        fecha: fields.date({ label: "Fecha" }),
+        email: fields.text({ label: "Email del anfitrion" }),
+        
+        // === FRASES Y MENSAJES ===
         frase_amor: fields.text({ label: "Frase de amor" }),
         frase_regalos: fields.text({ label: "Frase de regalos" }),
-        // Progreso de Invitados (para componente ProgresoInvitados)
-        progresoEmail: fields.text({ label: "Email para invitados" }),
-        progresoPorcentaje: fields.number({
-          label: "% mínimo para mostrar",
-          validation: { min: 0, max: 100 },
-        }),
-        progresoFrase: fields.text({ label: "Frase de progreso" }),
-        progresoMostrarSiempre: fields.checkbox({
-          label: "Mostrar siempre",
-          defaultValue: false,
-        }),
+        
+        // === PADRES ===
         padres: fields.object(
           {
             mamaNovia: fields.text({ label: "Mamá de la novia" }),
@@ -69,15 +79,8 @@ export default config({
           },
           { label: "Padres" }
         ),
-        consideraciones: fields.array(fields.text({ label: "Consideración" }), {
-          label: "Consideraciones",
-          itemLabel: (props) => props.value,
-        }),
-        coloresVestimenta: fields.array(fields.text({ label: "Color" }), {
-          label: "Colores de vestimenta",
-          itemLabel: (props) => props.value,
-        }),
-        vestimenta: fields.text({ label: "Vestimenta" }),
+        
+        // === EVENTOS ===
         ceremonia: fields.object(
           {
             hora: fields.text({ label: "Hora" }),
@@ -144,25 +147,28 @@ export default config({
           {
             label: "Itinerario",
             itemLabel: (props) => props.fields.titulo.value || "Evento",
-          }
+          },
         ),
-        beneficiario: fields.text({ label: "Beneficiario" }),
-        banco: fields.text({ label: "Banco" }),
-        cuenta: fields.text({ label: "Cuenta" }),
-        paleta: fields.select({
-          label: "Paleta",
-          options: [
-            { label: "Base", value: "base" },
-            { label: "Invierno", value: "invierno" },
-            { label: "Otoño", value: "otono" },
-            { label: "Primavera", value: "primavera" },
-            { label: "Verano", value: "verano" },
-          ],
-          defaultValue: "base",
-        }),
-        tipoRegalo: fields.array(fields.text({ label: "Tipo de regalo" }), {
-          label: "Tipos de regalo",
+        
+        // === VESTIMENTA ===
+        vestimenta: fields.text({ label: "Vestimenta" }),
+        coloresVestimenta: fields.array(fields.text({ label: "Color" }), {
+          label: "Colores de vestimenta",
           itemLabel: (props) => props.value,
+        }),
+        consideraciones: fields.array(fields.text({ label: "Consideración" }), {
+          label: "Consideraciones",
+          itemLabel: (props) => props.value,
+        }),
+        
+        // === REGALOS ===
+        tipoRegalo: fields.multiselect({
+          label: "Tipos de regalo",
+          options: [
+            { label: "Lluvia de sobres", value: "lluvia" },
+            { label: "Mesa de regalos", value: "mesa" },
+            { label: "Transferencias", value: "transferencias" },
+          ],
         }),
         mesaRegalos: fields.array(
           fields.object(
@@ -177,17 +183,34 @@ export default config({
             itemLabel: (props) => props.fields.titulo.value || "Mesa",
           }
         ),
-        galeria: fields.array(
-          fields.image({
-            label: "Imagen",
-            directory: "public/bodas/galeria",
-            publicPath: "/bodas/galeria/",
-          }),
-          {
-            label: "Galería",
-            itemLabel: () => "Imagen",
-          }
-        ),
+        beneficiario: fields.text({ label: "Beneficiario" }),
+        banco: fields.text({ label: "Banco" }),
+        cuenta: fields.text({ label: "Cuenta" }),
+        
+        // === PROGRESO DE INVITADOS ===
+        progresoEmail: fields.text({ label: "Email para invitados" }),
+        progresoPorcentaje: fields.number({
+          label: "% mínimo para mostrar",
+          validation: { min: 0, max: 100 },
+        }),
+        progresoFrase: fields.text({ label: "Frase de progreso" }),
+        progresoMostrarSiempre: fields.checkbox({
+          label: "Mostrar siempre",
+          defaultValue: false,
+        }),
+        
+        // === DISEÑO Y TEMA ===
+        paleta: fields.select({
+          label: "Paleta",
+          options: [
+            { label: "Base", value: "base" },
+            { label: "Invierno", value: "invierno" },
+            { label: "Otoño", value: "otono" },
+            { label: "Primavera", value: "primavera" },
+            { label: "Verano", value: "verano" },
+          ],
+          defaultValue: "base",
+        }),
         theme: fields.object(
           {
             name: fields.select({
@@ -220,6 +243,8 @@ export default config({
           },
           { label: "Tema" }
         ),
+        
+        // === CONTENIDO ===
         content: fields.mdx({ label: "Contenido" }),
       },
       previewUrl: "http://127.0.0.1:4321/bodas/{slug}",
@@ -240,7 +265,7 @@ export default config({
           publicPath: "/quince/covers/",
         }),
         whatsapp: fields.text({
-          label: "WhatsApp",
+          label: "WhatsApp del anfitrion",
           validation: {
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
@@ -263,9 +288,13 @@ export default config({
             itemLabel: (props) => props.fields.titulo.value || "Regalo",
           }
         ),
-        tipoRegalos: fields.array(fields.text({ label: "Tipo de regalo" }), {
+        tipoRegalos: fields.multiselect({
           label: "Tipos de regalos",
-          itemLabel: (props) => props.value,
+          options: [
+            { label: "Lluvia de sobres", value: "lluvia" },
+            { label: "Mesa de regalos", value: "mesa" },
+            { label: "Transferencias", value: "transferencias" },
+          ],
         }),
         // Progreso de Invitados (para componente ProgresoInvitados)
         progresoEmail: fields.text({ label: "Email del anfitrion" }),
