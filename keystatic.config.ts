@@ -26,10 +26,9 @@ export default config({
         ellaIniciales: fields.text({ label: "Iniciales de ella" }),
         elIniciales: fields.text({ label: "Iniciales de él" }),
         fecha: fields.date({ label: "Fecha" }),
-
         // === CONTACTO ===
         whatsapp: fields.text({
-          label: "WhatsApp",
+          label: "WhatsApp del anfitrion",
           validation: {
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
@@ -89,7 +88,6 @@ export default config({
           },
           { label: "Padres" }
         ),
-
         // === EVENTOS ===
         ceremonia: fields.object(
           {
@@ -157,7 +155,7 @@ export default config({
           {
             label: "Itinerario",
             itemLabel: (props) => props.fields.titulo.value || "Evento",
-          }
+          },
         ),
        
 
@@ -175,9 +173,15 @@ export default config({
         // === REGALOS ===
 
         frase_regalos: fields.text({ label: "Frase de regalos" }),
-        tipoRegalo: fields.array(fields.text({ label: "Tipo de regalo" }), {
+        
+        // === REGALOS ===
+        tipoRegalo: fields.multiselect({
           label: "Tipos de regalo",
-          itemLabel: (props) => props.value,
+          options: [
+            { label: "Lluvia de sobres", value: "lluvia" },
+            { label: "Mesa de regalos", value: "mesa" },
+            { label: "Transferencias", value: "transferencias" },
+          ],
         }),
         mesaRegalos: fields.array(
           fields.object(
@@ -251,7 +255,6 @@ export default config({
           },
           { label: "Tema" }
         ),
-
         // === CONTENIDO ===
         content: fields.mdx({ label: "Contenido" }),
       },
@@ -273,7 +276,7 @@ export default config({
           publicPath: "/quince/covers/",
         }),
         whatsapp: fields.text({
-          label: "WhatsApp",
+          label: "WhatsApp del anfitrion",
           validation: {
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
@@ -297,9 +300,13 @@ export default config({
             itemLabel: (props) => props.fields.titulo.value || "Regalo",
           }
         ),
-        tipoRegalos: fields.array(fields.text({ label: "Tipo de regalo" }), {
+        tipoRegalos: fields.multiselect({
           label: "Tipos de regalos",
-          itemLabel: (props) => props.value,
+          options: [
+            { label: "Lluvia de sobres", value: "lluvia" },
+            { label: "Mesa de regalos", value: "mesa" },
+            { label: "Transferencias", value: "transferencias" },
+          ],
         }),
         beneficiario: fields.text({ label: "Beneficiario de transferencia" }),
         banco: fields.text({ label: "Banco de transferencia" }),
