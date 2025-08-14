@@ -42,12 +42,12 @@ interface Props {
   boda: CollectionEntry<"bodas">;
 }
 
-
 const { boda } = Astro.props;
 const { Content } = await render(boda);
 const base = new URL(Astro.url.pathname, Astro.site);
 const galeria: string[] = (boda.data as any).galeria ?? [];
-const imagenesSolitarias: string[] = (boda.data as any).imagenesSolitarias ?? [];
+const imagenesSolitarias: string[] =
+  (boda.data as any).imagenesSolitarias ?? [];
 ---
 
 <Layout
@@ -57,135 +57,174 @@ const imagenesSolitarias: string[] = (boda.data as any).imagenesSolitarias ?? []
   paleta={boda.data.paleta}
   theme={boda.data.theme}
 >
-<section id="hero-hero">
-  <HeroElegante
-     nombres={boda.data.novios}
-     fecha={boda.data.fecha}
-     ellaIniciales={boda.data.ellaIniciales}
-     elIniciales={boda.data.elIniciales}
-     cover={boda.data.cover}
-     client:load
-   /> 
- </section>
- 
- <section class="grid contenido">
-   <Audio src="/bodas/nvitaPlus/love-story" />
- </section>
- 
- 
- <section class="grid pantalla">
-   <Padres
-     mamaNovia={boda.data.padres.mamaNovia}
-     papaNovia={boda.data.padres.papaNovia}
-     fotopapasNovia={boda.data.padres.fotopapasNovia}
-     mamaNovio={boda.data.padres.mamaNovio}
-     papaNovio={boda.data.padres.papaNovio}
-     fotopapasNovio={boda.data.padres.fotopapasNovio}
-   />
- </section>
- 
- <Pases folder={boda.data.json} client:load />
- 
- <section class="grid contenido">
-   <div class="bandejaLugares">
-     <BloqueMapa
-       encabezado="Ceremonia"
-       dir={boda.data.ceremonia.lugar}
-       horario={boda.data.ceremonia.hora}
-       lat={boda.data.ceremonia.lat}
-       lng={boda.data.ceremonia.lng}
-       mapName="mapa1"
-       icono="iglesia"
-     />
-     <BloqueMapa
-       encabezado="Recepción"
-       dir={boda.data.recepcion.lugar}
-       horario={boda.data.recepcion.hora}
-       lat={boda.data.recepcion.lat}
-       lng={boda.data.recepcion.lng}
-       mapName="mapa2"
-       icono="brindis"
-     />
-   </div>
- </section>
- 
- <section class="grid contenido">
-   <Frase frase={boda.data.frase_amor} />
- </section>
- 
+  <section id="hero-hero">
+    {
+      (() => {
+        switch (boda.data.theme.name) {
+          case 'elegante':
+            return (
+              <HeroElegante
+                nombres={boda.data.novios}
+                fecha={boda.data.fecha}
+                ellaIniciales={boda.data.ellaIniciales}
+                elIniciales={boda.data.elIniciales}
+                cover={boda.data.cover}
+                client:load
+              />
+            );
+          case 'base':
+            return (
+              <HeroBase
+                nombres={boda.data.novios}
+                fecha={boda.data.fecha}
+                ellaIniciales={boda.data.ellaIniciales}
+                elIniciales={boda.data.elIniciales}
+                cover={boda.data.cover}
+                client:load
+              />
+            );
+          default:
+            return null;
+        }
+      })()
+    }
+  </section>
+
+  <section class="grid contenido">
+    <Audio src="/bodas/nvitaPlus/love-story" />
+  </section>
+
+  <section class="grid pantalla">
+    <Padres
+      mamaNovia={boda.data.padres.mamaNovia}
+      papaNovia={boda.data.padres.papaNovia}
+      fotopapasNovia={boda.data.padres.fotopapasNovia}
+      mamaNovio={boda.data.padres.mamaNovio}
+      papaNovio={boda.data.padres.papaNovio}
+      fotopapasNovio={boda.data.padres.fotopapasNovio}
+    />
+  </section>
+
+  <Pases folder={boda.data.json} client:load />
+
+  <section class="grid contenido">
+    <div class="bandejaLugares">
+      <BloqueMapa
+        encabezado="Ceremonia"
+        dir={boda.data.ceremonia.lugar}
+        horario={boda.data.ceremonia.hora}
+        lat={boda.data.ceremonia.lat}
+        lng={boda.data.ceremonia.lng}
+        mapName="mapa1"
+        icono="iglesia"
+      />
+      <BloqueMapa
+        encabezado="Recepción"
+        dir={boda.data.recepcion.lugar}
+        horario={boda.data.recepcion.hora}
+        lat={boda.data.recepcion.lat}
+        lng={boda.data.recepcion.lng}
+        mapName="mapa2"
+        icono="brindis"
+      />
+    </div>
+  </section>
+
+  <section class="grid contenido">
+    <Frase frase={boda.data.frase_amor} />
+  </section>
 
   <!-- Imágenes solitarias condicionales -->
-  {imagenesSolitarias[0] && (
-    <FotoSolitaria arriba={false} gradientePorciento={40} src={imagenesSolitarias[0]} />
-  )}
-  
- <section class="grid contenido">
- 
-   <Contador fecha={boda.data.fecha.toISOString()} />
- </section>
- <ProgresoInvitados
-   email={boda.data.email}
-   porcentajeMostrarInvitados={20}
-   frase="Estás en la lista, ¿Ya confirmaste?"
-   mostrarSiempre={true}
- />
- 
- <section class="grid pantalla" id="BaseItinerario">
-   <Encabezados texto="Itinerario" />
-   <Itinerario listado={boda.data.itinerario} />
- </section>
- 
-  {imagenesSolitarias[1] && (
-    <FotoSolitaria arriba={true} gradientePorciento={30} src={imagenesSolitarias[1]} />
-  )}
-  
-  {imagenesSolitarias[2] && (
-    <FotoSolitaria arriba={false} gradientePorciento={35} src={imagenesSolitarias[2]} />
-  )}
+  {
+    imagenesSolitarias[0] && (
+      <FotoSolitaria
+        arriba={false}
+        gradientePorciento={40}
+        src={imagenesSolitarias[0]}
+      />
+    )
+  }
 
- 
- <section class="grid pantalla flex margen-arriba-abajo">
-   <Detalles lista={boda.data.consideraciones} encabezado="Consideraciones" />
-   <Detalles encabezado="Codigo de vestir" vestimenta={boda.data.vestimenta} />
-   <Detalles encabezado="Sugerencia de tonos" colores={boda.data.coloresVestimenta} />
- </section>
- 
- <section class="grid pantalla">
-   <SliderVentana>
-    {galeria && galeria.map((src) => (
-      <div class="img-window">  
-      <img src={src} alt={`Galería de ${boda.data.novios || 'Bodas de Nvitaciones'}`} loading="lazy" />
-      </div>
-    ))}
+  <section class="grid contenido">
+    <Contador fecha={boda.data.fecha.toISOString()} />
+  </section>
+  <ProgresoInvitados
+    email={boda.data.email}
+    porcentajeMostrarInvitados={20}
+    frase="Estás en la lista, ¿Ya confirmaste?"
+    mostrarSiempre={true}
+  />
 
-   </SliderVentana>
- </section>
- 
- 
- 
- <section class="grid contenido">
- 
-   <Regalos
-       frase={boda.data.frase_regalos}
-       beneficiario={boda.data.beneficiario}
-       banco={boda.data.banco}
-       cuenta={boda.data.cuenta}
-     />
- </section>
- 
- 
- 
- <section class="grid contenido">
-   <MensajeVip />
- </section>
- 
- <Confirmacion
-   whatsapp={boda.data.whatsapp}
-   dias_antes={15}
-   version={boda.data.version}
+  <section class="grid pantalla" id="BaseItinerario">
+    <Encabezados texto="Itinerario" />
+    <Itinerario listado={boda.data.itinerario} />
+  </section>
 
-   client:only="react"
- />
+  {
+    imagenesSolitarias[1] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={30}
+        src={imagenesSolitarias[1]}
+      />
+    )
+  }
+
+  {
+    imagenesSolitarias[2] && (
+      <FotoSolitaria
+        arriba={false}
+        gradientePorciento={35}
+        src={imagenesSolitarias[2]}
+      />
+    )
+  }
+
+  <section class="grid pantalla flex margen-arriba-abajo">
+    <Detalles lista={boda.data.consideraciones} encabezado="Consideraciones" />
+    <Detalles encabezado="Codigo de vestir" vestimenta={boda.data.vestimenta} />
+    <Detalles
+      encabezado="Sugerencia de tonos"
+      colores={boda.data.coloresVestimenta}
+    />
+  </section>
+
+  <section class="grid pantalla">
+    <SliderVentana>
+      {
+        galeria &&
+          galeria.map((src) => (
+            <div class="img-window">
+              <img
+                src={src}
+                alt={`Galería de ${boda.data.novios || "Bodas de Nvitaciones"}`}
+                loading="lazy"
+              />
+            </div>
+          ))
+      }
+    </SliderVentana>
+  </section>
+
+  <section class="grid contenido">
+    <Regalos
+      frase={boda.data.frase_regalos}
+      beneficiario={boda.data.beneficiario}
+      banco={boda.data.banco}
+      cuenta={boda.data.cuenta}
+    />
+  </section>
+
+  <section class="grid contenido">
+    <MensajeVip />
+  </section>
+
+  <Confirmacion
+    whatsapp={boda.data.whatsapp}
+    dias_antes={15}
+    version={boda.data.version}
+    client:only="react"
+  />
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>

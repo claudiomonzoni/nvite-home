@@ -15,13 +15,14 @@ export default function Hero({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Asegurarnos que fecha sea string y tenga el formato correcto
-  const fechaString = String(fecha);
-  const [year, month, day] = fechaString
-    .split("-")
-    .map((num) => parseInt(num, 10));
-
-  const fechaObj = new Date(year, month - 1, day);
+   // Asegurarnos que fecha sea un objeto Date válido
+   const fechaObj = fecha instanceof Date ? fecha : new Date(fecha);
+  
+   // Validar que la fecha sea válida
+   if (isNaN(fechaObj.getTime())) {
+ //    console.error('Fecha inválida:', fecha);
+     return <div>Error: Fecha inválida</div>;
+   }
 
   const diaSemana = fechaObj.toLocaleString("es-ES", { weekday: "long" });
   const dia = fechaObj.getDate();
