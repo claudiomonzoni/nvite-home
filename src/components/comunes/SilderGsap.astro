@@ -20,7 +20,7 @@
       ScrollTrigger.config({ ignoreMobileResize: true });
     
       setTimeout(() => {
-        const slides = document.querySelectorAll(".galeSlider p img");
+        const slides = document.querySelectorAll(".galeSlider  img");
         
         // Configuración inicial de las imágenes
         slides.forEach((slide, index) => {
@@ -47,7 +47,7 @@
             invalidateOnRefresh: true, // recalcula correctamente
             // anticipatePin: 1, // prueba quitando esto si sigue brincando
             snap: {
-              snapTo: 1 / (slides.length - 1),
+              snapTo: slides.length > 1 ? 1 / (slides.length - 1) : 0,
               duration: { min: 0.2, max: 0.5 },
               ease: "power1.inOut"
             },

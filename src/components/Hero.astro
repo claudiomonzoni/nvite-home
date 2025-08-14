@@ -61,7 +61,7 @@ import { Icon } from "astro-icon/components";
   @use "../estilos/_variables.scss" as *;
 
   #hero {
-    background: rgba($terciario, 0.3);
+    background: linear-gradient(45deg, rgba($terciario, 0.2) 0%, rgba($terciario, 0.9) 100%);
     border-radius: $radio;
     // border-top-left-radius: $margen-min;
     // border-bottom-left-radius: $margen-min;
@@ -163,36 +163,4 @@ import { Icon } from "astro-icon/components";
     font-family: "Montserrat Alternates", sans-serif;
   }
 </style>
-<!-- <script>
-  import SplitType from "split-type";
-  const encabezado = document.getElementById("nvitePalabras");
 
-  const remplazo = new SplitType(encabezado, {
-    types: "chars",
-  });
-
-  const timeout = setTimeout(() => {
-    eliminarTxt();
-  }, 2000);
-
-  function eliminarTxt() {
-    var index = 0;
-    const inter = setInterval(() => {
-      remplazo.chars[index++].classList.add("desapareceH1");
-
-      if (index >= remplazo.chars.length) {
-        clearInterval(inter);
-        mostrarTxt();
-      }
-    }, 50);
-  }
-
-  function mostrarTxt() {
-    const delay = setInterval(() => {
-      encabezado.classList.add("apareceH1");
-      encabezado.innerText = "Invita";
-      clearInterval(delay);
-    }, 600);
-    clearTimeout(timeout);
-  }
-</script> -->

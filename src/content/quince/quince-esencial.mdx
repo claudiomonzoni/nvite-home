@@ -1,128 +1,67 @@
 ---
-version: esencial
+version: lux
+draft: false
 titulo: Nvita Basic muestra Quince años
-slug: nvita-quince-esencial
-extracto: Muestra de la invitación de quince años nvita básica
-descripcion: Muestra de la invitación de XV añós nvita básica, la más básica de las invitaciones que te ofrecemos.
-cover: /quince/nina-casquito/cover.jpg
-whatsapp: 8488493900
+cover: /quince/covers/quince-esencial/cover.png
+whatsapp: '8488493900'
 quinceanera: Veronica Ortiz Gómez
 fecha: 2025-12-14
+frase_amor: >-
+  Desde pequeña esperabas con ansias este día, imaginabas compartirlo con todas
+  las personas que amas. Por fin llegó el día y es tal y como lo soñaste.
+frase_regalos: Esta es la frase desde keystatic
+regalos:
+  - titulo: Amazon
+    url: amazon.com
+tipoRegalos:
+  - mesa
+  - lluvia
+progresoEmail: claudiomonzoni@hotmail.com
+progresoPorcentaje: 20
+progresoFrase: Que pedo
+progresoMostrarSiempre: true
+consideraciones:
+  - No vestir de negro
+  - Favor de no llevar bebes
 vestimenta: Formal elegante
-frase_amor: Desde pequeña esperabas con ansias este día, imaginabas compartirlo con todas las personas que amas. Por fin llegó el día y es tal y como lo soñaste.
-consideraciones: ["No vestir de blanco", "Favor de no llevar bebes"]
 ceremonia:
-  {
-    "lat": 17.665128,
-    "lang": -101.597448,
-    "hora": 16:00,
-    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)",
-  }
+  hora: '16:20'
+  lugar: >-
+    <b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa
+    Gro. (frente a la Moraleja)
+  lat: '17.665128'
+  lng: '-101.597448'
 recepcion:
-  {
-    "lat": 17.661152,
-    "lang": -101.603728,
-    "hora": 18:00,
-    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.",
-  }
-paleta: invierno
+  hora: '18:00'
+  lugar: >-
+    <b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo,
+    Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.
+  lat: '17.661152'
+  lng: '-101.603728'
+itinerario:
+  - titulo: Primero esto
+    lugar: en algun lado
+    hora: '11'
+  - titulo: Segundo esto
+    hora: '12'
+beneficiario: Chuchita
+banco: Banamex
+cuenta: '19293945045'
+paleta: otono
 theme:
-  name: "base"
+  name: base
   colors:
-    primary: "#2C3E50"
-    secondary: "#E74C3C"
-    accent: "#F1C40F"
-    background: "#ECF0F1"
-    text: "#2C3E50"
+    primary: '#2C3E50'
+    secondary: '#E74C3C'
+    accent: '#F1C40F'
+    background: '#ECF0F1'
+    text: '#2C3E50'
   typography:
-    heading: "Playfair Display"
-    body: "Lora"
+    heading: Playfair Display
+    body: Lora
+galeria:
+  - /quince/galeria/quince-esencial/galeria/0.png
+  - /quince/galeria/quince-esencial/galeria/1.webp
+  - /quince/galeria/quince-esencial/galeria/2.webp
+  - /quince/galeria/quince-esencial/galeria/3.png
 ---
-
-import Hero from "../../components/quince/Hero";
-import Encabezados from "../../components/quince/Encabezados.astro";
-import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
-import Cartas from "../../components/quince/Cartas.astro";
-import Frase from "../../components/quince/Frase.astro";
-import BloqueMapa from "../../components/quince/BloqueMapa.astro";
-import Contador from "../../components/bodas/Contador.astro";
-import ConfirmacionBasica from "../../components/quince/ConfirmacionBasica";
-import Footer from "../../components/quince/Footer.astro";
-
-  <Hero
-    nombres={frontmatter.quinceanera}
-    fecha={frontmatter.fecha}
-    cover={frontmatter.cover}
-    client:load
-  />
-<Encabezados texto="Mis 15 años" />
-<ParrafosLibres texto="El anhelo de todo padre es ver a su hija transformarse de una niña feliz a una mujer segura de sí. Y más orgulloso no podría estar y por eso contigo quiero celebrar." />
-
-{" "}
-<section class="grid contenido">
-  <div class="conte-cartas">
-    <Cartas
-      icono="mdi:clipboard-text-date-outline"
-      titulo="Fecha"
-      fecha={frontmatter.fecha}
-    />
-    <Cartas
-      icono="mdi:list-status"
-      titulo="Detalles"
-      array={frontmatter.consideraciones}
-    />
-    <Cartas
-      icono="mdi:clothes-hanger"
-      titulo="Código de vestimenta"
-      codigo={frontmatter.vestimenta}
-    />
-  </div>
-</section>
-
-{" "}
-<section class="grid contenido">
-  <Frase frase={frontmatter.frase_amor} />
-</section>
-
-{" "}
-<Encabezados texto="El Lugar" />
-<section class="grid contenido fondo-mitad">
-  <ParrafosLibres
-    texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la fiesta de XV años."
-  />
-
-  <div id="zigzag">
-    <BloqueMapa
-      encabezado="Ceremonia"
-      dir={frontmatter.ceremonia.lugar}
-      horario={frontmatter.ceremonia.hora}
-      lat={frontmatter.ceremonia.lat}
-      lng={frontmatter.ceremonia.lang}
-      mapName="mapa1"
-    />
-    <BloqueMapa
-      encabezado="Recepción"
-      dir={frontmatter.recepcion.lugar}
-      horario={frontmatter.recepcion.hora}
-      lat={frontmatter.recepcion.lat}
-      lng={frontmatter.recepcion.lang}
-      mapName="mapa2"
-    />
-  </div>
-</section>
-
-{" "}
-<section class="grid contenido">
-  <Contador fecha={frontmatter.fecha} />
-</section>
-
-{" "}
-<section>
-  <ConfirmacionBasica
-    whatsapp={frontmatter.whatsapp}
-    dias_antes={7}
-    version={frontmatter.version}
-    client:only="react"
-  />
-</section>

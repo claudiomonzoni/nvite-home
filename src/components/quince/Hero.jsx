@@ -81,7 +81,7 @@ export default function Hero({ nombres, fecha, cover }) {
               </ b>
                 y me encantará compartirlo contigo.
                Con cariño,
-            </p>    
+            </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
           {
             pase ? (

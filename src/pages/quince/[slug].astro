@@ -5,13 +5,31 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/quince/Layout.astro";
 import Footer from "../../components/quince/Footer.astro";
 
+//componentes
+import Hero from "../../components/quince/Hero";
+import Audio from "../../components/quince/Audio.astro";
+import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
+import MensajeVip from "../../components/comunes/MensajeVip.astro";
+import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
+import Encabezados from "../../components/quince/Encabezados.astro";
+import Cartas from "../../components/quince/Cartas.astro";
+import Frase from "../../components/quince/Frase.astro";
+import SilderGsap from "../../components/comunes/SilderGsap.astro";
+import BloqueMapa from "../../components/quince/BloqueMapa.astro";
+import Regalos from "../../components/comunes/Regalos.astro";
+import Contador from "../../components/bodas/Contador.astro";
+import Itinerario from "../../components/quince/Itinerario.astro";
+import Confirmacion from "../../components/quince/Confirmacion";  
+
+
+
 export async function getStaticPaths() {
   const quinces = await getCollection("quince", ({ data }) => {
     return !data.draft;
   });
   return quinces.map((quince) => ({
     params: { slug: quince.id },
-    props: { quince },
+    props: { quince },  
   }));
 }
 interface Props {
@@ -23,14 +41,16 @@ const { quince } = Astro.props;
 
 const base = new URL(Astro.url.pathname, Astro.site);
 const Nfecha = new Date(quince.data.fecha);
-// const fecha = Nfecha.toLocaleDateString(["es-MX"], {
-//   weekday: "long",
-//   year: "numeric",
-//   month: "long",
-//   day: "numeric",
-// });
 
 const { Content } = await render(quince);
+// Tipado local para la galería mientras se regeneran los tipos de Keystatic
+const galeria: string[] = (quince.data as any).galeria ?? [];
+// Tipado y normalización local para mesas de regalos
+type Mesa = { url: string; titulo: string };
+const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
+  (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
+);
+
 ---
 
 <Layout
@@ -40,15 +60,124 @@ const { Content } = await render(quince);
   paleta={quince.data.paleta}
   theme={quince.data.theme}
 >
-  <!-- <Hero
-    nombres={quince.data.quinceanera}
-    fecha={fecha}
-    cover={quince.data.cover}
-    client:load
+
+
+<Hero
+  nombres={quince.data.quinceanera}
+  fecha={quince.data.fecha}
+  cover={quince.data.cover}
+  client:load
+/>
+
+<section class="grid contenido">
+  <Audio src="/quince/quincePlus/quince-musica" />
+</section>
+
+<Encabezados texto="Mis 15 años" />
+
+<!-- <ParrafosLibres
+  texto="He soñado mucho con este día, y me llena de ilusión compartirlo contigo.
+Para que no se te pase nada, revisa todos los detalles aquí abajo:"
+/> -->
+
+<section class="grid contenido">
+  <div class="conte-cartas">
+    <Cartas
+      icono="mdi:clipboard-text-date-outline"
+      titulo="Fecha"
+      fecha={quince.data.fecha}
+    />
+    <Cartas
+      icono="mdi:list-status"
+      titulo="Detalles"
+      array={quince.data.consideraciones}
+    />
+    <Cartas
+      icono="mdi:clothes-hanger"
+      titulo="Dress code"
+      codigo={quince.data.vestimenta}
+    />
+  </div>
+</section>
+
+<section class="grid contenido">
+  <Frase frase={quince.data.frase_amor} />
+</section>
+
+<Encabezados texto="El Lugar" />
+<section class="grid contenido fondo-mitad">
+  <!-- <ParrafosLibres
+    texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
+      la fiesta de XV años, ¡No faltes!"
   /> -->
+  <div id="zigzag">
+    <BloqueMapa
+      encabezado="Ceremonia"
+      dir={quince.data.ceremonia.lugar}
+      horario={quince.data.ceremonia.hora}
+      lat={quince.data.ceremonia.lat}
+      lng={quince.data.ceremonia.lng}
+      mapName="mapa1"
+    />
+    <BloqueMapa
+      encabezado="Recepción"
+      dir={quince.data.recepcion.lugar}
+      horario={quince.data.recepcion.hora}
+      lat={quince.data.recepcion.lat}
+      lng={quince.data.recepcion.lng}
+      mapName="mapa2"
+    />
+  </div>
+</section>
+
+<section class="grid contenido">
+  <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
+</section>
 
 
-  <Content />
+<section class="grid pantalla">
+  <ProgresoInvitados
+    email={quince.data.progresoEmail ?? "nvitacionluxquince@nvitaciones.com"}
+    porcentajeMostrarInvitados={(quince.data.progresoPorcentaje ?? 20) as number}
+    frase={quince.data.progresoFrase ?? "¡Ya casi completamos la lista de invitados!"}
+    mostrarSiempre={quince.data.progresoMostrarSiempre ?? true}
+  />
+</section>
+
+<Itinerario listado={quince.data.itinerario} />
+
+<section class="grid pantalla">
+  <SilderGsap>
+    {galeria && galeria.map((src) => (
+      <img src={src} alt={`Galería de ${quince.data.quinceanera || 'XV Años'}`} loading="lazy" />
+    ))}
+  </SilderGsap>
+</section>
+
+<section class="grid contenido">
+
+  <Regalos
+  tipo={quince.data.tipoRegalos}
+  mesas={mesas}
+      frase={quince.data.frase_regalos}
+      beneficiario={quince.data.beneficiario}
+      banco={quince.data.banco}
+      cuenta={quince.data.cuenta}
+    />
+</section>
+
+<section class="grid contenido">
+  <MensajeVip />
+</section>
+
+
+ <Confirmacion
+  whatsapp={quince.data.whatsapp}
+  dias_antes={15}
+  version={quince.data.version}
+  client:only="react"
+/> 
+
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>
