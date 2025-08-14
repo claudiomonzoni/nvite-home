@@ -20,6 +20,7 @@ import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";  
+import Detalles from "../../components/bodas/Detalles.astro";
 
 
 
@@ -83,19 +84,19 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 <section class="grid contenido">
   <div class="conte-cartas">
     <Cartas
+    icono="mdi:list-status"
+    titulo="Detalles"
+    array={quince.data.consideraciones}
+    />
+    <Cartas
+    icono="mdi:clothes-hanger"
+    titulo="Dress code"
+    codigo={quince.data.vestimenta}
+    />
+    <Cartas
       icono="mdi:clipboard-text-date-outline"
-      titulo="Fecha"
-      fecha={quince.data.fecha}
-    />
-    <Cartas
-      icono="mdi:list-status"
-      titulo="Detalles"
-      array={quince.data.consideraciones}
-    />
-    <Cartas
-      icono="mdi:clothes-hanger"
-      titulo="Dress code"
-      codigo={quince.data.vestimenta}
+      titulo="Sugerencia de tonos"
+      tonos={quince.data.coloresVestimenta}
     />
   </div>
 </section>
@@ -153,6 +154,16 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
     ))}
   </SilderGsap>
 </section>
+<!--  
+  <section class="grid pantalla flex margen-arriba-abajo">
+    <Detalles lista={quince.data.consideraciones} encabezado="Consideraciones" />
+    <Detalles encabezado="Codigo de vestir" vestimenta={quince.data.vestimenta} />
+    <Detalles
+    encabezado="Sugerencia de tonos"
+    colores={quince.data.coloresVestimenta}
+    />
+  </section>
+  -->
 
 <section class="grid contenido">
 

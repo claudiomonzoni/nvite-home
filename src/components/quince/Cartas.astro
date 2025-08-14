@@ -7,8 +7,9 @@ interface Props {
   array?: Array<any>;
   fecha?: Date;
   codigo?: string;
+  tonos?: Array<any>;
 }
-const { icono, titulo, array, fecha, codigo } = Astro.props;
+const { icono, titulo, array, fecha, codigo, tonos } = Astro.props;
 
 const formattedFecha = fecha
   ? new Date(fecha).toLocaleDateString("es-MX", {
@@ -17,6 +18,8 @@ const formattedFecha = fecha
       year: "numeric",
     })
   : null;
+
+  console.log(tonos)
 ---
 
 <div class="carta">
@@ -25,13 +28,47 @@ const formattedFecha = fecha
   </div>
   <h3 class="overlay">{titulo}</h3>
   {fecha ? <p>{formattedFecha}</p> : <slot />}
-
+  {
+    tonos && tonos.length > 0 ? (
+      <li>
+        <div class="colores-circulos">
+          {tonos.map((color) => (
+            <span
+              class="color-circulo"
+              style={`background-color: ${color};`}
+              title={color}
+            />
+          ))}
+        </div>
+      </li>
+    ) : null
+  }
   {array ? array.map((item) => <li>{item}</li>) : <slot />}
 
   {codigo ? <p>{codigo}</p> : <slot />}
 </div>
-
-
+<style>
+  .colores-circulos {
+    display: flex;
+    gap: 0; /* Sin gap para que se encimen */
+    margin-top: 1rem;
+    justify-content: center;
+    
+  }
+  .color-circulo {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: -0.2rem; /* Encima los círculos */
+    box-shadow: -1px 10px 25px 3px rgba(70,70,70,0.74);
+-webkit-box-shadow: -1px 10px 25px 3px rgba(70,70,70,0.74);
+-moz-box-shadow: -1px 10px 25px 3px rgba(70,70,70,0.74);
+  }
+  .color-circulo:first-child {
+    margin-left: 0; /* El primero no se encime */
+  }
+  </style>
 <script>
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";

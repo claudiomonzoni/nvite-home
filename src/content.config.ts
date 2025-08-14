@@ -66,8 +66,11 @@ const bodas = defineCollection({
         papaNovio: z.string().optional(),
         fotopapasNovio: z.string().optional(),
       }).optional(),
+      // Consideraciones importantes para los invitados
       consideraciones: z.array(z.string()).optional(),
+      // Colores sugeridos para la vestimenta (formato hexadecimal)
       coloresVestimenta: z.array(z.string()).optional(),
+      // Código de vestir para el evento
       vestimenta: z.string(),
       ceremonia: z
         .object({
@@ -140,8 +143,12 @@ const quince = defineCollection({
     email: z.string().email(),
     quinceanera: z.string(),
     fecha: z.date(),
+    // Consideraciones importantes para los invitados
     consideraciones: z.array(z.string()).optional(),
+    // Código de vestir para el evento
     vestimenta: z.string(),
+    // Colores sugeridos para la vestimenta (formato hexadecimal)
+    coloresVestimenta: z.array(z.string()).optional(),
     frase_amor: z.string(),
     frase_regalos: z.string().optional(),
     // ProgresoInvitados

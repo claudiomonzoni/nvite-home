@@ -48,6 +48,11 @@ const base = new URL(Astro.url.pathname, Astro.site);
 const galeria: string[] = (boda.data as any).galeria ?? [];
 const imagenesSolitarias: string[] =
   (boda.data as any).imagenesSolitarias ?? [];
+
+  type Mesa = { url: string; titulo: string };
+const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
+  (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
+);
 ---
 
 <Layout
@@ -207,12 +212,15 @@ const imagenesSolitarias: string[] =
   </section>
 
   <section class="grid contenido">
+
     <Regalos
-      frase={boda.data.frase_regalos}
-      beneficiario={boda.data.beneficiario}
-      banco={boda.data.banco}
-      cuenta={boda.data.cuenta}
-    />
+    tipo={boda.data.tipoRegalo}
+    mesas={mesas}
+        frase={boda.data.frase_regalos}
+        beneficiario={boda.data.beneficiario}
+        banco={boda.data.banco}
+        cuenta={boda.data.cuenta}
+      />
   </section>
 
   <section class="grid contenido">
