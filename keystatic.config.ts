@@ -17,17 +17,29 @@ export default config({
       format: { contentField: "content" },
       schema: {
         // === INFORMACIÓN BÁSICA ===
-        titulo: fields.slug({ name: { label: "Título" } }),
-        draft: fields.checkbox({ label: "Draft", defaultValue: false }),
         version: fields.text({ label: "Version" }),
-        
-        // === DATOS DE LOS NOVIOS ===
+        draft: fields.checkbox({ label: "Draft", defaultValue: false }),
+        titulo: fields.slug({ name: { label: "Título" } }),
+
+        // === INFORMACIÓN DE LOS NOVIOS ===
         novios: fields.text({ label: "Novios" }),
         ellaIniciales: fields.text({ label: "Iniciales de ella" }),
         elIniciales: fields.text({ label: "Iniciales de él" }),
         fecha: fields.date({ label: "Fecha" }),
-        
-        // === IMÁGENES PRINCIPALES ===
+        // === CONTACTO ===
+        whatsapp: fields.text({
+          label: "WhatsApp del anfitrion",
+          validation: {
+            length: { min: 10, max: 15 },
+            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
+          },
+        }),
+        email: fields.text({ label: "Email del anfitrion" }),
+
+        // === FRASES ===
+        frase_amor: fields.text({ label: "Frase de amor" }),
+
+        // === IMÁGENES ===
         cover: fields.image({
           label: "Imagen de portada",
           directory: "public/bodas/covers",
@@ -44,21 +56,18 @@ export default config({
             itemLabel: () => "Imagen",
           }
         ),
-        
-        // === CONTACTO ===
-        whatsapp: fields.text({
-          label: "WhatsApp del anfitrion",
-          validation: {
-            length: { min: 10, max: 15 },
-            pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
-          },
-        }),
-        email: fields.text({ label: "Email del anfitrion" }),
-        
-        // === FRASES Y MENSAJES ===
-        frase_amor: fields.text({ label: "Frase de amor" }),
-        frase_regalos: fields.text({ label: "Frase de regalos" }),
-        
+        imagenesSolitarias: fields.array(
+          fields.image({
+            label: "Imagen solitaria",
+            directory: "public/bodas/solitarias",
+            publicPath: "/bodas/solitarias/",
+          }),
+          {
+            label: "Imágenes solitarias",
+            itemLabel: () => "Imagen solitaria",
+            validation: { length: { max: 3 } },
+          }
+        ),
         // === PADRES ===
         padres: fields.object(
           {
@@ -79,7 +88,6 @@ export default config({
           },
           { label: "Padres" }
         ),
-        
         // === EVENTOS ===
         ceremonia: fields.object(
           {
@@ -149,8 +157,9 @@ export default config({
             itemLabel: (props) => props.fields.titulo.value || "Evento",
           },
         ),
-        
-        // === VESTIMENTA ===
+       
+
+        // === DETALLES ===
         vestimenta: fields.text({ label: "Vestimenta" }),
         coloresVestimenta: fields.array(fields.text({ label: "Color" }), {
           label: "Colores de vestimenta",
@@ -160,6 +169,10 @@ export default config({
           label: "Consideraciones",
           itemLabel: (props) => props.value,
         }),
+
+        // === REGALOS ===
+
+        frase_regalos: fields.text({ label: "Frase de regalos" }),
         
         // === REGALOS ===
         tipoRegalo: fields.multiselect({
@@ -180,26 +193,25 @@ export default config({
           ),
           {
             label: "Mesas de regalos",
-            itemLabel: (props) => props.fields.titulo.value || "Mesa",
+            itemLabel: (props) => props.fields.titulo.value || "Mesa de regalos",
           }
         ),
-        beneficiario: fields.text({ label: "Beneficiario" }),
-        banco: fields.text({ label: "Banco" }),
-        cuenta: fields.text({ label: "Cuenta" }),
-        
+        beneficiario: fields.text({ label: "Beneficiario de transferencia" }),
+        banco: fields.text({ label: "Banco de transferencia" }),
+        cuenta: fields.text({ label: "Cuenta de transferencia" }),
+
         // === PROGRESO DE INVITADOS ===
-        progresoEmail: fields.text({ label: "Email para invitados" }),
         progresoPorcentaje: fields.number({
-          label: "% mínimo para mostrar",
+          label: "% mínimo para mostrar invitados confirmados",
           validation: { min: 0, max: 100 },
         }),
-        progresoFrase: fields.text({ label: "Frase de progreso" }),
+        progresoFrase: fields.text({ label: "Frase de progreso de invitados confirmados" }),
         progresoMostrarSiempre: fields.checkbox({
           label: "Mostrar siempre",
           defaultValue: false,
         }),
-        
-        // === DISEÑO Y TEMA ===
+
+        // === CONFIGURACIÓN ===
         paleta: fields.select({
           label: "Paleta",
           options: [
@@ -243,7 +255,6 @@ export default config({
           },
           { label: "Tema" }
         ),
-        
         // === CONTENIDO ===
         content: fields.mdx({ label: "Contenido" }),
       },
@@ -271,6 +282,7 @@ export default config({
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
         }),
+        email: fields.text({ label: "Email del anfitrion" }),
         quinceanera: fields.text({ label: "Quinceañera" }),
         fecha: fields.date({ label: "Fecha" }),
         frase_amor: fields.text({ label: "Frase de amor" }),
@@ -296,13 +308,15 @@ export default config({
             { label: "Transferencias", value: "transferencias" },
           ],
         }),
+        beneficiario: fields.text({ label: "Beneficiario de transferencia" }),
+        banco: fields.text({ label: "Banco de transferencia" }),
+        cuenta: fields.text({ label: "Cuenta de transferencia" }),
         // Progreso de Invitados (para componente ProgresoInvitados)
-        progresoEmail: fields.text({ label: "Email del anfitrion" }),
         progresoPorcentaje: fields.number({
-          label: "% mínimo para mostrar",
+          label: "% mínimo para mostrar invitados confirmados",
           validation: { min: 0, max: 100 },
         }),
-        progresoFrase: fields.text({ label: "Frase de progreso" }),
+        progresoFrase: fields.text({ label: "Frase de progreso de invitados confirmados" }),
         progresoMostrarSiempre: fields.checkbox({
           label: "Mostrar siempre el progreso de invitados?",
           defaultValue: false,
@@ -381,9 +395,7 @@ export default config({
             itemLabel: (props) => props.fields.titulo.value || "Evento",
           }
         ),
-        beneficiario: fields.text({ label: "Beneficiario" }),
-        banco: fields.text({ label: "Banco" }),
-        cuenta: fields.text({ label: "Cuenta" }),
+        
         paleta: fields.select({
           label: "Paleta",
           options: [
@@ -437,6 +449,18 @@ export default config({
           {
             label: "Galería",
             itemLabel: () => "Imagen",
+          }
+        ),
+        imagenesSolitarias: fields.array(
+          fields.image({
+            label: "Imagen solitaria",
+            directory: "public/quince/solitarias",
+            publicPath: "/quince/solitarias/",
+          }),
+          {
+            label: "Imágenes solitarias",
+            itemLabel: () => "Imagen solitaria",
+            validation: { length: { max: 3 } },
           }
         ),
         content: fields.mdx({

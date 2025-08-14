@@ -109,6 +109,8 @@ const bodas = defineCollection({
         .optional(),
       // Galería
       galeria: z.array(z.string()).optional(),
+      // Imágenes solitarias (máximo 3)
+      imagenesSolitarias: z.array(z.string()).optional(),
       // Carpeta de pases
       json: z.string().optional(),
       theme: themeSchema
@@ -135,6 +137,7 @@ const quince = defineCollection({
     //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
     // }).optional(),
     whatsapp: z.string(),
+    email: z.string().email(),
     quinceanera: z.string(),
     fecha: z.date(),
     consideraciones: z.array(z.string()).optional(),
@@ -179,6 +182,8 @@ const quince = defineCollection({
     paleta: z.string().optional(),
     // Galería de imágenes cargadas desde Keystatic/MDX
     galeria: z.array(z.string()).optional(),
+    // Imágenes solitarias (máximo 3)
+    imagenesSolitarias: z.array(z.string()).optional(),
     theme: themeSchema
   }),
 });
