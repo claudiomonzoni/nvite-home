@@ -21,6 +21,7 @@ import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";  
 import Detalles from "../../components/bodas/Detalles.astro";
+import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 
 
 
@@ -44,6 +45,11 @@ const base = new URL(Astro.url.pathname, Astro.site);
 const Nfecha = new Date(quince.data.fecha);
 
 const { Content } = await render(quince);
+
+const imagenesSolitarias: string[] =
+  (quince.data as any).imagenesSolitarias ?? [];
+
+
 // Tipado local para la galería mientras se regeneran los tipos de Keystatic
 const galeria: string[] = (quince.data as any).galeria ?? [];
 // Tipado y normalización local para mesas de regalos
@@ -52,6 +58,7 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
   (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
 );
 
+console.log(imagenesSolitarias, "imagenes solitarias"); 
 ---
 
 <Layout
@@ -131,6 +138,16 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   </div>
 </section>
 
+ <!-- Imágenes solitarias condicionales -->
+  {
+    imagenesSolitarias[0] && (
+      <FotoSolitaria
+        arriba={false}
+        gradientePorciento={40}
+        src={imagenesSolitarias[0]}
+      />
+    )
+  }
 <section class="grid contenido">
   <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
 </section>
