@@ -490,8 +490,13 @@
       list-style: none;
       padding-bottom: $margen-min;
       color: var(--primario);
+      width: 70%;
+      @include cel {
+        width: 200px;
+      }
     }
     p {
+      overflow-wrap: break-word;
       color: var(--primario);
     }
     h3 {
@@ -764,7 +769,8 @@
     border: 0.5px solid var(--acento);
     position: relative;
     padding: $margen;
-    margin: $margen 0;
+    margin: 0 0 $margen 0;
+ 
     &:before {
       content: "";
       position: absolute;
@@ -804,10 +810,13 @@
       margin-top: $margen-cel;
       font-size: clamp(1.8rem, 2vw, 3rem);
     }
-    #dias {
-      transform: translateY(-60%);
+   
+    #dias-numero{
+      font-weight: bold;
     }
-
+#horas-numero, #minutos-numero, #segundos-numero {
+  font-size: clamp(1.5rem, 2vw, 2.5rem) ;
+}
     .tiempo-container {
       display: flex;
       justify-content: center;

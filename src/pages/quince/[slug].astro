@@ -58,7 +58,6 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
   (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
 );
 
-console.log(imagenesSolitarias, "imagenes solitarias"); 
 ---
 
 <Layout
@@ -77,11 +76,11 @@ console.log(imagenesSolitarias, "imagenes solitarias");
   client:load
 />
 
+<Encabezados texto="Mis 15 años" />
 <section class="grid contenido">
   <Audio src="/quince/quincePlus/quince-musica" />
 </section>
 
-<Encabezados texto="Mis 15 años" />
 
 <!-- <ParrafosLibres
   texto="He soñado mucho con este día, y me llena de ilusión compartirlo contigo.
@@ -112,7 +111,16 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   <Frase frase={quince.data.frase_amor} />
 </section>
 
-<Encabezados texto="El Lugar" />
+ <!-- Imágenes solitarias condicionales -->
+  {
+    imagenesSolitarias[0] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={50}
+        src={imagenesSolitarias[0]}
+      />
+    )
+  }
 <section class="grid contenido fondo-mitad">
   <!-- <ParrafosLibres
     texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
@@ -144,7 +152,7 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
       <FotoSolitaria
         arriba={false}
         gradientePorciento={40}
-        src={imagenesSolitarias[0]}
+        src={imagenesSolitarias[1]}
       />
     )
   }

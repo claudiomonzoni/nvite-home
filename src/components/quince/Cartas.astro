@@ -19,7 +19,6 @@ const formattedFecha = fecha
     })
   : null;
 
-  console.log(tonos)
 ---
 
 <div class="carta">
@@ -43,7 +42,7 @@ const formattedFecha = fecha
       </li>
     ) : null
   }
-  {array ? array.map((item) => <li>{item}</li>) : <slot />}
+  {array ? array.map((item) => <li><p> {item}</p></li>) : <slot />}
 
   {codigo ? <p>{codigo}</p> : <slot />}
 </div>
