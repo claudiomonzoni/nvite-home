@@ -3,11 +3,11 @@ import { wrapper, block } from "@keystatic/core/content-components";
 
 export default config({
   storage: {
-    kind: "local",
-    // repo: {
-    //   owner:'claudiomonzoni',
-    //   name:'nvite-home'
-    // }
+    kind: "github",
+    repo: {
+      owner:'claudiomonzoni',
+      name:'nvite-home'
+    },
   },
   collections: {
     bodas: collection({
