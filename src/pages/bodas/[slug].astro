@@ -31,20 +31,29 @@ if (!slug) {
   throw new Error('Slug no proporcionado');
 }
 
+// Evitar cache del HTML en el CDN/cliente
+Astro.response.headers.set('Cache-Control', 'no-store');
+
 const owner = 'claudiomonzoni';
 const repo = 'nvite-home';
 const branch = 'keystatic';
+
+// Helper para agregar query param
+const withParam = (url: string, key: string, val: string) => url + (url.includes('?') ? '&' : '?') + `${key}=${encodeURIComponent(val)}`;
+const cacheBust = Date.now().toString();
 
 // Helper para convertir rutas públicas a GitHub Raw URLs
 const toRawUrl = (maybePath: string | undefined): string | undefined => {
   if (!maybePath) return undefined;
   try { new URL(maybePath); return maybePath; } catch {}
   const p = maybePath.startsWith('/') ? maybePath : `/${maybePath}`;
-  return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/public${p}`;
+  const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/public${p}`;
+  return withParam(base, 'v', cacheBust);
 };
 
 // Descarga del archivo MDX
-const mdxUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/src/content/bodas/${slug}.mdx`;
+let mdxUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/src/content/bodas/${slug}.mdx`;
+mdxUrl = withParam(mdxUrl, 'v', cacheBust);
 const headers: Record<string, string> = {};
 const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 if (token) headers.Authorization = `Bearer ${token}`;
