@@ -8,6 +8,11 @@ export default config({
       owner:'claudiomonzoni',
       name:'nvite-home'
     },
+
+  //  kind: 'cloud',
+  //},
+  //cloud: {
+  //  project: 'nvitaciones/nvitaciones',
   },
   collections: {
     bodas: collection({

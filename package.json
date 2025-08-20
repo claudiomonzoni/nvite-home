@@ -29,6 +29,7 @@
     "astro": "5.8.1",
     "astro-icon": "^1.1.0",
     "firebase": "^11.0.1",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.12.5",
     "moment": "^2.30.1",
     "react": "^18.3.1",

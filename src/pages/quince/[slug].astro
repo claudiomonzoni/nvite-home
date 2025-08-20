@@ -1,7 +1,5 @@
 ---
-export const prerender = true;
-import { getCollection, render } from "astro:content";
-import type { CollectionEntry } from "astro:content";
+import matter from 'gray-matter';
 import Layout from "../../layouts/quince/Layout.astro";
 import Footer from "../../components/quince/Footer.astro";
 
@@ -10,7 +8,6 @@ import Hero from "../../components/quince/Hero";
 import Audio from "../../components/quince/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
-import ParrafosLibres from "../../components/quince/ParrafosLibres.astro";
 import Encabezados from "../../components/quince/Encabezados.astro";
 import Cartas from "../../components/quince/Cartas.astro";
 import Frase from "../../components/quince/Frase.astro";
@@ -20,37 +17,98 @@ import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";  
-import Detalles from "../../components/bodas/Detalles.astro";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 
-
-
-export async function getStaticPaths() {
-  const quinces = await getCollection("quince", ({ data }) => {
-    return !data.draft;
-  });
-  return quinces.map((quince) => ({
-    params: { slug: quince.id },
-    props: { quince },  
-  }));
+// SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
+const slug = Astro.params.slug as string;
+if (!slug) {
+  throw new Error('Slug no proporcionado');
 }
-interface Props {
-  quince: CollectionEntry<"quince">;
-}
-type quince = CollectionEntry<"quince">;
 
-const { quince } = Astro.props;
+const owner = 'claudiomonzoni';
+const repo = 'nvite-home';
+const branch = 'keystatic';
+
+// Helper para convertir rutas públicas a GitHub Raw URLs
+const toRawUrl = (maybePath: string | undefined): string | undefined => {
+  if (!maybePath) return undefined;
+  // Si ya es URL absoluta, dejarla igual
+  try { new URL(maybePath); return maybePath; } catch {}
+  // Normalizar prefijo
+  const p = maybePath.startsWith('/') ? maybePath : `/${maybePath}`;
+  // Keystatic guarda imágenes en public/* y expone con publicPath que empieza con "/..."
+  // Las serviremos directamente desde GitHub raw para evitar redeploys
+  return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/public${p}`;
+};
+
+// Descarga del archivo MDX
+const mdxUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/src/content/quince/${slug}.mdx`;
+const headers: Record<string, string> = {};
+const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
+if (token) headers.Authorization = `Bearer ${token}`;
+
+const res = await fetch(mdxUrl, { headers });
+if (!res.ok) {
+  return Astro.redirect('/404');
+}
+const mdxRaw = await res.text();
+
+// Parsear frontmatter
+const parsed = matter(mdxRaw);
+const fm = parsed.data as any;
+
+// Normalizar datos esperados por la página
+const quince = {
+  id: slug,
+  data: {
+    version: fm.version ?? '',
+    draft: !!fm.draft,
+    titulo: fm.titulo ?? slug,
+    whatsapp: fm.whatsapp ?? '',
+    email: fm.email ?? '',
+    quinceanera: fm.quinceanera ?? '',
+    fecha: fm.fecha ? new Date(fm.fecha) : new Date(),
+    frase_amor: fm.frase_amor ?? '',
+    ceremonia: {
+      hora: fm?.ceremonia?.hora ?? '',
+      lugar: fm?.ceremonia?.lugar ?? '',
+      lat: fm?.ceremonia?.lat ?? '',
+      lng: fm?.ceremonia?.lng ?? '',
+    },
+    recepcion: {
+      hora: fm?.recepcion?.hora ?? '',
+      lugar: fm?.recepcion?.lugar ?? '',
+      lat: fm?.recepcion?.lat ?? '',
+      lng: fm?.recepcion?.lng ?? '',
+    },
+    itinerario: Array.isArray(fm?.itinerario) ? fm.itinerario : [],
+    cover: toRawUrl(fm.cover) ?? '',
+    galeria: Array.isArray(fm?.galeria) ? fm.galeria.map((p: string) => toRawUrl(p)) : [],
+    imagenesSolitarias: Array.isArray(fm?.imagenesSolitarias) ? fm.imagenesSolitarias.map((p: string) => toRawUrl(p)) : [],
+    frase_regalos: fm.frase_regalos ?? '',
+    regalos: Array.isArray(fm?.regalos) ? fm.regalos : [],
+    tipoRegalos: Array.isArray(fm?.tipoRegalos) ? fm.tipoRegalos : [],
+    beneficiario: fm.beneficiario ?? '',
+    banco: fm.banco ?? '',
+    cuenta: fm.cuenta ?? '',
+    progresoPorcentaje: typeof fm.progresoPorcentaje === 'number' ? fm.progresoPorcentaje : 20,
+    progresoFrase: fm.progresoFrase ?? '¡Ya casi completamos la lista de invitados!',
+    progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
+    consideraciones: Array.isArray(fm?.consideraciones) ? fm.consideraciones : [],
+    vestimenta: fm.vestimenta ?? '',
+    coloresVestimenta: Array.isArray(fm?.coloresVestimenta) ? fm.coloresVestimenta : [],
+    paleta: fm.paleta ?? 'base',
+    theme: fm.theme ?? { name: 'base' },
+    content: parsed.content ?? '',
+  }
+} as any;
 
 const base = new URL(Astro.url.pathname, Astro.site);
 const Nfecha = new Date(quince.data.fecha);
 
-const { Content } = await render(quince);
+const imagenesSolitarias: string[] = (quince.data as any).imagenesSolitarias ?? [];
 
-const imagenesSolitarias: string[] =
-  (quince.data as any).imagenesSolitarias ?? [];
-
-
-// Tipado local para la galería mientras se regeneran los tipos de Keystatic
+// Tipado local para la galería
 const galeria: string[] = (quince.data as any).galeria ?? [];
 // Tipado y normalización local para mesas de regalos
 type Mesa = { url: string; titulo: string };
