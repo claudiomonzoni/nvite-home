@@ -171,8 +171,21 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
       })()
     }
   </section>
+  
 
-  <section class="grid contenido">
+  {
+    boda.data.galeria.length > 0 && (
+      <section class="grid pantalla">
+        <Galeria galeria={boda.data.galeria} />
+      </section>
+    )
+  }
+
+
+{
+    boda.data.version === "Lux" && (
+      
+      <section class="grid contenido">
     <Audio src="/bodas/nvitaPlus/love-story" />
   </section>
 
@@ -184,10 +197,17 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
       mamaNovio={boda.data.padres.mamaNovio}
       papaNovio={boda.data.padres.papaNovio}
       fotopapasNovio={boda.data.padres.fotopapasNovio}
-    />
+      />
   </section>
 
   <Pases folder={boda.data.json} client:load />
+
+)
+}
+<section class="grid contenido">
+  <Frase frase={boda.data.frase_amor} />
+</section>
+
 
   <section class="grid contenido">
     <div class="bandejaLugares">
@@ -212,9 +232,6 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     </div>
   </section>
 
-  <section class="grid contenido">
-    <Frase frase={boda.data.frase_amor} />
-  </section>
 
   <!-- Imágenes solitarias condicionales -->
   {
@@ -237,10 +254,16 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     mostrarSiempre={true}
   />
 
-  <section class="grid pantalla" id="BaseItinerario">
-    <Encabezados texto="Itinerario" />
-    <Itinerario listado={boda.data.itinerario} />
-  </section>
+  
+  <!-- Itinerario condicional según versión -->
+  {
+    (boda.data.version === "Lux" || boda.data.version === "Clasica") && (
+      <section class="grid pantalla" id="BaseItinerario">
+        <Encabezados texto="Itinerario" />
+        <Itinerario listado={boda.data.itinerario} />
+      </section>
+    )
+  }
 
   {
     imagenesSolitarias[1] && (
