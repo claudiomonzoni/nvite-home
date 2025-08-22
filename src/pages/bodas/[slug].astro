@@ -171,11 +171,13 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
       })()
     }
   </section>
+{
+  boda.data.version === 'Lux' && (
 
   <section class="grid contenido">
     <Audio src="/bodas/nvitaPlus/love-story" />
   </section>
-
+    
   <section class="grid pantalla">
     <Padres
       mamaNovia={boda.data.padres.mamaNovia}
@@ -184,10 +186,17 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
       mamaNovio={boda.data.padres.mamaNovio}
       papaNovio={boda.data.padres.papaNovio}
       fotopapasNovio={boda.data.padres.fotopapasNovio}
-    />
+      />
   </section>
 
-  <Pases folder={boda.data.json} client:load />
+<Pases folder={boda.data.json} client:load />
+)
+}
+
+<section class="grid contenido">
+  <Frase frase={boda.data.frase_amor} />
+</section>
+
 
   <section class="grid contenido">
     <div class="bandejaLugares">
@@ -212,9 +221,6 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     </div>
   </section>
 
-  <section class="grid contenido">
-    <Frase frase={boda.data.frase_amor} />
-  </section>
 
   <!-- Imágenes solitarias condicionales -->
   {
@@ -252,15 +258,7 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     )
   }
 
-  {
-    imagenesSolitarias[2] && (
-      <FotoSolitaria
-        arriba={false}
-        gradientePorciento={35}
-        src={imagenesSolitarias[2]}
-      />
-    )
-  }
+
 
   <section class="grid pantalla flex margen-arriba-abajo">
     <Detalles lista={boda.data.consideraciones} encabezado="Consideraciones" />
@@ -303,6 +301,16 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   <section class="grid contenido">
     <MensajeVip />
   </section>
+
+    {
+    imagenesSolitarias[2] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={35}
+        src={imagenesSolitarias[2]}
+      />
+    )
+  }
 
   <Confirmacion
     whatsapp={boda.data.whatsapp}
