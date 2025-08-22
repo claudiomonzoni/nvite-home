@@ -51,7 +51,7 @@ const bodas = defineCollection({
       novios: z.string().optional(),
        fecha: z.date(),
        frase_amor: z.string(),
-      frase_regalos: z.string(),
+      frase_regalos: z.string().optional(),
       // Progreso de Invitados
       progresoEmail: z.string().email().optional(),
       progresoPorcentaje: z.number().optional(),
