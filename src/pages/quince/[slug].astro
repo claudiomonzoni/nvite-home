@@ -26,7 +26,7 @@ if (!slug) {
 }
 
 // Evitar cache del HTML en el CDN/cliente
-Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate');
 
 const owner = 'claudiomonzoni';
 const repo = 'nvite-home';

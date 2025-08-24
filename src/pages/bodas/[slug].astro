@@ -32,7 +32,7 @@ if (!slug) {
 }
 
 // Evitar cache del HTML en el CDN/cliente
-Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate');
 
 const owner = 'claudiomonzoni';
 const repo = 'nvite-home';
@@ -209,12 +209,6 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 </section>
 
 
-)
-}
-<section class="grid contenido">
-  <Frase frase={boda.data.frase_amor} />
-</section>
-
 
   <section class="grid contenido">
     <div class="bandejaLugares">
@@ -254,6 +248,9 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   <section class="grid contenido">
     <Contador fecha={boda.data.fecha.toISOString()} />
   </section>
+  <!-- Itinerario condicional según versión -->
+  {
+    (boda.data.version === "Lux" || boda.data.version === "Clasica") && (
   <ProgresoInvitados
     email={boda.data.email}
     porcentajeMostrarInvitados={20}
@@ -262,9 +259,6 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   />
 
   
-  <!-- Itinerario condicional según versión -->
-  {
-    (boda.data.version === "Lux" || boda.data.version === "Clasica") && (
       <section class="grid pantalla" id="BaseItinerario">
         <Encabezados texto="Itinerario" />
         <Itinerario listado={boda.data.itinerario} />
