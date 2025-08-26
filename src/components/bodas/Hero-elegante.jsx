@@ -13,12 +13,25 @@ export default function Hero({
 }) {
   const [isLoading, setIsLoading] = useState(true);
 
+  // Crear fecha con timezone local y ajuste
+  const getFechaLocal = (fechaStr) => {
+    const [year, month, day] = fechaStr.split('-');
+    const date = new Date(year, month - 1, parseInt(day) + 1, 12, 0, 0);
+    return date;
+  };
+
   // Asegurarnos que fecha sea un objeto Date válido
-  const fechaObj = fecha instanceof Date ? fecha : new Date(fecha);
+  const fechaObj = fecha instanceof Date ? 
+    (() => {
+      const newDate = new Date(fecha);
+      newDate.setDate(newDate.getDate() + 1);
+      return newDate;
+    })() : 
+    getFechaLocal(fecha);
   
   // Validar que la fecha sea válida
   if (isNaN(fechaObj.getTime())) {
-//    console.error('Fecha inválida:', fecha);
+    console.error('Fecha inválida:', fecha);
     return <div>Error: Fecha inválida</div>;
   }
 

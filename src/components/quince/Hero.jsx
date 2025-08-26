@@ -70,17 +70,32 @@ export default function Hero({ nombres, fecha, cover }) {
             Tengo el honor de invitarlos a celebrar mis XV años
             </p>
             <p className={Style.fecha}>
-            La cita es el día  
-            <b>
-              {'\u00A0' + new Date(fecha).toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
-              }) + '\u00A0'}
-              </ b>
-                y me encantará compartirlo contigo.
-               Con cariño,
+              La cita es el día  
+              <b>
+                {'\u00A0' + (() => {
+                  try {
+                    if (!fecha) return 'Fecha por confirmar';
+                    // Add 1 day to compensate for timezone
+                    const date = new Date(fecha);
+                    date.setDate(date.getDate() + 1);
+                    
+                    if (isNaN(date.getTime())) return 'Fecha inválida';
+                    
+                    return date.toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      weekday: 'long',
+                      timeZone: 'America/Mexico_City'
+                    });
+                  } catch (error) {
+                    console.error('Error parsing date:', fecha, error);
+                    return 'Fecha por confirmar';
+                  }
+                })() + '\u00A0'}
+              </b>
+              y me encantará compartirlo contigo.
+              Con cariño,
             </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
           {
