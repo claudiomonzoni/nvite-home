@@ -250,22 +250,26 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   </section>
   <!-- Itinerario condicional según versión -->
   {
-    (boda.data.version === "Lux" || boda.data.version === "Clasica") && (
+    (boda.data.version === "Lux") && (
   <ProgresoInvitados
     email={boda.data.email}
     porcentajeMostrarInvitados={20}
     frase="Estás en la lista, ¿Ya confirmaste?"
     mostrarSiempre={true}
   />
+    )
+  }
 
-  
+  {
+    (boda.data.itinerario.length > 0) && (
+
       <section class="grid pantalla" id="BaseItinerario">
         <Encabezados texto="Itinerario" />
         <Itinerario listado={boda.data.itinerario} />
       </section>
-    )
-  }
 
+)
+}
   {
     imagenesSolitarias[1] && (
       <FotoSolitaria

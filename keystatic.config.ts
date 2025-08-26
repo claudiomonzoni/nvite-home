@@ -35,6 +35,7 @@ export default config({
         whatsapp: fields.text({
           label: "WhatsApp del anfitrion",
           validation: {
+            isRequired: true,
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
@@ -325,7 +326,9 @@ export default config({
         titulo: fields.slug({ name: { label: "Título" } }),
         whatsapp: fields.text({
           label: "WhatsApp del anfitrion",
+          
           validation: {
+             isRequired: true,
             length: { min: 10, max: 15 },
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
@@ -334,6 +337,19 @@ export default config({
         quinceanera: fields.text({ label: "Quinceañera" }),
         fecha: fields.date({ label: "Fecha" }),
         frase_amor: fields.text({ label: "Frase de amor" }),
+            // === PADRES ===
+          padres: fields.object(
+            {
+              mama: fields.text({ label: "Mamá de la Quinceañera" }),
+              papa: fields.text({ label: "Papá de la Quinceañera" }),
+              fotopapas: fields.image({
+                label: "Foto papás",
+                directory: "public/quince/padres",
+                publicPath: "/quince/padres/",
+              })
+            },
+            { label: "Padres" }
+          ),
 
         ceremonia: fields.object(
           {

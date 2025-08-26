@@ -46,7 +46,7 @@ const bodas = defineCollection({
       //   message:
       //     "¡La imagen de portada debe tener al menos 200 píxeles de ancho!",
       // }),
-      whatsapp: z.string(),
+      whatsapp: z.string().optional(),
       email: z.string().email(),
       novios: z.string().optional(),
        fecha: z.date(),
@@ -139,10 +139,16 @@ const quince = defineCollection({
     //   message:
     //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
     // }).optional(),
-    whatsapp: z.string(),
+    whatsapp: z.string().optional(),
     email: z.string().email(),
     quinceanera: z.string(),
     fecha: z.date(),
+      // Padres
+      padres: z.object({
+        mama: z.string().optional(),
+        papa: z.string().optional(),
+        fotopapas: z.string().optional(),
+      }).optional(),
     // Consideraciones importantes para los invitados
     consideraciones: z.array(z.string()).optional(),
     // Código de vestir para el evento

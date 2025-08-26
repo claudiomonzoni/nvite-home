@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import estilo from "../../estilos/temas/base/quince/confirmacion.module.scss";
 
-export default function Confirmacion({ whatsapp, dias_antes }) {
+export default function Confirmacion({ whatsapp }) {
 
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
             <h2>Confirmación</h2>
             <p>
               Por favor <b>confírmanos</b> tu asistencia{" "}
-              <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
+              <b>al menos 15 días antes del evento</b>, nos ayudarás
               mucho con la organización al hacerlo.
             </p>
 

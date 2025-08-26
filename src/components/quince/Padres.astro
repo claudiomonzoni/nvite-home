@@ -1,0 +1,35 @@
+---
+interface Props {
+  mama?: string;
+  papa?: string;
+  fotopapas?: string;
+}
+
+const { mama, papa, fotopapas, } = Astro.props;
+---
+<div id="padres">
+
+  <div class="bande" >
+    <h2>Mis Padres</h2>
+    <div class="conte">
+  
+      <ul class="padre">
+      {
+        fotopapas ? (
+          <div class="padre">
+            <img src={fotopapas} alt="Foto de los padres de la quinceañera" />
+          </div>
+        ) : (
+          ""
+        )
+      }
+ 
+        <h3>Gracias a mis Padres</h3>
+        <li>{mama}</li>
+        <li>{papa}</li>
+      </ul>
+
+    </div>
+  </div>
+  
+</div>

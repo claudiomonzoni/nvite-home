@@ -1,7 +1,6 @@
 ---
 import matter from 'gray-matter';
 import Layout from "../../layouts/quince/Layout.astro";
-import Footer from "../../components/quince/Footer.astro";
 
 //componentes
 import Hero from "../../components/quince/Hero";
@@ -17,7 +16,10 @@ import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
 import Confirmacion from "../../components/quince/Confirmacion";  
+import ConfirmacionBasica from "../../components/quince/ConfirmacionBasica";  
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
+import Padres from '../../components/quince/Padres.astro';
+import Footer from "../../components/quince/Footer.astro";
 
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
@@ -76,6 +78,11 @@ const quince = {
     whatsapp: fm.whatsapp ?? '',
     email: fm.email ?? '',
     quinceanera: fm.quinceanera ?? '',
+    padres: {
+      mama: fm?.padres?.mama ?? '',
+      papa: fm?.padres?.papa ?? '',
+      fotopapas: toRawUrl(fm?.padres?.fotopapas) ?? '',
+    },
     fecha: fm.fecha ? new Date(fm.fecha) : new Date(),
     frase_amor: fm.frase_amor ?? '',
     ceremonia: {
@@ -144,9 +151,22 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
 />
 
 <Encabezados texto="Mis 15 años" />
+  <section class="grid pantalla">
+    <Padres
+      mama={quince.data.padres.mama}
+      papa={quince.data.padres.papa}
+      fotopapas={quince.data.padres.fotopapas}
+    
+      />
+  </section>
+
+{
+    quince.data.version === "Lux" && (
 <section class="grid contenido">
   <Audio src="/quince/quincePlus/quince-musica" />
 </section>
+)
+}
 
 
 <!-- <ParrafosLibres
@@ -215,7 +235,7 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 
  <!-- Imágenes solitarias condicionales -->
   {
-    imagenesSolitarias[0] && (
+    imagenesSolitarias[1] && (
       <FotoSolitaria
         arriba={false}
         gradientePorciento={40}
@@ -227,6 +247,8 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
 </section>
 
+{
+    quince.data.version === "Lux" && (
 
 <section class="grid pantalla">
   <ProgresoInvitados
@@ -238,24 +260,17 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 </section>
 
 <Itinerario listado={quince.data.itinerario} />
+)
+}
 
 <section class="grid pantalla">
   <SilderGsap>
     {galeria && galeria.map((src) => (
-      <img src={src} alt={`Galería de ${quince.data.quinceanera || 'XV Años'}`} loading="lazy" />
+      <img src={src} alt={`Galería de ${quince.data.quinceanera || 'XV Años'}`} loading="eager" />
     ))}
   </SilderGsap>
 </section>
-<!--  
-  <section class="grid pantalla flex margen-arriba-abajo">
-    <Detalles lista={quince.data.consideraciones} encabezado="Consideraciones" />
-    <Detalles encabezado="Codigo de vestir" vestimenta={quince.data.vestimenta} />
-    <Detalles
-    encabezado="Sugerencia de tonos"
-    colores={quince.data.coloresVestimenta}
-    />
-  </section>
-  -->
+
 
 <section class="grid contenido">
 
@@ -274,12 +289,34 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 </section>
 
 
- <Confirmacion
-  whatsapp={quince.data.whatsapp}
-  dias_antes={15}
-  version={quince.data.version}
-  client:only="react"
+    {
+      (() => {
+        switch (quince.data.version) {
+          case 'Lux':
+          case 'Clasica':
+            return (
+              <Confirmacion
+                whatsapp={quince.data.whatsapp}
+                dias_antes={15}
+                client:only="react"
 /> 
+            );
+          case 'Esencial':
+            return (
+             <section>
+                  <ConfirmacionBasica
+                    whatsapp={quince.data.whatsapp}       
+                    client:only="react"
+                  />
+              </section>
+            );
+          default:
+            return null;
+        }
+      })()
+    }
+
+
 
   <section class="grid contenido">
     <Footer ruta={base} />

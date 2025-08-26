@@ -629,7 +629,17 @@
       height: 15px;
     }
   }
-
+// componente frase
+  .frase {
+    color: var(--primario);
+    font-family: $encabezados, serif;
+    font-size: clamp(3rem, 5vw, 7vw);
+    text-align: center;
+    margin: $margen-cel $margen-min 0 $margen-min;
+    padding: $margen $margen-min;
+    border-top: .7px solid var(--primario);
+    border-bottom: .7px solid var(--primario);
+  }
   // Componente Regalos
 
   #bandejaRegalos {

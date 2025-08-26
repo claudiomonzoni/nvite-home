@@ -8,19 +8,7 @@ const { frase } = Astro.props;
 <p class="frase">
   {frase}
 </p>
-<style lang="scss">
-  @use "../../estilos/quince/_variables.scss" as *;
-  .frase {
-    color: var(--primario);
-    font-family: $encabezados, serif;
-    font-size: clamp(3rem, 5vw, 7vw);
-    text-align: center;
-    margin: $margen-top $margen-min 0 $margen-min;
-    padding: $margen $margen-min;
-    border-top: 1px solid var(--primario);
-    border-bottom: 1px solid var(--primario);
-  }
-</style>
+
 <script>
   import SplitType from "split-type";
   import gsap from "gsap";
