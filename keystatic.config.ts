@@ -40,7 +40,7 @@ export default config({
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
         }),
-        email: fields.text({ label: "Email del anfitrion", validation: { isRequired: true } }),
+        email: fields.text({ label: "Email del anfitrion", validation: { isRequired: false } }),
 
         // === FRASES ===
         frase_amor: fields.text({ label: "Frase de amor" }),
@@ -333,7 +333,7 @@ export default config({
             pattern: { regex: /^[0-9]+$/, message: "Solo se permiten números" },
           },
         }),
-        email: fields.text({ label: "Email del anfitrion", validation: { isRequired: true } }),
+        email: fields.text({ label: "Email del anfitrion", validation: { isRequired: false } }),
         quinceanera: fields.text({ label: "Quinceañera" }),
         fecha: fields.date({ label: "Fecha" }),
         frase_amor: fields.text({ label: "Frase de amor" }),

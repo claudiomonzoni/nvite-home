@@ -47,7 +47,7 @@ const bodas = defineCollection({
       //     "¡La imagen de portada debe tener al menos 200 píxeles de ancho!",
       // }),
       whatsapp: z.string().optional(),
-      email: z.string().email(),
+      email: z.string().email().optional(),
       novios: z.string().optional(),
        fecha: z.date(),
        frase_amor: z.string(),
@@ -140,7 +140,7 @@ const quince = defineCollection({
     //     "¡La imagen de portada de quince debe tener al menos 700 píxeles de ancho!",
     // }).optional(),
     whatsapp: z.string().optional(),
-    email: z.string().email(),
+    email: z.string().email().optional(),
     quinceanera: z.string(),
     fecha: z.date(),
       // Padres
