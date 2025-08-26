@@ -46,7 +46,9 @@
     padding: 0;
     font-weight: normal;
   }
-
+p{
+  font-family: $txt, serif;
+}
   h1,
   h2,
   h3,
@@ -306,10 +308,15 @@
       align-items: center;
       text-align: center;
     }
+
     time,
     address {
+      font-family: $txt, serif;
       color: var(--secundario);
       font-size: clamp(1.1rem, 1.2vw, 1.6rem);
+      b{
+        color: var(--primario);
+      }
       svg {
         width: 20px;
         height: auto;
@@ -326,6 +333,24 @@
       border-bottom: solid 1px var(--primario);
       padding-bottom: $margen-min;
     }
+
+        time{
+      font-size: clamp(2rem, 2.5vw, 3rem)!important;
+      font-weight: bold;
+      color: var(--primario)!important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: $margen-min;
+      svg {
+        width: 30px;
+        height: auto;
+        vertical-align: middle;
+        margin: 0px 3px;
+      }
+    }
+
+
     @include cel {
       flex-wrap: wrap;
       .izq,
@@ -768,7 +793,68 @@
       padding-bottom: $margen;
     }
   }
+// componente padres
+  #padres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
 
+  .bande {
+    width: 90%;
+    max-width: 800px;
+    background: linear-gradient(
+      to top,
+      var(--fondoBurn) 0%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+    padding: $margen 1rem;
+    text-align: center;
+  }
+
+  .bande span {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: $txt, serif;
+    font-size: clamp(.7rem, 1.1vw, 1.3rem);
+    color: var(--secundario);
+  }
+
+  .conte {
+    margin-top: 1rem;
+  }
+
+  .padre {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .padre h3 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    color: var(--secundario);
+    margin-top: 0.5rem;
+    font-family: $encabezados, serif;
+  }
+
+  .padre li {
+    font-size: 1.2rem;
+    color: var(--primario);
+    font-size: clamp(1.8rem, 1.5vw, 2rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .padre img {
+    max-width: 200px;
+    margin-top: 1rem;
+    @extend .sombra;
+  }
   // Componente contador (cuenta regresiva)
 
   #contador {
@@ -776,9 +862,8 @@
     justify-content: center;
     align-items: center;
     color: var(--secundario);
-    border: 0.5px solid var(--acento);
+
     position: relative;
-    padding: $margen;
     margin: 0 0 $margen 0;
  
     &:before {
@@ -825,7 +910,8 @@
       font-weight: bold;
     }
 #horas-numero, #minutos-numero, #segundos-numero {
-  font-size: clamp(1.5rem, 2vw, 2.5rem) ;
+  font-size: clamp(1.5rem, 2vw, 2.5rem);
+ 
 }
     .tiempo-container {
       display: flex;
@@ -871,7 +957,7 @@
       text-align: center;
     }
     p {
-      font-family: $encabezados, serif;
+      font-family: $txt, serif;
       color: var(--primario);
       font-size: clamp(1.5rem, 1.5vw, 1.5rem);
       margin: 0;

@@ -22,6 +22,7 @@ import BloqueMapa from "../../components/bodas/BloqueMapa.astro";
 import Regalos from "../../components/bodas/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Confirmacion from "../../components/comunes/Confirmacion";
+import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 
@@ -334,12 +335,36 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     )
   }
 
-  <Confirmacion
-    whatsapp={boda.data.whatsapp}
-    dias_antes={15}
-    version={boda.data.version}
-    client:only="react"
-  />
+      {
+      (() => {
+        switch (boda.data.version) {
+          case 'Lux':
+          case 'Clasica':
+            return (
+               <Confirmacion
+                whatsapp={boda.data.whatsapp}
+                dias_antes={15}
+                version={boda.data.version}
+                client:only="react"
+              />
+            );
+          case 'Esencial':
+            return (
+             <section>
+                  <ConfirmacionBasica
+                      whatsapp={boda.data.whatsapp}
+                      dias_antes={15}
+                      client:only="react"
+                  />
+              </section>
+            );
+          default:
+            return null;
+        }
+      })()
+    }
+
+
   <section class="grid contenido">
     <Footer ruta={base} />
   </section>

@@ -783,6 +783,14 @@
     }
     .conte {
       padding: $margen-cel $margen;
+      svg{
+        width: 2rem;
+        height: auto;
+        vertical-align: middle;
+        path {
+          fill: var(--acento);
+        }
+      }
     }
     ul {
       margin-top: $margen-min;

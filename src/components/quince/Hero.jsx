@@ -67,7 +67,7 @@ export default function Hero({ nombres, fecha, cover }) {
               {invitado}
             </p>
             <p>
-            Tengo el honor de invitarte a celebrar mis XV años
+            Tengo el honor de invitarlos a celebrar mis XV años
             </p>
             <p className={Style.fecha}>
             La cita es el día  

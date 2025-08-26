@@ -42,7 +42,7 @@
     position: relative;
     padding: $margen-top $margen-min;
     h1 {
-      color: var(--primario) !important;
+      color: var(--acento) !important;
       padding: $margen-cel 0 0;
     }
     span {
@@ -72,12 +72,12 @@
     .centro {
       position: relative;
       padding: $margen-cel 0;
-      border-bottom: solid 1px var(--acento);
+      // border-bottom: solid 1px var(--acento);
       .familia{
         font-size: clamp(1.5rem, 2vw, 3rem);
         margin-bottom: $margen-cel;
         padding-bottom: $margen-cel;
-        border-bottom: solid 1px var(--acento);
+        // border-bottom: solid 1px var(--acento);
       }
   
     }
