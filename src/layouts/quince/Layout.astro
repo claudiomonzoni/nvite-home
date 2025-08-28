@@ -26,7 +26,8 @@ const { title, url, cover, paleta, theme } = Astro.props;
 const { name, colors, typography } = theme;
 
 // const portadaOG = `https://nvitaciones.com${cover}`;
-const portadaOG = cover;
+// const portadaOG = cover;
+const portadaOG = cover ? `${cover.split('?')[0]}?v=${new Date().getTime()}` : '';
 
 import "../../estilos/quince/redireccion.scss";
 console.log(portadaOG)
