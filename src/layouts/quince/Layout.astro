@@ -25,10 +25,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, url, cover, paleta, theme } = Astro.props;
 const { name, colors, typography } = theme;
 
-const portadaOG = `https://nvitaciones.com${cover}`;
+// const portadaOG = `https://nvitaciones.com${cover}`;
+const portadaOG = cover;
 
 import "../../estilos/quince/redireccion.scss";
-
+console.log(portadaOG)
 ---
 
 <!doctype html>

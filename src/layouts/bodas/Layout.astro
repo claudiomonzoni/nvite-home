@@ -23,7 +23,8 @@ interface Props {
 }
 const { title, url, paleta, cover, theme } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const portadaOG = `https://nvitaciones.com${cover}`;
+// const portadaOG = `https://nvitaciones.com${cover}`;
+const portadaOG = cover;
 const { name, colors, typography } = theme;
 
 

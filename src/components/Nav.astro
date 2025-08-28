@@ -12,7 +12,8 @@ if (Astro.cookies.has("cartItems")) {
 ---
 
 <nav id="main-nav">
-  <div class="nav-content">
+  <div class="grid contenido">
+  <div class="nav-content ">
     <a href="/" class="logo-container">
       <img src="/nvita-logo.svg" alt="Nvita invitaciones digitales" id="logo" />
     </a>
@@ -90,6 +91,7 @@ if (Astro.cookies.has("cartItems")) {
       </a>
     </li>
   </div>
+  </div>
 </nav>
 
 <style lang="scss">
@@ -105,23 +107,22 @@ if (Astro.cookies.has("cartItems")) {
   .panel-home {
     margin: 0;
   }
-
+ 
   .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
     @include cel {
-      margin: 0 $margen-cel;
       align-items: center;
     }
   }
 
   #logo {
-    width: 15vw;
+    width: 13vw;
     transition: all 0.3s ease;
     @include cel {
-      width: 46vw;
+      width: 44vw;
       padding: 0.5rem 0;
     }
   }
@@ -157,9 +158,9 @@ if (Astro.cookies.has("cartItems")) {
     border-bottom-left-radius: $radio;
 
   &.collapsed {
-      background-color: rgba($fondoGlobal, 0.85);
+      background-color: rgba($fondoGlobal, 0.8);
       backdrop-filter: blur(8px);
-      padding: 0.5rem $margen-cel;
+      padding: 0.5rem .4rem;
 
       #logo {
         width: 8vw;
