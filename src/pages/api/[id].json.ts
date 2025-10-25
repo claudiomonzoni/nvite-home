@@ -57,21 +57,39 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       throw new Error("No existe o fue enviado el id del usuario.");
     }
 
+     const updateFields = {
+      ...(nombre && { nombre }),
+      ...(pases && { pases: Math.trunc(Number(pases)).toString() }),
+      ...(mesa !== undefined && { mesa }),
+      ...(numeroWhats !== undefined && { numeroWhats }),
+      ...(confirmado !== undefined && { confirmado }),
+      ...(vip !== undefined && { vip }),
+      ...(InvitacionEnviada !== undefined && { InvitacionEnviada }),
+      ...(noAsiste !== undefined && { noAsiste }),
+      ...(tipoInvitacion !== undefined && { tipoInvitacion }),
+      ...(vip && mensajePersonalizado !== undefined && { mensajePersonalizado }),
+    };
+
     await db
       .update(Invitados)
-      .set({
-        nombre,
-        pases: Math.trunc(Number(pases)).toString(),
-        mesa,
-        numeroWhats,
-        confirmado,
-        vip,
-        InvitacionEnviada,
-        noAsiste,
-        tipoInvitacion,
-        mensajePersonalizado: vip ? mensajePersonalizado : null,
-      })
+      .set(updateFields)
       .where(eq(Invitados.id, Number(id)));
+
+    // await db
+    //   .update(Invitados)
+    //   .set({
+    //     nombre,
+    //     pases: Math.trunc(Number(pases)).toString(),
+    //     mesa,
+    //     numeroWhats,
+    //     confirmado,
+    //     vip,
+    //     InvitacionEnviada,
+    //     noAsiste,
+    //     tipoInvitacion,
+    //     mensajePersonalizado: vip ? mensajePersonalizado : null,
+    //   })
+    //   .where(eq(Invitados.id, Number(id)));
 
     return new Response(
       JSON.stringify({

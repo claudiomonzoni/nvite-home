@@ -62,7 +62,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version }) {
         setId(json[0].id);
         setAsistira(json[0].confirmado);
       } catch (error) {
-        setError("La direeción de esta invitación es incorrecta y no podemos mostrar el formulario de confirmación, Por favor, inténtalo de nuevo con la dirección correcta de su invitación.");
+        setError("La dirección de esta invitación es incorrecta y no podemos mostrar el formulario de confirmación, Por favor, inténtalo de nuevo con la dirección correcta de su invitación.");
         console.error("Error fetching invitado:", error);
       } finally {
         setIsLoading(false);

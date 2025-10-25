@@ -29,7 +29,7 @@ export default async function seed() {
       usuarioId: 1,
       nombre: "Ricardo Salinas Pliego",
       pases: "3",
-      mesa: "2",
+      mesa: "5",
       numeroWhats: 7551048550,
       confirmado: true,
       vip: true,

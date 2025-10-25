@@ -15,7 +15,7 @@ import BloqueMapa from "../../components/quince/BloqueMapa.astro";
 import Regalos from "../../components/comunes/Regalos.astro";
 import Contador from "../../components/bodas/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
-import Confirmacion from "../../components/quince/Confirmacion";  
+import Confirmacion from "../../components/comunes/Confirmacion";  
 import ConfirmacionBasica from "../../components/quince/ConfirmacionBasica";  
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import Padres from '../../components/quince/Padres.astro';
@@ -298,6 +298,7 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
               <Confirmacion
                 whatsapp={quince.data.whatsapp}
                 dias_antes={15}
+                version={quince.data.version}
                 client:only="react"
 /> 
             );
