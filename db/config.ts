@@ -34,6 +34,8 @@ const Invitados = defineTable({
       optional: true,
     }),
     mensajePersonalizado: column.text({ optional: true }),
+    comentarios: column.text({ optional: true }),
+    personasNoAsisten: column.text({ optional: true }),
   },
 });
 

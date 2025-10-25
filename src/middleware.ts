@@ -18,12 +18,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // Rutas protegidas
     const rutasProtegidas = [
         /^\/api\/addInvitados\.json$/, // Ruta para agregar invitados
-        /^\/api\/\d+\.json$/,          // Ruta para un invitado específico por ID
     ];
 
     const esRutaProtegida = rutasProtegidas.some((ruta) => ruta.test(pathname));
 
-    if (esRutaProtegida && (method === "POST" || method === "DELETE" || method === "PATCH")) {
+    if (esRutaProtegida && (method === "POST" || method === "DELETE")) {
         if (!estaDentro) {
             return new Response(JSON.stringify({ message: "No autorizado" }), { status: 401 });
         }
