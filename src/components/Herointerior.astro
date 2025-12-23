@@ -12,10 +12,19 @@ interface Props {
   imagencel?: string;
   fondo: string;
   tema?: string;
-  confianza?: string
+  confianza?: string;
 }
-const { description, h1, imagen, imagencel, fondo, Spanh1, Spanh2, tema, confianza } =
-  Astro.props;
+const {
+  description,
+  h1,
+  imagen,
+  imagencel,
+  fondo,
+  Spanh1,
+  Spanh2,
+  tema,
+  confianza,
+} = Astro.props;
 
 import { Icon } from "astro-icon/components";
 console.log(fondo);
@@ -26,7 +35,8 @@ console.log(fondo);
     <div class="izq anime">
       <div class="bandeja anime">
         <h1 class={tema}>
-          <span set:html={Spanh1} />{h1}
+          {h1}
+          <span set:html={Spanh1} />
           <span set:html={Spanh2} />
         </h1>
         <p class={tema} set:html={description} />
@@ -40,7 +50,7 @@ console.log(fondo);
           >
             <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
-          <p id="confianza" set:html={confianza}></p>
+          <p id="confianza" set:html={confianza} />
         </div>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>
@@ -79,23 +89,28 @@ console.log(fondo);
       display: flex;
       flex-wrap: wrap;
       width: 100%;
-      color: white;
+      color: $acento;
       font-size: clamp(4rem, 6vw, 8rem);
-      line-height: 0.6em;
+      line-height: 0.8em;
       text-align: left;
-      text-shadow:
-        2px 2px 0px var(--fondo),
-        5px 4px 10px rgba(0, 0, 0, 0.15);
+      font-family: $fuenteB, serif;
+      // text-shadow:
+      //   2px 2px 0px var(--fondo),
+      //   5px 4px 10px rgba(0, 0, 0, 0.15);
       transform: translateX(-0.5rem);
       span {
+        line-height: 2em;
         flex: 1 0 100%;
         color: $primario;
-        font-size: clamp(1.3rem, 1.3vw, 2rem);
-        font-weight: 100;
+        font-size: clamp(1.2rem, 1vw, 2rem);
         transform: translateX(0.5rem);
+        font-weight: 400 !important;
+        font-family: "Montserrat", sans-serif;
       }
       span:nth-child(2) {
-        font-size: clamp(1.3rem, 1.3vw, 2rem);
+        font-family: "Playfair Display", serif;
+        line-height: 1em;
+        font-size: clamp(1.8rem, 2.3vw, 3rem);
       }
 
       @include cel {
@@ -112,12 +127,12 @@ console.log(fondo);
     }
     p {
       margin: 0 0 $margen-cel 0;
+      padding-top: 1rem;
     }
-    a{
+    a {
       margin: 0;
     }
 
-  
     .bandeja {
       width: fit-content;
       max-width: 80%;
@@ -146,17 +161,18 @@ console.log(fondo);
       //   no-repeat;
       // background-size: cover;
       // background-position: 190% 0%;
-      overflow: hidden;
+      // overflow: hidden;
       border-radius: $margen-min;
       picture {
         width: fit-content;
         height: auto;
+        transform: translate(20px, -20px);
+        @include cel {
+          transform: translate(0px, 0px)!important;
+        }
         img {
           object-fit: contain;
           width: 100%;
-          @include cel {
-            transform: translate(1.5%, 0px);
-          }
         }
       }
     }
@@ -200,9 +216,9 @@ console.log(fondo);
   }
   .oscuro {
     color: white;
-      #confianza {
-     color: white
-    } 
+    #confianza {
+      color: white;
+    }
   }
   .oscuro span {
     color: $secundario !important;
@@ -212,7 +228,7 @@ console.log(fondo);
     span {
       color: $fondoGlobal !important;
     }
-     p {
+    p {
       color: $fondoGlobal !important;
     }
   }

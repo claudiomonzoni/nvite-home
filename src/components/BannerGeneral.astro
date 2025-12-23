@@ -58,8 +58,10 @@ if (!imagen[urlImagen])
   #banner {
     border-radius: $radio;
     margin-bottom: $margen-min;
+    margin-top: $margen-top-cel;
     @extend .sombra;
     gap: 0;
+ 
   }
   h2 {
     font-size: clamp(2.2rem, 3.5vw, 3.5rem);
@@ -121,7 +123,7 @@ if (!imagen[urlImagen])
       fill: $acento !important;
     }
 
-    background: linear-gradient(43deg, $secundario 10%, rgb(255, 247, 233) 80%);
+    background: linear-gradient(43deg, $terciario 10%, rgb(255, 247, 233) 80%);
   }
   .terciario {
     svg {

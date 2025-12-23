@@ -13,84 +13,91 @@ if (Astro.cookies.has("cartItems")) {
 
 <nav id="main-nav">
   <div class="grid contenido">
-  <div class="nav-content ">
-    <a href="/" class="logo-container">
-      <img src="/nvita-logo.svg" alt="Nvita invitaciones digitales" id="logo" />
-    </a>
-
-    <div class="menu-items">
-      <ul>
-        {
-          url === "/terminos-condiciones" ? (
-            <li>
-              <a href="/" class="selected">
-                Regresar
-              </a>
-            </li>
-          ) : (
-            <>
-              <li>
-                <a href="/bodas" class={url == "/bodas/" ? "selected" : "none"}>
-                  Bodas
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/invitaciones-quince"
-                  class={url == "/invitaciones-quince/" ? "selected" : "none"}
-                >
-                  XV años
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/invitaciones-pdf"
-                  class={url == "/invitaciones-pdf/" ? "selected" : "none"}
-                >
-                  Invitaciones PDF
-                </a>
-              </li>
-              {url === "/" ? (
-                <li>
-                  <a href="#faq">FAQ</a>
-                </li>
-              ) : (
-                ""
-              )}
-              <li>
-                <Btn
-                  liga="https://wa.link/kex8vd"
-                  texto="755113 2468"
-                  clases="btn-whatsapp panel-home"
-                  claro={false}
-                  blank={true}
-                  rel="nofollow"
-                >
-                  <Icon name="whatsapp" size={22} />
-                </Btn>
-              </li>
-            </>
-          )
-        }
-      </ul>
-    </div>
-    <li id="carrito">
-      <a href="/nvitaciones/cart" aria-label="Ir al carrito">
-        <Icon
-          name="solar:cart-large-minimalistic-outline"
-          width="32"
-          height="32"
+    <div class="nav-content">
+      <a href="/" class="logo-container">
+        <img
+          src="/nvita-logo.svg"
+          alt="Nvita invitaciones digitales"
+          id="logo"
         />
-        <span
-          class="count"
-          id="cart-count"
-          class:list={[{ hidden: cartItemsCount === 0 }]}
-        >
-          {cartItemsCount > 0 ? cartItemsCount : ""}
-        </span>
       </a>
-    </li>
-  </div>
+
+      <div class="menu-items">
+        <ul>
+          {
+            url === "/terminos-condiciones" ? (
+              <li>
+                <a href="/" class="selected">
+                  Regresar
+                </a>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <a
+                    href="/bodas"
+                    class={url == "/bodas/" ? "selected" : "none"}
+                  >
+                    Bodas
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/invitaciones-quince"
+                    class={url == "/invitaciones-quince/" ? "selected" : "none"}
+                  >
+                    XV años
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/invitaciones-pdf"
+                    class={url == "/invitaciones-pdf/" ? "selected" : "none"}
+                  >
+                    Invitaciones PDF
+                  </a>
+                </li>
+                {url === "/" ? (
+                  <li>
+                    <a href="#faq">FAQ</a>
+                  </li>
+                ) : (
+                  ""
+                )}
+                <li>
+                  <Btn
+                    liga="https://wa.link/kex8vd"
+                    texto="755113 2468"
+                    clases="btn-whatsapp panel-home"
+                    claro={false}
+                    blank={true}
+                    rel="nofollow"
+                  >
+                    <Icon name="whatsapp" size={22} />
+                  </Btn>
+                </li>
+              </>
+            )
+          }
+        </ul>
+      </div>
+      <li id="carrito">
+        <a href="/nvitaciones/cart" aria-label="Ir al carrito">
+          <Icon
+            name="solar:cart-large-minimalistic-outline"
+            width="32"
+            height="32"
+          />
+          <span
+            class="count"
+            id="cart-count"
+            class:list={[{ hidden: cartItemsCount === 0 }]}
+          >
+            {cartItemsCount > 0 ? cartItemsCount : ""}
+          </span>
+        </a>
+      </li>
+    </div>
   </div>
 </nav>
 
@@ -100,14 +107,14 @@ if (Astro.cookies.has("cartItems")) {
     margin-bottom: 0;
     background-color: white;
     svg {
-      margin-right: .4rem;
+      margin-right: 0.4rem;
     }
     @extend .sombra;
   }
   .panel-home {
     margin: 0;
   }
- 
+
   .nav-content {
     display: flex;
     justify-content: space-between;
@@ -119,6 +126,7 @@ if (Astro.cookies.has("cartItems")) {
   }
 
   #logo {
+    max-width: 300px;
     width: 13vw;
     transition: all 0.3s ease;
     @include cel {
@@ -137,6 +145,7 @@ if (Astro.cookies.has("cartItems")) {
       align-items: center;
       gap: $margen-min;
     }
+  
     @include cel {
       ul li:last-child {
         padding: 0 0 1rem 0;
@@ -157,10 +166,10 @@ if (Astro.cookies.has("cartItems")) {
     border-bottom-right-radius: $radio;
     border-bottom-left-radius: $radio;
 
-  &.collapsed {
+    &.collapsed {
       background-color: rgba($fondoGlobal, 0.8);
       backdrop-filter: blur(8px);
-      padding: 0.5rem .4rem;
+      padding: 0.5rem 0.4rem;
 
       #logo {
         width: 8vw;
@@ -206,12 +215,12 @@ if (Astro.cookies.has("cartItems")) {
         border-bottom-right-radius: $radio;
         border-bottom-left-radius: $radio;
       }
-      a{
-        font-size: .9rem;
+      a {
+        font-size: 0.9rem;
       }
     }
   }
-  
+
   ul {
     transition: all 0.3s ease;
     display: flex;
@@ -224,7 +233,7 @@ if (Astro.cookies.has("cartItems")) {
       margin-bottom: 0;
     }
     @include cel {
-      margin: 0.4rem .3rem;
+      margin: 0.4rem 0.3rem;
     }
   }
   #carrito {
