@@ -583,8 +583,9 @@ input::placeholder {
   h2 {
     color: $acento;
   }
-  background: url("/fondo-formu.webp"),
-    linear-gradient(330deg, $fondo 0%, white 70%) white;
+  background: url("/fondo-formu.webp"),white;
+  // background: url("/fondo-formu.webp"),
+  //   linear-gradient(330deg, $fondo 0%, white 70%) white;
   background-repeat: no-repeat;
   background-size: 30%;
   background-position: right bottom, center right;
