@@ -68,15 +68,16 @@ async function getProductImages(nvitacionInfo) {
 
 // Obtener datos del producto
 const product = await getEntry("productos", id as string);
+
+// Manejo de 404: Verificar si el producto existe y está activo
+if (!product || !product.data.active) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
 const nvitacionInfo = nvitacionesData.find(
   (item) => item.id === product?.data.id
 );
 const imagenes = await getProductImages(nvitacionInfo);
-
-// Manejo de 404
-if (!product) {
-  return new Response(null, { status: 404, statusText: "Not Found" });
-}
 
 const price = await getProductPrice(product);
 
@@ -278,55 +279,55 @@ const productId = product.data.id;
     </div>
 
        {
-      nvitacionInfo.version === 'Esencial' ? (
-        null
-      ) : (
-         nvitacionInfo && nvitacionInfo.muestra && (
-          <div class="BannerGeneralProducto">
-            <BannerGeneral
-              encabezado="Confirmación de asistencia"
-              texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
-              tema="secundario azul"
-              icono="mdi:archive-clock-outline"
-              urlImagen="../assets/home/gale/confirmacion.webp"
-              izquierda={true}
-            >
-            </BannerGeneral>
+    //   nvitacionInfo.version === 'Esencial' ? (
+    //     null
+    //   ) : (
+    //      nvitacionInfo && nvitacionInfo.muestra && (
+    //       <div class="BannerGeneralProducto">
+    //         <BannerGeneral
+    //           encabezado="Confirmación de asistencia"
+    //           texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+    //           tema="secundario azul"
+    //           icono="mdi:archive-clock-outline"
+    //           urlImagen="../assets/home/gale/confirmacion.webp"
+    //           izquierda={true}
+    //         >
+    //         </BannerGeneral>
 
-                <div id="conteCaracteristicas">
-      <Caracteristicas
-        encabezado="Invitación con mapas"
-        texto="Tus invitados sabrán exactamente como llegar."
-        icono="mdi:map-check"
-        fondo="/fondo-nvite-caracteristicas.png"
-      />
+    //             <div id="conteCaracteristicas">
+    //   <Caracteristicas
+    //     encabezado="Invitación con mapas"
+    //     texto="Tus invitados sabrán exactamente como llegar."
+    //     icono="mdi:map-check"
+    //     fondo="/fondo-nvite-caracteristicas.png"
+    //   />
 
-      <Caracteristicas
-        encabezado="Invitación con mesa de regalos"
-        texto="Sugiere que te gustaría de regalo."
-        icono="mdi:gift-open"
-        fondo="/fondo-nvite-caracteristicas-2.png"
-      />
+    //   <Caracteristicas
+    //     encabezado="Invitación con mesa de regalos"
+    //     texto="Sugiere que te gustaría de regalo."
+    //     icono="mdi:gift-open"
+    //     fondo="/fondo-nvite-caracteristicas-2.png"
+    //   />
 
-      <Caracteristicas
-        encabezado="Invitación con itinerario"
-        texto="Lista cada momento importante de tu evento"
-        icono="mdi:gift-open"
-        fondo="fondo-nvite-caracteristicas-3.png"
-      />
+    //   <Caracteristicas
+    //     encabezado="Invitación con itinerario"
+    //     texto="Lista cada momento importante de tu evento"
+    //     icono="mdi:gift-open"
+    //     fondo="fondo-nvite-caracteristicas-3.png"
+    //   />
 
-      <!-- <Caracteristicas
-        encabezado="animacón"
-        texto="Agrega hasta 6 fotos."
-        icono="/ico-nvite-fotos.svg"
-        fondo="fondo-nvite-caracteristicas-4.png"
-      /> -->
-    </div>
-          </div>
+    //   <!-- <Caracteristicas
+    //     encabezado="animacón"
+    //     texto="Agrega hasta 6 fotos."
+    //     icono="/ico-nvite-fotos.svg"
+    //     fondo="fondo-nvite-caracteristicas-4.png"
+    //   /> -->
+    // </div>
+    //       </div>
   
   
-      )
-     )
+    //   )
+    //  )
      }
 
   

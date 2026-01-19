@@ -6,17 +6,17 @@ const { dondeEstoy } = Astro.props;
 
 // Filtrado de productos mejorado
 const filteredProducts = productos.filter((producto) => {
+  // Solo incluir productos activos
+  if (!producto.data.active) {
+    return false;
+  }
+
   const categoria = (producto.data.metadata?.Categoria || "").toLowerCase();
   const dondeEstoyLower = (dondeEstoy || "").toLowerCase();
 
   // En la página principal mostrar todo
-  if (!dondeEstoy || dondeEstoy === "home" ) {
+  if (!dondeEstoy || dondeEstoy === "home") {
     return true;
-  }
-
-  // En la página de PDF
-  if (dondeEstoyLower === "pdf") {
-    return producto.data.metadata?.Tipo?.toLowerCase() === "pdf";
   }
 
   // En las páginas de categoría (bodas, quince)
@@ -27,12 +27,12 @@ const categorias = [
   { key: "todos", label: "Todo" },
   { key: "bodas", label: "Bodas" },
   { key: "quince", label: "Xv años" },
-  { key: "cumple", label: "Cumples" },
+  // { key: "cumple", label: "Cumples" },
 ];
 ---
 
 {
-  !dondeEstoy || dondeEstoy === "home" ||  dondeEstoy.toLowerCase() === "pdf" ? (
+  !dondeEstoy || dondeEstoy === "home"  ? (
     <>
       <div class="grid pantalla-der">
         <div class="filtros-productos">
@@ -52,9 +52,10 @@ const categorias = [
           <div class="swiper-wrapper" id="productos-wrapper">
             {(
               !dondeEstoy || dondeEstoy === "home"
-                ? productos
+                ? productos.filter((producto) => producto.data.active)  // Filtrar solo activos
                 : productos.filter(
                     (producto) =>
+                      producto.data.active &&  // Filtrar solo activos
                       producto.data.metadata?.Tipo?.toLowerCase() === "pdf"
                   )
             ).map((producto) => {
