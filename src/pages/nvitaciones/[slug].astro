@@ -1,6 +1,6 @@
 ---
 // Importaciones principales
-const { id } = Astro.params;
+const { slug } = Astro.params;
 import { getProductPrice } from "../../js/cart";
 import { calculateDeliveryDate } from "../../js/utils";
 import { Image } from "astro:assets";
@@ -20,6 +20,21 @@ import PreviewModal from "../../components/PreviewModal.astro";
 
 // Datos
 import nvitacionesData from "./nvitaciones.json";
+
+// Define the type for nvitacionInfo to include detalles
+type NvitacionInfo = {
+  id: string;
+  precioTachado?: string; // Make precioTachado optional
+  slug: string;
+  muestra?: string;
+  beneficios: string[];
+  categoria: string;
+  tipo: string;
+  version: string;
+  imagenes: string[];
+  detalles?: string; // Add detalles property
+  video?: string; // Add video property
+};
 import BannerGeneral from "../../components/BannerGeneral.astro";
 import Caracteristicas from "../../components/Caracteristicas.astro";
 
@@ -66,17 +81,22 @@ async function getProductImages(nvitacionInfo) {
   }
 }
 
-// Obtener datos del producto
-const product = await getEntry("productos", id as string);
+// Buscar en nvitaciones.json por slug
+const nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find((item) => item.slug === slug);
+
+// Si no encuentra el slug, devolver 404
+if (!nvitacionInfo) {
+  return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+// Obtener el producto de Stripe usando el ID mapeado
+const product = await getEntry("productos", nvitacionInfo.id);
 
 // Manejo de 404: Verificar si el producto existe y está activo
 if (!product || !product.data.active) {
   return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
-const nvitacionInfo = nvitacionesData.find(
-  (item) => item.id === product?.data.id
-);
 const imagenes = await getProductImages(nvitacionInfo);
 
 const price = await getProductPrice(product);

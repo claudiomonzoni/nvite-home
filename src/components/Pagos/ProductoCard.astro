@@ -34,7 +34,7 @@ if (nvitacionInfo?.precioTachado) {
 
 <article class="producto-card">
   <div class="portada">
-    <a href={`/nvitaciones/${producto.id}`}>
+    <a href={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}>
       <div class="crop">
         <Image
           src={producto.data.images[0]}

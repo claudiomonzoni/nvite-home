@@ -23,7 +23,8 @@ const relatedProducts = allProducts
     ).toLowerCase();
     return (
       productCategory === category.toLowerCase() &&
-      product.id !== currentProductId
+      product.id !== currentProductId &&
+      product.data.active  // Solo incluir productos activos
     );
   })
   .slice(0, 3); // Tomar solo 3 productos

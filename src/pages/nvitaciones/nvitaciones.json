@@ -2,7 +2,7 @@
   {
     "id": "prod_SK7Bqg9HjOSmhW",
     "precioTachado": "true",
-    "slug": "invitacion-quince-clasica",
+    "slug": "invitacion-xv-clasica",
     "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
     "beneficios": [
       "Panel de invitados",
@@ -51,7 +51,7 @@
   },
     {
     "id": "prod_SK7ICkqFPPgSuJ",
-    "slug": "invitacion-quince-esencial",
+    "slug": "invitacion-xv-esencial",
     "muestra": "/quince/invitacion-bodas-esencial",
     "beneficios": [
       "Detalles del evento",
@@ -100,7 +100,7 @@
   {
     "id": "prod_QLJkNCXvs8egN9",
     "precioTachado": "true",
-    "slug": "invitacion-quince-lux",
+    "slug": "invitacion-xv-lux",
     "muestra": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
       "Panel de invitados",
