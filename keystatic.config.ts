@@ -424,6 +424,13 @@ export default config({
           directory: "public/quince/covers",
           publicPath: "/quince/covers/",
         }),
+        // Audio MP3 para reproducir
+        audioMusica: fields.file({
+          label: "Audio de la celebración (MP3)",
+          description: "Sube un archivo MP3 para reproducir en la invitación",
+          directory: "public/quince/audios",
+          publicPath: "/quince/audios/",
+        }),
         // Galería de imágenes (array de imágenes)
         galeria: fields.array(
           fields.image({

@@ -8,8 +8,7 @@ const { src } = Astro.props;
 <div id="rola">
   <h3>Escucha la <b>canción</b> de nuestra boda</h3>
   <audio controls autoplay>
-    <source src={`${src}.mp3`} type="audio/mpeg" />
+    <source src={src} type="audio/mpeg" />
     Tu dispositivo no soporta el audio
   </audio>
 </div>
-

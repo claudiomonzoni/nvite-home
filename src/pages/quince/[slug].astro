@@ -4,7 +4,7 @@ import Layout from "../../layouts/quince/Layout.astro";
 
 //componentes
 import Hero from "../../components/quince/Hero";
-import Audio from "../../components/quince/Audio.astro";
+import AudioPlayer from "../../components/quince/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Encabezados from "../../components/quince/Encabezados.astro";
@@ -99,6 +99,7 @@ const quince = {
     },
     itinerario: Array.isArray(fm?.itinerario) ? fm.itinerario : [],
     cover: toRawUrl(fm.cover) ?? '',
+    audioMusica: toRawUrl(fm.audioMusica) ?? '',
     galeria: Array.isArray(fm?.galeria) ? fm.galeria.map((p: string) => toRawUrl(p)) : [],
     imagenesSolitarias: Array.isArray(fm?.imagenesSolitarias) ? fm.imagenesSolitarias.map((p: string) => toRawUrl(p)) : [],
     frase_regalos: fm.frase_regalos ?? '',
@@ -159,11 +160,11 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
     
       />
   </section>
-
+  
 {
-    quince.data.version === "Lux" && (
+    quince.data.version === "Lux" && quince.data.audioMusica && (
 <section class="grid contenido">
-  <Audio src="/quince/quincePlus/quince-musica" />
+  <AudioPlayer src={quince.data.audioMusica} />
 </section>
 )
 }
