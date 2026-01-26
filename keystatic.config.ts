@@ -72,6 +72,13 @@ export default config({
           directory: "public/bodas/covers",
           publicPath: "/bodas/covers/",
         }),
+        // Audio MP3 para reproducir
+        audioMusica: fields.file({
+          label: "Audio de la celebración (MP3)",
+          description: "Sube un archivo MP3 para reproducir en la invitación",
+          directory: "public/bodas/audios",
+          publicPath: "/bodas/audios/",
+        }),
         galeria: fields.array(
           fields.image({
             label: "Imagen",

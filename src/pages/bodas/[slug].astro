@@ -7,7 +7,7 @@ import Footer from "../../components/bodas/Footer.astro";
 import HeroElegante from "../../components/bodas/Hero-elegante.jsx";
 import HeroBase from "../../components/bodas/Hero.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
-import Audio from "../../components/bodas/Audio.astro";
+import AudioPlayer from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
 import Pases from "../../components/bodas/Pases";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
@@ -93,6 +93,7 @@ const boda = {
     },
     json: fm.json ?? '',
     cover: toRawUrl(fm.cover) ?? '',
+    audioMusica: toRawUrl(fm.audioMusica) ?? '',
     galeria: Array.isArray(fm?.galeria) ? fm.galeria.map((p: string) => toRawUrl(p)) : [],
     imagenesSolitarias: Array.isArray(fm?.imagenesSolitarias) ? fm.imagenesSolitarias.map((p: string) => toRawUrl(p)) : [],
     ceremonia: {
@@ -184,10 +185,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 
 
 {
-    boda.data.version === "Lux" && (
+    boda.data.version === "Lux" && boda.data.audioMusica && (
       
       <section class="grid contenido">
-    <Audio src="/bodas/nvitaPlus/love-story" />
+    <AudioPlayer src={boda.data.audioMusica} />
   </section>
     
   <section class="grid pantalla">
