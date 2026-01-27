@@ -1,25 +1,11 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-// Se eliminó la importación del CSS module para evitar conflictos con las paletas
-// Los estilos se cargan globalmente desde los archivos SCSS de quince/bodas
-const styles = {
-  confirmacion: 'confirmacion',
-  bandeja: 'bandeja',
-  asistira: 'asistira',
-  noAsistira: 'noAsistira',
-  conteCheck: 'conteCheck',
-  switch: 'switch',
-  slider: 'slider',
-  btnConfirmar: 'btnConfirmar',
-  desactivado: 'desactivado',
-  modal: 'modal',
-  modalContent: 'modalContent',
-  mensajeNoAsistencia: 'mensajeNoAsistencia',
-  'formulario': 'formulario',
-  'mueve': 'mueve'
-};
+import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.scss";
+import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
-export default function Confirmacion({ whatsapp, dias_antes, version }) {
+export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas' }) {
+  // Seleccionar el objeto de estilos correcto según el tipo
+  const styles = tipo === 'quince' ? stylesQuince : stylesBodas;
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
