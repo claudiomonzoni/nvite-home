@@ -1,0 +1,135 @@
+//paleta
+@use '../../../paletas/quince/base.scss' as *;
+@use '../../../paletas/quince/otono.scss' as *;
+@use '../../../paletas/quince/invierno.scss' as *;
+
+//fuentes
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
+
+
+// @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Parisienne&family=Playwrite+AU+QLD:wght@100..400&family=Quicksand:wght@300..700&family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+
+
+:root[data-paleta="base"] {
+  @include base();
+}
+:root[data-paleta="otono"] {
+  @include otono();
+}
+:root[data-paleta="invierno"] {
+  @include invierno();
+}
+
+
+//media query
+$cel: 479px;
+$nocel: 479px;
+$tableta: 768px;
+$tableta-land: 1024px;
+$hd:1600px;
+$hdplus:1990px;
+
+
+//extra
+$radio: .8rem;
+$margen: 4rem;
+$margen-top: 8rem;
+$radio-cel: 0.5rem;
+$margen-cel: 2rem;
+$margen-min: 1rem;
+$margen-top-cel: 6rem;
+
+// variable de css para rutas 
+$urlPatron: url("/bodas/patron-fondo.webp");
+// tambien cambiar la portada o cover en el archivo de layout para OpenGraph (la imagen que aparece al compartir por whatsapp)
+$urlCover: url("../../assets/quince/quincePlus/cover.webp");
+$encabezados: "Sacramento";
+$txt: "Old Standard TT";
+
+
+@mixin cel {
+  @media (max-width: #{$cel}) {
+    @content;
+  }
+}
+
+@mixin nocel {
+  @media (min-width: #{$nocel}) {
+    @content;
+  }
+}
+
+@mixin tableta_land {
+  @media (min-width: #{$tableta-land}) and (max-width: #{$hd - 1px}) {
+    @content;
+  }
+}
+
+@mixin tableta {
+  @media (min-width: #{$tableta - 1px}) and (max-width: #{$tableta-land - 1px}) {
+    @content;
+  }
+}
+
+@mixin hd {
+  @media (min-width: #{$hd}) and (max-width: #{$hdplus}) {
+    @content;
+  }
+}
+
+@mixin hdplus {
+  @media (min-width: #{$hdplus}) {
+    @content;
+  }
+}
+//grid
+// grid
+  .grid {
+    display: grid;
+    grid-template-columns: [pantalla-start] 5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 5vw [pantalla-end];
+    @include hd {
+      grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+    }
+    @include hdplus {
+      grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
+    }
+  }
+  .contenido > * {
+    grid-column: contenido;
+  }
+  .extra > * {
+    grid-column: extra;
+  }
+  .pantalla > * {
+    grid-column: pantalla;
+  }
+  .pantalla-izq > * {
+    grid-column: pantalla-start / contenido-end;
+  }
+  .pantalla-der > * {
+    grid-column: contenido-start / pantalla-end;
+  }
+  
+// animaciones 
+.anime{
+  transition: all .5s ease-in-out;
+  }
+
+  @keyframes slide-in {
+    0% { max-height:0; }
+    // por si tenemos en auto la altura
+    100% { max-height:200rem; } 
+  }
+
+
+
+
+// intentar con min
+$margen-riel: calc((100% - (100% - 5rem)) / 2 );
+
+.sombra{
+  box-shadow: 0px 1px 30px 6px var(--sombra);
+}

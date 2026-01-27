@@ -1,0 +1,1 @@
+import{d as a}from"./utils.DTxwb8SN.js";function e(){document.querySelector("#delete-cart-btn")?.addEventListener("click",t=>{t.preventDefault(),confirm("¿Estás seguro que deseas vaciar el carrito?")&&(a(),document.dispatchEvent(new CustomEvent("cart:updated")),window.location.reload())})}e();document.addEventListener("astro:page-load",e);

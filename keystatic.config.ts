@@ -358,6 +358,19 @@ export default config({
             { label: "Padres" }
           ),
 
+        // === PADRINOS ===
+        padrinos: fields.array(
+          fields.text({
+            label: "Nombre del padrino",
+            description: "Agrega el nombre completo del padrino"
+          }),
+          {
+            label: "Padrinos",
+            description: "Lista de padrinos de la quinceañera",
+            itemLabel: (props) => props.value || "Padrino",
+          }
+        ),
+
         ceremonia: fields.object(
           {
             hora: fields.text({ label: "Hora" }),

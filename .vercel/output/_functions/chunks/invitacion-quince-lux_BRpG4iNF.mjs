@@ -1,0 +1,111 @@
+import { i as createVNode, F as Fragment, _ as __astro_tag_component__ } from './astro/server_CohHI9gX.mjs';
+import 'clsx';
+
+const frontmatter = {
+  "version": "Lux",
+  "draft": false,
+  "titulo": "invitacion-quince-lux",
+  "whatsapp": "8488493900",
+  "email": "claudiomonzoni@hotmail.com",
+  "quinceanera": "Verónica Ortiz Gómez",
+  "fecha": "2026-04-25T00:00:00.000Z",
+  "frase_amor": "Desde pequeña esperabas con ansias este día, imaginabas compartirlo con todas las personas que amas. Por fin llegó el día y es tal y como lo soñaste.",
+  "padres": {
+    "mama": "Verónica Gómez",
+    "papa": "Alberto Ortiz",
+    "fotopapas": "/quince/padres/invitacion-quince-lux/padres/fotopapas.webp"
+  },
+  "ceremonia": {
+    "hora": "16:30",
+    "lugar": "<b>Iglesia de la Santa Cruz</b>, Calle Paseo de los Pelicanos 40883, Ixtapa Gro. (frente a la Moraleja)",
+    "lat": "17.665128",
+    "lng": "-101.597448"
+  },
+  "recepcion": {
+    "hora": "18:00",
+    "lugar": "<b>Hotel SunScape Ixtapa </b>, Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro Blvd. Paseo Ixtapa S/N-A, 40884 Zihuatanejo, Gro.",
+    "lat": "17.661152",
+    "lng": "-101.603728"
+  },
+  "itinerario": [{
+    "titulo": "Presentación de la Quinceañera",
+    "hora": "18:30"
+  }, {
+    "titulo": "Baile de la Quinceañera",
+    "hora": "20:00"
+  }, {
+    "titulo": "Brindis",
+    "hora": "20:30"
+  }, {
+    "titulo": "Cena",
+    "hora": "21:00"
+  }, {
+    "titulo": "Musica DJ",
+    "hora": "21:30"
+  }, {
+    "titulo": "Cierre de la fiesta",
+    "hora": "23:30"
+  }],
+  "cover": "/quince/covers/invitacion-quince-lux/cover.webp",
+  "audioMusica": "/quince/audios/invitacion-quince-lux/audioMusica.mp3",
+  "galeria": ["/quince/galeria/invitacion-quince-lux/galeria/0.webp", "/quince/galeria/invitacion-quince-lux/galeria/1.webp", "/quince/galeria/invitacion-quince-lux/galeria/2.webp", "/quince/galeria/invitacion-quince-lux/galeria/3.webp"],
+  "imagenesSolitarias": ["/quince/solitarias/invitacion-quince-lux/imagenesSolitarias/0.webp", "/quince/solitarias/invitacion-quince-lux/imagenesSolitarias/1.webp"],
+  "frase_regalos": "Esta es la frase desde keystatic",
+  "regalos": [{
+    "titulo": "Amazon",
+    "url": "amazon.com"
+  }, {
+    "titulo": "Liverpool",
+    "url": "https://liverpool.com"
+  }],
+  "tipoRegalos": ["mesa", "lluvia"],
+  "progresoPorcentaje": 20,
+  "progresoFrase": "Muchos ya están confirmando, solo faltas tú.",
+  "progresoMostrarSiempre": true,
+  "consideraciones": ["No vestir de rosa", "Favor de no llevar bebes", "La fiesta será en un jardín, llevar calzado cómodo para bailar."],
+  "vestimenta": "Formal casual",
+  "coloresVestimenta": ["#785F59", "#F2ECEB", "#2A2A6B"],
+  "paleta": "otono",
+  "theme": {
+    "name": "base",
+    "colors": {
+      "primary": "#2C3E50",
+      "secondary": "#E74C3C",
+      "accent": "#F1C40F",
+      "background": "#ECF0F1",
+      "text": "#2C3E50"
+    },
+    "typography": {
+      "heading": "Playfair Display",
+      "body": "Lora"
+    }
+  }
+};
+function getHeadings() {
+  return [];
+}
+function _createMdxContent(props) {
+  return createVNode(Fragment, {});
+}
+function MDXContent(props = {}) {
+  const {wrapper: MDXLayout} = props.components || ({});
+  return MDXLayout ? createVNode(MDXLayout, {
+    ...props,
+    children: createVNode(_createMdxContent, {
+      ...props
+    })
+  }) : _createMdxContent();
+}
+
+const url = "src/content/quince/invitacion-quince-lux.mdx";
+const file = "C:/Users/claud/OneDrive/Escritorio/NvitacionesWeb/nvite-home/src/content/quince/invitacion-quince-lux.mdx";
+const Content = (props = {}) => MDXContent({
+  ...props,
+  components: { Fragment: Fragment, ...props.components, },
+});
+Content[Symbol.for('mdx-component')] = true;
+Content[Symbol.for('astro.needsHeadRendering')] = !Boolean(frontmatter.layout);
+Content.moduleId = "C:/Users/claud/OneDrive/Escritorio/NvitacionesWeb/nvite-home/src/content/quince/invitacion-quince-lux.mdx";
+__astro_tag_component__(Content, 'astro:jsx');
+
+export { Content, Content as default, file, frontmatter, getHeadings, url };

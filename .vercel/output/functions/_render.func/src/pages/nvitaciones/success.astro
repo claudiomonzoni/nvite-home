@@ -1,0 +1,154 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Stripe from "stripe";
+
+const sessionId = Astro.url.searchParams.get("session_id");
+
+
+if (!sessionId) {
+  return Astro.redirect("/");
+}
+
+const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
+// const session = await stripe.checkout.sessions.retrieve(sessionId);
+const session = await stripe.checkout.sessions.retrieve(sessionId, {
+  expand: ["line_items.data.price.product"],
+});
+
+if (!session || !session.customer_details) {
+  return Astro.redirect("/");
+}
+
+const { name, email } = session.customer_details;
+// Obtén todos los productos comprados
+const productos = session.line_items.data.map((item) => item.price.product);
+
+// Opcional: elimina duplicados si pueden repetirse productos
+const productosUnicos = Object.values(
+  Object.fromEntries(
+    productos.map((p) => {
+      const product = p as any;
+      return [product.id, product];
+    })
+  )
+);
+
+Astro.cookies.delete("cartItems");
+---
+
+<Layout title="¡Compra Exitosa! - Nvitaciones">
+
+  <div class="success-container">
+    <div class="success-card">
+      <img src="/nvita-logo.svg" alt="gracias por tu compra" class="logo" />
+      <h2>¡Gracias por tu compra, {name}!</h2>
+      <p class="cart-info chirris">
+        Tu numero de compra es: {session.metadata.reservation_number}
+      </p>
+      <p class="cart-info chirris">
+        Por favor, guarda tu numero de compra para futuras consultas
+      </p>
+      <p>Hemos enviado el recibo a {email}</p>
+
+      <h3>Siguiente paso</h3>
+      <p class="cart-info">
+        <b>Completa el formulario</b> de datos de tu evento para que podamos
+        personalizar tu Nvitación.
+      </p>
+      {
+        productosUnicos.map(
+          (producto) =>
+            typeof producto === "object" &&
+            producto !== null &&
+            "metadata" in producto && (
+              <>
+                {(
+                  producto.metadata as { Tipo: string }
+                )?.Tipo?.toLowerCase() === "web" && (
+                  <p><b>Formulario Nvitaciones Web:</b> https://tally.so/r/nGBDOZ</p>
+                )}
+                {(producto.metadata as { Tipo: string })?.Tipo?.toLowerCase() === "pdf" && (
+                  <p><b>Formulario Nvitaciones PDF:</b> https://tally.so/r/mK2OyA</p>
+                )}
+                {/* Más condiciones según tus tipos */}
+              </>
+            )
+        )
+      }
+      <p class="chirris">
+        <b>Tip:</b> guarda el enlace del formulario en tus favoritos para acceder fácilmente.
+      </p>
+      <p class="chirris borde">
+        <b>Nota:</b> Si pagaste por medio de OXXO, tu pago se reflejará en un plazo de 24 a 48 horas y el establecimiento aplica un cargo de servicio. 
+      </p>
+      <p class="cart-info">
+        Cualquier duda, puedes contactarnos por WhatsApp al número
+        <a href="https://wa.me/+527551132468" target="_blank"><b>755.1132.468</b></a>
+      </p>
+
+      <br />
+      <a href="/" class="success-btn">Volver al inicio</a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .logo {
+    width: 200px;
+    margin-bottom: 1rem;
+  }
+  .success-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  b{
+    color: #ee6a6a;
+  }
+  .success-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+  }
+  .chirris{
+    font-size: clamp(.8rem, .6rem, 1rem);
+  }
+  .borde {
+    border: 1px solid #ee6a6a;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    background-color: #f9f9f9;
+  }
+  .success-icon {
+    font-size: 3rem;
+    color: #ee6a6a;
+    margin-bottom: 1rem;
+  }
+
+  .cart-info {
+    color: #666;
+    margin: 1rem 0;
+  }
+
+  .success-btn {
+    display: inline-block;
+    background-color: #656a8d;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+  }
+
+  .success-btn:hover {
+    background-color: #ee6a6a;
+  }
+</style>

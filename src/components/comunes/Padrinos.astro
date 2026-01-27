@@ -1,0 +1,26 @@
+---
+interface Props {
+    nombres?: Array<string>;
+}
+
+const { nombres } = Astro.props;
+---
+
+{
+    nombres && nombres.length > 0 && (
+        <div id="padres">
+            <div class="bande">
+                <h3>Padrinos</h3>
+                <div class="conte">
+                    <ul class="padre">
+                        {nombres.map((nombre: string) => (
+                            <li>
+                                {nombre}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    )
+}

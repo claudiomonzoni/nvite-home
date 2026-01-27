@@ -1,5 +1,22 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import styles from "../../estilos/temas/base/bodas/confirmacion.module.scss";
+// Se eliminó la importación del CSS module para evitar conflictos con las paletas
+// Los estilos se cargan globalmente desde los archivos SCSS de quince/bodas
+const styles = {
+  confirmacion: 'confirmacion',
+  bandeja: 'bandeja',
+  asistira: 'asistira',
+  noAsistira: 'noAsistira',
+  conteCheck: 'conteCheck',
+  switch: 'switch',
+  slider: 'slider',
+  btnConfirmar: 'btnConfirmar',
+  desactivado: 'desactivado',
+  modal: 'modal',
+  modalContent: 'modalContent',
+  mensajeNoAsistencia: 'mensajeNoAsistencia',
+  'formulario': 'formulario',
+  'mueve': 'mueve'
+};
 import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version }) {
