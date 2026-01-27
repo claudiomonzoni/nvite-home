@@ -134,8 +134,10 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               id="enviarwa"
               data-wa={invitadoData.numeroWhats}
               data-copiarwa={urlWA}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span>Enviar: </span>
+              <span>Invitar: </span>
               <Icon name="mdi:whatsapp" size={20} />
             </a>
           )
