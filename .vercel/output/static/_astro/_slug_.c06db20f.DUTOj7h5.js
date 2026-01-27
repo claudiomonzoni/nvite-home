@@ -1,1 +1,0 @@
-const a="_hero_16jm8_1",e="_bandeja_16jm8_81",s="_laimagen_16jm8_92",_="_pases_16jm8_1",o="_NumeroPases_16jm8_1",n="_centro_16jm8_156",m="_familia_16jm8_160",t={hero:a,bandeja:e,laimagen:s,pases:_,NumeroPases:o,centro:n,familia:m};export{t as S};
