@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import estilo from "../../estilos/temas/base/quince/confirmacion.module.scss";
+import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
-export default function Confirmacion({ whatsapp, dias_antes }) {
+export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas' }) {
+  // Seleccionar el objeto de estilos correcto según el tipo
+  const styles = tipo === 'quince' ? stylesQuince : stylesBodas;
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
@@ -42,9 +44,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
         }
 
         const response = await fetch(
-          `${
-            window.location.origin
-          }/api/getInvitado.json?id=${encodeURIComponent(
+          `${window.location.origin}/api/getInvitado.json?id=${encodeURIComponent(
             idParam
           )}&uid=${encodeURIComponent(uidParam)}`
         );
@@ -64,7 +64,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
         setId(json[0].id);
         setAsistira(json[0].confirmado);
       } catch (error) {
-        setError("Ocurrió un error al obtener la información del invitado. Por favor, inténtalo de nuevo más tarde.");
+        setError("La dirección de esta invitación es incorrecta y no podemos mostrar el formulario de confirmación, Por favor, inténtalo de nuevo con la dirección correcta de su invitación.");
         console.error("Error fetching invitado:", error);
       } finally {
         setIsLoading(false);
@@ -87,12 +87,12 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
           : "";
 
       const mensaje = asistira
-        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20fiesta%20de%20XV%20años:%20${encodeURIComponent(
+        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda:%20${encodeURIComponent(
             invitado
           )},%20y%20usaremos%20${encodeURIComponent(pasesSeleccionados)}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
           )}.`
-        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20fiesta%20de%20XV%20años:%20${encodeURIComponent(
+        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20boda:%20${encodeURIComponent(
             invitado
           )}.%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
@@ -129,9 +129,9 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
 
       if (btnconfirmarRef.current) {
         if (value && value !== "0") {
-          btnconfirmarRef.current.classList.remove(`${estilo.desactivado}`);
+          btnconfirmarRef.current.classList.remove(`${styles.desactivado}`);
         } else {
-          btnconfirmarRef.current.classList.add(`${estilo.desactivado}`);
+          btnconfirmarRef.current.classList.add(`${styles.desactivado}`);
         }
       }
 
@@ -163,13 +163,17 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
     setSelectedPases(0);
     setMostrarCampoNoAsisten(false);
     setPersonasNoAsisten("");
-
-    if (checked ) {
-      shootConfetti();
+    
+    if (checked && typeof window !== 'undefined') {
+      try {
+        shootConfetti();
+      } catch (error) {
+        console.error('Error ejecutando confetti:', error);
+      }
     }
 
     if (!checked && btnconfirmarRef.current) {
-      btnconfirmarRef.current.classList.remove(`${estilo.desactivado}`);
+      btnconfirmarRef.current.classList.remove(`${styles.desactivado}`);
     }
   }, []);
 
@@ -211,7 +215,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
   const handleConfirmar = useCallback(
     async (e) => {
       e.preventDefault();
-      if (e.target.classList.contains(`${estilo.desactivado}`)) return;
+      if (e.target.classList.contains(`${styles.desactivado}`)) return;
 
       try {
         // Guardamos la URL de WhatsApp antes de cualquier operación
@@ -264,16 +268,16 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
   }
 
   if (error) {
-    return <div className="error">Error: {error}</div>;
+    return <div className={styles.error}>Error: {error}</div>;
   }
 
   // Agregar verificación para invitados que ya confirmaron no asistencia
   if (pases === 0 && !asistira) {
     return (
-      <div className="grid pantalla">
-        <div className={estilo.confirmacion}>
-          <div className={estilo.bandeja}>
-            <p className={estilo.mensajeNoAsistencia}>
+      <div className="grid contenido">
+        <div className={styles.confirmacion}>
+          <div className={styles.bandeja}>
+            <p className={styles.mensajeNoAsistencia}>
               Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.
             </p>
           </div>
@@ -284,17 +288,17 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
 
   return (
     <>
-      <div className="grid pantalla" id="Confirmacion-comun">
+      <div className="grid contenido" id="Confirmacion-comun">
         <div
-          className={`${estilo.confirmacion} ${
-            asistira ? estilo.asistira : estilo.noAsistira
+          className={`${styles.confirmacion} ${
+            asistira ? styles.asistira : styles.noAsistira
           }`}
         >
-          <div className={estilo.bandeja}>
+          <div className={styles.bandeja}>
             <svg viewBox="0 0 41 31" fill="none">
               <path
                 d="M41 6.3152H22.55V10.4293H41V6.3152ZM41 22.7717H22.55V26.8859H41V22.7717ZM7.257 14.5435L0 7.26145L2.8905 4.36098L7.2365 8.72196L15.9285 0L18.819 2.90046L7.257 14.5435ZM7.257 31L0 23.718L2.8905 20.8175L7.2365 25.1785L15.9285 16.4565L18.819 19.357L7.257 31Z"
-                fill="#FF0000"
+                fill="white"
               ></path>
             </svg>
             <h2>¿Contamos con tu presencia?</h2>
@@ -304,26 +308,32 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
               mucho con la organización al hacerlo.
             </p>
 
-            <p>
-              Mueve el <span>switch a la derecha </span>para confirmar tu
-              asistencia, selecciona el numero de pases y envia tu confirmacion
-            </p>
-            <form className={estilo.formulario} onSubmit={(e) => e.preventDefault()}>
-              <div className={estilo.conteCheck}>
-                <label className={estilo.switch}>
+            <form
+              id={styles["formulario"]}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <div className={styles.conteCheck}>
+                <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
+               
+                <label className={styles.switch}>
                   <input
                     type="checkbox"
                     checked={asistira}
                     onChange={(e) => handleSwitchChange(e.target.checked)}
-                    />
-                  <span className={estilo.slider}></span>
+                  />
+                  <span className={styles.slider}></span>
                 </label>
-                    <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
               </div>
 
+            <p id={styles["mueve"]}>
+              Mueve el <span>switch a la derecha </span>para confirmar tu
+              asistencia y despues completa el formulario de confirmación.
+            </p>
               {asistira ? (
+                // Formulario para confirmar asistencia
                 <>
                   <label htmlFor="pases">¿Cuántos pases usarán?</label>
+                  {/* <small>Selecciona el número de pases para activar el botón de confirmación</small> */}
                   <select
                     name="pases"
                     id="Confipases"
@@ -337,7 +347,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
                   {mostrarCampoNoAsisten && (
                     <>
                       <label htmlFor="personasNoAsisten">
-                        ¿Nombre de las personas que no podrán acompañarnos?
+                        ¿Nombre de las personas que no podrán acompañarnos? (opcional)
                       </label>
                       <textarea
                         name="personasNoAsisten"
@@ -369,18 +379,19 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
                   ></textarea>
                   <a
                     href="#"
-                    className={`${estilo.btnConfirmar} ${estilo.desactivado}`}
+                    className={`${styles.btnConfirmar} ${styles.desactivado}`}
                     ref={btnconfirmarRef}
                     onClick={handleConfirmar}
                   >
-                    <img
+                    Confirmar mi asistencia
+                    {/* <img
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
-                    />{" "}
-                    Confirmar mi asistencia
+                    /> */}
                   </a>
                 </>
               ) : (
+                // Formulario para confirmar inasistencia
                 <>
                   <label htmlFor="comentarios">
                     ¿Deseas dejar un mensaje? (opcional):
@@ -403,7 +414,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
                   </small>
                   <a
                     href="#"
-                    className={estilo.btnConfirmar}
+                    className={styles.btnConfirmar}
                     ref={btnconfirmarRef}
                     onClick={handleConfirmar}
                   >
@@ -411,7 +422,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
-                    Confirmar que no podré asistir
+                    No podré asistir
                   </a>
                 </>
               )}
@@ -421,8 +432,8 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
       </div>
 
       {modalVisible && (
-        <div className={estilo.modal}>
-          <div className={estilo.modalContent}>
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
             <p>{modalMessage}</p>
             <button onClick={() => setModalVisible(false)}>Cerrar</button>
           </div>
@@ -431,4 +442,3 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
     </>
   );
 }
-

@@ -1,43 +1,41 @@
 @use "variablesquince.scss" as *;
-
-p{
-  font-size: clamp(1.2rem, 1.5vw, 1.8rem);
-}
+@use "globales.scss" as *;
 
 h2 {
-  color: var(--secundario);
   padding-top: $margen-min;
-  font-size: clamp(3rem, 1.5vw, 2rem);
+  font-size: clamp(2.5rem, 1.5vw, 2rem);
+  color: var(--primario);
 }
 .confirmacion {
-  color: white;
   margin-top: $margen;
+  background: url("/bodas/confirma-fondo-izq.webp"),
+    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right bottom;
+  background-size: contain;
+  background-blend-mode: color-burn, color-burn;
+  border-radius: $radio;
+  transition: all 0.3s ease;
+  @extend .sombra;
+  @include cel {
+    background-position: -30% top, right bottom;
+    background-size: 35%, 80%;
+    background-blend-mode: color-burn, normal;
+    background-blend-mode: overlay, color-burn;
+  }
 }
 .bandeja {
   text-align: center;
   padding: $margen;
   margin: 0 auto;
-  background: $urlPatron, var(--fondoBurn);
-  background-blend-mode: color-burn;
-  background-repeat: no-repeat;
+  max-width: 60%;
+  background-blend-mode: color-dodge;
   background-size: contain;
   background-position: center;
-  color: var(--primario);
-  @extend .anime;
   @include cel {
-    background-size: cover;
     max-width: 100%;
     padding: $margen-cel;
   }
-
-  svg {
-    max-width: 2.5rem;
-    height: auto;
-    margin: 0 auto;
-  }
-}
-.acento {
-  color: var(--acento);
 }
 form {
   display: flex;
@@ -45,14 +43,6 @@ form {
   text-align: left;
   margin: 0 auto;
   width: 50%;
-  a {
-    color: var(--primario) !important;
-    margin-top: $margen-cel !important;
-    @include cel {
-      width: 100% !important;
-      margin: $margen-cel 0 0 0 !important;
-    }
-  }
   label,
   input,
   select,
@@ -60,7 +50,8 @@ form {
     flex: 1 0 100%;
     margin-top: 0.6rem;
     padding: 0.5rem 0;
-    border-radius: 3px;
+    border-radius: $radio;
+    text-align: center;
   }
   textarea {
     field-sizing: content;
@@ -69,53 +60,64 @@ form {
   textarea,
   select {
     border: none !important;
-    opacity: 0.8;
-    padding: 0.5rem;
+    opacity: 0.5;
     @extend .sombra;
   }
   @include cel {
     width: 100%;
-
-    select {
-      padding: 1rem .2rem;
-    }
-
-    label {
-      text-align: center;
-    }
+    text-align: center;
   }
 }
-
+svg {
+  max-width: 2.5rem;
+  height: auto;
+  margin: 0 auto;
+  path {
+    fill: var(--acento);
+  }
+}
+#mueve {
+  border: solid var(--secundario) 0.9px;
+  padding: $margen-min;
+  text-align: center;
+  border-radius: $radio;
+}
 .conteCheck {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   width: 100%;
-  margin: 1rem 0;
+  margin: 2rem 0;
   p {
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+  }
+  p,
+  label {
     margin: 0 !important;
-    font-size: 1.6rem;
     font-weight: bold;
+    flex: 1 0 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
 .switch {
   position: relative;
   display: inline-block;
-  max-width: 47px;
-  height: 8px;
-
+  max-width: 46px;
+  height: 9px;
+  top: 0;
   input {
     opacity: 0;
     width: 0;
     height: 0;
 
     &:checked + .slider {
-      background-color: var(--acento);
+      background-color: var(--primario);
 
       &:before {
-        transform: translateX(23px);
-        @extend .sombra;
+        transform: translateX(22px);
       }
     }
 
@@ -148,38 +150,31 @@ form {
   }
 }
 
-
+.btnConfirmar {
+  @extend .btn;
+  display: flex;
+  border-radius: $radio;
+  border: 0;
+  background-color: var(--acento);
+  color: var(--fondo);
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
 .desactivado {
-  opacity: 0.7;
-  filter: blur(3px);
   pointer-events: none;
 }
 .asistira {
+  background-color: rgba(var(--primario), 0.1);
   .slider {
-    background-color: var(--acento) !important;
-  }
-  svg,
-  path {
-    fill: var(--acento);
+    background-color: var(--secundario) !important;
   }
 }
 
 .noAsistira {
-  .bandeja{
-    background: $urlPatron, rgb(236, 231, 231);
-    background-blend-mode:color-burn;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-  }
-
+  background-color: rgba(var(--gris), 0.2);
   .slider {
     background-color: var(--primario) !important;
-  }
-
-  svg,
-  path {
-    fill: var(--secundario);
   }
 }
 
@@ -193,91 +188,10 @@ span {
   color: var(--acento);
 }
 
-dialog {
-  position: fixed;
-  padding: 2rem;
-  border: none;
-  border-radius: $radio;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  background: var(--fondo);
-  color: var(--primario);
+.error {
+  background-color: var(--gris);
+  color: white;
   text-align: center;
-  max-width: 90%;
-  width: 400px;
-
-  &::backdrop {
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  p {
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
-  }
-
-  button {
-    background: var(--acento);
-    color: white;
-    border: none;
-    padding: 0.5rem 2rem;
-    border-radius: $radio;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-
-    &:hover {
-      opacity: 0.9;
-    }
-  }
-}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(202, 196, 196, 0.72);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .modalContent {
-    border-radius: $radio;
-    background: var(--fondo);
-    padding: 2rem;
-    border-radius: $radio;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-    color: var(--primario);
-    @extend .sombra;
-    button {
-      background: var(--acento);
-      color: white;
-      border: none;
-      padding: 0.5rem 2rem;
-      border-radius: $radio;
-    }
-  }
-}
-
-.mensajeNoAsistencia {
-  background-color: var(--acento);
-  padding: 1rem;
-  border-radius: $radio;
-  margin: 1rem auto;
-  font-weight: bold;
-  color: var(--primario);
-  max-width: 80%;
-  text-align: center;
-  @include cel {
-    max-width: 100%;
-  }
-}
-.btnConfirmar{
-  img{
-    width: 20px;
-  }
+  padding: $margen-min;
+  margin-bottom: 2rem;
 }

@@ -1064,6 +1064,9 @@ footer {
   padding: $margen 0;
   margin: 0 auto;
   text-align: center;
+  img {
+    margin-bottom: 1.5rem;
+  }
 }
 .logo {
   width: 200px;
@@ -1085,3 +1088,49 @@ li {
     fill: var(--primario);
   }
 }
+
+ @mixin liga($conBorde, $redondo) {
+    margin: $margen-min 0;
+    color: var(--primario);
+    background: var(--terciario);
+    padding: 0.7rem $margen-cel;
+    
+    svg {
+      vertical-align: middle;
+    }
+    img {
+      max-width: 1.5rem !important;
+      height: auto;
+      vertical-align: middle;
+      margin-right: 0.8rem;
+    }
+    @if $conBorde {
+      border: 1px solid var(--acento);
+      background: var(--secundario);
+      opacity: 0.8;
+      color: var(--primario) !important;
+    }
+    @if $redondo {
+      border-radius: $radio;
+    }
+    @include cel {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      margin-left: 0;
+      margin-right: 0;
+      border-radius: .3rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  .btn {
+    @include liga(false, false);
+  }
+  .con-borde {
+    @include liga(true, null);
+  }
+  .redondo {
+    @include liga(null, true);
+  }
