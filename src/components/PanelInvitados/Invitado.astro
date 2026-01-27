@@ -19,12 +19,13 @@ export type InvitadoProps = {
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
-const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}%26uid=${invitadoData.usuarioId}`;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}%26uid=${invitadoData.usuarioId}`;
 ---
 
 <article
   class=`invitado-card ${invitadoData.confirmado ? "confirmado" : ""} ${invitadoData.noAsiste ? "NoAsiste" : ""} ${invitadoData.InvitacionEnviada ? "enviada" : ""}`
->  <div class="status-indicator">
+>
+  <div class="status-indicator">
     {
       invitadoData.confirmado ? (
         <Icon name="mdi:check-circle" size={24} title="Confirmado" />
@@ -43,7 +44,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       {invitadoData.nombre}
       {
         invitadoData.vip && (
-          <Icon name="mdi:crown" size={20} class="vip-icon" title="Invitado VIP" />
+          <Icon
+            name="mdi:crown"
+            size={20}
+            class="vip-icon"
+            title="Invitado VIP"
+          />
         )
       }
     </h2>
@@ -151,7 +157,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 <script>
   //botones de control para compiar y enviar a whatsapp la invitación en el panel
   const copiarBtnes = document.querySelectorAll(
-    "#copiar"
+    "#copiar",
   ) as NodeListOf<HTMLAnchorElement>;
 
   copiarBtnes.forEach((btn) => {
@@ -165,7 +171,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
           },
           (err) => {
             console.error("Error al copiar el texto: ", err);
-          }
+          },
         );
       }
     });
@@ -175,7 +181,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
   const ua = navigator.userAgent;
 
   const enviarwaBtnes = document.querySelectorAll(
-    "#enviarwa"
+    "#enviarwa",
   ) as NodeListOf<HTMLAnchorElement>;
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
@@ -199,11 +205,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
   // btn borrar
   const deleteBtns = document.querySelectorAll(
-    "[data-delete]"
+    "[data-delete]",
   ) as NodeListOf<HTMLButtonElement>;
   // btn editar
   const editBtns = document.querySelectorAll(
-    "[data-edit]"
+    "[data-edit]",
   ) as NodeListOf<HTMLButtonElement>;
 
   deleteBtns.forEach((btn) => {
@@ -238,15 +244,15 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       const id = btn.dataset.id;
       const uid = btn.dataset.uid;
       const ediataDialog = document.querySelector(
-        "#editar-invitado-dialog"
+        "#editar-invitado-dialog",
       ) as HTMLDialogElement;
 
       // Configurar el evento change del checkbox VIP
       const vipCheckbox = ediataDialog.querySelector(
-        "input[name='vip']"
+        "input[name='vip']",
       ) as HTMLInputElement;
       const mensajeVipContainer = ediataDialog.querySelector(
-        "#mensaje-vip-container"
+        "#mensaje-vip-container",
       ) as HTMLDivElement;
 
       if (vipCheckbox && mensajeVipContainer) {
@@ -270,7 +276,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     const getInvitadoData = async (id, uid) => {
       const baseURL = window.location.origin;
       const response = await fetch(
-        `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`
+        `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`,
       );
       // const idfetch = await fetch(`http://localhost:4321/api/getInvitado.json?id=${id}&uid=${uid}`);
       const idInvitacion = await response.json();
@@ -279,34 +285,34 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
     const llenar = (dialogo, id, uid) => {
       const nombreInput = dialogo.querySelector(
-        "input[name='nombre']"
+        "input[name='nombre']",
       ) as HTMLInputElement;
       const pasesInput = dialogo.querySelector(
-        "input[name='pases']"
+        "input[name='pases']",
       ) as HTMLInputElement;
       const mesaInput = dialogo.querySelector(
-        "input[name='mesa']"
+        "input[name='mesa']",
       ) as HTMLInputElement;
       const numeroWhatsInput = dialogo.querySelector(
-        "input[name='numeroWhats']"
+        "input[name='numeroWhats']",
       ) as HTMLInputElement;
       const confirmadoCheckbox = dialogo.querySelector(
-        "input[name='confirmado']"
+        "input[name='confirmado']",
       ) as HTMLInputElement;
       const vipCheckbox = dialogo.querySelector(
-        "input[name='vip']"
+        "input[name='vip']",
       ) as HTMLInputElement;
       const invitacionEnviadaCheckbox = dialogo.querySelector(
-        "input[name='InvitacionEnviada']"
+        "input[name='InvitacionEnviada']",
       ) as HTMLInputElement;
       const noAsisteCheckbox = dialogo.querySelector(
-        "input[name='noAsiste']"
+        "input[name='noAsiste']",
       ) as HTMLInputElement;
       const mensajePersonalizadoTextarea = dialogo.querySelector(
-        "textarea[name='mensajePersonalizado']"
+        "textarea[name='mensajePersonalizado']",
       ) as HTMLTextAreaElement;
       const mensajeVipContainer = dialogo.querySelector(
-        "#mensaje-vip-container"
+        "#mensaje-vip-container",
       ) as HTMLDivElement;
 
       const invitadoDataPromise = getInvitadoData(id, uid);
@@ -365,7 +371,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     }
 
     &.confirmado {
-      background-color: rgba($fondo,  .8);
+      background-color: rgba($fondo, 0.8);
       color: #4b7c91;
       h2 {
         color: $acento;
@@ -380,7 +386,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
       }
       .info-section {
         background-color: #687378;
-       
       }
     }
   }
@@ -403,7 +408,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
 
     svg {
       transition: all 0.3s ease;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
 
     &:hover {
@@ -419,9 +424,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
   }
 
   .invitado-card.confirmado .status-indicator {
-    background-color: rgba(#4CAF50, 0.1);
+    background-color: rgba(#4caf50, 0.1);
     svg {
-      color: #4CAF50;
+      color: #4caf50;
     }
   }
 
@@ -473,7 +478,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    
   }
 
   .info-item {
@@ -481,7 +485,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     align-items: center;
     gap: 0.5rem;
     margin: 0;
-     color: white;
+    color: white;
 
     &.warning {
       color: #ffd700;
@@ -555,22 +559,21 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.id}
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
-    border: 1px solid rgba($acento , 0.6);
+    border: 1px solid rgba($acento, 0.6);
     color: $acento;
-    background: none!important;
+    background: none !important;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    
+
     &:hover {
       transform: translateY(-1px);
       filter: brightness(1.1);
     }
-    
+
     &.delete {
       border: 1px solid $acento;
-
     }
   }
 
