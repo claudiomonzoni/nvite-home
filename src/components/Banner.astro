@@ -26,16 +26,16 @@ import Btn from "./Btn.astro";
           {
             dondeEstoy === 'home' ? (
             <Btn
-            liga="/bodas/nvita-bodas-esencial"
-            clases="btn-ver-nvitaciones "
-            texto="Ejemplo de Bodas"
+            liga="/nvitaciones/invitacion-bodas-esencial"
+            clases="btn-claro "
+            texto="Bodas"
             icono="mdi:chevron-double-right"
             claro={true}
             />
             <Btn
-            liga="/quince/nvita-quince-esencial"
-            clases="btn-ver-nvitaciones "
-            texto="Ejemplo de 15 Años"
+            liga="/nvitaciones/invitacion-xv-esencial"
+            clases="btn-oscuro "
+            texto="Xv Años"
             icono="mdi:chevron-double-right"
             claro={true}
             />
@@ -43,17 +43,17 @@ import Btn from "./Btn.astro";
             
             dondeEstoy === "bodas"  ? (
                <Btn
-                liga="/nvitaciones/prod_QNpXQx0LWRjRFh"
+                liga="/nvitaciones/invitacion-bodas-esencial"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
             ):(
                 <Btn
-                liga="/nvitaciones/prod_SK7ICkqFPPgSuJ"
+                liga="/nvitaciones/invitacion-xv-esencial"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
@@ -65,7 +65,7 @@ import Btn from "./Btn.astro";
  
     </article>
     
-    <article class="lista destacada">
+    <article class="lista">
       <div class="bandeDestacada">
         <small>Bodas & 15 Años</small>
         <h2> 
@@ -91,16 +91,16 @@ import Btn from "./Btn.astro";
           {
             dondeEstoy === 'home' ? (
               <Btn
-              liga="/bodas/nvita-bodas-clasica?id=1&uid=1"
-              clases="btn-ver-nvitaciones "
-              texto="Ejemplo de Bodas"
+              liga="/nvitaciones/invitacion-bodas-clasica"
+              clases="btn-claro"
+              texto="Bodas"
               icono="mdi:chevron-double-right"
               claro={true}
               />
               <Btn
-              liga="/quince/nvita-quince-clasica?id=1&uid=1"
-              clases="btn-ver-nvitaciones"
-              texto="Ejemplo de 15 Años"
+              liga="/nvitaciones/invitacion-xv-clasica"
+              clases="btn-oscuro"
+              texto="Xv Años"
               icono="mdi:chevron-double-right"
               claro={true}
               />
@@ -108,17 +108,17 @@ import Btn from "./Btn.astro";
               
               dondeEstoy === "bodas"  ? (
               <Btn
-                liga="/nvitaciones/prod_QNpO0T7kRp1zkL"
+                liga="/nvitaciones/invitacion-bodas-clasica"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
               ):(
                 <Btn
-                liga="/nvitaciones/prod_SK7Bqg9HjOSmhW"
+                liga="/nvitaciones/invitacion-xv-clasica"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
@@ -132,7 +132,7 @@ import Btn from "./Btn.astro";
     </div>
   </article>
   
-  <article class="lista">
+  <article class="lista destacada">
     <small>Bodas & 15 Años</small>
     <h2>Nvitación Lux</h2>
     <!-- <div class="precio">$1279</div> -->
@@ -155,33 +155,33 @@ import Btn from "./Btn.astro";
       {
         dondeEstoy === 'home' ? (
           <Btn
-          liga="/bodas/nvita-bodas-lux?id=1&uid=1"
-          clases="btn-ver-nvitaciones "
-          texto="Ejemplo de Bodas"
+          liga="/bodas/nvita-bodas-lux"
+          clases="btn-claro "
+          texto="Bodas"
           icono="mdi:chevron-double-right"
           claro={true}
           />
           <Btn
-          liga="/quince/nvita-quince-lux?id=1&uid=1"
-          clases="btn-ver-nvitaciones"
-          texto="Ejemplo de 15 Años"
+          liga="/quince/nvita-quince-lux"
+          clases="btn-oscuro"
+          texto="Xv Años"
           icono="mdi:chevron-double-right"
           claro={true}
           />
         ) : (
           dondeEstoy === "bodas"  ? (
             <Btn
-                liga="/nvitaciones/prod_Q42WJO0oMaU98G"
+                liga="/nvitaciones/invitacion-bodas-lux-elegante"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
           ):(
             <Btn
-                liga="/nvitaciones/prod_QLJkNCXvs8egN9"
+                liga="/nvitaciones/invitacion-xv-lux"
                 clases="btn-oscuro"
-                texto="Comprar ahora"
+                texto="Saber más"
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />

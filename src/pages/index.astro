@@ -154,6 +154,10 @@ import Logos from "../components/Logos.astro";
   </div>
 </div>
 
+<div id="precios" class="grid contenido">
+  <Banner dondeEstoy="home" />
+</div>
+
 <!-- <Galeriaslide /> -->
 <div class="grid contenido">
   <BannerGeneral
@@ -239,7 +243,7 @@ import Logos from "../components/Logos.astro";
   <div class="flex">
     <div class="fondo-formu">
       <div class="bande">
-        <h2>Prueba tu Nvitación <br /> sin compromiso</h2>
+        <h2>Empieza a planear tu evento </h2>
         <p>
           <b>¿Tienes dudas o pedidos especiales?</b> <br /> contáctanos y hagamos
           que tu invitación sea perfecta <br />😊
@@ -260,7 +264,6 @@ import Logos from "../components/Logos.astro";
           <select name="evento" id="evento">
             <option value="Boda">Boda</option>
             <option value="Xv">XV años</option>
-            <option value="Cumple">Cumpleaños</option>
           </select>
 
           <Btn
@@ -286,7 +289,6 @@ import Logos from "../components/Logos.astro";
     "video-home-cel"
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
-  console.log(mivideoHome);
 
   play.addEventListener("click", playPause);
 
