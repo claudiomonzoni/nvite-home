@@ -66,8 +66,9 @@
       grid-column: 2 / span 1;
       grid-row: 6 / -1;
       z-index: 3;
-      padding: $margen-cel $margen-cel $margen $margen-cel;
+      padding: $margen-cel $margen-cel $margen-cel $margen-cel;
       max-height: content;
+      height: auto !important;
       transform: translateY(-20%);
     }
     .centro {
@@ -87,8 +88,10 @@
   @include cel {
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: 10% 1fr 10%;
-    height: auto;
-    margin-bottom: $margen;
+    height: auto !important;
+  
+    margin-bottom: -40%;
+    //estoy teniendo mucho espacio debajo 
     
   }
 }

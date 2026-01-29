@@ -180,25 +180,7 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
 Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 /> -->
 
-<section class="grid contenido">
-  <div class="conte-cartas">
-    <Cartas
-    icono="mdi:list-status"
-    titulo="Detalles"
-    array={quince.data.consideraciones}
-    />
-    <Cartas
-    icono="mdi:clothes-hanger"
-    titulo="Dress code"
-    codigo={quince.data.vestimenta}
-    />
-    <Cartas
-      icono="mdi:clipboard-text-date-outline"
-      titulo="Sugerencia de tonos"
-      tonos={quince.data.coloresVestimenta}
-    />
-  </div>
-</section>
+
 
 <section class="grid contenido">
   <Frase frase={quince.data.frase_amor} />
@@ -235,6 +217,26 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
       lat={quince.data.recepcion.lat}
       lng={quince.data.recepcion.lng}
       mapName="mapa2"
+    />
+  </div>
+</section>
+
+<section class="grid contenido">
+  <div class="conte-cartas">
+    <Cartas
+    icono="mdi:list-status"
+    titulo="Detalles"
+    array={quince.data.consideraciones}
+    />
+    <Cartas
+    icono="mdi:clothes-hanger"
+    titulo="Dress code"
+    codigo={quince.data.vestimenta}
+    />
+    <Cartas
+      icono="mdi:clipboard-text-date-outline"
+      titulo="Sugerencia de tonos"
+      tonos={quince.data.coloresVestimenta}
     />
   </div>
 </section>
