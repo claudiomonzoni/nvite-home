@@ -68,6 +68,7 @@
       z-index: 3;
       padding: $margen-cel $margen-cel $margen $margen-cel;
       max-height: content;
+      transform: translateY(-20%);
     }
     .centro {
       position: relative;
