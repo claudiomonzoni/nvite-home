@@ -23,15 +23,49 @@ interface Props {
 }
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, url, cover, paleta, theme } = Astro.props;
-const { name, colors, typography } = theme;
+const { name, colors, typography } = theme || {};
 
+// Generar CSS personalizado solo si hay valores
+const customStyles: string[] = [];
+
+// Colores personalizados
+if (colors) {
+    if (colors.primary) customStyles.push(`--primario: ${colors.primary};`);
+    if (colors.secondary)
+        customStyles.push(`--secundario: ${colors.secondary};`);
+    if (colors.accent) customStyles.push(`--acento: ${colors.accent};`);
+    if (colors.background) customStyles.push(`--fondo: ${colors.background};`);
+    if (colors.text) customStyles.push(`--texto: ${colors.text};`);
+}
+
+// Tipografías personalizadas
+if (typography) {
+    if (typography.heading)
+        customStyles.push(`--font-heading: '${typography.heading}', serif;`);
+    if (typography.body)
+        customStyles.push(`--font-body: '${typography.body}', sans-serif;`);
+}
+
+// Generar links de Google Fonts si hay tipografías personalizadas
+const fontLinks: string[] = [];
+if (typography?.heading) {
+    const fontName = typography.heading.replace(/ /g, "+");
+    fontLinks.push(
+        `https://fonts.googleapis.com/css2?family=${fontName}&display=swap`,
+    );
+}
+if (typography?.body) {
+    const fontName = typography.body.replace(/ /g, "+");
+    fontLinks.push(
+        `https://fonts.googleapis.com/css2?family=${fontName}&display=swap`,
+    );
+}
 
 const portadaOG = cover
     ? `${cover.split("?")[0]}?v=${new Date().getTime()}`
     : "";
 
 import "../../estilos/quince/redireccion.scss";
-
 ---
 
 <!doctype html>
@@ -50,10 +84,7 @@ import "../../estilos/quince/redireccion.scss";
         <title>{title}</title>
         <meta property="og:locale" content="es_MX" />
         <meta property="og:type" content="article" />
-        <meta
-            property="og:title"
-            content=`${title} - nvitaciones.com`
-        />
+        <meta property="og:title" content=`${title} - nvitaciones.com` />
         <meta
             property="og:description"
             content=`Esperamos tu asistencia, estaremos felices de celebrar juntos`
@@ -68,6 +99,22 @@ import "../../estilos/quince/redireccion.scss";
         <meta property="og:image:height" content="900" />
         <meta property="og:image:type" content="image/webp" />
         <meta name="twitter:card" content="summary_large_image" />
+
+        <!-- Fuentes personalizadas de Google Fonts -->
+        {fontLinks.map((link) => <link rel="stylesheet" href={link} />)}
+
+        <!-- Estilos personalizados -->
+        {
+            customStyles.length > 0 && (
+                <style
+                    set:html={`
+                :root[data-paleta="${paleta}"][data-theme="${name}"] {
+                    ${customStyles.join("\n                    ")}
+                }
+            `}
+                />
+            )
+        }
     </head>
     <!-- Hotjar Tracking Code for Sitio 5048561 (falta el nombre)
 <script>

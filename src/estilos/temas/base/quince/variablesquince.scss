@@ -2,6 +2,7 @@
 @use '../../../paletas/quince/base.scss' as *;
 @use '../../../paletas/quince/otono.scss' as *;
 @use '../../../paletas/quince/invierno.scss' as *;
+@use '../../../paletas/quince/verano.scss' as *;
 
 //fuentes
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
@@ -22,7 +23,15 @@
 :root[data-paleta="invierno"] {
   @include invierno();
 }
+:root[data-paleta="verano"] {
+  @include verano();
+}
 
+// Variables CSS para tipografías personalizables
+:root {
+  --font-heading: "Sacramento", serif;
+  --font-body: "Old Standard TT", serif;
+}
 
 //media query
 $cel: 479px;

@@ -1,0 +1,9 @@
+@mixin verano() {
+  --primario: rgb(41, 128, 185);
+  --secundario: rgb(52, 152, 219);
+  --terciario: rgb(255, 250, 240);
+  --acento: rgba(241, 196, 15, 1);
+  --gris: rgb(127, 140, 141);
+  --sombra: rgba(52, 152, 219, 0.5);
+  --fondoBurn: #fef8e7;
+}
