@@ -1040,15 +1040,15 @@ p{
     border-radius: $margen-min;
     color: var(--primario);
   }
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
   @if $claro {
     background: var(--acento);
     color: var(--primario);
     border-radius: $radio;
     border: none !important;
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
   }
 }
 .btn {
