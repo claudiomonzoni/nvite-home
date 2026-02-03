@@ -14,7 +14,7 @@
   }
   body {
     background: url("/bodas/textuta-bg-2.webp") repeat;
-    font-family: $txt, serif;
+    font-family: var(--font-body), serif;
     position: relative;
     font-size: clamp(10px, 0.9vw, 22px);
     color: var(--primario);
@@ -75,7 +75,7 @@
   h3,
   h4 {
     line-height: 1em;
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     padding-bottom: 0.7rem;
     color: var(--secundario);
   }
@@ -120,7 +120,7 @@
   b {
     color: var(--acento);
     font-style: normal;
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     font-weight: 300;
   }
 
@@ -760,7 +760,7 @@
       position: relative;
     }
     time {
-      font-family: $encabezados, serif;
+      font-family: var(--font-heading), serif;
       font-size: clamp(1.5rem, 1.5vw, 2rem);
       color: var(--acento);
     }
@@ -1004,7 +1004,7 @@
       text-align: center;
     }
     p {
-      font-family: $encabezados, serif;
+      font-family: var(--font-heading), serif;
       color: var(--secundario);
       font-weight: 300;
       font-size: clamp(1rem, 1.5vw, 1.5rem);
@@ -1097,7 +1097,7 @@
   }
 
   .mensaje-texto {
-    font-family: $txt, serif;
+    font-family: var(--font-body), serif;
     text-align: center;
     font-size: clamp(2rem, 3vw, 4.5rem);
     line-height: 1.2!important;

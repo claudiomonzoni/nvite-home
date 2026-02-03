@@ -24,6 +24,11 @@
   @include primavera();
 }
 
+// Variables CSS para tipografías personalizables
+:root {
+  --font-heading: "DM Serif Display", serif;
+  --font-body: "Didact Gothic", sans-serif;
+}
 
 
 //media query

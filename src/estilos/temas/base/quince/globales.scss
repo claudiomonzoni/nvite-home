@@ -6,7 +6,7 @@
     box-sizing: border-box;
     font-size: clamp(10px, 0.9vw, 22px);
     color: var(--gris);
-    font-family: $txt, serif;
+    font-family: var(--font-body), serif;
     font-weight: 100;
     background: url("/quince/decor.svg"), url("/quince/textuta-bg.webp") #fff;
     background-repeat: no-repeat, repeat;
@@ -47,14 +47,14 @@
     font-weight: normal;
   }
 p{
-  font-family: $txt, serif;
+  font-family: var(--font-body), serif;
 }
   h1,
   h2,
   h3,
   h4 {
     line-height: 1em;
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     padding-bottom: 0.7rem;
     color: var(--secundario);
   }
@@ -270,7 +270,7 @@ p{
     max-width: 700px;
 
     h3 {
-      font-family: $txt, sans-serif;
+      font-family: var(--font-body), sans-serif;
       margin-bottom: 1.5rem;
       color: var(--primario);
       font-size: clamp(1.6rem, 2vw, 2.5rem);
@@ -311,7 +311,7 @@ p{
 
     time,
     address {
-      font-family: $txt, serif;
+      font-family: var(--font-body), serif;
       color: var(--secundario);
       font-size: clamp(1.1rem, 1.2vw, 1.6rem);
       b{
@@ -627,7 +627,7 @@ p{
   }
 
   .porcentaje .numero {
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     font-size: 3rem;
     font-weight: bold;
     color: var(--acento);
@@ -673,7 +673,7 @@ p{
 // componente frase
   .frase {
     color: var(--primario);
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     font-size: clamp(3rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-cel $margen-min 0 $margen-min;
@@ -728,7 +728,7 @@ p{
         color: white !important;
         border-bottom: 1px solid white;
         font-size: clamp(2.5rem, 2vw, 3rem);
-        font-family: $encabezados, serif;
+        font-family: var(--font-heading), serif;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
       }
@@ -856,7 +856,7 @@ p{
     font-size: clamp(2rem, 3vw, 3rem);
     color: var(--secundario);
     margin-top: 0.5rem;
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
   }
 
   .padre li {
@@ -916,7 +916,7 @@ p{
 
     h3 {
       color: var(--primario);
-      font-family: $encabezados, serif;
+      font-family: var(--font-heading), serif;
       text-align: center;
       margin-top: $margen-cel;
       font-size: clamp(1.8rem, 2vw, 3rem);
@@ -958,7 +958,7 @@ p{
       margin-top: $margen-cel;
       font-size: clamp(3rem, 5vw, 7rem);
       color: var(--acento);
-      font-family: $encabezados, serif;
+      font-family: var(--font-heading), serif;
     }
     //recuadro del encabezado
     p:first-child {
@@ -973,7 +973,7 @@ p{
       text-align: center;
     }
     p {
-      font-family: $txt, serif;
+      font-family: var(--font-body), serif;
       color: var(--primario);
       font-size: clamp(1.5rem, 1.5vw, 1.5rem);
       margin: 0;
@@ -1011,7 +1011,7 @@ p{
 
     .mensaje-texto {
       width: 100%;
-      font-family: $txt, serif;
+      font-family: var(--font-body), serif;
       border-top: solid 1px var(--acento);
       padding-top: $margen-cel;
       text-align: center;
@@ -1040,15 +1040,15 @@ p{
     border-radius: $margen-min;
     color: var(--primario);
   }
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
   @if $claro {
     background: var(--acento);
     color: var(--primario);
     border-radius: $radio;
     border: none !important;
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
   }
 }
 .btn {

@@ -137,12 +137,12 @@
   .fechaNum {
     font-size: clamp(5rem, 6vw, 7rem);
     color: var(--acento);
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     line-height: 0.9em;
     
   }
   .fechaAno {
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
   }
 }
 
@@ -150,7 +150,7 @@
 
   .amp{
     font-size: clamp(2.5rem, 3.5vw, 4.5rem);
-    font-family: $encabezados, serif;
+    font-family: var(--font-heading), serif;
     color: white;
     display: flex;
     justify-content: center;
@@ -199,7 +199,7 @@
 .loadingText {
   font-size: 1.6rem;
   color: var(--acento);
-  font-family: $encabezados, sans-serif;
+  font-family: var(--font-heading), sans-serif;
 }
 
 @keyframes spin {
