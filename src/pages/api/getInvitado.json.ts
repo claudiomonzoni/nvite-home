@@ -1,8 +1,6 @@
 import type { APIRoute } from "astro";
 import { Invitados, db, eq, and } from "astro:db";
 
-console.log(Invitados)
-
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
   const id = url.searchParams.get('id');

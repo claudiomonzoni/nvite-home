@@ -72,10 +72,10 @@ console.log(lat);
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
-  const bloqueMapa = gsap.utils.toArray("#bloqueMapa");
+  const bloqueMapa = gsap.utils.toArray("#bloqueMapa") as HTMLElement[];
   gsap.registerPlugin(ScrollTrigger);
 
-  bloqueMapa.forEach((bMapa: HTMLElement, id) => {
+  bloqueMapa.forEach((bMapa, id) => {
     let mm = gsap.matchMedia();
     let suma = 5 * id + 1;
 

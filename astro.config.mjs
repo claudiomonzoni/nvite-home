@@ -16,5 +16,9 @@ export default defineConfig({
   output: "server",
   // adapter: netlify()
   adapter: vercelServerless(),
-
+  vite: {
+    ssr: {
+      noExternal: ['gsap']
+    }
+  }
 });

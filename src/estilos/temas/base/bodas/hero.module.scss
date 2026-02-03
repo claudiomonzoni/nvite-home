@@ -118,6 +118,9 @@
   // }
 }
 #fecha {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   .linea1 {
     border-top: solid 1px var(--primario);
     position: absolute;

@@ -124,7 +124,6 @@
     font-weight: 300;
   }
 
- 
   #BaseItinerario {
     h2 {
       color: var(--acento);
@@ -134,7 +133,6 @@
     z-index: -1;
     overflow: hidden;
     // border-radius: $radio;
- 
 
     ol {
       text-align: center;
@@ -338,7 +336,7 @@
     }
     .conte {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-around;
       align-items: center;
       padding: $margen;
       position: relative;
@@ -367,17 +365,25 @@
     }
     .padre {
       position: relative;
-       text-align: center;
-       img{
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: solid 1px var(--acento);
+      padding-bottom: $margen-min;
+      .padreImg {
         max-width: 20%;
         height: auto;
-        border-radius: .3rem;
+        border-radius: 0.3rem;
 
         @extend .sombra;
         margin-bottom: $margen-cel;
         @include cel {
           max-width: 60%;
         }
+      }
+      li {
+        padding: 0;
       }
 
       h3 {
@@ -666,7 +672,10 @@
       z-index: 100;
       position: absolute;
       border-radius: calc(5px * var($radio));
-      box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow:
+        0 0 #0000,
+        0 0 #0000,
+        0 25px 50px -12px rgba(0, 0, 0, 0.25);
       padding: 1.6rem;
       scale: 1;
       transition: scale 0.5s ease-in-out;
@@ -713,6 +722,7 @@
     }
     @include cel {
       flex-wrap: wrap;
+      flex: 1 0 100%;
       .izq,
       .der {
         flex: 1 0 100%;
@@ -794,10 +804,13 @@
     }
     ul {
       margin-top: $margen-min;
+      display: flex;
+      flex-direction: column;
       li {
         padding: $margen-min 0;
         border-bottom: 0.5px solid var(--terciario);
         font-size: clamp(1.6rem, 1.5vw, 2rem);
+        width: 100%;
         @include cel {
           font-size: 1.2rem;
         }
@@ -811,10 +824,6 @@
   // Componente Regalos
 
   #Regalos {
-    h3 {
-      padding-bottom: 0 !important;
-      margin: 0;
-    }
     #regalo {
       margin-top: $margen;
       padding: $margen;
@@ -832,6 +841,14 @@
         border-bottom: 1px solid white;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
+        font-size: clamp(4rem, 1.8vw, 3rem);
+      }
+      h3 {
+        color: white;
+        padding-bottom: 0 !important;
+        margin: 0;
+        font-size: clamp(3rem, 1.8vw, 3rem);
+        text-shadow: 2px 2px 4px #000000;
       }
       svg {
         max-width: 2.5rem;
@@ -843,8 +860,8 @@
     }
     #lluvia {
       h3 {
-        color: var(--acento);
-        font-size: clamp(2.2rem, 1.5vw, 2rem);
+        color: var(--primario);
+        font-size: clamp(4rem, 1.8vw, 3rem);
       }
       background: url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
@@ -874,14 +891,16 @@
       @extend .sombra;
       h3 {
         color: white;
-        font-size: clamp(2rem, 1vw, 2rem);
+        font-size: clamp(3.2rem, 1.8vw, 3rem);
+        text-shadow: 2px 2px 4px #000000;
       }
       b {
         color: white;
       }
       ul {
         color: white;
-        text-align: left;
+        display: flex;
+        flex-direction: column;
         @include cel {
           text-align: center;
         }
@@ -1011,8 +1030,7 @@
       margin: 0;
     }
     @include cel {
-    padding: $margen-cel;
-    
+      padding: $margen-cel;
     }
   }
   // Componente galeria Gsap
@@ -1068,94 +1086,94 @@
   }
 
   //componente mensaje Vip
-  #mensaje-vip-container{
+  #mensaje-vip-container {
     display: none;
     margin: $margen;
     .mensaje-vip {
-    padding-top: $margen;
-    margin-top: $margen ;
-    position: relative;
-  }
+      padding-top: $margen;
+      margin-top: $margen;
+      position: relative;
+    }
 
-  .etiqueta-vip {
-    position: absolute;
-    top: 0rem;
-    right: 0.5rem;
-    background-color: var(--acento);
-    color: white;
-    font-size: 0.8rem;
-    padding: 0.3rem 0.8rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+    .etiqueta-vip {
+      position: absolute;
+      top: 0rem;
+      right: 0.5rem;
+      background-color: var(--acento);
+      color: white;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-  .mensaje-contenido {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
+    .mensaje-contenido {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
 
-  .mensaje-texto {
-    font-family: var(--font-body), serif;
-    text-align: center;
-    font-size: clamp(2rem, 3vw, 4.5rem);
-    line-height: 1.2!important;
+    .mensaje-texto {
+      font-family: var(--font-body), serif;
+      text-align: center;
+      font-size: clamp(2rem, 3vw, 4.5rem);
+      line-height: 1.2 !important;
 
-    .word {
-      display: inline-block;
-
-      .char {
-        color: var(--primario);
+      .word {
         display: inline-block;
+
+        .char {
+          color: var(--primario);
+          display: inline-block;
+        }
       }
     }
   }
+}
+
+@mixin liga($conBorde, $redondo) {
+  margin: $margen-min 0;
+  color: var(--primario);
+  background: var(--terciario);
+  padding: 0.7rem $margen-cel;
+
+  svg {
+    vertical-align: middle;
+  }
+  img {
+    max-width: 1.5rem !important;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+  @if $conBorde {
+    border: 1px solid var(--acento);
+    background: var(--secundario);
+    opacity: 0.8;
+    color: var(--primario) !important;
+  }
+  @if $redondo {
+    border-radius: $radio;
+  }
+  @include cel {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 0.3rem;
+    font-size: 1.2rem;
   }
 }
 
- @mixin liga($conBorde, $redondo) {
-    margin: $margen-min 0;
-    color: var(--primario);
-    background: var(--terciario);
-    padding: 0.7rem $margen-cel;
-    
-    svg {
-      vertical-align: middle;
-    }
-    img {
-      max-width: 1.5rem !important;
-      height: auto;
-      vertical-align: middle;
-      margin-right: 0.5rem;
-    }
-    @if $conBorde {
-      border: 1px solid var(--acento);
-      background: var(--secundario);
-      opacity: 0.8;
-      color: var(--primario) !important;
-    }
-    @if $redondo {
-      border-radius: $radio;
-    }
-    @include cel {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      margin-left: 0;
-      margin-right: 0;
-      border-radius: .3rem;
-      font-size: 1.2rem;
-    }
-  }
-
-  .btn {
-    @include liga(false, false);
-  }
-  .con-borde {
-    @include liga(true, null);
-  }
-  .redondo {
-    @include liga(null, true);
-  }
+.btn {
+  @include liga(false, false);
+}
+.con-borde {
+  @include liga(true, null);
+}
+.redondo {
+  @include liga(null, true);
+}

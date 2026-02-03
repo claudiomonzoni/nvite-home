@@ -143,6 +143,9 @@
 }
 #fecha {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   #fechaConte {
     display: flex;
     justify-content: center;
