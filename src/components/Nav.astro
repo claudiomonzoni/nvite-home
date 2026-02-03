@@ -138,17 +138,24 @@ if (Astro.cookies.has("cartItems")) {
   .menu-items {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: $margen-min;
 
     ul {
+
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: $margen-min;
+      margin-top: 5px;
     }
   
     @include cel {
+      ul {
+        width: 100%;
+      }
       ul li:last-child {
-        padding: 0 0 1rem 0;
+       
         margin: 0;
       }
     }
