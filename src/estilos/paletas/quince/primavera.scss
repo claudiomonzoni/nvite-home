@@ -1,0 +1,10 @@
+@mixin primavera() {
+    --primario: #485369;       // Azul cielo primaveral
+    --secundario: #ac74af;     // Rosa durazno suave
+    --terciario: #f8f9fa;      // Blanco luminoso
+    --acento: #d46f5b;         // Coral floral
+    --gris: #fff;           // Gris perla
+    --fondo: #fff9f5;          // Blanco melocotón
+    --sombra: rgba(194, 213, 219, 0.4); // Sombra azul cielo
+    --fondoBurn: #fdf6f0;      // Fondo durazno claro
+}

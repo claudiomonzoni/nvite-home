@@ -461,6 +461,9 @@ p{
       grid-auto-flow: column;
       padding-bottom: $margen-cel;
     }
+    p{
+      color: var(--primario);
+    }
     li {
       display: flex;
       flex-direction: column;
@@ -702,7 +705,8 @@ p{
     }
     h3 {
       padding-bottom: 0 !important;
-      font-size: clamp(2rem, 3vw, 3rem) !important;
+      font-size: clamp(3.3rem, 3vw, 4rem);
+       
       margin: 0;
     }
     p,
@@ -715,13 +719,17 @@ p{
     #regalo {
       margin-top: $margen;
       padding: $margen $margen-cel;
-      background: url("/bg-floral-regalos-izq.svg") var(--primario);
+      background: url("/bg-floral-regalos-izq.svg") var(--secundario);
       background-repeat: no-repeat;
       background-size: contain;
-      background-blend-mode: color-burn;
+      background-blend-mode: screen;
       text-align: center;
-      border: solid 1px var(--acento);
       margin-bottom: $margen-cel;
+      h3{
+        color: var(--terciario);
+         text-shadow:  3px 3px 4px #000;
+        
+      }
 
       h2 {
         color: var(--primario);
@@ -762,12 +770,12 @@ p{
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: url("/bg-floral-regalos-der.svg") var(--acento);
+      background: url("/bg-floral-regalos-der.svg") var(--terciario);
       background-position: top right;
       background-repeat: no-repeat;
       background-size: 40%;
       background-blend-mode: color-burn;
-      color: var(--terciario);
+      color: var(--primario);
       p {
         color: var(--fondo);
         max-width: 80%;
@@ -776,13 +784,13 @@ p{
       @extend .sombra;
 
       h3 {
-        color: white;
+        color: var(--acento);
       }
       b {
-        color: white;
+        color: var(--acento);
       }
       ul {
-        color: white;
+        color: var(--acento);
         text-align: left;
         display: flex;
         flex-direction: column;

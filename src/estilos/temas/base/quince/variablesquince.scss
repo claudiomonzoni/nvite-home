@@ -3,6 +3,7 @@
 @use '../../../paletas/quince/otono.scss' as *;
 @use '../../../paletas/quince/invierno.scss' as *;
 @use '../../../paletas/quince/verano.scss' as *;
+@use '../../../paletas/quince/primavera.scss' as *;
 
 //fuentes
 @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
@@ -25,6 +26,9 @@
 }
 :root[data-paleta="verano"] {
   @include verano();
+}
+:root[data-paleta="primavera"] {
+  @include primavera();
 }
 
 // Variables CSS para tipografías personalizables
