@@ -1,12 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/temas/base/quince/hero.module.scss";
 
 export default function Hero({ nombres, fecha, cover }) {
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
+  const [iniciado, setIniciado] = useState(false);
+  const [animandoSalida, setAnimandoSalida] = useState(false);
+  const loadingTextRef = useRef(null);
+
+  const handleIniciar = () => {
+    setAnimandoSalida(true);
+    setTimeout(() => {
+      setIniciado(true);
+    }, 800);
+  };
+
   useEffect(() => {
-    document.querySelector(".contenido").classList.remove("opa");
     // confirmacion de id
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
@@ -18,7 +28,7 @@ export default function Hero({ nombres, fecha, cover }) {
     // Fetch data cuando se monta el componente
     fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
     .then(res => res.json())
-    .then(json =>{
+    .then(json=>{
 
       setInvitado(json[0].nombre);
       setPase(json[0].pases);
@@ -31,32 +41,113 @@ export default function Hero({ nombres, fecha, cover }) {
       }
     }
     )
-
-  
-    // animacion intro
-  
-    const tl = gsap.timeline();
-    gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
-    tl.from("#bande", {
-      opacity: 0,
-      y: -30,
-      delay: 2,
-      height: 500,
-      duration: 1,
-      ease: "power4.out",
-    });
-    tl.from("#centro *", {
-      opacity: 0,
-      y: -30,
-      duration: 1,
-      ease: "power4.out",
-      stagger: { amount: 0.5 },
-    });
-    
   }, []);
+
+  // Animación del texto de carga
+  useEffect(() => {
+    if (!iniciado && loadingTextRef.current) {
+      const chars = loadingTextRef.current.querySelectorAll('span');
+      
+      gsap.fromTo(chars, 
+        { opacity: 0.2, y: 10 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "power2.out"
+          // Sin repeat para que solo se anime una vez
+        }
+      );
+    }
+  }, [iniciado]);
+
+  // Modificar handleIniciar para disparar evento
+  const handleIniciarModificado = () => {
+    // Disparar evento personalizado para que el audio comience
+    window.dispatchEvent(new Event('iniciarInvitacion'));
+    
+    // Animar salida del texto y botón
+    const chars = loadingTextRef.current?.querySelectorAll('span');
+    const button = document.querySelector(`.${Style.tapToStart}`);
+    
+    if (chars) {
+      gsap.to(chars, {
+        opacity: 0,
+        y: 20,
+        duration: 0.4,
+        stagger: 0.01,
+        ease: "power2.in"
+      });
+    }
+    
+    if (button) {
+      gsap.to(button, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+    }
+    
+    // Esperar a que termine la animación antes de cambiar de pantalla
+    setTimeout(() => {
+      handleIniciar();
+    }, 500);
+  };
+
+  // Animación de la invitación
+  useEffect(() => {
+    if (iniciado) {
+      setTimeout(() => {
+        const contenido = document.querySelector(".contenido");
+        if (contenido) {
+          contenido.classList.remove("opa");
+          
+          const tl = gsap.timeline();
+          gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
+          tl.from("#bande", {
+            opacity: 0,
+            y: -30,
+            delay: 2,
+            height: 500,
+            duration: 1,
+            ease: "power4.out",
+          });
+          tl.from("#centro *", {
+            opacity: 0,
+            y: -30,
+            duration: 1,
+            ease: "power4.out",
+            stagger: { amount: 0.5 },
+          });
+        }
+      }, 100);
+    }
+  }, [iniciado]);
+
   return (
     <>
-      <section id={Style["hero"]} className="contenido opa">
+      {/* Pantalla de carga */}
+      {!iniciado && (
+        <div 
+          className={`${Style.loadingScreen} ${animandoSalida ? Style.fadeOut : ''}`} 
+          onClick={!animandoSalida ? handleIniciarModificado : null}
+        >
+          <div className={Style.loadingContent}>
+            <h2 className={Style.loadingText} ref={loadingTextRef}>
+              {"Queremos que seas parte de nuestra celebración de XV años".split('').map((char, i) => (
+                <span key={i}>{char === ' ' ? '\u00A0' : char}</span>
+              ))}
+            </h2>
+            {!animandoSalida && (
+              <p className={Style.tapToStart}>Toca para comenzar</p>
+            )}
+          </div>
+        </div>
+      )}
+
+      <section id={Style["hero"]} className={`contenido opa ${!iniciado ? Style.oculto : ''}`}>
         <div className={Style["laimagen"]}>
           <img src={cover} alt="cover" />
         </div>

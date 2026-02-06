@@ -7,12 +7,32 @@ const { src } = Astro.props;
 
 <div id="rola">
     <h3>Escucha la <b>canción</b> de mis Xv años</h3>
-    <audio controls autoplay>
+    <audio controls id="audioInvitacion">
         <!-- <source src="horse.ogg"  type="audio/ogg"> -->
         <source src={src} type="audio/mpeg" />
         Tu dispositivo no soporta el audio
     </audio>
 </div>
+
+<script>
+    // Escuchar el evento personalizado para iniciar el audio
+    window.addEventListener("iniciarInvitacion", () => {
+        const audio = document.getElementById(
+            "audioInvitacion",
+        ) as HTMLAudioElement;
+        if (audio) {
+            // Intentar reproducir el audio
+            audio.play().catch((error) => {
+                console.log(
+                    "No se pudo reproducir el audio automáticamente:",
+                    error,
+                );
+                // Los navegadores modernos bloquean autoplay sin interacción del usuario
+                // pero como el usuario ya hizo clic, debería funcionar
+            });
+        }
+    });
+</script>
 
 <style>
     #rola {

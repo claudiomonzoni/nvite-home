@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/temas/base/bodas/hero.module.scss";
 
@@ -13,7 +13,16 @@ export default function Hero({
   fecha,
   cover,
 }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [iniciado, setIniciado] = useState(false);
+  const [animandoSalida, setAnimandoSalida] = useState(false);
+  const loadingTextRef = useRef(null);
+
+  const handleIniciar = () => {
+    setAnimandoSalida(true);
+    setTimeout(() => {
+      setIniciado(true);
+    }, 800);
+  };
 
   // Crear fecha con timezone local y ajuste
   const getFechaLocal = (fechaStr) => {
@@ -47,17 +56,61 @@ export default function Hero({
   // asegurar el numero correcto
   const adjustedDiaNum = String(diaNum).padStart(2, "0");
 
+  // Animación del texto de carga
   useEffect(() => {
-    // Simular tiempo de carga
-    const timer = setTimeout(() => {
-      setIsLoading(false);
+    if (!iniciado && loadingTextRef.current) {
+      const chars = loadingTextRef.current.querySelectorAll('span');
+      
+      gsap.fromTo(chars, 
+        { opacity: 0.2, y: 10 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "power2.out"
+          // Sin repeat para que solo se anime una vez
+        }
+      );
+    }
+  }, [iniciado]);
+
+  // Modificar handleIniciar para disparar evento
+  const handleIniciarModificado = () => {
+    // Disparar evento personalizado para que el audio comience
+    window.dispatchEvent(new Event('iniciarInvitacion'));
+    
+    // Animar salida del texto y botón
+    const chars = loadingTextRef.current?.querySelectorAll('span');
+    const button = document.querySelector(`.${Style.tapToStart}`);
+    
+    if (chars) {
+      gsap.to(chars, {
+        opacity: 0,
+        y: 20,
+        duration: 0.4,
+        stagger: 0.01,
+        ease: "power2.in"
+      });
+    }
+    
+    if (button) {
+      gsap.to(button, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+    }
+    
+    // Esperar a que termine la animación antes de cambiar de pantalla
+    setTimeout(() => {
+      handleIniciar();
     }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
+  };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (iniciado) {
       let ScrollTrigger;
       if (typeof window !== "undefined") {
         import("gsap/ScrollTrigger").then((mod) => {
@@ -138,53 +191,65 @@ export default function Hero({
         });
       }
     }
-  }, [isLoading]);
-
-  if (isLoading) {
-    return (
-      <div className={Style.loadingContainer}>
-        <div className={Style.spinner}></div>
-        <p className={Style.loadingText}>Cargando invitación...</p>
-      </div>
-    );
-  }
+  }, [iniciado]);
 
   return (
-    <section className="grid contenido">
-      <div id={Style["hero"]}>
-        <div className={Style["izq"]} id="izq">
-          <div id={Style["avatar"]} className="avatarConte">
-            <img src={cover} alt="Invitaciones de bodas cover" />
+    <>
+      {/* Pantalla de carga */}
+      {!iniciado && (
+        <div 
+          className={`${Style.loadingScreen} ${animandoSalida ? Style.fadeOut : ''}`} 
+          onClick={!animandoSalida ? handleIniciarModificado : null}
+        >
+          <div className={Style.loadingContent}>
+            <h2 className={Style.loadingText} ref={loadingTextRef}>
+              {"Queremos que seas parte de nuestra boda".split('').map((char, i) => (
+                <span key={i}>{char === ' ' ? '\u00A0' : char}</span>
+              ))}
+            </h2>
+            {!animandoSalida && (
+              <p className={Style.tapToStart}>Toca para comenzar</p>
+            )}
           </div>
         </div>
+      )}
 
-        <div className={Style["der"]}>
-          <div className={Style.bandeja} id="bande">
-            <div id={Style["iniciales"]}>
-              <div className={Style.amp}>
-                <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
-              </div>
+      <section className={`grid contenido ${!iniciado ? Style.oculto : ''}`}>
+        <div id={Style["hero"]}>
+          <div className={Style["izq"]} id="izq">
+            <div id={Style["avatar"]} className="avatarConte">
+              <img src={cover} alt="Invitaciones de bodas cover" />
             </div>
-            {/* <span className={Style.familia} id="invitado">
-              {invitado}
-            </span> */}
-            <img src={divisor.src} alt="divisor bodas nvita" />
-            <p className={Style["casamos"]}> Nos casamos </p>
-            <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
-            <p>
-              Deseamos invitarte a <b>celebrar nuestra boda</b>
-            </p>
-            <ul id={Style["fecha"]}>
-              <li className={Style.fecha}>{`${diaSemana}`}</li>
-              <hr className={Style.linea1} />
-              <li className={Style.fechaNum}>{adjustedDiaNum}</li>
-              <hr className={Style.linea2} />
-              <li className={Style.fechaMes}>{mes}</li>
-              <li className={Style.fechaAno}>{ano}</li>
-            </ul>
+          </div>
+
+          <div className={Style["der"]}>
+            <div className={Style.bandeja} id="bande">
+              <div id={Style["iniciales"]}>
+                <div className={Style.amp}>
+                  <span>{ellaIniciales}</span>&<span>{elIniciales}</span>
+                </div>
+              </div>
+              {/* <span className={Style.familia} id="invitado">
+                {invitado}
+              </span> */}
+              <img src={divisor.src} alt="divisor bodas nvita" />
+              <p className={Style["casamos"]}> Nos casamos </p>
+              <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
+              <p>
+                Deseamos invitarte a <b>celebrar nuestra boda</b>
+              </p>
+              <ul id={Style["fecha"]}>
+                <li className={Style.fecha}>{`${diaSemana}`}</li>
+                <hr className={Style.linea1} />
+                <li className={Style.fechaNum}>{adjustedDiaNum}</li>
+                <hr className={Style.linea2} />
+                <li className={Style.fechaMes}>{mes}</li>
+                <li className={Style.fechaAno}>{ano}</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
