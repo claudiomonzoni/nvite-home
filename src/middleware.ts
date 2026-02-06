@@ -37,6 +37,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
     // Rutas públicas permitidas sin autenticación
     const rutasPublicas = [
         /^\/$/,                               // Página principal
+        /^\/sitemap\.xml$/,                   // Sitemap
+        /^\/robots\.txt$/,                    // Robots.txt
         /^\/api\/getInvitados\.json$/,        // Ruta específica de la API
         /^\/api\/getInvitado\.json$/,         // Ruta para obtener invitado
         /^\/api\/\d+\.json$/,                 // Ruta para actualizar invitado (PATCH)
