@@ -235,8 +235,8 @@ export default function Hero({
         >
           <div className={Style.loadingContent}>
             <h2 className={Style.loadingText} ref={loadingTextRef}>
-              {"Queremos que seas parte de nuestra boda".split('').map((char, i) => (
-                <span key={i}>{char === ' ' ? '\u00A0' : char}</span>
+              {"Queremos que seas parte de nuestra boda".split(' ').map((word, i) => (
+                <span key={i}>{word}{'\u00A0'}</span>
               ))}
             </h2>
             {!animandoSalida && (
