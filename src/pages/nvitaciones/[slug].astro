@@ -44,8 +44,13 @@ const imageModules = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true }
 );
 
+// Helper para verificar si es ImageMetadata
+function isImageMetadata(value: any): value is ImageMetadata {
+  return value && typeof value === 'object' && 'src' in value && 'width' in value && 'height' in value;
+}
+
 // Función para cargar las imágenes del producto
-async function getProductImages(nvitacionInfo) {
+async function getProductImages(nvitacionInfo: NvitacionInfo | undefined) {
   if (!product) return [];
 
   try {
@@ -139,29 +144,50 @@ const productId = product.data.id;
             <div class="thumbnails-container">
               {
                 imagenes.map((imagen) => (
-                  <div class="thumbnail-wrapper" data-full-img={imagen.src}>
-                    <Image
-                      src={imagen}
-                      alt={`Imagen de ${product.data.name}`}
-                      height={80}
-                      width={80}
-                      class="thumbnail"
-                      quality="max"
-                    />
+                  <div class="thumbnail-wrapper" data-full-img={isImageMetadata(imagen) ? imagen.src : imagen}>
+                    {isImageMetadata(imagen) ? (
+                      <Image
+                        src={imagen}
+                        alt={`Imagen de ${product.data.name}`}
+                        height={80}
+                        width={80}
+                        class="thumbnail"
+                        quality="max"
+                      />
+                    ) : (
+                      <img
+                        src={imagen}
+                        alt={`Imagen de ${product.data.name}`}
+                        height={80}
+                        width={80}
+                        class="thumbnail"
+                      />
+                    )}
                   </div>
                 ))
               }
             </div>
             <div class="main-image-container">
-              <Image
-                src={imagenes[0]}
-                loading="eager"
-                alt={product.data.name}
-                height={800}
-                width={800}
-                class="main-image"
-                quality="max"
-              />
+              {isImageMetadata(imagenes[0]) ? (
+                <Image
+                  src={imagenes[0]}
+                  loading="eager"
+                  alt={product.data.name}
+                  height={800}
+                  width={800}
+                  class="main-image"
+                  quality="max"
+                />
+              ) : (
+                <img
+                  src={imagenes[0]}
+                  loading="eager"
+                  alt={product.data.name}
+                  height={800}
+                  width={800}
+                  class="main-image"
+                />
+              )}
             </div>
           </div>
         </div>
