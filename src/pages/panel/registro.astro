@@ -7,10 +7,10 @@ import Layout from "../../layouts/panelInvitados.astro";
     <div class="izq">
       <div class="bandeja">
         <img
-        src="/nvita-logo.svg"
-        alt="Nvita invitaciones digitales"
-        id="logo"
-      />
+          src="/nvita-logo.svg"
+          alt="Nvita invitaciones digitales"
+          id="logo"
+        />
         <h1>Registro de clientes</h1>
         <form data-authForm action="../api/registro.json">
           <label for="email">Email</label>
@@ -18,25 +18,25 @@ import Layout from "../../layouts/panelInvitados.astro";
             type="email"
             name="email"
             id="email"
-            placeholder="Agrega un email valido"
+            placeholder="Agrega un email válido"
           />
-          <label for="password">Contaseña</label>
+          <label for="password">Contraseña</label>
           <input
             type="password"
             name="password"
             id="password"
             autocomplete="password"
-            placeholder="Agrega una contraseñá segura"
+            placeholder="Agrega una contraseña segura"
           />
-          <label for="tipoInvitacion">Tipo Invitacion</label>
+          <label for="tipoInvitacion">Tipo Invitación</label>
           <select name="tipoInvitacion" id="tipoInvitacion">
             <option value="bodas">Bodas</option>
             <option value="quince">Xv años</option>
             <option value="cumples">Cumpleaños</option>
           </select>
-      
+
           <label for="ruta">Ruta</label>
-          <input type="text" name="ruta" placeholder="Agrega una /juanyjuana/" />
+          <input type="text" name="ruta" placeholder="Agrega una juanyjuana" />
           <button>Registrate</button>
         </form>
         <p>Ya tienes cuenta? <a href="/panel/ingresar">Ingresar</a></p>
@@ -46,7 +46,6 @@ import Layout from "../../layouts/panelInvitados.astro";
       <img src="/panel-ingreso.webp" alt="panel registro de clientes" />
     </div>
   </div>
- 
 </Layout>
 
 <style lang="scss">
