@@ -1,0 +1,681 @@
+---
+// slider como el del sitio de apple con controles, play,pause y al terminar, repetir (replay)
+// que al entrar cada slide este dispare la animacion de un lottie y un fadein de los textos
+// como encabezados y parrafos.
+// para iniciar con el prototipo del slider, iniciemos con solo textos, luego agregamos los lotties
+
+import lottieSlide1 from "../../public/sliders/home/slide-1.json";
+
+interface Slide {
+  title: string;
+  description: string;
+  lottieData?: any;
+}
+
+const slides: Slide[] = [
+  {
+    title: "Fáciles de enviar, imposibles de ignorar",
+    description:
+      "Compártelas por WhatsApp, redes o correo. Sin descargas, sin complicaciones.",
+    lottieData: lottieSlide1,
+  },
+  {
+    title: "Tú tienes el control, no el estrés",
+    description:
+      "Agrega pases, revisa quién confirma y olvídate de las sorpresas.",
+  },
+  {
+    title: "Cada “sí voy” queda registrado",
+    description:
+      "Tus invitados confirman y tú lo ves todo desde un solo panel.",
+  },
+  {
+    title: "No son genéricas. Son para quienes más importan",
+    description: "Personaliza mensajes y crea una invitación con significado.",
+  },
+  {
+    title: "Más que una invitación, una experiencia",
+    description: "Diseño, emoción y tecnología para un día irrepetible.",
+  },
+];
+---
+
+<div class="slider-container">
+  <!-- Slides -->
+  <div class="slides-wrapper">
+    {
+      slides.map((slide, index) => (
+        <div class="slide" data-slide={index}>
+          <div class="slide-content">
+            {slide.lottieData && (
+              <div
+                class="lottie-container"
+                data-lottie-data={JSON.stringify(slide.lottieData)}
+                data-lottie-index={index}
+              />
+            )}
+            <div class="slide-text-content">
+              <h2 class="slide-title animate">{slide.title}</h2>
+              <p class="slide-description animate">{slide.description}</p>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <!-- Controles estilo Apple - ajustados a la referencia -->
+  <div class="controls-wrap">
+    <!-- Play / Pause / Replay circular button (izquierda) -->
+    <button class="play-btn" aria-label="Reproducir/Pausar">
+      <!-- <svg class="play-icon hidden" viewBox="0 0 24 24" fill="#111">
+        <path d="M8 5v14l11-7z" />
+      </svg> -->
+      <svg class="pause-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path>
+      </svg>
+      <svg class="replay-icon" viewBox="0 0 24 24" fill="currentColor"
+        ><path fill="currentColor" d="M8 5.14v14l11-7z"></path></svg
+      >
+      <!-- <svg class="replay-icon" viewBox="0 0 24 24" fill="#111">
+        <path d="M12 5V1L7 6l5 5V7c3.86 0 7 3.14 7 7 0 1.2-.3 2.33-.84 3.33l1.46 1.46C20.54 17.74 21 15.93 21 14c0-4.97-4.03-9-9-9zM6.34 6.34L4.93 4.93C3.46 6.4 2.5 8.55 2.22 10.95L3.66 12.4C3.87 10.66 4.66 8.98 6.34 6.34z"/>
+      </svg> -->
+    </button>
+
+    <!-- Centro: pill con indicador y bullet móvil -->
+    <div class="progress-pill" role="region" aria-label="Progreso del slide">
+      <div class="pill-inner">
+        {
+          slides.map((_, i) => (
+            <button
+              class={`pill-segment ${i === 0 ? "active-segment" : ""}`}
+              data-seg={i}
+              aria-label={`Segmento ${i + 1}`}
+            >
+              <span class="segment-progress" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+  .slider-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  svg {
+    color: $primario;
+  }
+  .slides-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.6s ease-in-out,
+      visibility 0.6s;
+    pointer-events: none;
+  }
+
+  .slide.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80%;
+    padding: clamp(20px, 5vw, 60px) clamp(20px, 5vw, 40px);
+    text-align: center;
+    color: #111;
+    background: white;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+    gap: 2rem;
+
+    @include desktop {
+      flex-direction: row;
+      text-align: left;
+      gap: 3rem;
+    }
+  }
+
+  .slide-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* Mostrar preview del siguiente slide */
+  .slide:not(.active) + .slide.active .slide-content::after,
+  .slide.active ~ .slide:first-of-type .slide-content {
+    display: block;
+  }
+
+  /* Lottie container */
+  .lottie-container {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+
+    @include cel {
+      max-width: 280px;
+      order: 2;
+    }
+
+    @include desktop {
+      flex: 0 0 45%;
+      max-width: 500px;
+    }
+  }
+
+  .slide.active .lottie-container {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.1s;
+  }
+
+  .slide-title {
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  .slide-description {
+    font-size: clamp(0.9rem, 3vw, 1.25rem);
+    font-weight: 400;
+    max-width: 90vw;
+    margin: 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.6s ease-out 0.1s,
+      transform 0.6s ease-out 0.1s;
+  }
+
+  /* Animaciones de entrada cuando el slide está activo */
+  .slide.active .slide-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
+
+  .slide.active .slide-description {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+  }
+
+  /* Asegurar que los elementos se oculten cuando el slide no está activo */
+  .slide:not(.active) .slide-title,
+  .slide:not(.active) .slide-description {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /* Controles estilo Apple */
+  /* Contenedores de controles, replicando la referencia de Apple */
+  .controls-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 20;
+    pointer-events: auto;
+    margin-top: 2rem;
+    margin-bottom: $margen;
+  }
+
+  /* Botón circular Play/Pause (izquierda) */
+  .play-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .play-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+  .play-btn .pause-icon.hidden,
+  .play-btn .play-icon.hidden,
+  .play-btn .replay-icon.hidden {
+    display: none;
+  }
+
+  /* Pill central que contiene track y bullet */
+  .progress-pill {
+    width: 280px;
+    height: 56px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    padding: 8px 12px;
+    @include cel {
+      width: calc(100vw - 140px);
+      max-width: 240px;
+      padding: 8px 10px;
+    }
+  }
+
+  .pill-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 3px;
+  }
+
+  /* Cada segmento representa un slide; por defecto es pequeño (círculo) */
+  .pill-segment {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba($primario, 0.95);
+    border: none;
+    padding: 0;
+    transition:
+      width 560ms cubic-bezier(0.2, 0.9, 0.2, 1),
+      border-radius 560ms,
+      background 220ms;
+    display: inline-block;
+    overflow: hidden;
+    flex-shrink: 0;
+    // box-shadow: 0 2px 6px rgba(0,0,0,0.28);
+    @include cel {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  /* Cuando el segmento está activo se expande a una barra (pill) */
+  .pill-segment.active-segment {
+    width: 120px; /* ancho del segmento expandido */
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  /* barra de progreso interna que se llena cuando el slide está activo */
+  .pill-segment .segment-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: $primario; /* más contraste */
+    border-radius: 999px;
+    transition: width 120ms linear;
+  }
+
+  /* cuando no activo, el segemento se muestra como círculo oscuro */
+  .pill-segment:not(.active-segment) .segment-progress {
+    display: none;
+  }
+
+  /* Replay pequeño a la derecha */
+
+  /* Progress Bar */
+  .progress-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: white;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .controls-wrap {
+      gap: 12px;
+    }
+    .pill-segment.active-segment {
+      width: 80px;
+    }
+    .play-btn,
+    .replay-btn {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .controls-wrap {
+      gap: 8px;
+      bottom: 20px;
+    }
+    .pill-segment.active-segment {
+      width: 60px;
+    }
+    .play-btn,
+    .replay-btn {
+      width: 54px;
+      height: 54px;
+    }
+    .play-btn svg,
+    .replay-btn svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>
+
+<script>
+  import lottie from "lottie-web";
+
+  class AppleSlider {
+    private slides: HTMLElement[];
+    private currentSlide: number;
+    private isPlaying: boolean;
+    private finished: boolean;
+    private slideDuration: number;
+    private raf: number | null;
+    private slideStartTime: number;
+    private playBtn: HTMLButtonElement | null;
+    private lottieAnimations: Map<number, any>;
+
+    constructor() {
+      this.slides = Array.from(document.querySelectorAll(".slide"));
+      this.currentSlide = 0;
+      this.isPlaying = false;
+      this.finished = false;
+      this.slideDuration = 5000;
+      this.raf = null;
+      this.slideStartTime = 0;
+      this.playBtn = null;
+      this.lottieAnimations = new Map();
+
+      this.initializeSlider();
+      this.initializeLottieAnimations().then(() => {
+        // Play Lottie animation for the first slide after loading
+        this.playLottieForSlide(0);
+      });
+      this.attachEventListeners();
+    }
+
+    private initializeSlider(): void {
+      if (this.slides[0]) this.slides[0].classList.add("active");
+    }
+
+    private async initializeLottieAnimations(): Promise<void> {
+      const lottieContainers = document.querySelectorAll(".lottie-container");
+
+      for (const container of lottieContainers) {
+        const dataAttr = container.getAttribute("data-lottie-data");
+        const index = parseInt(
+          container.getAttribute("data-lottie-index") || "0",
+        );
+
+        if (dataAttr) {
+          try {
+            // Parse the JSON data from the data attribute
+            const animationData = JSON.parse(dataAttr);
+
+            const animation = lottie.loadAnimation({
+              container: container as HTMLElement,
+              renderer: "svg",
+              loop: false,
+              autoplay: false,
+              animationData: animationData,
+            });
+
+            this.lottieAnimations.set(index, animation);
+          } catch (error) {
+            console.error(`Failed to load Lottie animation:`, error);
+          }
+        }
+      }
+    }
+
+    private playLottieForSlide(index: number): void {
+      const animation = this.lottieAnimations.get(index);
+      if (animation) {
+        animation.goToAndStop(0, true);
+        animation.play();
+      }
+    }
+
+    private stopAllLotties(): void {
+      this.lottieAnimations.forEach((animation) => {
+        animation.stop();
+      });
+    }
+
+    private attachEventListeners(): void {
+      this.playBtn = document.querySelector(".play-btn");
+      const indicators = document.querySelectorAll(".indicator");
+      const pill = document.querySelector(".progress-pill");
+
+      this.playBtn?.addEventListener("click", () => this.togglePlayPause());
+
+      indicators.forEach((el, idx) => {
+        (el as HTMLElement).addEventListener("click", () =>
+          this.goToSlide(idx),
+        );
+      });
+
+      pill?.addEventListener("click", (e: Event) => {
+        const target = e.currentTarget as HTMLElement;
+        const rect = target.getBoundingClientRect();
+        const clickX = (e as MouseEvent).clientX - rect.left;
+        const pct = clickX / rect.width;
+        const idx = Math.floor(pct * this.slides.length);
+        this.goToSlide(Math.min(idx, this.slides.length - 1));
+      });
+
+      const segments = document.querySelectorAll(".pill-segment");
+      segments.forEach((el, idx) => {
+        (el as HTMLElement).addEventListener("click", (ev: Event) => {
+          ev.stopPropagation();
+          this.goToSlide(idx);
+        });
+      });
+
+      // set initial segments state and icon
+      this.updateSegmentsForIndex(this.currentSlide, 0);
+      this.updatePlayPauseIcon();
+    }
+
+    private nextSlide(): void {
+      // if last slide, finish and show replay
+      if (this.currentSlide === this.slides.length - 1) {
+        this.finished = true;
+        this.pause();
+        this.updatePlayPauseIcon();
+        return;
+      }
+      this.goToSlide(this.currentSlide + 1);
+    }
+
+    private goToSlide(index: number): void {
+      if (!this.slides.length) return;
+      this.slides[this.currentSlide]?.classList.remove("active");
+      this.currentSlide = index;
+      this.slides[this.currentSlide]?.classList.add("active");
+      this.updateIndicators();
+      this.updateSegmentsForIndex(this.currentSlide, 0);
+
+      // Play Lottie animation for this slide
+      this.stopAllLotties();
+      this.playLottieForSlide(this.currentSlide);
+
+      // restart autoplay timing
+      if (this.isPlaying) {
+        this.slideStartTime = performance.now();
+      }
+    }
+
+    private togglePlayPause(): void {
+      if (this.isPlaying) this.pause();
+      else this.play();
+    }
+
+    private play(): void {
+      if (this.isPlaying) return;
+      // if previously finished and user presses play (replay), restart from 0
+      if (this.finished) {
+        this.goToSlide(0);
+        this.finished = false;
+      }
+      this.isPlaying = true;
+      this.updatePlayPauseIcon();
+      this.slideStartTime = performance.now();
+      this.playLottieForSlide(this.currentSlide);
+      this.startTick();
+    }
+
+    private pause(): void {
+      this.isPlaying = false;
+      this.updatePlayPauseIcon();
+      if (this.raf !== null) {
+        cancelAnimationFrame(this.raf);
+        this.raf = null;
+      }
+    }
+
+    private replay(): void {
+      this.goToSlide(0);
+      this.play();
+    }
+
+    private startTick(): void {
+      const tick = (ts: DOMHighResTimeStamp): void => {
+        if (!this.isPlaying) return;
+        const elapsed = ts - this.slideStartTime;
+        const progress = Math.min(elapsed / this.slideDuration, 1);
+        this.updateSegmentsForIndex(this.currentSlide, progress);
+        if (progress >= 1) {
+          // if last slide, finish and show replay
+          if (this.currentSlide === this.slides.length - 1) {
+            this.finished = true;
+            this.pause();
+            this.updatePlayPauseIcon();
+            return;
+          }
+          // advance to next slide and continue ticking
+          const next = this.currentSlide + 1;
+          this.goToSlide(next);
+          this.slideStartTime = performance.now();
+          this.raf = requestAnimationFrame(tick);
+          return;
+        }
+        this.raf = requestAnimationFrame(tick);
+      };
+      this.raf = requestAnimationFrame(tick);
+    }
+
+    private updatePlayPauseIcon(): void {
+      const playIcon = this.playBtn?.querySelector(
+        ".play-icon",
+      ) as SVGElement | null;
+      const pauseIcon = this.playBtn?.querySelector(
+        ".pause-icon",
+      ) as SVGElement | null;
+      const replayIcon = this.playBtn?.querySelector(
+        ".replay-icon",
+      ) as SVGElement | null;
+      // Icono inicial y por defecto: replay
+      // Al reproducir: pause
+      // Al terminar: replay
+      if (this.isPlaying) {
+        replayIcon?.classList.add("hidden");
+        playIcon?.classList.add("hidden");
+        pauseIcon?.classList.remove("hidden");
+      } else {
+        pauseIcon?.classList.add("hidden");
+        playIcon?.classList.add("hidden");
+        replayIcon?.classList.remove("hidden");
+      }
+    }
+
+    private updateIndicators(): void {
+      const indicators = document.querySelectorAll(".indicator");
+      indicators.forEach((el, idx) => {
+        (el as HTMLElement).classList.toggle(
+          "active",
+          idx === this.currentSlide,
+        );
+      });
+    }
+
+    private updateSegmentsForIndex(
+      index: number,
+      progressBetween: number = 0,
+    ): void {
+      const segments = document.querySelectorAll(".pill-segment");
+      segments.forEach((el, idx) => {
+        const progressEl = (el as HTMLElement).querySelector(
+          ".segment-progress",
+        ) as HTMLElement | null;
+        if (idx === index) {
+          (el as HTMLElement).classList.add("active-segment");
+          if (progressEl)
+            progressEl.style.width = Math.round(progressBetween * 100) + "%";
+        } else {
+          (el as HTMLElement).classList.remove("active-segment");
+          if (progressEl) progressEl.style.width = "0%";
+        }
+      });
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => new AppleSlider());
+</script>
