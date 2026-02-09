@@ -5,6 +5,8 @@
 // para iniciar con el prototipo del slider, iniciemos con solo textos, luego agregamos los lotties
 
 import lottieSlide1 from "../../public/sliders/home/slide-1.json";
+import lottieSlide2 from "../../public/sliders/home/slide-2.json";
+import lottieSlide3 from "../../public/sliders/home/slide-3.json";
 
 interface Slide {
   title: string;
@@ -23,11 +25,13 @@ const slides: Slide[] = [
     title: "Tú tienes el control, no el estrés",
     description:
       "Agrega pases, revisa quién confirma y olvídate de las sorpresas.",
+      lottieData: lottieSlide2,
   },
   {
     title: "Cada “sí voy” queda registrado",
     description:
       "Tus invitados confirman y tú lo ves todo desde un solo panel.",
+      lottieData: lottieSlide3,
   },
   {
     title: "No son genéricas. Son para quienes más importan",
@@ -47,6 +51,10 @@ const slides: Slide[] = [
       slides.map((slide, index) => (
         <div class="slide" data-slide={index}>
           <div class="slide-content">
+            <div class="slide-text-content">
+              <h2 class="slide-title animate">{slide.title}</h2>
+              <p class="slide-description animate">{slide.description}</p>
+            </div>
             {slide.lottieData && (
               <div
                 class="lottie-container"
@@ -54,10 +62,6 @@ const slides: Slide[] = [
                 data-lottie-index={index}
               />
             )}
-            <div class="slide-text-content">
-              <h2 class="slide-title animate">{slide.title}</h2>
-              <p class="slide-description animate">{slide.description}</p>
-            </div>
           </div>
         </div>
       ))
@@ -107,6 +111,7 @@ const slides: Slide[] = [
     position: relative;
     width: 100%;
     height: auto;
+margin-top: $margen;
   }
 
   svg {
@@ -141,19 +146,21 @@ const slides: Slide[] = [
 
   .slide-content {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 80%;
-    padding: clamp(20px, 5vw, 60px) clamp(20px, 5vw, 40px);
-    text-align: center;
-    color: #111;
+    // padding: clamp(20px, 5vw, 60px) clamp(20px, 5vw, 40px);
     background: white;
     border-radius: 20px;
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     z-index: 1;
-    gap: 2rem;
+    gap: 1rem;
+    @include cel {
+      flex-direction: column;
+      text-align: center;
+    }
 
     @include desktop {
       flex-direction: row;
@@ -163,11 +170,17 @@ const slides: Slide[] = [
   }
 
   .slide-text-content {
-    flex: 1;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
+    padding: $margen-cel;
+    @include cel {
+      width: 100%;
+      gap:0;
+      text-align: center;
+    }
   }
 
   /* Mostrar preview del siguiente slide */
@@ -178,10 +191,11 @@ const slides: Slide[] = [
 
   /* Lottie container */
   .lottie-container {
+    display: flex;
     width: 100%;
-    max-width: 350px;
+    // max-width: 350px;
     height: auto;
-    flex-shrink: 0;
+    // flex-shrink: 0;
     opacity: 0;
     transform: scale(0.8);
     transition:
@@ -189,7 +203,7 @@ const slides: Slide[] = [
       transform 0.6s ease-out;
 
     @include cel {
-      max-width: 280px;
+      flex: 0 0 100%;
       order: 2;
     }
 
@@ -260,7 +274,6 @@ const slides: Slide[] = [
     z-index: 20;
     pointer-events: auto;
     margin-top: 2rem;
-    margin-bottom: $margen;
   }
 
   /* Botón circular Play/Pause (izquierda) */
@@ -421,6 +434,8 @@ const slides: Slide[] = [
 <script>
   import lottie from "lottie-web";
 
+  let currentSliderInstance: AppleSlider | null = null;
+
   class AppleSlider {
     private slides: HTMLElement[];
     private currentSlide: number;
@@ -431,22 +446,28 @@ const slides: Slide[] = [
     private slideStartTime: number;
     private playBtn: HTMLButtonElement | null;
     private lottieAnimations: Map<number, any>;
+    private sliderContainer: HTMLElement | null;
+    private intersectionObserver: IntersectionObserver | null;
+    private hasPlayedFirstAnimation: boolean;
 
     constructor() {
       this.slides = Array.from(document.querySelectorAll(".slide"));
       this.currentSlide = 0;
       this.isPlaying = false;
       this.finished = false;
-      this.slideDuration = 5000;
+      this.slideDuration = 6000;
       this.raf = null;
       this.slideStartTime = 0;
       this.playBtn = null;
       this.lottieAnimations = new Map();
+      this.sliderContainer = document.querySelector(".slider-container");
+      this.intersectionObserver = null;
+      this.hasPlayedFirstAnimation = false;
 
       this.initializeSlider();
       this.initializeLottieAnimations().then(() => {
-        // Play Lottie animation for the first slide after loading
-        this.playLottieForSlide(0);
+        // No reproducir Lottie aquí, esperar a que sea visible
+        this.setupIntersectionObserver();
       });
       this.attachEventListeners();
     }
@@ -497,6 +518,55 @@ const slides: Slide[] = [
       this.lottieAnimations.forEach((animation) => {
         animation.stop();
       });
+    }
+
+    private setupIntersectionObserver(): void {
+      if (!this.sliderContainer) return;
+
+      const options = {
+        threshold: 0.2, // Dispara cuando el 20% del slider es visible
+        rootMargin: "0px",
+      };
+
+      this.intersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.hasPlayedFirstAnimation) {
+            // El slider es visible y no hemos reproducido la animación inicial
+            this.hasPlayedFirstAnimation = true;
+            this.playLottieForSlide(0);
+            // Desconectar el observer después de disparar
+            this.intersectionObserver?.disconnect();
+          }
+        });
+      }, options);
+
+      this.intersectionObserver.observe(this.sliderContainer);
+    }
+
+    public destroy(): void {
+      // Desconectar intersection observer
+      if (this.intersectionObserver) {
+        this.intersectionObserver.disconnect();
+        this.intersectionObserver = null;
+      }
+
+      // Limpiar todos los Lotties
+      this.stopAllLotties();
+      this.lottieAnimations.clear();
+      
+      // Cancelar animaciones pendientes
+      if (this.raf !== null) {
+        cancelAnimationFrame(this.raf);
+        this.raf = null;
+      }
+
+      // Remover clases activas
+      this.slides.forEach(slide => {
+        slide.classList.remove("active");
+      });
+
+      // Remover event listeners
+      this.playBtn?.removeEventListener("click", () => this.togglePlayPause());
     }
 
     private attachEventListeners(): void {
@@ -677,5 +747,27 @@ const slides: Slide[] = [
     }
   }
 
-  document.addEventListener("DOMContentLoaded", () => new AppleSlider());
+  function initializeSlider() {
+    // Destruir la instancia anterior si existe
+    if (currentSliderInstance) {
+      currentSliderInstance.destroy();
+    }
+    // Crear nueva instancia
+    currentSliderInstance = new AppleSlider();
+  }
+
+  // Para navegación normal (primera carga)
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSlider);
+  } else {
+    initializeSlider();
+  }
+
+  // Para view transitions (cuando regresas a la página)
+  document.addEventListener("astro:after-swap", initializeSlider);
+  // Limpiar antes del swap para evitar duplicados
+  document.addEventListener("astro:before-swap", () => {
+    // Cancelar cualquier animación pendiente
+    const appleSliders = document.querySelectorAll(".slider-container");
+  });
 </script>
