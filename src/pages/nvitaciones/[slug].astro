@@ -233,12 +233,12 @@ const productId = product.data.id;
           {
             nvitacionInfo && nvitacionInfo.muestra && (
               <>
-                <div class="liga-muetra">
+                <div class="liga-muestra">
                   <Btn
                     id="preview-btn"
                     liga="#"
-                    texto="Ver Nvitación de muestra"
-                    icono="mdi:eye"
+                    texto="<b>Ver Nvitación</b> muestra"
+                    icono="mdi:chevron-right"
                     clases="btn-oscuro"
                     claro={false}
                   />
@@ -308,7 +308,7 @@ const productId = product.data.id;
           />
           <div id="ahora">
             <p>
-              Compra ahora y <b>recibe tu invitación</b>a más tardar el {
+              <b>Compra ahora y recibe tu invitación</b>a más tardar el {
                 calculateDeliveryDate()
               }
             </p>
@@ -391,6 +391,11 @@ const productId = product.data.id;
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
+
+  #preview-btn{
+    background: $acento;
+    border-radius: 100px;
+  }
   #detalles{
 
     :global(h3) {
@@ -445,13 +450,13 @@ const productId = product.data.id;
       display: grid;
       gap: 1rem;
     }
-    .liga-muetra {
+    .liga-muestra {
       display: flex;
       align-items: center;
       height: 3rem;
-      background-color: $gris;
-      border-radius: calc($radio + 0.5rem);
-      padding: $margen-min .6rem;
+      border-radius: 100px;
+      padding: $margen-min .3rem;
+      width: fit-content;
       a{
         margin: 0;
         transform-origin: left;
