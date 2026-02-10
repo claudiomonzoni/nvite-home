@@ -7,6 +7,8 @@
 import lottieSlide1 from "../../public/sliders/home/slide-1.json";
 import lottieSlide2 from "../../public/sliders/home/slide-2.json";
 import lottieSlide3 from "../../public/sliders/home/slide-3.json";
+import lottieSlide4 from "../../public/sliders/home/slide-4.json";
+import lottieSlide5 from "../../public/sliders/home/slide-5.json";
 
 interface Slide {
   title: string;
@@ -36,10 +38,12 @@ const slides: Slide[] = [
   {
     title: "No son genéricas. Son para quienes más importan",
     description: "Personaliza mensajes y crea una invitación con significado.",
+    lottieData: lottieSlide4,  
   },
   {
     title: "Más que una invitación, una experiencia",
     description: "Diseño, emoción y tecnología para un día irrepetible.",
+    lottieData: lottieSlide5
   },
 ];
 ---
@@ -175,8 +179,9 @@ margin-top: $margen;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
-    padding: $margen-cel;
+    padding: $margen-cel ;
     @include cel {
+      padding: $margen-cel $margen-cel 0 $margen-cel;
       width: 100%;
       gap:0;
       text-align: center;

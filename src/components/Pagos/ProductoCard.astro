@@ -35,6 +35,9 @@ if (nvitacionInfo?.precioTachado) {
 <article class="producto-card">
   <div class="portada">
     <a href={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}>
+      <div class="verNvitacion">
+        Ver Nvitación
+      </div>
       <div class="crop">
         <Image
           src={producto.data.images[0]}
@@ -112,6 +115,20 @@ if (nvitacionInfo?.precioTachado) {
       margin-top: 0;
     }
   }
+  .verNvitacion{
+    position: absolute;
+    z-index: 100;
+    top: 5%;
+    right: 5%;
+    background: rgba($terciario, 0.6);
+    padding: .5rem $margen-min;
+    color: $acento;
+    font-weight: bold;
+    font-size: .7rem;
+    border-radius: $radio;
+    backdrop-filter: blur(5px);
+    @extend .sombra;
+  }
 
   .portada {
     grid-column: 1 / -1;
@@ -139,6 +156,7 @@ if (nvitacionInfo?.precioTachado) {
       transform-origin: bottom;
     }
     .crop {
+      position: relative;
       width: 100%;
       height: 70%;
       aspect-ratio: 1/1;

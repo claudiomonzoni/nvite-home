@@ -83,37 +83,7 @@ import Slider from "../components/Slider.astro";
     </div>
   </section> -->
 
-<CaracteristicasGrid
-  matriz={[
-    {
-      imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
-      titulo: "Invita y <span>sorprende</span>",
-      texto:
-        "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
-      txtbtn: "¿dudas?",
-      icono: "mdi:account-question-outline",
-      enlace: "#faq",
-    },
-    {
-      imagen: "mdi:infinity",
-      titulo: "Sin límites",
-      texto: "Sin cargos extras por número de invitados",
-      enlace: "#",
-    },
-    {
-      imagen: "mdi:account-multiple-check-outline",
-      texto: "Anima a los invitados mostrando los asistentes confirmados",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "<span>Consulta</span> quién sí va a tu fiesta",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "<span>asigna</span> pases por invitación",
-    },
-  ]}
-/>
+
 
 <div class="grid contenido">
 
@@ -124,7 +94,7 @@ import Slider from "../components/Slider.astro";
   <MostrarNvitaciones dondeEstoy="home" />
 </div>
 
-<div class="grid contenido">
+<!-- <div class="grid contenido">
   <div id="conteCaracteristicas">
     <Caracteristicas
       encabezado="Invita"
@@ -158,11 +128,53 @@ import Slider from "../components/Slider.astro";
       colorBg="#FFF1E1"
     />
   </div>
-</div>
+</div> -->
 
 <div id="precios" class="grid contenido">
   <Banner dondeEstoy="home" />
 </div>
+
+<CaracteristicasGrid
+  matriz={[
+    {
+      imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
+      titulo: "Invita y <span>sorprende</span>",
+      texto:
+        "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
+      txtbtn: "¿dudas?",
+      icono: "mdi:account-question-outline",
+      enlace: "#faq",
+    },
+    {
+      imagen: "mdi:infinity",
+      titulo: "Sin límites",
+      texto: "Sin cargos extras por número de invitados",
+      enlace: "#",
+    },
+    {
+      imagen: "mdi:account-multiple-check-outline",
+      texto: "Anima a los invitados mostrando los asistentes confirmados",
+    },
+    {
+      imagen: "mdi:infinity-box",
+      texto: "<span>Consulta</span> quién sí va a tu fiesta",
+    },
+    {
+      imagen: "mdi:infinity-box",
+      texto: "<span>asigna</span> pases por invitación",
+    },
+  ]}
+/>
+
+
+
+
+<Testimonios />
+
+<div class="grid contenido" id="faq">
+  <Faq />
+</div>
+
 
 <!-- <Galeriaslide /> -->
 <div class="grid contenido">
@@ -201,11 +213,6 @@ import Slider from "../components/Slider.astro";
   </BannerGeneral>
 </div>
 
-<Testimonios />
-
-<div class="grid contenido" id="faq">
-  <Faq />
-</div>
 
 <section class="grid contenido">
   <div id="conteCaracteristicas">
@@ -244,6 +251,7 @@ import Slider from "../components/Slider.astro";
     />
   </div>
 </section>
+
 
 <section class="grid contenido" id="formulario">
   <div class="flex">

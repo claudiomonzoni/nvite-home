@@ -664,7 +664,7 @@ input::placeholder {
     color: $primario;
   }
   @include cel {
-    padding: $margen $margen-cel;
+    padding: $margen $margen-cel 0;
   }
 }
 
