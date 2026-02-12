@@ -134,46 +134,6 @@ import Slider from "../components/Slider.astro";
   <Banner dondeEstoy="home" />
 </div>
 
-<CaracteristicasGrid
-  matriz={[
-    {
-      imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
-      titulo: "Invita y <span>sorprende</span>",
-      texto:
-        "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
-      txtbtn: "¿dudas?",
-      icono: "mdi:account-question-outline",
-      enlace: "#faq",
-    },
-    {
-      imagen: "mdi:infinity",
-      titulo: "Sin límites",
-      texto: "Sin cargos extras por número de invitados",
-      enlace: "#",
-    },
-    {
-      imagen: "mdi:account-multiple-check-outline",
-      texto: "Anima a los invitados mostrando los asistentes confirmados",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "<span>Consulta</span> quién sí va a tu fiesta",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      texto: "<span>asigna</span> pases por invitación",
-    },
-  ]}
-/>
-
-
-
-
-<Testimonios />
-
-<div class="grid contenido" id="faq">
-  <Faq />
-</div>
 
 
 <!-- <Galeriaslide /> -->
@@ -212,6 +172,51 @@ import Slider from "../components/Slider.astro";
     </Btn>
   </BannerGeneral>
 </div>
+
+
+<Testimonios />
+
+<div class="grid contenido" id="faq">
+  <Faq />
+</div>
+
+
+<CaracteristicasGrid
+  matriz={[
+    {
+      imagen: "/home-invitaciones-digitales-caracteristicas-nvitaciones.webp",
+      titulo: "Iniciemos con tus <span>invitaciones</span>",
+      texto:
+        "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
+      txtbtn: "Cotizar ahora",
+      icono: "mdi:account-question-outline",
+      enlace: "#formu",
+    },
+    {
+      imagen: "mdi:infinity",
+      titulo: "Invita sin límites",
+      texto: "Sin cargos extras por número de invitados, invita a todos los que quieras",
+      enlace: "#",
+    },
+    {
+      imagen: "mdi:account-multiple-check-outline",
+      titulo: "Motiva confirmaciones",
+      texto: "Anima a más invitados mostrando en tiempo real quién ya confirmó asistencia",
+    },
+    {
+      imagen: "mdi:infinity-box",
+      titulo: "Control total",
+      texto: "<span>Consulta</span> y gestiona quién asiste a tu evento fácilmente",
+    },
+    {
+      imagen: "mdi:infinity-box",
+      titulo: "Asigna pases",
+      texto: "<span>Asigna</span> pases personalizados por invitación para un control preciso",
+    },
+  ]}
+/>
+
+
 
 
 <section class="grid contenido">
