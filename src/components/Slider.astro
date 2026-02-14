@@ -288,9 +288,9 @@ margin-top: $margen;
     border-radius: 50%;
     display: inline-grid;
     place-items: center;
-    background: rgba(255, 255, 255, 1);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+    background: rgba($fondoGlobal, 1);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 10px rgba($gris, 0.16);
     cursor: pointer;
     padding: 0;
   }
@@ -313,9 +313,8 @@ margin-top: $margen;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 1);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    background: rgba($fondoGlobal, 1);
+    box-shadow: 0 4px 10px rgba($gris, 0.18);
     padding: 8px 12px;
     @include cel {
       width: calc(100vw - 140px);
@@ -339,7 +338,7 @@ margin-top: $margen;
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba($primario, 0.95);
+    background: rgba($acento, 0.95);
     border: none;
     padding: 0;
     transition:
@@ -361,7 +360,7 @@ margin-top: $margen;
     width: 120px; /* ancho del segmento expandido */
     height: 12px;
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba($secundario, 0.2);
   }
 
   /* barra de progreso interna que se llena cuando el slide está activo */
