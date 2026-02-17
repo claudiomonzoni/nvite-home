@@ -1,5 +1,6 @@
 ---
 import matter from 'gray-matter';
+import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/quince/Layout.astro";
 
 //componentes
@@ -13,9 +14,9 @@ import Frase from "../../components/quince/Frase.astro";
 import SilderGsap from "../../components/comunes/SilderGsap.astro";
 import BloqueMapa from "../../components/quince/BloqueMapa.astro";
 import Regalos from "../../components/comunes/Regalos.astro";
-import Contador from "../../components/bodas/Contador.astro";
+import Contador from "../../components/quince/Contador.astro";
 import Itinerario from "../../components/quince/Itinerario.astro";
-import Confirmacion from "../../components/quince/Confirmacion";  
+import Confirmacion from "../../components/comunes/Confirmacion";  
 import ConfirmacionBasica from "../../components/quince/ConfirmacionBasica";  
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import Padres from '../../components/quince/Padres.astro';
@@ -74,6 +75,7 @@ const quince = {
   id: slug,
   data: {
     version: fm.version ?? '',
+    idioma: fm.idioma ?? 'es',
     draft: !!fm.draft,
     titulo: fm.titulo ?? slug,
     whatsapp: fm.whatsapp ?? '',
@@ -135,6 +137,9 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
   (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
 );
 
+const lang = (quince.data.idioma as keyof typeof ui) || 'es';
+const t = useTranslations(lang);
+
 ---
 
 <Layout
@@ -151,25 +156,46 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
   fecha={quince.data.fecha}
   cover={quince.data.cover}
   client:load
+  lang={lang}
+  labels={{
+    loading: t('hero.loadingQuince'),
+    tap: t('hero.tap'),
+    honor: t('hero.quince.honor'),
+    date: t('hero.quince.date'),
+    share: t('hero.quince.share'),
+    passes: t('hero.passes'),
+  }}
 />
 
-<Encabezados texto="Mis 15 años" />
+<Encabezados texto={t('quince.myFifteen')} />
   <section class="grid pantalla">
     <Padres
       mama={quince.data.padres.mama}
       papa={quince.data.padres.papa}
       fotopapas={quince.data.padres.fotopapas}
-    
-      />
-      <Padrinos
-        nombres={quince.data.padrinos}
-      />
+      labels={{
+        blessing: t('quince.parents'),
+        mother: t('parents.mother'),
+        father: t('parents.father'),
+      }}
+    />
+    <Padrinos
+      nombres={quince.data.padrinos}
+      labels={{
+        title: t('godparents.title'),
+      }}
+    />
   </section>
   
 {
     quince.data.version === "Lux" && quince.data.audioMusica && (
 <section class="grid contenido">
-  <AudioPlayer src={quince.data.audioMusica} />
+  <AudioPlayer 
+    src={quince.data.audioMusica} 
+    labels={{
+      listen: t('quince.audio.listen'),
+    }}
+  />
 </section>
 )
 }
@@ -203,20 +229,26 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   /> -->
   <div id="zigzag">
     <BloqueMapa
-      encabezado="Ceremonia"
+      encabezado={t('invitation.ceremony')}
       dir={quince.data.ceremonia.lugar}
       horario={quince.data.ceremonia.hora}
       lat={quince.data.ceremonia.lat}
       lng={quince.data.ceremonia.lng}
       mapName="mapa1"
+      labels={{
+        startTrip: t('maps.startTrip'),
+      }}
     />
     <BloqueMapa
-      encabezado="Recepción"
+      encabezado={t('invitation.reception')}
       dir={quince.data.recepcion.lugar}
       horario={quince.data.recepcion.hora}
       lat={quince.data.recepcion.lat}
       lng={quince.data.recepcion.lng}
       mapName="mapa2"
+      labels={{
+        startTrip: t('maps.startTrip'),
+      }}
     />
   </div>
 </section>
@@ -225,17 +257,17 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   <div class="conte-cartas">
     <Cartas
     icono="mdi:list-status"
-    titulo="Detalles"
+    titulo={t('invitation.details')}
     array={quince.data.consideraciones}
     />
     <Cartas
     icono="mdi:clothes-hanger"
-    titulo="Dress code"
+    titulo={t('invitation.dressCode')}
     codigo={quince.data.vestimenta}
     />
     <Cartas
       icono="mdi:clipboard-text-date-outline"
-      titulo="Sugerencia de tonos"
+      titulo={t('invitation.colorPalette')}
       tonos={quince.data.coloresVestimenta}
     />
   </div>
@@ -252,7 +284,19 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
     )
   }
 <section class="grid contenido">
-  <Contador fecha={quince.data.fecha.toISOString().split('T')[0]} />
+  <Contador 
+    fecha={quince.data.fecha.toISOString().split('T')[0]} 
+    labels={{
+      days: t('countdown.days'),
+      hours: t('countdown.hours'),
+      minutes: t('countdown.minutes'),
+      seconds: t('countdown.seconds'),
+      onlyMissing: t('quince.countdown.onlyMissing'),
+      thanks: t('quince.countdown.thanks'),
+      day: t('quince.countdown.day'),
+      onlyOne: t('quince.countdown.onlyOne'),
+    }}
+  />
 </section>
 
 {
@@ -262,7 +306,7 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
   <ProgresoInvitados
     email={quince.data.email ?? "nvitacionluxquince@nvitaciones.com"}
     porcentajeMostrarInvitados={(quince.data.progresoPorcentaje ?? 20) as number}
-    frase={quince.data.progresoFrase ?? "¡Ya casi completamos la lista de invitados!"}
+    frase={quince.data.progresoFrase ?? t('invitation.rsvp.daysBefore')}
     mostrarSiempre={quince.data.progresoMostrarSiempre ?? true}
   />
 </section>
@@ -289,11 +333,24 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
     beneficiario={quince.data.beneficiario}
     banco={quince.data.banco}
     cuenta={quince.data.cuenta}
+    labels={{
+      title: t('invitation.gifts'),
+      stores: t('gifts.stores'),
+      cash: t('gifts.cash'),
+      transfers: t('gifts.transfer'),
+      beneficiary: t('gifts.beneficiary'),
+      bank: t('gifts.bank'),
+      account: t('gifts.account')
+    }}
     />
 </section>
 
 <section class="grid contenido">
-  <MensajeVip />
+  <MensajeVip 
+    labels={{
+      tag: t('vip.tag'),
+    }}
+  />
 </section>
 
 
@@ -309,14 +366,45 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
                 version={quince.data.version}
                 tipo="quince"
                 client:only="react"
+                labels={{
+                  title: t('invitation.rsvp'),
+                  subtitle: t('invitation.rsvp.daysBefore'),
+                  confirmYes: t('rsvp.confirmYes'),
+                  confirmNo: t('rsvp.confirmNo'),
+                  howMany: t('rsvp.howMany'),
+                  selectPasses: t('rsvp.selectPasses'),
+                  messageOptional: t('rsvp.messageOptional'),
+                  messagePlaceholder: t('rsvp.messagePlaceholder'),
+                  btnConfirm: t('rsvp.btnConfirm'),
+                  btnDecline: t('rsvp.btnDecline'),
+                  modalYes: t('rsvp.modalYes'),
+                  modalNo: t('rsvp.modalNo'),
+                  whatsappMsgYes: t('rsvp.whatsappMsgYes'),
+                  whatsappMsgNo: t('rsvp.whatsappMsgNo'),
+                  label: t('rsvp.label'),
+                  moveSwitch: t('rsvp.moveSwitch'),
+                  whoCanNotAttend: t('rsvp.whoCanNotAttend'),
+                  whoCanNotAttendPlaceholder: t('rsvp.whoCanNotAttendPlaceholder'),
+                  whoCanNotAttendNote: t('rsvp.whoCanNotAttendNote'),
+                  importantNote: t('rsvp.importantNote'),
+                  msgNoAttendFinal: t('rsvp.msgNoAttendFinal'),
+                }}
 /> 
             );
           case 'Esencial':
             return (
              <section>
                   <ConfirmacionBasica
-                    whatsapp={quince.data.whatsapp}       
+                    whatsapp={quince.data.whatsapp}
+                    dias_antes={15}      
                     client:only="react"
+                    labels={{
+                      title: t('invitation.rsvp'),
+                      subtitle: t('invitation.rsvp.daysBefore'),
+                      btnConfirm: t('rsvp.btnConfirm'),
+                      whatsappMsg: t('rsvp.whatsappMsgYes'),
+                      label: t('rsvp.label'),
+                    }}
                   />
               </section>
             );
@@ -329,6 +417,13 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
 
 
   <section class="grid contenido">
-    <Footer ruta={base} />
+    <Footer 
+      ruta={base} 
+      labels={{
+        developedBy: t('footer.developedBy'),
+        rights: t('footer.rights'),
+        altLogo: t('footer.altLogo'),
+      }}
+    />
   </section>
 </Layout>

@@ -6,28 +6,46 @@ interface Props {
   papaNovio?: string;
   fotopapasNovia?: string;
   fotopapasNovio?: string;
+  labels?: {
+    ourParents?: string;
+    bride?: string;
+    groom?: string;
+  };
 }
 
-const { mamaNovia, papaNovia, mamaNovio, papaNovio, fotopapasNovia, fotopapasNovio } = Astro.props;
----
-<div id="padres">
+const {
+  mamaNovia,
+  papaNovia,
+  mamaNovio,
+  papaNovio,
+  fotopapasNovia,
+  fotopapasNovio,
+  labels = {},
+} = Astro.props;
 
-  <div class="bande" >
-    <h2>Nuestros Padres</h2>
+const l = {
+  ourParents: labels.ourParents || "Nuestros Padres",
+  bride: labels.bride || "Novia",
+  groom: labels.groom || "Novio",
+};
+---
+
+<div id="padres">
+  <div class="bande">
+    <h2>{l.ourParents}</h2>
     <div class="conte">
-  
       <ul class="padre">
-      {
-        fotopapasNovia ? (
-          <div class="padreImg">
-            <img src={fotopapasNovia} alt="Foto de los padres de la novia" />
-          </div>
-        ) : (
-          ""
-        )
-      }
- 
-        <h3>Novia</h3>
+        {
+          fotopapasNovia ? (
+            <div class="padreImg">
+              <img src={fotopapasNovia} alt="Foto de los padres de la novia" />
+            </div>
+          ) : (
+            ""
+          )
+        }
+
+        <h3>{l.bride}</h3>
         <li>{mamaNovia}</li>
         <li>{papaNovia}</li>
       </ul>
@@ -41,12 +59,11 @@ const { mamaNovia, papaNovia, mamaNovio, papaNovio, fotopapasNovia, fotopapasNov
             ""
           )
         }
-    
-        <h3>Novio</h3>
+
+        <h3>{l.groom}</h3>
         <li>{mamaNovio}</li>
         <li>{papaNovio}</li>
       </ul>
     </div>
   </div>
-  
 </div>

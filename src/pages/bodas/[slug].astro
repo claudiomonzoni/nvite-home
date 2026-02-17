@@ -1,5 +1,6 @@
 ---
 import matter from 'gray-matter';
+import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Footer from "../../components/bodas/Footer.astro";
 
@@ -74,6 +75,7 @@ const boda = {
   id: slug,
   data: {
     version: fm.version ?? '',
+    idioma: fm.idioma ?? 'es',
     draft: !!fm.draft,
     titulo: fm.titulo ?? slug,
     novios: fm.novios ?? '',
@@ -133,6 +135,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
 );
 
+const lang = (boda.data.idioma as keyof typeof ui) || 'es';
+const t = useTranslations(lang);
+
+
 ---
 <Layout
   title=`Invitación de boda de ${boda.data.novios}`
@@ -154,6 +160,15 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
                 elIniciales={boda.data.elIniciales}
                 cover={boda.data.cover}
                 client:load
+                lang={lang}
+                labels={{
+                  loading: t('hero.loading'),
+                  tap: t('hero.tap'),
+                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
+                  invite: t('hero.wedding.invite'),
+                  celebration: t('hero.wedding.celebration'),
+                  pleasedToInvite: t('hero.elegant.pleasedToInvite'),
+                }}
               />
             );
           case 'base':
@@ -165,6 +180,13 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
                 elIniciales={boda.data.elIniciales}
                 cover={boda.data.cover}
                 client:load
+                lang={lang}
+                labels={{
+                  loading: t('hero.loading'),
+                  tap: t('hero.tap'),
+                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
+                  invite: t('hero.wedding.invite'),
+                }}
               />
             );
           default:
@@ -188,7 +210,12 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     boda.data.version === "Lux" && boda.data.audioMusica && (
       
       <section class="grid contenido">
-    <AudioPlayer src={boda.data.audioMusica} />
+    <AudioPlayer 
+      src={boda.data.audioMusica} 
+      labels={{
+        listen: t('audio.listen'),
+      }}
+    />
   </section>
     
   <section class="grid pantalla">
@@ -199,15 +226,36 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
       mamaNovio={boda.data.padres.mamaNovio}
       papaNovio={boda.data.padres.papaNovio}
       fotopapasNovio={boda.data.padres.fotopapasNovio}
-      />
+      labels={{
+        ourParents: t('parents.ourParents'),
+        bride: t('parents.bride'),
+        groom: t('parents.groom'),
+      }}
+    />
   </section>
 
-<Pases folder={boda.data.json} client:load />
+<Pases 
+  folder={boda.data.json} 
+  client:load 
+  labels={{
+    attendance: t('passes.attendance'),
+    weDeliver: t('passes.weDeliver'),
+    youPlural: t('passes.youPlural'),
+    youSingular: t('passes.youSingular'),
+    passesPlural: t('passes.passesPlural'),
+    passSingular: t('passes.passSingular'),
+  }}
+/>
 )
 }
 
 <section class="grid contenido">
   <Frase frase={boda.data.frase_amor} />
+  <MensajeVip 
+    labels={{
+      tag: t('vip.tag'),
+    }}
+  />
 </section>
 
 
@@ -215,22 +263,30 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   <section class="grid contenido">
     <div class="bandejaLugares">
       <BloqueMapa
-        encabezado="Ceremonia"
+        encabezado={t('invitation.ceremony')}
         dir={boda.data.ceremonia.lugar}
         horario={boda.data.ceremonia.hora}
         lat={boda.data.ceremonia.lat}
         lng={boda.data.ceremonia.lng}
         mapName="mapa1"
         icono="iglesia"
+        labels={{
+          viewMap: t('maps.viewMap'),
+          startTrip: t('maps.startTrip'),
+        }}
       />
       <BloqueMapa
-        encabezado="Recepción"
+        encabezado={t('invitation.reception')}
         dir={boda.data.recepcion.lugar}
         horario={boda.data.recepcion.hora}
         lat={boda.data.recepcion.lat}
         lng={boda.data.recepcion.lng}
         mapName="mapa2"
         icono="brindis"
+        labels={{
+          viewMap: t('maps.viewMap'),
+          startTrip: t('maps.startTrip'),
+        }}
       />
     </div>
   </section>
@@ -248,17 +304,39 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
   }
 
   <section class="grid contenido">
-    <Contador fecha={boda.data.fecha.toISOString()} />
+    <Contador 
+      fecha={boda.data.fecha.toISOString()} 
+      labels={{
+        days: t('countdown.days'),
+        hours: t('countdown.hours'),
+        minutes: t('countdown.minutes'),
+        seconds: t('countdown.seconds'),
+        title: t('wedding.countdown.title'),
+        congrats: t('wedding.countdown.congrats'),
+        day: t('wedding.countdown.day'),
+        onlyOne: t('wedding.countdown.onlyOne'),
+        daysLeft: t('wedding.countdown.daysLeft'),
+      }}
+    />
   </section>
   <!-- Itinerario condicional según versión -->
   {
     (boda.data.version === "Lux") && (
-  <ProgresoInvitados
-    email={boda.data.email}
-    porcentajeMostrarInvitados={20}
-    frase="Estás en la lista, ¿Ya confirmaste?"
-    mostrarSiempre={true}
-  />
+      <section class="grid contenido">
+        <ProgresoInvitados
+          frase={boda.data.progresoFrase || t('invitation.rsvp.daysBefore')}
+          porcentajeMostrarInvitados={20}
+          mostrarSiempre={true}
+          email={boda.data.email}
+          labels={{
+            confirmed: t('progress.confirmed'),
+            passesConfirmed: t('progress.passesConfirmed'),
+            of: t('progress.of'),
+            btnConfirm: t('progress.btnConfirm'),
+            allReady: t('progress.allReady'),
+          }}
+        />
+      </section>
     )
   }
 
@@ -266,7 +344,7 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     (boda.data.itinerario.length > 0) && (
 
       <section class="grid pantalla" id="BaseItinerario">
-        <Encabezados texto="Itinerario" />
+        <Encabezados texto={t('invitation.itinerary')} />
         <Itinerario listado={boda.data.itinerario} />
       </section>
 
@@ -285,10 +363,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 
 
   <section class="grid pantalla flex margen-arriba-abajo">
-    <Detalles lista={boda.data.consideraciones} encabezado="Consideraciones" />
-    <Detalles encabezado="Codigo de vestir" vestimenta={boda.data.vestimenta} />
+    <Detalles lista={boda.data.consideraciones} encabezado={t('invitation.considerations')} />
+    <Detalles encabezado={t('invitation.dressCode')} vestimenta={boda.data.vestimenta} />
     <Detalles
-      encabezado="Sugerencia de tonos"
+      encabezado={t('invitation.colorPalette')}
       colores={boda.data.coloresVestimenta}
     />
   </section>
@@ -315,6 +393,15 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     <Regalos
     tipo={boda.data.tipoRegalo}
     mesas={mesas}
+    labels={{
+      title: t('invitation.gifts'),
+      stores: t('gifts.stores'),
+      cash: t('gifts.cash'),
+      transfers: t('gifts.transfer'),
+      beneficiary: t('gifts.beneficiary'),
+      bank: t('gifts.bank'),
+      account: t('gifts.account')
+    }}
         frase={boda.data.frase_regalos}
         beneficiario={boda.data.beneficiario}
         banco={boda.data.banco}
@@ -348,6 +435,29 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
                 version={boda.data.version}
                 tipo="bodas"
                 client:only="react"
+                labels={{
+                  title: t('invitation.rsvp'),
+                  subtitle: t('invitation.rsvp.daysBefore'),
+                  confirmYes: t('rsvp.confirmYes'),
+                  confirmNo: t('rsvp.confirmNo'),
+                  howMany: t('rsvp.howMany'),
+                  selectPasses: t('rsvp.selectPasses'),
+                  messageOptional: t('rsvp.messageOptional'),
+                  messagePlaceholder: t('rsvp.messagePlaceholder'),
+                  btnConfirm: t('rsvp.btnConfirm'),
+                  btnDecline: t('rsvp.btnDecline'),
+                  modalYes: t('rsvp.modalYes'),
+                  modalNo: t('rsvp.modalNo'),
+                  whatsappMsgYes: t('rsvp.whatsappMsgYes'),
+                  whatsappMsgNo: t('rsvp.whatsappMsgNo'),
+                  label: t('rsvp.label'),
+                  moveSwitch: t('rsvp.moveSwitch'),
+                  whoCanNotAttend: t('rsvp.whoCanNotAttend'),
+                  whoCanNotAttendPlaceholder: t('rsvp.whoCanNotAttendPlaceholder'),
+                  whoCanNotAttendNote: t('rsvp.whoCanNotAttendNote'),
+                  importantNote: t('rsvp.importantNote'),
+                  msgNoAttendFinal: t('rsvp.msgNoAttendFinal'),
+                }}
               />
             );
           case 'Esencial':
@@ -357,6 +467,15 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
                       whatsapp={boda.data.whatsapp}
                       dias_antes={15}
                       client:only="react"
+                      labels={{
+                        title: t('invitation.rsvp'),
+                        subtitle: t('invitation.rsvp.daysBefore'),
+                        btnConfirm: t('rsvp.btnConfirm'),
+                        whatsappMsg: t('rsvp.whatsappMsgYes'),
+                        label: t('rsvp.label'),
+                        subtitle: t('invitation.rsvp.daysBefore'),
+                        title: t('invitation.rsvp'),
+                      }}
                   />
               </section>
             );
@@ -368,6 +487,13 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 
 
   <section class="grid contenido">
-    <Footer ruta={base} />
+    <Footer 
+      ruta={base} 
+      labels={{
+        developedBy: t('footer.developedBy'),
+        rights: t('footer.rights'),
+        altLogo: t('footer.altLogo'),
+      }}
+    />
   </section>
 </Layout>

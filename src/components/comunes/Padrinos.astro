@@ -1,22 +1,27 @@
 ---
 interface Props {
     nombres?: Array<string>;
+    labels?: {
+        title?: string;
+    };
 }
 
-const { nombres } = Astro.props;
+const { nombres, labels = {} } = Astro.props;
+
+const l = {
+    title: labels.title || "Padrinos",
+};
 ---
 
 {
     nombres && nombres.length > 0 && (
         <div id="padres">
             <div class="bande">
-                <h3>Padrinos</h3>
+                <h3>{l.title}</h3>
                 <div class="conte">
                     <ul class="padre">
                         {nombres.map((nombre: string) => (
-                            <li>
-                                {nombre}
-                            </li>
+                            <li>{nombre}</li>
                         ))}
                     </ul>
                 </div>

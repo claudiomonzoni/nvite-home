@@ -1,89 +1,123 @@
 ---
 interface Props {
-  fecha: string; // Changed from Date to string
+  fecha: string;
+  labels?: {
+    days?: string;
+    hours?: string;
+    minutes?: string;
+    seconds?: string;
+    title?: string;
+    congrats?: string;
+    day?: string;
+    onlyOne?: string;
+    daysLeft?: string;
+  };
 }
 
-const { fecha } = Astro.props;
+const { fecha, labels = {} } = Astro.props;
+
+const l = {
+  days: labels.days || "días",
+  hours: labels.hours || "horas",
+  minutes: labels.minutes || "minutos",
+  seconds: labels.seconds || "segundos",
+  title: labels.title || "Nuestro Evento es en:",
+  congrats: labels.congrats || "¡Felicidades!",
+  day: labels.day || "día",
+  onlyOne: labels.onlyOne || "Solo falta:",
+  daysLeft: labels.daysLeft || "Días para el Evento:",
+};
 ---
 
 <div id="contador">
   <div class="bande">
-    <p id="falta">Nuestro Evento es en:</p>
+    <p id="falta">{l.title}</p>
     <div class="tiempo-container">
       <div class="tiempo-item">
         <div id="dias-numero" class="numero"></div>
-        <p id="dias-texto">días</p>
+        <p id="dias-texto">{l.days}</p>
       </div>
       <div class="tiempo-item">
         <div id="horas-numero" class="numero"></div>
-        <p>horas</p>
+        <p>{l.hours}</p>
       </div>
       <div class="tiempo-item">
         <div id="minutos-numero" class="numero"></div>
-        <p>minutos</p>
+        <p>{l.minutes}</p>
       </div>
       <div class="tiempo-item">
         <div id="segundos-numero" class="numero"></div>
-        <p>segundos</p>
+        <p>{l.seconds}</p>
       </div>
     </div>
   </div>
 </div>
 
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" type="text/javascript"></script>
-<script define:vars={{ fecha }}>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"
+  type="text/javascript"></script>
+<script define:vars={{ fecha, l }}>
   function calcularTiempoRestante(fechaObjetivo) {
     try {
-      const [year, month, day] = fechaObjetivo.split('-').map(num => parseInt(num));
+      const [year, month, day] = fechaObjetivo
+        .split("-")
+        .map((num) => parseInt(num));
       const targetDate = new Date(year, month - 1, day);
       const now = new Date();
-      
+
       const diffTime = targetDate.getTime() - now.getTime();
-      
+
       if (diffTime <= 0) {
         return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
       }
 
       const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const horas = Math.floor(
+        (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
       const minutos = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
       const segundos = Math.floor((diffTime % (1000 * 60)) / 1000);
-      
+
       return { dias, horas, minutos, segundos };
     } catch (error) {
-      console.error('Error calculating time:', error);
+      console.error("Error calculating time:", error);
       return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
     }
   }
 
   function actualizarContador() {
     const tiempo = calcularTiempoRestante(fecha);
-    
+
     document.getElementById("dias-numero").innerHTML = tiempo.dias;
     document.getElementById("horas-numero").innerHTML = tiempo.horas;
     document.getElementById("minutos-numero").innerHTML = tiempo.minutos;
     document.getElementById("segundos-numero").innerHTML = tiempo.segundos;
-    
+
     const faltaElement = document.getElementById("falta");
     const diasTexto = document.getElementById("dias-texto");
 
-    if (tiempo.dias <= 0 && tiempo.horas <= 0 && tiempo.minutos <= 0 && tiempo.segundos <= 0) {
-      faltaElement.innerHTML = "¡Felicidades!";
+    if (
+      tiempo.dias <= 0 &&
+      tiempo.horas <= 0 &&
+      tiempo.minutos <= 0 &&
+      tiempo.segundos <= 0
+    ) {
+      faltaElement.innerHTML = l.congrats;
       return;
     }
 
     if (tiempo.dias === 1) {
-      diasTexto.innerHTML = "día";
-      faltaElement.innerHTML = "Solo falta:";
+      diasTexto.innerHTML = l.day;
+      faltaElement.innerHTML = l.onlyOne;
     } else {
-      diasTexto.innerHTML = "días";
-      faltaElement.innerHTML = "Días para el Evento:";
+      diasTexto.innerHTML = l.days;
+      faltaElement.innerHTML = l.daysLeft;
     }
   }
 
   actualizarContador();
   const intervalo = setInterval(actualizarContador, 1000); // Actualizar cada segundo
-  document.addEventListener('astro:before-swap', () => clearInterval(intervalo));
+  document.addEventListener("astro:before-swap", () =>
+    clearInterval(intervalo),
+  );
 </script>

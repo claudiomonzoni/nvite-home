@@ -7,9 +7,26 @@ interface Props {
   lng: string;
   mapName: string;
   icono: string;
+  labels?: {
+    viewMap?: string;
+    startTrip?: string;
+  };
 }
 
-const { encabezado, dir, lat, lng, mapName, horario, icono } = Astro.props;
+const {
+  encabezado,
+  dir,
+  lat,
+  lng,
+  mapName,
+  horario,
+  icono,
+  labels = {},
+} = Astro.props;
+const l = {
+  viewMap: labels.viewMap || "ver mapa",
+  startTrip: labels.startTrip || "iniciar viaje",
+};
 import { Icon } from "astro-icon/components";
 import Mapa from "../comunes/Mapa.astro";
 
@@ -28,9 +45,7 @@ console.log(lat);
     <div class="bandeja">
       <Icon name={icono} size={35} />
       <h3>{encabezado}</h3>
-      <address set:html={dir}>
-       
-      </address>
+      <address set:html={dir} />
       <div id="bandeReloj">
         <hr class="linea1" />
         <Icon name="solar:clock-circle-linear" size={30} />
@@ -49,7 +64,7 @@ console.log(lat);
       redondo={false}
       sombra={false}
       tema={"primario"}
-      texto={"ver mapa"}
+      texto={l.viewMap}
     />
     <Anchor
       url={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
@@ -60,7 +75,7 @@ console.log(lat);
       redondo={false}
       sombra={false}
       tema={"primario"}
-      texto={"iniciar viaje"}
+      texto={l.startTrip}
       target="_blank"
     />
   </div>

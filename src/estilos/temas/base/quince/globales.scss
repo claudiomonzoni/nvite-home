@@ -307,6 +307,10 @@ p{
       justify-content: center;
       align-items: center;
       text-align: center;
+      flex-direction: column;
+      .bandeja p {
+        font-size: clamp(1.1rem, 1.1rem, 1.6rem);
+      }
     }
 
     time,
@@ -940,6 +944,7 @@ p{
     .tiempo-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
       @include cel {
         flex-direction: column;
@@ -948,10 +953,18 @@ p{
       }
     }
     .tiempo-item {
+      
       text-align: center;
       padding-right: 2rem;
       margin-right: 2rem;
       border-right: solid 1px var(--secundario);
+      &:first-child {
+        background-color: var(--primario);
+        padding: $margen;
+        p{
+          color: var(--fondo)!important;
+        }
+      }
       &:last-child {
         border-right: none;
       }
@@ -963,7 +976,7 @@ p{
       }
     }
     .numero {
-      margin-top: $margen-cel;
+      // margin-top: $margen-cel;
       font-size: clamp(3rem, 5vw, 7rem);
       color: var(--acento);
       font-family: var(--font-heading), serif;

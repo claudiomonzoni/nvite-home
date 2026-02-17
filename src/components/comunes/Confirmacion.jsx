@@ -3,7 +3,32 @@ import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.sc
 import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
-export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas' }) {
+export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', labels = {} }) {
+  const t = {
+    title: labels.title || "¿Contamos con tu presencia?",
+    subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
+    confirmYes: labels.confirmYes || "¡Confirmo asistencia! 😄",
+    confirmNo: labels.confirmNo || "Lo lamento, no podré asistir 😔",
+    moveSwitch: labels.moveSwitch || "Mueve el switch a la derecha para confirmar tu asistencia y despues completa el formulario de confirmación.",
+    howMany: labels.howMany || "¿Cuántos pases usarán?",
+    selectPasses: labels.selectPasses || "Selecciona el número de pases",
+    whoCanNotAttend: labels.whoCanNotAttend || "¿Nombre de las personas que no podrán acompañarnos? (opcional)",
+    whoCanNotAttendPlaceholder: labels.whoCanNotAttendPlaceholder || "Escribe aquí los nombres...",
+    whoCanNotAttendNote: labels.whoCanNotAttendNote || "Si cambian de opinión y pueden acompañarnos al evento, no duden en contactarnos directamente {dias} días antes del evento.",
+    messageOptional: labels.messageOptional || "Envíanos algún saludo (opcional):",
+    messagePlaceholder: labels.messagePlaceholder || "Escribe aquí tu mensaje...",
+    btnConfirm: labels.btnConfirm || "Confirmar mi asistencia",
+    btnDecline: labels.btnDecline || "No podré asistir",
+    messageNoAttend: labels.messageNoAttend || "¿Deseas dejar un mensaje? (opcional):",
+    importantNote: labels.importantNote || "IMPORTANTE: En caso de que si puedan acompañarnos, les pedimos amablemente que nos confirmen directamente al menos {dias} días antes del evento.",
+    modalYes: labels.modalYes || "¡Muchas gracias por confirmar su asistencia! Nos llena de alegría saber que podremos contar con su presencia en este día tan especial.",
+    modalNo: labels.modalNo || "Agradecemos mucho su pronta respuesta. Lamentamos que no pueda acompañarnos en esta ocasión tan especial.",
+    loading: labels.loading || "Cargando...",
+    error: labels.error || "Error:",
+    msgNoAttendFinal: labels.msgNoAttendFinal || "Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.",
+    whatsappMsgYes: labels.whatsappMsgYes || "Hola, les confirmo la asistencia a la boda: {nombre}, y usaremos {pases} pase(s). {noAsisten} Comentarios: {comentarios}.",
+    whatsappMsgNo: labels.whatsappMsgNo || "Hola, lamento informarles que no podré asistir a la boda: {nombre}. Comentarios: {comentarios}."
+  };
   // Seleccionar el objeto de estilos correcto según el tipo
   const styles = tipo === 'quince' ? stylesQuince : stylesBodas;
   const [invitado, setInvitado] = useState("sin datos");
@@ -88,16 +113,14 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
           : "";
 
       const mensaje = asistira
-        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda:%20${encodeURIComponent(
-            invitado
-          )},%20y%20usaremos%20${encodeURIComponent(pasesSeleccionados)}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
-            comentariosValue || "Sin comentarios"
-          )}.`
-        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20boda:%20${encodeURIComponent(
-            invitado
-          )}.%0aComentarios:%20${encodeURIComponent(
-            comentariosValue || "Sin comentarios"
-          )}.`;
+        ? t.whatsappMsgYes
+            .replace('{nombre}', encodeURIComponent(invitado))
+            .replace('{pases}', encodeURIComponent(pasesSeleccionados))
+            .replace('{noAsisten}', personasNoAsistenMensaje)
+            .replace('{comentarios}', encodeURIComponent(comentariosValue || "Sin comentarios"))
+        : t.whatsappMsgNo
+            .replace('{nombre}', encodeURIComponent(invitado))
+            .replace('{comentarios}', encodeURIComponent(comentariosValue || "Sin comentarios"));
 
       btnconfirmarRef.current.href = `${whatsappBase}${encodeURIComponent(whatsapp)}&text=${mensaje}`;
     },
@@ -234,8 +257,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
           // Si no hay mensaje ni nombres, mostramos agradecimiento según el caso
           setModalMessage(
             asistira 
-              ? "¡Muchas gracias por confirmar su asistencia! Nos llena de alegría saber que podremos contar con su presencia en este día tan especial."
-              : "Agradecemos mucho su pronta respuesta. Lamentamos que no pueda acompañarnos en esta ocasión tan especial."
+              ? t.modalYes
+              : t.modalNo
           );
           setModalVisible(true);
         }
@@ -249,7 +272,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   const renderPasesOptions = useMemo(() => {
     const options = [
       <option key="0" value="0">
-        Selecciona el número de pases
+        {t.selectPasses}
       </option>,
     ];
 
@@ -265,11 +288,11 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   }, [pases]);
 
   if (isLoading) {
-    return <div className="loading">Cargando...</div>;
+    return <div className="loading">{t.loading}</div>;
   }
 
   if (error) {
-    return <div className="error">Error: {error}</div>;
+    return <div className="error">{t.error} {error}</div>;
   }
 
   // Agregar verificación para invitados que ya confirmaron no asistencia
@@ -279,7 +302,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
         <div className={styles.confirmacion}>
           <div className={styles.bandeja}>
             <p className={styles.mensajeNoAsistencia}>
-              Estimado invitado, agradecemos que nos haya notificado su imposibilidad de asistir. Si sus planes cambian, por favor no dude en contactar directamente con los anfitriones.
+              {t.msgNoAttendFinal}
             </p>
           </div>
         </div>
@@ -302,19 +325,15 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                 fill="white"
               ></path>
             </svg>
-            <h2>¿Contamos con tu presencia?</h2>
-            <p>
-              Por favor <b>confírmanos</b> tu asistencia{" "}
-              <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
-              mucho con la organización al hacerlo.
-            </p>
+            <h2>{t.title}</h2>
+            <p dangerouslySetInnerHTML={{ __html: t.subtitle.replace('{dias}', `<b>${dias_antes}</b>`) }} />
 
             <form
               id={styles["formulario"]}
               onSubmit={(e) => e.preventDefault()}
             >
               <div className={styles.conteCheck}>
-                <p>{asistira ? "¡Confirmo asistencia! 😄" : "Lo lamento, no podré asistir 😔"}</p>
+                <p>{asistira ? t.confirmYes : t.confirmNo}</p>
                
                 <label className={styles.switch}>
                   <input
@@ -326,14 +345,11 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                 </label>
               </div>
 
-            <p id={styles["mueve"]}>
-              Mueve el <span>switch a la derecha </span>para confirmar tu
-              asistencia y despues completa el formulario de confirmación.
-            </p>
+            <p id={styles["mueve"]} dangerouslySetInnerHTML={{ __html: t.moveSwitch.replace('switch a la derecha', '<span>switch a la derecha </span>') }} />
               {asistira ? (
                 // Formulario para confirmar asistencia
                 <>
-                  <label htmlFor="pases">¿Cuántos pases usarán?</label>
+                  <label htmlFor="pases">{t.howMany}</label>
                   {/* <small>Selecciona el número de pases para activar el botón de confirmación</small> */}
                   <select
                     name="pases"
@@ -348,34 +364,29 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                   {mostrarCampoNoAsisten && (
                     <>
                       <label htmlFor="personasNoAsisten">
-                        ¿Nombre de las personas que no podrán acompañarnos? (opcional)
+                        {t.whoCanNotAttend}
                       </label>
                       <textarea
                         name="personasNoAsisten"
                         id="personasNoAsisten"
                         value={personasNoAsisten}
                         onChange={handlePersonasNoAsistenChange}
-                        placeholder="Escribe aquí los nombres..."
+                        placeholder={t.whoCanNotAttendPlaceholder}
                         maxLength={500}
                       ></textarea>
-                      <small>
-                        Si cambian de opinión y pueden acompañarnos al evento,
-                        no duden en{" "}
-                        <u>contactarnos directamente {dias_antes} días antes</u>{" "}
-                        del evento.
-                      </small>
+                      <small dangerouslySetInnerHTML={{ __html: t.whoCanNotAttendNote.replace('{dias}', `<u>${dias_antes}</u>`) }} />
                     </>
                   )}
 
                   <label htmlFor="comentarios">
-                    Envíanos algún saludo (opcional):
+                    {t.messageOptional}
                   </label>
                   <textarea
                     name="comentarios"
                     id="comentarios"
                     value={comentarios}
                     onChange={handleComentariosChange}
-                    placeholder="Escribe aquí tu mensaje..."
+                    placeholder={t.messagePlaceholder}
                     maxLength={500}
                   ></textarea>
                   <a
@@ -388,31 +399,24 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
-                    Confirmar mi asistencia
+                    {t.btnConfirm}
                   </a>
                 </>
               ) : (
                 // Formulario para confirmar inasistencia
                 <>
                   <label htmlFor="comentarios">
-                    ¿Deseas dejar un mensaje? (opcional):
+                    {t.messageNoAttend}
                   </label>
                   <textarea
                     name="comentarios"
                     id="comentarios"
                     value={comentarios}
                     onChange={handleComentariosChange}
-                    placeholder="Escribe aquí tu mensaje..."
+                    placeholder={t.messagePlaceholder}
                     maxLength={500}
                   ></textarea>
-                  <small>
-                    <span>IMPORTANTE:</span> En caso de que si puedan
-                    acompañarnos, les pedimos amablemente que nos{" "}
-                    <span>
-                      confirmen directamente al menos {dias_antes} días antes
-                    </span>{" "}
-                    del evento.
-                  </small>
+                  <small dangerouslySetInnerHTML={{ __html: t.importantNote.replace('{dias}', `<span>${dias_antes}</span>`).replace('IMPORTANTE:', '<span>IMPORTANTE:</span>') }} />
                   <a
                     href="#"
                     className={styles.btnConfirmar}
@@ -423,7 +427,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
                     />{" "}
-                    No podré asistir
+                    {t.btnDecline}
                   </a>
                 </>
               )}

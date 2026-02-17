@@ -12,20 +12,51 @@ interface Props {
   cuenta?: string;
   tipo: Array<string>;
   mesas?: Array<Mesa>;
+  labels?: {
+    title?: string;
+    stores?: string;
+    cash?: string;
+    cashMessage?: string;
+    transfers?: string;
+    beneficiary?: string;
+    bank?: string;
+    account?: string;
+  };
 }
-const { frase, beneficiario, banco, cuenta, tipo, mesas } = Astro.props;
+const {
+  frase,
+  beneficiario,
+  banco,
+  cuenta,
+  tipo,
+  mesas,
+  labels = {},
+} = Astro.props;
+
+const l = {
+  title: labels.title || "Regalos",
+  stores: labels.stores || "Mesa de Regalos",
+  cash: labels.cash || "Lluvia de sobres",
+  cashMessage:
+    labels.cashMessage ||
+    "Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre",
+  transfers: labels.transfers || "Transferencias:",
+  beneficiary: labels.beneficiary || "Beneficiario",
+  bank: labels.bank || "Banco",
+  account: labels.account || "Cuenta",
+};
 import { Icon } from "astro-icon/components";
 import Anchor from "../comunes/Anchor.astro";
 ---
 
 <div id="bandejaRegalos">
   <Icon name={"mdi:wallet-giftcard"} size={40} />
-  <h2>Regalos</h2>
+  <h2>{l.title}</h2>
   <p set:html={frase} />
   {
     tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
       <div id="regalo">
-        <h3>Mesa de Regalos</h3>
+        <h3>{l.stores}</h3>
         {mesas.map((mesa) => (
           <Anchor
             url={mesa.url}
@@ -45,11 +76,8 @@ import Anchor from "../comunes/Anchor.astro";
   {
     tipo.includes("lluvia") && (
       <div id="lluvia">
-        <h3>Lluvia de sobres</h3>
-        <p>
-          Preferimos que los presentes que deseen hacernos sean en efectivo, los
-          cuales podrán colocar en un sobre
-        </p>
+        <h3>{l.cash}</h3>
+        <p>{l.cashMessage}</p>
       </div>
     )
   }
@@ -57,20 +85,20 @@ import Anchor from "../comunes/Anchor.astro";
   {
     tipo.includes("transferencias") && beneficiario && banco && cuenta && (
       <div id="transferencias">
-        <h3>Transferencias:</h3>
+        <h3>{l.transfers}</h3>
         <p>
           Si prefieres hacer una transferencia, puedes hacerlo a la siguiente
           cuenta bancaria:
         </p>
         <ul>
           <li>
-            <b>Beneficiario</b>: {beneficiario}
+            <b>{l.beneficiary}</b>: {beneficiario}
           </li>
           <li>
-            <b>Banco</b>: {banco}
+            <b>{l.bank}</b>: {banco}
           </li>
           <li>
-            <b>Cuenta</b>: {cuenta}
+            <b>{l.account}</b>: {cuenta}
           </li>
         </ul>
       </div>
