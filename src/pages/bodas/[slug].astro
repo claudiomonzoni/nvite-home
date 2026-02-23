@@ -211,9 +211,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 </section>
 
 
-
+{ (boda.data.ceremonia.lugar || boda.data.recepcion.lugar) && (
   <section class="grid contenido">
     <div class="bandejaLugares">
+      {boda.data.ceremonia.lugar && (
       <BloqueMapa
         encabezado="Ceremonia"
         dir={boda.data.ceremonia.lugar}
@@ -223,6 +224,8 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
         mapName="mapa1"
         icono="iglesia"
       />
+      )}
+      {boda.data.recepcion.lugar && (
       <BloqueMapa
         encabezado="Recepción"
         dir={boda.data.recepcion.lugar}
@@ -232,9 +235,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
         mapName="mapa2"
         icono="brindis"
       />
+      )}
     </div>
   </section>
-
+)}
 
   <!-- Imágenes solitarias condicionales -->
   {

@@ -196,30 +196,33 @@ Para que no se te pase nada, revisa todos los detalles aquí abajo:"
       />
     )
   }
-<section class="grid contenido fondo-mitad">
-  <!-- <ParrafosLibres
-    texto="Te compartimos la ubicación, te esperamos en la ceremonia religiosa y en
-      la fiesta de XV años, ¡No faltes!"
-  /> -->
-  <div id="zigzag">
-    <BloqueMapa
-      encabezado="Ceremonia"
-      dir={quince.data.ceremonia.lugar}
-      horario={quince.data.ceremonia.hora}
-      lat={quince.data.ceremonia.lat}
-      lng={quince.data.ceremonia.lng}
-      mapName="mapa1"
-    />
-    <BloqueMapa
-      encabezado="Recepción"
-      dir={quince.data.recepcion.lugar}
-      horario={quince.data.recepcion.hora}
-      lat={quince.data.recepcion.lat}
-      lng={quince.data.recepcion.lng}
-      mapName="mapa2"
-    />
-  </div>
-</section>
+{ (quince.data.ceremonia.lugar || quince.data.recepcion.lugar) && (
+  <section class="grid contenido fondo-mitad">
+    <div id="zigzag">
+      {quince.data.ceremonia.lugar && (
+        <BloqueMapa
+          encabezado="Ceremonia"
+          dir={quince.data.ceremonia.lugar}
+          horario={quince.data.ceremonia.hora}
+          lat={quince.data.ceremonia.lat}
+          lng={quince.data.ceremonia.lng}
+          mapName="mapa1"
+        />
+      )}
+      {quince.data.recepcion.lugar && (
+        <BloqueMapa
+          encabezado="Recepción"
+          dir={quince.data.recepcion.lugar}
+          horario={quince.data.recepcion.hora}
+          lat={quince.data.recepcion.lat}
+          lng={quince.data.recepcion.lng}
+          mapName="mapa2"
+        />
+      )}
+    </div>
+  </section>
+)}
+
 
 <section class="grid contenido">
   <div class="conte-cartas">

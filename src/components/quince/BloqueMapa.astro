@@ -56,7 +56,7 @@ import Mapa from "./Mapa.astro";
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
 
-  const bloqueMapa = gsap.utils.toArray(".bloqueMapa");
+  const bloqueMapa = gsap.utils.toArray<HTMLElement>(".bloqueMapa");
   gsap.registerPlugin(ScrollTrigger);
  // Soluciona problemas de pin y resize en móviles
       ScrollTrigger.config({ ignoreMobileResize: true });
