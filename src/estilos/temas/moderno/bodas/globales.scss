@@ -865,11 +865,19 @@
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: url("/bg-floral-regalos-der.svg") var(--acento);
-      background-position: top right;
-      background-repeat: no-repeat;
-      background-size: 40%;
-      background-blend-mode: color-burn;
+      background: var(--acento);
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("/bg-floral-regalos-der.svg");
+        background-position: top right;
+        background-repeat: no-repeat;
+        background-size: 40%;
+        mix-blend-mode: color-burn;
+        pointer-events: none;
+        z-index: 0;
+      }
       color: var(--terciario);
       @extend .sombra;
       

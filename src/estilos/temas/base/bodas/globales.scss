@@ -827,10 +827,18 @@
     #regalo {
       margin-top: $margen;
       padding: $margen;
-      background: url("/bg-floral-regalos-izq.svg") var(--primario);
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-blend-mode: color-burn;
+      background: var(--primario);
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("/bg-floral-regalos-izq.svg");
+        background-repeat: no-repeat;
+        background-size: contain;
+        mix-blend-mode: color-burn;
+        pointer-events: none;
+        z-index: 0;
+      }
       color: white;
       text-align: center;
       :global(b) {
@@ -882,11 +890,19 @@
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: url("/bg-floral-regalos-der.svg") var(--acento);
-      background-position: top right;
-      background-repeat: no-repeat;
-      background-size: 40%;
-      background-blend-mode: color-burn;
+      background: var(--acento);
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("/bg-floral-regalos-der.svg");
+        background-position: top right;
+        background-repeat: no-repeat;
+        background-size: 40%;
+        mix-blend-mode: color-burn;
+        pointer-events: none;
+        z-index: 0;
+      }
       color: var(--terciario);
       @extend .sombra;
       h3 {

@@ -31,8 +31,16 @@
     grid-row: 1 / -1;
     z-index: 2;
     margin: $margen 0;
-    background: $urlPatron, var(--fondoBurn);
-    background-blend-mode: color-burn;
+    background: var(--fondoBurn);
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $urlPatron;
+      mix-blend-mode: color-burn;
+      pointer-events: none;
+      z-index: 0;
+    }
     text-align: center;
     color: var(--primario);
     display: flex;
@@ -73,6 +81,7 @@
     }
     .centro {
       position: relative;
+      z-index: 2;
       padding: $margen-cel 0;
       // border-bottom: solid 1px var(--acento);
       .familia {
@@ -106,8 +115,16 @@
   left: 0;
   width: 100vw;
   height: 100dvh;
-  background: $urlPatron, linear-gradient(135deg, var(--fondoBurn) 0%, var(--terciario) 50%, #f5f5f5 100%);;
-  background-blend-mode: color-burn;
+  background: linear-gradient(135deg, var(--fondoBurn) 0%, var(--terciario) 50%, #f5f5f5 100%);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: $urlPatron;
+    mix-blend-mode: color-burn;
+    pointer-events: none;
+    z-index: 0;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,6 +139,8 @@
 }
 
 .loadingContent {
+  position: relative;
+  z-index: 2;
   max-width: 90%;
   text-align: center;
   padding: 2rem;
