@@ -779,6 +779,7 @@ p{
       text-align: center;
       margin-bottom: $margen-cel;
       background: var(--terciario);
+      position: relative;
       &::before {
         content: "";
         position: absolute;
