@@ -1,12 +1,19 @@
 ---
 interface Props {
     src: string;
+    labels?: {
+        listen?: string;
+    };
 }
-const { src } = Astro.props;
+const { src, labels = {} } = Astro.props;
+
+const l = {
+    listen: labels.listen || "Escucha la <b>canción</b> de mis Xv años",
+};
 ---
 
 <div id="rola">
-    <h3>Escucha la <b>canción</b> de mis Xv años</h3>
+    <h3 set:html={l.listen} />
     <audio controls id="audioInvitacion">
         <!-- <source src="horse.ogg"  type="audio/ogg"> -->
         <source src={src} type="audio/mpeg" />

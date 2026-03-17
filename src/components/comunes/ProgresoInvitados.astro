@@ -1,61 +1,99 @@
 ---
-import Anchor from './Anchor.astro';
+import Anchor from "./Anchor.astro";
 
 interface Props {
     porcentajeMostrarInvitados: number;
     mostrarSiempre: boolean;
     frase: string;
     email: string;
+    labels?: {
+        confirmed?: string;
+        passesConfirmed?: string;
+        of?: string;
+        btnConfirm?: string;
+        allReady?: string;
+    };
 }
 
-const { porcentajeMostrarInvitados, mostrarSiempre, frase, email } = Astro.props;
+const {
+    porcentajeMostrarInvitados,
+    mostrarSiempre,
+    frase,
+    email,
+    labels = {},
+} = Astro.props;
+
+const l = {
+    confirmed: labels.confirmed || "de invitados han confirmado",
+    passesConfirmed: labels.passesConfirmed || "pases confirmados",
+    of: labels.of || "de",
+    btnConfirm: labels.btnConfirm || "confirmar asistencia",
+    allReady:
+        labels.allReady || "¡Que empiece la fiesta, estamos todos listos!",
+};
 ---
 
-<div id="progreso-invitados" class="progreso-invitados" data-email={email} data-porcentaje-minimo={porcentajeMostrarInvitados} data-mostrar-siempre={mostrarSiempre} data-frase={frase}>
+<div
+    id="progreso-invitados"
+    class="progreso-invitados"
+    data-email={email}
+    data-porcentaje-minimo={porcentajeMostrarInvitados}
+    data-mostrar-siempre={mostrarSiempre}
+    data-frase={frase}
+    data-all-ready={l.allReady}
+>
     <div class="contenido">
         <h2 id="frase-titulo"></h2>
         <p class="porcentaje">
             <span class="numero" id="porcentaje-numero">0%</span>
-            <span class="texto">de invitados han confirmado</span>
+            <span class="texto">{l.confirmed}</span>
         </p>
         <div class="estadisticas">
             <div class="barra-progreso">
                 <div class="barra" id="barra-progreso"></div>
             </div>
             <p class="detalles">
-                <span class="confirmados" id="pases-confirmados">0</span> de <span class="total" id="total-pases">0</span> pases confirmados
+                <span class="confirmados" id="pases-confirmados">0</span>
+                {l.of}
+                <span class="total" id="total-pases">0</span>
+                {l.passesConfirmed}
             </p>
         </div>
-          <Anchor
-      url={"#Confirmacion-comun"}
-      id="confirmacion-btn-progreso"
-      icono="solar:check-read-outline"
-      clases={"large"}
-      conBorde={false}
-      redondo={false}
-      sombra={false}
-      tema={"primario"}
-      texto={"confirmar asistencia"}
-    />
+        <Anchor
+            url={"#Confirmacion-comun"}
+            id="confirmacion-btn-progreso"
+            icono="solar:check-read-outline"
+            clases={"large"}
+            conBorde={false}
+            redondo={false}
+            sombra={false}
+            tema={"primario"}
+            texto={l.btnConfirm}
+        />
     </div>
 </div>
 
 <script>
     async function actualizarProgreso() {
-        const contenedor = document.getElementById('progreso-invitados');
+        const contenedor = document.getElementById("progreso-invitados");
         if (!contenedor) return;
 
-        const email = contenedor.dataset.email;
-        const porcentajeMinimo = parseInt(contenedor.dataset.porcentajeMinimo);
-        const mostrarSiempre = contenedor.dataset.mostrarSiempre === 'true';
+        const email = contenedor.dataset.email || "";
+        const porcentajeMinimo = parseInt(
+            contenedor.dataset.porcentajeMinimo || "0",
+        );
+        const mostrarSiempre = contenedor.dataset.mostrarSiempre === "true";
         const frase = contenedor.dataset.frase;
+        const allReady = contenedor.dataset.allReady;
 
         try {
-            const response = await fetch(`${window.location.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`);
+            const response = await fetch(
+                `${window.location.origin}/api/getInvitados.json?email=${encodeURIComponent(email)}`,
+            );
             const invitados = await response.json();
 
             if (!Array.isArray(invitados)) {
-                throw new Error('Datos inválidos recibidos');
+                throw new Error("Datos inválidos recibidos");
             }
 
             // Calcular totales
@@ -73,35 +111,49 @@ const { porcentajeMostrarInvitados, mostrarSiempre, frase, email } = Astro.props
             }, 0);
 
             // Calcular el porcentaje de confirmados
-            const porcentajeConfirmados = totalPases > 0 ? Math.round((pasesConfirmados / totalPases) * 100) : 0;
+            const porcentajeConfirmados =
+                totalPases > 0
+                    ? Math.round((pasesConfirmados / totalPases) * 100)
+                    : 0;
 
             // Actualizar la UI
-            const mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMinimo;
-            contenedor.style.display = mostrarComponente ? 'block' : 'none';
+            const mostrarComponente =
+                mostrarSiempre || porcentajeConfirmados >= porcentajeMinimo;
+            contenedor.style.display = mostrarComponente ? "block" : "none";
 
             if (mostrarComponente) {
-                const fraseTitulo = document.getElementById('frase-titulo');
-                const porcentajeNumero = document.getElementById('porcentaje-numero');
-                const barraProgreso = document.getElementById('barra-progreso');
-                const pasesConfirmadosEl = document.getElementById('pases-confirmados');
-                const totalPasesEl = document.getElementById('total-pases');
+                const fraseTitulo = document.getElementById("frase-titulo");
+                const porcentajeNumero =
+                    document.getElementById("porcentaje-numero");
+                const barraProgreso = document.getElementById("barra-progreso");
+                const pasesConfirmadosEl =
+                    document.getElementById("pases-confirmados");
+                const totalPasesEl = document.getElementById("total-pases");
 
-                if (fraseTitulo) fraseTitulo.textContent = porcentajeConfirmados === 100 ? 
-                    '¡Que empiece la fiesta, estamos todos listos!' : 
-                    frase;
+                if (fraseTitulo)
+                    fraseTitulo.textContent =
+                        (porcentajeConfirmados === 100 ? allReady : frase) ??
+                        null;
 
-                if (porcentajeNumero) porcentajeNumero.textContent = `${porcentajeConfirmados}%`;
-                if (barraProgreso) barraProgreso.style.setProperty('--progress', `${porcentajeConfirmados}%`);
-                if (pasesConfirmadosEl) pasesConfirmadosEl.textContent = pasesConfirmados.toString();
-                if (totalPasesEl) totalPasesEl.textContent = totalPases.toString();
+                if (porcentajeNumero)
+                    porcentajeNumero.textContent = `${porcentajeConfirmados}%`;
+                if (barraProgreso)
+                    barraProgreso.style.setProperty(
+                        "--progress",
+                        `${porcentajeConfirmados}%`,
+                    );
+                if (pasesConfirmadosEl)
+                    pasesConfirmadosEl.textContent =
+                        pasesConfirmados.toString();
+                if (totalPasesEl)
+                    totalPasesEl.textContent = totalPases.toString();
             }
         } catch (error) {
-            console.error('Error al obtener o procesar los datos:', error);
-            contenedor.style.display = 'none';
+            console.error("Error al obtener o procesar los datos:", error);
+            contenedor.style.display = "none";
         }
     }
 
     // Actualizar solo al cargar la página
     actualizarProgreso();
 </script>
-

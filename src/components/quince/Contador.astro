@@ -1,86 +1,135 @@
 ---
 interface Props {
-    fecha: Date;
+    fecha: string;
+    labels?: {
+        days?: string;
+        hours?: string;
+        minutes?: string;
+        seconds?: string;
+        onlyMissing?: string;
+        thanks?: string;
+        day?: string;
+        onlyOne?: string;
+    };
 }
 
-const { fecha } = Astro.props;
+const { fecha, labels = {} } = Astro.props;
+
+const l = {
+    days: labels.days || "días",
+    hours: labels.hours || "horas",
+    minutes: labels.minutes || "minutos",
+    seconds: labels.seconds || "segundos",
+    onlyMissing: labels.onlyMissing || "Solo faltan:",
+    thanks:
+        labels.thanks ||
+        "Gracias por ser parte de la celebración de mis XV años",
+    day: labels.day || "Día",
+    onlyOne: labels.onlyOne || "Solo falta",
+};
 ---
 
 <div id="demo"></div>
 <div id="contador">
-<p id="falta">Solo faltan:</p>
-<div id="numero">12</div>
-<p id="dias">días</p>
+    <p id="falta">{l.onlyMissing}</p>
+    <div class="tiempo-container">
+        <div class="tiempo-item">
+            <div id="dias-numero" class="numero"></div>
+            <p id="dias-texto">{l.days}</p>
+        </div>
+        <div class="tiempo-item">
+            <div id="horas-numero" class="numero"></div>
+            <p>{l.hours}</p>
+        </div>
+        <div class="tiempo-item">
+            <div id="minutos-numero" class="numero"></div>
+            <p>{l.minutes}</p>
+        </div>
+        <div class="tiempo-item">
+            <div id="segundos-numero" class="numero"></div>
+            <p>{l.seconds}</p>
+        </div>
+    </div>
 </div>
 
-<style lang="scss">
-    @use "../../estilos/quince/_variables.scss" as *;
+<script define:vars={{ fecha, l }}>
+    function calcularTiempoRestante(fechaObjetivo) {
+        try {
+            const parts = fechaObjetivo.split("-");
+            // Handle YYYY-MM-DD format manually to parse as local date (00:00:00)
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]);
+            const day = parseInt(parts[2]);
 
-    #contador {
-        display:  flex;
-        justify-content: center;
-        align-items: center;
-    color: var(--secundario);
-    font-family: 'Italiana', serif;
-    gap: .7rem;
-    border-top: 1px solid var(--secundario);
-    border-bottom: 1px solid var(--secundario);
-    
-}
+            const targetDate = new Date(year, month - 1, day);
+            const now = new Date();
 
-#numero{
-    font-size: clamp(6.5rem, 10.5vw, 14rem);
-}
-p{
-    font-size: clamp(1.5rem, 2.5vw, 3rem);
-    margin: 0;
-    
-}
-#demo{
-        font-family: 'Italiana', serif;
-        text-align: center;
-        padding-bottom: 2rem;
-        font-size: 2.5rem;
+            const diffTime = targetDate.getTime() - now.getTime();
+
+            if (diffTime <= 0) {
+                return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
+            }
+
+            const dias = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            const horas = Math.floor(
+                (diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+            );
+            const minutos = Math.floor(
+                (diffTime % (1000 * 60 * 60)) / (1000 * 60),
+            );
+            const segundos = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+            return { dias, horas, minutos, segundos };
+        } catch (error) {
+            console.error("Error calculating time:", error);
+            return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
+        }
     }
 
-</style>
+    function actualizarContador() {
+        const tiempo = calcularTiempoRestante(fecha);
 
+        const diasElement = document.getElementById("dias-numero");
+        const horasElement = document.getElementById("horas-numero");
+        const minutosElement = document.getElementById("minutos-numero");
+        const segundosElement = document.getElementById("segundos-numero");
+        const contadorContainer = document.getElementById("contador");
+        const demoElement = document.getElementById("demo");
 
+        if (diasElement) diasElement.innerHTML = tiempo.dias;
+        if (horasElement) horasElement.innerHTML = tiempo.horas;
+        if (minutosElement) minutosElement.innerHTML = tiempo.minutos;
+        if (segundosElement) segundosElement.innerHTML = tiempo.segundos;
 
+        const faltaElement = document.getElementById("falta");
+        const diasTexto = document.getElementById("dias-texto");
 
-<script define:vars={{ fecha }}>
+        if (
+            tiempo.dias <= 0 &&
+            tiempo.horas <= 0 &&
+            tiempo.minutos <= 0 &&
+            tiempo.segundos <= 0
+        ) {
+            if (contadorContainer) contadorContainer.style.display = "none";
+            if (demoElement) {
+                demoElement.style.display = "block";
+                demoElement.innerHTML = l.thanks;
+            }
+            return;
+        }
 
-// Set the date we're counting down to
-const countDownDate = new Date(fecha).getTime();
-
-// Update the count down every 1 second
-const cuenta = function() {
-
-  // Get today's date and time
-  const now = new Date().getTime();
-    
-  // Find the distance between now and the count down date
-  const distance = countDownDate - now
-    
-  // Time calculations for days, hours, minutes and seconds
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24) );
-
-
-      // Output the result in an element with id="demo"
-  document.getElementById("numero").innerHTML = days;
-  
-  // If the count down is over, write some text 
-  if (distance < 0) {
-        document.getElementById("numero").innerHTML = "0";
-      document.getElementById("demo").innerHTML = "Gracias por ser parte de la celebración de mis XV años";
+        if (tiempo.dias === 1) {
+            if (diasTexto) diasTexto.innerHTML = l.day;
+            if (faltaElement) faltaElement.innerHTML = l.onlyOne;
+        } else {
+            if (diasTexto) diasTexto.innerHTML = l.days;
+            if (faltaElement) faltaElement.innerHTML = l.onlyMissing;
+        }
     }
 
-    if (days == 1) {
-        document.getElementById("dias").innerHTML = "Dia";
-        document.getElementById("falta").innerHTML = "Solo falta";
-    }
-   
-};
-cuenta()
-
+    actualizarContador();
+    const intervalo = setInterval(actualizarContador, 1000);
+    document.addEventListener("astro:before-swap", () =>
+        clearInterval(intervalo),
+    );
 </script>

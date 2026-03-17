@@ -23,6 +23,14 @@ export default config({
       schema: {
         // === INFORMACIÓN BÁSICA ===
         version: fields.text({ label: "Version" }),
+        idioma: fields.select({
+          label: "Idioma",
+          options: [
+            { label: "Español", value: "es" },
+            { label: "English", value: "en" },
+          ],
+          defaultValue: "es",
+        }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
         titulo: fields.slug({ name: { label: "Título" } }),
 
@@ -329,6 +337,14 @@ export default config({
       format: { contentField: "content" },
       schema: {
         version: fields.text({ label: "Version" }),
+        idioma: fields.select({
+          label: "Idioma",
+          options: [
+            { label: "Español", value: "es" },
+            { label: "English", value: "en" },
+          ],
+          defaultValue: "es",
+        }),
         draft: fields.checkbox({ label: "Draft", defaultValue: false }),
         titulo: fields.slug({ name: { label: "Título" } }),
         whatsapp: fields.text({

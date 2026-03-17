@@ -12,8 +12,39 @@ interface Props {
   cuenta?: string;
   tipo: Array<string>;
   mesas?: Array<Mesa>;
+  labels?: {
+    title?: string;
+    stores?: string;
+    cash?: string;
+    cashMessage?: string;
+    transfers?: string;
+    beneficiary?: string;
+    bank?: string;
+    account?: string;
+  };
 }
-const { frase, beneficiario, banco, cuenta, tipo, mesas } = Astro.props;
+const {
+  frase,
+  beneficiario,
+  banco,
+  cuenta,
+  tipo,
+  mesas,
+  labels = {},
+} = Astro.props;
+
+const l = {
+  title: labels.title || "Regalos",
+  stores: labels.stores || "Mesa de Regalos",
+  cash: labels.cash || "Lluvia de sobres",
+  cashMessage:
+    labels.cashMessage ||
+    "Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre",
+  transfers: labels.transfers || "Transferencias:",
+  beneficiary: labels.beneficiary || "Beneficiario",
+  bank: labels.bank || "Banco",
+  account: labels.account || "Cuenta",
+};
 import { Icon } from "astro-icon/components";
 import Anchor from "../comunes/Anchor.astro";
 ---
@@ -21,76 +52,88 @@ import Anchor from "../comunes/Anchor.astro";
 <div id="Regalos">
   <div id="regalo">
     <Icon name={"mdi:wallet-giftcard"} size={40} />
-    <h2>Regalos</h2>
-    
-    <p set:html={frase} />
-    
-    {tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
-      <div id="mesa-regalos">
-        <h3>Mesa de Regalos</h3>
-        {mesas.map((mesa) => (
-          <Anchor
-            url={mesa.url}
-            id={"estilo"}
-            clases={"large"}
-            conBorde={true}
-            redondo={false}
-            sombra={false}
-            tema={"primario"}
-            texto={mesa.titulo}
-            target="_blank"
-          />
-        ))}
-      </div>
-    )}
+    <h2>{l.title}</h2>
 
-    {tipo.includes("mesa") && (!Array.isArray(mesas) || mesas.length === 0) && (
-      <div id="mesa-regalos-default">
-        <h3>Mesa de regalos</h3>
-        <Anchor
-          url={"https://www.amazon.com.mx/registries"}
-          id={"estilo"}
-          clases={"large"}
-          conBorde={true}
-          redondo={false}
-          sombra={false}
-          tema={"primario"}
-          texto={"Amazon"}
-        />
-        <Anchor
-          url={"https://mesaderegalos.liverpool.com.mx/"}
-          id={"estilo"}
-          clases={"large"}
-          conBorde={true}
-          redondo={false}
-          sombra={false}
-          tema={"primario"}
-          texto={"Liverpool"}
-        />
-      </div>
-    )}
+    <p set:html={frase} />
+
+    {
+      tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
+        <div id="mesa-regalos">
+          <h3>{l.stores}</h3>
+          {mesas.map((mesa) => (
+            <Anchor
+              url={mesa.url}
+              id={"estilo"}
+              clases={"large"}
+              conBorde={true}
+              redondo={false}
+              sombra={false}
+              tema={"primario"}
+              texto={mesa.titulo}
+              target="_blank"
+            />
+          ))}
+        </div>
+      )
+    }
+
+    {
+      tipo.includes("mesa") &&
+        (!Array.isArray(mesas) || mesas.length === 0) && (
+          <div id="mesa-regalos-default">
+            <h3>{l.stores}</h3>
+            <Anchor
+              url={"https://www.amazon.com.mx/registries"}
+              id={"estilo"}
+              clases={"large"}
+              conBorde={true}
+              redondo={false}
+              sombra={false}
+              tema={"primario"}
+              texto={"Amazon"}
+            />
+            <Anchor
+              url={"https://mesaderegalos.liverpool.com.mx/"}
+              id={"estilo"}
+              clases={"large"}
+              conBorde={true}
+              redondo={false}
+              sombra={false}
+              tema={"primario"}
+              texto={"Liverpool"}
+            />
+          </div>
+        )
+    }
   </div>
 
-  {tipo.includes("lluvia") && (
-    <div id="lluvia">
-      <h3>Lluvia de sobres</h3>
-      <p>
-        Preferimos que los presentes que deseen hacernos sean en efectivo, los
-        cuales podrán colocar en un sobre
-      </p>
-    </div>
-  )}
+  {
+    tipo.includes("lluvia") && (
+      <div id="lluvia">
+        <h3>{l.cash}</h3>
+        <p>{l.cashMessage}</p>
+      </div>
+    )
+  }
 
-  {tipo.includes("transferencias") && beneficiario && banco && cuenta && (
-    <div id="transferencias">
-      <h3>Transferencias:</h3>
-      <ul>
-        <li><b>Beneficiario</b>: {beneficiario}</li>
-        <li><b>Banco</b>: {banco}</li>
-        <li><b>Cuenta</b>: {cuenta}</li>
-      </ul>
-    </div>
-  )}
+  {
+    tipo.includes("transferencias") && beneficiario && banco && cuenta && (
+      <div id="transferencias">
+        <h3>{l.transfers}</h3>
+        <ul>
+          <li>
+            <b>{l.beneficiary}</b>: {beneficiario}
+          </li>
+          <li>
+            <b>{l.bank}</b>: {banco}
+          </li>
+          <li>
+            <b>{l.account}</b>: {cuenta}
+          </li>
+        </ul>
+      </div>
+    )
+  }
 </div>
 
 <script>

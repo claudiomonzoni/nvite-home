@@ -3,7 +3,15 @@ import Style from "../../estilos/temas/base/bodas/pases.module.scss";
 
 import { useEffect, useState } from "react";
 
-export default function Pases({ folder }) {
+export default function Pases({ folder, labels }) {
+  const l = {
+    attendance: labels?.attendance || "<b> Su asistencia</b> a nuestra boda será una alegría más para nosotros en este día tan especial.",
+    weDeliver: labels?.weDeliver || "entregamos",
+    youPlural: labels?.youPlural || "Les",
+    youSingular: labels?.youSingular || "Te",
+    passesPlural: labels?.passesPlural || " pases",
+    passSingular: labels?.passSingular || " pase",
+  };
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   useEffect(() => {
@@ -22,11 +30,11 @@ export default function Pases({ folder }) {
         setPase(json[0].pases);
 
         if (json[0].pases > 1) {
-          spanVarios.textContent = "Les";
-          pase.textContent = " pases";
+          spanVarios.textContent = l.youPlural;
+          pase.textContent = l.passesPlural;
         } else {
-          spanVarios.textContent = "Te";
-          pase.textContent = " pase";
+          spanVarios.textContent = l.youSingular;
+          pase.textContent = l.passSingular;
         }
       });
   }, []);
@@ -34,12 +42,9 @@ export default function Pases({ folder }) {
     <section className="grid contenido" id="pases">
       <div id="bande">
         <h2 id="invitados">{invitado}</h2>
-        <p>
-          <b> Su asistencia</b> a nuestra boda será una alegría más para
-          nosotros en este día tan especial.
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: l.attendance }}></p>
         <h3>
-          <span id="varios" className="variosSpan"></span> entregamos
+          <span id="varios" className="variosSpan"></span> {l.weDeliver}
         </h3>
         <hr />
         <div>

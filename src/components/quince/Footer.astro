@@ -1,20 +1,27 @@
 ---
 interface IProps {
   base: string;
+  labels?: {
+    developedBy?: string;
+    rights?: string;
+    altLogo?: string;
+  };
 }
-const { base } = Astro.props;
+const { base, labels = {} } = Astro.props;
+
+const l = {
+  developedBy: labels.developedBy || "Invitación desarrollada y diseñada por:",
+  rights: labels.rights || "Todos los derechos reservados",
+  altLogo:
+    labels.altLogo ||
+    "invitaciones digitales para bodas, quince años y eventos",
+};
 ---
 
 <footer>
-  <p>Invitación desarrollada y diseñada por:</p>
+  <p>{l.developedBy}</p>
   <a href="https://nvitaciones.com" target="_blank">
-    <img
-      src=`/nvita-logo.svg`
-      alt="invitaciones digitales para bodas, quince años y eventos"
-      class="logo"
-    />
+    <img src=`/nvita-logo.svg` alt={l.altLogo} class="logo" />
   </a>
-  <p>© 2022 - {new Date().getFullYear()} Todos los derechos reservados</p>
+  <p>© 2022 - {new Date().getFullYear()} {l.rights}</p>
 </footer>
-
-

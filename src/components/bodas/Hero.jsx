@@ -12,7 +12,15 @@ export default function Hero({
   elIniciales,
   fecha,
   cover,
+  labels,
+  lang = 'es-ES'
 }) {
+  const l = {
+    loading: labels?.loading || "Queremos que seas parte de nuestra boda",
+    tap: labels?.tap || "Toca para comenzar",
+    weAreGettingMarried: labels?.weAreGettingMarried || "Nos casamos",
+    invite: labels?.invite || "Deseamos invitarte a <b>celebrar nuestra boda</b>",
+  };
   const [iniciado, setIniciado] = useState(false);
   const [animandoSalida, setAnimandoSalida] = useState(false);
   const loadingTextRef = useRef(null);
@@ -47,9 +55,9 @@ export default function Hero({
     return <div>Error: Fecha inválida</div>;
   }
 
-  const diaSemana = fechaObj.toLocaleString("es-ES", { weekday: "long" });
+  const diaSemana = fechaObj.toLocaleString(lang, { weekday: "long" });
   const dia = fechaObj.getDate();
-  const mes = fechaObj.toLocaleString("es-ES", { month: "long" });
+  const mes = fechaObj.toLocaleString(lang, { month: "long" });
   const ano = fechaObj.getFullYear();
   const diaNum = dia;
 
@@ -202,14 +210,14 @@ export default function Hero({
           onClick={!animandoSalida ? handleIniciarModificado : null}
         >
           <div className={Style.loadingContent}>
-             <h2 className={Style.loadingText} ref={loadingTextRef}>
-              {"Queremos que seas parte de nuestra boda".split(' ').map((word, i) => (
+            <h2 className={Style.loadingText} ref={loadingTextRef}>
+              {l.loading.split(' ').map((word, i) => (
                 <span key={i}>{word}{'\u00A0'}</span>
               ))}
             </h2>
 
             {!animandoSalida && (
-              <p className={Style.tapToStart}>Toca para comenzar</p>
+              <p className={Style.tapToStart}>{l.tap}</p>
             )}
           </div>
         </div>
@@ -234,11 +242,9 @@ export default function Hero({
                 {invitado}
               </span> */}
               <img src={divisor.src} alt="divisor bodas nvita" />
-              <p className={Style["casamos"]}> Nos casamos </p>
+              <p className={Style["casamos"]}> {l.weAreGettingMarried} </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
-              <p>
-                Deseamos invitarte a <b>celebrar nuestra boda</b>
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: l.invite }}></p>
               <ul id={Style["fecha"]}>
                 <li className={Style.fecha}>{`${diaSemana}`}</li>
                 <hr className={Style.linea1} />

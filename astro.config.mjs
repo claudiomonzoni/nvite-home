@@ -13,6 +13,13 @@ import invitaciones from './src/pages/nvitaciones/nvitaciones.json';
 export default defineConfig({
   base: "/",
   site: 'https://nvitaciones.com',
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en"],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
   integrations: [
     sitemap({
       filter: (page) => {

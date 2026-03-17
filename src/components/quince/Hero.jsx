@@ -2,7 +2,15 @@ import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import Style from "../../estilos/temas/base/quince/hero.module.scss";
 
-export default function Hero({ nombres, fecha, cover }) {
+export default function Hero({ nombres, fecha, cover, labels, lang = 'es-ES' }) {
+  const l = {
+    loading: labels?.loading || "Queremos que seas parte de nuestra celebración de XV años",
+    tap: labels?.tap || "Toca para comenzar",
+    honor: labels?.honor || "Tengo el honor de invitarlos a celebrar mis XV años",
+    date: labels?.date || "La cita es el día",
+    share: labels?.share || "y me encantará compartirlo contigo. Con cariño,",
+    passes: labels?.passes || "No. de pases",
+  };
   const [invitado, setInvitado] = useState("-");
   const [pase, setPase] = useState(0);
   const [iniciado, setIniciado] = useState(false);
@@ -136,12 +144,12 @@ export default function Hero({ nombres, fecha, cover }) {
         >
           <div className={Style.loadingContent}>
             <h2 className={Style.loadingText} ref={loadingTextRef}>
-              {"Queremos que seas parte de nuestra celebración de XV años".split(' ').map((word, i) => (
+              {l.loading.split(' ').map((word, i) => (
                 <span key={i}>{word}{'\u00A0'}</span>
               ))}
             </h2>
             {!animandoSalida && (
-              <p className={Style.tapToStart}>Toca para comenzar</p>
+              <p className={Style.tapToStart}>{l.tap}</p>
             )}
           </div>
         </div>
@@ -158,10 +166,10 @@ export default function Hero({ nombres, fecha, cover }) {
               {invitado}
             </p>
             <p>
-            Tengo el honor de invitarlos a celebrar mis XV años
+            {l.honor}
             </p>
             <p className={Style.fecha}>
-              La cita es el día  
+              {l.date}  
               <b>
                 {'\u00A0' + (() => {
                   try {
@@ -172,7 +180,7 @@ export default function Hero({ nombres, fecha, cover }) {
                     
                     if (isNaN(date.getTime())) return 'Fecha inválida';
                     
-                    return date.toLocaleDateString('es-ES', {
+                    return date.toLocaleDateString(lang, {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -185,14 +193,13 @@ export default function Hero({ nombres, fecha, cover }) {
                   }
                 })() + '\u00A0'}
               </b>
-              y me encantará compartirlo contigo.
-              Con cariño,
+              {l.share}
             </p>
               <h1 dangerouslySetInnerHTML={{ __html: nombres }}></h1>
           {
             pase ? (
               <div id={Style["pases"]}>
-              No. de pases <p id={Style["NumeroPases"]}>{pase}</p>
+              {l.passes} <p id={Style["NumeroPases"]}>{pase}</p>
             </div>
             ) : (
               ""

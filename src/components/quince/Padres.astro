@@ -3,20 +3,31 @@ interface Props {
   mama?: string;
   papa?: string;
   fotopapas?: string;
+  labels?: {
+    blessing?: string;
+    mother?: string;
+    father?: string;
+  };
 }
 
-const { mama, papa, fotopapas } = Astro.props;
+const { mama, papa, fotopapas, labels = {} } = Astro.props;
+
+const l = {
+  blessing: labels.blessing || "CON LA BENDICIÓN DE",
+  mother: labels.mother || "Mi Madre",
+  father: labels.father || "Mi Padre",
+};
 ---
 
 <div id="padres">
   <div class="bande">
-    <span>CON LA BENDICIÓN DE</span>
+    <span>{l.blessing}</span>
     <div class="conte">
       <ul class="padre">
         {
           mama && (
             <li>
-              <h3>Mi Madre</h3>
+              <h3>{l.mother}</h3>
               {mama}
             </li>
           )
@@ -24,7 +35,7 @@ const { mama, papa, fotopapas } = Astro.props;
         {
           papa && (
             <li>
-              <h3>Mi Padre</h3>
+              <h3>{l.father}</h3>
               {papa}
             </li>
           )

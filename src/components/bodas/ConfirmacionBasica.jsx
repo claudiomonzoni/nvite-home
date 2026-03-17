@@ -2,7 +2,14 @@ import { useEffect } from "react";
 import estilo from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 
 
-export default function Confirmacion({ whatsapp, dias_antes }) {
+export default function Confirmacion({ whatsapp, dias_antes, labels = {} }) {
+  const t = {
+    title: labels.title || "Confirmación",
+    subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
+    label: labels.label || "Escribenos tu nombre completo y cuantas personas asistiran:",
+    btnConfirm: labels.btnConfirm || "Confirmar",
+    whatsappMsg: labels.whatsappMsg || "Hola, les confirmo la asistencia Comentarios: {comentarios}."
+  };
   useEffect(() => {
     const comentarios = document.getElementById("comentarios");
     const btnconfirmar = document.getElementById("btnconfirmar");
@@ -22,7 +29,7 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
     };
     
     const envio = (whats, comentarios) => {
-      const url = `${whats}Hola,%20les%20confirmo%20la%20asistencia%20Comentarios:%20${comentarios}.`;
+      const url = `${whats}${t.whatsappMsg.replace('{comentarios}', comentarios)}`;
       btnconfirmar.classList.remove("desactivado");
       btnconfirmar.href = url;
     };
@@ -39,21 +46,14 @@ export default function Confirmacion({ whatsapp, dias_antes }) {
                 fill="white"
               ></path>
             </svg>
-            <h2>Confirmación</h2>
-            <p>
-              Por favor <b>confírmanos</b> tu asistencia{" "}
-              <b>al menos {dias_antes} días antes del evento</b>, nos ayudarás
-              mucho con la organización al hacerlo.
-            </p>
+            <h2>{t.title}</h2>
+            <p dangerouslySetInnerHTML={{ __html: t.subtitle.replace('{dias}', `<b>${dias_antes}</b>`) }} />
 
             <form id={estilo["formulario"]}>
-              <label for="comentarios">
-                Escribenos tu <b>nombre completo</b> y cuantas personas
-                asistiran:
-              </label>
+              <label htmlFor="comentarios" dangerouslySetInnerHTML={{ __html: t.label.replace('nombre completo', '<b>nombre completo</b>') }} />
               <textarea name="comentarios" id="comentarios"></textarea>
               <a href="#" className="btn desactivado" id="btnconfirmar">
-                Confirmar
+                {t.btnConfirm}
               </a>
             </form>
           </div>

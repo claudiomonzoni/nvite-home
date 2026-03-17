@@ -1,10 +1,20 @@
 ---
-// El componente no necesita props ya que obtendrá los parámetros de la URL
+interface Props {
+  labels?: {
+    tag?: string;
+  };
+}
+
+const { labels = {} } = Astro.props;
+
+const l = {
+  tag: labels.tag || "invitado especial",
+};
 ---
 
 <div id="mensaje-vip-container">
   <div class="mensaje-vip">
-    <span class="etiqueta-vip">invitado especial</span>
+    <span class="etiqueta-vip">{l.tag}</span>
     <div class="mensaje-contenido">
       <p class="mensaje-texto"></p>
     </div>
@@ -23,35 +33,41 @@
   const getMensajeVip = async () => {
     // Obtener los parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    const uid = urlParams.get('uid');
+    const id = urlParams.get("id");
+    const uid = urlParams.get("uid");
 
     if (!id || !uid) return;
 
     try {
       // Obtener el mensaje del invitado usando el endpoint
-      const response = await fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`);
+      const response = await fetch(
+        `${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`,
+      );
       const data = await response.json();
 
       // Solo mostrar el mensaje si el invitado existe, es VIP y tiene un mensaje
       const mensaje = data[0]?.vip ? data[0]?.mensajePersonalizado : null;
 
       if (mensaje) {
-        document.querySelector('.mensaje-texto').innerHTML = mensaje;
-        const container = document.querySelector('#mensaje-vip-container') as HTMLElement;
+        document.querySelector(".mensaje-texto").innerHTML = mensaje;
+        const container = document.querySelector(
+          "#mensaje-vip-container",
+        ) as HTMLElement;
         if (container) {
-          container.style.display = 'block';
+          container.style.display = "block";
         }
         // Refresca ScrollTrigger después de insertar el mensaje
         setTimeout(() => {
-          if (typeof ScrollTrigger !== 'undefined') {
+          if (typeof ScrollTrigger !== "undefined") {
             ScrollTrigger.refresh();
           }
         }, 200);
 
         const initMensajeVip = () => {
           const context = gsap.context(() => {
-            const mensajeElement = document.querySelector(".mensaje-texto") as HTMLElement;
+            const mensajeElement = document.querySelector(
+              ".mensaje-texto",
+            ) as HTMLElement;
             const container = document.querySelector("#mensaje-vip-container");
 
             if (mensajeElement && container) {
@@ -99,12 +115,12 @@
         initMensajeVip();
       }
     } catch (error) {
-      console.error('Error al obtener el mensaje VIP:', error);
+      console.error("Error al obtener el mensaje VIP:", error);
     }
   };
 
   // Ejecutar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', getMensajeVip);
+  document.addEventListener("DOMContentLoaded", getMensajeVip);
 </script>
 
 <style lang="scss">
@@ -112,6 +128,4 @@
   #mensaje-vip-container {
     display: none;
   }
-
-  
 </style>
