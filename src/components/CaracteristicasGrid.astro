@@ -23,15 +23,18 @@ const { matriz } = Astro.props;
       <div class="info">
         <div class="conte">
           <h2 set:html={matriz[0].titulo} id="caracteristicash2" />
-          <p set:html={matriz[0].texto}> </p>
-            
+          <p set:html={matriz[0].texto} />
+
           <Btn
-          liga={matriz[0].enlace ? matriz[0].enlace : "#formu"}
+            liga={matriz[0].enlace ? matriz[0].enlace : "#formu"}
             texto={matriz[0].txtbtn ? matriz[0].txtbtn : "Saber más"}
             claro={false}
             clases="btn-bordes"
           >
-            <Icon name={matriz[0].icono ? matriz[0].icono : "mdi:check-all"} size={25} />
+            <Icon
+              name={matriz[0].icono ? matriz[0].icono : "mdi:check-all"}
+              size={25}
+            />
           </Btn>
         </div>
       </div>
@@ -60,11 +63,10 @@ const { matriz } = Astro.props;
     </div>
     <div id="item-e" class="item">
       <p class="p-itemGlobal" set:html={matriz[4].texto} />
-   
-      </p>
     </div>
   </div>
 </div>
+
 <!-- <style is:global>
     #caracteristicash2 span{
     border: solid;
@@ -83,12 +85,11 @@ const { matriz } = Astro.props;
     @include cel {
       font-size: 1rem;
     }
-
   }
 
- h2{
-  font-weight: 600;
- }
+  h2 {
+    font-weight: 600;
+  }
   #caracteristicas {
     @extend .sombra;
     margin: 0 auto;
@@ -103,22 +104,31 @@ const { matriz } = Astro.props;
       padding: $margen-cel $margen-min;
       text-align: center;
       line-height: 1.5rem;
-    
     }
     #item-a {
       grid-column: 1 / -1;
       display: flex;
       position: relative;
-      
+
       .info {
         border-top-left-radius: $radio;
         flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: url("/fondo-nvite-caracteristicas-2.png") $primario no-repeat right center;
-        background-size: cover;
-        background-blend-mode: color-burn;
+        background: $primario;
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: url("/fondo-nvite-caracteristicas-2.png");
+          background-position: right center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          mix-blend-mode: color-burn;
+          pointer-events: none;
+          z-index: 0;
+        }
       }
       .conte {
         width: 70%;
@@ -144,26 +154,37 @@ const { matriz } = Astro.props;
       background: $secundario;
       grid-column: 1 / span 2;
       grid-row: 2 / span 2;
-      h3, p {
+      h3,
+      p {
         color: $fondoGlobal;
       }
       svg {
-        color: $fondoGlobal!important;
-        fill: currentColor!important;
+        color: $fondoGlobal !important;
+        fill: currentColor !important;
       }
     }
     #item-c {
       grid-column: 3 / span 1;
       grid-row: 2 / span 2;
-       background: url("/fondo-nvite-caracteristicas.png") $acento no-repeat center;
+      background: $acento;
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("/fondo-nvite-caracteristicas.png");
+        background-position: center;
+        background-repeat: no-repeat;
         background-size: cover;
-        background-blend-mode: color-burn;
+        mix-blend-mode: color-burn;
+        pointer-events: none;
+        z-index: 0;
+      }
       p {
         color: #fff;
       }
       svg {
-        color: white!important;
-        fill: currentColor!important;
+        color: white !important;
+        fill: currentColor !important;
       }
     }
     #item-d {
@@ -182,10 +203,10 @@ const { matriz } = Astro.props;
     @include cel {
       grid-template-rows: repeat(5, auto);
       // width: 100%;
-      h2{
+      h2 {
         font-size: 1.8rem;
       }
-  
+
       #item-a {
         flex-wrap: wrap;
         grid-column: 1 / -1;
@@ -216,19 +237,32 @@ const { matriz } = Astro.props;
         background: $fondoGlobal;
         p,
         svg {
-          color: $acento!important;
-          fill: currentColor!important;
+          color: $acento !important;
+          fill: currentColor !important;
         }
       }
       #item-d {
         grid-column: 1 / span 2;
         grid-row: 4 / span 1;
         border-bottom-left-radius: $radio;
-         background: url("/fondo-nvite-caracteristicas-2.png") $acento no-repeat right center;
-        background-size: cover;
-        background-blend-mode: color-burn;
-        p{
-          color: #fff;}
+        background: $acento;
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: url("/fondo-nvite-caracteristicas-2.png");
+          background-position: right center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          mix-blend-mode: color-burn;
+          pointer-events: none;
+          z-index: 0;
+        }
+        p {
+          position: relative;
+          z-index: 2;
+          color: #fff;
+        }
       }
       #item-e {
         grid-column: 3 / span 2;

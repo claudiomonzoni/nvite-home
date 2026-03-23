@@ -511,9 +511,17 @@ p{
     aspect-ratio: 1/1;
     flex: 1;
     text-align: center;
-    background: $urlPatron, var(--fondoBurn);
-    background-blend-mode: color-burn;
-    background-position: center;
+    background: var(--fondoBurn);
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $urlPatron;
+      background-position: center;
+      mix-blend-mode: color-burn;
+      pointer-events: none;
+      z-index: 0;
+    }
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -774,14 +782,23 @@ p{
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: url("/bg-floral-regalos-der.svg") var(--terciario);
-      background-position: top right;
-      background-repeat: no-repeat;
-      background-size: 40%;
-      background-blend-mode: color-burn;
+      background: var(--terciario);
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("/bg-floral-regalos-der.svg");
+        background-position: top right;
+        background-repeat: no-repeat;
+        background-size: 40%;
+        mix-blend-mode: color-burn;
+        pointer-events: none;
+        z-index: 0;
+      }
       color: var(--primario);
       p {
-        color: var(--fondo);
+        
         max-width: 80%;
         margin: 0 auto;
       }

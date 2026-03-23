@@ -259,9 +259,10 @@ const t = useTranslations(lang);
 </section>
 
 
-
+{ (boda.data.ceremonia.lugar || boda.data.recepcion.lugar) && (
   <section class="grid contenido">
     <div class="bandejaLugares">
+      {boda.data.ceremonia.lugar && (
       <BloqueMapa
         encabezado={t('invitation.ceremony')}
         dir={boda.data.ceremonia.lugar}
@@ -275,6 +276,8 @@ const t = useTranslations(lang);
           startTrip: t('maps.startTrip'),
         }}
       />
+      )}
+      {boda.data.recepcion.lugar && (
       <BloqueMapa
         encabezado={t('invitation.reception')}
         dir={boda.data.recepcion.lugar}
@@ -288,9 +291,10 @@ const t = useTranslations(lang);
           startTrip: t('maps.startTrip'),
         }}
       />
+      )}
     </div>
   </section>
-
+)}
 
   <!-- Imágenes solitarias condicionales -->
   {

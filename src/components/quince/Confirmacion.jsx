@@ -87,12 +87,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
           : "";
 
       const mensaje = asistira
-        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20la%20boda:%20${encodeURIComponent(
+        ? `Hola,%20les%20confirmo%20la%20asistencia%20a%20los%20XV%20años:%20${encodeURIComponent(
             invitado
           )},%20y%20usaremos%20${encodeURIComponent(pasesSeleccionados)}%20pase(s).${personasNoAsistenMensaje}%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
           )}.`
-        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20la%20boda:%20${encodeURIComponent(
+        : `Hola,%20lamento%20informarles%20que%20no%20podré%20asistir%20a%20los%20XV%20años:%20${encodeURIComponent(
             invitado
           )}.%0aComentarios:%20${encodeURIComponent(
             comentariosValue || "Sin comentarios"
