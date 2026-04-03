@@ -1,0 +1,243 @@
+@use "variablesquince.scss" as *;
+@use "globales.scss" as *;
+
+h2 {
+  padding-top: $margen-min;
+  font-size: clamp(2.5rem, 1.5vw, 2rem);
+  color: var(--primario);
+}
+.confirmacion {
+  margin-top: $margen;
+  background: url("/bodas/confirma-fondo-izq.webp"),
+    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, right bottom;
+  background-size: contain;
+  background-blend-mode: color-burn, color-burn;
+  border-radius: $radio;
+  transition: all 0.3s ease;
+  @extend .sombra;
+  @include cel {
+    background-position: -30% top, right bottom;
+    background-size: 35%, 80%;
+    background-blend-mode: color-burn, normal;
+    background-blend-mode: overlay, color-burn;
+  }
+}
+.bandeja {
+  text-align: center;
+  padding: $margen;
+  margin: 0 auto;
+  max-width: 60%;
+  background-blend-mode: color-dodge;
+  background-size: contain;
+  background-position: center;
+  @include cel {
+    max-width: 100%;
+    padding: $margen-cel;
+  }
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  margin: 0 auto;
+  width: 50%;
+  label,
+  input,
+  select,
+  textarea {
+    flex: 1 0 100%;
+    margin-top: 0.6rem;
+    padding: 0.5rem 0;
+    border-radius: $radio;
+    text-align: center;
+  }
+  textarea {
+    field-sizing: content;
+    min-height: 50px;
+  }
+  textarea,
+  select {
+    border: none !important;
+    opacity: 0.5;
+    @extend .sombra;
+  }
+  @include cel {
+    width: 100%;
+    text-align: center;
+  }
+}
+svg {
+  max-width: 2.5rem;
+  height: auto;
+  margin: 0 auto;
+  path {
+    fill: var(--acento);
+  }
+}
+#mueve {
+  border: solid var(--secundario) 0.9px;
+  padding: $margen-min;
+  text-align: center;
+  border-radius: $radio;
+}
+.conteCheck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  margin: 2rem 0;
+  p {
+    font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+  }
+  p,
+  label {
+    margin: 0 !important;
+    font-weight: bold;
+    flex: 1 0 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  max-width: 46px;
+  height: 9px;
+  top: 0;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background-color: var(--primario);
+
+      &:before {
+        transform: translateX(22px);
+      }
+    }
+
+    &:focus + .slider {
+      box-shadow: 0 0 1px var(--acento);
+    }
+  }
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--acento);
+  transition: 0.3s;
+  border-radius: 24px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+  }
+}
+
+.btnConfirmar {
+  @extend .btn;
+  display: flex;
+  border-radius: $radio;
+  border: 0;
+  background-color: var(--acento);
+  color: var(--fondo);
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+.desactivado {
+  pointer-events: none;
+}
+.asistira {
+  background-color: rgba(var(--primario), 0.1);
+  .slider {
+    background-color: var(--secundario) !important;
+  }
+}
+
+.noAsistira {
+  background-color: rgba(var(--gris), 0.2);
+  .slider {
+    background-color: var(--primario) !important;
+  }
+}
+
+small {
+  padding-top: $margen-min;
+  text-align: center;
+  font-size: 0.8rem;
+}
+span {
+  font-weight: bolder;
+  color: var(--acento);
+}
+
+.error {
+  background-color: var(--gris);
+  color: white;
+  text-align: center;
+  padding: $margen-min;
+  margin-bottom: 2rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(var(--acento), 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalContent {
+  background-color: var(--primario);
+  padding: $margen;
+  border-radius: $radio;
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+  @extend .sombra;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  p {
+    flex: 1 0 100%;
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: $margen-min;
+  }
+
+  button {
+    @extend .btn;
+    background-color: var(--acento);
+    color: var(--fondo);
+    border: none;
+    border-radius: $radio;
+    cursor: pointer;
+    margin-top: 1rem;
+    padding: 0.5rem ;
+    width: 50%;
+  }
+}

@@ -5,6 +5,7 @@ import Layout from "../../layouts/quince/Layout.astro";
 
 //componentes
 import Hero from "../../components/quince/Hero";
+import HeroGlass from "../../components/quince/Hero-glass";
 import AudioPlayer from "../../components/quince/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
@@ -151,21 +152,52 @@ const t = useTranslations(lang);
 >
 
 
-<Hero
-  nombres={quince.data.quinceanera}
-  fecha={quince.data.fecha}
-  cover={quince.data.cover}
-  client:load
-  lang={lang}
-  labels={{
-    loading: t('hero.loadingQuince'),
-    tap: t('hero.tap'),
-    honor: t('hero.quince.honor'),
-    date: t('hero.quince.date'),
-    share: t('hero.quince.share'),
-    passes: t('hero.passes'),
-  }}
-/>
+  <section id="hero-hero">
+    {
+      (() => {
+        switch (quince.data.theme.name) {
+          case 'glass':
+            return (
+              <HeroGlass
+                nombres={quince.data.quinceanera}
+                fecha={quince.data.fecha}
+                cover={quince.data.cover}
+                client:load
+                lang={lang}
+                labels={{
+                  loading: t('hero.loadingQuince'),
+                  tap: t('hero.tap'),
+                  honor: t('hero.quince.honor'),
+                  date: t('hero.quince.date'),
+                  share: t('hero.quince.share'),
+                  passes: t('hero.passes'),
+                }}
+              />
+            );
+          case 'base':
+          default:
+            return (
+              <Hero
+                nombres={quince.data.quinceanera}
+                fecha={quince.data.fecha}
+                cover={quince.data.cover}
+                client:load
+                lang={lang}
+                labels={{
+                  loading: t('hero.loadingQuince'),
+                  tap: t('hero.tap'),
+                  honor: t('hero.quince.honor'),
+                  date: t('hero.quince.date'),
+                  share: t('hero.quince.share'),
+                  passes: t('hero.passes'),
+                }}
+              />
+            );
+        }
+      })()
+    }
+  </section>
+
 
 <Encabezados texto={t('quince.myFifteen')} />
   <section class="grid pantalla">
