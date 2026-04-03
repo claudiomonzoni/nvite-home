@@ -7,6 +7,7 @@ import Footer from "../../components/bodas/Footer.astro";
 //componentes
 import HeroElegante from "../../components/bodas/Hero-elegante.jsx";
 import HeroBase from "../../components/bodas/Hero.jsx";
+import HeroGlass from "../../components/bodas/Hero-glass.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import AudioPlayer from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
@@ -174,6 +175,24 @@ const t = useTranslations(lang);
           case 'base':
             return (
               <HeroBase
+                nombres={boda.data.novios}
+                fecha={boda.data.fecha}
+                ellaIniciales={boda.data.ellaIniciales}
+                elIniciales={boda.data.elIniciales}
+                cover={boda.data.cover}
+                client:load
+                lang={lang}
+                labels={{
+                  loading: t('hero.loading'),
+                  tap: t('hero.tap'),
+                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
+                  invite: t('hero.wedding.invite'),
+                }}
+              />
+            );
+          case 'glass':
+            return (
+              <HeroGlass
                 nombres={boda.data.novios}
                 fecha={boda.data.fecha}
                 ellaIniciales={boda.data.ellaIniciales}

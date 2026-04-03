@@ -4,6 +4,7 @@
 @use "../temas/clasico/bodas/clasico" as *;
 @use "../temas/elegante/bodas/globales" as *;
 @use "../temas/moderno/bodas/globales" as *;
+@use "../temas/glass/bodas/globales" as *;
 
 
 
@@ -22,4 +23,6 @@
 :root[data-theme="moderno"] {
   @include tema-moderno();
 }
-
+:root[data-theme="glass"] {
+  @include tema-glass();
+}
