@@ -1,0 +1,150 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  liga: string;
+  texto: string;
+  claro?: boolean;
+  blank?: boolean;
+  clases?: string;
+  id?: string;
+  rel?: string;
+  icono?: string;
+}
+const { liga, texto, claro, blank, clases, rel, icono, id, ...rest } = Astro.props;
+---
+<!-- Auto-inyección: Se insertará solo 1 vez en toda la página -->
+<script is:inline>
+  if (!document.getElementById('filtro-glass-base')) {
+     const svgWrap = document.createElement('div');
+     svgWrap.innerHTML = `
+      <svg id="filtro-glass-base" style="display: none">
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+          <feTurbulence type="fractalNoise" baseFrequency="0 0.01" numOctaves="1" seed="5" result="turbulence"></feTurbulence>
+          <feComponentTransfer in="turbulence" result="mapped">
+            <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"></feFuncR>
+            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"></feFuncG>
+            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"></feFuncB>
+          </feComponentTransfer>
+          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap"></feGaussianBlur>
+          <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight">
+            <fePointLight x="-200" y="-200" z="300"></fePointLight>
+          </feSpecularLighting>
+          <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"></feComposite>
+          <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+        </filter>
+      </svg>`;
+     document.body.prepend(svgWrap);
+  }
+</script>
+
+<a
+  id={id}
+  href={liga}
+  class:list={['boton-glass-wrap', clases, claro ? 'is-claro' : '']}
+  target={blank ? "_blank" : ""}
+  {...rest}
+  rel={rel}
+>
+  <span class="liquidGlass-efecto"></span>
+  <span class="liquidGlass-brillo"></span>
+  
+  <div class="boton-contenido">
+    {icono && <Icon name={icono} size={25} />}
+    <span set:html={texto}></span>
+    <slot />
+  </div>
+</a>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .boton-glass-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px 20px; /* Consistente con @mixin btn */
+    border-radius: $radio;
+    margin: 0 0 $margen-min 0;
+    color: white;
+    font-weight: 400; /* Consistente con @mixin btn */
+    transition: transform 0.3s ease, color 0.3s ease;
+    border: none;
+    white-space: nowrap;
+    text-align: center;
+    max-width: fit-content;
+    isolation: isolate; 
+    cursor: pointer;
+
+    @include cel {
+      margin-top: $margen-min;
+      max-width: 100%;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      
+      .liquidGlass-brillo {
+        box-shadow:
+          inset 2px 2px 3px 1px rgba(255, 255, 255, 0.6),
+          inset -2px -2px 3px 1px rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  /* Variante más clara */
+  .boton-glass-wrap.is-claro {
+    color: $primario; /* Usa color primario de texto si es claro */
+    .boton-contenido {
+      text-shadow: 0px 1px 4px rgba(255, 255, 255, 0.9);
+    }
+    .liquidGlass-efecto {
+      background: rgba(255, 255, 255, 0.4); /* Más opaco y claro */
+    }
+    .liquidGlass-brillo {
+      box-shadow:
+        inset 1px 1px 2px 1px rgba(255, 255, 255, 0.8),
+        inset -1px -1px 2px 1px rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .boton-contenido {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: inherit;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.7); 
+    
+    :global(svg) {
+      color: currentColor !important;
+      fill: currentColor !important;
+    }
+  }
+
+  .liquidGlass-efecto {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    backdrop-filter: blur(7px);
+    background: rgba(255, 255, 255, 0.15); /* Tint sutil */
+    filter: url(#glass-distortion);
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .liquidGlass-brillo {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    border-radius: inherit;
+    box-shadow:
+      inset 1px 1px 2px 1px rgba(255, 255, 255, 0.4),
+      inset -1px -1px 2px 1px rgba(255, 255, 255, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+</style>
