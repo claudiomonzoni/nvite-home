@@ -517,11 +517,14 @@
 
   //componete progreso invitados
 
-  .progreso-invitados {
+ .progreso-invitados {
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
-    padding-bottom: $margen;
+    padding: $margen 0;
+    @include cel {
+      padding: 8rem 0 $margen 0!important;
+    }
   }
 
   .barra-progreso {

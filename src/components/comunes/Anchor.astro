@@ -34,9 +34,10 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
 
-  @mixin liga($conBorde, $redondo) {
+  @mixin liga($conBorde, $redondo, $sombra) {
     margin: $margen-min 0;
-    color: var(--primario);
+    color: white !important;
+    font-family: $txt;
     background: var(--acento);
     padding: 0.7rem $margen-cel;
     svg {
@@ -57,6 +58,9 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
     @if $redondo {
       border-radius: $radio;
     }
+    @if $sombra {
+      filter: drop-shadow(0.4rem 0.4rem .3rem var(--primario));
+    }
     @include cel {
       display: block;
       width: 100%;
@@ -68,12 +72,15 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
   }
 
   .btn {
-    @include liga(false, false);
+    @include liga(false, false, false);
   }
   .con-borde {
-    @include liga(true, null);
+    @include liga(true, null, null);
   }
   .redondo {
-    @include liga(null, true);
+    @include liga(null, true, null);
+  }
+  .sombra {
+    @include liga(null, null, true);
   }
 </style>

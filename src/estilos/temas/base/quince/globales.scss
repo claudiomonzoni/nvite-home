@@ -731,7 +731,7 @@ p{
     #regalo {
       margin-top: $margen;
       padding: $margen $margen-cel;
-      background: url("/bg-floral-regalos-izq.svg") var(--secundario);
+      background: url("/bg-floral-regalos-izq.svg") var(--primario);
       background-repeat: no-repeat;
       background-size: contain;
       background-blend-mode: screen;
@@ -901,7 +901,16 @@ p{
     @extend .sombra;
   }
   // Componente contador (cuenta regresiva)
-
+  #demo{
+    color: var(--acento);
+    text-align: center;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-family: var(--font-heading), serif;
+    padding: $margen 0;
+    @include cel {
+      padding: $margen 0 0;
+    }
+  }
   #contador {
     display: flex;
     justify-content: center;

@@ -1,5 +1,5 @@
 ---
-import matter from 'gray-matter';
+import matter from "gray-matter";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Footer from "../../components/bodas/Footer.astro";
@@ -31,39 +31,46 @@ import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
 if (!slug) {
-  throw new Error('Slug no proporcionado');
+  throw new Error("Slug no proporcionado");
 }
 
 // Evitar cache del HTML en el CDN/cliente
-Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate');
+Astro.response.headers.set(
+  "Cache-Control",
+  "s-maxage=10, stale-while-revalidate",
+);
 
-const owner = 'claudiomonzoni';
-const repo = 'nvite-home';
-const branch = 'master';
+const owner = "claudiomonzoni";
+const repo = "nvite-home";
+const branch = "master";
 
 // Helper para agregar query param
-const withParam = (url: string, key: string, val: string) => url + (url.includes('?') ? '&' : '?') + `${key}=${encodeURIComponent(val)}`;
+const withParam = (url: string, key: string, val: string) =>
+  url + (url.includes("?") ? "&" : "?") + `${key}=${encodeURIComponent(val)}`;
 const cacheBust = Date.now().toString();
 
 // Helper para convertir rutas públicas a GitHub Raw URLs
 const toRawUrl = (maybePath: string | undefined): string | undefined => {
   if (!maybePath) return undefined;
-  try { new URL(maybePath); return maybePath; } catch {}
-  const p = maybePath.startsWith('/') ? maybePath : `/${maybePath}`;
+  try {
+    new URL(maybePath);
+    return maybePath;
+  } catch {}
+  const p = maybePath.startsWith("/") ? maybePath : `/${maybePath}`;
   const base = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/public${p}`;
-  return withParam(base, 'v', cacheBust);
+  return withParam(base, "v", cacheBust);
 };
 
 // Descarga del archivo MDX
 let mdxUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/src/content/bodas/${slug}.mdx`;
-mdxUrl = withParam(mdxUrl, 'v', cacheBust);
+mdxUrl = withParam(mdxUrl, "v", cacheBust);
 const headers: Record<string, string> = {};
 const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 if (token) headers.Authorization = `Bearer ${token}`;
 
 const res = await fetch(mdxUrl, { headers });
 if (!res.ok) {
-  return Astro.redirect('/404');
+  return Astro.redirect("/404");
 }
 const mdxRaw = await res.text();
 
@@ -75,72 +82,84 @@ const fm = parsed.data as any;
 const boda = {
   id: slug,
   data: {
-    version: fm.version ?? '',
-    idioma: fm.idioma ?? 'es',
+    version: fm.version ?? "",
+    idioma: fm.idioma ?? "es",
     draft: !!fm.draft,
     titulo: fm.titulo ?? slug,
-    novios: fm.novios ?? '',
-    ellaIniciales: fm.ellaIniciales ?? '',
-    elIniciales: fm.elIniciales ?? '',
+    novios: fm.novios ?? "",
+    ellaIniciales: fm.ellaIniciales ?? "",
+    elIniciales: fm.elIniciales ?? "",
     fecha: fm.fecha ? new Date(fm.fecha) : new Date(),
-    whatsapp: fm.whatsapp ?? '',
-    email: fm.email ?? '',
-    frase_amor: fm.frase_amor ?? '',
+    whatsapp: fm.whatsapp ?? "",
+    email: fm.email ?? "",
+    frase_amor: fm.frase_amor ?? "",
     padres: {
-      mamaNovia: fm?.padres?.mamaNovia ?? '',
-      papaNovia: fm?.padres?.papaNovia ?? '',
-      fotopapasNovia: toRawUrl(fm?.padres?.fotopapasNovia) ?? '',
-      mamaNovio: fm?.padres?.mamaNovio ?? '',
-      papaNovio: fm?.padres?.papaNovio ?? '',
-      fotopapasNovio: toRawUrl(fm?.padres?.fotopapasNovio) ?? '',
+      mamaNovia: fm?.padres?.mamaNovia ?? "",
+      papaNovia: fm?.padres?.papaNovia ?? "",
+      fotopapasNovia: toRawUrl(fm?.padres?.fotopapasNovia) ?? "",
+      mamaNovio: fm?.padres?.mamaNovio ?? "",
+      papaNovio: fm?.padres?.papaNovio ?? "",
+      fotopapasNovio: toRawUrl(fm?.padres?.fotopapasNovio) ?? "",
     },
-    json: fm.json ?? '',
-    cover: toRawUrl(fm.cover) ?? '',
-    audioMusica: toRawUrl(fm.audioMusica) ?? '',
-    galeria: Array.isArray(fm?.galeria) ? fm.galeria.map((p: string) => toRawUrl(p)) : [],
-    imagenesSolitarias: Array.isArray(fm?.imagenesSolitarias) ? fm.imagenesSolitarias.map((p: string) => toRawUrl(p)) : [],
+    json: fm.json ?? "",
+    cover: toRawUrl(fm.cover) ?? "",
+    audioMusica: toRawUrl(fm.audioMusica) ?? "",
+    galeria: Array.isArray(fm?.galeria)
+      ? fm.galeria.map((p: string) => toRawUrl(p))
+      : [],
+    imagenesSolitarias: Array.isArray(fm?.imagenesSolitarias)
+      ? fm.imagenesSolitarias.map((p: string) => toRawUrl(p))
+      : [],
     ceremonia: {
-      hora: fm?.ceremonia?.hora ?? '',
-      lugar: fm?.ceremonia?.lugar ?? '',
-      lat: fm?.ceremonia?.lat ?? '',
-      lng: fm?.ceremonia?.lng ?? '',
+      hora: fm?.ceremonia?.hora ?? "",
+      lugar: fm?.ceremonia?.lugar ?? "",
+      lat: fm?.ceremonia?.lat ?? "",
+      lng: fm?.ceremonia?.lng ?? "",
     },
     recepcion: {
-      hora: fm?.recepcion?.hora ?? '',
-      lugar: fm?.recepcion?.lugar ?? '',
-      lat: fm?.recepcion?.lat ?? '',
-      lng: fm?.recepcion?.lng ?? '',
+      hora: fm?.recepcion?.hora ?? "",
+      lugar: fm?.recepcion?.lugar ?? "",
+      lat: fm?.recepcion?.lat ?? "",
+      lng: fm?.recepcion?.lng ?? "",
     },
     itinerario: Array.isArray(fm?.itinerario) ? fm.itinerario : [],
-    consideraciones: Array.isArray(fm?.consideraciones) ? fm.consideraciones : [],
-    vestimenta: fm.vestimenta ?? '',
-    coloresVestimenta: Array.isArray(fm?.coloresVestimenta) ? fm.coloresVestimenta : [],
-    frase_regalos: fm.frase_regalos ?? '',
+    consideraciones: Array.isArray(fm?.consideraciones)
+      ? fm.consideraciones
+      : [],
+    vestimenta: fm.vestimenta ?? "",
+    coloresVestimenta: Array.isArray(fm?.coloresVestimenta)
+      ? fm.coloresVestimenta
+      : [],
+    frase_regalos: fm.frase_regalos ?? "",
     tipoRegalo: Array.isArray(fm?.tipoRegalo) ? fm.tipoRegalo : [],
     mesaRegalos: Array.isArray(fm?.mesaRegalos) ? fm.mesaRegalos : [],
-    beneficiario: fm.beneficiario ?? '',
-    banco: fm.banco ?? '',
-    cuenta: fm.cuenta ?? '',
-    paleta: fm.paleta ?? 'base',
-    theme: fm.theme ?? { name: 'base' },
-    content: parsed.content ?? '',
-  }
+    beneficiario: fm.beneficiario ?? "",
+    banco: fm.banco ?? "",
+    cuenta: fm.cuenta ?? "",
+    paleta: fm.paleta ?? "base",
+    theme: fm.theme ?? { name: "base" },
+    content: parsed.content ?? "",
+  },
 } as any;
 
 const base = new URL(Astro.url.pathname, Astro.site);
 const galeria: string[] = (boda.data as any).galeria ?? [];
-const imagenesSolitarias: string[] = (boda.data as any).imagenesSolitarias ?? [];
+const imagenesSolitarias: string[] =
+  (boda.data as any).imagenesSolitarias ?? [];
 
 type Mesa = { url: string; titulo: string };
 const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
-  (m: any): m is Mesa => typeof m?.url === 'string' && m.url && typeof m?.titulo === 'string' && m.titulo
+  (m: any): m is Mesa =>
+    typeof m?.url === "string" &&
+    m.url &&
+    typeof m?.titulo === "string" &&
+    m.titulo,
 );
 
-const lang = (boda.data.idioma as keyof typeof ui) || 'es';
+const lang = (boda.data.idioma as keyof typeof ui) || "es";
 const t = useTranslations(lang);
-
-
 ---
+
 <Layout
   title=`Invitación de boda de ${boda.data.novios}`
   url={base.toString()}
@@ -152,7 +171,7 @@ const t = useTranslations(lang);
     {
       (() => {
         switch (boda.data.theme.name) {
-          case 'elegante':
+          case "elegante":
             return (
               <HeroElegante
                 nombres={boda.data.novios}
@@ -163,16 +182,16 @@ const t = useTranslations(lang);
                 client:load
                 lang={lang}
                 labels={{
-                  loading: t('hero.loading'),
-                  tap: t('hero.tap'),
-                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
-                  invite: t('hero.wedding.invite'),
-                  celebration: t('hero.wedding.celebration'),
-                  pleasedToInvite: t('hero.elegant.pleasedToInvite'),
+                  loading: t("hero.loading"),
+                  tap: t("hero.tap"),
+                  weAreGettingMarried: t("hero.wedding.weAreGettingMarried"),
+                  invite: t("hero.wedding.invite"),
+                  celebration: t("hero.wedding.celebration"),
+                  pleasedToInvite: t("hero.elegant.pleasedToInvite"),
                 }}
               />
             );
-          case 'base':
+          case "base":
             return (
               <HeroBase
                 nombres={boda.data.novios}
@@ -183,14 +202,14 @@ const t = useTranslations(lang);
                 client:load
                 lang={lang}
                 labels={{
-                  loading: t('hero.loading'),
-                  tap: t('hero.tap'),
-                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
-                  invite: t('hero.wedding.invite'),
+                  loading: t("hero.loading"),
+                  tap: t("hero.tap"),
+                  weAreGettingMarried: t("hero.wedding.weAreGettingMarried"),
+                  invite: t("hero.wedding.invite"),
                 }}
               />
             );
-          case 'glass':
+          case "glass":
             return (
               <HeroGlass
                 nombres={boda.data.novios}
@@ -201,10 +220,10 @@ const t = useTranslations(lang);
                 client:load
                 lang={lang}
                 labels={{
-                  loading: t('hero.loading'),
-                  tap: t('hero.tap'),
-                  weAreGettingMarried: t('hero.wedding.weAreGettingMarried'),
-                  invite: t('hero.wedding.invite'),
+                  loading: t("hero.loading"),
+                  tap: t("hero.tap"),
+                  weAreGettingMarried: t("hero.wedding.weAreGettingMarried"),
+                  invite: t("hero.wedding.invite"),
                 }}
               />
             );
@@ -214,29 +233,24 @@ const t = useTranslations(lang);
       })()
     }
   </section>
-  
 
   {
-    boda.data.galeria.length > 0 && (
-      <section class="grid pantalla">
-        <Galeria galeria={boda.data.galeria} />
+    boda.data.version === "Lux" && boda.data.audioMusica && (
+      <section class="grid contenido">
+        <AudioPlayer
+          src={boda.data.audioMusica}
+          labels={{
+            listen: t("audio.listen"),
+          }}
+        />
       </section>
     )
   }
 
-
-{
-    boda.data.version === "Lux" && boda.data.audioMusica && (
-      
-      <section class="grid contenido">
-    <AudioPlayer 
-      src={boda.data.audioMusica} 
-      labels={{
-        listen: t('audio.listen'),
-      }}
-    />
+  <section class="grid contenido">
+    <Frase frase={boda.data.frase_amor} />
   </section>
-    
+
   <section class="grid pantalla">
     <Padres
       mamaNovia={boda.data.padres.mamaNovia}
@@ -246,74 +260,12 @@ const t = useTranslations(lang);
       papaNovio={boda.data.padres.papaNovio}
       fotopapasNovio={boda.data.padres.fotopapasNovio}
       labels={{
-        ourParents: t('parents.ourParents'),
-        bride: t('parents.bride'),
-        groom: t('parents.groom'),
+        ourParents: t("parents.ourParents"),
+        bride: t("parents.bride"),
+        groom: t("parents.groom"),
       }}
     />
   </section>
-
-<Pases 
-  folder={boda.data.json} 
-  client:load 
-  labels={{
-    attendance: t('passes.attendance'),
-    weDeliver: t('passes.weDeliver'),
-    youPlural: t('passes.youPlural'),
-    youSingular: t('passes.youSingular'),
-    passesPlural: t('passes.passesPlural'),
-    passSingular: t('passes.passSingular'),
-  }}
-/>
-)
-}
-
-<section class="grid contenido">
-  <Frase frase={boda.data.frase_amor} />
-  <MensajeVip 
-    labels={{
-      tag: t('vip.tag'),
-    }}
-  />
-</section>
-
-
-{ (boda.data.ceremonia.lugar || boda.data.recepcion.lugar) && (
-  <section class="grid contenido">
-    <div class="bandejaLugares">
-      {boda.data.ceremonia.lugar && (
-      <BloqueMapa
-        encabezado={t('invitation.ceremony')}
-        dir={boda.data.ceremonia.lugar}
-        horario={boda.data.ceremonia.hora}
-        lat={boda.data.ceremonia.lat}
-        lng={boda.data.ceremonia.lng}
-        mapName="mapa1"
-        icono="iglesia"
-        labels={{
-          viewMap: t('maps.viewMap'),
-          startTrip: t('maps.startTrip'),
-        }}
-      />
-      )}
-      {boda.data.recepcion.lugar && (
-      <BloqueMapa
-        encabezado={t('invitation.reception')}
-        dir={boda.data.recepcion.lugar}
-        horario={boda.data.recepcion.hora}
-        lat={boda.data.recepcion.lat}
-        lng={boda.data.recepcion.lng}
-        mapName="mapa2"
-        icono="brindis"
-        labels={{
-          viewMap: t('maps.viewMap'),
-          startTrip: t('maps.startTrip'),
-        }}
-      />
-      )}
-    </div>
-  </section>
-)}
 
   <!-- Imágenes solitarias condicionales -->
   {
@@ -326,71 +278,28 @@ const t = useTranslations(lang);
     )
   }
 
+  {
+    boda.data.galeria.length > 0 && (
+      <section class="grid pantalla">
+        <Galeria galeria={boda.data.galeria} />
+      </section>
+    )
+  }
+
   <section class="grid contenido">
-    <Contador 
-      fecha={boda.data.fecha.toISOString()} 
+    <Contador
+      fecha={boda.data.fecha.toISOString()}
       labels={{
-        days: t('countdown.days'),
-        hours: t('countdown.hours'),
-        minutes: t('countdown.minutes'),
-        seconds: t('countdown.seconds'),
-        title: t('wedding.countdown.title'),
-        congrats: t('wedding.countdown.congrats'),
-        day: t('wedding.countdown.day'),
-        onlyOne: t('wedding.countdown.onlyOne'),
-        daysLeft: t('wedding.countdown.daysLeft'),
+        days: t("countdown.days"),
+        hours: t("countdown.hours"),
+        minutes: t("countdown.minutes"),
+        seconds: t("countdown.seconds"),
+        title: t("wedding.countdown.title"),
+        congrats: t("wedding.countdown.congrats"),
+        day: t("wedding.countdown.day"),
+        onlyOne: t("wedding.countdown.onlyOne"),
+        daysLeft: t("wedding.countdown.daysLeft"),
       }}
-    />
-  </section>
-  <!-- Itinerario condicional según versión -->
-  {
-    (boda.data.version === "Lux") && (
-      <section class="grid contenido">
-        <ProgresoInvitados
-          frase={boda.data.progresoFrase || t('invitation.rsvp.daysBefore')}
-          porcentajeMostrarInvitados={20}
-          mostrarSiempre={true}
-          email={boda.data.email}
-          labels={{
-            confirmed: t('progress.confirmed'),
-            passesConfirmed: t('progress.passesConfirmed'),
-            of: t('progress.of'),
-            btnConfirm: t('progress.btnConfirm'),
-            allReady: t('progress.allReady'),
-          }}
-        />
-      </section>
-    )
-  }
-
-  {
-    (boda.data.itinerario.length > 0) && (
-
-      <section class="grid pantalla" id="BaseItinerario">
-        <Encabezados texto={t('invitation.itinerary')} />
-        <Itinerario listado={boda.data.itinerario} />
-      </section>
-
-)
-}
-  {
-    imagenesSolitarias[1] && (
-      <FotoSolitaria
-        arriba={true}
-        gradientePorciento={30}
-        src={imagenesSolitarias[1]}
-      />
-    )
-  }
-
-
-
-  <section class="grid pantalla flex margen-arriba-abajo">
-    <Detalles lista={boda.data.consideraciones} encabezado={t('invitation.considerations')} />
-    <Detalles encabezado={t('invitation.dressCode')} vestimenta={boda.data.vestimenta} />
-    <Detalles
-      encabezado={t('invitation.colorPalette')}
-      colores={boda.data.coloresVestimenta}
     />
   </section>
 
@@ -411,32 +320,128 @@ const t = useTranslations(lang);
     </SliderVentana>
   </section>
 
-  <section class="grid contenido">
+  {
+    (boda.data.ceremonia.lugar || boda.data.recepcion.lugar) && (
+      <section class="grid contenido">
+        <div class="bandejaLugares">
+          {boda.data.ceremonia.lugar && (
+            <BloqueMapa
+              encabezado={t("invitation.ceremony")}
+              dir={boda.data.ceremonia.lugar}
+              horario={boda.data.ceremonia.hora}
+              lat={boda.data.ceremonia.lat}
+              lng={boda.data.ceremonia.lng}
+              mapName="mapa1"
+              icono="iglesia"
+              labels={{
+                viewMap: t("maps.viewMap"),
+                startTrip: t("maps.startTrip"),
+              }}
+            />
+          )}
+          {boda.data.recepcion.lugar && (
+            <BloqueMapa
+              encabezado={t("invitation.reception")}
+              dir={boda.data.recepcion.lugar}
+              horario={boda.data.recepcion.hora}
+              lat={boda.data.recepcion.lat}
+              lng={boda.data.recepcion.lng}
+              mapName="mapa2"
+              icono="brindis"
+              labels={{
+                viewMap: t("maps.viewMap"),
+                startTrip: t("maps.startTrip"),
+              }}
+            />
+          )}
+        </div>
+      </section>
+    )
+  }
 
-    <Regalos
-    tipo={boda.data.tipoRegalo}
-    mesas={mesas}
-    labels={{
-      title: t('invitation.gifts'),
-      stores: t('gifts.stores'),
-      cash: t('gifts.cash'),
-      transfers: t('gifts.transfer'),
-      beneficiary: t('gifts.beneficiary'),
-      bank: t('gifts.bank'),
-      account: t('gifts.account')
-    }}
-        frase={boda.data.frase_regalos}
-        beneficiario={boda.data.beneficiario}
-        banco={boda.data.banco}
-        cuenta={boda.data.cuenta}
+  <section class="grid pantalla flex margen-arriba-abajo">
+    <Detalles
+      encabezado={t("invitation.dressCode")}
+      vestimenta={boda.data.vestimenta}
+    />
+    <Detalles
+      encabezado={t("invitation.colorPalette")}
+      colores={boda.data.coloresVestimenta}
+    />
+    <Detalles
+      lista={boda.data.consideraciones}
+      encabezado={t("invitation.considerations")}
+    />
+  </section>
+
+  {
+    imagenesSolitarias[1] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={30}
+        src={imagenesSolitarias[1]}
       />
+    )
+  }
+
+  {
+    boda.data.itinerario.length > 0 && (
+      <section class="grid pantalla" id="BaseItinerario">
+        <Encabezados texto={t("invitation.itinerary")} />
+        <Itinerario listado={boda.data.itinerario} />
+      </section>
+    )
+  }
+
+  {
+    boda.data.version === "Lux" && (
+      <section class="grid contenido">
+        <ProgresoInvitados
+          frase={boda.data.progresoFrase || t("invitation.rsvp.daysBefore")}
+          porcentajeMostrarInvitados={20}
+          mostrarSiempre={true}
+          email={boda.data.email}
+          labels={{
+            confirmed: t("progress.confirmed"),
+            passesConfirmed: t("progress.passesConfirmed"),
+            of: t("progress.of"),
+            btnConfirm: t("progress.btnConfirm"),
+            allReady: t("progress.allReady"),
+          }}
+        />
+      </section>
+    )
+  }
+
+  <section class="grid contenido">
+    <Regalos
+      tipo={boda.data.tipoRegalo}
+      mesas={mesas}
+      labels={{
+        title: t("invitation.gifts"),
+        stores: t("gifts.stores"),
+        cash: t("gifts.cash"),
+        transfers: t("gifts.transfer"),
+        beneficiary: t("gifts.beneficiary"),
+        bank: t("gifts.bank"),
+        account: t("gifts.account"),
+      }}
+      frase={boda.data.frase_regalos}
+      beneficiario={boda.data.beneficiario}
+      banco={boda.data.banco}
+      cuenta={boda.data.cuenta}
+    />
   </section>
 
   <section class="grid contenido">
-    <MensajeVip />
+    <MensajeVip
+      labels={{
+        tag: t("vip.tag"),
+      }}
+    />
   </section>
 
-    {
+  {
     imagenesSolitarias[2] && (
       <FotoSolitaria
         arriba={true}
@@ -446,76 +451,92 @@ const t = useTranslations(lang);
     )
   }
 
-      {
-      (() => {
-        switch (boda.data.version) {
-          case 'Lux':
-          case 'Clasica':
-            return (
-               <Confirmacion
+  {
+    boda.data.version === "Lux" && (
+      <Pases
+        folder={boda.data.json}
+        client:load
+        labels={{
+          attendance: t("passes.attendance"),
+          weDeliver: t("passes.weDeliver"),
+          youPlural: t("passes.youPlural"),
+          youSingular: t("passes.youSingular"),
+          passesPlural: t("passes.passesPlural"),
+          passSingular: t("passes.passSingular"),
+        }}
+      />
+    )
+  }
+
+  {
+    (() => {
+      switch (boda.data.version) {
+        case "Lux":
+        case "Clasica":
+          return (
+            <Confirmacion
+              whatsapp={boda.data.whatsapp}
+              dias_antes={15}
+              version={boda.data.version}
+              tipo="bodas"
+              client:only="react"
+              labels={{
+                title: t("invitation.rsvp"),
+                subtitle: t("invitation.rsvp.daysBefore"),
+                confirmYes: t("rsvp.confirmYes"),
+                confirmNo: t("rsvp.confirmNo"),
+                howMany: t("rsvp.howMany"),
+                selectPasses: t("rsvp.selectPasses"),
+                messageOptional: t("rsvp.messageOptional"),
+                messagePlaceholder: t("rsvp.messagePlaceholder"),
+                btnConfirm: t("rsvp.btnConfirm"),
+                btnDecline: t("rsvp.btnDecline"),
+                modalYes: t("rsvp.modalYes"),
+                modalNo: t("rsvp.modalNo"),
+                whatsappMsgYes: t("rsvp.whatsappMsgYes"),
+                whatsappMsgNo: t("rsvp.whatsappMsgNo"),
+                label: t("rsvp.label"),
+                moveSwitch: t("rsvp.moveSwitch"),
+                whoCanNotAttend: t("rsvp.whoCanNotAttend"),
+                whoCanNotAttendPlaceholder: t(
+                  "rsvp.whoCanNotAttendPlaceholder",
+                ),
+                whoCanNotAttendNote: t("rsvp.whoCanNotAttendNote"),
+                importantNote: t("rsvp.importantNote"),
+                msgNoAttendFinal: t("rsvp.msgNoAttendFinal"),
+              }}
+            />
+          );
+        case "Esencial":
+          return (
+            <section>
+              <ConfirmacionBasica
                 whatsapp={boda.data.whatsapp}
                 dias_antes={15}
-                version={boda.data.version}
-                tipo="bodas"
                 client:only="react"
                 labels={{
-                  title: t('invitation.rsvp'),
-                  subtitle: t('invitation.rsvp.daysBefore'),
-                  confirmYes: t('rsvp.confirmYes'),
-                  confirmNo: t('rsvp.confirmNo'),
-                  howMany: t('rsvp.howMany'),
-                  selectPasses: t('rsvp.selectPasses'),
-                  messageOptional: t('rsvp.messageOptional'),
-                  messagePlaceholder: t('rsvp.messagePlaceholder'),
-                  btnConfirm: t('rsvp.btnConfirm'),
-                  btnDecline: t('rsvp.btnDecline'),
-                  modalYes: t('rsvp.modalYes'),
-                  modalNo: t('rsvp.modalNo'),
-                  whatsappMsgYes: t('rsvp.whatsappMsgYes'),
-                  whatsappMsgNo: t('rsvp.whatsappMsgNo'),
-                  label: t('rsvp.label'),
-                  moveSwitch: t('rsvp.moveSwitch'),
-                  whoCanNotAttend: t('rsvp.whoCanNotAttend'),
-                  whoCanNotAttendPlaceholder: t('rsvp.whoCanNotAttendPlaceholder'),
-                  whoCanNotAttendNote: t('rsvp.whoCanNotAttendNote'),
-                  importantNote: t('rsvp.importantNote'),
-                  msgNoAttendFinal: t('rsvp.msgNoAttendFinal'),
+                  btnConfirm: t("rsvp.btnConfirm"),
+                  whatsappMsg: t("rsvp.whatsappMsgYes"),
+                  label: t("rsvp.label"),
+                  subtitle: t("invitation.rsvp.daysBefore"),
+                  title: t("invitation.rsvp"),
                 }}
               />
-            );
-          case 'Esencial':
-            return (
-             <section>
-                  <ConfirmacionBasica
-                      whatsapp={boda.data.whatsapp}
-                      dias_antes={15}
-                      client:only="react"
-                      labels={{
-                        title: t('invitation.rsvp'),
-                        subtitle: t('invitation.rsvp.daysBefore'),
-                        btnConfirm: t('rsvp.btnConfirm'),
-                        whatsappMsg: t('rsvp.whatsappMsgYes'),
-                        label: t('rsvp.label'),
-                        subtitle: t('invitation.rsvp.daysBefore'),
-                        title: t('invitation.rsvp'),
-                      }}
-                  />
-              </section>
-            );
-          default:
-            return null;
-        }
-      })()
-    }
-
+            </section>
+          );
+        default:
+          return null;
+      }
+    })()
+  }
 
   <section class="grid contenido">
-    <Footer 
-      ruta={base} 
+    <Footer
+      ruta={base}
       labels={{
-        developedBy: t('footer.developedBy'),
-        rights: t('footer.rights'),
-        altLogo: t('footer.altLogo'),
+        developedBy: t("footer.developedBy"),
+        rights: t("footer.rights"),
+        altLogo: t("footer.altLogo"),
       }}
     />
   </section>
