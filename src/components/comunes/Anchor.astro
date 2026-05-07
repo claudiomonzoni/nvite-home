@@ -7,14 +7,25 @@ interface Props {
   conBorde?: boolean;
   redondo?: boolean;
   sombra?: boolean;
+  neumorfismo?: boolean;
   tema?: string;
   url: string;
   texto?: string;
   target?: string;
   icono?: string;
 }
-const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
-  Astro.props;
+const {
+  clases,
+  conBorde,
+  redondo,
+  sombra,
+  neumorfismo,
+  tema,
+  url,
+  texto,
+  icono,
+  ...rest
+} = Astro.props;
 ---
 
 <a
@@ -23,7 +34,12 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
     "btn",
     clases,
     tema,
-    { "con-borde": conBorde, redondo: redondo, sombra: sombra },
+    {
+      "con-borde": conBorde,
+      redondo: redondo,
+      sombra: sombra,
+      "btn-neumorfismo": neumorfismo,
+    },
   ]}
   {...rest}
 >
@@ -34,13 +50,16 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
 
-  @mixin liga($conBorde, $redondo) {
+  @mixin liga($conBorde, $redondo, $sombra) {
     margin: $margen-min 0;
-    color: var(--primario);
+    color: white;
+    font-family: $txt;
     background: var(--acento);
     padding: 0.7rem $margen-cel;
     svg {
       vertical-align: middle;
+      padding-bottom: 2px;
+      color: currentColor !important;
     }
     img {
       max-width: 1.5rem !important;
@@ -50,12 +69,13 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
     }
     @if $conBorde {
       border: 1px solid var(--acento);
-      background: var(--secundario);
       opacity: 0.8;
-      color: var(--primario) !important;
     }
     @if $redondo {
       border-radius: $radio;
+    }
+    @if $sombra {
+      filter: drop-shadow(0.4rem 0.4rem 0.3rem var(--primario));
     }
     @include cel {
       display: block;
@@ -68,12 +88,40 @@ const { clases, conBorde, redondo, sombra, tema, url, texto, icono, ...rest } =
   }
 
   .btn {
-    @include liga(false, false);
+    @include liga(false, false, false);
   }
   .con-borde {
-    @include liga(true, null);
+    @include liga(true, null, null);
   }
   .redondo {
-    @include liga(null, true);
+    @include liga(null, true, null);
+  }
+  .sombra {
+    @include liga(null, null, true);
+  }
+  .btn-neumorfismo {
+    background-color: var(--fondo) !important;
+    /* Gradiente sutil simulado con superposición transparente */
+    // background-image: linear-gradient(
+    //   145deg,
+    //   rgba(0, 0, 0, 0.1) 0%,
+    //   rgba(255, 255, 255, 0.2) 100%
+    // ) !important;
+    color: var(--acento) !important;
+    border: none !important;
+    border-radius: 12px;
+    /* Sombras dinámicas usando color-mix para aclarar y oscurecer var(--fondo) */
+    background: linear-gradient(
+      145deg,
+      color-mix(in srgb, white, var(--primario) 11%),
+      var(--fondo)
+    ) !important;
+    box-shadow:
+      6px 6px 20px -1px color-mix(in srgb, var(--fondoBurn), black 15%),
+      -6px -6px 20px -1px color-mix(in srgb, var(--fondo), white 30%) !important;
+    @include liga(false, null, false);
+    svg {
+      color: var(--acento);
+    }
   }
 </style>

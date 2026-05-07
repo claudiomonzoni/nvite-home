@@ -95,39 +95,9 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     <MostrarNvitaciones dondeEstoy="bodas" />
   </div>
 
-  <CaracteristicasGrid
-    matriz={[
-      {
-        imagen: "/bodas-caracteristicas.webp",
-        titulo: "Invitaciones <span>personalizadas</span>",
-        texto:
-          "Tus invitados sabrán lo especiales que son para ti, cada invitación se envía con su nombre y los pases asignados",
-        enlace: "#precios",
-      },
-      {
-        imagen: "mdi:email-check",
-        titulo: "Confirmación de asistencia",
-        texto:
-          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
-        enlace: "#",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto:
-          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto: "Con <span>toda la información</span> necesaria para tu boda",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
-      },
-    ]}
-  />
+  
 
-</Layout>
+
 
 <div class="grid contenido">
   <BannerGeneral
@@ -297,6 +267,39 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
   />
 </section>
 
+<CaracteristicasGrid
+    matriz={[
+      {
+        imagen: "/bodas-caracteristicas.webp",
+        titulo: "Invitaciones <span>personalizadas</span>",
+        texto:
+          "Tus invitados sabrán lo especiales que son para ti, cada invitación se envía con su nombre y los pases asignados",
+        enlace: "#precios",
+      },
+      {
+        imagen: "mdi:email-check",
+        titulo: "Confirmación de asistencia",
+        texto:
+          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:
+          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "Con <span>toda la información</span> necesaria para tu boda",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
+      },
+    ]}
+  />
+
+
 <div class="grid contenido">
   <SaveTheDate
     h2="Save the date <span>Gratis</span>"
@@ -317,6 +320,8 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
     ]}
   />
 </div>
+
+
 <section class="grid contenido" id="formulario">
   <div class="flex">
     <div class="fondo-formu">
@@ -362,6 +367,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
   </div>
 </section>
 <Footer />
+</Layout>
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;

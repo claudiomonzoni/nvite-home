@@ -1,9 +1,11 @@
 // Importo temas
 @use "../temas/base/quince/variablesquince" as *;
 @use "../temas/base/quince/globales" as *;
-// @use "../temas/clasico/quince/clasico" as *;
-// @use "../temas/elegante/quince/globales" as *;
 
+// Importar los archivos SCSS del tema Glass
+@use "../temas/glass/quince/globales" as *;
+
+// @use "../temas/clasico/quince/clasico" as *;
 
 
 // temas
@@ -11,9 +13,9 @@
   @include tema-base();
 }
 
-// :root[data-theme="clasico"] {
-//   @include tema-clasico();
-// }
+:root[data-theme="glass"] {
+  @include tema-glass();
+}
 
 // :root[data-theme="elegante"] {
 //   @include tema-elegante();

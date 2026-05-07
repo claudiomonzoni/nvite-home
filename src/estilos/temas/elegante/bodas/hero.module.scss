@@ -7,12 +7,14 @@
   position: relative;
   z-index: 1;
   background: linear-gradient(0deg, var(--gris) 0%, var(--fondo) 30%);
+
   ul,
   li {
     list-style: none;
     margin: 0;
     padding: 0;
   }
+
   p {
     padding: 0 !important;
   }
@@ -30,11 +32,13 @@
     background-position: 90% 90%;
     // background-blend-mode: multiply;
     mix-blend-mode: overlay;
+
     @include cel {
       background-size: 200%;
       background-position: center 50%;
     }
   }
+
   @include cel {
     flex-wrap: wrap;
     justify-content: center;
@@ -47,20 +51,24 @@
       justify-content: center;
       align-items: center;
     }
+
     .izq {
       // padding: $margen-cel;
       margin-bottom: $margen-cel;
       height: auto;
       order: 2;
     }
+
     .der {
       order: 1;
+
       p {
         padding: $margen-cel;
       }
     }
   }
 }
+
 .izq {
   flex: 1 0 40%;
   height: 100%;
@@ -68,6 +76,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .der {
   height: fit-content;
   font-size: clamp(1.3rem, 1vw, 1rem);
@@ -75,14 +84,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   h1 {
     color: var(--primario) !important;
     font-size: clamp(4rem, 6vw, 7.5rem) !important;
+
     // text-shadow: 2px 2px 8px #cab9ae;
     @include cel {
       font-size: 13vw !important;
     }
   }
+
   .bandeja {
     text-align: center;
     border: solid 1px var(--secundario);
@@ -95,6 +107,7 @@
       padding: $margen $margen-cel;
     }
   }
+
   .flecha {
     position: absolute;
     bottom: 0%;
@@ -107,6 +120,7 @@
     height: 30px;
   }
 }
+
 .casamos {
   color: var(--acento);
   font-family: $garigol, serif;
@@ -114,6 +128,7 @@
   line-height: 2.1rem;
   margin-top: $margen-min !important;
 }
+
 #avatar {
   width: 83%;
   height: 90%;
@@ -135,28 +150,33 @@
     position: relative;
     z-index: 1;
   }
+
   @include cel {
     width: 100%;
     height: 700px;
     //clip-path: circle(calc(var(--tamano) - 3%) at 50% 50%);
   }
 }
+
 #fecha {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 0;
+
   #fechaConte {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
   .fecha,
   .fechaMes {
     border-top: solid 1px var(--secundario);
     border-bottom: solid 1px var(--secundario);
     padding: 0.4rem 0;
   }
+
   .fechaNum {
     font-size: clamp(5rem, 6vw, 7rem);
     color: var(--acento);
@@ -164,6 +184,7 @@
     line-height: 1.1em;
     padding: 0 $margen-min;
   }
+
   .fechaAno {
     font-family: $encabezados, serif;
     font-size: clamp(1.2rem, 2vw, 3rem);
@@ -172,6 +193,7 @@
 
 #iniciales {
   margin-bottom: $margen-cel;
+
   .amp {
     font-size: clamp(2.5rem, 3.5vw, 4.5rem);
     font-family: $encabezados, serif;
@@ -188,11 +210,13 @@
       color: var(--secundario);
       font-size: clamp(3rem, 4vw, 5rem);
     }
+
     span:first-child {
       position: relative;
       top: -15px;
       left: 10px;
     }
+
     span:last-child {
       position: relative;
       top: 10px;
@@ -215,12 +239,10 @@
   height: 100dvh;
   background:
     url("/bodas/floral-decor-eleggante-1.svg"),
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       var(--fondoBurn) 0%,
       var(--terciario) 50%,
-      #f5f5f5 100%
-    );
+      #f5f5f5 100%);
   background-repeat: no-repeat;
   background-size: 100%;
   background-blend-mode: overlay;
@@ -228,10 +250,12 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+
   @include cel {
     background-size: 200%;
     background-position: center 100%;
   }
+
   cursor: pointer;
   animation: fadeIn 0.5s ease-in-out;
 
@@ -278,6 +302,15 @@
   border: solid 1px var(--primario);
   padding: 1rem 2rem !important;
 
+  border: none !important;
+  border-radius: 12px;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, white, var(--terciario) 15%),
+      var(--fondoBurn)) !important;
+  box-shadow:
+    6px 6px 20px -1px color-mix(in srgb, var(--fondoBurn), black 15%),
+    -6px -6px 20px -1px color-mix(in srgb, var(--terciario), white 80%) !important;
+
   &:hover {
     background: rgba(var(--acento-rgb, 212, 175, 55), 0.1);
     transform: scale(1.05);
@@ -289,6 +322,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -301,11 +335,13 @@
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.7;
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.02);

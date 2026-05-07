@@ -1,7 +1,7 @@
 @use "sass:math";
 @use "variablesquince" as *;
 
-@mixin tema-base() {
+@mixin tema-glass() {
   html {
     box-sizing: border-box;
     font-size: clamp(10px, 0.9vw, 22px);
@@ -731,7 +731,7 @@ p{
     #regalo {
       margin-top: $margen;
       padding: $margen $margen-cel;
-      background: url("/bg-floral-regalos-izq.svg") var(--primario);
+      background: url("/bg-floral-regalos-izq.svg") var(--secundario);
       background-repeat: no-repeat;
       background-size: contain;
       background-blend-mode: screen;
@@ -901,16 +901,7 @@ p{
     @extend .sombra;
   }
   // Componente contador (cuenta regresiva)
-  #demo{
-    color: var(--acento);
-    text-align: center;
-    font-size: clamp(3rem, 5vw, 5rem);
-    font-family: var(--font-heading), serif;
-    padding: $margen 0;
-    @include cel {
-      padding: $margen 0 0;
-    }
-  }
+
   #contador {
     display: flex;
     justify-content: center;

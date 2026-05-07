@@ -2,7 +2,7 @@
 @use "sass:math";
 @use "_variables.scss" as *;
 
-@mixin tema-base() {
+@mixin tema-glass() {
   html {
     box-sizing: border-box;
   }
@@ -399,9 +399,11 @@
           left: 0;
           width: 100%;
           height: 100%;
-          background: rgb(254, 241, 241);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background: var(--glass-bg, rgb(254, 241, 241));
+          backdrop-filter: var(--glass-blur, blur(8px));
+          -webkit-backdrop-filter: var(--glass-blur, blur(8px));
+          border: var(--glass-border, none);
+          box-shadow: var(--glass-shadow, none);
           z-index: -1;
           border-radius: 4px;
         }
@@ -506,25 +508,24 @@
       z-index: 10;
       font-family: $garigol, serif;
       font-size: clamp(1.8rem, 2.5vw, 3.5rem);
-      border: solid 0.5px var(--acento);
+      border: var(--glass-border, solid 0.5px var(--acento));
       display: inline-block;
       padding: $margen-min;
       border-radius: $margen-min;
-      background-color: rgba(255, 255, 255, 0.4);
-      backdrop-filter: blur(2px);
+      background-color: var(--glass-bg, rgba(255, 255, 255, 0.4));
+      backdrop-filter: var(--glass-blur, blur(2px));
+      -webkit-backdrop-filter: var(--glass-blur, blur(2px));
+      box-shadow: var(--glass-shadow);
     }
   }
 
   //componete progreso invitados
 
- .progreso-invitados {
+  .progreso-invitados {
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
-    padding: $margen 0;
-    @include cel {
-      padding: 8rem 0 $margen 0!important;
-    }
+    padding-bottom: $margen;
   }
 
   .barra-progreso {
@@ -785,9 +786,11 @@
     margin-top: $margen;
     display: flex;
     flex-wrap: wrap;
-    background: rgb(255, 255, 255, 0.4);
+    background: var(--glass-bg, rgba(255, 255, 255, 0.4));
     border-radius: $radio;
-    backdrop-filter: blur(3px);
+    backdrop-filter: var(--glass-blur, blur(3px));
+    -webkit-backdrop-filter: var(--glass-blur, blur(3px));
+    border: var(--glass-border, none);
     padding: $margen-min;
     z-index: 30;
     @extend .sombra;
