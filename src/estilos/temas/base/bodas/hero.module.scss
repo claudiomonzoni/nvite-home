@@ -278,7 +278,15 @@
   border: solid 1px var(--primario);
   padding: 1rem 2rem !important;
 
-  
+   border: none !important;
+  border-radius: 12px;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, white, var(--terciario) 15%),
+      var(--fondoBurn)) !important;
+  box-shadow:
+    6px 6px 20px -1px color-mix(in srgb, var(--fondoBurn), black 15%),
+    -6px -6px 20px -1px color-mix(in srgb, var(--terciario), white 80%) !important;
+    
   &:hover {
     background: rgba(var(--acento-rgb, 212, 175, 55), 0.1);
     transform: scale(1.05);
