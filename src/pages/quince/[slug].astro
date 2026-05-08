@@ -6,7 +6,7 @@ import Layout from "../../layouts/quince/Layout.astro";
 //componentes
 import Hero from "../../components/quince/Hero";
 import HeroGlass from "../../components/quince/Hero-glass";
-import AudioPlayer from "../../components/quince/Audio.astro";
+import AudioPlayer from "../../components/comunes/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Encabezados from "../../components/quince/Encabezados.astro";
@@ -219,14 +219,12 @@ const t = useTranslations(lang);
 
   {
     quince.data.version === "Lux" && quince.data.audioMusica && (
-      <section class="grid contenido">
-        <AudioPlayer
-          src={quince.data.audioMusica}
-          labels={{
-            listen: t("quince.audio.listen"),
-          }}
-        />
-      </section>
+      <AudioPlayer
+        src={quince.data.audioMusica}
+        labels={{
+          listen: t("quince.audio.listen"),
+        }}
+      />
     )
   }
 
