@@ -292,7 +292,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   }
 
   if (error) {
-    return <div className="error">{t.error} {error}</div>;
+    return <div className={styles.error}>{t.error} {error}</div>;
   }
 
   // Agregar verificación para invitados que ya confirmaron no asistencia

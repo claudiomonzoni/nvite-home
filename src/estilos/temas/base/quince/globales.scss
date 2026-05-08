@@ -1000,6 +1000,12 @@ p{
         border-right: none;
         border-bottom: solid 1px var(--secundario);
       }
+      &:first-child {
+        
+        @include cel {
+         margin-bottom: $margen-min;
+        }
+      }
     }
     .numero {
       // margin-top: $margen-cel;

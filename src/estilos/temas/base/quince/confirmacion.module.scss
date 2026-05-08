@@ -190,10 +190,11 @@ span {
 
 .error {
   background-color: var(--gris);
-  color: white;
+  color: var(--primario);
   text-align: center;
-  padding: $margen-min;
+  padding: $margen-cel;
   margin-bottom: 2rem;
+  font-family: $txt;
 }
 
 .modal {
