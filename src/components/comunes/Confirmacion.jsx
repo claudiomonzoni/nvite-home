@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.scss";
+import stylesQuinceElegante from "../../estilos/temas/elegante/quince/confirmacion.module.scss";
 import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss";
+import stylesBodasElegante from "../../estilos/temas/elegante/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
-export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', labels = {} }) {
+export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', themeName = 'base', labels = {} }) {
   const t = {
     title: labels.title || "¿Contamos con tu presencia?",
     subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
@@ -29,8 +31,20 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
     whatsappMsgYes: labels.whatsappMsgYes || "Hola, les confirmo la asistencia a la boda: {nombre}, y usaremos {pases} pase(s). {noAsisten} Comentarios: {comentarios}.",
     whatsappMsgNo: labels.whatsappMsgNo || "Hola, lamento informarles que no podré asistir a la boda: {nombre}. Comentarios: {comentarios}."
   };
-  // Seleccionar el objeto de estilos correcto según el tipo
-  const styles = tipo === 'quince' ? stylesQuince : stylesBodas;
+  
+  // Seleccionar el objeto de estilos correcto según el tipo y themeName
+  const themeMap = {
+    bodas: {
+      base: stylesBodas,
+      elegante: stylesBodasElegante,
+    },
+    quince: {
+      base: stylesQuince,
+      elegante: stylesQuinceElegante,
+    }
+  };
+  const styles = themeMap[tipo]?.[themeName] || themeMap[tipo]?.base || stylesBodas;
+
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);

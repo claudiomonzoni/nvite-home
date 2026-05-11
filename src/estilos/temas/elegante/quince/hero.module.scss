@@ -1,0 +1,207 @@
+@use "variablesquince.scss" as *;
+
+// ─── Hero Section ─────────────────────────────────────────────
+#hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // Romper restricciones del grid padre (.contenido, .grid)
+  background: linear-gradient(
+    180deg,
+    var(--secundario) 0%,
+    var(--secundario) 20%,
+    white 100%
+  );
+
+  // ── Imagen con arco inferior (SVG clip-path Bézier) ─────────
+  .imagenPrincipal {
+    width: 100%;
+    flex-shrink: 0;
+    // Referencia al <clipPath> SVG inline del componente
+    clip-path: url(#arcoInferior);
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    @include cel {
+      height: 65dvh;
+    }
+
+    @include nocel {
+      max-height: 70vh;
+    }
+  }
+
+  // ── Contenido de texto ────────────────────────────────────
+  .contenidoHero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $margen-cel $margen-min $margen;
+    width: 90%;
+    max-width: 500px;
+
+    h1 {
+      font-family: var(--font-heading, "Italiana"), serif;
+      font-size: clamp(3.5rem, 12vw, 5rem);
+      font-weight: 400;
+      color: #de8080;
+      line-height: 1.05;
+      margin: 0 0 $margen-cel;
+      padding: 0;
+        padding: 0 $margen-min;
+    }
+
+    .misQuince {
+      font-family: var(--font-body, "Montserrat"), sans-serif;
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      font-weight: 400;
+      color: var(--primario, #3d447d);
+      margin: 0 0 0.25rem;
+    }
+
+    .fecha {
+      font-family: var(--font-heading, "Italiana"), serif;
+      font-size: clamp(2rem, 7vw, 2.8rem);
+      font-weight: 400;
+      color: var(--primario, #3d447d);
+      line-height: 1.15;
+      margin: 0 0 $margen-cel;
+    }
+
+    .separador {
+      width: 180px;
+      height: 1px;
+      background-color: var(--primario, #3d447d);
+      flex-shrink: 0;
+    }
+
+    .saveDate {
+      font-family: var(--font-body, "Montserrat"), sans-serif;
+      font-size: 0.625rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--primario, #3d447d);
+      margin: 0.6rem 0;
+    }
+
+    #pases {
+      margin-top: $margen;
+      padding: $margen-min;
+      color: var(--secundario);
+      border: 1px solid var(--secundario);
+      border-radius: 4px;
+      text-align: center;
+      font-family: var(--font-body, "Montserrat"), sans-serif;
+    }
+
+    #NumeroPases {
+      font-size: clamp(1.5rem, 2vw, 3rem);
+      color: var(--acento);
+    }
+  }
+}
+
+// ─── Pantalla de carga elegante ─────────────────────────────────
+.oculto {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+  animation: fadeIn 0.5s ease-in-out;
+
+  &.fadeOut {
+    cursor: default;
+    animation: fadeOutScreen 0.8s ease-in-out forwards;
+  }
+}
+
+.loadingContent {
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loadingText {
+  font-family: var(--font-heading, "Italiana"), serif;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 300;
+  color: var(--primario);
+  line-height: 1.4;
+  margin: 0 0 3rem;
+  letter-spacing: 0.02em;
+
+  span {
+    display: inline-block;
+    opacity: 0.2;
+    font-size: clamp(3.5rem, 5vw, 5rem);
+    line-height: 1;
+  }
+
+  @include cel {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    margin: 0 0 2rem;
+  }
+}
+
+.tapToStart {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  animation: pulse 2s ease-in-out infinite;
+  display: inline-block;
+  transition: all 0.3s ease;
+  border: solid 1px var(--secundario);
+  padding: 1rem 2rem !important;
+  border-radius: 0;
+  background: transparent !important;
+  color: var(--secundario);
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05) !important;
+    transform: scale(1.05);
+  }
+}
+
+// ─── Animaciones ────────────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOutScreen {
+  to { opacity: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}

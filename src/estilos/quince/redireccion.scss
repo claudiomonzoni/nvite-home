@@ -5,6 +5,8 @@
 // Importar los archivos SCSS del tema Glass
 @use "../temas/glass/quince/globales" as *;
 
+@use "../temas/elegante/quince/globales" as *;
+
 // @use "../temas/clasico/quince/clasico" as *;
 
 
@@ -17,9 +19,9 @@
   @include tema-glass();
 }
 
-// :root[data-theme="elegante"] {
-//   @include tema-elegante();
-// }
+:root[data-theme="elegante"] {
+  @include tema-elegante();
+}
 
 
 
