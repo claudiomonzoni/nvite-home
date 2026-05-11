@@ -237,12 +237,12 @@ const t = useTranslations(lang);
   {
     boda.data.version === "Lux" && boda.data.audioMusica && (
       <section class="grid contenido">
-        <AudioPlayer
-          src={boda.data.audioMusica}
-          labels={{
-            listen: t("audio.listen"),
-          }}
-        />
+      <AudioPlayer
+        src={boda.data.audioMusica}
+        labels={{
+          listen: t("audio.listen"),
+        }}
+      />
       </section>
     )
   }

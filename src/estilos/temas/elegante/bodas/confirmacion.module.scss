@@ -169,3 +169,12 @@ span{
   font-weight: bolder;
   color: var(--acento);
 }
+
+.error {
+  background-color: var(--gris);
+  color: var(--primario);
+  text-align: center;
+  padding: $margen-cel;
+  margin-bottom: 2rem;
+  font-family: $txt;
+}

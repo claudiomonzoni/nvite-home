@@ -6,7 +6,8 @@ import Layout from "../../layouts/quince/Layout.astro";
 //componentes
 import Hero from "../../components/quince/Hero";
 import HeroGlass from "../../components/quince/Hero-glass";
-import AudioPlayer from "../../components/quince/Audio.astro";
+import HeroElegante from "../../components/quince/Hero-elegante.jsx";
+import AudioPlayer from "../../components/comunes/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
 import MensajeVip from "../../components/comunes/MensajeVip.astro";
 import Encabezados from "../../components/quince/Encabezados.astro";
@@ -193,6 +194,24 @@ const t = useTranslations(lang);
                 }}
               />
             );
+          case "elegante":
+            return (
+              <HeroElegante
+                nombres={quince.data.quinceanera}
+                fecha={quince.data.fecha}
+                cover={quince.data.cover}
+                client:load
+                lang={lang}
+                labels={{
+                  loading: t("hero.loadingQuince"),
+                  tap: t("hero.tap"),
+                  honor: t("hero.quince.honor"),
+                  date: t("hero.quince.date"),
+                  share: t("hero.quince.share"),
+                  passes: t("hero.passes"),
+                }}
+              />
+            );
           case "base":
           default:
             return (
@@ -219,14 +238,12 @@ const t = useTranslations(lang);
 
   {
     quince.data.version === "Lux" && quince.data.audioMusica && (
-      <section class="grid contenido">
-        <AudioPlayer
-          src={quince.data.audioMusica}
-          labels={{
-            listen: t("quince.audio.listen"),
-          }}
-        />
-      </section>
+      <AudioPlayer
+        src={quince.data.audioMusica}
+        labels={{
+          listen: t("quince.audio.listen"),
+        }}
+      />
     )
   }
 
@@ -414,6 +431,7 @@ const t = useTranslations(lang);
               dias_antes={15}
               version={quince.data.version}
               tipo="quince"
+              themeName={quince.data.theme.name}
               client:only="react"
               labels={{
                 title: t("invitation.rsvp"),

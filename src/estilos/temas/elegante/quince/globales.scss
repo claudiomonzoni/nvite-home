@@ -1,17 +1,23 @@
 @use "sass:math";
 @use "variablesquince" as *;
 
-@mixin tema-base() {
+@mixin tema-elegante() {
   html {
     box-sizing: border-box;
-    font-size: clamp(10px, 0.9vw, 22px);
-    color: var(--gris);
+  }
+  
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+  body {
+    background: white;
     font-family: var(--font-body), serif;
+    position: relative;
+    font-size: clamp(10px, 0.9vw, 22px);
+    color: var(--primario);
     font-weight: 100;
-    background: url("/quince/decor.svg"), url("/quince/textuta-bg.webp") #fff;
-    background-repeat: no-repeat, repeat;
-    background-size: 40%, auto;
-    background-position: -8vw 120vh, 0%;
     scroll-behavior: smooth;
     @include hd {
       font-size: clamp(10px, 0.9vw, 20px);
@@ -22,17 +28,35 @@
     @include hdplus {
       font-size: clamp(14px, 7vw, 22px);
     }
+    margin: 0!important;
+    
+    &:before {
+      content: "";
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: absolute;
+      top: 28%;
+      left: 50%;
+      transform: translateX(-50.6%);
+      background: url("/bodas/floral-decor-eleggante-1.svg") no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-blend-mode: overlay;
+      z-index: -1;
+      opacity: 0.1;
+      
+      @include cel {
+        left: 0;
+        top: 40%;
+        transform: translateX(0%);
+        background-position: 15% center;
+        background-size: 240%;
+      }
+    }
   }
 
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-  body {
-    position: relative;
-  }
-  body,
+  // Reinicios globales
   h1,
   h2,
   h3,
@@ -141,7 +165,14 @@ p{
   }
   .opa {
     visibility: hidden;
-    border: 10px solid red !important;
+  }
+
+  // El wrapper del hero debe ser full-width
+  #hero-hero {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .gale {
