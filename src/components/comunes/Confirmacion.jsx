@@ -409,10 +409,10 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                     ref={btnconfirmarRef}
                     onClick={handleConfirmar}
                   >
-                    <img
+                    {/* <img
                       src="/whatsapp.png"
                       alt="confirmar whatsapp"
-                    />{" "}
+                    />{" "} */}
                     {t.btnConfirm}
                   </a>
                 </>

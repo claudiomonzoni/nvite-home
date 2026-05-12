@@ -711,9 +711,15 @@ p{
 
   .progreso-invitados {
     text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    padding-bottom: $margen;
+    padding: $margen-min;
+    max-width: 50% !important;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    @include cel {
+      max-width: 100% !important;
+    }
+   
   }
 
   .barra-progreso {

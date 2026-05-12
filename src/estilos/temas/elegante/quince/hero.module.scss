@@ -211,6 +211,16 @@
   background: transparent !important;
   color: var(--secundario);
 
+  
+  border: none !important;
+  border-radius: 12px;
+  background: linear-gradient(145deg,
+      color-mix(in srgb, white, var(--terciario) 15%),
+      var(--fondoBurn)) !important;
+  box-shadow:
+    6px 6px 20px -1px color-mix(in srgb, var(--fondoBurn), black 15%),
+    -6px -6px 20px -1px color-mix(in srgb, var(--terciario), white 80%) !important;
+
   &:hover {
     background: rgba(0, 0, 0, 0.05) !important;
     transform: scale(1.05);

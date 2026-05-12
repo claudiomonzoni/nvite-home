@@ -141,6 +141,8 @@ top: 0;
   @extend .btn;
   display: flex;
   border-radius: $radio;
+  background-color: var(--acento);
+  border: none;
 
 }
 .desactivado {
