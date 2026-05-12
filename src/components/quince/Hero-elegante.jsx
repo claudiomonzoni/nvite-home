@@ -211,6 +211,10 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
           <p className={Style.saveDate}>{l.saveDate}</p>
           <div className={Style.separador}></div>
 
+          {invitado && invitado !== "-" && (
+            <p className={Style.nombreInvitado}>{invitado}</p>
+          )}
+
           {pase ? (
             <div id={Style["pases"]}>
               {l.passes} <p id={Style["NumeroPases"]}>{pase}</p>

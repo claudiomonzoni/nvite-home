@@ -15,6 +15,8 @@
     white 100%
   );
 
+
+
   // ── Imagen con arco inferior (SVG clip-path Bézier) ─────────
   .imagenPrincipal {
     width: 100%;
@@ -34,7 +36,15 @@
     }
 
     @include nocel {
-      max-height: 70vh;
+      max-height: 80vh;
+      max-width: 500px;
+    }
+
+
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      height: 45vh;
+      max-height: 45vh;
     }
   }
 
@@ -47,6 +57,15 @@
     padding: $margen-cel $margen-min $margen;
     width: 90%;
     max-width: 500px;
+
+    // Landscape: padding más compacto
+    @media (orientation: landscape) {
+      padding: 1rem $margen-min 1.5rem;
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      padding: 0.5rem $margen-min 1rem;
+    }
 
     h1 {
       font-family: var(--font-heading, "Italiana"), serif;
@@ -92,6 +111,16 @@
       margin: 0.6rem 0;
     }
 
+    .nombreInvitado {
+      font-family: var(--font-heading, "Italiana"), serif;
+      font-size: clamp(2rem, 7vw, 3rem);
+      font-weight: 400;
+      color: var(--primario, #3d447d);
+      margin: 1rem 0 0;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+    }
+
     #pases {
       margin-top: $margen;
       padding: $margen-min;
@@ -100,6 +129,9 @@
       border-radius: 4px;
       text-align: center;
       font-family: var(--font-body, "Montserrat"), sans-serif;
+      @include cel {
+        margin-top: $margen-cel;
+      }
     }
 
     #NumeroPases {

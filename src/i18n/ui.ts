@@ -80,6 +80,11 @@ export const ui = {
     // Audio
     'audio.listen': 'Escucha la <b>canción</b> de nuestra boda',
     'quince.audio.listen': 'Escucha la <b>canción</b> de mis XV años',
+    'audio.confirm': 'Confirma',
+    'audio.playSong': 'Reproducir canción',
+    'audio.pauseSong': 'Pausar canción',
+    'audio.ariaConfirm': 'Confirmar asistencia',
+    'audio.ariaPlayPause': 'Reproducir/Pausar música',
     
     // Maps
     'maps.viewMap': 'ver mapa',
@@ -212,6 +217,11 @@ export const ui = {
     // Audio
     'audio.listen': 'Listen to our <b>wedding song</b>',
     'quince.audio.listen': 'Listen to my <b>Quinceañera song</b>',
+    'audio.confirm': 'Confirm',
+    'audio.playSong': 'Play song',
+    'audio.pauseSong': 'Pause song',
+    'audio.ariaConfirm': 'Confirm attendance',
+    'audio.ariaPlayPause': 'Play/Pause music',
 
     // Maps
     'maps.viewMap': 'view map',

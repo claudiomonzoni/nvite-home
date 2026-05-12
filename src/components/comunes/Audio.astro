@@ -3,39 +3,53 @@ interface Props {
     src: string;
     labels?: {
         listen?: string;
+        confirm?: string;
+        playSong?: string;
+        pauseSong?: string;
+        ariaConfirm?: string;
+        ariaPlayPause?: string;
     };
 }
 const { src, labels = {} } = Astro.props;
 
 const l = {
     listen: labels.listen || "Canción del evento",
+    confirm: labels.confirm || "Confirma",
+    playSong: labels.playSong || "Reproducir canción",
+    pauseSong: labels.pauseSong || "Pausar canción",
+    ariaConfirm: labels.ariaConfirm || "Confirmar asistencia",
+    ariaPlayPause: labels.ariaPlayPause || "Reproducir/Pausar música",
 };
 
 import { Icon } from 'astro-icon/components';
-//import {Anchor} from './Anchor.astro';
 ---
 
 <audio id="audioInvitacion" loop style="display: none;">
     <source src={src} type="audio/mpeg" />
 </audio>
 
-<section id="fixedAudio" class="fixed-bottom-bar hidden">
+<section
+    id="fixedAudio"
+    class="fixed-bottom-bar hidden"
+    data-play-text={l.playSong}
+    data-pause-text={l.pauseSong}
+>
     <ul>
-        <li>
-            <a href="#asistencia" class="action-btn" aria-label="Confirmar ">
+        <li id="confirmLi" style="transition: opacity 0.3s ease, max-width 0.4s ease; overflow: hidden; max-width: 200px; opacity: 1;">
+            <a href="#Confirmacion-comun" class="action-btn" aria-label={l.ariaConfirm}>
                 <span class="icon-circle">
                <Icon name="mdi:check-all" />
                 </span>
-                <span>confirma</span>
+                <span>{l.confirm}</span>
             </a>
         </li>
         <li>
-            <button id="toggleAudioBtn" class="action-btn" aria-label="Reproducir/Pausar música">
+            <button id="toggleAudioBtn" class="action-btn" aria-label={l.ariaPlayPause}>
                 <span class="icon-circle">
                 <Icon name="mdi:play" id="icon-play" />
                 <Icon name="mdi:pause" id="icon-pause" style="display: none;" />
                 </span>
-                <span id="audioText">canción del evento</span>
+                <span id="audioText">{l.playSong}</span>
             </button>
         </li>
     </ul>
@@ -48,6 +62,11 @@ import { Icon } from 'astro-icon/components';
     const iconPlay = document.getElementById("icon-play");
     const iconPause = document.getElementById("icon-pause");
     const audioText = document.getElementById("audioText");
+    const confirmLi = document.getElementById("confirmLi");
+
+    // Leer textos localizados desde data attributes
+    const playText = fixedAudio?.dataset.playText || "Reproducir canción";
+    const pauseText = fixedAudio?.dataset.pauseText || "Pausar canción";
     
     let isPlaying = false;
 
@@ -94,21 +113,28 @@ import { Icon } from 'astro-icon/components';
         if (isPlaying) {
             iconPlay.style.display = "none";
             iconPause.style.display = "block";
-            // audioText.textContent = "Pausar"; // Removido para igualar el diseño fijo de Figma
+            audioText.textContent = pauseText;
         } else {
             iconPlay.style.display = "block";
             iconPause.style.display = "none";
-            // audioText.textContent = "Reproducir"; // Removido para igualar el diseño fijo de Figma
+            audioText.textContent = playText;
         }
     }
 
-    // Manejar Scroll
+    // Manejar Scroll + ocultar "Confirma" al 60% del alto total
     function handleScroll() {
         if (!fixedAudio) return;
-        if (window.scrollY > 500) {
-            fixedAudio.classList.add("visible");
-        } else {
-            fixedAudio.classList.remove("visible");
+
+        const scrolled = window.scrollY > 500;
+        fixedAudio.classList.toggle("visible", scrolled);
+
+        // Ocultar el anchor "Confirma" cuando se ha recorrido el 90% de la página
+        if (confirmLi) {
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const shouldHide = scrollPercent >= 0.9;
+            confirmLi.style.opacity = shouldHide ? "0" : "1";
+            confirmLi.style.maxWidth = shouldHide ? "0" : "200px";
+            confirmLi.style.pointerEvents = shouldHide ? "none" : "";
         }
     }
 
@@ -117,91 +143,3 @@ import { Icon } from 'astro-icon/components';
     // Verificación inicial por si la página carga ya habiendo scroleado
     handleScroll();
 </script>
-
-<style lang="scss">
-   // @use "../../estilos/bodas/_variables.scss" as *;
-
-    .fixed-bottom-bar {
-        position:fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%) translateY(50px);
-        z-index: 1000;
-        width: 100%;
-        
-        /* Efecto Glass */
-        background-color: var(--glass-bg, rgba(227, 202, 192, 0.4));
-        backdrop-filter: var(--glass-blur, blur(10px));
-        -webkit-backdrop-filter: var(--glass-blur, blur(10px));
-        
-        padding: 9px 18px;
-        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .fixed-bottom-bar.visible {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateX(-50%) translateY(0);
-    }
-
-    .fixed-bottom-bar ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        gap: 20px;
-        align-items: center;
-    }
-
-    .fixed-bottom-bar li {
-        flex-wrap: wrap;
-        display: flex;
-        align-items: center;
-        a{
-            display: flex;
-        }
-    }
-
-    .icon-circle {
-        width: 21px;
-        height: 21px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: currentColor;
-    }
-
-    .action-btn {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        white-space: nowrap;
-        gap: 8px;
-        background: none;
-        border: none;
-        color: #765b4a;
-        font-family: "Montserrat", sans-serif;
-        font-size: 13px;
-        font-weight: 400;
-        cursor: pointer;
-        text-decoration: none;
-        padding: 0;
-        transition: opacity 0.2s ease, transform 0.1s ease;
-    }
-
-    .action-btn:hover {
-        opacity: 0.8;
-    }
-
-    .action-btn:active {
-        transform: scale(0.95);
-    }
-
-    .action-btn span:not(.icon-circle) {
-        white-space: nowrap;
-    }
-</style>
