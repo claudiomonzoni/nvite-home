@@ -30,7 +30,36 @@ if (nvitacionInfo?.precioTachado) {
     precioTachado = `${currency}${priceTachadoStr}`;
   }
 }
+
+// Extraer el número del precio para el Schema
+const priceNumberOnly = precio.replace(/[^\d.]/g, '');
+
+const schemaProduct = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": producto.data.name,
+  "image": producto.data.images[0],
+  "description": producto.data.description || `Invitación digital ${producto.data.name}`,
+  "sku": producto.data.id,
+  "brand": {
+    "@type": "Brand",
+    "name": "Nvitaciones"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": `https://nvitaciones.com/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`,
+    "priceCurrency": "MXN",
+    "price": priceNumberOnly,
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "Nvitaciones"
+    }
+  }
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaProduct)} />
 
 <article class="producto-card">
   <div class="portada">
