@@ -2,7 +2,60 @@
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
+const reviews = [
+  {
+    name: "Berenice Jimenez",
+    image: "https://lh3.googleusercontent.com/a-/ALV-UjXmoVWw6nsrNe1efzBInej_NPnj5jfaEl9zibKvXPgy2Gg4JquS=s50-c-rp-mo-br100",
+    text: "Nos hicieron unas invitaciones para boda y nos encantaron, están súper lindas y practicas, me las entregaron muy rápido y tienen muy buen estilo. Los súper recomiendo✨🤩 100/10",
+    rating: 5
+  },
+  {
+    name: "Chucho González",
+    image: "https://lh3.googleusercontent.com/a-/ALV-UjXo4JUASbjgi76039aHG8vnbYGWYwWbLFXzi159ciP60lmteUQK=s50-c-rp-mo-br100",
+    text: "Estuvieron excelentes, a todos mis amigos les encantaron, saludos",
+    rating: 5
+  },
+  {
+    name: "Gabriela Mon",
+    image: "https://lh3.googleusercontent.com/a/ACg8ocJzrSiEJc6JE_GX_v4va33Nf9VLdrofwZIeBBK15bn1V2SE_w=s50-c-rp-mo-br100",
+    text: "Bellísimas invitaciones 😍 fueron enviadas para nuestra boda y encantaron, súper profesionales en toda la atención",
+    rating: 5
+  },
+  {
+    name: "Wen Jira",
+    image: "https://lh3.googleusercontent.com/a/ACg8ocIG-V7JGfPOyLHWPrYHFfou9TneSnSewqb2aHe_5dr47n9EvA=s50-c-rp-mo-br100",
+    text: "Fueron atentos, rápidos y siempre dispuestos. Las invitaciones fueron hermosas y funcionales, facilitando el control de invitados. Sin duda, los volverías a contratar.",
+    rating: 5
+  }
+];
+
+const schemaReviews = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Invitaciones Digitales Nvitaciones",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": reviews.length.toString()
+  },
+  "review": reviews.map(review => ({
+    "@type": "Review",
+    "author": {
+      "@type": "Person",
+      "name": review.name
+    },
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": review.rating.toString(),
+      "bestRating": "5"
+    },
+    "reviewBody": review.text
+  }))
+};
 ---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaReviews)} />
 
 <section class="testimonios">
   <div class="testimonios__container">
@@ -11,67 +64,23 @@ import "swiper/css/navigation";
 
     <div class="swiper testimonios-swiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="testimonios__card">
-            <img
-              src="https://lh3.googleusercontent.com/a-/ALV-UjXmoVWw6nsrNe1efzBInej_NPnj5jfaEl9zibKvXPgy2Gg4JquS=s50-c-rp-mo-br100"
-              alt="Cliente 1"
-              class="testimonios__image"
-            />
-            <h3 class="testimonios__name">Berenice Jimenez</h3>
-            <p class="testimonios__text">
-              "Nos hicieron unas invitaciones para boda y nos encantaron, están
-              súper lindas y practicas, me las entregaron muy rápido y tienen
-              muy buen estilo. Los súper recomiendo✨🤩 100/10"
-            </p>
+        {reviews.map(review => (
+          <div class="swiper-slide">
+            <div class="testimonios__card">
+              <img
+                src={review.image}
+                alt={`Cliente ${review.name}`}
+                class="testimonios__image"
+                loading="lazy"
+                decoding="async"
+              />
+              <h3 class="testimonios__name">{review.name}</h3>
+              <p class="testimonios__text">
+                "{review.text}"
+              </p>
+            </div>
           </div>
-        </div>
-
-        <div class="swiper-slide">
-          <div class="testimonios__card">
-            <img
-              src="https://lh3.googleusercontent.com/a-/ALV-UjXo4JUASbjgi76039aHG8vnbYGWYwWbLFXzi159ciP60lmteUQK=s50-c-rp-mo-br100"
-              alt="Cliente 2"
-              class="testimonios__image"
-            />
-            <h3 class="testimonios__name">Chucho González</h3>
-            <p class="testimonios__text">
-              "Estuvieron excelentes, a todos mis amigos les encantaron,
-              saludos"
-            </p>
-          </div>
-        </div>
-
-        <div class="swiper-slide">
-          <div class="testimonios__card">
-            <img
-              src="https://lh3.googleusercontent.com/a/ACg8ocJzrSiEJc6JE_GX_v4va33Nf9VLdrofwZIeBBK15bn1V2SE_w=s50-c-rp-mo-br100"
-              alt="Cliente 3"
-              class="testimonios__image"
-            />
-            <h3 class="testimonios__name">Gabriela Mon</h3>
-            <p class="testimonios__text">
-              "Bellísimas invitaciones 😍 fueron enviadas para nuestra boda y
-              encantaron, súper profesionales en toda la atención"
-            </p>
-          </div>
-        </div>
-
-        <div class="swiper-slide">
-          <div class="testimonios__card">
-            <img
-              src="https://lh3.googleusercontent.com/a/ACg8ocIG-V7JGfPOyLHWPrYHFfou9TneSnSewqb2aHe_5dr47n9EvA=s50-c-rp-mo-br100"
-              alt="Cliente 4"
-              class="testimonios__image"
-            />
-            <h3 class="testimonios__name">Wen Jira</h3>
-            <p class="testimonios__text">
-              "Fueron atentos, rápidos y siempre dispuestos. Las invitaciones
-              fueron hermosas y funcionales, facilitando el control de
-              invitados. Sin duda, los volverías a contratar."
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div class="swiper-pagination"></div>

@@ -12,6 +12,7 @@ import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 
 import PreciosPdf from "../components/PreciosPdf.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
+import pdfCaracteristicasImg from "../assets/home/pdf-caracteristicas.webp";
 ---
 
 <Layout
@@ -87,7 +88,7 @@ import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
   <CaracteristicasGrid
     matriz={[
       {
-        imagen: "/pdf-caracteristicas.webp",
+        imagen: pdfCaracteristicasImg,
         titulo: "Invitaciones <span>economicas</span>",
         texto:
           "Tus invitados recibirán una invitación interactiva con los detalles de tu evento, incluyendo fecha, hora, ubicación y más.",

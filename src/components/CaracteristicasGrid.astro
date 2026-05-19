@@ -1,10 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+import { Image } from "astro:assets";
 
 interface MatrizItems {
   titulo?: string;
-  imagen?: string;
+  imagen?: any;
   texto?: string;
   enlace?: string;
   txtbtn?: string;
@@ -39,11 +40,9 @@ const { matriz } = Astro.props;
         </div>
       </div>
       <div class="imagen">
-        <img
+        <Image
           src={matriz[0].imagen}
           alt="Invitaciones digitales / Nvitaciones"
-          loading="lazy"
-          decoding="async"
         />
       </div>
     </div>
