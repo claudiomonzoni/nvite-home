@@ -4,7 +4,7 @@ import Style from "../../estilos/temas/elegante/quince/hero.module.scss";
 
 export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es-ES' }) {
   const l = {
-    loading: labels?.loading || "Queremos que seas parte de nuestra celebración de XV años",
+    loading: labels?.loading || "Quiero que sean parte de la celebración de mis XV años",
     tap: labels?.tap || "Toca para comenzar",
     honor: labels?.honor || "Mis 15 años",
     saveDate: labels?.saveDate || "SAVE THE DATE",

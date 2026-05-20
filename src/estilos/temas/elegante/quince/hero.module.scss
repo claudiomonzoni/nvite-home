@@ -8,14 +8,21 @@
   flex-direction: column;
   align-items: center;
   // Romper restricciones del grid padre (.contenido, .grid)
-  background: linear-gradient(
-    180deg,
-    var(--secundario) 0%,
-    var(--secundario) 20%,
-    white 100%
-  );
-
-
+  background:
+    url("./quince-elegante-flor.svg"),
+    linear-gradient(
+        180deg,
+        var(--secundario) 0%,
+        var(--secundario) 20%,
+        white 100%
+      )
+      no-repeat;
+  background-position:
+    center bottom,
+    center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 80px, cover;
+  background-blend-mode: multiply, normal;
 
   // ── Imagen con arco inferior (SVG clip-path Bézier) ─────────
   .imagenPrincipal {
@@ -40,8 +47,6 @@
       max-width: 500px;
     }
 
-
-
     @media (orientation: landscape) and (max-height: 500px) {
       height: 45vh;
       max-height: 45vh;
@@ -60,11 +65,11 @@
 
     // Landscape: padding más compacto
     @media (orientation: landscape) {
-      padding: 1rem $margen-min 1.5rem;
+      padding: 1rem $margen-min $margen;
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
-      padding: 0.5rem $margen-min 1rem;
+      padding: 0.5rem $margen-min $margen;
     }
 
     h1 {
@@ -75,7 +80,7 @@
       line-height: 1.05;
       margin: 0 0 $margen-cel;
       padding: 0;
-        padding: 0 $margen-min;
+      padding: 0 $margen-min;
     }
 
     .misQuince {
@@ -87,8 +92,8 @@
     }
 
     .fecha {
-      font-family: var(--font-heading, "Italiana"), serif;
-      font-size: clamp(2rem, 7vw, 2.8rem);
+      padding: $margen-min $margen-cel 0;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
       font-weight: 400;
       color: var(--primario, #3d447d);
       line-height: 1.15;
@@ -174,18 +179,25 @@
   max-width: 90%;
   text-align: center;
   padding: 2rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .loadingText {
-  font-family: var(--font-heading, "Italiana"), serif;
   font-size: clamp(2.5rem, 5vw, 5rem);
   font-weight: 300;
   color: var(--primario);
   line-height: 1.4;
   margin: 0 0 3rem;
   letter-spacing: 0.02em;
+  flex: 1 0 70%;
+  text-align: center;
+  width: 60%;
 
   span {
+    font-family: var(--font-heading, "Italiana"), serif;
     display: inline-block;
     opacity: 0.2;
     font-size: clamp(3.5rem, 5vw, 5rem);
@@ -193,6 +205,7 @@
   }
 
   @include cel {
+    width: 90%;
     font-size: clamp(1.8rem, 6vw, 3rem);
     margin: 0 0 2rem;
   }
@@ -211,12 +224,13 @@
   background: transparent !important;
   color: var(--secundario);
 
-  
   border: none !important;
   border-radius: 12px;
-  background: linear-gradient(145deg,
-      color-mix(in srgb, white, var(--terciario) 15%),
-      var(--fondoBurn)) !important;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, white, var(--terciario) 15%),
+    var(--fondoBurn)
+  ) !important;
   box-shadow:
     6px 6px 20px -1px color-mix(in srgb, var(--fondoBurn), black 15%),
     -6px -6px 20px -1px color-mix(in srgb, var(--terciario), white 80%) !important;
@@ -229,16 +243,23 @@
 
 // ─── Animaciones ────────────────────────────────────────────────
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOutScreen {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.7;
     transform: scale(1);
   }

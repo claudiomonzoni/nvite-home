@@ -577,6 +577,7 @@ p{
   }
 
   #riel {
+    padding: 0 0 $margen 0;
     ol {
       list-style: none;
       overflow-x: auto;
@@ -598,11 +599,14 @@ p{
       color: var(--gris);
       padding: $margen;
       width: 22vw;
+      min-height: 30vh;
       font-size: clamp(1rem, 1.5vw, 2vw);
       border-right: 1px solid var(--gris);
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
       border-left: 1px solid transparent;
+      background: linear-gradient(var(--fondo) 0%, #fff 100%);
+      border-left: solid 1px var(--secundario);
       @include cel {
         padding: $margen-cel;
         width: 60vw;
@@ -816,7 +820,7 @@ p{
   .frase {
     color: var(--primario);
     font-family: var(--font-heading), serif;
-    font-size: clamp(3rem, 5vw, 7vw);
+    font-size: clamp(2.3rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-cel $margen-min 0 $margen-min;
     padding: $margen $margen-min;
@@ -980,12 +984,14 @@ p{
     max-width: 800px;
     background: linear-gradient(
       to top,
-      var(--fondoBurn) 0%,
+      var(--secundario) -60%,
       rgba(255, 255, 255, 0.8) 100%
     );
     padding: $margen 1rem;
     text-align: center;
     font-family: $txt, serif;
+    border-bottom-right-radius: 200px;
+    border-bottom-left-radius: 200px;
   }
 
   .bande span {
@@ -1025,6 +1031,7 @@ p{
   .padre img {
     max-width: 200px;
     margin-top: 1rem;
+    border-radius: 100%;
     @extend .sombra;
   }
   // Componente contador (cuenta regresiva)

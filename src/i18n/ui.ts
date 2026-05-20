@@ -97,13 +97,13 @@ export const ui = {
 
     // Hero
     'hero.loading': 'Queremos que seas parte de nuestra boda',
-    'hero.loadingQuince': 'Queremos que seas parte de nuestra celebración de XV años',
+    'hero.loadingQuince': 'Quiero que seas parte de mis XV años',
     'hero.tap': 'Toca para comenzar',
     'hero.wedding.weAreGettingMarried': 'Nos casamos',
     'hero.wedding.invite': 'Deseamos invitarte a <b>celebrar nuestra boda</b>',
     'hero.wedding.celebration': 'A la celebración de nuestra unión',
     'hero.elegant.pleasedToInvite': 'NOS COMPLACE INVITARTE',
-    'hero.quince.honor': 'Tengo el honor de invitarlos a celebrar mis XV años',
+    'hero.quince.honor': 'Mis XV años',
     'hero.quince.date': 'La cita es el día',
     'hero.quince.share': 'y me encantará compartirlo contigo. Con cariño,',
     'hero.passes': 'No. de pases',
