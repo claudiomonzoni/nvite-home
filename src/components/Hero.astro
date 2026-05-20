@@ -21,7 +21,7 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
     <div class="izq anime">
       <div class="bandeja anime">
         <h1>
-          <span>Invitaciones de bodas y Xv años</span> modernas y elegantes
+          <span>Invitaciones digitales de Bodas y Xv años</span> elegantes</br> e interactivas
         </h1>
         <p set:html={description} />
         <div class="cta">
@@ -80,11 +80,16 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
       span {
         color: $acento;
         font-weight: normal;
-        font-size: clamp(1.7rem, 1.4vw, 2.5vw);
+        font-size: clamp(1.4rem, 1.2vw, 1.2vw);
       }
     }
     p {
-      margin: $margen-cel 0;
+      margin: $margen-min 0 $margen-cel;
+      max-width: 80%;
+      @include cel {
+        max-width: 100%;
+        margin: $margen-min 0 $margen-cel;
+      }
     }
     a{
       margin: 0;

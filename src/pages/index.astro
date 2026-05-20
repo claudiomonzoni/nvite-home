@@ -24,14 +24,16 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
   description="Invitaciones digitales para bodas y XV años con confirmación en tiempo real. Panel de control de invitados, envío por WhatsApp. Entrega en 2 días ✓"
 >
   <Hero
-    description="Envía tu invitación personalizada y <b>conoce en tiempo real quién va a tu boda o XV años</b>."
+    description="Personaliza tu invitación digital, envíala fácil y <b>controla tu lista de invitados en tiempo real</b>."
   />
   <div class="grid contenido">
     <Logos />
     <div id="choro">
       <h2>Invitaciones digitales que hacen <b>tu fiesta posible</b></h2>
       <p>
-        Pero invitarlos de la manera tradicional quita tiempo y es caro, <b>Nvitaciones te lo hace fácil</b>, invita en minutos y lleva el control de tus invitados
+        Pero invitarlos de la manera tradicional quita tiempo y es caro, <b
+          >Nvitaciones te lo hace fácil</b
+        >, invita en minutos y lleva el control de tus invitados
       </p>
     </div>
     <!-- <Btn
@@ -42,12 +44,10 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
           >
             <Icon name="mdi:envelope-heart-outline" size={25} />
           </Btn>
-          -->
+          -->z
   </div>
 
-
-
-<!-- <div class="grid contenido">
+  <!-- <div class="grid contenido">
    <OfertaTiempo
      encabezado="<b>Aprovecha 15% </b>de descuento"
      texto="Oferta imperdible. <b>aplica el cupón: NVITAME15</b> a la hora de adquirir tu invitación de boda o 15 años (versión Lux)."
@@ -58,7 +58,7 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
    />
  </div> -->
 
-<!-- <section class="grid contenido">
+  <!-- <section class="grid contenido">
       <div id="video">
         <iframe
         width="560"
@@ -82,18 +82,15 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
     </div>
   </section> -->
 
+  <div class="grid contenido">
+    <Slider />
+  </div>
 
+  <div id="nvitaciones">
+    <MostrarNvitaciones dondeEstoy="home" />
+  </div>
 
-<div class="grid contenido">
-
-  <Slider />
-</div>
-
-<div id="nvitaciones">
-  <MostrarNvitaciones dondeEstoy="home" />
-</div>
-
-<!-- <div class="grid contenido">
+  <!-- <div class="grid contenido">
   <div id="conteCaracteristicas">
     <Caracteristicas
       encabezado="Invita"
@@ -129,17 +126,15 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
   </div>
 </div> -->
 
-<div id="precios" class="grid contenido">
-  <Banner dondeEstoy="home" />
-</div>
+  <div id="precios" class="grid contenido">
+    <Banner dondeEstoy="home" />
+  </div>
 
-
-
-<!-- <Galeriaslide /> -->
-<div class="grid contenido">
-  <BannerGeneral
-    encabezado="Recibes con tu <b>invitación digital</b>"
-    texto={`
+  <!-- <Galeriaslide /> -->
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu <b>invitación digital</b>"
+      texto={`
     <ul>
     <li><b>Trato personalizado.</b></li>
     <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
@@ -155,157 +150,155 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
         <small>*Panel de invitados no aplica en la versión "basic"</small>
         <br>
         `}
-    tema="terciario"
-    icono="mdi:deal"
-    urlImagen="../assets/home/gale/recibes.webp"
-    margenAbajo={true}
-  >
-    <Btn
-      liga="#faq"
-      texto="¿Tienes más dudas?"
-      clases="btn-oscuro"
-      claro={true}
-      blank={false}
+      tema="terciario"
+      icono="mdi:deal"
+      urlImagen="../assets/home/gale/recibes.webp"
+      margenAbajo={true}
     >
-      <Icon name="mdi:comment-question-outline" size={25} />
-    </Btn>
-  </BannerGeneral>
-</div>
-
-
-<Testimonios />
-
-<div class="grid contenido" id="faq">
-  <Faq />
-</div>
-
-
-<CaracteristicasGrid
-  matriz={[
-    {
-      imagen: caracteristicasImg,
-      titulo: "Iniciemos con tus <span>invitaciones</span>",
-      texto:
-        "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
-      txtbtn: "Cotizar ahora",
-      icono: "mdi:account-question-outline",
-      enlace: "#formu",
-    },
-    {
-      imagen: "mdi:infinity",
-      titulo: "Invita sin límites",
-      texto: "Sin cargos extras por número de invitados, invita a todos los que quieras",
-      enlace: "#",
-    },
-    {
-      imagen: "mdi:account-multiple-check-outline",
-      titulo: "Motiva confirmaciones",
-      texto: "Anima a más invitados mostrando en tiempo real quién ya confirmó asistencia",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      titulo: "Control total",
-      texto: "<span>Consulta</span> y gestiona quién asiste a tu evento fácilmente",
-    },
-    {
-      imagen: "mdi:infinity-box",
-      titulo: "Asigna pases",
-      texto: "<span>Asigna</span> pases personalizados por invitación para un control preciso",
-    },
-  ]}
-/>
-
-
-
-
-<section class="grid contenido">
-  <div id="conteCaracteristicas">
-    <Caracteristicas
-      encabezado="contacto"
-      texto="te guiamos <b> en el proceso</b>."
-      icono="mdi:message-processing-outline"
-      fondo="/fondo-nvite-caracteristicas.png"
-      colorBg="#FFF1E1"
-      ;
-    />
-
-    <Caracteristicas
-      encabezado="pago"
-      texto="paga en <b>OXXO o con tu tarjeta bancaria. </b>"
-      icono="mdi:payment"
-      fondo="/fondo-nvite-caracteristicas-2.png"
-      colorBg="#FFF1E1"
-    />
-
-    <Caracteristicas
-      encabezado="detalles"
-      texto="Envíanos los <b> detalles de tu evento. </b>"
-      icono="mdi:connect-without-contact"
-      fondo="fondo-nvite-caracteristicas-3.png"
-      colorBg="#FFF1E1"
-      ;
-    />
-
-    <Caracteristicas
-      encabezado="entrega"
-      texto="En <b>2 días</b> o menos"
-      icono="mdi:package-variant-closed-delivered"
-      fondo="fondo-nvite-caracteristicas-4.png"
-      colorBg="#FFF1E1"
-    />
+      <Btn
+        liga="#faq"
+        texto="¿Tienes más dudas?"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="mdi:comment-question-outline" size={25} />
+      </Btn>
+    </BannerGeneral>
   </div>
-</section>
 
+  <Testimonios />
 
-<section class="grid contenido" id="formulario">
-  <div class="flex">
-    <div class="fondo-formu">
-      <div class="bande">
-        <h3>Empieza a planear tu evento</h3>
-        <p>
-          <b>¿Tienes dudas o pedidos especiales?</b>
-          <br /> contáctanos y hagamos que tu invitación sea perfecta <br />😊
-        </p>
-      </div>
+  <div class="grid contenido" id="faq">
+    <Faq />
+  </div>
 
-      <div id="formu">
-        <form>
-          <!-- <h3>
+  <CaracteristicasGrid
+    matriz={[
+      {
+        imagen: caracteristicasImg,
+        titulo: "Iniciemos con tus <span>invitaciones</span>",
+        texto:
+          "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
+        txtbtn: "Cotizar ahora",
+        icono: "mdi:account-question-outline",
+        enlace: "#formu",
+      },
+      {
+        imagen: "mdi:infinity",
+        titulo: "Invita sin límites",
+        texto:
+          "Sin cargos extras por número de invitados, invita a todos los que quieras",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:account-multiple-check-outline",
+        titulo: "Motiva confirmaciones",
+        texto:
+          "Anima a más invitados mostrando en tiempo real quién ya confirmó asistencia",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        titulo: "Control total",
+        texto:
+          "<span>Consulta</span> y gestiona quién asiste a tu evento fácilmente",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        titulo: "Asigna pases",
+        texto:
+          "<span>Asigna</span> pases personalizados por invitación para un control preciso",
+      },
+    ]}
+  />
+
+  <section class="grid contenido">
+    <div id="conteCaracteristicas">
+      <Caracteristicas
+        encabezado="contacto"
+        texto="te guiamos <b> en el proceso</b>."
+        icono="mdi:message-processing-outline"
+        fondo="/fondo-nvite-caracteristicas.png"
+        colorBg="#FFF1E1"
+        ;
+      />
+
+      <Caracteristicas
+        encabezado="pago"
+        texto="paga en <b>OXXO o con tu tarjeta bancaria. </b>"
+        icono="mdi:payment"
+        fondo="/fondo-nvite-caracteristicas-2.png"
+        colorBg="#FFF1E1"
+      />
+
+      <Caracteristicas
+        encabezado="detalles"
+        texto="Envíanos los <b> detalles de tu evento. </b>"
+        icono="mdi:connect-without-contact"
+        fondo="fondo-nvite-caracteristicas-3.png"
+        colorBg="#FFF1E1"
+        ;
+      />
+
+      <Caracteristicas
+        encabezado="entrega"
+        texto="En <b>2 días</b> o menos"
+        icono="mdi:package-variant-closed-delivered"
+        fondo="fondo-nvite-caracteristicas-4.png"
+        colorBg="#FFF1E1"
+      />
+    </div>
+  </section>
+
+  <section class="grid contenido" id="formulario">
+    <div class="flex">
+      <div class="fondo-formu">
+        <div class="bande">
+          <h3>Empieza a planear tu evento</h3>
+          <p>
+            <b>¿Tienes dudas o pedidos especiales?</b>
+            <br /> contáctanos y hagamos que tu invitación sea perfecta <br />😊
+          </p>
+        </div>
+
+        <div id="formu">
+          <form>
+            <!-- <h3>
           <img src="/whatsapp.png" alt="logo whatsapp">
           <b>whatsapp</b></h3> -->
 
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Tu nombre" />
-          <label for="fecha">Fecha del evento</label>
-          <input type="date" name="fecha" id="fecha" />
-          <label for="evento">Tipo de evento</label>
-          <select name="evento" id="evento">
-            <option value="Boda">Boda</option>
-            <option value="Xv">XV años</option>
-          </select>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" />
+            <label for="fecha">Fecha del evento</label>
+            <input type="date" name="fecha" id="fecha" />
+            <label for="evento">Tipo de evento</label>
+            <select name="evento" id="evento">
+              <option value="Boda">Boda</option>
+              <option value="Xv">XV años</option>
+            </select>
 
-          <Btn
-            liga="#"
-            id="empezar"
-            texto="<b>Enviar</b> ahora"
-            clases="desactivado, btn-oscuro"
-            claro={false}
-            blank={true}
-          >
-            <Icon name="mdi:whatsapp" />
-          </Btn>
-          <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
-        </form>
+            <Btn
+              liga="#"
+              id="empezar"
+              texto="<b>Enviar</b> ahora"
+              clases="desactivado, btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:whatsapp" />
+            </Btn>
+            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<Footer />
+  </section>
+  <Footer />
 </Layout>
 
 <script>
   const mivideoHome = document.getElementById(
-    "video-home-cel"
+    "video-home-cel",
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
 
