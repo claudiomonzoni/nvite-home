@@ -1,6 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Style from "../../estilos/temas/elegante/quince/hero.module.scss";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es-ES' }) {
   const l = {
@@ -15,6 +20,7 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
   const [iniciado, setIniciado] = useState(false);
   const [animandoSalida, setAnimandoSalida] = useState(false);
   const loadingTextRef = useRef(null);
+  const imgRef = useRef(null);
 
   const handleIniciar = () => {
     setAnimandoSalida(true);
@@ -121,6 +127,33 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
     }
   }, [iniciado]);
 
+  // Efecto para mantener la imagen fija al hacer scroll usando GSAP ScrollTrigger con efecto de paralaje y retraso suave
+  useEffect(() => {
+    if (!iniciado || !imgRef.current) return;
+
+    const img = imgRef.current;
+    const parent = img.parentElement;
+
+    const ctx = gsap.context(() => {
+      gsap.to(img, {
+        y: () => parent ? parent.offsetHeight * 0.4 : 0,
+        scale: 1.4,
+        ease: "none",
+        scrollTrigger: {
+          trigger: parent,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.2, // Retraso suave de 1.2 segundos para el efecto inercia
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    return () => {
+      ctx.revert();
+    };
+  }, [iniciado]);
+
   // Formatear fecha
   const fechaFormateada = (() => {
     try {
@@ -163,6 +196,9 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
       )}
 
       <section id={Style["hero"]} className={`contenido opa ${!iniciado ? Style.oculto : ''}`}>
+        <div className={Style.xv}>
+          XV
+        </div>
         {/* SVG clipPath con curva Bézier para el arco suave */}
         <svg width="0" height="0" style={{ position: 'absolute' }}>
           <defs>
@@ -196,7 +232,7 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
 
         {/* Imagen con arco inferior */}
         <div className={Style.imagenPrincipal} id="imagenArco">
-          <img src={cover} alt="cover" />
+          <img ref={imgRef} src={cover} alt="cover" />
         </div>
 
         {/* Contenido de texto centrado */}

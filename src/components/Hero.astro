@@ -1,5 +1,4 @@
 ---
-
 import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
 
@@ -21,7 +20,7 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
     <div class="izq anime">
       <div class="bandeja anime">
         <h1>
-          <span>Invitaciones digitales de Bodas y Xv años</span> elegantes</br> e interactivas
+          <span>Invitaciones digitales de Bodas y Xv años</span> elegantes e interactivas
         </h1>
         <p set:html={description} />
         <div class="cta">
@@ -41,14 +40,8 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
 
     <div class="der anime">
       <picture>
-        <source
-          srcset={coverDesktop.src}
-          media="(min-width: 479px)"
-        />
-        <source
-          srcset={coverMobile.src}
-          media="(max-width: 479px)"
-        />
+        <source srcset={coverDesktop.src} media="(min-width: 479px)" />
+        <source srcset={coverMobile.src} media="(max-width: 479px)" />
         <Image
           src={coverDesktop}
           alt="nvitaciones digitales para eventos bodas y quince años"
@@ -64,34 +57,33 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
   @use "../estilos/_variables.scss" as *;
 
   #hero {
-    background: linear-gradient(45deg, rgba($terciario, 0.4) 0%, rgba($terciario, 1) 100%);
+    background: linear-gradient(
+      45deg,
+      rgba($terciario, 0.4) 0%,
+      rgba($terciario, 1) 100%
+    );
     border-radius: $radio;
     // border-top-left-radius: $margen-min;
     // border-bottom-left-radius: $margen-min;
     display: flex;
     margin-top: 6rem;
- 
+
     h1 {
       width: 100%;
       color: $primario;
       font-size: clamp(2rem, 3.6vw, 6vw);
-      line-height: .9;
-      
+      line-height: 0.9;
+
       span {
         color: $acento;
         font-weight: normal;
-        font-size: clamp(1.4rem, 1.2vw, 1.2vw);
+        font-size: clamp(1.7rem, 1.4vw, 2.5vw);
       }
     }
     p {
-      margin: $margen-min 0 $margen-cel;
-      max-width: 80%;
-      @include cel {
-        max-width: 100%;
-        margin: $margen-min 0 $margen-cel;
-      }
+      margin: $margen-cel 0;
     }
-    a{
+    a {
       margin: 0;
     }
     // @extend .sombra;
@@ -130,9 +122,8 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
         }
       }
     }
-       
-      
-      @include cel {
+
+    @include cel {
       margin-top: 13rem;
       border-radius: 1.5rem;
       flex-wrap: wrap;
@@ -146,7 +137,7 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
       }
     }
   }
- .cta {
+  .cta {
     display: flex;
     justify-content: left;
     align-items: center;
@@ -171,4 +162,3 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
     font-family: "Montserrat Alternates", sans-serif;
   }
 </style>
-
