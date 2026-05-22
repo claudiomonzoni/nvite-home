@@ -47,8 +47,8 @@ import Analytics from "@vercel/analytics/astro";
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "Invitaciones Digitales - Nvitaciones",
-        "url": "https://www.nvitaciones.com",
-        "logo": "https://www.nvitaciones.com/nvita-logo.svg",
+        "url": "https://nvitaciones.com",
+        "logo": "https://nvitaciones.com/nvita-logo.svg",
         "image": [
           "https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp"
         ],
@@ -181,7 +181,9 @@ import Analytics from "@vercel/analytics/astro";
   </noscript>
   <!-- End Facebook Pixel Code -->
   <body>
-    <slot />
+    <main id="main-content">
+      <slot />
+    </main>
     <Analytics />
     <script src="../js/reserva.js"></script>
     <script src="../js/globals.ts"></script>

@@ -100,6 +100,31 @@ import "../../estilos/quince/redireccion.scss";
         <meta property="og:image:type" content="image/webp" />
         <meta name="twitter:card" content="summary_large_image" />
 
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Invitaciones Digitales - Nvitaciones",
+                "url": "https://nvitaciones.com",
+                "logo": "https://nvitaciones.com/nvita-logo.svg",
+                "sameAs": [
+                    "https://www.facebook.com/nvitaciones",
+                    "https://www.instagram.com/nvitaciones"
+                ],
+                "description": "¡Que tu celebración sea inolvidable!, transforma las invitaciones de tu evento en una experiencia única con las invitaciones digitales de nvitaciones.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "México",
+                    "addressCountry": "MX"
+                },
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+5217551132468",
+                    "contactType": "customer service"
+                }
+            }
+        </script>
+
         <!-- Fuentes personalizadas de Google Fonts -->
         {fontLinks.map((link) => <link rel="stylesheet" href={link} />)}
 
@@ -129,7 +154,9 @@ import "../../estilos/quince/redireccion.scss";
 </script> -->
 
     <body>
-        <slot />
+        <main id="main-content">
+            <slot />
+        </main>
     </body>
 </html>
 
