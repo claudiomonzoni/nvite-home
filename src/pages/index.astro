@@ -302,10 +302,14 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
 
-  play.addEventListener("click", playPause);
+  if (play && mivideoHome) {
+    play.addEventListener("click", playPause);
+  }
 
   function playPause() {
-    if (mivideoHome.paused) mivideoHome.play();
-    else mivideoHome.pause();
+    if (mivideoHome) {
+      if (mivideoHome.paused) mivideoHome.play();
+      else mivideoHome.pause();
+    }
   }
 </script>

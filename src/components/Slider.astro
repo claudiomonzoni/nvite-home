@@ -4,16 +4,10 @@
 // como encabezados y parrafos.
 // para iniciar con el prototipo del slider, iniciemos con solo textos, luego agregamos los lotties
 
-import lottieSlide1 from "../../public/sliders/home/slide-1.json";
-import lottieSlide2 from "../../public/sliders/home/slide-2.json";
-import lottieSlide3 from "../../public/sliders/home/slide-3.json";
-import lottieSlide4 from "../../public/sliders/home/slide-4.json";
-import lottieSlide5 from "../../public/sliders/home/slide-5.json";
-
 interface Slide {
   title: string;
   description: string;
-  lottieData?: any;
+  lottiePath?: string;
 }
 
 const slides: Slide[] = [
@@ -21,29 +15,29 @@ const slides: Slide[] = [
     title: "Fáciles de enviar, imposibles de ignorar",
     description:
       "Compártelas por WhatsApp, redes o correo. Sin descargas, sin complicaciones.",
-    lottieData: lottieSlide1,
+    lottiePath: "/sliders/home/slide-1.json",
   },
   {
     title: "Tú tienes el control, no el estrés",
     description:
       "Agrega pases, revisa quién confirma y olvídate de las sorpresas.",
-      lottieData: lottieSlide2,
+    lottiePath: "/sliders/home/slide-2.json",
   },
   {
     title: "Cada “sí voy” queda registrado",
     description:
       "Tus invitados confirman y tú lo ves todo desde un solo panel.",
-      lottieData: lottieSlide3,
+    lottiePath: "/sliders/home/slide-3.json",
   },
   {
     title: "No son genéricas. Son para quienes más importan",
     description: "Personaliza mensajes y crea una invitación con significado.",
-    lottieData: lottieSlide4,  
+    lottiePath: "/sliders/home/slide-4.json",
   },
   {
     title: "Más que una invitación, una experiencia",
     description: "Diseño, emoción y tecnología para un día irrepetible.",
-    lottieData: lottieSlide5
+    lottiePath: "/sliders/home/slide-5.json",
   },
 ];
 ---
@@ -59,10 +53,10 @@ const slides: Slide[] = [
               <h2 class="slide-title animate">{slide.title}</h2>
               <p class="slide-description animate">{slide.description}</p>
             </div>
-            {slide.lottieData && (
+            {slide.lottiePath && (
               <div
                 class="lottie-container"
-                data-lottie-data={JSON.stringify(slide.lottieData)}
+                data-lottie-path={slide.lottiePath}
                 data-lottie-index={index}
               />
             )}
@@ -436,7 +430,7 @@ margin-top: $margen;
 </style>
 
 <script>
-  import lottie from "lottie-web";
+  import lottie from "lottie-web/build/player/lottie_light";
 
   let currentSliderInstance: AppleSlider | null = null;
 
@@ -484,22 +478,19 @@ margin-top: $margen;
       const lottieContainers = document.querySelectorAll(".lottie-container");
 
       for (const container of lottieContainers) {
-        const dataAttr = container.getAttribute("data-lottie-data");
+        const path = container.getAttribute("data-lottie-path");
         const index = parseInt(
           container.getAttribute("data-lottie-index") || "0",
         );
 
-        if (dataAttr) {
+        if (path) {
           try {
-            // Parse the JSON data from the data attribute
-            const animationData = JSON.parse(dataAttr);
-
             const animation = lottie.loadAnimation({
               container: container as HTMLElement,
               renderer: "svg",
               loop: false,
               autoplay: false,
-              animationData: animationData,
+              path: path,
             });
 
             this.lottieAnimations.set(index, animation);
