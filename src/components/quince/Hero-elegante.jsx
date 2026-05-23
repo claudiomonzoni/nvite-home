@@ -105,19 +105,19 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
         if (contenido) {
           contenido.classList.remove("opa");
 
-          gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0.2 });
+          gsap.from(".contenido", { opacity: 0, y: -30, duration: 1, delay: 0 });
 
           const tl = gsap.timeline();
           tl.from("#imagenArco", {
             opacity: 0,
             y: -30,
-            delay: 1.5,
+            delay: 1,
             duration: 1,
             ease: "power4.out",
           });
           tl.from("#centro *", {
             opacity: 0,
-            y: -30,
+            y: 30,
             duration: 1,
             ease: "power4.out",
             stagger: { amount: 0.5 },
@@ -136,9 +136,9 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
 
     const ctx = gsap.context(() => {
       gsap.to(img, {
-        y: () => parent ? parent.offsetHeight * 0.4 : 0,
-        scale: 1.4,
-        ease: "none",
+        y: () => parent ? parent.offsetHeight * 0.7 : 0,
+        scale: 1.7,
+        //ease: "none",
         scrollTrigger: {
           trigger: parent,
           start: "top top",

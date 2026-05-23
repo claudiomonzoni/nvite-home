@@ -19,7 +19,7 @@
 
 #hero {
   position: relative;
-  min-height: 100dvh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,6 +44,7 @@
     // Referencia al <clipPath> SVG inline del componente
     clip-path: url(#arcoInferior);
     overflow: hidden;
+    will-change: transform;
 
     img {
       width: 100%;
@@ -54,7 +55,7 @@
     }
 
     @include cel {
-      height: 65dvh;
+      height: 65svh;
     }
 
     @include nocel {
