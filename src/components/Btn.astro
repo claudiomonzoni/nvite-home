@@ -40,6 +40,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     text-align: center;
     max-width: fit-content;
     font-weight: 400;
+   // padding-top: 10px;
     :global(svg){
       color: currentColor !important;
       fill: currentColor !important;
@@ -51,15 +52,15 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   }
 
   .btn-claro {
-    background-color: $primario;
-    color: $fondoGlobal;
-   
+    background-color: $fondo;
+    color: $primario;
+   @extend .sombra;
     @include btn;
   }
   .btn-oscuro {
     background-color: $secundario;
     color: white;
-    font-weight: 200!important;
+  
     svg {
         color: currentColor !important;
       fill: currentColor !important;

@@ -8,7 +8,7 @@ interface Props {
   tema?: string;
   icono?: string;
   izquierda?: boolean;
-  urlImagen: string;
+  urlImagen?: string;
   margenAbajo?: boolean;
   valorBoton?: string;
 }
@@ -27,8 +27,9 @@ const {
 const imagen = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"
 );
-if (!imagen[urlImagen])
+if (urlImagen && !imagen[urlImagen])
   throw new Error(`"${urlImagen}" no existe wey, checale bien"`);
+const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
 ---
 
 <div
@@ -44,9 +45,11 @@ if (!imagen[urlImagen])
       <slot />
     </div>
   </div>
-  <div class:list={["imagen", { izq: izquierda }]}>
-    <Image src={imagen[urlImagen]()} alt={encabezado} />
-  </div>
+  {imagenCargada && (
+    <div class:list={["imagen", { izq: izquierda }]}>
+      <Image src={imagenCargada} alt={encabezado} />
+    </div>
+  )}
 </div>
 
 <style lang="scss">

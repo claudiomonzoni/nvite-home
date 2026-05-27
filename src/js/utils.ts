@@ -63,10 +63,21 @@ export const dispatchCartUpdateEvent = () => {
 
 /**
  * Generates a random number for sales or returns a default
- * @returns A number between 0 and 5
+ * @returns A number between 0 and 20
  */
 export const generateRandomSales = (): number => {
-  return Math.floor(Math.random() * 6); // 0 to 5 (inclusive)
+  const min = 5;
+  const max = 20;
+  // Probability to actually show a number (e.g. 0.7 = 70% chance)
+  const showProbability = 0.8;
+
+  // Decide whether to show a number or not
+  if (Math.random() > showProbability) {
+    return 0; // will hide the message because page checks for > 0
+  }
+
+  // random integer between min and max inclusive
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 /**

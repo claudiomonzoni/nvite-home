@@ -137,7 +137,7 @@ const productId = product.data.id;
       />
     </div>
 
-    <div id="producto-conte">
+    <div id="producto-conte" data-category={nvitacionInfo?.categoria?.toLowerCase() ?? ''}>
       <div id="izq">
         <div id="fix">
           <div class="gallery-container">
@@ -199,10 +199,10 @@ const productId = product.data.id;
             {
               nvitacionInfo && (
                 <>
-                  {nvitacionInfo.categoria && (
+                  {/* {nvitacionInfo.categoria && (
                     <li>Categoría: {nvitacionInfo.categoria}</li>
-                  )}
-                  {nvitacionInfo.tipo && <li>Tipo: {nvitacionInfo.tipo}</li>}
+                  )} */}
+                  {/* {nvitacionInfo.tipo && <li>Tipo: {nvitacionInfo.tipo}</li>} */}
                   {nvitacionInfo.version && (
                     <li>Versión: {nvitacionInfo.version}</li>
                   )}
@@ -212,23 +212,25 @@ const productId = product.data.id;
           </ul>
           <!-- <p>{product.data.id}</p> -->
           <h1>{product.data.name}</h1>
-          <p>{product.data.description}</p>
 
-          <p id="vendidos"></p>
-          {
-            nvitacionInfo?.precioTachado && (
-            <p class="precioTachado">
+            <div id="precio">
+         <div class="bandejaPrecio">
+
+           {
+             nvitacionInfo?.precioTachado && (
+               <p class="precioTachado">
             {priceTachado + "."}<sup>00</sup>
           </p>
             )}
          
-          
-          <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
-          {
-            nvitacionInfo && nvitacionInfo.detalles && (
-                <div id="detalles" set:html={nvitacionInfo.detalles}></div>
-              )
-             }
+         
+         <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
+         {
+           nvitacionInfo && nvitacionInfo.detalles && (
+             <div id="detalles" set:html={nvitacionInfo.detalles}></div>
+            )
+          }
+          </div>
 
           {
             nvitacionInfo && nvitacionInfo.muestra && (
@@ -237,18 +239,81 @@ const productId = product.data.id;
                   <Btn
                     id="preview-btn"
                     liga="#"
-                    texto="<b>Ver Nvitación</b> muestra"
+                    texto="<b>Ver Nvitación muestra</b>"
                     icono="mdi:chevron-right"
                     clases="btn-oscuro"
                     claro={false}
-                  />
+                    />
+
                 </div>
                 <PreviewModal url={nvitacionInfo.muestra} />
               </>
             )
           }
 
+         </div>
+         
+          <p>{product.data.description}</p>
+
           <div id="datosjson">
+     
+
+            {nvitacionInfo.version === 'Esencial' ? (
+              null
+            ) : nvitacionInfo.version === 'Clásica' ? (
+              <div class="BannerGeneralProducto">
+                <BannerGeneral
+                  encabezado="Confirmación de asistencia"
+                  texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+                  tema="secundario azul"
+                  icono="mdi:archive-clock-outline"
+                  izquierda={true}
+                />
+
+                <div id="conteCaracteristicas">
+                  <Caracteristicas
+                    encabezado="mapas"
+                    texto="Tus invitados sabrán exactamente como llegar."
+                    icono="mdi:map-check"
+                    fondo="/fondo-nvite-caracteristicas.png"
+                  />
+                  <Caracteristicas
+                    encabezado="música"
+                    texto="Crea ambiente con música y comparte la emoción del evento."
+                    icono="mdi:music-note-outline"
+                    fondo="/fondo-nvite-caracteristicas.png"
+                  />
+                </div>
+              </div>
+            ) : nvitacionInfo.version === 'Lux' ? (
+              <div class="BannerGeneralProducto">
+                <BannerGeneral
+                  encabezado="Experiencia premium"
+                  texto="Tu invitación contará con soporte VIP y detalles exclusivos en cada paso."
+                  tema="secundario morado"
+                  icono="mdi:star-outline"
+                  izquierda={true}
+                />
+
+                <div id="conteCaracteristicas">
+                  <Caracteristicas
+                    encabezado="diseño exclusivo"
+                    texto="Un estilo único pensado para destacar tu evento desde la primera impresión."
+                    icono="mdi:pencil-ruler"
+                    fondo="/fondo-nvite-caracteristicas.png"
+                  />
+                  <Caracteristicas
+                    encabezado="soporte prioritario"
+                    texto="Atención rápida y personalizada para tu invitación Lux."
+                    icono="mdi:headset"
+                    fondo="/fondo-nvite-caracteristicas.png"
+                  />
+                </div>
+              </div>
+            ) : null}
+ 
+
+
             {
               nvitacionInfo && (
                 <div class="info-adicional">
@@ -283,19 +348,13 @@ const productId = product.data.id;
               )
             }
           </div>
+
+          
+       
+
         </div>
 
         <div class="buttons-container">
-          <Btn
-            data-cart
-            data-action="increment"
-            data-productid={product.data.id}
-            liga="#"
-            texto="Agregar al carrito"
-            clases="btn-oscuro"
-            claro={false}
-            icono="mdi:cart-plus"
-          />
           <Btn
             data-cart
             data-action="buy-now"
@@ -306,9 +365,19 @@ const productId = product.data.id;
             icono="mdi:cart-check"
             claro={true}
           />
+          <Btn
+            data-cart
+            data-action="increment"
+            data-productid={product.data.id}
+            liga="#"
+            texto="Guardar en carrito"
+            clases="btn-bordes"
+            claro={false}
+            icono="mdi:cart-plus"
+          />
           <div id="ahora">
             <p>
-              <b>Compra ahora y recibe tu invitación</b>a más tardar el {
+              <b>Compra ahora y agenda tu invitación sin preocupaciones.</b> Fecha estimada de entrega: {
                 calculateDeliveryDate()
               }
             </p>
@@ -321,60 +390,9 @@ const productId = product.data.id;
             title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
           />
         </div>
+        
       </div>
     </div>
-
-       {
-    //   nvitacionInfo.version === 'Esencial' ? (
-    //     null
-    //   ) : (
-    //      nvitacionInfo && nvitacionInfo.muestra && (
-    //       <div class="BannerGeneralProducto">
-    //         <BannerGeneral
-    //           encabezado="Confirmación de asistencia"
-    //           texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
-    //           tema="secundario azul"
-    //           icono="mdi:archive-clock-outline"
-    //           urlImagen="../assets/home/gale/confirmacion.webp"
-    //           izquierda={true}
-    //         >
-    //         </BannerGeneral>
-
-    //             <div id="conteCaracteristicas">
-    //   <Caracteristicas
-    //     encabezado="Invitación con mapas"
-    //     texto="Tus invitados sabrán exactamente como llegar."
-    //     icono="mdi:map-check"
-    //     fondo="/fondo-nvite-caracteristicas.png"
-    //   />
-
-    //   <Caracteristicas
-    //     encabezado="Invitación con mesa de regalos"
-    //     texto="Sugiere que te gustaría de regalo."
-    //     icono="mdi:gift-open"
-    //     fondo="/fondo-nvite-caracteristicas-2.png"
-    //   />
-
-    //   <Caracteristicas
-    //     encabezado="Invitación con itinerario"
-    //     texto="Lista cada momento importante de tu evento"
-    //     icono="mdi:gift-open"
-    //     fondo="fondo-nvite-caracteristicas-3.png"
-    //   />
-
-    //   <!-- <Caracteristicas
-    //     encabezado="animacón"
-    //     texto="Agrega hasta 6 fotos."
-    //     icono="/ico-nvite-fotos.svg"
-    //     fondo="fondo-nvite-caracteristicas-4.png"
-    //   /> -->
-    // </div>
-    //       </div>
-  
-  
-    //   )
-    //  )
-     }
 
   
 
@@ -394,7 +412,7 @@ const productId = product.data.id;
 
   #preview-btn{
     background: $acento;
-    border-radius: 100px;
+      @extend .sombra;
   }
   #detalles{
 
@@ -409,7 +427,7 @@ const productId = product.data.id;
   .breadcrumb-container {
     margin-top: 7rem;
     @include cel {
-      margin-top: 12rem;
+      margin-top: 8rem;
     }
   }
 
@@ -463,7 +481,7 @@ const productId = product.data.id;
       }
       @include cel {
         height: auto;
-        padding: $margen-min;
+        padding: 0 !important;
         justify-content: center;
         border-radius: calc($radio + 0.7rem);
         a{
@@ -474,11 +492,13 @@ const productId = product.data.id;
       }
     }
     .buttons-container {
+    position: sticky;
+    top: 4rem;
       display: grid;
       align-self: flex-start;
       background: white;
       border-radius: $radio;
-      padding: $margen-min;
+      padding: calc($margen-min + 10px) $margen-min $margen-min;
       @extend .sombra;
 
       a {
@@ -511,22 +531,40 @@ const productId = product.data.id;
     border-bottom: solid 1px $primario;
   }
 
+
+  //contenedor de precio
+  #precio {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    align-items: center;
+    gap: 1.5rem;
+      @include cel {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+  }
+  
   .price, .precioTachado {
     font-size: 1.5rem;
     font-weight: bold;
     color: $primario;
-
     sup {
       font-size: 0.5em;
       vertical-align: super;
     }
+    @include cel {
+      padding: 0 $margen-min;
+    }
   }
   .precioTachado{
-    font-size: 1rem;
+
+    font-size: 0.9rem;
     color:$acento;
-    margin: 0;
     text-decoration: line-through;
-    transform: translateY(70%);
+
+    margin: 0;
   }
 
   // Gallery styles
@@ -623,8 +661,6 @@ const productId = product.data.id;
     color: $acento;
     font-size: 0.8rem;
     gap: 0.7rem;
-    margin-top: 1rem;
-    padding-top: 1rem;
     border-top: 1px solid #e9ecef;
 
     li {
@@ -667,9 +703,14 @@ const productId = product.data.id;
   }
 
   // Utility styles
-  #vendidos {
+  :global(#vendidos) {
     font-size: 0.8rem;
     color: $gris;
+    padding: 0.5rem;
+    border-top: solid 1px $gris;
+    border-bottom: solid 1px $gris;
+    display: flex;
+    align-items: center;
   }
 
   #terminos {
@@ -717,12 +758,11 @@ const productId = product.data.id;
 
     // Manejo de ventas aleatorias
     initializeSalesMessage() {
-      const vendidosDiv = document.getElementById("vendidos");
       const productId = document
         .querySelector("[data-productid]")
         ?.getAttribute("data-productid");
 
-      if (!vendidosDiv || !productId) return;
+      if (!productId) return;
 
       const cookieKey = `sales_${productId}`;
       const existingNumber = document.cookie
@@ -741,9 +781,32 @@ const productId = product.data.id;
       }
 
       if (salesNumber > 0) {
-        vendidosDiv.innerHTML = `<b>${salesNumber} Nvitaciones vendidas</b> en el último mes.`;
-      } else {
-        vendidosDiv.innerHTML = "";
+        const productContainer = document.getElementById('producto-conte');
+        const category = (productContainer?.dataset?.category || '').toLowerCase();
+
+        let subject = 'parejas';
+        if (category.includes('quince')) {
+          subject = 'quinceañeras';
+        } else if (category.includes('boda') || category.includes('bodas')) {
+          subject = 'parejas';
+        }
+
+        const vendidosDiv = document.createElement('p');
+        vendidosDiv.id = 'vendidos';
+        vendidosDiv.innerHTML = `<b>${salesNumber} ${subject} han confiado en esta invitación en el último mes.</b>`;
+
+        const descriptionP = document.querySelector('#precio + p') || document.querySelector('#titulo p');
+        if (descriptionP && descriptionP.parentNode) {
+          descriptionP.parentNode.insertBefore(vendidosDiv, descriptionP.nextSibling);
+        } else {
+          const precio = document.getElementById('precio');
+          if (precio && precio.parentNode) {
+            precio.parentNode.insertBefore(vendidosDiv, precio);
+          } else {
+            const titulo = document.getElementById('titulo');
+            titulo?.appendChild(vendidosDiv);
+          }
+        }
       }
     }
 
