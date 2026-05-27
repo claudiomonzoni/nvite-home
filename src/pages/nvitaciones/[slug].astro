@@ -264,7 +264,7 @@ const productId = product.data.id;
               <div class="BannerGeneralProducto">
                 <BannerGeneral
                   encabezado="Confirmación de asistencia"
-                  texto="Tus invitados sabrán exactamente cuantos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+                  texto="¡No pierdas el control! Descubre en tiempo real quién asistirá y permite que tus invitados confirmen su asistencia <b>desde la misma invitación.</b>"
                   tema="secundario azul"
                   icono="mdi:archive-clock-outline"
                   izquierda={true}
@@ -278,8 +278,8 @@ const productId = product.data.id;
                     fondo="/fondo-nvite-caracteristicas.png"
                   />
                   <Caracteristicas
-                    encabezado="música"
-                    texto="Crea ambiente con música y comparte la emoción del evento."
+                    encabezado="pases"
+                    texto="Mentén el control asignando pases a cada invitación."
                     icono="mdi:music-note-outline"
                     fondo="/fondo-nvite-caracteristicas.png"
                   />
@@ -288,8 +288,8 @@ const productId = product.data.id;
             ) : nvitacionInfo.version === 'Lux' ? (
               <div class="BannerGeneralProducto">
                 <BannerGeneral
-                  encabezado="Experiencia premium"
-                  texto="Tu invitación contará con soporte VIP y detalles exclusivos en cada paso."
+                  encabezado="Experiencia inolvidable"
+                  texto="Tu invitación contará con música y mensajes personalizados, cada <b>invitación será especial</b>."
                   tema="secundario morado"
                   icono="mdi:star-outline"
                   izquierda={true}
@@ -297,14 +297,14 @@ const productId = product.data.id;
 
                 <div id="conteCaracteristicas">
                   <Caracteristicas
-                    encabezado="diseño exclusivo"
-                    texto="Un estilo único pensado para destacar tu evento desde la primera impresión."
+                    encabezado="diseño"
+                    texto="Un estilo único que se adapta a tu evento en colores, frases y tipografía."
                     icono="mdi:pencil-ruler"
                     fondo="/fondo-nvite-caracteristicas.png"
                   />
                   <Caracteristicas
-                    encabezado="soporte prioritario"
-                    texto="Atención rápida y personalizada para tu invitación Lux."
+                    encabezado="soporte"
+                    texto="Te acompañamos en todo el proceso, desde la compra hasta que invites."
                     icono="mdi:headset"
                     fondo="/fondo-nvite-caracteristicas.png"
                   />
@@ -389,21 +389,34 @@ const productId = product.data.id;
             url={Astro.url.toString()}
             title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
           />
+
+          <div id="quesucede">
+            <input type="checkbox" id="quesucede-toggle" class="quesucede-toggle" />
+            <label for="quesucede-toggle" class="quesucede-label">¿Que sucede despues de mi compra?</label>
+            <ul class="quesucede-content">
+              <li>Nos contactamos y te enviamos un formulario para que nos hagas llegar imagenes y datos de tu evento</li>
+              <li>Te damos acceso a tu panel de invitados y podrás generar todas tus invitaciones</li>
+              <li>Te mostramos tu invitación con los datos y fotos de tu evento y podrás hacer ajustes hasta en 2 tandas</li>
+            </ul>
+          </div>
         </div>
         
       </div>
     </div>
 
   
-
-    <RelatedProducts
-      currentProductId={product.id}
-      category={nvitacionInfo?.categoria ||
-        product.data.metadata?.Categoria ||
-        ""}
-    />
   </div>
   <Testimonios />
+
+
+  <div class="grid contenido">  
+    <RelatedProducts
+    currentProductId={product.id}
+    category={nvitacionInfo?.categoria ||
+      product.data.metadata?.Categoria ||
+      ""}
+  />
+</div>
   <Footer />
 </Layout>
 
@@ -734,12 +747,60 @@ const productId = product.data.id;
       flex-direction: column;
     }
   }
+
+  #quesucede {
+    font-size: .9rem;
+    color: $gris;
+  }
+
+  .quesucede-toggle {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .quesucede-label {
+    display: inline-block;
+    color: $gris;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    font-size: .9rem;
+     @include cel {
+      font-size: .8rem;
+    }
+  }
+
+  .quesucede-content {
+    margin-top: 0.5rem;
+    padding-left: 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+  }
+
+  .quesucede-content li {
+    margin-bottom: 0.5rem;
+    color: $gris;
+    font-size: .8rem;
+  }
+
+  .quesucede-toggle:checked + .quesucede-label + .quesucede-content {
+    max-height: 500px;
+    opacity: 1;
+  }
 </style>
 
 <script>
   import { generateRandomSales } from "../../js/utils";
 
   class ProductPage {
+    private initialized = false;
+
     constructor() {
       // Inicializar cuando el documento esté listo
       document.addEventListener("astro:page-load", () => this.init());
@@ -749,6 +810,9 @@ const productId = product.data.id;
     }
 
     init() {
+      if (this.initialized) return;
+      this.initialized = true;
+
       this.initializeSalesMessage();
       this.initializeBuyNowButtons();
       this.initializeGallery();
@@ -758,6 +822,8 @@ const productId = product.data.id;
 
     // Manejo de ventas aleatorias
     initializeSalesMessage() {
+      if (document.getElementById('vendidos')) return;
+
       const productId = document
         .querySelector("[data-productid]")
         ?.getAttribute("data-productid");
