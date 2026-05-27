@@ -41,6 +41,7 @@ export const ui = {
     
     // Regalos
     'gifts.cash': 'Lluvia de Sobres',
+    'gifts.cashMessage': 'Si así lo deseas, puedes darnos el regalo en efectivo, el cual podrán colocar en un sobre',
     'gifts.transfer': 'Transferencia',
     'gifts.stores': 'Mesa de Regalos',
     'gifts.bank': 'Banco',
@@ -178,6 +179,7 @@ export const ui = {
     
     // Regalos
     'gifts.cash': 'Cash Gift',
+    'gifts.cashMessage': 'If you wish, you can give us the gift in cash, which you can place in an envelope.',
     'gifts.transfer': 'Bank Transfer',
     'gifts.stores': 'Gift Registry',
     'gifts.bank': 'Bank',

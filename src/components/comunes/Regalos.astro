@@ -39,7 +39,7 @@ const l = {
   cash: labels.cash || "Lluvia de sobres",
   cashMessage:
     labels.cashMessage ||
-    "Preferimos que los presentes que deseen hacernos sean en efectivo, los cuales podrán colocar en un sobre",
+    "Si así lo deseas, puedes darnos el regalo en efectivo, el cual podrán colocar en un sobre",
   transfers: labels.transfers || "Transferencias:",
   beneficiary: labels.beneficiary || "Beneficiario",
   bank: labels.bank || "Banco",
@@ -64,8 +64,8 @@ import Anchor from "../comunes/Anchor.astro";
             clases={"large"}
             conBorde={true}
             redondo={false}
-            sombra={true}
-            tema={"primario"}
+            neumorfismo={true}
+    
             texto={mesa.titulo}
           />
         ))}

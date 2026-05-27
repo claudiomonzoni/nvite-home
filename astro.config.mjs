@@ -20,6 +20,7 @@ export default defineConfig({
       prefixDefaultLocale: false
     }
   },
+  devToolbar: { enabled: false },
   integrations: [
     sitemap({
       filter: (page) => {

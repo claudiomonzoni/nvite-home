@@ -381,24 +381,24 @@ const productId = product.data.id;
                 calculateDeliveryDate()
               }
             </p>
-            <a id="terminos" href="/terminos-condiciones"
-              >ver terminos y condiciones</a
-            >
           </div>
-          <SocialShare
-            url={Astro.url.toString()}
-            title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
-          />
-
+          
           <div id="quesucede">
             <input type="checkbox" id="quesucede-toggle" class="quesucede-toggle" />
             <label for="quesucede-toggle" class="quesucede-label">¿Qué sucede después de tu compra?</label>
             <ul class="quesucede-content">
               <li><b>Te escribimos</b> a la brevedad y te enviamos un formulario para recopilar las fotos y detalles de tu evento</li>
               <li><b>Obtienes acceso</b> a tu panel de invitados para generar y gestionar todas tus invitaciones</li>
-              <li><b>Revisas tu invitación personalizada</b> y puedes solicitar cambios en hasta 2 rondas de ajustes</li>
+              <li><b>Revisas tu invitación personalizada</b> y puedes solicitar cambios hasta en 2 rondas de ajustes</li>
             </ul>
           </div>
+          <a id="terminos" href="/terminos-condiciones"
+          >ver terminos y condiciones</a
+          >
+          <SocialShare
+          url={Astro.url.toString()}
+          title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
+          />
         </div>
         
       </div>

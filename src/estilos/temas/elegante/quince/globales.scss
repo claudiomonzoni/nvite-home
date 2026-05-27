@@ -34,8 +34,6 @@
     }
 
     margin: 0 !important;
-
-  
   }
 
   // Reinicios globales
@@ -140,16 +138,20 @@
 
   .fondo-mitad {
     background: var(--fondoBurn);
-    background: linear-gradient(0deg,
-        var(--fondoBurn) 88%,
-        rgba(255, 255, 255, 0) 88%,
-        rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+      0deg,
+      var(--fondoBurn) 88%,
+      rgba(255, 255, 255, 0) 88%,
+      rgba(255, 255, 255, 0) 100%
+    );
 
     @include cel {
-      background: linear-gradient(0deg,
-          var(--fondoBurn) 80%,
-          rgba(255, 255, 255, 0) 100%,
-          rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(
+        0deg,
+        var(--fondoBurn) 80%,
+        rgba(255, 255, 255, 0) 100%,
+        rgba(255, 255, 255, 0) 100%
+      );
     }
   }
 
@@ -216,9 +218,17 @@
 
     @for $i from 1 through 10 {
       img:nth-child(#{$i}) {
-        transform: rotate(math.max(math.min((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg,
-                $max ),
-              -$max ));
+        transform: rotate(
+          math.max(
+            math.min(
+              (math.random() * 2 - 1) *
+                math.random(math.div($max, 1deg)) *
+                1deg,
+              $max
+            ),
+            -$max
+          )
+        );
       }
     }
 
@@ -313,7 +323,6 @@
     }
   }
 
-
   //audio fixed comunes
 
   .fixed-bottom-bar {
@@ -330,7 +339,9 @@
     -webkit-backdrop-filter: var(--glass-blur, blur(10px));
 
     padding: $margen-min $margen-cel;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     opacity: 0;
     pointer-events: none;
   }
@@ -391,7 +402,9 @@
     cursor: pointer;
     text-decoration: none;
     padding: 0;
-    transition: opacity 0.2s ease, transform 0.1s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.1s ease;
   }
 
   .action-btn:hover {
@@ -417,7 +430,11 @@
     display: flex;
     position: relative;
     align-items: center;
-
+    #mapa1,
+    #mapa2 {
+      border-radius: $radio;
+      border: solid 1px var(--secundario);
+    }
     .izq {
       flex: 1.3;
       height: auto;
@@ -488,14 +505,13 @@
       }
     }
 
-
     @include cel {
       flex-wrap: wrap;
 
       .izq,
       .der {
         flex: 1 0 100%;
-        margin-top: 3rem;
+        // margin-top: 3rem;
       }
 
       .izq {
@@ -651,13 +667,27 @@
     gap: $margen-min;
     margin: $margen 0;
     flex-wrap: wrap;
+    @include cel {
+      gap: 0;
+    }
   }
 
   .carta {
     aspect-ratio: 1/1;
     flex: 1;
     text-align: center;
-    background: var(--fondoBurn);
+    background: linear-gradient(#ffffff 0%, var(--secundario) 200%);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $margen;
+    position: relative;
+    font-size: clamp(1.3rem, 1.3vw, 2vw);
 
     &::before {
       content: "";
@@ -669,16 +699,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--gris);
-    padding: $margen-min;
-    position: relative;
-    font-size: clamp(1.3rem, 1.3vw, 2vw);
-
     li {
       list-style: none;
       padding-bottom: $margen-min;
@@ -697,7 +717,7 @@
 
     h3 {
       width: fit-content;
-      color: var(--secundario);
+      color: var(--primario);
       border-bottom: solid 0.5px var(--primario);
       margin: $margen-min 0;
       font-size: clamp(2.5rem, 1.6vw, 3rem);
@@ -713,30 +733,15 @@
       margin: 0 auto;
     }
 
-    @extend .sombra;
-
     @include cel {
       flex: 1 0 auto;
+      padding: $margen-cel $margen-cel;
+      margin: 0;
     }
 
     .icono {
       svg {
         color: var(--acento) !important;
-      }
-
-      path,
-      svg path {
-        fill: var(--acento) !important;
-      }
-
-      circle,
-      svg circle {
-        fill: var(--acento) !important;
-      }
-
-      polygon,
-      svg polygon {
-        fill: var(--acento) !important;
       }
     }
   }
@@ -756,7 +761,6 @@
     @include cel {
       max-width: 100% !important;
     }
-
   }
 
   .barra-progreso {
@@ -859,8 +863,8 @@
     text-align: center;
     margin: $margen-cel $margen-min 0 $margen-min;
     padding: $margen $margen-min;
-    border-top: .7px solid var(--primario);
-    border-bottom: .7px solid var(--primario);
+    border-top: 0.7px solid var(--primario);
+    border-bottom: 0.7px solid var(--primario);
   }
 
   // Componente Regalos
@@ -901,19 +905,20 @@
     }
 
     #regalo {
-      margin-top: $margen;
+      border-radius: $radio;
+      margin-top: $margen-cel;
       padding: $margen $margen-cel;
-      background: url("/bg-floral-regalos-izq.svg") var(--primario);
+      // background: url("/bg-floral-regalos-izq.svg") var(--acento);
       background-repeat: no-repeat;
       background-size: contain;
-      background-blend-mode: screen;
+      background-blend-mode: soft-light;
       text-align: center;
       margin-bottom: $margen-cel;
+      border: solid 1px var(--acento);
 
       h3 {
-        color: var(--terciario);
-        text-shadow: 3px 3px 4px #000;
-
+        color: var(--acento);
+        // text-shadow: 3px 3px 4px #000;
       }
 
       h2 {
@@ -928,8 +933,9 @@
     }
 
     #lluvia {
-      background: linear-gradient(rgba(255, 255, 255, 0.4),
-          rgba(255, 255, 255, 0.4)),
+      border-radius: $radio;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
         // capa blanca semitransparente
         url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
@@ -938,7 +944,6 @@
       padding: $margen $margen-cel;
       text-align: center;
       color: var(--primario);
-      @extend .sombra;
 
       p {
         max-width: 80%;
@@ -947,6 +952,7 @@
     }
 
     #transferencias {
+      border-radius: $radio;
       padding: $margen $margen-min;
       display: flex;
       flex-direction: column;
@@ -975,7 +981,6 @@
       color: var(--primario);
 
       p {
-
         max-width: 80%;
         margin: 0 auto;
       }
@@ -1029,16 +1034,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
     margin-bottom: 2rem;
+    position: relative;
+    &:last-child {
+      z-index: 400;
+      background: url("./quince-elegante-flor-2.svg") no-repeat center;
+      background-size: 120px;
+      background-position: 50% 0%;
+    }
   }
 
   .bande {
-    width: 90%;
+    width: 100%;
     max-width: 800px;
-    background: linear-gradient(to top,
-        var(--secundario) -60%,
-        rgba(255, 255, 255, 0.8) 100%);
+    background: linear-gradient(
+      to top,
+      var(--secundario) -60%,
+      rgba(255, 255, 255, 0.2) 100%
+    );
     padding: $margen 1rem;
     text-align: center;
     font-family: $txt, serif;
@@ -1049,7 +1062,7 @@
   .bande span {
     font-size: 1rem;
     font-weight: bold;
-    font-size: clamp(.7rem, 1.1vw, 1.3rem);
+    font-size: clamp(0.7rem, 1.1vw, 1.3rem);
     color: var(--secundario);
   }
 
@@ -1109,7 +1122,7 @@
 
     position: relative;
     margin: 0 0 calc($margen + 3rem) 0;
-    @include cel{
+    @include cel {
       margin: $margen-cel 0 0;
     }
 
@@ -1159,7 +1172,7 @@
       font-weight: bold;
       color: #fff;
       font-size: clamp(4rem, 1.5vw, 2rem);
-      
+
       @include cel {
         padding: 0;
         margin: -10px;
@@ -1170,7 +1183,6 @@
     #minutos-numero,
     #segundos-numero {
       font-size: clamp(1.5rem, 2vw, 2.5rem);
-
     }
 
     .tiempo-container {
@@ -1231,7 +1243,7 @@
     //recuadro del encabezado
     p:first-child {
       color: var(--primario);
-      font-size: clamp(.8rem, 1.1vw, 1.3rem);
+      font-size: clamp(0.8rem, 1.1vw, 1.3rem);
       background-color: #fff;
       padding: $margen-min;
       text-align: center;
@@ -1239,13 +1251,12 @@
       text-transform: uppercase;
       border-bottom: solid 1px var(--acento);
       border-top: solid 1px var(--acento);
- 
-      
+
       @include cel {
         position: absolute;
         top: 0%;
         width: 100%;
-        margin:0px;
+        margin: 0px;
       }
     }
 
@@ -1256,14 +1267,14 @@
       margin: 0;
     }
 
-      &:before {
+    &:before {
       content: "";
       width: 90vw;
       height: 60vh;
       overflow: hidden;
       position: absolute;
       top: 0%;
-      left:50%;
+      left: 50%;
       transform: translateX(50%);
       background: url("/bodas/floral-decor-eleggante-1.svg") no-repeat;
       background-size: 60%;
@@ -1271,10 +1282,10 @@
       background-blend-mode: overlay;
       z-index: -1;
       opacity: 0.1;
-      
+
       @include cel {
         border: solid;
-        background-position: 50%  80%;
+        background-position: 50% 80%;
         width: 100vw;
         background-size: 200%;
         opacity: 0.2;
@@ -1285,11 +1296,11 @@
   //componente mensaje Vip
   #mensaje-vip-container {
     display: none;
-    margin: $margen;
+    margin: $margen-min;
 
     .mensaje-vip {
       padding-top: $margen;
-      margin-top: $margen;
+      margin-bottom: $margen-cel;
       position: relative;
     }
 
@@ -1316,16 +1327,17 @@
       width: 100%;
       font-family: var(--font-body), serif;
       border-top: solid 1px var(--acento);
-      padding-top: $margen-cel;
+      border-bottom: solid 1px var(--acento);
+      padding: $margen-cel 0;
       text-align: center;
-      font-size: clamp(2rem, 3vw, 4.5rem);
+      font-size: clamp(1.7rem, 3vw, 4.5rem);
       line-height: 1.2 !important;
 
       .word {
         display: inline-block;
 
         .char {
-          color: var(--primario);
+          color: var(--secundario);
           display: inline-block;
         }
       }
@@ -1440,7 +1452,7 @@ li {
     box-sizing: border-box;
     margin-left: 0;
     margin-right: 0;
-    border-radius: .3rem;
+    border-radius: 0.3rem;
     font-size: 1.2rem;
   }
 }
