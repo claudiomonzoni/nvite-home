@@ -1,2 +1,13 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
+
+declare namespace App {
+  interface Locals {
+    user?: {
+      id: number;
+      email: string;
+      tipo: string;
+      ruta: string;
+    };
+  }
+}

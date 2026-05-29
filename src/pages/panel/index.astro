@@ -1,5 +1,4 @@
 ---
-import { NvitaAuth } from "../../firebase/config";
 import Layout from "../../layouts/panelInvitados.astro";
 import Menu from "../../components/PanelInvitados/Menu.astro";
 import Invitado from "../../components/PanelInvitados/Invitado.astro";
@@ -10,48 +9,30 @@ import { Usuario, Invitados, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 // Ensure the user is authenticated
-if (!NvitaAuth.currentUser) {
-  alert("No estás autenticado. Por favor, inicia sesión.");
-  // return
-  throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
+const user = Astro.locals.user;
+
+if (!user) {
+  return Astro.redirect("/panel/ingresar");
 }
 
-const usuarioEmail = NvitaAuth.currentUser.email;
-
-if (!usuarioEmail) {
-  console.error("El usuario no está autenticado.");
-  throw new Error("Usuario no autenticado. Por favor, inicia sesión.");
-}
+const usuarioEmail = user.email;
+const usuarioId = user.id;
+const tipoInvitacion = user.tipo;
+const ruta = user.ruta;
 
 let invitadosData = [];
-let tipoInvitacion = null;
-let ruta = null;
 
 try {
-  // Obtén los datos del usuario
-  var usuarios = await db
-    .select()
-    .from(Usuario)
-    .where(eq(Usuario.email, usuarioEmail));
-
-  if (usuarios.length === 0) {
-    throw new Error(`No se encontró un usuario con el email: ${usuarioEmail}`);
-  }
-
-  tipoInvitacion = usuarios[0].tipo;
-  ruta = usuarios[0].ruta;
-
   // Obtén los datos de los invitados
   invitadosData = await db
     .select()
     .from(Invitados)
-    .where(eq(Invitados.usuarioId, usuarios[0].id))
+    .where(eq(Invitados.usuarioId, usuarioId))
     .orderBy(desc(Invitados.id));
 } catch (error) {
   console.error("Error al obtener los datos:", error);
   invitadosData = [];
 }
-const usuarioId = usuarios[0].id;
 ---
 
 <Layout title="Panel de administración">

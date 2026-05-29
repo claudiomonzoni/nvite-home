@@ -1,8 +1,7 @@
 import { defineMiddleware } from "astro:middleware";
-import { NvitaAuth } from "./firebase/config";
+import { db, Usuario, Sesion, eq } from "astro:db";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-    const estaDentro = NvitaAuth.currentUser; // Verifica si el usuario está autenticado
     const { pathname } = context.url;
     const method = context.request.method;
 
@@ -15,7 +14,45 @@ export const onRequest = defineMiddleware(async (context, next) => {
         return next();
     }
 
-    // Rutas protegidas
+    // 1. Obtener la sesión actual desde la cookie
+    const sessionId = context.cookies.get("session_id")?.value;
+    let usuarioLogueado = null;
+
+    if (sessionId) {
+        try {
+            const sessions = await db
+                .select()
+                .from(Sesion)
+                .where(eq(Sesion.id, sessionId));
+
+            if (sessions.length > 0) {
+                const session = sessions[0];
+                const expiraAt = new Date(session.expiraAt);
+
+                if (expiraAt > new Date()) {
+                    const users = await db
+                        .select()
+                        .from(Usuario)
+                        .where(eq(Usuario.id, session.usuarioId));
+
+                    if (users.length > 0) {
+                        usuarioLogueado = users[0];
+                        context.locals.user = usuarioLogueado;
+                    }
+                } else {
+                    // Limpiar sesión expirada en la BD y en la cookie
+                    await db.delete(Sesion).where(eq(Sesion.id, sessionId));
+                    context.cookies.delete("session_id", { path: "/" });
+                }
+            }
+        } catch (error) {
+            console.error("Error al validar sesión en middleware:", error);
+        }
+    }
+
+    const estaDentro = !!usuarioLogueado;
+
+    // Rutas protegidas de la API
     const rutasProtegidas = [
         /^\/api\/addInvitados\.json$/, // Ruta para agregar invitados
     ];
@@ -44,14 +81,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/api\/\d+\.json$/,                 // Ruta para actualizar invitado (PATCH)
         /^\/panel\/ingresar$/,                // Página de ingreso
         /^\/panel\/registro$/,                // Página de registro
-        /^\/keystatic(\/.*)?$/,                   // Cualquier subruta en /bodas
+        /^\/keystatic(\/.*)?$/,               // Cualquier subruta en keystatic
         /^\/bodas(\/.*)?$/,                   // Cualquier subruta en /bodas
-        /^\/quince(\/.*)?$/,                   // Cualquier subruta en /bodas
-        /^\/invitaciones-quince(\/.*)?$/,                  // Cualquier subruta en /quince
-        /^\/invitaciones-pdf(\/.*)?$/,                  // Cualquier subruta en /quince
-        /^\/nvitaciones(\/.*)?$/,                  // Cualquier subruta en /quince
+        /^\/quince(\/.*)?$/,                  // Cualquier subruta en /quince
+        /^\/invitaciones-quince(\/.*)?$/,     // Cualquier subruta en /invitaciones-quince
+        /^\/invitaciones-pdf(\/.*)?$/,        // Cualquier subruta en /invitaciones-pdf
+        /^\/nvitaciones(\/.*)?$/,             // Cualquier subruta en /nvitaciones
         /^\/terminos-condiciones(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
-        /^\/404(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
+        /^\/404(\/.*)?$/,                     // 404
     ];
 
     const esRutaPublica = rutasPublicas.some((ruta) => ruta.test(pathname));

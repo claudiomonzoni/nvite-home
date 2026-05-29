@@ -3,11 +3,18 @@ import sanitize from "sanitize-html";
 import { Invitados, db } from "astro:db";
 import { v4 as uuidv4 } from 'uuid';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
+  const user = locals.user;
+  if (!user) {
+    return new Response(
+      JSON.stringify({ error: "No autorizado" }),
+      { status: 401, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   const body = await request.json();
   try {
     const {
-      usuarioId,
       nombre,
       pases,
       mesa,
@@ -24,21 +31,12 @@ export const POST: APIRoute = async ({ request }) => {
     if (
       typeof nombre !== "string" ||
       typeof pases !== "string"
-      // typeof usuarioId !== "number" ||
-      // typeof confirmado !== "boolean" ||
-      // typeof vip !== "boolean" ||
-      // typeof InvitacionEnviada !== "boolean" ||
-      // typeof noAsiste !== "boolean" ||
-      // typeof fechaEnvitado !== "string" ||
-      // typeof invitacionFamiliar !== "boolean" ||
-      // typeof invitacionIndividual !== "boolean" ||
-      // typeof invitacionGrupal !== "boolean"
     ) {
       throw new Error("llene los campos obligatorios");
     }
     // hacemos el reg en la bd
     const req = await db.insert(Invitados).values({
-      usuarioId,
+      usuarioId: user.id,
       //uuid: uuidv4().split('-')[0] + uuidv4().split('-')[1]  // "550e8400e29b" (12 caracteres, menos riesgo de coalicion)
       uuid: uuidv4().split('-')[0], 
       nombre: sanitize(nombre),

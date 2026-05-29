@@ -1,36 +1,101 @@
 import type { APIRoute } from "astro";
-import { Usuario, db } from "astro:db";
+import { db, Usuario, Sesion } from "astro:db";
 import sanitize from "sanitize-html";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { NvitaAuth } from "../../firebase/config";
 
-export const POST: APIRoute = async ({ request }) => {
-  const { email, password, ruta, tipoInvitacion } = await request.json();
-
+export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    // creo usuario
-    await createUserWithEmailAndPassword(NvitaAuth, email, password);
+    const { email, password, ruta, tipoInvitacion } = await request.json();
 
-    // creo usuario en la db
-    const req = await db.insert(Usuario).values({
-      email: sanitize(email),
+    if (!email || !password || !ruta || !tipoInvitacion) {
+      return new Response(
+        JSON.stringify({ error: "Todos los campos son obligatorios." }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // 1. Crear usuario usando la API REST de Firebase (stateless)
+    const apiKey = import.meta.env.SECRET_APIKEY;
+    const signUpUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${apiKey}`;
+
+    const authResponse = await fetch(signUpUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        password,
+        returnSecureToken: true,
+      }),
+    });
+
+    const authData = await authResponse.json();
+
+    if (!authResponse.ok) {
+      const errMsg = authData.error?.message || "Error al crear la cuenta en Firebase.";
+      return new Response(
+        JSON.stringify({ error: errMsg }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const verifiedEmail = authData.email;
+
+    // 2. Crear usuario en la base de datos local Astro DB
+    const insertResult = await db.insert(Usuario).values({
+      email: sanitize(verifiedEmail),
       ruta: sanitize(ruta),
       tipo: sanitize(tipoInvitacion),
     });
 
+    // Como insertResult puede no retornar el ID insertado directamente dependiendo del dialecto de Astro DB,
+    // vamos a recuperar el usuario recién creado para obtener su ID autoincremental
+    const users = await db
+      .select()
+      .from(Usuario)
+      .where(eq => eq(Usuario.email, verifiedEmail));
+    
+    if (users.length === 0) {
+      throw new Error("No se pudo recuperar el usuario registrado de la base de datos.");
+    }
+
+    const user = users[0];
+
+    // 3. Crear sesión en la base de datos
+    const sessionId = crypto.randomUUID();
+    const expiraAt = new Date();
+    expiraAt.setDate(expiraAt.getDate() + 7); // Expiración en 7 días
+
+    await db.insert(Sesion).values({
+      id: sessionId,
+      usuarioId: user.id,
+      expiraAt: expiraAt,
+    });
+
+    // 4. Guardar sesión en una cookie HTTP-only y Secure
+    cookies.set("session_id", sessionId, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      expires: expiraAt,
+    });
+
     return new Response(
       JSON.stringify({
-        message: "Cuenta registrada en firebase",
-        message2: req,
+        message: "Cuenta registrada con éxito",
         success: true,
       }),
       {
         status: 201,
+        headers: { "Content-Type": "application/json" },
       }
     );
   } catch (error) {
-    return new Response(JSON.stringify({ error }), {
-      status: 500,
-    });
+    console.error("Error en registro:", error);
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : "Ocurrió un error inesperado al registrar el usuario.",
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 };
