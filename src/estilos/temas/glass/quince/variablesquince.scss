@@ -13,20 +13,20 @@
 
 
 
-:root[data-paleta="base"] {
-  @include base();
+:root[data-paleta-quince="base"] {
+  @include base-quince();
 }
-:root[data-paleta="otono"] {
-  @include otono();
+:root[data-paleta-quince="otono"] {
+  @include otono-quince();
 }
-:root[data-paleta="invierno"] {
-  @include invierno();
+:root[data-paleta-quince="invierno"] {
+  @include invierno-quince();
 }
-:root[data-paleta="verano"] {
-  @include verano();
+:root[data-paleta-quince="verano"] {
+  @include verano-quince();
 }
-:root[data-paleta="primavera"] {
-  @include primavera();
+:root[data-paleta-quince="primavera"] {
+  @include primavera-quince();
 }
 
 // Variables CSS para tipografías personalizables

@@ -1,5 +1,5 @@
 @use "sass:math";
-@use "variablesquince" as *;
+@use "../../base/quince/variablesquince" as *;
 
 @mixin tema-elegante() {
   html {
@@ -525,6 +525,11 @@
     }
   }
 
+  .bloqueMapa:last-child .der {
+
+    margin-top: 3rem;
+  }
+
   // componente slider Gsap
   .progress-bar-container {
     position: absolute;
@@ -688,16 +693,19 @@
     padding: $margen;
     position: relative;
     font-size: clamp(1.3rem, 1.3vw, 2vw);
-
+    
     &::before {
       content: "";
       position: absolute;
       inset: 0;
       background: $urlPatron;
       background-position: center;
-      mix-blend-mode: color-burn;
+      mix-blend-mode: soft-light;
       pointer-events: none;
       z-index: 0;
+      border-bottom-right-radius: 100px;
+      border-bottom-left-radius: 100px;
+      filter: grayscale(100%) brightness(1.5);
     }
     li {
       list-style: none;
@@ -720,7 +728,7 @@
       color: var(--primario);
       border-bottom: solid 0.5px var(--primario);
       margin: $margen-min 0;
-      font-size: clamp(2.5rem, 1.6vw, 3rem);
+      font-size: clamp(2rem, 1.6vw, 3rem);
 
       @include cel {
         border-bottom: solid 1px var(--secundario);
@@ -1038,7 +1046,7 @@
     position: relative;
     &:last-child {
       z-index: 400;
-      background: url("./quince-elegante-flor-2.svg") no-repeat center;
+      background: url("quince-elegante-flor-2.svg") no-repeat center;
       background-size: 120px;
       background-position: 50% 0%;
     }

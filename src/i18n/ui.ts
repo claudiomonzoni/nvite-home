@@ -16,7 +16,7 @@ export const ui = {
     'invitation.reception': 'Recepción',
     'invitation.itinerary': 'Itinerario',
     'invitation.dressCode': 'Código de Vestir',
-    'invitation.colorPalette': 'Sugerencia de Tonos',
+    'invitation.colorPalette': 'Paleta de Colores',
     'invitation.considerations': 'Consideraciones',
     'invitation.details': 'Detalles',
     'invitation.gifts': 'Regalos',

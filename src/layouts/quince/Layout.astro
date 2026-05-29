@@ -69,7 +69,7 @@ import "../../estilos/quince/redireccion.scss";
 ---
 
 <!doctype html>
-<html lang="es" data-paleta={paleta} data-theme={name}>
+<html lang="es" data-paleta-quince={paleta} data-theme={name}>
     <head>
         <meta charset="UTF-8" />
         <meta
@@ -133,7 +133,7 @@ import "../../estilos/quince/redireccion.scss";
             customStyles.length > 0 && (
                 <style
                     set:html={`
-                :root[data-paleta="${paleta}"][data-theme="${name}"] {
+                :root[data-paleta-quince="${paleta}"][data-theme="${name}"] {
                     ${customStyles.join("\n                    ")}
                 }
             `}

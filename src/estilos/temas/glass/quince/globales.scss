@@ -1,5 +1,5 @@
 @use "sass:math";
-@use "variablesquince" as *;
+@use "../../base/quince/variablesquince" as *;
 
 @mixin tema-glass() {
   html {
