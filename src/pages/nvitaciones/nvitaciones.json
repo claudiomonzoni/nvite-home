@@ -96,6 +96,40 @@
     ]
   },
   {
+    "id": "prod_UcVoRiVmcT6ZQM",
+    "precioTachado": "true",
+    "slug": "elegante-lux-xv",
+    "muestra": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+    "beneficios": [
+      "Panel de invitados",
+      "Mensaje para invitados especiales",
+      "Música ambiental",
+      "Dress code y sugerencia de colores",
+      "Itinerario",
+      "Nombre del invitado",
+      "Pases del invitado",
+      "Galería de imágenes interactivas",
+      "Sugerencia de regalos",
+      "Detalles del evento",
+      "Cuenta regresiva",
+      "Mapas de ubicación",
+      "Frase animada",
+      "Formulario de confirmación"
+    ],
+    "categoria": "Quince",
+    "tipo": "Sitio web",
+    "version": "Lux",
+    "imagenes": [
+       "../../assets/cart/quince/elegante/color-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/padres-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/mapa-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/fomo-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/cuenta-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/confirma-Nvitaciones-quince-lux-elgante.webp"
+     
+    ]
+  },
+  {
     "id": "prod_QLJkNCXvs8egN9",
     "precioTachado": "true",
     "slug": "invitacion-xv-lux",
