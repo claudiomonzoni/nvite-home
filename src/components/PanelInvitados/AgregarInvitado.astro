@@ -1,36 +1,9 @@
 ---
-import { NvitaAuth } from "../../firebase/config";
-import Checkbox from "./Checkbox.astro";
-import { Usuario, db, eq } from "astro:db";
-const usuarioEmail = NvitaAuth.currentUser?.email;
-const usuarios = await db
-  .select()
-  .from(Usuario)
-  .where(eq(Usuario.email, usuarioEmail));
-// const usuarioId = usuarios[0].id
+interface Props {
+  usuarioId: number;
+}
 const { usuarioId } = Astro.props;
-// const tipoInvitacion = usuarios[0].tipo
-// const ruta = usuarios[0].ruta
-
-///________________________________________________________________________
-// import { monitorAuthState } from "../../firebase/authListener";
-
-// const verificarAuth = () => {
-//   return new Promise((resolve) => {
-//     monitorAuthState(({ authenticated }) => {
-//       resolve(authenticated);
-//     });
-//   });
-// };
-
-// verificarAuth().then((authenticated) => {
-
-//   if (!authenticated) {
-//     location.reload();
-//   return;
-//   }
-// });
-///________________________________________________________________________
+import Checkbox from "./Checkbox.astro";
 ---
 
 <dialog id="agrega-invitado-dialog" data-ref={usuarioId}>

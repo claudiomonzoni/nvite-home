@@ -39,6 +39,14 @@ const Invitados = defineTable({
   },
 });
 
+const Sesion = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    usuarioId: column.number({ references: () => Usuario.columns.id }),
+    expiraAt: column.date(),
+  },
+});
+
 export default defineDb({
-  tables: { Usuario, Invitados },
+  tables: { Usuario, Invitados, Sesion },
 });

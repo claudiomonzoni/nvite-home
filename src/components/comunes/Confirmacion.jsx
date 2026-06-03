@@ -48,6 +48,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   const [invitado, setInvitado] = useState("sin datos");
   const [pases, setPases] = useState(0);
   const [id, setId] = useState(0);
+  const [uuid, setUuid] = useState("");
   const [asistira, setAsistira] = useState(false);
   const [selectedPases, setSelectedPases] = useState("0");
   const [comentarios, setComentarios] = useState("");
@@ -102,6 +103,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
         setInvitado(json[0].nombre);
         setPases(Math.trunc(json[0].pases));
         setId(json[0].id);
+        setUuid(idParam);
         setAsistira(json[0].confirmado);
       } catch (error) {
         setError("La dirección de esta invitación es incorrecta y no podemos mostrar el formulario de confirmación, Por favor, inténtalo de nuevo con la dirección correcta de su invitación.");
@@ -220,7 +222,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/${encodeURIComponent(id)}.json`, {
+        const response = await fetch(`/api/confirmar/${encodeURIComponent(uuid)}.json`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
