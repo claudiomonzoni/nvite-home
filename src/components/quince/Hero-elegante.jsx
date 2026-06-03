@@ -1,10 +1,143 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Style from "../../estilos/temas/elegante/quince/hero.module.scss";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+}
+
+// ─── Hook: useSparkleCanvas ─────────────────────────────────────
+// Canvas con puntos diminutos que brillan aleatoriamente,
+// simulando papel texturizado reflejando la luz.
+// Usa IntersectionObserver para pausar la animación fuera del viewport.
+function useSparkleCanvas(canvasRef, isActive) {
+  useEffect(() => {
+    if (!isActive || !canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    let animationId = null;
+    let sparkles = [];
+    let isVisible = true; // Controlado por IntersectionObserver
+
+    // ── Configuración ────────────────────────────────
+    const SPARKLE_COUNT = 4000;        // Cantidad de puntos
+    const MIN_RADIUS = 0.5;           // Radio mínimo del punto (px)
+    const MAX_RADIUS = 2.0;           // Radio máximo del punto (px)
+    const MIN_OPACITY = 0.05;         // Opacidad mínima (casi invisible)
+    const MAX_OPACITY = 0.85;         // Opacidad máxima del brillo
+    const MIN_SPEED = 0.3;            // Velocidad mínima de parpadeo
+    const MAX_SPEED = 1.8;            // Velocidad máxima de parpadeo
+
+    // ── Leer color del tema CSS ──────────────────────
+    const getSparkleColor = () => {
+      const style = getComputedStyle(document.documentElement);
+      const color = style.getPropertyValue("--acento").trim();
+
+      const temp = document.createElement("div");
+      temp.style.color =  "#ffffff";
+      document.body.appendChild(temp);
+      const computed = getComputedStyle(temp).color;
+      document.body.removeChild(temp);
+
+      const match = computed.match(/(\d+),\s*(\d+),\s*(\d+)/);
+      if (match) return { r: +match[1], g: +match[2], b: +match[3] };
+      return { r: 201, g: 169, b: 110 };
+    };
+
+    const color = getSparkleColor();
+
+    // Dimensiones cacheadas (evita getBoundingClientRect en cada frame)
+    let cachedWidth = 0;
+    let cachedHeight = 0;
+
+    // Ajustar canvas al tamaño del contenedor
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const newW = rect.width;
+      const newH = rect.height;
+
+      canvas.width = newW * dpr;
+      canvas.height = newH * dpr;
+      canvas.style.width = newW + "px";
+      canvas.style.height = newH + "px";
+      ctx.scale(dpr, dpr);
+
+      // Solo regenerar sparkles si es la primera vez o el tamaño cambió significativamente
+      const sizeChanged = Math.abs(newW - cachedWidth) > 2 || Math.abs(newH - cachedHeight) > 2;
+      if (sparkles.length === 0 || sizeChanged) {
+        sparkles = generateSparkles();
+      }
+
+      cachedWidth = newW;
+      cachedHeight = newH;
+    };
+
+    // Generar puntos con coordenadas normalizadas (0-1)
+    // Así no se reacomodan al redimensionar
+    const generateSparkles = () => {
+      return Array.from({ length: SPARKLE_COUNT }, () => ({
+        nx: Math.random(),  // Posición X normalizada (0-1)
+        ny: Math.random(),  // Posición Y normalizada (0-1)
+        radius: MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS),
+        phase: Math.random() * Math.PI * 2,
+        speed: MIN_SPEED + Math.random() * (MAX_SPEED - MIN_SPEED),
+        maxOpacity: MIN_OPACITY + Math.random() * (MAX_OPACITY - MIN_OPACITY),
+      }));
+    };
+
+    // Loop de animación (usa dimensiones cacheadas, no getBoundingClientRect)
+    const animate = (time) => {
+      if (!isVisible) {
+        animationId = null;
+        return;
+      }
+
+      ctx.clearRect(0, 0, cachedWidth, cachedHeight);
+
+      const t = time * 0.001;
+
+      for (const s of sparkles) {
+        const sin = Math.sin(t * s.speed + s.phase);
+        const opacity = s.maxOpacity * Math.max(0, sin * sin * sin);
+        if (opacity < 0.01) continue;
+
+        const size = s.radius * 2;
+        // Convertir coordenadas normalizadas a píxeles reales
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`;
+        ctx.fillRect(s.nx * cachedWidth, s.ny * cachedHeight, size, size);
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    // ── IntersectionObserver: pausar fuera del viewport ──
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        // Reanudar animación al volver a ser visible
+        if (isVisible && !animationId) {
+          animationId = requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0 } // Se activa apenas un pixel es visible
+    );
+
+    const parent = canvas.parentElement;
+    if (parent) observer.observe(parent);
+
+    resize();
+    animationId = requestAnimationFrame(animate);
+    window.addEventListener("resize", resize);
+
+    return () => {
+      if (animationId) cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", resize);
+      observer.disconnect();
+    };
+  }, [canvasRef, isActive]);
 }
 
 export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es-ES' }) {
@@ -21,6 +154,13 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
   const [animandoSalida, setAnimandoSalida] = useState(false);
   const loadingTextRef = useRef(null);
   const imgRef = useRef(null);
+  const sparkleCanvasRef = useRef(null);
+  const heroSparkleCanvasRef = useRef(null);
+
+  // Sparkles en la pantalla de carga (se desactiva al iniciar)
+  useSparkleCanvas(sparkleCanvasRef, !iniciado);
+  // Sparkles en la section hero (se activa al iniciar, se pausa fuera del viewport)
+  useSparkleCanvas(heroSparkleCanvasRef, iniciado);
 
   const handleIniciar = () => {
     setAnimandoSalida(true);
@@ -182,6 +322,16 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
           className={`${Style.loadingScreen} ${animandoSalida ? Style.fadeOut : ''}`}
           onClick={!animandoSalida ? handleIniciarModificado : null}
         >
+          {/* Canvas de puntos brillantes — efecto papel texturizado */}
+          <canvas
+            ref={sparkleCanvasRef}
+            style={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 1,
+              pointerEvents: "none",
+            }}
+          />
           <div className={Style.loadingContent}>
             <h2 className={Style.loadingText} ref={loadingTextRef}>
               {l.loading.split(' ').map((word, i) => (
@@ -195,7 +345,17 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
         </div>
       )}
 
-      <section id={Style["hero"]} className={`contenido opa ${!iniciado ? Style.oculto : ''}`}>
+      <section id={Style["hero"]} className={`contenido opa ${!iniciado ? Style.oculto : ''}`} style={{ position: 'relative' }}>
+        {/* Canvas de puntos brillantes en el hero */}
+        <canvas
+          ref={heroSparkleCanvasRef}
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        />
         <div className={Style.xv}>
           XV
         </div>
