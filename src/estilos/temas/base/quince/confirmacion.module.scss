@@ -8,8 +8,8 @@ h2 {
 }
 .confirmacion {
   margin-top: $margen;
-  background: url("/bodas/confirma-fondo-izq.webp"),
-    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+  background: url("/quince/confirma-fondo-izq.webp"),
+    url("/quince/confirma-fondo-der.webp");
   background-repeat: no-repeat, no-repeat;
   background-position: left top, right bottom;
   background-size: contain;

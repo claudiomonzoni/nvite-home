@@ -9,7 +9,7 @@ h2 {
 .confirmacion {
   margin-top: $margen;
   background: url("/bodas/confirma-fondo-izq.webp"),
-    url("/bodas/confirma-fondo-der.webp") var(--fondo);
+    url("/bodas/confirma-fondo-der.webp") ;
   background-repeat: no-repeat, no-repeat;
   background-position: left top, right bottom;
   background-size: contain;
@@ -149,6 +149,7 @@ top: 0;
   display: flex;
   border-radius: $radio;
   background-color: var(--acento);
+  color: #ffffff;
   border: none;
 
 }
