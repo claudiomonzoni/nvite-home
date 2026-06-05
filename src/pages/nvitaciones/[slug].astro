@@ -140,11 +140,18 @@ const productId = product.data.id;
     <div id="producto-conte" data-category={nvitacionInfo?.categoria?.toLowerCase() ?? ''}>
       <div id="izq">
         <div id="fix">
-          <div class="gallery-container">
-            <div class="thumbnails-container">
+          <div class="gallery-container" id="nv-gallery">
+            <div class="thumbnails-container" id="nv-thumbs">
               {
-                imagenes.map((imagen) => (
-                  <div class="thumbnail-wrapper" data-full-img={isImageMetadata(imagen) ? imagen.src : imagen}>
+                imagenes.map((imagen, index) => (
+                  <div
+                    class="thumbnail-wrapper"
+                    role="button"
+                    tabindex="0"
+                    data-full-img={isImageMetadata(imagen) ? imagen.src : imagen}
+                    data-index={index}
+                    data-video-url={index === 0 && nvitacionInfo?.video ? nvitacionInfo.video : undefined}
+                  >
                     {isImageMetadata(imagen) ? (
                       <Image
                         src={imagen}
@@ -163,31 +170,47 @@ const productId = product.data.id;
                         class="thumbnail"
                       />
                     )}
+                    {index === 0 && nvitacionInfo?.video && (
+                      <div class="thumb-play" aria-hidden="false">
+                        <Icon name="mdi:play-circle" color="white" size={28} />
+                      </div>
+                    )}
                   </div>
                 ))
               }
             </div>
-            <div class="main-image-container">
-              {isImageMetadata(imagenes[0]) ? (
-                <Image
-                  src={imagenes[0]}
-                  loading="eager"
-                  alt={product.data.name}
-                  height={800}
-                  width={800}
-                  class="main-image"
-                  quality="max"
-                />
-              ) : (
-                <img
-                  src={imagenes[0]}
-                  loading="eager"
-                  alt={product.data.name}
-                  height={800}
-                  width={800}
-                  class="main-image"
-                />
-              )}
+
+            <div class="main-image-container" id="nv-main" data-video-url={nvitacionInfo?.video}>
+              <div class="media-poster">
+                {isImageMetadata(imagenes[0]) ? (
+                  <Image
+                    src={imagenes[0]}
+                    loading="eager"
+                    alt={product.data.name}
+                    height={800}
+                    width={800}
+                    class="main-image"
+                    id="nv-poster"
+                    quality="max"
+                  />
+                ) : (
+                  <img
+                    src={imagenes[0]}
+                    loading="eager"
+                    alt={product.data.name}
+                    height={800}
+                    width={800}
+                    class="main-image"
+                    id="nv-poster"
+                  />
+                )}
+
+                {nvitacionInfo?.video && (
+                  <button id="nv-play" class="video-play" aria-label="Reproducir video">
+                    <Icon name="mdi:play-circle" color="white" size={70} />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -328,25 +351,7 @@ const productId = product.data.id;
               )
             }
 
-            {
-              nvitacionInfo && nvitacionInfo.video && (
-                <div id="video-home">
-                  <!-- <div id="play">
-                    <Icon name="mdi:play-circle" color="white" size={70} />
-                  </div>
-                  --!>
-                  <video
-                    preload="auto"
-                    poster={product.data.images[0]}
-                    id="video-producto"
-                    controls="true"
-                    playsinline
-                  >
-                    <source src={nvitacionInfo.video} type="video/mp4" />
-                  </video>
-                </div>
-              )
-            }
+            {/* Si el producto tiene "video" lo manejamos en la galería principal como poster + play */}
           </div>
 
           
@@ -596,6 +601,7 @@ const productId = product.data.id;
   }
 
   .thumbnail-wrapper {
+    position: relative;
     cursor: pointer;
     border: 2px solid transparent;
     border-radius: $radio;
@@ -611,6 +617,23 @@ const productId = product.data.id;
     &.active {
       border: $acento;
     }
+  }
+
+  /* Play overlay on thumbnails */
+  .thumb-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.45);
+    pointer-events: auto;
   }
 
   .thumbnail {
@@ -631,14 +654,40 @@ const productId = product.data.id;
     overflow: hidden;
     border-radius: 8px;
 
+    .media-poster {
+      position: relative;
+      display: block;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
     .main-image {
       max-width: 100%;
-      width: auto;
+      width: 100%;
       height: auto;
       display: block;
       margin: 0 auto;
       object-fit: contain;
       transition: transform 0.3s ease;
+      z-index: 1;
+      position: relative;
+    }
+
+    .video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.35);
+      cursor: pointer;
     }
   }
 
@@ -802,10 +851,15 @@ const productId = product.data.id;
     private initialized = false;
 
     constructor() {
-      // Inicializar cuando el documento esté listo
-      document.addEventListener("astro:page-load", () => this.init());
+      // Inicializar cuando el documento esté listo y al navegar con Astro viewTransitions
+      document.addEventListener("astro:page-load", () => {
+        this.initialized = false;
+        this.init();
+      });
       if (document.readyState === "complete") {
         this.init();
+      } else {
+        document.addEventListener("DOMContentLoaded", () => this.init());
       }
     }
 
@@ -816,7 +870,6 @@ const productId = product.data.id;
       this.initializeSalesMessage();
       this.initializeBuyNowButtons();
       this.initializeGallery();
-      this.initializeVideoPlayer();
       this.initializePreviewModal();
     }
 
@@ -876,90 +929,174 @@ const productId = product.data.id;
       }
     }
 
-    // Manejo de galería de imágenes
+    // Manejo de galería de imágenes y video (implementación robusta)
+    // Esta función inicializa la galería, el poster principal y el video.
+    // Se destruye cualquier instancia previa para que funcione correctamente
+    // con las transiciones de Astro (viewTransitions / SPA navigation).
     initializeGallery() {
-      const mainImage = document.querySelector(
-        ".main-image"
-      ) as HTMLImageElement;
-      const mainImageContainer = document.querySelector(
-        ".main-image-container"
-      ) as HTMLElement;
-      const thumbnails = document.querySelectorAll(".thumbnail-wrapper");
+      const GKEY = '__NV_GALLERY__';
+      // Destroy previous instance if present (handles SPA navigation/transitions)
+      try { (window as any)[GKEY]?.destroy?.(); } catch (e) { /* ignore */ }
 
-      if (!mainImage || !thumbnails.length || !mainImageContainer) return;
+      const root = document.getElementById('nv-gallery');
+      if (!root) return;
 
-      const stripeImage = mainImage.src;
-      thumbnails[0].classList.add("active");
+      const thumbs = Array.from(root.querySelectorAll('.thumbnail-wrapper')) as HTMLElement[];
+      const poster = document.getElementById('nv-poster') as HTMLImageElement | null;
+      const mainContainer = document.getElementById('nv-main') as HTMLElement | null;
+      const playButton = document.getElementById('nv-play') as HTMLButtonElement | null;
+      const mediaPoster = root.querySelector('.media-poster') as HTMLElement | null;
 
-      thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener("click", () => {
-          const fullSizeImage =
-            index === 0 ? stripeImage : thumb.getAttribute("data-full-img");
-          if (!fullSizeImage) return;
+      if (!poster || !thumbs.length || !mainContainer || !mediaPoster) return;
 
-          mainImage.src = fullSizeImage;
-          thumbnails.forEach((t) => t.classList.remove("active"));
-          thumb.classList.add("active");
-        });
-      });
-    }
+      const posterSrc = poster.getAttribute('src') || '';
+      const videoUrl = mainContainer.getAttribute('data-video-url') || null;
 
-    // Manejo del reproductor de video
-    initializeVideoPlayer() {
-      const video = document.getElementById(
-        "video-producto"
-      ) as HTMLVideoElement;
-      const playButton = document.getElementById("play") as HTMLDivElement;
-      const videoContainer = document.getElementById(
-        "video-home"
-      ) as HTMLDivElement;
+      let currentIndex = 0;
+      let videoEl: HTMLVideoElement | null = null;
+      let videoPlayHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
+      let videoPauseHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
+      let videoEndedHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
 
-      if (!video || !playButton || !videoContainer) return;
+      // Marca visualmente la miniatura activa.
+      const setActive = (index: number) => {
+        thumbs.forEach((t) => t.classList.remove('active'));
+        const t = thumbs[index];
+        if (t) t.classList.add('active');
+      };
 
-      const newVideo = video.cloneNode(true) as HTMLVideoElement;
-      const newPlayButton = playButton.cloneNode(true) as HTMLDivElement;
+      const clearVideoHandlers = () => {
+        if (!videoEl) return;
+        if (videoPlayHandler) videoEl.removeEventListener('play', videoPlayHandler);
+        if (videoPauseHandler) videoEl.removeEventListener('pause', videoPauseHandler);
+        if (videoEndedHandler) videoEl.removeEventListener('ended', videoEndedHandler);
+        videoPlayHandler = null;
+        videoPauseHandler = null;
+        videoEndedHandler = null;
+      };
 
-      video.parentNode?.replaceChild(newVideo, video);
-      playButton.parentNode?.replaceChild(newPlayButton, playButton);
+      // Detiene y limpia el elemento de video cuando cambiamos de miniatura
+      // o cuando el usuario abandona el modo video.
+      const destroyVideo = () => {
+        if (videoEl) {
+          clearVideoHandlers();
+          if (playButton) playButton.style.display = 'none';
+          try { videoEl.pause(); } catch (e) {}
+          videoEl.remove();
+          videoEl = null;
+        }
+        if (poster) poster.style.display = '';
+      };
 
-      const togglePlay = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
+      const selectIndex = (index: number) => {
+        currentIndex = index;
+        const thumb = thumbs[index];
+        const thumbVideo = thumb.getAttribute('data-video-url');
+        const full = thumb.getAttribute('data-full-img') || posterSrc;
 
-        if (newVideo.paused) {
-          const playPromise = newVideo.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then(() => {
-                newPlayButton.style.display = "none";
-              })
-              .catch((error) => {
-                console.error("Error reproduciendo video:", error);
-                newPlayButton.style.display = "flex";
-              });
-          }
+        // If we had a playing video, stop it
+        destroyVideo();
+
+        // If the selected thumb is the video (index 0 with video)
+        if (thumbVideo) {
+          // Restore poster to the original posterSrc for video
+          if (poster) poster.setAttribute('src', posterSrc);
+          if (playButton) playButton.style.display = 'flex';
         } else {
-          newVideo.pause();
-          newPlayButton.style.display = "flex";
+          // Show selected image as poster
+          if (poster) poster.setAttribute('src', full);
+          if (playButton) playButton.style.display = 'none';
+        }
+
+        setActive(index);
+      };
+
+      // Crea el elemento <video> dinámicamente y lo inserta en el poster.
+      // Se vinculan eventos para mostrar/ocultar el botón Play y limpiar al finalizar.
+      const createVideo = () => {
+        if (!videoUrl) return;
+        destroyVideo();
+
+        videoEl = document.createElement('video');
+        videoEl.src = videoUrl;
+        videoEl.controls = true;
+        videoEl.autoplay = true;
+        videoEl.playsInline = true;
+        videoEl.className = 'main-image';
+        videoEl.id = 'nv-video';
+        if (posterSrc) videoEl.setAttribute('poster', posterSrc);
+
+        // Hide poster and append video
+        if (poster) poster.style.display = 'none';
+        mediaPoster.appendChild(videoEl);
+
+        // Update playButton visibility
+        if (playButton) playButton.style.display = 'none';
+
+        videoPlayHandler = () => {
+          if (playButton) playButton.style.display = 'none';
+        };
+        videoPauseHandler = () => {
+          if (playButton) playButton.style.display = 'flex';
+        };
+        videoEndedHandler = () => {
+          destroyVideo();
+        };
+
+        videoEl.addEventListener('play', videoPlayHandler);
+        videoEl.addEventListener('pause', videoPauseHandler);
+        videoEl.addEventListener('ended', videoEndedHandler);
+      };
+
+      // Handlers
+      const thumbClickHandler = (e: Event) => {
+        const el = e.currentTarget as HTMLElement;
+        const idx = Number(el.getAttribute('data-index')) || 0;
+        selectIndex(idx);
+      };
+
+      const thumbKeyHandler = (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          (e.currentTarget as HTMLElement).click();
+          e.preventDefault();
         }
       };
 
-      newVideo.addEventListener(
-        "play",
-        () => (newPlayButton.style.display = "none")
-      );
-      newVideo.addEventListener(
-        "pause",
-        () => (newPlayButton.style.display = "flex")
-      );
-      newVideo.addEventListener("ended", () => {
-        newVideo.currentTime = 0;
-        newPlayButton.style.display = "flex";
+      thumbs.forEach((t) => {
+        t.addEventListener('click', thumbClickHandler);
+        t.addEventListener('keydown', thumbKeyHandler as any);
       });
 
-      newPlayButton.addEventListener("click", togglePlay);
-      newVideo.addEventListener("click", togglePlay);
-      newPlayButton.style.display = "flex";
+      const playClickHandler = (e: Event) => {
+        e.preventDefault();
+        // Toggle if video exists
+        if (videoEl) {
+          if (videoEl.paused) videoEl.play().catch(() => {});
+          else videoEl.pause();
+          return;
+        }
+        createVideo();
+      };
+
+      if (playButton) {
+        playButton.addEventListener('click', playClickHandler);
+      }
+
+      // expose destroy to window so SPA navigation can cleanup
+      (window as any)[GKEY] = {
+        destroy() {
+          thumbs.forEach((t) => {
+            t.removeEventListener('click', thumbClickHandler);
+            t.removeEventListener('keydown', thumbKeyHandler as any);
+          });
+          if (playButton) playButton.removeEventListener('click', playClickHandler);
+          destroyVideo();
+          try { delete (window as any)[GKEY]; } catch (e) {}
+        }
+      };
+
+      // initialize
+      selectIndex(0);
     }
 
     // Manejo de botones de compra
