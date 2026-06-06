@@ -35,14 +35,17 @@ console.log(categoria)
   </ul>
 </nav>
 
-<style>
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
   .breadcrumb {
     padding: .4rem 0;
     margin-bottom: 1rem;
-    font-size: .8rem;
-
+    font-size: .7rem;
+    background-color: rgba($terciario, 0.4);
+    border-radius: $radio;
+    
   }
-
+  
   .breadcrumb ul {
     padding: 0;
     margin: 0;

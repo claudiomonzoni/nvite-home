@@ -40,7 +40,10 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     text-align: center;
     max-width: fit-content;
     font-weight: 400;
-   // padding-top: 10px;
+   &:hover{
+    background-color: $acento;
+    color: white!important;
+   }
     :global(svg){
       color: currentColor !important;
       fill: currentColor !important;
@@ -90,8 +93,8 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     @extend .sombra;
   }
   .btn-whatsapp {
-    //background-color: #6E8F70!important;
-    background-color: $secundario!important;
+    background-color: #6E8F70!important;
+    //background-color: $primario!important;
     color: white!important;
     @include btn;
   }

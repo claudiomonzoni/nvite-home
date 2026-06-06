@@ -78,6 +78,13 @@ import Btn from "./Btn.astro";
     </div>
 </div>
 <div class="fondo">
+  <address>
+  <small>
+    Nvitaciones es una marca registrada de CMN Design, C.C. Los Patios Loc. 8, Ixtapa Zihuatanejo, C.P. 40880,
+    México.
+  </small>
+    
+  </address>
   <small
   >© 2024 - {new Date().getFullYear()} Todos los derechos reservados</small
   >
@@ -101,6 +108,12 @@ import Btn from "./Btn.astro";
     padding: $margen 0;
     margin: 0 auto;
     text-align: center;
+  }
+  address{
+    font-style: normal;
+    margin-bottom: $margen-min;
+    color: $primario;
+    font-size: 0.9rem;
   }
   .contepie {
     display: flex;

@@ -41,12 +41,18 @@ import Caracteristicas from "../../components/Caracteristicas.astro";
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
   "../../assets/cart/**/*.{jpg,jpeg,png,gif,webp}",
-  { eager: true }
+  { eager: true },
 );
 
 // Helper para verificar si es ImageMetadata
 function isImageMetadata(value: any): value is ImageMetadata {
-  return value && typeof value === 'object' && 'src' in value && 'width' in value && 'height' in value;
+  return (
+    value &&
+    typeof value === "object" &&
+    "src" in value &&
+    "width" in value &&
+    "height" in value
+  );
 }
 
 // Función para cargar las imágenes del producto
@@ -87,7 +93,9 @@ async function getProductImages(nvitacionInfo: NvitacionInfo | undefined) {
 }
 
 // Buscar en nvitaciones.json por slug
-const nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find((item) => item.slug === slug);
+const nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find(
+  (item) => item.slug === slug,
+);
 
 // Si no encuentra el slug, devolver 404
 if (!nvitacionInfo) {
@@ -116,8 +124,9 @@ if (match) {
   const priceTachadoNumber = Math.round(priceNumber * 1.4);
 
   // Formatear con separador de miles y dos decimales si quieres
-  const priceTachadoStr = priceTachadoNumber
-    .toLocaleString("es-MX", { minimumFractionDigits: 0 });
+  const priceTachadoStr = priceTachadoNumber.toLocaleString("es-MX", {
+    minimumFractionDigits: 0,
+  });
 
   priceTachado = `${currency}${priceTachadoStr}`;
 }
@@ -137,7 +146,10 @@ const productId = product.data.id;
       />
     </div>
 
-    <div id="producto-conte" data-category={nvitacionInfo?.categoria?.toLowerCase() ?? ''}>
+    <div
+      id="producto-conte"
+      data-category={nvitacionInfo?.categoria?.toLowerCase() ?? ""}
+    >
       <div id="izq">
         <div id="fix">
           <div class="gallery-container" id="nv-gallery">
@@ -148,9 +160,15 @@ const productId = product.data.id;
                     class="thumbnail-wrapper"
                     role="button"
                     tabindex="0"
-                    data-full-img={isImageMetadata(imagen) ? imagen.src : imagen}
+                    data-full-img={
+                      isImageMetadata(imagen) ? imagen.src : imagen
+                    }
                     data-index={index}
-                    data-video-url={index === 0 && nvitacionInfo?.video ? nvitacionInfo.video : undefined}
+                    data-video-url={
+                      index === 0 && nvitacionInfo?.video
+                        ? nvitacionInfo.video
+                        : undefined
+                    }
                   >
                     {isImageMetadata(imagen) ? (
                       <Image
@@ -180,36 +198,48 @@ const productId = product.data.id;
               }
             </div>
 
-            <div class="main-image-container" id="nv-main" data-video-url={nvitacionInfo?.video}>
+            <div
+              class="main-image-container"
+              id="nv-main"
+              data-video-url={nvitacionInfo?.video}
+            >
               <div class="media-poster">
-                {isImageMetadata(imagenes[0]) ? (
-                  <Image
-                    src={imagenes[0]}
-                    loading="eager"
-                    alt={product.data.name}
-                    height={800}
-                    width={800}
-                    class="main-image"
-                    id="nv-poster"
-                    quality="max"
-                  />
-                ) : (
-                  <img
-                    src={imagenes[0]}
-                    loading="eager"
-                    alt={product.data.name}
-                    height={800}
-                    width={800}
-                    class="main-image"
-                    id="nv-poster"
-                  />
-                )}
+                {
+                  isImageMetadata(imagenes[0]) ? (
+                    <Image
+                      src={imagenes[0]}
+                      loading="eager"
+                      alt={product.data.name}
+                      height={800}
+                      width={800}
+                      class="main-image"
+                      id="nv-poster"
+                      quality="max"
+                    />
+                  ) : (
+                    <img
+                      src={imagenes[0]}
+                      loading="eager"
+                      alt={product.data.name}
+                      height={800}
+                      width={800}
+                      class="main-image"
+                      id="nv-poster"
+                    />
+                  )
+                }
 
-                {nvitacionInfo?.video && (
-                  <button id="nv-play" class="video-play" aria-label="Reproducir video">
-                    <Icon name="mdi:play-circle" color="white" size={70} />
-                  </button>
-                )}
+                {
+                  nvitacionInfo?.video && (
+                    <button
+                      id="nv-play"
+                      class="video-play"
+                      aria-label="Reproducir video"
+                    >
+                      <Icon name="mdi:play-circle" color="white" size={70} />
+                    </button>
+                  )
+                }
               </div>
             </div>
           </div>
@@ -236,106 +266,103 @@ const productId = product.data.id;
           <!-- <p>{product.data.id}</p> -->
           <h1>{product.data.name}</h1>
 
-            <div id="precio">
-         <div class="bandejaPrecio">
+          <div id="precio">
+            <div class="bandejaPrecio">
+              {
+                nvitacionInfo?.precioTachado && (
+                  <p class="precioTachado">
+                    {priceTachado + "."}
+                    <sup>00</sup>
+                  </p>
+                )
+              }
 
-           {
-             nvitacionInfo?.precioTachado && (
-               <p class="precioTachado">
-            {priceTachado + "."}<sup>00</sup>
-          </p>
-            )}
-         
-         
-         <p class="price">{price.slice(0, -2)}<sup>{price.slice(-2)}</sup></p>
-         {
-           nvitacionInfo && nvitacionInfo.detalles && (
-             <div id="detalles" set:html={nvitacionInfo.detalles}></div>
-            )
-          }
+              <p class="price">
+                {price.slice(0, -2)}<sup>{price.slice(-2)}</sup>
+              </p>
+              {
+                nvitacionInfo && nvitacionInfo.detalles && (
+                  <div id="detalles" set:html={nvitacionInfo.detalles} />
+                )
+              }
+            </div>
+
+            {
+              nvitacionInfo && nvitacionInfo.muestra && (
+                <>
+                  <div class="liga-muestra">
+                    <Btn
+                      id="preview-btn"
+                      liga="#"
+                      texto="<b>Ver Nvitación muestra</b>"
+                      icono="mdi:chevron-right"
+                      clases="btn-oscuro"
+                      claro={false}
+                    />
+                  </div>
+                  <PreviewModal url={nvitacionInfo.muestra} />
+                </>
+              )
+            }
           </div>
 
-          {
-            nvitacionInfo && nvitacionInfo.muestra && (
-              <>
-                <div class="liga-muestra">
-                  <Btn
-                    id="preview-btn"
-                    liga="#"
-                    texto="<b>Ver Nvitación muestra</b>"
-                    icono="mdi:chevron-right"
-                    clases="btn-oscuro"
-                    claro={false}
-                    />
-
-                </div>
-                <PreviewModal url={nvitacionInfo.muestra} />
-              </>
-            )
-          }
-
-         </div>
-         
           <p>{product.data.description}</p>
 
           <div id="datosjson">
-     
-
-            {nvitacionInfo.version === 'Esencial' ? (
-              null
-            ) : nvitacionInfo.version === 'Clásica' ? (
-              <div class="BannerGeneralProducto">
-                <BannerGeneral
-                  encabezado="Confirmación de asistencia"
-                  texto="¡No pierdas el control! Descubre en tiempo real quién asistirá y permite que tus invitados confirmen su asistencia <b>desde la misma invitación.</b>"
-                  tema="secundario azul"
-                  icono="mdi:archive-clock-outline"
-                  izquierda={true}
-                />
-
-                <div id="conteCaracteristicas">
-                  <Caracteristicas
-                    encabezado="mapas"
-                    texto="Tus invitados sabrán exactamente como llegar."
-                    icono="mdi:map-check"
-                    fondo="/fondo-nvite-caracteristicas.png"
+            {
+              nvitacionInfo.version ===
+              "Esencial" ? null : nvitacionInfo.version === "Clásica" ? (
+                <div class="BannerGeneralProducto">
+                  <BannerGeneral
+                    encabezado="Confirmación de asistencia"
+                    texto="¡No pierdas el control! Descubre en tiempo real quién asistirá y permite que tus invitados confirmen su asistencia <b>desde la misma invitación.</b>"
+                    tema="secundario azul"
+                    icono="mdi:archive-clock-outline"
+                    izquierda={true}
                   />
-                  <Caracteristicas
-                    encabezado="pases"
-                    texto="Mentén el control asignando pases a cada invitación."
-                    icono="mdi:music-note-outline"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
+
+                  <div id="conteCaracteristicas">
+                    <Caracteristicas
+                      encabezado="mapas"
+                      texto="Tus invitados sabrán exactamente como llegar."
+                      icono="mdi:map-check"
+                      fondo="/fondo-nvite-caracteristicas.png"
+                    />
+                    <Caracteristicas
+                      encabezado="pases"
+                      texto="Mentén el control asignando pases a cada invitación."
+                      icono="mdi:music-note-outline"
+                      fondo="/fondo-nvite-caracteristicas.png"
+                    />
+                  </div>
                 </div>
-              </div>
-            ) : nvitacionInfo.version === 'Lux' ? (
-              <div class="BannerGeneralProducto">
-                <BannerGeneral
-                  encabezado="Experiencia inolvidable"
-                  texto="Tu invitación contará con música y mensajes personalizados, cada <b>invitación será especial</b>."
-                  tema="secundario morado"
-                  icono="mdi:star-outline"
-                  izquierda={true}
-                />
+              ) : nvitacionInfo.version === "Lux" ? (
+                <div class="BannerGeneralProducto">
+                  <BannerGeneral
+                    encabezado="Experiencia inolvidable"
+                    texto="Tu invitación contará con música y mensajes personalizados, cada <b>invitación será especial</b>."
+                    tema="secundario morado"
+                    icono="mdi:star-outline"
+                    izquierda={true}
+                  />
 
-                <div id="conteCaracteristicas">
-                  <Caracteristicas
-                    encabezado="diseño"
-                    texto="Un estilo único que se adapta a tu evento en colores, frases y tipografía."
-                    icono="mdi:pencil-ruler"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
-                  <Caracteristicas
-                    encabezado="soporte"
-                    texto="Te acompañamos en todo el proceso, desde la compra hasta que invites."
-                    icono="mdi:headset"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
+                  <div id="conteCaracteristicas">
+                    <Caracteristicas
+                      encabezado="diseño"
+                      texto="Un estilo único que se adapta a tu evento en colores, frases y tipografía."
+                      icono="mdi:pencil-ruler"
+                      fondo="/fondo-nvite-caracteristicas.png"
+                    />
+                    <Caracteristicas
+                      encabezado="soporte"
+                      texto="Te acompañamos en todo el proceso, desde la compra hasta que invites."
+                      icono="mdi:headset"
+                      fondo="/fondo-nvite-caracteristicas.png"
+                    />
+                  </div>
                 </div>
-              </div>
-            ) : null}
- 
-
+              ) : null
+            }
 
             {
               nvitacionInfo && (
@@ -351,12 +378,10 @@ const productId = product.data.id;
               )
             }
 
-            {/* Si el producto tiene "video" lo manejamos en la galería principal como poster + play */}
+            {
+              /* Si el producto tiene "video" lo manejamos en la galería principal como poster + play */
+            }
           </div>
-
-          
-       
-
         </div>
 
         <div class="buttons-container">
@@ -382,58 +407,67 @@ const productId = product.data.id;
           />
           <div id="ahora">
             <p>
-              <b>Compra ahora y agenda tu invitación sin preocupaciones.</b> Fecha estimada de entrega: {
-                calculateDeliveryDate()
-              }
+              <b>Compra ahora y agenda tu invitación sin preocupaciones.</b> Fecha
+              estimada de entrega: {calculateDeliveryDate()}
             </p>
           </div>
-          
+
           <div id="quesucede">
-            <input type="checkbox" id="quesucede-toggle" class="quesucede-toggle" />
-            <label for="quesucede-toggle" class="quesucede-label">¿Qué sucede después de tu compra?</label>
+            <input
+              type="checkbox"
+              id="quesucede-toggle"
+              class="quesucede-toggle"
+            />
+            <label for="quesucede-toggle" class="quesucede-label"
+              >¿Qué sucede después de tu compra?</label
+            >
             <ul class="quesucede-content">
-              <li><b>Te escribimos</b> a la brevedad y te enviamos un formulario para recopilar las fotos y detalles de tu evento</li>
-              <li><b>Obtienes acceso</b> a tu panel de invitados para generar y gestionar todas tus invitaciones</li>
-              <li><b>Revisas tu invitación personalizada</b> y puedes solicitar cambios hasta en 2 rondas de ajustes</li>
+              <li>
+                <b>Te escribimos</b> a la brevedad y te enviamos un formulario para
+                recopilar las fotos y detalles de tu evento
+              </li>
+              <li>
+                <b>Obtienes acceso</b> a tu panel de invitados para generar y gestionar
+                todas tus invitaciones
+              </li>
+              <li>
+                <b>Revisas tu invitación personalizada</b> y puedes solicitar cambios
+                hasta en 2 rondas de ajustes
+              </li>
             </ul>
           </div>
           <a id="terminos" href="/terminos-condiciones"
-          >ver terminos y condiciones</a
+            >ver terminos y condiciones</a
           >
           <SocialShare
-          url={Astro.url.toString()}
-          title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
+            url={Astro.url.toString()}
+            title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
           />
         </div>
-        
       </div>
     </div>
-
-  
   </div>
   <Testimonios />
 
-
-  <div class="grid contenido">  
+  <div class="grid contenido">
     <RelatedProducts
-    currentProductId={product.id}
-    category={nvitacionInfo?.categoria ||
-      product.data.metadata?.Categoria ||
-      ""}
-  />
-</div>
+      currentProductId={product.id}
+      category={nvitacionInfo?.categoria ||
+        product.data.metadata?.Categoria ||
+        ""}
+    />
+  </div>
   <Footer />
 </Layout>
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
 
-  #preview-btn{
+  #preview-btn {
     background: $acento;
-      @extend .sombra;
+    @extend .sombra;
   }
-  #detalles{
-
+  #detalles {
     :global(h3) {
       color: $acento;
       font-size: 1.2rem;
@@ -491,9 +525,9 @@ const productId = product.data.id;
       align-items: center;
       height: 3rem;
       border-radius: 100px;
-      padding: $margen-min .3rem;
+      padding: $margen-min 0.3rem;
       width: fit-content;
-      a{
+      a {
         margin: 0;
         transform-origin: left;
       }
@@ -502,7 +536,7 @@ const productId = product.data.id;
         padding: 0 !important;
         justify-content: center;
         border-radius: calc($radio + 0.7rem);
-        a{
+        a {
           width: 100%;
           text-align: center;
           transform-origin: center;
@@ -510,8 +544,8 @@ const productId = product.data.id;
       }
     }
     .buttons-container {
-    position: sticky;
-    top: 4rem;
+      position: sticky;
+      top: 4rem;
       display: grid;
       align-self: flex-start;
       background: white;
@@ -537,10 +571,9 @@ const productId = product.data.id;
       height: auto;
     }
   }
-// banner general
+  // banner general
   .BannerGeneralProducto {
     margin: $margen 0 0 0;
-
   }
   // Typography styles
   h1 {
@@ -550,7 +583,6 @@ const productId = product.data.id;
     margin-bottom: $margen-min !important;
   }
 
-
   //contenedor de precio
   #precio {
     display: flex;
@@ -558,14 +590,14 @@ const productId = product.data.id;
     gap: 1rem;
     align-items: center;
     gap: 1.5rem;
-      @include cel {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
+    @include cel {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
-  
-  .price, .precioTachado {
+
+  .price,
+  .precioTachado {
     font-size: 1.5rem;
     font-weight: bold;
     color: $primario;
@@ -577,10 +609,9 @@ const productId = product.data.id;
       padding: 0 $margen-min;
     }
   }
-  .precioTachado{
-
+  .precioTachado {
     font-size: 0.9rem;
-    color:$acento;
+    color: $acento;
     text-decoration: line-through;
 
     margin: 0;
@@ -632,7 +663,7 @@ const productId = product.data.id;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     pointer-events: auto;
   }
 
@@ -646,7 +677,6 @@ const productId = product.data.id;
   }
 
   .main-image-container {
-
     position: sticky;
     top: 4rem;
     height: fit-content;
@@ -686,7 +716,7 @@ const productId = product.data.id;
       width: 84px;
       height: 84px;
       border-radius: 50%;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0, 0, 0, 0.35);
       cursor: pointer;
     }
   }
@@ -769,9 +799,9 @@ const productId = product.data.id;
   :global(#vendidos) {
     font-size: 0.8rem;
     color: $gris;
-    padding: 0.5rem;
-    border-top: solid 1px $gris;
-    border-bottom: solid 1px $gris;
+    padding: 0.5rem 1rem;
+    background-color: rgba($secundario, 0.4);
+    border-radius: $radio;
     display: flex;
     align-items: center;
   }
@@ -799,7 +829,7 @@ const productId = product.data.id;
   }
 
   #quesucede {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: $gris;
   }
 
@@ -818,9 +848,9 @@ const productId = product.data.id;
     text-decoration: none;
     cursor: pointer;
     user-select: none;
-    font-size: .9rem;
-     @include cel {
-      font-size: .8rem;
+    font-size: 0.9rem;
+    @include cel {
+      font-size: 0.8rem;
     }
   }
 
@@ -829,13 +859,15 @@ const productId = product.data.id;
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition:
+      max-height 0.3s ease,
+      opacity 0.3s ease;
   }
 
   .quesucede-content li {
     margin-bottom: 0.5rem;
     color: $gris;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   .quesucede-toggle:checked + .quesucede-label + .quesucede-content {
@@ -875,7 +907,7 @@ const productId = product.data.id;
 
     // Manejo de ventas aleatorias
     initializeSalesMessage() {
-      if (document.getElementById('vendidos')) return;
+      if (document.getElementById("vendidos")) return;
 
       const productId = document
         .querySelector("[data-productid]")
@@ -900,29 +932,36 @@ const productId = product.data.id;
       }
 
       if (salesNumber > 0) {
-        const productContainer = document.getElementById('producto-conte');
-        const category = (productContainer?.dataset?.category || '').toLowerCase();
+        const productContainer = document.getElementById("producto-conte");
+        const category = (
+          productContainer?.dataset?.category || ""
+        ).toLowerCase();
 
-        let subject = 'parejas';
-        if (category.includes('quince')) {
-          subject = 'quinceañeras';
-        } else if (category.includes('boda') || category.includes('bodas')) {
-          subject = 'parejas';
+        let subject = "parejas";
+        if (category.includes("quince")) {
+          subject = "quinceañeras";
+        } else if (category.includes("boda") || category.includes("bodas")) {
+          subject = "parejas";
         }
 
-        const vendidosDiv = document.createElement('p');
-        vendidosDiv.id = 'vendidos';
+        const vendidosDiv = document.createElement("p");
+        vendidosDiv.id = "vendidos";
         vendidosDiv.innerHTML = `<b>${salesNumber} ${subject} han confiado en esta invitación en el último mes.</b>`;
 
-        const descriptionP = document.querySelector('#precio + p') || document.querySelector('#titulo p');
+        const descriptionP =
+          document.querySelector("#precio + p") ||
+          document.querySelector("#titulo p");
         if (descriptionP && descriptionP.parentNode) {
-          descriptionP.parentNode.insertBefore(vendidosDiv, descriptionP.nextSibling);
+          descriptionP.parentNode.insertBefore(
+            vendidosDiv,
+            descriptionP.nextSibling,
+          );
         } else {
-          const precio = document.getElementById('precio');
+          const precio = document.getElementById("precio");
           if (precio && precio.parentNode) {
             precio.parentNode.insertBefore(vendidosDiv, precio);
           } else {
-            const titulo = document.getElementById('titulo');
+            const titulo = document.getElementById("titulo");
             titulo?.appendChild(vendidosDiv);
           }
         }
@@ -934,42 +973,65 @@ const productId = product.data.id;
     // Se destruye cualquier instancia previa para que funcione correctamente
     // con las transiciones de Astro (viewTransitions / SPA navigation).
     initializeGallery() {
-      const GKEY = '__NV_GALLERY__';
+      const GKEY = "__NV_GALLERY__";
       // Destroy previous instance if present (handles SPA navigation/transitions)
-      try { (window as any)[GKEY]?.destroy?.(); } catch (e) { /* ignore */ }
+      try {
+        (window as any)[GKEY]?.destroy?.();
+      } catch (e) {
+        /* ignore */
+      }
 
-      const root = document.getElementById('nv-gallery');
+      const root = document.getElementById("nv-gallery");
       if (!root) return;
 
-      const thumbs = Array.from(root.querySelectorAll('.thumbnail-wrapper')) as HTMLElement[];
-      const poster = document.getElementById('nv-poster') as HTMLImageElement | null;
-      const mainContainer = document.getElementById('nv-main') as HTMLElement | null;
-      const playButton = document.getElementById('nv-play') as HTMLButtonElement | null;
-      const mediaPoster = root.querySelector('.media-poster') as HTMLElement | null;
+      const thumbs = Array.from(
+        root.querySelectorAll(".thumbnail-wrapper"),
+      ) as HTMLElement[];
+      const poster = document.getElementById(
+        "nv-poster",
+      ) as HTMLImageElement | null;
+      const mainContainer = document.getElementById(
+        "nv-main",
+      ) as HTMLElement | null;
+      const playButton = document.getElementById(
+        "nv-play",
+      ) as HTMLButtonElement | null;
+      const mediaPoster = root.querySelector(
+        ".media-poster",
+      ) as HTMLElement | null;
 
       if (!poster || !thumbs.length || !mainContainer || !mediaPoster) return;
 
-      const posterSrc = poster.getAttribute('src') || '';
-      const videoUrl = mainContainer.getAttribute('data-video-url') || null;
+      const posterSrc = poster.getAttribute("src") || "";
+      const videoUrl = mainContainer.getAttribute("data-video-url") || null;
 
       let currentIndex = 0;
       let videoEl: HTMLVideoElement | null = null;
-      let videoPlayHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
-      let videoPauseHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
-      let videoEndedHandler: ((this: HTMLVideoElement, ev: Event) => any) | null = null;
+      let videoPlayHandler:
+        | ((this: HTMLVideoElement, ev: Event) => any)
+        | null = null;
+      let videoPauseHandler:
+        | ((this: HTMLVideoElement, ev: Event) => any)
+        | null = null;
+      let videoEndedHandler:
+        | ((this: HTMLVideoElement, ev: Event) => any)
+        | null = null;
 
       // Marca visualmente la miniatura activa.
       const setActive = (index: number) => {
-        thumbs.forEach((t) => t.classList.remove('active'));
+        thumbs.forEach((t) => t.classList.remove("active"));
         const t = thumbs[index];
-        if (t) t.classList.add('active');
+        if (t) t.classList.add("active");
       };
 
       const clearVideoHandlers = () => {
         if (!videoEl) return;
-        if (videoPlayHandler) videoEl.removeEventListener('play', videoPlayHandler);
-        if (videoPauseHandler) videoEl.removeEventListener('pause', videoPauseHandler);
-        if (videoEndedHandler) videoEl.removeEventListener('ended', videoEndedHandler);
+        if (videoPlayHandler)
+          videoEl.removeEventListener("play", videoPlayHandler);
+        if (videoPauseHandler)
+          videoEl.removeEventListener("pause", videoPauseHandler);
+        if (videoEndedHandler)
+          videoEl.removeEventListener("ended", videoEndedHandler);
         videoPlayHandler = null;
         videoPauseHandler = null;
         videoEndedHandler = null;
@@ -980,19 +1042,21 @@ const productId = product.data.id;
       const destroyVideo = () => {
         if (videoEl) {
           clearVideoHandlers();
-          if (playButton) playButton.style.display = 'none';
-          try { videoEl.pause(); } catch (e) {}
+          if (playButton) playButton.style.display = "none";
+          try {
+            videoEl.pause();
+          } catch (e) {}
           videoEl.remove();
           videoEl = null;
         }
-        if (poster) poster.style.display = '';
+        if (poster) poster.style.display = "";
       };
 
       const selectIndex = (index: number) => {
         currentIndex = index;
         const thumb = thumbs[index];
-        const thumbVideo = thumb.getAttribute('data-video-url');
-        const full = thumb.getAttribute('data-full-img') || posterSrc;
+        const thumbVideo = thumb.getAttribute("data-video-url");
+        const full = thumb.getAttribute("data-full-img") || posterSrc;
 
         // If we had a playing video, stop it
         destroyVideo();
@@ -1000,12 +1064,12 @@ const productId = product.data.id;
         // If the selected thumb is the video (index 0 with video)
         if (thumbVideo) {
           // Restore poster to the original posterSrc for video
-          if (poster) poster.setAttribute('src', posterSrc);
-          if (playButton) playButton.style.display = 'flex';
+          if (poster) poster.setAttribute("src", posterSrc);
+          if (playButton) playButton.style.display = "flex";
         } else {
           // Show selected image as poster
-          if (poster) poster.setAttribute('src', full);
-          if (playButton) playButton.style.display = 'none';
+          if (poster) poster.setAttribute("src", full);
+          if (playButton) playButton.style.display = "none";
         }
 
         setActive(index);
@@ -1017,54 +1081,54 @@ const productId = product.data.id;
         if (!videoUrl) return;
         destroyVideo();
 
-        videoEl = document.createElement('video');
+        videoEl = document.createElement("video");
         videoEl.src = videoUrl;
         videoEl.controls = true;
         videoEl.autoplay = true;
         videoEl.playsInline = true;
-        videoEl.className = 'main-image';
-        videoEl.id = 'nv-video';
-        if (posterSrc) videoEl.setAttribute('poster', posterSrc);
+        videoEl.className = "main-image";
+        videoEl.id = "nv-video";
+        if (posterSrc) videoEl.setAttribute("poster", posterSrc);
 
         // Hide poster and append video
-        if (poster) poster.style.display = 'none';
+        if (poster) poster.style.display = "none";
         mediaPoster.appendChild(videoEl);
 
         // Update playButton visibility
-        if (playButton) playButton.style.display = 'none';
+        if (playButton) playButton.style.display = "none";
 
         videoPlayHandler = () => {
-          if (playButton) playButton.style.display = 'none';
+          if (playButton) playButton.style.display = "none";
         };
         videoPauseHandler = () => {
-          if (playButton) playButton.style.display = 'flex';
+          if (playButton) playButton.style.display = "flex";
         };
         videoEndedHandler = () => {
           destroyVideo();
         };
 
-        videoEl.addEventListener('play', videoPlayHandler);
-        videoEl.addEventListener('pause', videoPauseHandler);
-        videoEl.addEventListener('ended', videoEndedHandler);
+        videoEl.addEventListener("play", videoPlayHandler);
+        videoEl.addEventListener("pause", videoPauseHandler);
+        videoEl.addEventListener("ended", videoEndedHandler);
       };
 
       // Handlers
       const thumbClickHandler = (e: Event) => {
         const el = e.currentTarget as HTMLElement;
-        const idx = Number(el.getAttribute('data-index')) || 0;
+        const idx = Number(el.getAttribute("data-index")) || 0;
         selectIndex(idx);
       };
 
       const thumbKeyHandler = (e: KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           (e.currentTarget as HTMLElement).click();
           e.preventDefault();
         }
       };
 
       thumbs.forEach((t) => {
-        t.addEventListener('click', thumbClickHandler);
-        t.addEventListener('keydown', thumbKeyHandler as any);
+        t.addEventListener("click", thumbClickHandler);
+        t.addEventListener("keydown", thumbKeyHandler as any);
       });
 
       const playClickHandler = (e: Event) => {
@@ -1079,20 +1143,23 @@ const productId = product.data.id;
       };
 
       if (playButton) {
-        playButton.addEventListener('click', playClickHandler);
+        playButton.addEventListener("click", playClickHandler);
       }
 
       // expose destroy to window so SPA navigation can cleanup
       (window as any)[GKEY] = {
         destroy() {
           thumbs.forEach((t) => {
-            t.removeEventListener('click', thumbClickHandler);
-            t.removeEventListener('keydown', thumbKeyHandler as any);
+            t.removeEventListener("click", thumbClickHandler);
+            t.removeEventListener("keydown", thumbKeyHandler as any);
           });
-          if (playButton) playButton.removeEventListener('click', playClickHandler);
+          if (playButton)
+            playButton.removeEventListener("click", playClickHandler);
           destroyVideo();
-          try { delete (window as any)[GKEY]; } catch (e) {}
-        }
+          try {
+            delete (window as any)[GKEY];
+          } catch (e) {}
+        },
       };
 
       // initialize
@@ -1102,10 +1169,10 @@ const productId = product.data.id;
     // Manejo de botones de compra
     initializeBuyNowButtons() {
       const buyNowButtons = document.querySelectorAll(
-        '[data-action="buy-now"]'
+        '[data-action="buy-now"]',
       );
       buyNowButtons.forEach((button) =>
-        button.addEventListener("click", this.handleBuyNow)
+        button.addEventListener("click", this.handleBuyNow),
       );
     }
 
