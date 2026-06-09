@@ -76,7 +76,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/$/,                               // Página principal
         /^\/sitemap\.xml$/,                   // Sitemap
         /^\/robots\.txt$/,                    // Robots.txt
-        /^\/api\/getInvitados\.json$/,        // Ruta específica de la API
         /^\/api\/getInvitado\.json$/,         // Ruta para obtener invitado
         /^\/api\/\d+\.json$/,                 // Ruta para actualizar invitado (PATCH)
         /^\/panel\/ingresar$/,                // Página de ingreso
