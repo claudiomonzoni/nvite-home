@@ -1089,7 +1089,14 @@ const productId = product.data.id;
         videoEl.className = "main-image";
         videoEl.id = "nv-video";
         if (posterSrc) videoEl.setAttribute("poster", posterSrc);
-
+        
+        // Aplicar estilos inline al video
+        videoEl.style.width = "100%";
+        videoEl.style.maxWidth = "500px";
+        videoEl.style.margin = "0 auto";
+        videoEl.style.display = "block";
+        videoEl.style.borderRadius = "10px";
+        
         // Hide poster and append video
         if (poster) poster.style.display = "none";
         mediaPoster.appendChild(videoEl);
