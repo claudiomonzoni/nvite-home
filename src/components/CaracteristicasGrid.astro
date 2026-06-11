@@ -165,7 +165,7 @@ const { matriz } = Astro.props;
     #item-c {
       grid-column: 3 / span 1;
       grid-row: 2 / span 2;
-      background: $acento;
+      background: $fondo;
       &::before {
         content: "";
         position: absolute;
@@ -179,10 +179,10 @@ const { matriz } = Astro.props;
         z-index: 0;
       }
       p {
-        color: #fff;
+        color:$primario;
       }
       svg {
-        color: white !important;
+        color: $primario !important;
         fill: currentColor !important;
       }
     }
