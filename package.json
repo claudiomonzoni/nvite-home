@@ -11,22 +11,22 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/db": "0.19.0",
-    "@astrojs/mdx": "4.3.13",
-    "@astrojs/netlify": "6.6.4",
-    "@astrojs/node": "9.5.2",
-    "@astrojs/react": "4.4.2",
-    "@astrojs/sitemap": "3.7.0",
-    "@astrojs/vercel": "9.0.4",
+    "@astrojs/db": "0.21.3",
+    "@astrojs/mdx": "6.0.3",
+    "@astrojs/netlify": "7.0.13",
+    "@astrojs/node": "10.1.4",
+    "@astrojs/react": "5.0.7",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/vercel": "10.0.8",
     "@iconify-json/mdi": "^1.2.0",
-    "@keystatic/astro": "^5.0.6",
-    "@keystatic/core": "^0.5.48",
+    "@keystatic/astro": "^5.1.0",
+    "@keystatic/core": "^0.5.50",
     "@libsql/client": "^0.14.0",
     "@stripe/stripe-js": "^7.3.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vercel/analytics": "^1.4.1",
-    "astro": "5.17.1",
+    "astro": "6.4.8",
     "astro-icon": "^1.1.0",
     "firebase": "^11.0.1",
     "gray-matter": "^4.0.3",
@@ -46,5 +46,8 @@
   },
   "devDependencies": {
     "@iconify-json/solar": "^1.2.0"
+  },
+  "resolutions": {
+    "stripe-astro-loader/astro": "^6.0.0"
   }
 }

@@ -1,5 +1,6 @@
 // 1. Import utilities from `astro:content`
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 import { stripePriceLoader, stripeProductLoader } from "stripe-astro-loader";
 import Stripe from "stripe";
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
@@ -224,16 +225,19 @@ const precios = defineCollection({
 });
 
 
-const imagenes = defineCollection({
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      cover: image().refine((img) => img.width >= 1080, {
-        message: "Cover image must be at least 1080 pixels wide!",
-      }),
-      Alt: z.string(),
-    }),
-});
+// La colección `imagenes` ha sido comentada debido a que en Astro 6 todas las
+// colecciones requieren un `loader` y esta colección no se utiliza en el proyecto.
+// De ser necesaria en el futuro, reactivar y definir un loader apropiado (ej: glob).
+// const imagenes = defineCollection({
+//   schema: ({ image }) =>
+//     z.object({
+//       title: z.string(),
+//       cover: image().refine((img) => img.width >= 1080, {
+//         message: "Cover image must be at least 1080 pixels wide!",
+//       }),
+//       Alt: z.string(),
+//     }),
+// });
 
 // 4. Export a single `collections` object to register your collection(s)
-export const collections = { bodas, quince, imagenes, productos, precios };
+export const collections = { bodas, quince, productos, precios };
