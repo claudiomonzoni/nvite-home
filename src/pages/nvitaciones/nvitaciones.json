@@ -97,25 +97,14 @@
   },
   {
     "id": "prod_UcVoRiVmcT6ZQM",
-    "precioTachado": "true",
+    "precioTachado": false,
     "slug": "elegante-lux-xv",
     "muestra": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
     "beneficios": [
-      "Panel de invitados",
-      "Mensaje para invitados especiales",
-      "Música ambiental",
-      "Dress code y sugerencia de colores",
-      "Itinerario",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes interactivas",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      "Cuando la abren: Música ambiental · Frase animada · Galería de hasta 6 fotos",
+      "Cuando confirman: Confirmación de asistencia · Número de pases · Panel en tiempo real · Mensaje personalizado del invitado",
+      "Cuando el día llega: Mapa interactivo · Itinerario · Cuenta regresiva · Dress code · Mesa de regalos · Mesas y lugares · Mensaje especial por invitado"
     ],
     "categoria": "Quince",
     "tipo": "Sitio web",
@@ -129,7 +118,7 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
-    "precioTachado": "true",
+    "precioTachado": false,
     "slug": "invitacion-xv-lux",
     "muestra": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
@@ -163,7 +152,7 @@
   },
   {
     "id": "prod_Q42WJO0oMaU98G",
-    "precioTachado": "true",
+    "precioTachado": false,
     "slug": "invitacion-bodas-lux",
     "muestra": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
@@ -196,7 +185,7 @@
   },
   {
     "id": "prod_SZwAeRXTJGqFO8",
-    "precioTachado": "true",
+    "precioTachado": false,
     "slug": "invitacion-bodas-lux-elegante",
     "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
     "beneficios": [
