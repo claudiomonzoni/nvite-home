@@ -24,9 +24,10 @@ import nvitacionesData from "./nvitaciones.json";
 // Define the type for nvitacionInfo to include detalles
 type NvitacionInfo = {
   id: string;
-  precioTachado?: string; // Make precioTachado optional
+  precioTachado?: string | boolean; // Make precioTachado optional and accept string or boolean
   slug: string;
   muestra?: string;
+  titulo?: string;
   beneficios: string[];
   categoria: string;
   tipo: string;
@@ -1216,6 +1217,20 @@ const productId = product.data.id;
       const backdrop = modal?.querySelector(".modal-backdrop");
 
       const openModal = () => {
+        // Si es dispositivo móvil (teléfono), abrir en una pestaña nueva.
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        const urlAttr = modal?.getAttribute('data-url');
+        if (isMobile && urlAttr) {
+          try {
+            window.open(urlAttr, '_blank');
+          } catch (e) {
+            // Fallback: navegar en la misma pestaña
+            window.location.href = urlAttr;
+          }
+          return;
+        }
+
+        // En tablet o escritorio, abrir en modal con iframe (comportamiento actual)
         modal?.classList.add("active");
         document.body.style.overflow = "hidden";
         modal?.dispatchEvent(new CustomEvent("modal:open"));

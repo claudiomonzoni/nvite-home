@@ -661,11 +661,15 @@ input::placeholder {
   position: relative;
   padding: $margen;
   text-align: center;
+  width: 70%;
+  margin: 0 auto;
   h2 {
     color: $primario;
+    margin-bottom: $margen-cel;
   }
   @include cel {
     padding: $margen $margen-cel 0;
+    width: 100%;
   }
 }
 

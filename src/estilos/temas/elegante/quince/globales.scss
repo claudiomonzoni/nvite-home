@@ -1180,7 +1180,6 @@
       font-weight: bold;
       color: #fff;
       font-size: clamp(4rem, 1.5vw, 2rem);
-
       @include cel {
         padding: 0;
         margin: -10px;
@@ -1219,7 +1218,7 @@
         padding: $margen $margen $margen-cel;
 
         p {
-          color: var(--fondo) !important;
+          color: #fff !important;
         }
       }
 
@@ -1230,6 +1229,7 @@
       @include cel {
         padding-right: 0;
         margin-right: 0;
+        margin-bottom: $margen-cel;
         border-right: none;
         border-bottom: solid 1px var(--secundario);
       }

@@ -1078,7 +1078,7 @@ p{
         background-color: var(--primario);
         padding: $margen;
         p{
-          color: var(--fondo)!important;
+          color: #fff !important;
         }
       }
       &:last-child {
@@ -1087,6 +1087,7 @@ p{
       @include cel {
         padding-right: 0;
         margin-right: 0;
+        margin-bottom: $margen-min;
         border-right: none;
         border-bottom: solid 1px var(--secundario);
       }

@@ -9,6 +9,7 @@ import { ClientRouter } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 import Analytics from "@vercel/analytics/astro";
+import WhatsappFloat from "../components/WhatsappFloat.astro";
 ---
 
 <!doctype html>
@@ -185,6 +186,7 @@ import Analytics from "@vercel/analytics/astro";
       <slot />
     </main>
     <Analytics />
+    <WhatsappFloat />
     <script src="../js/reserva.js"></script>
     <script src="../js/globals.ts"></script>
   </body>
