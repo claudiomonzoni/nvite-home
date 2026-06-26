@@ -4,16 +4,21 @@
     "slug": "invitacion-xv-clasica",
     "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
     "beneficios": [
-      "Panel de invitados",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Leen tu mensaje animado con tu frase favorita, disfrutan de tu galería de fotos y se emocionan con la cuenta regresiva.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Confirman su asistencia en segundos, eligen su número de pases y se registran automáticamente en tu panel de control.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Abren la ubicación en Google Maps con un toque y revisan tu mesa de regalos con enlaces directos.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Quince",
     "tipo": "Sitio web",
@@ -33,12 +38,21 @@
     "titulo": "Invitación Bodas esencial",
     "muestra": "/bodas/invitacion-bodas-esencial",
     "beneficios": [
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Hasta 4 imágenes en galería",
-      "Formulario sencillo de confirmación por whatsapp"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Se deslumbran con su hermosa frase de amor animada, ven la cuenta regresiva y disfrutan de sus mejores fotos de portada.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Te envían su confirmación directamente a tu WhatsApp con un solo botón rápido e intuitivo.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Tienen el mapa interactivo y los detalles exactos del evento al alcance de su teléfono.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Bodas",
     "tipo": "Sitio web",
@@ -48,16 +62,26 @@
       "../../assets/cart/bodas/esencial/confirmacion-Nvitaciones-bodas-esencial.webp"
     ]
   },
-    {
+  {
     "id": "prod_SK7ICkqFPPgSuJ",
     "slug": "invitacion-xv-esencial",
     "muestra": "/quince/invitacion-bodas-esencial",
     "beneficios": [
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario sencillo de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Leen tu inspiradora frase animada de quinceañera, ven el reloj de cuenta regresiva y se emocionan con tu foto principal.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Te envían su asistencia a través de un formulario sencillo directo a tu WhatsApp.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Acceden al mapa interactivo para llegar a la ceremonia y al salón sin perderse.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Quince",
     "tipo": "Sitio web",
@@ -73,16 +97,21 @@
     "slug": "invitacion-bodas-clasica",
     "muestra": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
     "beneficios": [
-      "Panel de invitados",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Leen su frase de amor animada personalizada, se emocionan con el reloj de cuenta regresiva y ven su galería de fotos.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Confirman su asistencia, indican el número de pases y se registran en tu panel de control al instante.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Tienen el mapa directo con GPS al salón de bodas y los enlaces directos a su mesa de regalos.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Bodas",
     "tipo": "Sitio web",
@@ -102,15 +131,27 @@
     "muestra": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
     "beneficios": [
-      "Cuando la abren: Música ambiental · Frase animada · Galería de hasta 6 fotos",
-      "Cuando confirman: Confirmación de asistencia · Número de pases · Panel en tiempo real · Mensaje personalizado del invitado",
-      "Cuando el día llega: Mapa interactivo · Itinerario · Cuenta regresiva · Dress code · Mesa de regalos · Mesas y lugares · Mensaje especial por invitado"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Escuchan la canción que amas, leen tu mensaje animado y ven tu galería con tus mejores fotos.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Recibes su asistencia al instante, eligen su mesa de regalos y te dejan un mensaje de felicitación.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Tienen el itinerario del evento, el mapa interactivo y su pase personalizado en su teléfono.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Quince",
     "tipo": "Sitio web",
     "version": "Lux",
     "imagenes": [
-       "../../assets/cart/quince/elegante/color-Nvitaciones-quince-lux-elgante.webp",
+      "../../assets/cart/quince/elegante/color-Nvitaciones-quince-lux-elgante.webp",
       "../../assets/cart/quince/elegante/padres-Nvitaciones-quince-lux-elgante.webp",
       "../../assets/cart/quince/elegante/responsiva.webp",
       "../../assets/cart/quince/elegante/fomo-Nvitaciones-quince-lux-elgante.webp"
@@ -118,24 +159,25 @@
   },
   {
     "id": "prod_QLJkNCXvs8egN9",
-    "precioTachado": false,
+    "precioTachado": true,
     "slug": "invitacion-xv-lux",
     "muestra": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
-      "Panel de invitados",
-      "Mensaje para invitados especiales",
-      "Música ambiental",
-      "Dress code y sugerencia de colores",
-      "Itinerario",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes interactivas",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Escuchan tu canción favorita de fondo, se sorprenden con tu frase animada y ven tu hermosa galería interactiva.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Confirman su asistencia en segundos, eligen sus pases y te dejan un mensaje de felicitación.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Acceden al mapa GPS, al itinerario detallado, al dress code y a la sugerencia de regalos con un solo toque.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Quince",
     "tipo": "Sitio web",
@@ -156,20 +198,21 @@
     "slug": "invitacion-bodas-lux",
     "muestra": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
-      "Panel de invitados",
-      "Mensaje para invitados especiales",
-      "Música ambiental",
-      "Dress code y sugerencia de colores",
-      "Itinerario",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes interactivas",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Suena su canción especial de novios, leen su mensaje de amor animado y disfrutan de la hermosa galería del romance.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Confirman de inmediato en el formulario de asistencia, eligen sus pases y se registran en tu panel de control.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Tienen a la mano el mapa exacto, el itinerario del gran día, la mesa de regalos y el dress code sugerido.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Bodas",
     "tipo": "Sitio web",
@@ -189,20 +232,21 @@
     "slug": "invitacion-bodas-lux-elegante",
     "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
     "beneficios": [
-      "Panel de invitados",
-      "Mensaje para invitados especiales",
-      "Música ambiental",
-      "Dress code y sugerencia de colores",
-      "Itinerario",
-      "Nombre del invitado",
-      "Pases del invitado",
-      "Galería de imágenes interactivas",
-      "Sugerencia de regalos",
-      "Detalles del evento",
-      "Cuenta regresiva",
-      "Mapas de ubicación",
-      "Frase animada",
-      "Formulario de confirmación"
+      {
+        "titulo": "Cuando la abren",
+        "parrafo": "Se sumergen en su historia de amor con su canción favorita de fondo, su frase animada de bienvenida y su galería fotográfica.",
+        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+      },
+      {
+        "titulo": "Cuando confirman",
+        "parrafo": "Te envían sus mejores deseos, seleccionan sus pases de invitado y registran su asistencia en tu panel en tiempo real.",
+        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+      },
+      {
+        "titulo": "Cuando el día llega",
+        "parrafo": "Tienen su pase personalizado en su teléfono, el dress code de gala y los enlaces de su mesa de regalos.",
+        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+      }
     ],
     "categoria": "Bodas",
     "tipo": "Sitio web",

@@ -1,0 +1,71 @@
+---
+interface Props {
+  titulo: string;
+  parrafo: string;
+  imaFondo: string;
+}
+
+const { titulo, parrafo, imaFondo } = Astro.props;
+const url = `url("${imaFondo}")`;
+---
+
+<div class="beneficio-card">
+  <div class="conte">
+    <h3>{titulo}</h3>
+    <p set:html={parrafo}></p>
+  </div>
+</div>
+
+<style define:vars={{ url }} lang="scss">
+  @use "../estilos/variables" as *;
+
+  .beneficio-card {
+    background: var(--url) no-repeat right bottom #fefefe;
+    background-size: auto 90%;
+    border-radius: $radio;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    height: 50vh;
+
+    @include cel {
+      height: 50vh;
+    }
+    @include hdplus {
+      height: 44vh;
+    }
+  }
+
+  .conte {
+    max-width: 80%;
+    z-index: 1;
+    text-align: left;
+  }
+
+  h3 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $primario;
+    line-height: normal;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: $gris;
+    line-height: 1.5;
+  }
+
+  @include cel {
+    .beneficio-card {
+      padding: 1.25rem;
+      background-size: auto 55%;
+    }
+    .conte {
+      max-width: 80%;
+    }
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 import CartItem from "../../components/Pagos/CartItem.astro";
 import Layout from "../../layouts/Layout.astro";
-import { getTotalCartItems } from  "../../js/cart";
+import { getTotalCartItems, getProductPrice } from  "../../js/cart";
 import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import { Icon } from "astro-icon/components";
@@ -12,6 +12,16 @@ const cartCookie = Astro.cookies.get("cartItems")?.value as unknown as string;
 const totalCartItems = await getTotalCartItems(
   cartCookie ? JSON.parse(cartCookie) : []
 );
+
+// Calcular el costo por invitado dinámico del primer item del carrito
+let costPerGuest = 20; // Default
+if (totalCartItems.length > 0) {
+  const priceStr = await getProductPrice(totalCartItems[0].product);
+  const numericPrice = Number(priceStr.replace(/,/g, "").replace(/[^\d.]/g, ""));
+  if (numericPrice) {
+    costPerGuest = Math.round(numericPrice / 100);
+  }
+}
 ---
 
 <Layout title="Carrito de Compras - Nvitaciones">
@@ -41,6 +51,17 @@ const totalCartItems = await getTotalCartItems(
           <div class="cart-actions">
             <div class="cart-summary">
               <p class="total-items">{totalCartItems.length} {totalCartItems.length === 1 ? 'Nvitación' : 'Nvitaciones'}</p>
+            </div>
+            
+            <!-- Resumen de valor en carrito — NUEVO -->
+            <div class="cart-value-summary">
+              <p class="cart-anchor">≈ ${costPerGuest} por invitado · Sin límite de envíos</p>
+              <ul class="cart-includes">
+                <li>✦ Personalizada con tu nombre, fecha y colores</li>
+                <li>✦ Lista en 2 días hábiles</li>
+                <li>✦ Tus invitados confirman solos desde la invitación</li>
+                <li>✦ Tú lo ves en tiempo real desde tu panel</li>
+              </ul>
             </div>
             <div class="cart-buttons">
         
@@ -127,6 +148,39 @@ const totalCartItems = await getTotalCartItems(
   .total-items {
     font-size: 1.1rem;
     color: #666;
+  }
+
+  .cart-value-summary {
+    background: #fdf8f4;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(192, 57, 43, 0.1);
+    text-align: left;
+  }
+
+  .cart-anchor {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .cart-includes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cart-includes li {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+    text-align: left;
   }
 
   .cart-buttons {

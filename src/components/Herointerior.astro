@@ -40,6 +40,9 @@ console.log(fondo);
           <span set:html={Spanh2} />
         </h1>
         <p class={tema} set:html={description} />
+        <p class="hero-anchor">
+          Desde $20 por invitado · Personalizada a tus colores · Lista en 2 días
+        </p>
         <div class={`cta ${tema}`}>
           <Btn
             liga="#nvitaciones"
@@ -188,6 +191,18 @@ console.log(fondo);
       .der {
         flex: 1 0 100%;
       }
+    }
+  }
+  .hero-anchor {
+    font-size: 13px;
+    color: #888;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+    text-align: left;
+    @include cel {
+      text-align: center;
+      margin-bottom: 12px;
     }
   }
   .cta {

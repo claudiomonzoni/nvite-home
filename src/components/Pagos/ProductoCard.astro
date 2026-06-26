@@ -34,6 +34,10 @@ if (nvitacionInfo?.precioTachado) {
 // Extraer el número del precio para el Schema
 const priceNumberOnly = precio.replace(/[^\d.]/g, "");
 
+// Calcular precio por invitado dinámicamente
+const numericPrice = Number(precio.replace(/,/g, "").replace(/[^\d.]/g, ""));
+const costPerGuest = Math.round(numericPrice / 100);
+
 const schemaProduct = {
   "@context": "https://schema.org/",
   "@type": "Product",
@@ -66,7 +70,7 @@ const schemaProduct = {
 <article class="producto-card">
   <div class="portada">
     <a href={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}>
-      <div class="verNvitacion">Ver Nvitación</div>
+      <!-- <div class="verNvitacion">Ver Nvitación</div> -->
       <div class="crop">
         <Image
           src={producto.data.images[0]}
@@ -74,6 +78,7 @@ const schemaProduct = {
           height={320}
           width={320}
         />
+        <div class="badge-invitado">≈ ${costPerGuest} por invitado</div>
       </div>
     </a>
   </div>
@@ -97,18 +102,19 @@ const schemaProduct = {
         {precio.replace(/\.00$/, "")}<sup>.00</sup>
       </p>
     </div>
-    <!-- <p set:html={producto.data.description} /> -->
+    <!-- NUEVO: línea de ancla emocional -->
+    <p  class="price-anchor">
+      ≈ ${costPerGuest} por invitado · Envíos ilimitados / <b></b>
+    </p>
   </div>
-  <Btn
-    data-cart
-    data-action="increment"
-    data-productid={producto.data.id}
-    liga="#"
-    texto="agregar al carrito"
+  <div class="conteBtn">
+    <Btn
+    liga={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}
+    texto="Ver mi ejemplo gratis →"
     clases="btn-oscuro"
     claro={false}
-    icono="mdi:cart-plus"
-  />
+    />
+  </div>
 </article>
 
 <style lang="scss">
@@ -116,31 +122,12 @@ const schemaProduct = {
   .producto-card {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto auto auto auto;
     gap: 0.5rem;
     border-radius: $radio;
     // box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
     // background-color: white;
     height: 100%;
-    .btn-oscuro {
-      margin-bottom: 0;
-      margin-bottom: $margen-cel;
-      margin-top: 0;
-    }
-  }
-  .verNvitacion {
-    position: absolute;
-    z-index: 100;
-    top: 5%;
-    right: 5%;
-    background: rgba($terciario, 0.6);
-    padding: 0.5rem $margen-min;
-    color: $acento;
-    font-weight: bold;
-    font-size: 0.7rem;
-    border-radius: $radio;
-    backdrop-filter: blur(5px);
-    @extend .sombra;
   }
 
   .portada {
@@ -174,7 +161,6 @@ const schemaProduct = {
       height: 70%;
       aspect-ratio: 1/1;
       overflow: hidden;
-      position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -183,6 +169,20 @@ const schemaProduct = {
       object-fit: cover;
       width: 60%;
       height: auto;
+    }
+    .badge-invitado {
+      position: absolute;
+      z-index: 100;
+      top: 5%;
+      right: 5%;
+      background: rgba($gris, 0.7);
+      padding: 0.5rem $margen-min;
+      color:#fff;
+      font-weight: bold;
+      font-size: 0.7rem;
+      border-radius: $radio;
+      backdrop-filter: blur(5px);
+      @extend .sombra;
     }
   }
 
@@ -193,7 +193,7 @@ const schemaProduct = {
     font-size: clamp(0.7rem, 1.1vw + 0.5rem, 0.8rem);
     color: $acento;
     text-transform: capitalize;
-    margin-bottom: $margen-min;
+    margin-bottom: $margen-cel;
     font-weight: 300;
   }
   .headinfo {
@@ -203,12 +203,13 @@ const schemaProduct = {
     gap: $margen-min;
     border-bottom: solid 1px $secundario;
     padding-bottom: $margen-min;
+   flex-wrap: wrap;
     // margin-bottom: $margen-min;
   }
 
   .precio,
   .precioTachado {
-    font-size: clamp(1.1rem, 1.1vw, 1.5rem);
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
     font-weight: bold;
     color: $primario;
 
@@ -224,13 +225,43 @@ const schemaProduct = {
     font-weight: bold !important;
     color: $acento;
     text-decoration: line-through;
+    padding-right: $margen-min;
+  }
+
+  .price-anchor {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    font-style: normal;
+    letter-spacing: 0.01em;
+    @include cel{
+      text-align: center;
+      
+    }
+  }
+
+  .price-note {
+    font-size: 11px;
+    color: #aaa;
+    text-align: center;
+    margin-top: -2px;
+    margin-bottom: 8px;
   }
 
   h2 {
-    font-size: clamp(1.3rem, 1.2vw, 1.7rem);
-    margin: 0;
+    font-size: clamp(1.6rem, 1.2vw, 1.7rem);
+    margin-top:4px;
     padding: 0;
     color: $primario;
+    flex: 1 0 100%;
+  }
+  .conteBtn {
+   padding: 0 $margen-min;
+   @include cel{
+    text-align: center;
+    margin-top: -20px;
+   }
   }
   .categoria {
     text-transform: capitalize;

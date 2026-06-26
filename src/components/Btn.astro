@@ -61,7 +61,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     @include btn;
   }
   .btn-oscuro {
-    background-color: $secundario;
+    background-color: $acento;
     color: white;
   
     svg {
@@ -69,6 +69,10 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
       fill: currentColor !important;
     }
     @include btn;
+    &:hover{
+      background-color: $terciario;
+      color:$primario!important;
+    }
   }
   .btn-bordes {
     border: 1px solid $secundario !important;
@@ -84,8 +88,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
     @include btn;
   }
   .btn-ver-nvitaciones {
-    background: linear-gradient(178deg, $fondoGlobal, $secundario);
-    border: 1px solid $secundario !important;
+    background: $terciario !important;
     color: $primario;
     justify-content: left !important;
  
