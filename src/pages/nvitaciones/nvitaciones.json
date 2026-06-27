@@ -134,17 +134,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Escuchan la canción que amas, leen tu mensaje animado y ven tu galería con tus mejores fotos.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Recibes su asistencia al instante, eligen su mesa de regalos y te dejan un mensaje de felicitación.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Tienen el itinerario del evento, el mapa interactivo y su pase personalizado en su teléfono.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan.webp"
       }
     ],
     "categoria": "Quince",
@@ -235,17 +235,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Se sumergen en su historia de amor con su canción favorita de fondo, su frase animada de bienvenida y su galería fotográfica.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Te envían sus mejores deseos, seleccionan sus pases de invitado y registran su asistencia en tu panel en tiempo real.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Tienen su pase personalizado en su teléfono, el dress code de gala y los enlaces de su mesa de regalos.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
     "categoria": "Bodas",

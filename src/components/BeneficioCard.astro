@@ -20,52 +20,57 @@ const url = `url("${imaFondo}")`;
   @use "../estilos/variables" as *;
 
   .beneficio-card {
-    background: var(--url) no-repeat right bottom #fefefe;
-    background-size: auto 90%;
+    background: 
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba($primario, 1) 100%), 
+      var(--url) no-repeat center / cover #f0efee;
     border-radius: $radio;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: flex-end;
     position: relative;
     height: 50vh;
+    overflow: hidden;
 
     @include cel {
       height: 50vh;
     }
-    @include hdplus {
-      height: 44vh;
-    }
+
   }
 
   .conte {
-    max-width: 80%;
+    max-width: 100%;
     z-index: 1;
     text-align: left;
   }
 
   h3 {
-    margin: 0 0 0.4rem 0;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: $primario;
-    line-height: normal;
+    margin: 0 0 0.5rem 0;
+    font-family: $fuenteB;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    @include cel {
+      font-size: 1.5rem;
+    }
   }
 
   p {
     margin: 0;
-    font-size: 0.85rem;
-    color: $gris;
-    line-height: 1.5;
+    font-family: $fuenteA;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    //text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: clamp(1rem, 1rem, 1.2rem);
+  
   }
 
   @include cel {
     .beneficio-card {
-      padding: 1.25rem;
-      background-size: auto 55%;
-    }
-    .conte {
-      max-width: 80%;
+      padding: 1.5rem 1.25rem;
     }
   }
 </style>
