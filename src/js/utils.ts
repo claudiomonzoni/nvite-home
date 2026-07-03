@@ -66,8 +66,8 @@ export const dispatchCartUpdateEvent = () => {
  * @returns A number between 0 and 20
  */
 export const generateRandomSales = (): number => {
-  const min = 5;
-  const max = 20;
+  const min = 23;
+  const max = 47;
   // Probability to actually show a number (e.g. 0.7 = 70% chance)
   const showProbability = 0.8;
 

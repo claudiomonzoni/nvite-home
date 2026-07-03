@@ -16,10 +16,13 @@ const allProducts = await getCollection("productos");
 
 // Filtrar productos relacionados
 const relatedProducts = allProducts
-  .filter(product => 
-    product.data.metadata?.Categoria?.toLowerCase() === category.toLowerCase() && 
-    product.id !== currentProductId
-  )
+  .filter(product => {
+    const metadata = product.data.metadata as Record<string, string> | undefined;
+    return (
+      metadata?.Categoria?.toLowerCase() === category.toLowerCase() && 
+      product.id !== currentProductId
+    );
+  })
   .slice(0, 3); // Tomar solo 3 productos
 
 // Obtener precios

@@ -16,9 +16,10 @@ const allProducts = await getCollection("productos");
 const relatedProducts = allProducts
   .filter((product) => {
     // Obtener la categoría del producto de las posibles fuentes
+    const metadata = product.data.metadata as Record<string, string> | undefined;
     const productCategory = (
-      product.data.metadata?.Categoria ||
-      product.data.metadata?.categoria ||
+      metadata?.Categoria ||
+      metadata?.categoria ||
       ""
     ).toLowerCase();
     return (
