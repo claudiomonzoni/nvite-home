@@ -13,92 +13,101 @@ interface Props {
 const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
 ---
 
-  <a
-    href={liga}
-    class:list={clases}
-    target={blank ? "_blank" : ""}
-    {...rest}
-    rel={rel}
-    set:html={texto}
-  >
-    {icono ? <Icon name={icono} size={25} /> : ""}
-    <slot />
-  </a>
-
+<a
+  href={liga}
+  class:list={clases}
+  target={blank ? "_blank" : ""}
+  {...rest}
+  rel={rel}
+  set:html={texto}
+>
+  {icono ? <Icon name={icono} size={25} /> : ""}
+  <slot />
+</a>
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
   @mixin btn {
-    padding: .8rem 1.5rem;
-    display: inline-block;
+    padding: 0.5rem 1.2rem;
     text-decoration: none;
     border-radius: $radio;
     margin: 0 0 $margen-min 0;
     border: none;
+    font-size: 0.8rem;
     font-weight: 600;
     white-space: nowrap;
     text-align: center;
     max-width: fit-content;
     font-weight: 400;
-   &:hover{
-    background-color: $acento;
-    color: white!important;
-   }
-    :global(svg){
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    align-items: center;
+    &:hover {
+      background-color: $acento;
+      color: white !important;
+    }
+    :global(svg) {
       color: currentColor !important;
       fill: currentColor !important;
     }
     @include cel {
       margin-top: $margen-min;
       max-width: 100%;
+      font-size: 1rem;
     }
   }
 
   .btn-claro {
     background-color: $fondo;
     color: $primario;
-   @extend .sombra;
+    @extend .sombra;
+    @include btn;
+  }
+  .btn-cta {
+    background-color: $acento;
+    color: #ffffff;
+    @extend .sombra;
     @include btn;
   }
   .btn-oscuro {
-    background-color: $acento;
+    background-color: $secundario;
     color: white;
-  
     svg {
-        color: currentColor !important;
+      color: currentColor !important;
       fill: currentColor !important;
     }
     @include btn;
-    &:hover{
+    &:hover {
       background-color: $terciario;
-      color:$primario!important;
+      color: $primario !important;
     }
   }
   .btn-bordes {
     border: 1px solid $secundario !important;
-    color: $secundario;
-   
+    color: $primario;
+
     @include btn;
   }
   .btn-bordes-oscuro {
     margin-top: 1rem !important;
     background-color: $acento;
     color: white;
- 
+
     @include btn;
   }
   .btn-ver-nvitaciones {
     background: $terciario !important;
     color: $primario;
     justify-content: left !important;
- 
+
     @include btn;
     @extend .sombra;
   }
   .btn-whatsapp {
-    background-color: #6E8F70!important;
+    background-color: #6e8f70 !important;
     //background-color: $primario!important;
-    color: white!important;
+    color: white !important;
     @include btn;
   }
   .centrado {

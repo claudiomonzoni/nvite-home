@@ -1,11 +1,22 @@
 $primario: #656A8D;
-$secundario: #e98f8f;
+$secundario: #d05a5a;
 $terciario: #dae3ea;
-$acento: #DC6A6A;
+$acento: #d65e5e;
 $gris: #4a4c54;
 $fondo: #ffce95;
 $fondoGlobal: #fff6f0;
 $otro:#f0eae7;
+
+
+// $primario: #4f536d;
+// $secundario: #4b5795;
+// $terciario: #dae3ea;
+// $acento: #ae8a76;
+// $gris: #636363;
+// $fondo: #ffce95;
+// $fondoGlobal: #ffffff;
+// $otro:#f0eae7;
+
 
 //media query
 $cel: 479px;
@@ -16,7 +27,7 @@ $hd: 1600px;
 $hdplus: 1990px;
 
 //extra
-$radio: 0.8rem;
+$radio: 0.5rem;
 $margen: 4rem;
 $margen-top: 8rem;
 $radio-cel: 0.5rem;
@@ -25,7 +36,8 @@ $margen-min: 1rem;
 $margen-top-cel: 6rem;
 
 $fuenteA: "Montserrat", sans-serif;
-$fuenteB: "DM Serif Display", serif;
+// $fuenteB: "DM Serif Display", serif;
+$fuenteB: "Bittere", serif;
 $garigol: "Playwrite CU";
 
 @mixin cel {

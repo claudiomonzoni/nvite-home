@@ -1,24 +1,25 @@
 @use "_variables" as *;
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bitter&display=swap');
 html {
   box-sizing: border-box;
-  font-size: clamp(10px, 0.9vw, 22px);
+  font-size: 12px;
   font-family: $fuenteA, sans-serif;
   font-weight: 100;
-  background: #fff6f0;
+  background: $fondoGlobal;
   scroll-behavior: smooth;
   letter-spacing: 0.02em;
   line-height: 1.3em;
 
   @include hd {
-    font-size: clamp(10px, 0.9vw, 20px);
+    font-size: 18px;
   }
   @include cel {
-    font-size: clamp(16px, 1.8vw, 18px);
+    font-size: 16px;
   }
   @include hdplus {
-    font-size: clamp(14px, 7vw, 22px);
+    font-size: 21px;
   }
 }
 
@@ -49,15 +50,15 @@ h1,
 h2
  {
   line-height: 1em;
-  font-family: $fuenteB, serif;
-  // font-weight: bold;
+  // font-family: $fuenteB, serif;
+  font-family: var(--font-hurme), serif;
   padding-bottom: 0.7rem;
   color: $secundario;
 }
 h3,
 h4{
-  font-family: $fuenteA, serif;
-  font-weight: bold;
+  // font-family: $fuenteA, serif;
+  font-family: var(--font-hurme), serif;
   color: $secundario;
 }
 h1 {
@@ -123,7 +124,7 @@ b {
   font-weight: bold;
 }
 mark {
-  background-color: $acento;
+  background-color: $gris;
   color: white;
   padding: 0 0.3rem;
   border-radius: 0.2rem;
@@ -352,7 +353,7 @@ mark {
   &:last-child {
     flex: 1 0 30%;
     padding: $margen-cel $margen-cel 0 $margen-cel;
-    background: url("/fondo-nvite-caracteristicas-2.png") no-repeat $secundario;
+    background: url("/fondo-nvite-caracteristicas-2.png") no-repeat $terciario;
     background-size: cover;
     background-blend-mode: color-dodge;
     // img {
@@ -666,6 +667,7 @@ input::placeholder {
   h2 {
     color: $primario;
     margin-bottom: $margen-cel;
+    font-weight: 200;
   }
   @include cel {
     padding: $margen $margen-cel 0;

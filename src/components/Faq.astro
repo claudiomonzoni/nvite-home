@@ -73,7 +73,7 @@ const schemaFAQ = {
   @use "../estilos/_variables.scss" as *;
   .conte {
     border-radius: $radio;
-    background: rgb(255, 247, 233);
+    background: $fondoGlobal;
     margin-bottom: $margen;
     transform: translateY(-$margen-min);
     // max-width: fit-content;
@@ -128,7 +128,7 @@ const schemaFAQ = {
 
   details[open] div {
     padding: $margen-cel;
-    background: linear-gradient(0deg, $primario 80%, rgb(51, 47, 87) 40%);
+    //background: linear-gradient(0deg, $primario 80%, rgba($terciario, 1) 40%);
     background: $primario;
     font-size: clamp(1rem, 1rem, 1vw);
     color: white;
