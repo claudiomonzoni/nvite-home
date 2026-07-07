@@ -71,12 +71,12 @@ export default defineConfig({
       options: {
         variants: [
           {
-            src: ["./dist/fonts/hurme/HurmeGeometricSans4-Regular.woff2"],
+            src: ["./public/fonts/hurme/HurmeGeometricSans4-Regular.woff2"],
             weight: "400",
             style: "normal",
           },
           {
-            src: ["./dist/fonts/hurme/HurmeGeometricSans4-Bold.woff2"],
+            src: ["./public/fonts/hurme/HurmeGeometricSans4-Bold.woff2"],
             weight: "700",
             style: "normal",
           },
