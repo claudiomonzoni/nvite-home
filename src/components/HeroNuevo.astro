@@ -8,75 +8,174 @@ import type { ImageMetadata } from "astro";
 import Logos from "./Logos.astro";
 
 interface Props {
-    h1: string;
-    p: string;
-    textoValidacion: string;
-    imagenDesktop: ImageMetadata;
-    imagenMobile: ImageMetadata;
-    alt?: string;
+  h1: string;
+  p: string;
+  textoValidacion: string;
+  imagenDesktop: ImageMetadata;
+  imagenMobile: ImageMetadata;
+  alt?: string;
 }
 const {
-    h1,
-    p,
-    textoValidacion,
-    imagenDesktop,
-    imagenMobile,
-    alt = "nvitaciones digitales para eventos bodas y quince años",
+  h1,
+  p,
+  textoValidacion,
+  imagenDesktop,
+  imagenMobile,
+  alt = "nvitaciones digitales para eventos bodas y quince años",
 } = Astro.props;
 ---
 
 <Nav />
 
 <section class="grid contenido" id="conteHero">
-    <div id="hero">
-        <h1 set:html={h1} />
+  <div id="hero">
+    <h1 set:html={h1} id="heroh1" />
 
-        <picture class="imgContainer">
-            <source srcset={imagenDesktop.src} media="(min-width: 479px)" />
-            <source srcset={imagenMobile.src} media="(max-width: 479px)" />
-            <Image
-                src={imagenDesktop}
-                alt={alt}
-                loading="eager"
-                fetchpriority="high"
-            />
+    <picture class="imgContainer">
+      <source srcset={imagenDesktop.src} media="(min-width: 479px)" />
+      <source srcset={imagenMobile.src} media="(max-width: 479px)" />
+      <Image
+        src={imagenDesktop}
+        alt={alt}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </picture>
+
+    <div id="heroCta">
+      <p set:html={p} />
+      <Btn
+        liga="#nvitaciones"
+        texto="Quiero ver ejemplos"
+        clases="btn-claro"
+        claro={false}
+      >
+        <Icon name="mdi:chevron-double-down" size={25} />
+      </Btn>
+      <div id="enviados">
+        <picture>
+          <source srcset="/sello-nvitaciones.svg" media="(min-width: 479px)" />
+          <source
+            srcset="/sello-nvitaciones-cel.svg"
+            media="(max-width: 479px)"
+          />
+          <img
+            src="/enviados.svg"
+            alt="Más de 23,788 invitaciones enviadas en México"
+            loading="lazy"
+            decoding="async"
+          />
         </picture>
-
-        <div>
-            <p set:html={p} />
-            <p set:html={textoValidacion} />
-            <Btn
-                liga="#nvitaciones"
-                texto="Ver Nvitaciones"
-                clases="btn-bordes-oscuro "
-                claro={false}
-            >
-                <Icon name="mdi:envelope-heart-outline" size={25} />
-            </Btn>
-            <Logos />
-        </div>
+        <p set:html={textoValidacion} />
+      </div>
+      <Logos />
     </div>
+  </div>
 </section>
 
 <style lang="scss">
-    @use "../estilos/_variables.scss" as *;
+  @use "../estilos/_variables.scss" as *;
 
-    #conteHero {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        background-color: $fondoGlobal;
+  #conteHero {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: $fondoGlobal;
+    background:
+      url("/fondo-hojas-home.svg") no-repeat center center,
+      linear-gradient(90deg, $fondoGlobal 20%, $secundario 70%);
+    @include cel {
+      position: relative;
+      background: $fondoGlobal;
+      background:
+        url("/fondo-hojas-home-cel.svg") no-repeat center 130%,
+        linear-gradient(160deg, $fondoGlobal 40%, $secundario 70%);
+      background-size: 160%, cover;
     }
-    #hero {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        grid-template-rows: 1fr;
+  }
+  #hero {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 6rem;
+    @include cel {
+      margin-top: 8rem;
+      grid-template-columns: 1fr;
+    }
+  }
+  #heroh1 {
+    order: 0;
+    font-size: clamp(1.3rem, 3vw, 1.5rem);
+    line-height: 1;
+    padding: $margen-cel 0;
+    @include cel {
+      padding: $margen-min;
+      line-height: 1;
+    }
+  }
+
+  :global(#spanHeroH1) {
+    position: relative;
+    line-height: 0.9;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    color: $primario;
+    @include cel {
+      left: 0px;
+      line-height: 1.1;
+    }
+  }
+
+  .imgContainer {
+    order: 1;
+    @include cel {
+      order: 2;
+    }
+  }
+  #heroCta {
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: $margen-cel;
+    p {
+      color: $fondoGlobal;
     }
 
-    // Hace que todas las secciones y elementos siguientes pasen por encima del Hero
-    :global(#conteHero ~ *) {
-        position: relative;
-        z-index: 10;
-        background-color: $fondoGlobal;
+    @include cel {
+      order: 1;
+      padding: $margen-min;
+      p {
+        padding-top: 1rem;
+        color: $primario;
+      }
+      :global(#pHero) {
+        display: none;
+      }
     }
+  }
+  #enviados{
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    align-items: center;
+    img {
+      width: 3rem;
+      height: 3rem;
+      object-fit: contain;
+    }
+    p {
+      color: $fondoGlobal;
+      font-size: 0.8rem;
+      @include cel {
+        color: $primario;
+      }
+    }
+  }
+
+  // Hace que todas las secciones y elementos siguientes pasen por encima del Hero
+  :global(#conteHero ~ *) {
+    position: relative;
+    z-index: 10;
+    background-color: $fondoGlobal;
+  }
 </style>

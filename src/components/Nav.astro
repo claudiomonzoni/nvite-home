@@ -127,7 +127,7 @@ if (Astro.cookies.has("cartItems")) {
   }
 
   #logo {
-    max-width: 300px;
+    max-width: 270px;
     width: 13vw;
     transition: all 0.3s ease;
     @include cel {
@@ -168,10 +168,10 @@ if (Astro.cookies.has("cartItems")) {
     position: fixed;
     z-index: 9999;
     // background-color: $secundario;
-    background-color: rgba($fondoGlobal, 1);
+    background-color: rgba($fondoGlobal, .1);
     backdrop-filter: blur(8px);
     width: 100%;
-    padding: $margen-min $margen-cel;
+    padding: $margen-min 0;
     transition: all 0.3s ease;
     border-bottom-right-radius: $radio;
     border-bottom-left-radius: $radio;

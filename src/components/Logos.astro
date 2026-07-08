@@ -4,6 +4,10 @@
 
 <div id="logos">
     <ul>
+        <span>Presencia en:</span>
+        <li>
+            <img src="/logos/bodas.svg" alt="bodas.com" loading="lazy" decoding="async">
+        </li>
      <li>
          <img src="/logos/etsy.svg" alt="etsy" loading="lazy" decoding="async">
      </li>
@@ -11,10 +15,7 @@
          <img src="/logos/weddingsInZIhua.svg" alt="weddings in zihua " loading="lazy" decoding="async">
      </li>
         <li>
-            <img src="/logos/bodas.svg" alt="bodas.com" loading="lazy" decoding="async">
-        </li>
-        <li>
-            <img src="logos/weddingsco.svg" alt="bodas y eventos" loading="lazy" decoding="async">
+            <img src="logos/mercadolibre.svg" alt="bodas y eventos" loading="lazy" decoding="async">
         </li>
     </ul>
 </div>
@@ -24,21 +25,30 @@
     width: 100%;
     display: flex;
     flex-wrap:wrap;
-    gap: .5rem;
-    justify-content: right;
+    justify-content: left;
+
+    @media (max-width: 600px) {
+        display: none;
+    }
+}
+span{
+    width: 100%;
+    font-size: 0.6rem;
+    color: rgba(255, 255, 255, 0.5);
 }
 li{ 
+    flex: 1;
     margin-left: 0;
-    padding: 1rem 0;
+    padding: 0 0 1rem 0;
     list-style: none;
-    text-align: center;
 }
 img{
     width: 100%;
-    max-width: 80px;
+    width: 3vw;
+    max-width: 60px;
     height: 50px;
     object-fit: contain;
-    margin: 0.5rem;
+    opacity: 0.6;
 }
 @media (max-width: 600px) {
         li{
