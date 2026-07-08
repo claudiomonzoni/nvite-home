@@ -1,0 +1,82 @@
+---
+import Nav from "./Nav.astro";
+import Btn from "./Btn.astro";
+
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Logos from "./Logos.astro";
+
+interface Props {
+    h1: string;
+    p: string;
+    textoValidacion: string;
+    imagenDesktop: ImageMetadata;
+    imagenMobile: ImageMetadata;
+    alt?: string;
+}
+const {
+    h1,
+    p,
+    textoValidacion,
+    imagenDesktop,
+    imagenMobile,
+    alt = "nvitaciones digitales para eventos bodas y quince años",
+} = Astro.props;
+---
+
+<Nav />
+
+<section class="grid contenido" id="conteHero">
+    <div id="hero">
+        <h1 set:html={h1} />
+
+        <picture class="imgContainer">
+            <source srcset={imagenDesktop.src} media="(min-width: 479px)" />
+            <source srcset={imagenMobile.src} media="(max-width: 479px)" />
+            <Image
+                src={imagenDesktop}
+                alt={alt}
+                loading="eager"
+                fetchpriority="high"
+            />
+        </picture>
+
+        <div>
+            <p set:html={p} />
+            <p set:html={textoValidacion} />
+            <Btn
+                liga="#nvitaciones"
+                texto="Ver Nvitaciones"
+                clases="btn-bordes-oscuro "
+                claro={false}
+            >
+                <Icon name="mdi:envelope-heart-outline" size={25} />
+            </Btn>
+            <Logos />
+        </div>
+    </div>
+</section>
+
+<style lang="scss">
+    @use "../estilos/_variables.scss" as *;
+
+    #conteHero {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background-color: $fondoGlobal;
+    }
+    #hero {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: 1fr;
+    }
+
+    // Hace que todas las secciones y elementos siguientes pasen por encima del Hero
+    :global(#conteHero ~ *) {
+        position: relative;
+        z-index: 10;
+        background-color: $fondoGlobal;
+    }
+</style>
