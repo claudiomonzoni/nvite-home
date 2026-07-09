@@ -3,7 +3,8 @@ export const prerender = true;
 import { Icon } from "astro-icon/components";
 import Btn from "../components/Btn.astro";
 import Caracteristicas from "../components/Caracteristicas.astro";
-import Herointerior from "../components/Herointerior.astro";
+//import Herointerior from "../components/Herointerior.astro";
+import Hero from "../components/HeroNuevo.astro";
 import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
@@ -13,6 +14,9 @@ import Banner from "../components/Banner.astro";
 import SaveTheDate from "../components/SaveTheDate.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 import bodasCaracteristicasImg from "../assets/bodas/caracteristicas-bodas.webp";
+
+import coverDesktopBoda from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-intBoda.webp";
+import coverMobileBoda from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel-intBoda.webp";
 ---
 
 <Layout
@@ -20,20 +24,14 @@ import bodasCaracteristicasImg from "../assets/bodas/caracteristicas-bodas.webp"
   description="Invitaciones digitales de boda en México. Desde $20 por invitado — personalizadas con tu música, tus fotos y tus colores. Tus invitados confirman asistencia solos. Lista en 2 días hábiles."
 >
   <div class="grid contenido">
-    <Nav />
+    
   </div>
 
-  <Herointerior
-    Spanh1="<b>Invitaciones digitales</b> "
-    h1="Bodas"
-    Spanh2="Elegantes y únicas"
-    description={`Antes de que suene la música, antes de que lleguen las flores, tus invitados ya están viviendo tu boda. Con tu canción, tus fotos y su nombre en cada invitación.`}
-    fondo="#e4e7ec"
-    imagen="/Nvitaciones-invitaciones-digitales-bodas.webp"
-    imagencel="/Nvitaciones-invitaciones-digitales-bodas-cel.webp"
-    tema="claro"
-    confianza="para tu gran día"
-  />
+    <Hero h1='Invitaciones digitales </br>de <b>Bodas </b> </br> <span id="spanHeroH1">Tu boda, organizada.</br> Tus invitados, encantados. </span>'
+  p='<span id="pHero">Invitaciones personalizadas que tus invitados abren en su celular y confirman al instante.</span> Tú controlas todo desde un panel, sin estrés.'
+  textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
+  imagenDesktop={coverDesktopBoda}
+  imagenMobile={coverMobileBoda}/>
 
   <div class="grid contenido">
     <div id="choro">
@@ -101,43 +99,40 @@ import bodasCaracteristicasImg from "../assets/bodas/caracteristicas-bodas.webp"
 
   
 
+<CaracteristicasGrid
+    matriz={[
+      {
+        imagen: bodasCaracteristicasImg,
+        titulo: "Invitaciones <span>personalizadas</span>",
+        texto:
+          "La persona más importante para ti merece ver su nombre antes de leer una sola línea. Cada invitación llega personalizada — con el nombre del invitado y los pases que le corresponden.",
+        enlace: "#precios",
+      },
+      {
+        imagen: "mdi:email-check",
+        titulo: "Confirmación de asistencia",
+        texto:
+          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
+        enlace: "#",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto:
+          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "Con <span>toda la información</span> necesaria para tu boda",
+      },
+      {
+        imagen: "mdi:infinity-box",
+        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
+      },
+    ]}
+  />
 
 
-<div class="grid contenido">
-  <BannerGeneral
-    encabezado="Recibes con tu <b>Nvitación</b>"
-    texto={`
-    <ul>
-    <li><b>Trato personalizado.</b></li>
-    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
-    <li>
-   <b>Panel de invitados</b>, controla tus invitaciones.
-    </li>
-    <li>
-    Tu invitación disponible <b> 1 semana</b> después del evento.
-    </li>
-    <li><mark>Envíos ilimitados.</mark></li>
-       
-        </ul>
-        <small>*Panel de invitados no aplica en la versión "basic"</small>
-        <br>
-        `}
-    tema="terciario"
-    icono="mdi:deal"
-    urlImagen="../assets/home/gale/recibes.webp"
-    margenAbajo={true}
-  >
-    <Btn
-      liga="#formu"
-      texto="Obtén tu invitación"
-      clases="btn-oscuro"
-      claro={true}
-      blank={false}
-    >
-      <Icon name="bag" size={25} />
-    </Btn>
-  </BannerGeneral>
-</div>
+
 
 <div id="precios" class="grid contenido">
   <Banner dondeEstoy="bodas" />
@@ -263,45 +258,45 @@ import bodasCaracteristicasImg from "../assets/bodas/caracteristicas-bodas.webp"
         fondo="fondo-nvite-caracteristicas-4.png"
       /> -->
   </div>
-    <Btn
-      liga="#formu"
-      texto="Ver ejemplo →"
-      clases="btn-oscuro centrado"
-      claro={false}
-    />
+ 
 </section>
 
-<CaracteristicasGrid
-    matriz={[
-      {
-        imagen: bodasCaracteristicasImg,
-        titulo: "Invitaciones <span>personalizadas</span>",
-        texto:
-          "La persona más importante para ti merece ver su nombre antes de leer una sola línea. Cada invitación llega personalizada — con el nombre del invitado y los pases que le corresponden.",
-        enlace: "#precios",
-      },
-      {
-        imagen: "mdi:email-check",
-        titulo: "Confirmación de asistencia",
-        texto:
-          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
-        enlace: "#",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto:
-          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto: "Con <span>toda la información</span> necesaria para tu boda",
-      },
-      {
-        imagen: "mdi:infinity-box",
-        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
-      },
-    ]}
-  />
+<div class="grid contenido">
+  <BannerGeneral
+    encabezado="Recibes con tu <b>Nvitación</b>"
+    texto={`
+    <ul>
+    <li><b>Trato personalizado.</b></li>
+    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
+    <li>
+   <b>Panel de invitados</b>, controla tus invitaciones.
+    </li>
+    <li>
+    Tu invitación disponible <b> 1 semana</b> después del evento.
+    </li>
+    <li><mark>Envíos ilimitados.</mark></li>
+       
+        </ul>
+        <small>*Panel de invitados no aplica en la versión "basic"</small>
+        <br>
+        `}
+    tema="terciario"
+    icono="mdi:deal"
+    urlImagen="../assets/home/gale/recibes.webp"
+    margenAbajo={true}
+  >
+    <Btn
+      liga="#formu"
+      texto="Obtén tu invitación"
+      clases="btn-oscuro"
+      claro={true}
+      blank={false}
+    >
+      <Icon name="bag" size={25} />
+    </Btn>
+  </BannerGeneral>
+</div>
+
 
 
 <div class="grid contenido">

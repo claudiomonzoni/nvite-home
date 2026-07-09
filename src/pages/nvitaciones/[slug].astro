@@ -44,12 +44,17 @@ const panelTestimonials = [
 
 function getTestimonialIndex(seed: string | undefined, length: number) {
   const normalized = seed || "default";
-  return Math.abs(
-    normalized.split("").reduce((acc, char) => acc * 31 + char.charCodeAt(0), 0),
-  ) % length;
+  return (
+    Math.abs(
+      normalized
+        .split("")
+        .reduce((acc, char) => acc * 31 + char.charCodeAt(0), 0),
+    ) % length
+  );
 }
 
-const testimonial = panelTestimonials[getTestimonialIndex(slug, panelTestimonials.length)];
+const testimonial =
+  panelTestimonials[getTestimonialIndex(slug, panelTestimonials.length)];
 
 // Datos
 import nvitacionesData from "./nvitaciones.json";
@@ -179,7 +184,10 @@ const costPerGuest = Math.round(numericPrice / 100);
 const metaDescription = `La invitación digital más completa para tu boda — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} por invitado. Con música, galería animada, cuenta regresiva y confirmación en tiempo real. Personalizada a tus colores.`;
 ---
 
-<Layout title=`${product.data.name} - Invitación Digitales para tu evento` description={metaDescription}>
+<Layout
+  title=`${product.data.name} - Invitación Digitales para tu evento`
+  description={metaDescription}
+>
   <div class="grid contenido">
     <Nav />
 
@@ -371,20 +379,20 @@ const metaDescription = `La invitación digital más completa para tu boda — $
                 {price.replace(/\.00$/, "")}<sup>.00</sup>
               </p>
             </div>
-            
+
             <p class="price-anchor-detail">
               ≈ ${costPerGuest} por invitado para 100 personas · Sin límite de envíos
             </p>
-            
+
             <Btn
-            data-cart
-            data-action="buy-now"
-            data-productid={product.data.id}
-            liga="#"
-            clases="btn-claro btn-carrito"
-            texto="Quiero esta invitación →"
-            icono="mdi:cart-check"
-            claro={true}
+              data-cart
+              data-action="buy-now"
+              data-productid={product.data.id}
+              liga="#"
+              clases="btn-claro btn-carrito"
+              texto="Quiero esta invitación →"
+              icono="mdi:cart-check"
+              claro={true}
             />
             <!-- <p class="price-note">
               Compra ahora y personaliza tu invitación, con los colores, tipografía, música, fotos y datos de tu evento · Lista en 2 días hábiles 
@@ -394,25 +402,33 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               Fecha estimada de entrega: {calculateDeliveryDate()}
             </p>
             <p class="price-vs">
-              Imprimir 100 invitaciones: $3,200 MXN — sin música, sin galería de fotos, sin confirmación automática.
+              Imprimir 100 invitaciones: $3,200 MXN — sin música, sin galería de
+              fotos, sin confirmación automática.
             </p>
           </div>
 
           <div class="panel-testimonial">
-            {panelTestimonials.map((t, index) => {
-              const isDefault = index === getTestimonialIndex(slug, panelTestimonials.length);
-              return (
-                <div class="testimonial-item" data-index={index} style={isDefault ? "display: block;" : "display: none;"}>
-                  <div class="stars">
-                    {Array.from({ length: t.stars }).map(() => (
-                      <Icon name="solar:star-bold" class="star-icon" />
-                    ))}
+            {
+              panelTestimonials.map((t, index) => {
+                const isDefault =
+                  index === getTestimonialIndex(slug, panelTestimonials.length);
+                return (
+                  <div
+                    class="testimonial-item"
+                    data-index={index}
+                    style={isDefault ? "display: block;" : "display: none;"}
+                  >
+                    <div class="stars">
+                      {Array.from({ length: t.stars }).map(() => (
+                        <Icon name="solar:star-bold" class="star-icon" />
+                      ))}
+                    </div>
+                    <p class="testimonial-text">{t.text}</p>
+                    <span class="testimonial-author">{t.author}</span>
                   </div>
-                  <p class="testimonial-text">{t.text}</p>
-                  <span class="testimonial-author">{t.author}</span>
-                </div>
-              );
-            })}
+                );
+              })
+            }
           </div>
           <!-- <Btn
             data-cart
@@ -424,10 +440,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             claro={false}
             icono="mdi:cart-plus"
           /> -->
-          
 
-          <div id="ahora">
-          </div>
+          <div id="ahora"></div>
 
           <div id="quesucede">
             <input
@@ -445,7 +459,9 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               </li>
               <li>
                 <b>Obtienes acceso</b> a tu panel de invitados para generar y gestionar
-                todas tus invitaciones. <small> <b>Aplica en "Clásica" y "Lux"</b> </small>
+                todas tus invitaciones. <small>
+                  <b>Aplica en "Clásica" y "Lux"</b>
+                </small>
               </li>
               <li>
                 <b>Revisas tu invitación personalizada</b> y puedes solicitar cambios
@@ -534,16 +550,31 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
           <!-- NUEVA sección: por qué vale lo que vale -->
           <div class="value-section">
-            <h4>Lo que ${costPerGuest} pesos le dan a cada uno de tus invitados</h4>
+            <h4>
+              Lo que ${costPerGuest} pesos le dan a cada uno de tus invitados
+            </h4>
             <ul class="value-list">
-              <li><b>Su nombre en la invitación</b> — no es una tarjeta masiva</li>
-              <li><b>Tu música</b> sonando cuando la abren <span class="badge-lux">Exclusivo Lux</span></li>
+              <li>
+                <b>Su nombre en la invitación</b> — no es una tarjeta masiva
+              </li>
+              <li>
+                <b>Tu música</b> sonando cuando la abren <span class="badge-lux"
+                  >Exclusivo Lux</span>
+              </li>
               <li><b>Tus fotos, animadas</b>, antes de leer un solo detalle</li>
-              <li><b>Itinerario detallado</b> de tu evento <span class="badge-lux">Exclusivo Lux</span></li>
-              <li><b>Mensaje personalizado</b> para invitados especiales <span class="badge-lux">Exclusivo Lux</span></li>
+              <li>
+                <b>Itinerario detallado</b> de tu evento <span class="badge-lux"
+                  >Exclusivo Lux</span>
+              </li>
+              <li>
+                <b>Mensaje personalizado</b> para invitados especiales <span
+                  class="badge-lux">Exclusivo Lux</span>
+              </li>
               <li><b>Confirman</b> asistencia en ese mismo momento</li>
               <li><b>Un mapa</b> que los lleva directo al lugar</li>
-              <li><b>Una invitación que</b> guardan en su teléfono — no en un cajón</li>
+              <li>
+                <b>Una invitación que</b> guardan en su teléfono — no en un cajón
+              </li>
             </ul>
           </div>
 
@@ -554,13 +585,51 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       </div>
     </div>
   </div>
+
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu <b>Nvitación</b>"
+      texto={`
+    <ul>
+    <li><b>Trato personalizado.</b></li>
+    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
+    <li>
+   <b>Panel de invitados</b>, controla tus invitaciones.
+    </li>
+    <li>
+    Tu invitación disponible <b> 1 semana</b> después del evento.
+    </li>
+    <li><mark>Envíos ilimitados.</mark></li>
+       
+        </ul>
+        <small>*Panel de invitados exclusivo de la versión "Lux y Clásica"</small>
+        <br>
+        `}
+      tema="terciario"
+      icono="mdi:deal"
+      urlImagen="../assets/home/gale/recibes.webp"
+      margenAbajo={true}
+    >
+      <!-- <Btn
+        liga="#formu"
+        texto="Quiero mi ejemplo gratis →"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="bag" size={25} />
+      </Btn> -->
+    </BannerGeneral>
+  </div>
+
   <Testimonios />
 
   <div class="grid contenido otrosProductos">
     <RelatedProducts
       currentProductId={product.id}
       category={nvitacionInfo?.categoria ||
-        (product.data.metadata as Record<string, string> | undefined)?.Categoria ||
+        (product.data.metadata as Record<string, string> | undefined)
+          ?.Categoria ||
         ""}
     />
   </div>
@@ -631,7 +700,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       grid-column: 1;
       grid-row: 1;
     }
-  
+
     .liga-muestra {
       display: flex;
       align-items: center;
@@ -688,7 +757,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         grid-column: auto;
         grid-row: auto;
       }
-   
+
       .buttons-container {
         position: relative;
         grid-column: auto;
@@ -947,7 +1016,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     background: #fdf8f4;
     border-radius: 12px;
     border: 1px solid rgba($secundario, 0.1);
-    
+
     h4 {
       font-weight: 600;
       margin-bottom: 12px;
@@ -955,14 +1024,14 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       color: $primario;
     }
   }
-  
+
   .value-list {
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    
+
     li {
       list-style: none;
       color: #555;
@@ -970,7 +1039,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       position: relative;
       line-height: 1.5;
       text-align: left;
-      
+
       &::before {
         content: "✦";
         position: absolute;
@@ -1012,21 +1081,21 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     margin-bottom: 2px;
 
     .precioTachado {
-      font-size: 17px!important;
-      color: rgba($secundario, .5);
+      font-size: 17px !important;
+      color: rgba($secundario, 0.5);
       text-decoration: line-through;
       margin: 0;
       line-height: 1.2;
-      padding: 0!important;
+      padding: 0 !important;
     }
 
     .main-price {
-      font-size: clamp(1.6rem,1vw,2rem)!important;
+      font-size: clamp(1.6rem, 1vw, 2rem) !important;
       font-weight: 700;
       color: $primario;
       margin: 0;
       line-height: 1.2;
-      
+
       sup {
         font-size: 0.5em;
         vertical-align: super;
@@ -1052,13 +1121,12 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     margin: 4px 0 8px;
     line-height: 1.5;
     text-align: left;
-
   }
 
   .price-note {
-    font-size: clamp(11px,1vw,14px) !important;
-    color : $gris;
-    margin-bottom:$margen-min!important;
+    font-size: clamp(11px, 1vw, 14px) !important;
+    color: $gris;
+    margin-bottom: $margen-min !important;
     line-height: 1.3;
   }
 
@@ -1072,7 +1140,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     display: flex;
     gap: 2px;
     margin-bottom: 6px;
-    
+
     .star-icon {
       width: 14px;
       height: 14px;
@@ -1099,7 +1167,6 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     font-weight: bold;
     &:hover {
       background-color: darken($acento, 10%) !important;
-
     }
   }
 
@@ -1109,9 +1176,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     width: 0;
     height: 0;
     pointer-events: none;
-
   }
-  
+
   .quesucede-label {
     display: inline-block;
     color: $gris;
@@ -1119,7 +1185,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     text-decoration: underline;
     cursor: pointer;
     user-select: none;
-    font-size: .9rem!important;
+    font-size: 0.9rem !important;
     @include cel {
       font-size: 0.8rem;
     }
@@ -1145,7 +1211,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     max-height: 500px;
     opacity: 1;
   }
-  .otrosProductos{
+  .otrosProductos {
     margin-bottom: $margen;
   }
 </style>
@@ -1298,14 +1364,11 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       let currentIndex = 0;
       let videoEl: HTMLVideoElement | null = null;
       let videoPlayHandler:
-        | ((this: HTMLVideoElement, ev: Event) => any)
-        | null = null;
+        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
       let videoPauseHandler:
-        | ((this: HTMLVideoElement, ev: Event) => any)
-        | null = null;
+        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
       let videoEndedHandler:
-        | ((this: HTMLVideoElement, ev: Event) => any)
-        | null = null;
+        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
 
       // Marca visualmente la miniatura activa.
       const setActive = (index: number) => {
@@ -1379,14 +1442,14 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         videoEl.className = "main-image";
         videoEl.id = "nv-video";
         if (posterSrc) videoEl.setAttribute("poster", posterSrc);
-        
+
         // Aplicar estilos inline al video
         videoEl.style.width = "100%";
         videoEl.style.maxWidth = "500px";
         videoEl.style.margin = "0 auto";
         videoEl.style.display = "block";
         videoEl.style.borderRadius = "10px";
-        
+
         // Hide poster and append video
         if (poster) poster.style.display = "none";
         mediaPoster.appendChild(videoEl);
@@ -1507,11 +1570,11 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
       const openModal = () => {
         // Si es dispositivo móvil (teléfono), abrir en una pestaña nueva.
-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
-        const urlAttr = modal?.getAttribute('data-url');
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const urlAttr = modal?.getAttribute("data-url");
         if (isMobile && urlAttr) {
           try {
-            window.open(urlAttr, '_blank');
+            window.open(urlAttr, "_blank");
           } catch (e) {
             // Fallback: navegar en la misma pestaña
             window.location.href = urlAttr;
