@@ -455,13 +455,13 @@ mark {
 .azulBG {
   border-radius: $radio;
   background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-    linear-gradient(43deg, #fff6f0 30%, $terciario 100%) no-repeat;
+    linear-gradient(43deg, $fondoGlobal 30%, $terciario 100%) no-repeat;
   background-position: center right, top left;
   background-size: 50%, 100%;
   margin-bottom: $margen-min;
   @include cel {
     background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-      linear-gradient(43deg, $secundario 0%, rgb(255, 255, 255) 100%) no-repeat;
+      linear-gradient(0deg, $fondoGlobal 0%, $terciario 100%) no-repeat;
     background-position: center bottom;
     background-size: 120%;
   }
@@ -483,8 +483,9 @@ mark {
   padding: $margen-cel;
   border-radius: $margen-min;
   backdrop-filter: blur(5px);
-  background: rgba(255, 136, 0, 0.3);
+  background: rgba($terciario, 0.3);
   text-align: left;
+  margin-bottom: $margen;
 
   img {
     width: 30px;
@@ -493,7 +494,6 @@ mark {
   }
   @include cel {
     width: 100%;
-    margin-top: 2rem;
     img {
       width: 20px;
     }
@@ -563,10 +563,10 @@ button[type="submit"],
 #empezar {
   margin-top: $margen-min !important;
   border-radius: 10px;
-  padding: 0.3rem $margen-cel;
+  padding: $margen-min $margen-cel;
   color: white;
   margin: 0.5rem 0.5rem 0.5rem 0;
-  background-color: $acento;
+  background-color: $primario;
   @include cel {
     width: 100%;
     margin: 1rem 0;

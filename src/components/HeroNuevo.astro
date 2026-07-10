@@ -89,7 +89,7 @@ const {
       background: $fondoGlobal;
       background:
         url("/fondo-hojas-home-cel.svg") no-repeat center 130%,
-        linear-gradient(160deg, $fondoGlobal 40%, $secundario 70%);
+        linear-gradient(160deg, $fondoGlobal 50%, $secundario 70%);
       background-size: 160%, cover;
     }
   }
@@ -155,18 +155,23 @@ const {
   }
   #enviados{
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
     margin: 1rem 0;
     align-items: center;
     img {
       width: 3rem;
       height: 3rem;
       object-fit: contain;
+      
     }
     p {
+      
       color: $fondoGlobal;
       font-size: 0.8rem;
+      padding:0;
       @include cel {
+        font-weight: 600;
+        font-size: 1rem;
         color: $primario;
       }
     }

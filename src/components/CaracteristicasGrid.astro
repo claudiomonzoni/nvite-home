@@ -126,6 +126,10 @@ const { matriz } = Astro.props;
           pointer-events: none;
           z-index: 0;
           opacity: 0.4;
+          @include cel {
+            background-size: 600%;
+            background-position: 30vw 100%;
+          }
         }
       }
       .conte {
@@ -164,7 +168,7 @@ const { matriz } = Astro.props;
     #item-c {
       grid-column: 3 / span 1;
       grid-row: 2 / span 2;
-      background: $fondo;
+      background: $terciario;
       &::before {
         content: "";
         position: absolute;
@@ -182,7 +186,7 @@ const { matriz } = Astro.props;
       }
       svg {
         color: $primario !important;
-        fill: currentColor !important;
+  
       }
     }
     #item-d {
@@ -232,18 +236,17 @@ const { matriz } = Astro.props;
         grid-column: 1 / -1;
         grid-row: 3 / span 1;
         height: auto;
-        background: $fondoGlobal;
+        background: $terciario;
+        color: $primario;
         p,
         svg {
-          color: $acento !important;
-          fill: currentColor !important;
+          color: currentColor !important;
         }
       }
       #item-d {
         grid-column: 1 / span 2;
         grid-row: 4 / span 1;
         border-bottom-left-radius: $radio;
-        background: $acento;
         &::before {
           content: "";
           position: absolute;
@@ -259,7 +262,6 @@ const { matriz } = Astro.props;
         p {
           position: relative;
           z-index: 2;
-          color: #fff;
         }
       }
       #item-e {
