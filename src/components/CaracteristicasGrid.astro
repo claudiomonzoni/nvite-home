@@ -92,7 +92,7 @@ const { matriz } = Astro.props;
   #caracteristicas {
     @extend .sombra;
     margin: 0 auto;
-    // width: 80%;
+    margin-bottom: $margen;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
@@ -120,13 +120,12 @@ const { matriz } = Astro.props;
           content: "";
           position: absolute;
           inset: 0;
-          background: url("/fondo-nvite-caracteristicas-2.png");
-          background-position: right center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          mix-blend-mode: color-burn;
+          background: url("/fondo-hojas-home.svg") no-repeat 20vw 10% /
+            100%;
+          background-blend-mode:multiply;
           pointer-events: none;
           z-index: 0;
+          opacity: 0.4;
         }
       }
       .conte {
@@ -137,7 +136,7 @@ const { matriz } = Astro.props;
         }
       }
       .imagen {
-        flex: 1;
+        flex: 0.5;
         position: relative;
         height: calc(100% + 34px);
         top: -34px;
@@ -170,7 +169,7 @@ const { matriz } = Astro.props;
         content: "";
         position: absolute;
         inset: 0;
-        background: url("/fondo-nvite-caracteristicas.png");
+        //background: url("/fondo-nvite-caracteristicas.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -179,7 +178,7 @@ const { matriz } = Astro.props;
         z-index: 0;
       }
       p {
-        color:$primario;
+        color: $primario;
       }
       svg {
         color: $primario !important;

@@ -320,27 +320,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
           <!-- <p>{product.data.id}</p> -->
           <h1>{product.data.name}</h1>
 
-          <div id="precio">
-            <div class="bandejaPrecio">
-              <!-- {
-                nvitacionInfo?.precioTachado && (
-                  <p class="precioTachado">
-                    {priceTachado + "."}
-                    <sup>00</sup>
-                  </p>
-                )
-              }
-
-              <p class="price">
-                {price.slice(0, -2)}<sup>{price.slice(-2)}</sup>
-              </p> -->
-              {
-                nvitacionInfo && nvitacionInfo.detalles && (
-                  <div id="detalles" set:html={nvitacionInfo.detalles} />
-                )
-              }
-            </div>
-
+          <div id="conteVerNvitacion">
+            <p>{product.data.description}</p>
             {
               nvitacionInfo && nvitacionInfo.muestra && (
                 <>
@@ -358,9 +339,9 @@ const metaDescription = `La invitación digital más completa para tu boda — $
                 </>
               )
             }
+
           </div>
 
-          <p>{product.data.description}</p>
         </div>
 
         <div class="buttons-container">
@@ -605,7 +586,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         <small>*Panel de invitados exclusivo de la versión "Lux y Clásica"</small>
         <br>
         `}
-      tema="terciario"
+      tema="secundario"
       icono="mdi:deal"
       urlImagen="../assets/home/gale/recibes.webp"
       margenAbajo={true}
@@ -655,7 +636,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
   // Layout & Container styles
   .breadcrumb-container {
-    margin-top: 7rem;
+    margin-top: 4.5rem;
+    margin-bottom: 1rem;
     @include cel {
       margin-top: 8rem;
     }
@@ -773,9 +755,9 @@ const metaDescription = `La invitación digital más completa para tu boda — $
   // Typography styles
   h1 {
     color: $primario;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: clamp(1.7rem, 4vw, 2rem);
     border-bottom: solid 1px $primario;
-    margin-bottom: $margen-min !important;
+    margin-bottom: $margen-cel;
   }
 
   //contenedor de precio
@@ -1214,6 +1196,34 @@ const metaDescription = `La invitación digital más completa para tu boda — $
   .otrosProductos {
     margin-bottom: $margen;
   }
+
+  #conteVerNvitacion{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1rem;
+    border-radius: $radio;
+    padding: $margen;
+    background: rgba($terciario, 0.4);
+     background:
+      url("/fondo-hojas-home.svg") no-repeat center center / 200%,
+      linear-gradient(0deg, $fondoGlobal 20%, $terciario 70%);
+      background-blend-mode:color-dodge;
+      //background-attachment: fixed;
+
+    p{
+      
+      padding: $margen-min;
+      color: $primario;
+    }
+    @include cel {
+      flex-direction: column;
+      p{
+        padding: $margen-cel 0;
+        text-align: center;
+      }
+    }
+  }
 </style>
 
 <script>
@@ -1304,21 +1314,26 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         vendidosDiv.id = "vendidos";
         vendidosDiv.innerHTML = `<b>${salesNumber} ${subject} han confiado en esta invitación en los últimos 3 meses.</b>`;
 
-        const descriptionP =
-          document.querySelector("#precio + p") ||
-          document.querySelector("#titulo p");
-        if (descriptionP && descriptionP.parentNode) {
-          descriptionP.parentNode.insertBefore(
-            vendidosDiv,
-            descriptionP.nextSibling,
-          );
+        const conteVerNvitacion = document.getElementById("conteVerNvitacion");
+        if (conteVerNvitacion?.parentNode) {
+          conteVerNvitacion.insertAdjacentElement("afterend", vendidosDiv);
         } else {
-          const precio = document.getElementById("precio");
-          if (precio && precio.parentNode) {
-            precio.parentNode.insertBefore(vendidosDiv, precio);
+          const descriptionP =
+            document.querySelector("#precio + p") ||
+            document.querySelector("#titulo p");
+          if (descriptionP && descriptionP.parentNode) {
+            descriptionP.parentNode.insertBefore(
+              vendidosDiv,
+              descriptionP.nextSibling,
+            );
           } else {
-            const titulo = document.getElementById("titulo");
-            titulo?.appendChild(vendidosDiv);
+            const precio = document.getElementById("precio");
+            if (precio && precio.parentNode) {
+              precio.parentNode.insertBefore(vendidosDiv, precio);
+            } else {
+              const titulo = document.getElementById("titulo");
+              titulo?.appendChild(vendidosDiv);
+            }
           }
         }
       }

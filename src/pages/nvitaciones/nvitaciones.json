@@ -7,17 +7,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Leen tu mensaje animado con tu frase favorita, disfrutan de tu galería de fotos y se emocionan con la cuenta regresiva.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Confirman su asistencia en segundos, eligen su número de pases y se registran automáticamente en tu panel de control.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Abren la ubicación en Google Maps con un toque y revisan tu mesa de regalos con enlaces directos.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan.webp"
       }
     ],
     "categoria": "Quince",
@@ -41,17 +41,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Se deslumbran con su hermosa frase de amor animada, ven la cuenta regresiva y disfrutan de sus mejores fotos de portada.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Te envían su confirmación directamente a tu WhatsApp con un solo botón rápido e intuitivo.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Tienen el mapa interactivo y los detalles exactos del evento al alcance de su teléfono.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
     "categoria": "Bodas",
@@ -70,17 +70,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Leen tu inspiradora frase animada de quinceañera, ven el reloj de cuenta regresiva y se emocionan con tu foto principal.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Te envían su asistencia a través de un formulario sencillo directo a tu WhatsApp.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Acceden al mapa interactivo para llegar a la ceremonia y al salón sin perderse.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan.webp"
       }
     ],
     "categoria": "Quince",
@@ -100,17 +100,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Leen su frase de amor animada personalizada, se emocionan con el reloj de cuenta regresiva y ven su galería de fotos.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Confirman su asistencia, indican el número de pases y se registran en tu panel de control al instante.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Tienen el mapa directo con GPS al salón de bodas y los enlaces directos a su mesa de regalos.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
     "categoria": "Bodas",
@@ -166,17 +166,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Escuchan tu canción favorita de fondo, se sorprenden con tu frase animada y ven tu hermosa galería interactiva.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Confirman su asistencia en segundos, eligen sus pases y te dejan un mensaje de felicitación.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Acceden al mapa GPS, al itinerario detallado, al dress code y a la sugerencia de regalos con un solo toque.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan.webp"
       }
     ],
     "categoria": "Quince",
@@ -201,17 +201,17 @@
       {
         "titulo": "Cuando la abren",
         "parrafo": "Suena su canción especial de novios, leen su mensaje de amor animado y disfrutan de la hermosa galería del romance.",
-        "imaFondo": "/fondo-nvite-caracteristicas-0.png"
+        "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
         "parrafo": "Confirman de inmediato en el formulario de asistencia, eligen sus pases y se registran en tu panel de control.",
-        "imaFondo": "/fondo-nvite-caracteristicas-2.png"
+        "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
         "parrafo": "Tienen a la mano el mapa exacto, el itinerario del gran día, la mesa de regalos y el dress code sugerido.",
-        "imaFondo": "/fondo-nvite-caracteristicas-3.png"
+        "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
     "categoria": "Bodas",

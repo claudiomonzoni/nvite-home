@@ -24,6 +24,36 @@ const {
   valorBoton,
   ...rest
 } = Astro.props;
+
+const temaBase =
+  typeof tema === "string"
+    ? tema.split(/\s+/).find((t) => ["primario", "secundario", "terciario"].includes(t)) ?? "primario"
+    : "primario";
+
+const estilosTema = {
+  primario: {
+    "--banner-bg": "linear-gradient(43deg, #dae3ea 10%, #656A8D 80%)",
+    "--banner-bg-mobile": "linear-gradient(43deg, #656A8D 10%, #EB8686 80%)",
+    "--banner-svg": "#ffce95",
+    "--banner-heading": "#ffce95",
+    "--banner-text": "#ffffff",
+  },
+  secundario: {
+    "--banner-bg": "linear-gradient(43deg, #dae3ea 10%, rgb(255, 247, 233) 80%)",
+    "--banner-bg-mobile": "linear-gradient(43deg, #dae3ea 10%, rgb(255, 247, 233) 80%)",
+    "--banner-svg": "#EB8686",
+    "--banner-heading": "#656A8D",
+    "--banner-text": "#656A8D",
+  },
+  terciario: {
+    "--banner-bg": "linear-gradient(83deg, #a2a4ba 10%, #656A8D 60%)",
+    "--banner-bg-mobile": "linear-gradient(123deg, #a2a4ba 10%, #656A8D 60%)",
+    "--banner-svg": "#d65e5e",
+    "--banner-heading": "#fff6f0",
+    "--banner-text": "#ffffff",
+  },
+};
+
 const imagen = import.meta.glob<{ default: ImageMetadata }>(
   "../assets/home/gale/*.{jpeg,jpg,png,gif,webp}"
 );
@@ -35,6 +65,7 @@ const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
 <div
   id="banner"
   class:list={["flex", tema, { margenAbajo: margenAbajo }]}
+  style={estilosTema[temaBase as keyof typeof estilosTema]}
   {...rest}
 >
   <div class="contenido flex">
@@ -62,14 +93,18 @@ const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
     margin-top: $margen;
     border-radius: $radio;
     margin-bottom: $margen-min;
+    background: var(--banner-bg, linear-gradient(43deg, $terciario 10%, $primario 80%));
+    color: var(--banner-text, $gris);
 
     @extend .sombra;
     gap: 0;
- 
   }
   h2 {
     font-size: clamp(2.2rem, 3.5vw, 3.5rem);
-    color: $gris !important;
+    color: var(--banner-heading, $gris) !important;
+  }
+  p {
+    color: var(--banner-text, $gris);
   }
   .izq {
     order: 1 !important;
@@ -107,41 +142,46 @@ const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
     }
   }
   .primario {
-    background: linear-gradient(43deg, $terciario 10%, $primario 80%);
+    background: var(--banner-bg, linear-gradient(43deg, $terciario 10%, $primario 80%));
     svg {
-      // color: $fondo!important;
-      fill: $fondo !important;
+      color: var(--banner-svg, $fondo) !important;
+      fill: var(--banner-svg, $fondo) !important;
     }
     h2 {
-      color: $fondo !important;
+      color: var(--banner-heading, $fondo) !important;
     }
     p {
-      color: white;
+      color: var(--banner-text, white);
     }
     @include cel {
-      background: linear-gradient(43deg, $primario 10%, $secundario 80%);
+      background: var(--banner-bg-mobile, linear-gradient(43deg, $primario 10%, $secundario 80%));
     }
   }
   .secundario {
     svg {
-      fill: $acento !important;
+      color: var(--banner-svg, $secundario) !important;
+      fill: var(--banner-svg, $secundario) !important;
     }
-
-    background: linear-gradient(43deg, $terciario 10%, rgb(255, 247, 233) 80%);
+    h2{
+      color: var(--banner-heading, $primario) !important;
+    }
+    color: var(--banner-text, $primario);
+    background: var(--banner-bg, linear-gradient(43deg, $terciario 10%, rgb(255, 247, 233) 80%));
   }
   .terciario {
     svg {
-      fill: $acento !important;
+      fill: var(--banner-svg, $acento) !important;
+      color: var(--banner-svg, $acento) !important;
     }
 
     h2 {
-      color: $fondoGlobal !important;
+      color: var(--banner-heading, $fondoGlobal) !important;
     }
 
-    background: linear-gradient(83deg, #a2a4ba 10%, $primario 60%);
-    color: #fff;
+    background: var(--banner-bg, linear-gradient(83deg, #a2a4ba 10%, $primario 60%));
+    color: var(--banner-text, #fff);
     @include cel {
-      background: linear-gradient(123deg, #a2a4ba 10%, $primario 60%);
+      background: var(--banner-bg-mobile, linear-gradient(123deg, #a2a4ba 10%, $primario 60%));
     }
   }
 

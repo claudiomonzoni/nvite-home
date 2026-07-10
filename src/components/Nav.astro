@@ -84,20 +84,20 @@ if (Astro.cookies.has("cartItems")) {
         <li id="carrito">
           <a href="/nvitaciones/cart" aria-label="Ir al carrito">
             <Icon
-            name="solar:cart-large-minimalistic-outline"
-            width="32"
-            height="32"
+              name="solar:cart-large-minimalistic-outline"
+              width="32"
+              height="32"
             />
             <span
-            class="count"
-            id="cart-count"
-            class:list={[{ hidden: cartItemsCount === 0 }]}
+              class="count"
+              id="cart-count"
+              class:list={[{ hidden: cartItemsCount === 0 }]}
             >
-            {cartItemsCount > 0 ? cartItemsCount : ""}
-          </span>
-        </a>
-      </li>
-    </div>
+              {cartItemsCount > 0 ? cartItemsCount : ""}
+            </span>
+          </a>
+        </li>
+      </div>
     </div>
   </div>
 </nav>
@@ -141,22 +141,24 @@ if (Astro.cookies.has("cartItems")) {
     align-items: center;
     justify-content: center;
     gap: $margen-min;
-    
+
     ul {
-      
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: right;
       gap: $margen-min;
       margin-top: 5px;
     }
-    
+
     @include cel {
       ul {
         width: 100%;
       }
+      ul li {
+        padding-bottom: 1.5rem;
+      }
       ul li:last-child {
-        margin: 0;
+        margin-right: 10%;
         // flex: 1 0 100%;
         // display: flex;
         // justify-content: center;
@@ -168,13 +170,16 @@ if (Astro.cookies.has("cartItems")) {
     position: fixed;
     z-index: 9999;
     // background-color: $secundario;
-    background-color: rgba($fondoGlobal, .1);
+    background-color: rgba($fondoGlobal, 0.1);
     backdrop-filter: blur(8px);
     width: 100%;
     padding: $margen-min 0;
     transition: all 0.3s ease;
     border-bottom-right-radius: $radio;
     border-bottom-left-radius: $radio;
+    @include cel {
+      background-color: rgba($fondoGlobal, 1);
+    }
 
     &.collapsed {
       background-color: rgba($fondoGlobal, 0.8);
@@ -218,8 +223,8 @@ if (Astro.cookies.has("cartItems")) {
 
         background: linear-gradient(
           0deg,
-          rgba($fondoGlobal, 0) 0%,
-          rgba($fondoGlobal, 1) 50%
+          rgba($fondoGlobal, 0) 10%,
+          rgba($fondoGlobal, 1) 45%
         );
         backdrop-filter: blur(8px);
         border-bottom-right-radius: $radio;
@@ -280,7 +285,7 @@ if (Astro.cookies.has("cartItems")) {
 
   function initializeCartCount() {
     const countCartSpan = document.querySelector(
-      "#cart-count"
+      "#cart-count",
     ) as HTMLSpanElement;
     if (!countCartSpan) return;
 
