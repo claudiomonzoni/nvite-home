@@ -4,7 +4,6 @@ import { Icon } from "astro-icon/components";
 import Btn from "../components/Btn.astro";
 import Caracteristicas from "../components/Caracteristicas.astro";
 import Hero from "../components/HeroNuevo.astro";
-import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
 import BannerGeneral from "../components/BannerGeneral.astro";
 import Footer from "../components/Footer.astro";
@@ -82,15 +81,6 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
     </div>
   </div>
 
-  <!-- <section class="grid contenido">
-    <p class="intro">
-      Una invitación que refleje el amor y la emoción de ese día tan especial.
-      En nvitaciones.com, te ayudamos a crear <b
-        >invitaciones digitales únicas</b
-      >, elegantes y personalizadas que dejarán una impresión inolvidable en tus
-      invitados.
-    </p>
-  </section> -->
 
   <CaracteristicasGrid
     matriz={[
@@ -155,13 +145,7 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
       icono="mdi:image-plus"
       urlImagen="../assets/home/gale/frase.webp"
     />
-    <!-- <BannerGeneral
-      encabezado="Administra tus invitados"
-      texto="De manera <b>fácil y eficiente</b>, agrega, edita, envía y controla todo desde el panel de invitados"
-      tema="secundario"
-      izquierda={true}
-      icono="mdi:book-edit"
-      urlImagen="../assets/home/gale/panel.webp"
+
     /> -->
     <div class="flex">
       <div class="cartaBase2">
@@ -226,12 +210,6 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
         fondo="fondo-nvite-caracteristicas-3.png"
       />
 
-      <!-- <Caracteristicas
-        encabezado="animacón"
-        texto="Agrega hasta 6 fotos."
-        icono="/ico-nvite-fotos.svg"
-        fondo="fondo-nvite-caracteristicas-4.png"
-      /> -->
     </div>
   </section>
 
@@ -285,9 +263,7 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
 
         <div id="formu">
           <form>
-            <!-- <h3>
-          <img src="/whatsapp.png" alt="logo whatsapp">
-          <b>whatsapp</b></h3> -->
+ 
 
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" placeholder="Tu nombre" />
@@ -310,7 +286,7 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
             >
               <Icon name="mdi:whatsapp" />
             </Btn>
-            <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
+          
           </form>
         </div>
       </div>
