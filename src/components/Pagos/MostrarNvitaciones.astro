@@ -6,22 +6,42 @@ const rawProductos = await getCollection("productos");
 
 // Ordenar por versión (Stripe metadata): Lux -> Clásica -> Esencial
 const versionOrder: Record<string, number> = {
-  "lux": 1,
-  "clásica": 2,
-  "clasica": 2,
-  "esencial": 3
+  lux: 1,
+  clásica: 2,
+  clasica: 2,
+  esencial: 3,
 };
 
 const getVersionPriority = (prod: any) => {
-  const version = (prod.data.metadata?.Version || prod.data.metadata?.version || "").toLowerCase();
+  const version = (
+    prod.data.metadata?.Version ||
+    prod.data.metadata?.version ||
+    ""
+  ).toLowerCase();
   return versionOrder[version] || 99;
 };
 
-const productos = [...rawProductos].sort((a, b) => getVersionPriority(a) - getVersionPriority(b));
+const productos = [...rawProductos].sort(
+  (a, b) => getVersionPriority(a) - getVersionPriority(b),
+);
 import ProductoCard from "../Pagos/ProductoCard.astro";
+import nvitacionesData from "../../pages/nvitaciones/nvitaciones.json";
 const { dondeEstoy } = Astro.props;
 
-// Filtrado de productos mejorado
+// Filtrar las invitaciones configuradas como "masvista"
+const masVistasIds = new Set(
+  nvitacionesData.filter((item) => item.masvista).map((item) => item.id),
+);
+
+// En la página principal mostrar solo las más vistas, con un fallback de 4 productos activos si no hay ninguna marcada
+const activeProducts = productos.filter((producto) => producto.data.active);
+const homeProducts = activeProducts.filter((producto) =>
+  masVistasIds.has(producto.data.id),
+);
+const displayedHomeProducts =
+  homeProducts.length > 0 ? homeProducts : activeProducts.slice(0, 4);
+
+// Filtrado de productos mejorado para páginas de categoría
 const filteredProducts = productos.filter((producto) => {
   // Solo incluir productos activos
   if (!producto.data.active) {
@@ -31,7 +51,7 @@ const filteredProducts = productos.filter((producto) => {
   const categoria = (producto.data.metadata?.Categoria || "").toLowerCase();
   const dondeEstoyLower = (dondeEstoy || "").toLowerCase();
 
-  // En la página principal mostrar todo
+  // En la página principal mostrar todo (no aplica aquí, pero se mantiene como resguardo)
   if (!dondeEstoy || dondeEstoy === "home") {
     return true;
   }
@@ -53,28 +73,24 @@ const categorias = [
     <>
       <div class="grid pantalla-der">
         <div class="filtros-productos">
-          {categorias.map((cat, idx) => (
-            <button
-              type="button"
-              data-filtro={cat.key}
-              class={`filtro-btn${idx === 0 ? " filtro-activo" : ""}`}
-            >
-              {cat.label}
-            </button>
-          ))}
+          <h2>Más vistas</h2>
+          <div class="filtros">
+            {categorias.map((cat, idx) => (
+              <button
+                type="button"
+                data-filtro={cat.key}
+                class={`filtro-btn${idx === 0 ? " filtro-activo" : ""}`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <div class="grid pantalla-der">
         <div class="swiper productos-swiper">
           <div class="swiper-wrapper" id="productos-wrapper">
-            {(!dondeEstoy || dondeEstoy === "home"
-              ? productos.filter((producto) => producto.data.active) // Filtrar solo activos
-              : productos.filter(
-                  (producto) =>
-                    producto.data.active && // Filtrar solo activos
-                    producto.data.metadata?.Tipo?.toLowerCase() === "pdf",
-                )
-            ).map((producto) => {
+            {displayedHomeProducts.map((producto) => {
               const categoria = (
                 producto.data.metadata?.Categoria || ""
               ).toLowerCase();
@@ -137,6 +153,15 @@ const categorias = [
     margin-top: $margen-top;
     padding-top: 2rem;
     display: flex;
+    gap: 1rem;
+    align-items: center;
+    @include cel {
+      flex-wrap: wrap;
+    }
+  }
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
   }
 
@@ -182,7 +207,7 @@ const categorias = [
         modules: [Pagination, Autoplay],
         slidesPerView: 1.2,
         spaceBetween: 15,
-        loop: true,
+        loop: false,
         autoplay: {
           delay: 5000,
           disableOnInteraction: false,

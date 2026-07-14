@@ -23,12 +23,6 @@ const reviews = [
     rating: 5
   },
   {
-    name: "Wen Jira / Ixtapa Gro.",
-    image: "https://lh3.googleusercontent.com/a/ACg8ocIG-V7JGfPOyLHWPrYHFfou9TneSnSewqb2aHe_5dr47n9EvA=s50-c-rp-mo-br100",
-    text: "Fueron atentos, rápidos y siempre dispuestos. Las invitaciones fueron hermosas y funcionales, facilitando el control de invitados. Sin duda, los volverías a contratar.",
-    rating: 5
-  },
-  {
     name: "Sofía Martínez / Morelia, Mich.",
     image: "/sofia.webp",
     text: "La invitación LUX quedó perfecta y todos confirmaron, ¡muy recomendable!",
@@ -92,7 +86,7 @@ const schemaReviews = {
 <section class="testimonios">
   <div class="testimonios__container">
     <h2 class="testimonios__title">Lo que dicen nuestros clientes</h2>
-    <p>Testimonios tomados de nuestros clientes en Google Reviews</p>
+    <p>de nuestro servicio e invitaciones</p>
 
     <div class="swiper testimonios-swiper">
       <div class="swiper-wrapper">
@@ -130,6 +124,10 @@ const schemaReviews = {
     background: linear-gradient(180deg, $fondoGlobal, $terciario);
     h2 {
       margin-bottom: 0;
+      color: $secundario;
+      font-weight: 500;
+      //font-size: 2rem;
+
     }
     p {
       text-align: center;

@@ -1207,25 +1207,28 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     padding: $margen;
     background: rgba($terciario, 0.4);
     background:
-    url("/fondo-hojas-home.svg") no-repeat center center / 200%,
-    linear-gradient(0deg, $fondoGlobal 20%, rgba($terciario, 0.5) 70%);
-    background-blend-mode:color-dodge;
+    url("/fondo-hojas-home-white.svg") no-repeat center center / 400%,
+    linear-gradient(0deg, $fondoGlobal 0%, rgba($terciario, 0.6) 50%);
+   // background-blend-mode:color-dodge;
     //background-attachment: fixed;
     
     p{
       
       padding: $margen-min;
-      color: $gris;
+      color: $primario;
       font-weight: 600;
+      border-right: 1px solid rgba($primario, 0.3);
     }
     @include cel {
       background:
-      url("/fondo-hojas-home.svg") no-repeat center center / 1200%,
+      url("/fondo-hojas-home-white.svg") no-repeat center center / 1200%,
       linear-gradient(0deg, $fondoGlobal 20%, rgba($terciario, 1) 70%);
       flex-direction: column;
       padding: $margen-cel;
       p{
-        padding: $margen-min 0;
+        border-right: none;
+        border-bottom: 1px solid rgba($primario, 0.3);
+        padding: $margen-cel 0;
         text-align: center;
       }
     }

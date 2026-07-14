@@ -127,6 +127,7 @@
   {
     "id": "prod_UcVoRiVmcT6ZQM",
     "precioTachado": false,
+    "masvista": true,
     "slug": "elegante-lux-xv",
     "muestra": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
@@ -160,6 +161,7 @@
   {
     "id": "prod_QLJkNCXvs8egN9",
     "precioTachado": true,
+    "masvista": true,
     "slug": "invitacion-xv-lux",
     "muestra": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
     "beneficios": [
@@ -195,6 +197,7 @@
   {
     "id": "prod_Q42WJO0oMaU98G",
     "precioTachado": false,
+    "masvista": true,
     "slug": "invitacion-bodas-lux",
     "muestra": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
     "beneficios": [
@@ -229,6 +232,7 @@
   {
     "id": "prod_SZwAeRXTJGqFO8",
     "precioTachado": false,
+    "masvista": true,
     "slug": "invitacion-bodas-lux-elegante",
     "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
     "beneficios": [
