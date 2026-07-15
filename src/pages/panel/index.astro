@@ -40,7 +40,7 @@ try {
   <section class="grid contenido">
     <div id="hero">
       <div class="barra-progreso-container">
-        <h3>Progreso de confirmaciones de tu Nvitacion</h3>
+        <h3>Progreso de confirmaciones de tus invitaciones</h3>
         <div class="barra-progreso">
           <div
             class="barra"
@@ -97,7 +97,7 @@ try {
       <div class="estadisticas">
         <div class="stat-item">
           <span class="stat-numero">{invitadosData.length}</span>
-          <span class="stat-label">Total de invitaciones</span>
+          <span class="stat-label">Invitaciones creadas</span>
         </div>
         <div class="stat-item">
           <span class="stat-numero">
@@ -108,7 +108,7 @@ try {
               }, 0)
             }
           </span>
-          <span class="stat-label">Total de pases asignados</span>
+          <span class="stat-label">Pases asignados</span>
         </div>
         <div class="stat-item">
           <span class="stat-numero"
@@ -277,6 +277,8 @@ try {
     border-radius: 5px;
     font-size: 1rem;
     flex: 1 0 auto;
+     box-shadow: none; 
+     background-color: rgba($terciario, 0.5);
 
     @include cel {
       margin: $margen-min 0;
@@ -324,17 +326,18 @@ try {
   .stat-item {
     flex: 1;
     display: flex;
-    flex-direction: column;
     min-width: 150px;
     text-align: center;
+    justify-content: center;
     padding: 1rem;
     border-right: 1px solid rgba($primario, 0.1);
     justify-content: center;
     align-items: center;
-    font-size: clamp(0.9rem, 1vw, 1.2rem);
+    font-size: clamp(0.9rem, 1vw, 1rem);
+    gap: 1rem;
     .stat-numero {
-      font-size: clamp(1.2rem, 1.5vw, 2rem);
-      color: $acento;
+      font-size: clamp(1.3rem, 1.5vw, 1.5rem);
+      color: $secundario;
       font-weight: bold;
     }
 
@@ -344,10 +347,11 @@ try {
 
     @include cel {
       min-width: calc(50% - 1rem);
-      padding: 0.5rem;
+      padding: .5rem 0.2rem;
       border-right: none;
       border-bottom: 1px solid rgba($primario, 0.1);
-
+      gap:.5rem;
+      flex-direction: column;
       &:nth-last-child(-n + 2) {
         border-bottom: none;
       }
@@ -378,21 +382,22 @@ try {
   .filtro-btn {
     flex: 1 0 auto;
     padding: 0.5rem 1rem;
-    border: 1px solid $acento;
+    border: 1px solid $primario;
     border-radius: $radio;
     background: transparent;
-    color: $acento;
+    color: $primario;
     max-width: fit-content;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      background: rgba($acento, 0.1);
+      background: rgba($primario, 0.1);
     }
 
     &.activo {
-      background: $acento;
+      background: $secundario;
       color: white;
+      border: 1px solid $secundario;
     }
   }
 
@@ -434,7 +439,7 @@ try {
   .barra {
     height: 100%;
     width: 0;
-    background: linear-gradient(to right, $primario, $acento);
+    background: linear-gradient(to right, $terciario, $secundario);
     animation: crecer 1.5s ease-out forwards;
     
   }
@@ -457,13 +462,11 @@ try {
     .porcentaje {
       font-size: 1.3rem;
       font-weight: bold;
-      color: $acento;
     }
 
     .confirmados,
     .pendientes {
       font-weight: bold;
-      color: $acento;
     }
   }
 

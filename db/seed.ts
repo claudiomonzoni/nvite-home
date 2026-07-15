@@ -6,19 +6,22 @@ export default async function seed() {
       id: 1,
       email: "claudiomonzoni@hotmail.com",
       tipo: "bodas",
-      ruta: "nvita-bodas-clasica"
+      ruta: "nvita-bodas-clasica",
+      rol: "admin"
     },
     {
       id: 2,
       email: "nvitaplusboda@nvita.me",
       tipo: "bodas",
-      ruta: "nvita-bodas-lux"
+      ruta: "nvita-bodas-lux",
+      rol: "cliente"
     },
     {
       id: 3,
       email: "nvitacionluxquince@nvitaciones.com",
       tipo: "quince",
-      ruta: "nvita-quince-lux"
+      ruta: "nvita-quince-lux",
+      rol: "cliente"
     }
   ]);
 

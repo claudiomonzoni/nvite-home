@@ -210,7 +210,7 @@ const productos = defineCollection({
     name: z.string(),
     description: z.string(),
     images: z.array(z.string()),
-    metadata: z.record(z.string()).optional(),  // Cambiado para aceptar cualquier clave-valor string
+    metadata: z.record(z.string(), z.string()).optional(),  // Cambiado para aceptar cualquier clave-valor string
     default_price: z.string().nullable().optional(),
   }),
 });

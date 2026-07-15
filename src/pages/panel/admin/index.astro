@@ -1,0 +1,873 @@
+---
+import Layout from "../../../layouts/panelInvitados.astro";
+import { db, Usuario, Invitados, eq, sql } from "astro:db";
+import { Icon } from "astro-icon/components";
+
+// Ensure user is authenticated and is admin
+const user = Astro.locals.user;
+if (!user || user.rol !== "admin") {
+  return Astro.redirect("/panel/ingresar");
+}
+
+interface AdminUserData {
+  id: number;
+  email: string;
+  tipo: string;
+  ruta: string;
+  rol: string;
+  guestCount: number;
+}
+
+let usersData: AdminUserData[] = [];
+try {
+  usersData = await db
+    .select({
+      id: Usuario.id,
+      email: Usuario.email,
+      tipo: Usuario.tipo,
+      ruta: Usuario.ruta,
+      rol: Usuario.rol,
+      guestCount: sql<number>`COUNT(${Invitados.id})`.mapWith(Number),
+    })
+    .from(Usuario)
+    .leftJoin(Invitados, eq(Invitados.usuarioId, Usuario.id))
+    .groupBy(Usuario.id)
+    .orderBy(Usuario.id);
+} catch (error) {
+  console.error("Error loading admin users:", error);
+}
+---
+
+<Layout title="Panel de Administración - Nvitaciones">
+  <div class="admin-wrapper">
+    <header class="admin-header">
+      <div class="header-logo">
+        <img src="/nvita-logo.svg" alt="Nvitaciones" class="logo" />
+        <span class="badge">Administrador</span>
+      </div>
+      <div class="header-nav">
+        <a href="/panel" class="btn-secondary">Ir a mi Panel de Invitados</a>
+        <button id="logout-btn" class="btn-logout">
+          <Icon name="mdi:logout" size={18} />
+          Cerrar Sesión
+        </button>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <h1 class="page-title">Gestión de Clientes</h1>
+
+      <div class="stats-container">
+        <div class="stat-box">
+          <span class="stat-number">{usersData.length}</span>
+          <span class="stat-label">Clientes Registrados</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">
+            {usersData.reduce((sum, u) => sum + (u.guestCount || 0), 0)}
+          </span>
+          <span class="stat-label">Total de Invitados en BD</span>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-header">
+          <div class="search-bar">
+            <Icon name="mdi:magnify" size={20} class="search-icon" />
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Buscar por email, ruta o tipo..."
+            />
+          </div>
+          <button id="btn-crear" class="btn-create">
+            <Icon name="mdi:plus" size={20} />
+            Crear Nuevo Cliente
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Tipo</th>
+                <th>Ruta</th>
+                <th>Invitados Creados</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              {
+                usersData.length > 0 ? (
+                  usersData.map((cliente) => (
+                    <tr class="client-row" data-search-email={cliente.email.toLowerCase()} data-search-ruta={cliente.ruta.toLowerCase()} data-search-tipo={cliente.tipo.toLowerCase()}>
+                      <td><strong>{cliente.id}</strong></td>
+                      <td>{cliente.email}</td>
+                      <td>
+                        <span class={`type-badge ${cliente.tipo}`}>
+                          {cliente.tipo}
+                        </span>
+                      </td>
+                      <td>
+                        <a href={`/${cliente.tipo}/${cliente.ruta}`} target="_blank" class="invite-link">
+                          /{cliente.ruta}
+                          <Icon name="mdi:open-in-new" size={14} />
+                        </a>
+                      </td>
+                      <td>
+                        <span class="guest-count">{cliente.guestCount} invitados</span>
+                      </td>
+                      <td class="actions-cell">
+                        <button
+                          class="btn-action edit"
+                          data-action-edit
+                          data-id={cliente.id}
+                          data-email={cliente.email}
+                          data-ruta={cliente.ruta}
+                          data-tipo={cliente.tipo}
+                          data-rol={cliente.rol}
+                        >
+                          <Icon name="mdi:pencil-outline" size={18} />
+                          <span>Editar</span>
+                        </button>
+                        <button
+                          class="btn-action delete"
+                          data-action-delete
+                          data-id={cliente.id}
+                          data-email={cliente.email}
+                        >
+                          <Icon name="mdi:trash-can-outline" size={18} />
+                          <span>Borrar</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colspan="6" class="empty-state">
+                      No hay clientes registrados en el sistema.
+                    </td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Crear Cliente -->
+  <dialog id="crear-modal" class="admin-dialog">
+    <div class="dialog-content">
+      <h2>Crear Nuevo Cliente</h2>
+      <form id="crear-form">
+        <label>
+          Correo Electrónico
+          <input type="email" name="email" required placeholder="correo@ejemplo.com" />
+        </label>
+        <label>
+          Contraseña
+          <input type="password" name="password" required placeholder="Mínimo 6 caracteres" minlength="6" />
+        </label>
+        <label>
+          Tipo de Invitación
+          <select name="tipoInvitacion" required>
+            <option value="bodas">Bodas (bodas)</option>
+            <option value="quince">XV Años (quince)</option>
+            <option value="cumples">Cumpleaños (cumples)</option>
+          </select>
+        </label>
+        <label>
+          Ruta (Slug URL)
+          <input type="text" name="ruta" required placeholder="ej: juanymaria (sin espacios)" pattern="^[a-zA-Z0-9\-]+$" title="Solo letras, números y guiones" />
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" name="isAdmin" />
+          <span>¿Otorgar privilegios de administrador?</span>
+        </label>
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn-submit">Registrar Cliente</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal Editar Cliente -->
+  <dialog id="editar-modal" class="admin-dialog">
+    <div class="dialog-content">
+      <h2>Editar Cliente</h2>
+      <form id="editar-form">
+        <input type="hidden" name="id" id="edit-id" />
+        <label>
+          Correo Electrónico
+          <input type="email" name="email" id="edit-email" required />
+        </label>
+        <label>
+          Tipo de Invitación
+          <select name="tipoInvitacion" id="edit-tipo" required>
+            <option value="bodas">Bodas</option>
+            <option value="quince">XV Años</option>
+            <option value="cumples">Cumpleaños</option>
+          </select>
+        </label>
+        <label>
+          Ruta (Slug URL)
+          <input type="text" name="ruta" id="edit-ruta" required pattern="^[a-zA-Z0-9\-]+$" />
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" name="isAdmin" id="edit-is-admin" />
+          <span>¿Es administrador?</span>
+        </label>
+        <div class="dialog-actions">
+          <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn-submit">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. Buscador en tiempo real
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const clientRows = document.querySelectorAll(".client-row") as NodeListOf<HTMLTableRowElement>;
+
+    searchInput?.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase().trim();
+      clientRows.forEach((row) => {
+        const email = row.getAttribute("data-search-email") || "";
+        const ruta = row.getAttribute("data-search-ruta") || "";
+        const tipo = row.getAttribute("data-search-tipo") || "";
+        if (email.includes(query) || ruta.includes(query) || tipo.includes(query)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+
+    // 2. Modales (Crear y Editar)
+    const crearDialog = document.getElementById("crear-modal") as HTMLDialogElement;
+    const editarDialog = document.getElementById("editar-modal") as HTMLDialogElement;
+    const btnCrear = document.getElementById("btn-crear");
+    const closeBtns = document.querySelectorAll("[data-close-modal]");
+
+    btnCrear?.addEventListener("click", () => {
+      crearDialog.showModal();
+    });
+
+    closeBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        crearDialog.close();
+        editarDialog.close();
+      });
+    });
+
+    // 3. Crear Cliente POST
+    const crearForm = document.getElementById("crear-form") as HTMLFormElement;
+    crearForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(crearForm);
+      const payload = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+        tipoInvitacion: formData.get("tipoInvitacion"),
+        ruta: formData.get("ruta"),
+        rol: formData.get("isAdmin") ? "admin" : "cliente"
+      };
+
+      try {
+        const res = await fetch("/api/admin/usuarios.json", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          alert("Cliente creado exitosamente.");
+          location.reload();
+        } else {
+          alert(data.error || "Ocurrió un error al registrar.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión al servidor.");
+      }
+    });
+
+    // 4. Llenar Editar Modal y PATCH
+    const editBtns = document.querySelectorAll("[data-action-edit]") as NodeListOf<HTMLButtonElement>;
+    editBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        const email = btn.getAttribute("data-email");
+        const ruta = btn.getAttribute("data-ruta");
+        const tipo = btn.getAttribute("data-tipo");
+        const rol = btn.getAttribute("data-rol");
+
+        (document.getElementById("edit-id") as HTMLInputElement).value = id || "";
+        (document.getElementById("edit-email") as HTMLInputElement).value = email || "";
+        (document.getElementById("edit-ruta") as HTMLInputElement).value = ruta || "";
+        (document.getElementById("edit-tipo") as HTMLSelectElement).value = tipo || "bodas";
+        (document.getElementById("edit-is-admin") as HTMLInputElement).checked = rol === "admin";
+
+        editarDialog.showModal();
+      });
+    });
+
+    const editarForm = document.getElementById("editar-form") as HTMLFormElement;
+    editarForm?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(editarForm);
+      const payload = {
+        id: formData.get("id"),
+        email: formData.get("email"),
+        tipoInvitacion: formData.get("tipoInvitacion"),
+        ruta: formData.get("ruta"),
+        rol: formData.get("isAdmin") ? "admin" : "cliente"
+      };
+
+      try {
+        const res = await fetch("/api/admin/usuarios.json", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          alert("Datos de cliente actualizados.");
+          location.reload();
+        } else {
+          alert(data.error || "Error al actualizar.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error de conexión al servidor.");
+      }
+    });
+
+    // 5. Eliminar Cliente DELETE
+    const deleteBtns = document.querySelectorAll("[data-action-delete]") as NodeListOf<HTMLButtonElement>;
+    deleteBtns.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.getAttribute("data-id");
+        const email = btn.getAttribute("data-email");
+
+        if (confirm(`¿Estás COMPLETAMENTE seguro de eliminar al usuario ${email}?\n\n¡Esta acción borrará todas sus sesiones y todos sus invitados registrados de forma definitiva!`)) {
+          try {
+            const res = await fetch("/api/admin/usuarios.json", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              alert("Usuario y todos sus datos borrados con éxito.");
+              location.reload();
+            } else {
+              alert(data.error || "Error al borrar usuario.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Error de red al intentar borrar.");
+          }
+        }
+      });
+    });
+
+    // 6. Cerrar Sesión
+    const logoutBtn = document.getElementById("logout-btn");
+    logoutBtn?.addEventListener("click", async () => {
+      try {
+        const res = await fetch("/api/salir.json", { method: "POST" });
+        if (res.ok) {
+          location.href = "/panel/ingresar";
+        } else {
+          alert("Error al cerrar sesión.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  });
+</script>
+
+<style lang="scss">
+  @use "../../../estilos/_variables.scss" as *;
+
+  .admin-wrapper {
+    min-height: 100vh;
+    background-color: $fondoGlobal;
+    color: $gris;
+    font-family: $fuenteA;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin-header {
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba($primario, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .logo {
+        height: 36px;
+      }
+
+      .badge {
+        background-color: rgba($acento, 0.1);
+        color: $acento;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+  }
+
+  .admin-content {
+    max-width: 1800px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    flex: 1;
+
+    .page-title {
+      font-size: 2rem;
+      color: $primario;
+      margin-bottom: 2rem;
+      font-family: $fuenteB;
+    }
+  }
+
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-box {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba($primario, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 4px solid $acento;
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: $acento;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: $gris;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  .table-container {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba($primario, 0.05);
+    overflow: hidden;
+    margin-bottom: 2rem;
+
+    .table-header {
+      padding: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid rgba($primario, 0.08);
+
+      .search-bar {
+        position: relative;
+        flex: 1;
+        max-width: 400px;
+        min-width: 250px;
+
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #999;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.6rem 1rem 0.6rem 2.5rem;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          outline: none;
+          transition: border-color 0.2s;
+
+          &:focus {
+            border-color: $acento;
+          }
+        }
+      }
+    }
+  }
+
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+
+    th, td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #f0f0f0;
+      white-space: nowrap;
+    }
+
+    th {
+      background-color: #fafbfc;
+      font-weight: 600;
+      color: $primario;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    tbody tr:hover {
+      background-color: #fcfdfe;
+    }
+
+    .empty-state {
+      text-align: center;
+      color: #999;
+      padding: 3rem 1.5rem;
+    }
+
+    .invite-link {
+      color: $acento;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .guest-count {
+      background-color: #f3f4f6;
+      color: #374151;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .type-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+
+      &.bodas {
+        background-color: #edf8fd;
+        color: #1e3a8a;
+      }
+      &.quince {
+        background-color: #fdf2f8;
+        color: #9d174d;
+      }
+      &.cumples {
+        background-color: #ecfdf5;
+        color: #065f46;
+      }
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 0.5rem;
+      min-width: 200px;
+    }
+  }
+
+  // Botones estilo premium
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: $primario;
+    border: 1px solid rgba($primario, 0.4);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: rgba($primario, 0.05);
+      border-color: $primario;
+    }
+  }
+
+  .btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #fee2e2;
+    }
+  }
+
+  .btn-create {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    background-color: $acento;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba($acento, 0.2);
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba($acento, 0.3);
+    }
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+
+    &.edit {
+      border: 1px solid rgba($primario, 0.3);
+      color: $primario;
+
+      &:hover {
+        background-color: rgba($primario, 0.05);
+      }
+    }
+
+    &.delete {
+      border: 1px solid #fee2e2;
+      color: #dc2626;
+
+      &:hover {
+        background-color: #fef2f2;
+        border-color: #fca5a5;
+      }
+    }
+  }
+
+  // Modales
+  .admin-dialog {
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 550px;
+    width: 90%;
+    outline: none;
+
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+    }
+
+    .dialog-content {
+      padding: 2rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      color: $primario;
+      margin-bottom: 1.5rem;
+      font-family: $fuenteB;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $gris;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      padding: 0.6rem 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+
+      &:focus {
+        border-color: $acento;
+      }
+    }
+
+    .checkbox-label {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 0.25rem;
+
+      input[type="checkbox"] {
+        flex: none !important;
+        width: 18px !important;
+        height: 18px !important;
+        margin: 0;
+        padding: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        accent-color: $acento;
+      }
+      span {
+        flex: 1;
+        text-align: left;
+      }
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .btn-cancel {
+      padding: 0.55rem 1.2rem;
+      background-color: #f3f4f6;
+      color: #4b5563;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #e5e7eb;
+      }
+    }
+
+    .btn-submit {
+      padding: 0.55rem 1.2rem;
+      background-color: $acento;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover {
+        background-color: darken($acento, 5%);
+      }
+    }
+  }
+
+  // Responsividad
+  @media (max-width: 768px) {
+    .admin-header {
+      padding: 1rem;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+
+      .header-nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    .table-header {
+      flex-direction: column;
+      align-items: flex-start !important;
+
+      .search-bar {
+        width: 100%;
+        max-width: none !important;
+      }
+
+      .btn-create {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+</style>

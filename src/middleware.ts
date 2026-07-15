@@ -37,6 +37,17 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
                     if (users.length > 0) {
                         usuarioLogueado = users[0];
+                        
+                        // Determinar rol administrativo de forma dinámica vía variable de entorno
+                        const adminEmailsEnv = import.meta.env.ADMIN_EMAILS || "";
+                        const adminEmailsList = adminEmailsEnv.split(",").map((e: string) => e.trim().toLowerCase());
+                        
+                        if (adminEmailsList.includes(usuarioLogueado.email.toLowerCase())) {
+                            usuarioLogueado.rol = "admin";
+                        } else if (!usuarioLogueado.rol) {
+                            usuarioLogueado.rol = "cliente";
+                        }
+                        
                         context.locals.user = usuarioLogueado;
                     }
                 } else {
@@ -51,8 +62,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
 
     const estaDentro = !!usuarioLogueado;
+    const esAdmin = usuarioLogueado?.rol === "admin";
 
-    // Rutas protegidas de la API
+    // Rutas protegidas de la API (solo usuarios logueados)
     const rutasProtegidas = [
         /^\/api\/addInvitados\.json$/, // Ruta para agregar invitados
     ];
@@ -66,8 +78,26 @@ export const onRequest = defineMiddleware(async (context, next) => {
         return next();
     }
 
-    // Redirigir si el usuario autenticado intenta ingresar a /panel/ingresar o /panel/registro
-    if (estaDentro && (pathname === '/panel/ingresar' || pathname === '/panel/registro')) {
+    // Proteger rutas administrativas
+    const esRutaAdmin = pathname.startsWith("/panel/admin") || pathname.startsWith("/api/admin");
+    if (esRutaAdmin) {
+        if (!estaDentro || !esAdmin) {
+            return context.redirect("/panel/ingresar");
+        }
+    }
+
+    // Restringir el registro a administradores
+    if (pathname === "/panel/registro") {
+        if (!estaDentro || !esAdmin) {
+            return context.redirect("/panel/ingresar");
+        }
+    }
+
+    // Redirigir si el usuario autenticado intenta ingresar a /panel/ingresar
+    if (estaDentro && pathname === '/panel/ingresar') {
+        if (esAdmin) {
+            return context.redirect('/panel/admin');
+        }
         return context.redirect('/panel');
     }
 
@@ -79,7 +109,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/api\/getInvitado\.json$/,         // Ruta para obtener invitado
         /^\/api\/\d+\.json$/,                 // Ruta para actualizar invitado (PATCH)
         /^\/panel\/ingresar$/,                // Página de ingreso
-        /^\/panel\/registro$/,                // Página de registro
         /^\/keystatic(\/.*)?$/,               // Cualquier subruta en keystatic
         /^\/bodas(\/.*)?$/,                   // Cualquier subruta en /bodas
         /^\/quince(\/.*)?$/,                  // Cualquier subruta en /quince

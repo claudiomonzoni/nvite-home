@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Usuario, Sesion } from "astro:db";
+import { db, Usuario, Sesion, eq } from "astro:db";
 import sanitize from "sanitize-html";
 
 export const POST: APIRoute = async ({ request, cookies }) => {
@@ -38,12 +38,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     const verifiedEmail = authData.email;
+    const firebaseUid = authData.localId;
 
     // 2. Crear usuario en la base de datos local Astro DB
-    const insertResult = await db.insert(Usuario).values({
+    await db.insert(Usuario).values({
       email: sanitize(verifiedEmail),
       ruta: sanitize(ruta),
       tipo: sanitize(tipoInvitacion),
+      firebaseUid: firebaseUid,
+      rol: "cliente",
     });
 
     // Como insertResult puede no retornar el ID insertado directamente dependiendo del dialecto de Astro DB,
@@ -51,7 +54,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const users = await db
       .select()
       .from(Usuario)
-      .where(eq => eq(Usuario.email, verifiedEmail));
+      .where(eq(Usuario.email, verifiedEmail));
     
     if (users.length === 0) {
       throw new Error("No se pudo recuperar el usuario registrado de la base de datos.");

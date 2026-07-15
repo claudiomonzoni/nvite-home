@@ -45,7 +45,9 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@iconify-json/solar": "^1.2.0"
+    "@astrojs/check": "^0.9.9",
+    "@iconify-json/solar": "^1.2.0",
+    "typescript": "^7.0.2"
   },
   "resolutions": {
     "stripe-astro-loader/astro": "^6.0.0"

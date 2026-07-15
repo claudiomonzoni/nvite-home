@@ -6,6 +6,8 @@ const Usuario = defineTable({
     email: column.text(),
     tipo: column.text({default: "bodas",}),
     ruta: column.text({}),
+    rol: column.text({ default: "cliente" }),
+    firebaseUid: column.text({ optional: true }),
   },
 });
 
