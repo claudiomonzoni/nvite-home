@@ -10,6 +10,10 @@ declare namespace App {
       ruta: string;
       rol?: string;
       firebaseUid?: string | null;
+      nombreEvento?: string | null;
+      fechaEvento?: Date | null;
+      addonMesas?: boolean;
+      addonRecordatorios?: boolean;
     };
   }
 }

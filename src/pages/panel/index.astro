@@ -5,7 +5,9 @@ import Invitado from "../../components/PanelInvitados/Invitado.astro";
 import type { InvitadoProps } from "../../components/PanelInvitados/Invitado.astro";
 import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.astro";
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
-import { Usuario, Invitados, db, eq, desc } from "astro:db";
+import AddonCTA from "../../components/PanelInvitados/AddonCTA.astro";
+import GestorMesas from "../../components/PanelInvitados/GestorMesas.astro";
+import { Usuario, Invitados, Mesas, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 // Ensure the user is authenticated
@@ -19,8 +21,12 @@ const usuarioEmail = user.email;
 const usuarioId = user.id;
 const tipoInvitacion = user.tipo;
 const ruta = user.ruta;
+const nombreEvento = user.nombreEvento;
+const fechaEvento = user.fechaEvento;
+const addonMesas = user.addonMesas;
 
 let invitadosData = [];
+let mesasData = [];
 
 try {
   // Obtén los datos de los invitados
@@ -29,230 +35,474 @@ try {
     .from(Invitados)
     .where(eq(Invitados.usuarioId, usuarioId))
     .orderBy(desc(Invitados.id));
+
+  // Obtén las mesas si tiene el add-on activo
+  if (addonMesas) {
+    mesasData = await db
+      .select()
+      .from(Mesas)
+      .where(eq(Mesas.usuarioId, usuarioId));
+  }
 } catch (error) {
   console.error("Error al obtener los datos:", error);
   invitadosData = [];
+  mesasData = [];
+}
+
+// Calcular estadísticas de confirmación
+const totalInvitados = invitadosData.length;
+const totalConfirmados = invitadosData.filter((inv) => inv.confirmado && !inv.noAsiste).length;
+const porcentajeConfirmados = totalInvitados > 0 ? (totalConfirmados / totalInvitados) * 100 : 0;
+
+const pasesPendientes = invitadosData.reduce(
+  (sum, inv) =>
+    !inv.confirmado && !inv.noAsiste
+      ? sum + parseInt(inv.pases || "0")
+      : sum,
+  0
+);
+
+// Calcular días restantes y alertas dinámicas de cuenta regresiva
+let diasRestantes = null;
+let alertaTipo = null; // "motivacional" | "celebrativa"
+let totalPendientesConfirmacion = 0;
+
+if (fechaEvento) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const fechaEv = new Date(fechaEvento);
+  fechaEv.setHours(0, 0, 0, 0);
+
+  const diffTime = fechaEv.getTime() - hoy.getTime();
+  diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Contar los invitados que aún no confirman (y no han cancelado/asisten)
+  totalPendientesConfirmacion = invitadosData.filter(
+    (inv) => !inv.confirmado && !inv.noAsiste
+  ).length;
+
+  if (diasRestantes <= 15 && diasRestantes >= 0) {
+    if (porcentajeConfirmados >= 80 || totalPendientesConfirmacion === 0) {
+      alertaTipo = "celebrativa";
+    } else {
+      alertaTipo = "motivacional";
+    }
+  }
 }
 ---
 
-<Layout title="Panel de administración">
-  <Menu tipo={tipoInvitacion} ruta={ruta} />
-  <section class="grid contenido">
-    <div id="hero">
-      <div class="barra-progreso-container">
-        <h3>Progreso de confirmaciones de tus invitaciones</h3>
-        <div class="barra-progreso">
-          <div
-            class="barra"
-            style={`--progress: ${
-              invitadosData.length > 0
-                ? Math.round(
-                    (invitadosData.filter(
-                      (inv) => inv.confirmado && !inv.noAsiste
-                    ).length /
-                      invitadosData.length) *
-                      100
-                  )
-                : 0
-            }%`}
-          >
-          </div>
+<Layout title={nombreEvento ? `Panel - ${nombreEvento}` : "Panel de Administración"}>
+  <Menu tipo={tipoInvitacion} ruta={ruta} nombreEvento={nombreEvento} />
+  
+  <!-- Banner de Cuenta Regresiva Amigable (Alineado en el grid original) -->
+  {alertaTipo && (
+    <section class="grid contenido no-margin-bottom">
+      <div class={`alerta-panel ${alertaTipo}`}>
+        <div class="alerta-icon">
+          <Icon name={alertaTipo === "celebrativa" ? "mdi:party-popper" : "mdi:calendar-heart"} size={24} />
         </div>
-        <p class="porcentaje-texto">
-          <span class="porcentaje"
-            >{
-              invitadosData.length > 0
-                ? Math.round(
-                    (invitadosData.filter(
-                      (inv) => inv.confirmado && !inv.noAsiste
-                    ).length /
-                      invitadosData.length) *
-                      100
-                  )
-                : 0
-            }%</span
-          > de Nvitaciones confirmadas,
-          <span class="confirmados"
-            >{
-              invitadosData.reduce(
-                (sum, inv) =>
-                  inv.confirmado && !inv.noAsiste
-                    ? sum + parseInt(inv.pases || "0")
-                    : sum,
-                0
-              )
-            }</span
-          > pases confirmados,
-          <span class="pendientes"
-            >{
-              invitadosData.reduce(
-                (sum, inv) =>
-                  !inv.confirmado ? sum + parseInt(inv.pases || "0") : sum,
-                0
-              )
-            }</span
-          > pases por confirmar
-        </p>
-      </div>
-      <div class="estadisticas">
-        <div class="stat-item">
-          <span class="stat-numero">{invitadosData.length}</span>
-          <span class="stat-label">Invitaciones creadas</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-numero">
-            {
-              invitadosData.reduce((sum, inv) => {
-                const pases = Math.round(parseFloat(inv.pases || "0"));
-                return sum + (inv.noAsiste ? 0 : pases);
-              }, 0)
-            }
-          </span>
-          <span class="stat-label">Pases asignados</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-numero"
-            >{invitadosData.filter((inv) => inv.confirmado).length}</span
-          >
-          <span class="stat-label">Invitaciones confirmadas</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-numero"
-            >{invitadosData.filter((inv) => inv.noAsiste).length}</span
-          >
-          <span class="stat-label">No asisten</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-numero"
-            >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
-          >
-          <span class="stat-label">Invitaciones enviadas</span>
+        <div class="alerta-mensaje">
+          {alertaTipo === "celebrativa" ? (
+            <span>
+              <strong>¡Solo {diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día!</strong> 🎉 ¡Excelente avance! Todo está marchando de maravilla, tienes más del 80% de tus invitados confirmados. ¡A disfrutar los preparativos!
+            </span>
+          ) : (
+            <span>
+              <strong>{diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día.</strong> Aún quedan <strong>{totalPendientesConfirmacion}</strong> {totalPendientesConfirmacion === 1 ? 'invitación' : 'invitaciones'} sin confirmar y <strong>{pasesPendientes}</strong> {pasesPendientes === 1 ? 'pase libre' : 'pases libres'}. ¡Tú puedes, falta muy poco!
+            </span>
+          )}
         </div>
       </div>
+    </section>
+  )}
 
-      <div class="conteFiltros">
-        <input
-          id="search-input"
-          type="text"
-          placeholder="Buscar invitado por nombre..."
-          class="buscador"
-        />
-        <div class="filtros">
-          <div class="filtros-estado">
-            <button class="filtro-btn activo" data-estado="todos">Todos</button>
-            <button class="filtro-btn" data-estado="enviada">Enviada</button>
-            <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
-            <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
-            <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
-          </div>
-        </div>
-
-   
+  <!-- Pestañas de Navegación del Panel si el Add-on está activo (Alineado en el grid original) -->
+  {addonMesas && (
+    <section class="grid contenido no-margin-bottom">
+      <div class="tabs-container">
+        <button class="tab-btn active" data-tab="invitados">
+          <Icon name="mdi:account-group" size={20} />
+          <span>Invitaciones</span>
+        </button>
+        <button class="tab-btn" data-tab="mesas">
+          <Icon name="mdi:table-furniture" size={20} />
+          <span>Gestión de Mesas</span>
+        </button>
       </div>
-    </div>
-    <ul id="invitados-list">
-      {
-        invitadosData.length > 0 ? (
-          invitadosData.map((invitado: InvitadoProps) => (
-            <li
-              class="invitado-item"
-              data-nombre={invitado.nombre.toLowerCase()}
-              data-estado={
-                invitado.confirmado
-                  ? "confirmado"
-                  : invitado.noAsiste
-                    ? "NoAsiste"
-                    : invitado.InvitacionEnviada
-                      ? "enviada"
-                      : "noEnviada"
-              }
+    </section>
+  )}
+
+  <!-- Contenido de la pestaña INVITADOS -->
+  <div id="tab-invitados" class="tab-content active">
+    <section class="grid contenido">
+      <div id="hero">
+        <div class="barra-progreso-container">
+          <h3>Progreso de confirmaciones de tus invitaciones</h3>
+          <div class="barra-progreso">
+            <div
+              class="barra"
+              style={`--progress: ${
+                invitadosData.length > 0
+                  ? Math.round(
+                      (invitadosData.filter(
+                        (inv) => inv.confirmado && !inv.noAsiste
+                      ).length /
+                        invitadosData.length) *
+                        100
+                    )
+                  : 0
+              }%`}
             >
-              <Invitado
-                invitadoData={invitado}
-                ruta={ruta}
-                tipo={tipoInvitacion}
-              />
-            </li>
-          ))
-        ) : (
-          <p>
-            No tienes invitados aún. Usa el botón de abajo para agregar uno.
+            </div>
+          </div>
+          <p class="porcentaje-texto">
+            <span class="porcentaje"
+              >{
+                invitadosData.length > 0
+                  ? Math.round(
+                      (invitadosData.filter(
+                        (inv) => inv.confirmado && !inv.noAsiste
+                      ).length /
+                        invitadosData.length) *
+                        100
+                    )
+                  : 0
+              }%</span
+            > de invitaciones confirmadas,
+            <span class="confirmados"
+              >{
+                invitadosData.reduce(
+                  (sum, inv) =>
+                    inv.confirmado && !inv.noAsiste
+                      ? sum + parseInt(inv.pases || "0")
+                      : sum,
+                  0
+                )
+              }</span
+            > pases confirmados,
+            <span class="pendientes"
+              >{
+                invitadosData.reduce(
+                  (sum, inv) =>
+                    !inv.confirmado && !inv.noAsiste
+                      ? sum + parseInt(inv.pases || "0")
+                      : sum,
+                  0
+                )
+              }</span
+            > pases por confirmar
           </p>
+        </div>
+        <div class="estadisticas">
+          <div class="stat-item">
+            <span class="stat-numero">{invitadosData.length}</span>
+            <span class="stat-label">Invitaciones creadas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero">
+              {
+                invitadosData.reduce((sum, inv) => {
+                  const pases = Math.round(parseFloat(inv.pases || "0"));
+                  return sum + (inv.noAsiste ? 0 : pases);
+                }, 0)
+              }
+            </span>
+            <span class="stat-label">Pases asignados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero"
+              >{invitadosData.filter((inv) => inv.confirmado && !inv.noAsiste).length}</span
+            >
+            <span class="stat-label">Invitaciones confirmadas</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero"
+              >{invitadosData.filter((inv) => inv.noAsiste).length}</span
+            >
+            <span class="stat-label">No asisten</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero"
+              >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
+            >
+            <span class="stat-label">Invitaciones enviadas</span>
+          </div>
+        </div>
+
+        <div class="conteFiltros">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Buscar invitado por nombre..."
+            class="buscador"
+          />
+          <div class="filtros">
+            <div class="filtros-estado">
+              <button class="filtro-btn activo" data-estado="todos">Todos</button>
+              <button class="filtro-btn" data-estado="enviada">Enviada</button>
+              <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
+              <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
+              <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ul id="invitados-list">
+        {
+          invitadosData.length > 0 ? (
+            invitadosData.map((invitado: InvitadoProps) => (
+              <li
+                class="invitado-item"
+                data-nombre={invitado.nombre.toLowerCase()}
+                data-estado={
+                  invitado.confirmado
+                    ? "confirmado"
+                    : invitado.noAsiste
+                      ? "NoAsiste"
+                      : invitado.InvitacionEnviada
+                        ? "enviada"
+                        : "noEnviada"
+                }
+              >
+                <Invitado
+                  invitadoData={invitado}
+                  ruta={ruta}
+                  tipo={tipoInvitacion}
+                />
+              </li>
+            ))
+          ) : (
+            <p>
+              No tienes invitados aún. Usa el botón de abajo para agregar uno.
+            </p>
+          )
+        }
+      </ul>
+
+      {
+        usuarioId ? (
+          <>
+            <button id="agregar-invitado">
+              <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
+            </button>
+            <AgregarInvitado usuarioId={usuarioId} />
+            <EditarInvitado />
+          </>
+        ) : (
+          <>{console.error("No se encontró el ID del usuario.")}</>
         )
       }
-    </ul>
 
-    {
-      usuarioId ? (
-        <>
-          <button id="agregar-invitado">
-            <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-          </button>
-          <AgregarInvitado usuarioId={usuarioId} />
-          <EditarInvitado />
-        </>
-      ) : (
-        <>{console.error("No se encontró el ID del usuario.")}</>
-      )
-    }
-  </section>
+      <!-- Banner Promo para adquirir add-on de Mesas si no lo tiene comprado -->
+      {!addonMesas && (
+        <div class="addon-promo-section">
+          <AddonCTA
+            nombre="Gestor de Mesas"
+            descripcion="Distribuye tus invitados en mesas numeradas, calcula espacios libres y controla la capacidad en tiempo real desde tu celular."
+            icono="mdi:table-furniture"
+          />
+        </div>
+      )}
+    </section>
+  </div>
 
-  <!-- <div id="auth-state" class="auth-banner hidden"></div> -->
+  <!-- Contenido de la pestaña GESTIÓN DE MESAS -->
+  {addonMesas && (
+    <div id="tab-mesas" class="tab-content">
+      <section class="grid contenido">
+        <GestorMesas mesas={mesasData} invitados={invitadosData} />
+      </section>
+    </div>
+  )}
 </Layout>
 
 <script>
-  // Funcionalidad del buscador y filtros
   document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById(
-      "search-input"
-    ) as HTMLInputElement;
-    const invitadosList = document.getElementById("invitados-list");
-    const invitadoItems = invitadosList.querySelectorAll(
-      ".invitado-item"
-    ) as NodeListOf<HTMLLIElement>;
-    const filtroBtns = document.querySelectorAll(
-      ".filtro-btn"
-    ) as NodeListOf<HTMLButtonElement>;
+    // 1. Funcionalidad de pestañas (tabs) con persistencia en localStorage
+    const tabBtns = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
 
-    let estadoFiltro = "todos";
-
-    // Función para filtrar invitados
-    const filtrarInvitados = () => {
-      const searchTerm = searchInput.value.toLowerCase();
-
-      invitadoItems.forEach((item) => {
-        const nombre = item.getAttribute("data-nombre") || "";
-        const estado = item.getAttribute("data-estado") || "";
-
-        const cumpleBusqueda = nombre.includes(searchTerm);
-        const cumpleFiltro =
-          estadoFiltro === "todos" || estado === estadoFiltro;
-
-        item.style.display = cumpleBusqueda && cumpleFiltro ? "block" : "none";
+    const switchTab = (targetTab: string) => {
+      tabBtns.forEach((b) => {
+        if (b.getAttribute("data-tab") === targetTab) {
+          b.classList.add("active");
+          b.classList.add("activo");
+        } else {
+          b.classList.remove("active");
+          b.classList.remove("activo");
+        }
       });
+      tabContents.forEach((c) => {
+        if (c.id === `tab-${targetTab}`) {
+          c.classList.add("active");
+        } else {
+          c.classList.remove("active");
+        }
+      });
+      localStorage.setItem("panelActiveTab", targetTab);
     };
 
-    // Evento para el buscador
-    searchInput.addEventListener("input", filtrarInvitados);
-
-    // Evento para los botones de filtro
-    filtroBtns.forEach((btn) => {
+    tabBtns.forEach((btn) => {
       btn.addEventListener("click", () => {
-        // Remover clase activo de todos los botones
-        filtroBtns.forEach((b) => b.classList.remove("activo"));
-        // Agregar clase activo al botón clickeado
-        btn.classList.add("activo");
-        // Actualizar el estado del filtro
-        estadoFiltro = btn.getAttribute("data-estado") || "todos";
-        // Aplicar filtros
-        filtrarInvitados();
+        const targetTab = btn.getAttribute("data-tab");
+        if (targetTab) {
+          switchTab(targetTab);
+        }
       });
     });
+
+    // Restaurar pestaña activa tras recarga
+    const savedTab = localStorage.getItem("panelActiveTab");
+    if (savedTab && document.getElementById(`tab-${savedTab}`)) {
+      switchTab(savedTab);
+    }
+
+    // 2. Funcionalidad del buscador y filtros
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const invitadosList = document.getElementById("invitados-list");
+    
+    if (searchInput && invitadosList) {
+      const invitadoItems = invitadosList.querySelectorAll(".invitado-item") as NodeListOf<HTMLLIElement>;
+      const filtroBtns = document.querySelectorAll(".filtro-btn") as NodeListOf<HTMLButtonElement>;
+
+      let estadoFiltro = "todos";
+
+      const filtrarInvitados = () => {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        invitadoItems.forEach((item) => {
+          const nombre = item.getAttribute("data-nombre") || "";
+          const estado = item.getAttribute("data-estado") || "";
+
+          const cumpleBusqueda = nombre.includes(searchTerm);
+          const cumpleFiltro = estadoFiltro === "todos" || estado === estadoFiltro;
+
+          item.style.display = cumpleBusqueda && cumpleFiltro ? "block" : "none";
+        });
+      };
+
+      searchInput.addEventListener("input", filtrarInvitados);
+
+      filtroBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filtroBtns.forEach((b) => {
+            b.classList.remove("activo");
+            b.classList.remove("active");
+          });
+          btn.classList.add("activo");
+          btn.classList.add("active");
+          estadoFiltro = btn.getAttribute("data-estado") || "todos";
+          filtrarInvitados();
+        });
+      });
+    }
   });
 </script>
 
 <style lang="scss">
   @use "../../estilos/_variables.scss" as *;
+
+  .no-margin-bottom {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .tabs-container {
+    grid-column: contenido;
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.1rem;
+    margin-bottom: 1rem;
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: $gris;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primario;
+        background-color: rgba($primario, 0.03);
+      }
+
+      &.active {
+        color: $acento;
+        font-weight: bold;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -0.2rem;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background-color: $acento;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+
+  .alerta-panel {
+    grid-column: contenido;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 1rem;
+
+    .alerta-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &.motivacional {
+      background-color: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fef3c7;
+      .alerta-icon { color: #d97706; }
+    }
+
+    &.celebrativa {
+      background-color: #f0fdf4;
+      color: #166534;
+      border: 1px solid #dcfce7;
+      .alerta-icon { color: #22c55e; }
+    }
+  }
+
+  .addon-promo-section {
+    grid-column: contenido;
+    margin-top: 3rem;
+    border-top: 1px dashed #e5e7eb;
+    padding-top: 2rem;
+  }
+
   #hero {
     display: flex;
     flex-wrap: wrap;
@@ -277,15 +527,13 @@ try {
     border-radius: 5px;
     font-size: 1rem;
     flex: 1 0 auto;
-     box-shadow: none; 
-     background-color: rgba($terciario, 0.5);
+    box-shadow: none; 
+    background-color: rgba($terciario, 0.5);
 
     @include cel {
       margin: $margen-min 0;
     }
   }
-
-  
 
   .conteFiltros {
     width: 100%;
@@ -310,7 +558,6 @@ try {
       flex: 1 1 30%;
       list-style: none;
       margin-left: 0!important;
-     
     }
 
     @include cel {
@@ -335,6 +582,7 @@ try {
     align-items: center;
     font-size: clamp(0.9rem, 1vw, 1rem);
     gap: 1rem;
+    
     .stat-numero {
       font-size: clamp(1.3rem, 1.5vw, 1.5rem);
       color: $secundario;
@@ -365,10 +613,11 @@ try {
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
+    
     @include cel {
       order: 1;
     }
-    input{
+    input {
       border-radius: $radio;
     }
   }
@@ -394,7 +643,7 @@ try {
       background: rgba($primario, 0.1);
     }
 
-    &.activo {
+    &.activo, &.active {
       background: $secundario;
       color: white;
       border: 1px solid $secundario;
@@ -441,7 +690,6 @@ try {
     width: 0;
     background: linear-gradient(to right, $terciario, $secundario);
     animation: crecer 1.5s ease-out forwards;
-    
   }
 
   @keyframes crecer {
@@ -484,26 +732,12 @@ try {
     position: fixed;
     right: 5%;
     bottom: 2%;
+    z-index: 99;
     @extend .sombra;
+    
     svg {
       vertical-align: middle;
       margin-right: 0.2rem;
     }
   }
-
-  //alerta
-  //   .auth-banner {
-  //   position: fixed;
-  //   top: 0;
-  //   width: 100%;
-  //   background-color: #ff4444;
-  //   color: white;
-  //   text-align: center;
-  //   padding: 10px;
-  //   z-index: 1000;
-  // }
-
-  // .hidden {
-  //   // display: none;
-  // }
 </style>

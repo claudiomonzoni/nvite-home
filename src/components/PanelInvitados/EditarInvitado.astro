@@ -24,14 +24,6 @@ import Checkbox from "./Checkbox.astro";
           placeholder="Asignar numero de pases"
         />
       </label>
-      <label for="mesa">
-        Número de mesa
-        <input
-          type="number"
-          name="mesa"
-          placeholder="Asignar numero de mesa (opcional)"
-        />
-      </label>
       <label for="whatsapp">
         Número de WhatsApp
         <input
@@ -40,12 +32,14 @@ import Checkbox from "./Checkbox.astro";
           placeholder="Numero de whatsapp del invitado"
         />
       </label>
-      <label for="tipoInvitacion">Tipo de invitación</label>
-      <select name="tipoInvitacion" id="tipoInvitacion">
-        <option value="Familiar">Familiar</option>
-        <option value="Individual">Individual</option>
-        <option value="Grupal">Grupal</option>
-      </select>
+      <label for="tipoInvitacion">
+        Tipo de invitación
+        <select name="tipoInvitacion" id="tipoInvitacion">
+          <option value="Familiar">Familiar</option>
+          <option value="Individual">Individual</option>
+          <option value="Grupal">Grupal</option>
+        </select>
+      </label>
 
       <div class="check">
         <Checkbox
@@ -141,20 +135,8 @@ import Checkbox from "./Checkbox.astro";
     h2 {
       color: $acento;
       font-size: clamp(1.5rem, 3vw, 2rem);
-      margin-bottom: 2.5rem;
+      margin-bottom: .5rem;
       position: relative;
-
-      &:after {
-        content: "";
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: clamp(40px, 10%, 80px);
-        height: 3px;
-        background: $acento;
-        border-radius: 2px;
-      }
     }
   }
   form {
@@ -172,7 +154,7 @@ import Checkbox from "./Checkbox.astro";
 
     @include cel {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: .5rem;
     }
 
     label {
@@ -182,29 +164,49 @@ import Checkbox from "./Checkbox.astro";
       font-weight: 500;
       color: $primario;
       font-size: clamp(0.9rem, 1.5vw, 1rem);
+    }
 
-      &[for="tipoInvitacion"] {
-        @media (min-width: 768px) {
-          grid-column: span 2;
-        }
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"] {
+      border: 2px solid #e0e0e0 !important;
+      border-radius: 8px !important;
+      padding: 0.6rem 1rem !important;
+      font-size: clamp(0.9rem, 1.5vw, 1rem) !important;
+      transition: all 0.2s ease !important;
+      background: white !important;
+      width: 100% !important;
+      height: 48px !important;
+      min-height: 48px !important;
+      max-height: 48px !important;
+      box-sizing: border-box !important;
+
+      &:focus {
+        border-color: $acento;
+        box-shadow: 0 0 0 3px rgba($acento, 0.1);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #999;
+        font-size: clamp(0.85rem, 1.5vw, 0.9rem);
       }
     }
 
-    input {
-    padding:0 1rem;
-    }
     input[type="submit"] {
-    padding:.4rem 1rem;
+      padding: .4rem 1rem;
     }
+
     select,
     textarea {
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      padding: clamp(0.6rem, 1vw, 1rem);
+      padding: 0.6rem 1rem;
       font-size: clamp(0.9rem, 1.5vw, 1rem);
       transition: all 0.2s ease;
       background: white;
       width: 100%;
+      box-sizing: border-box;
 
       &:focus {
         border-color: $acento;
@@ -225,11 +227,7 @@ import Checkbox from "./Checkbox.astro";
       background-position: right 1rem center;
       background-size: 1em;
       padding-right: 2.5rem;
-
-      @media (min-width: 768px) {
-        grid-column: span 2;
-        max-width: 100%;
-      }
+      height: 48px;
     }
   }
 
@@ -237,7 +235,7 @@ import Checkbox from "./Checkbox.astro";
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: clamp(1rem, 2vw, 1.5rem);
+    gap: clamp(.5rem, 2vw, 1.5rem);
     padding: clamp(1rem, 2vw, 1.5rem);
     background: #f8f9fa;
     border-radius: 12px;
@@ -405,7 +403,6 @@ import Checkbox from "./Checkbox.astro";
         usuarioId: refere,
         nombre: sanitize(formData.get("nombre") as string),
         pases: sanitize(formData.get("pases") as string),
-        mesa: sanitize(formData.get("mesa") as string),
         numeroWhats: sanitize(formData.get("numeroWhats") as string),
         confirmado: formData.get("confirmado") === "on",
         vip: formData.get("vip") === "on",

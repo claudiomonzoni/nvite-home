@@ -8,6 +8,19 @@ const Usuario = defineTable({
     ruta: column.text({}),
     rol: column.text({ default: "cliente" }),
     firebaseUid: column.text({ optional: true }),
+    nombreEvento: column.text({ optional: true }),
+    fechaEvento: column.date({ optional: true }),
+    addonMesas: column.boolean({ default: false }),
+    addonRecordatorios: column.boolean({ default: false }),
+  },
+});
+
+const Mesas = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    usuarioId: column.number({ references: () => Usuario.columns.id }),
+    nombre: column.text(),
+    capacidad: column.number({ default: 10 }),
   },
 });
 
@@ -19,6 +32,7 @@ const Invitados = defineTable({
     nombre: column.text(),
     pases: column.text(),
     mesa: column.text({ optional: true }),
+    mesaId: column.number({ references: () => Mesas.columns.id, optional: true }),
     numeroWhats: column.number({ optional: true }),
     confirmado: column.boolean({
       default: false,
@@ -50,5 +64,5 @@ const Sesion = defineTable({
 });
 
 export default defineDb({
-  tables: { Usuario, Invitados, Sesion },
+  tables: { Usuario, Invitados, Sesion, Mesas },
 });

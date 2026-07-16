@@ -1,0 +1,187 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  nombre: string;
+  descripcion: string;
+  icono?: string;
+}
+
+const { nombre, descripcion, icono = "mdi:lock-outline" } = Astro.props;
+---
+
+<div class="addon-cta-card">
+  <div class="addon-icon-wrapper">
+    <Icon name={icono} size={48} class="addon-icon" />
+  </div>
+  <div class="addon-details">
+    <span class="addon-tag">Add-on Disponible</span>
+    <h3 class="addon-title">{nombre}</h3>
+    <p class="addon-description">{descripcion}</p>
+    
+    <div class="addon-features-preview">
+      <span class="feature-tag">
+        <Icon name="mdi:check" size={16} />
+        Fácil de usar en móvil
+      </span>
+      <span class="feature-tag">
+        <Icon name="mdi:check" size={16} />
+        Actualización en tiempo real
+      </span>
+      <span class="feature-tag">
+        <Icon name="mdi:check" size={16} />
+        Optimizado para tus invitados
+      </span>
+    </div>
+
+    <a
+      href={`https://wa.me/527551132468?text=Hola,%20me%20gustaría%20activar%20el%20Add-on%20de%20"${encodeURIComponent(nombre)}"%20para%20mi%20invitación.`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="addon-button"
+    >
+      <Icon name="mdi:whatsapp" size={20} />
+      <span>Adquirir y Activar Add-on</span>
+    </a>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../../estilos/_variables.scss" as *;
+
+  .addon-cta-card {
+    background: linear-gradient(135deg, #ffffff, #fef6f2);
+    border: 2px dashed rgba($acento, 0.3);
+    border-radius: 16px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    max-width: 800px;
+    margin: 2rem auto;
+    box-shadow: 0 8px 30px rgba($primario, 0.04);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: rgba($acento, 0.6);
+      box-shadow: 0 12px 40px rgba($primario, 0.08);
+    }
+
+    @include cel {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem;
+      gap: 1.25rem;
+    }
+  }
+
+  .addon-icon-wrapper {
+    background: linear-gradient(135deg, rgba($acento, 0.1), rgba($primario, 0.1));
+    color: $acento;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 15px rgba($acento, 0.1);
+
+    .addon-icon {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+    }
+  }
+
+  .addon-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex: 1;
+
+    @include cel {
+      align-items: center;
+    }
+  }
+
+  .addon-tag {
+    background-color: rgba($acento, 0.1);
+    color: $acento;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .addon-title {
+    font-size: 1.6rem;
+    color: $primario;
+    font-family: $fuenteB;
+    margin: 0;
+  }
+
+  .addon-description {
+    font-size: 0.95rem;
+    color: $gris;
+    line-height: 1.5;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .addon-features-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    @include cel {
+      justify-content: center;
+    }
+
+    .feature-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background-color: #ffffff;
+      border: 1px solid #eee;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: $gris;
+      font-weight: 500;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.01);
+
+      svg {
+        color: #4caf50;
+      }
+    }
+  }
+
+  .addon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: rgb(43, 175, 91);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(43, 175, 91, 0.25);
+
+    &:hover {
+      background-color: darken(rgb(43, 175, 91), 5%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(43, 175, 91, 0.35);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -6,8 +6,9 @@ import Btn from "../Btn.astro";
 interface Props {
   tipo: string;
   ruta: string;
+  nombreEvento?: string | null;
 }
-const { tipo, ruta } = Astro.props;
+const { tipo, ruta, nombreEvento } = Astro.props;
 ---
 
 <nav>
@@ -15,7 +16,7 @@ const { tipo, ruta } = Astro.props;
     <a href={Astro.url.origin}
       ><img src="/nvita-logo-panel.svg" alt="nvitaciones" id="logo" /></a
     >
-    <li>{tipo} de {ruta}</li>
+    <li>{nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}</li>
     <li>      <form data-authForm action="../api/salir.json" method="POST">
         <button type="submit" class="btn-claro">
           <Icon name="mdi:logout" size={20} /> Salir

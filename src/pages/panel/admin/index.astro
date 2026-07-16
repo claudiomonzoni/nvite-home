@@ -15,10 +15,14 @@ interface AdminUserData {
   tipo: string;
   ruta: string;
   rol: string;
+  nombreEvento: string | null;
+  fechaEvento: Date | null;
+  addonMesas: boolean;
+  addonRecordatorios: boolean;
   guestCount: number;
 }
 
-let usersData: AdminUserData[] = [];
+let usersData: any[] = [];
 try {
   usersData = await db
     .select({
@@ -27,6 +31,10 @@ try {
       tipo: Usuario.tipo,
       ruta: Usuario.ruta,
       rol: Usuario.rol,
+      nombreEvento: Usuario.nombreEvento,
+      fechaEvento: Usuario.fechaEvento,
+      addonMesas: Usuario.addonMesas,
+      addonRecordatorios: Usuario.addonRecordatorios,
       guestCount: sql<number>`COUNT(${Invitados.id})`.mapWith(Number),
     })
     .from(Usuario)
@@ -92,8 +100,11 @@ try {
               <tr>
                 <th>ID</th>
                 <th>Email</th>
+                <th>Nombre Evento</th>
+                <th>Fecha Evento</th>
                 <th>Tipo</th>
                 <th>Ruta</th>
+                <th>Add-ons</th>
                 <th>Invitados Creados</th>
                 <th>Acciones</th>
               </tr>
@@ -105,6 +116,14 @@ try {
                     <tr class="client-row" data-search-email={cliente.email.toLowerCase()} data-search-ruta={cliente.ruta.toLowerCase()} data-search-tipo={cliente.tipo.toLowerCase()}>
                       <td><strong>{cliente.id}</strong></td>
                       <td>{cliente.email}</td>
+                      <td>{cliente.nombreEvento || <span class="muted">-</span>}</td>
+                      <td>
+                        {cliente.fechaEvento ? (
+                          new Date(cliente.fechaEvento).toLocaleDateString("es-MX", { timeZone: "UTC" })
+                        ) : (
+                          <span class="muted">-</span>
+                        )}
+                      </td>
                       <td>
                         <span class={`type-badge ${cliente.tipo}`}>
                           {cliente.tipo}
@@ -115,6 +134,16 @@ try {
                           /{cliente.ruta}
                           <Icon name="mdi:open-in-new" size={14} />
                         </a>
+                      </td>
+                      <td>
+                        <div class="addons-list-cell">
+                          <span class={`status-badge ${cliente.addonMesas ? "active" : "inactive"}`} title="Gestor de Mesas">
+                            Mesas
+                          </span>
+                          <span class={`status-badge ${cliente.addonRecordatorios ? "active" : "inactive"}`} title="Recordatorios Automáticos">
+                            Recordatorios
+                          </span>
+                        </div>
                       </td>
                       <td>
                         <span class="guest-count">{cliente.guestCount} invitados</span>
@@ -128,6 +157,10 @@ try {
                           data-ruta={cliente.ruta}
                           data-tipo={cliente.tipo}
                           data-rol={cliente.rol}
+                          data-nombre-evento={cliente.nombreEvento || ""}
+                          data-fecha-evento={cliente.fechaEvento ? new Date(cliente.fechaEvento).toISOString().split('T')[0] : ""}
+                          data-addon-mesas={cliente.addonMesas ? "true" : "false"}
+                          data-addon-recordatorios={cliente.addonRecordatorios ? "true" : "false"}
                         >
                           <Icon name="mdi:pencil-outline" size={18} />
                           <span>Editar</span>
@@ -146,7 +179,7 @@ try {
                   ))
                 ) : (
                   <tr>
-                    <td colspan="6" class="empty-state">
+                    <td colspan="9" class="empty-state">
                       No hay clientes registrados en el sistema.
                     </td>
                   </tr>
@@ -184,10 +217,30 @@ try {
           Ruta (Slug URL)
           <input type="text" name="ruta" required placeholder="ej: juanymaria (sin espacios)" pattern="^[a-zA-Z0-9\-]+$" title="Solo letras, números y guiones" />
         </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="isAdmin" />
-          <span>¿Otorgar privilegios de administrador?</span>
+        <label>
+          Nombre del Evento
+          <input type="text" name="nombreEvento" placeholder="ej: XV de Julia o Boda de Ana y Juan" />
         </label>
+        <label>
+          Fecha del Evento
+          <input type="date" name="fechaEvento" />
+        </label>
+        
+        <div class="dialog-checkboxes">
+          <label class="checkbox-label">
+            <input type="checkbox" name="addonMesas" />
+            <span>Activar Gestor de Mesas</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="addonRecordatorios" />
+            <span>Activar Recordatorios</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="isAdmin" />
+            <span>¿Otorgar privilegios de administrador?</span>
+          </label>
+        </div>
+
         <div class="dialog-actions">
           <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
           <button type="submit" class="btn-submit">Registrar Cliente</button>
@@ -218,10 +271,30 @@ try {
           Ruta (Slug URL)
           <input type="text" name="ruta" id="edit-ruta" required pattern="^[a-zA-Z0-9\-]+$" />
         </label>
-        <label class="checkbox-label">
-          <input type="checkbox" name="isAdmin" id="edit-is-admin" />
-          <span>¿Es administrador?</span>
+        <label>
+          Nombre del Evento
+          <input type="text" name="nombreEvento" id="edit-nombre-evento" placeholder="ej: XV de Julia" />
         </label>
+        <label>
+          Fecha del Evento
+          <input type="date" name="fechaEvento" id="edit-fecha-evento" />
+        </label>
+
+        <div class="dialog-checkboxes">
+          <label class="checkbox-label">
+            <input type="checkbox" name="addonMesas" id="edit-addon-mesas" />
+            <span>Activar Gestor de Mesas</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="addonRecordatorios" id="edit-addon-recordatorios" />
+            <span>Activar Recordatorios</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="isAdmin" id="edit-is-admin" />
+            <span>¿Es administrador?</span>
+          </label>
+        </div>
+
         <div class="dialog-actions">
           <button type="button" class="btn-cancel" data-close-modal>Cancelar</button>
           <button type="submit" class="btn-submit">Guardar Cambios</button>
@@ -278,7 +351,11 @@ try {
         password: formData.get("password"),
         tipoInvitacion: formData.get("tipoInvitacion"),
         ruta: formData.get("ruta"),
-        rol: formData.get("isAdmin") ? "admin" : "cliente"
+        nombreEvento: formData.get("nombreEvento") || null,
+        fechaEvento: formData.get("fechaEvento") || null,
+        addonMesas: (crearForm.querySelector("[name='addonMesas']") as HTMLInputElement).checked,
+        addonRecordatorios: (crearForm.querySelector("[name='addonRecordatorios']") as HTMLInputElement).checked,
+        rol: (crearForm.querySelector("[name='isAdmin']") as HTMLInputElement).checked ? "admin" : "cliente"
       };
 
       try {
@@ -309,12 +386,20 @@ try {
         const ruta = btn.getAttribute("data-ruta");
         const tipo = btn.getAttribute("data-tipo");
         const rol = btn.getAttribute("data-rol");
+        const nombreEvento = btn.getAttribute("data-nombre-evento");
+        const fechaEvento = btn.getAttribute("data-fecha-evento");
+        const addonMesas = btn.getAttribute("data-addon-mesas") === "true";
+        const addonRecordatorios = btn.getAttribute("data-addon-recordatorios") === "true";
 
         (document.getElementById("edit-id") as HTMLInputElement).value = id || "";
         (document.getElementById("edit-email") as HTMLInputElement).value = email || "";
         (document.getElementById("edit-ruta") as HTMLInputElement).value = ruta || "";
         (document.getElementById("edit-tipo") as HTMLSelectElement).value = tipo || "bodas";
         (document.getElementById("edit-is-admin") as HTMLInputElement).checked = rol === "admin";
+        (document.getElementById("edit-nombre-evento") as HTMLInputElement).value = nombreEvento || "";
+        (document.getElementById("edit-fecha-evento") as HTMLInputElement).value = fechaEvento || "";
+        (document.getElementById("edit-addon-mesas") as HTMLInputElement).checked = addonMesas;
+        (document.getElementById("edit-addon-recordatorios") as HTMLInputElement).checked = addonRecordatorios;
 
         editarDialog.showModal();
       });
@@ -329,7 +414,11 @@ try {
         email: formData.get("email"),
         tipoInvitacion: formData.get("tipoInvitacion"),
         ruta: formData.get("ruta"),
-        rol: formData.get("isAdmin") ? "admin" : "cliente"
+        nombreEvento: formData.get("nombreEvento") || null,
+        fechaEvento: formData.get("fechaEvento") || null,
+        addonMesas: (document.getElementById("edit-addon-mesas") as HTMLInputElement).checked,
+        addonRecordatorios: (document.getElementById("edit-addon-recordatorios") as HTMLInputElement).checked,
+        rol: (document.getElementById("edit-is-admin") as HTMLInputElement).checked ? "admin" : "cliente"
       };
 
       try {
@@ -839,6 +928,50 @@ try {
         background-color: darken($acento, 5%);
       }
     }
+  }
+
+  .addons-list-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    width: max-content;
+
+    &.active {
+      background-color: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    &.inactive {
+      background-color: #f3f4f6;
+      color: #9ca3af;
+      border: 1px solid #e5e7eb;
+    }
+  }
+
+  .dialog-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #f3f4f6;
+  }
+
+  .muted {
+    color: #9ca3af;
+    font-style: italic;
   }
 
   // Responsividad

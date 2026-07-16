@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { db, Usuario, Sesion, Invitados, eq, sql } from "astro:db";
 import sanitize from "sanitize-html";
 
-// GET: List all users with guest count
+// GET: List all users with guest count and new event/addon details
 export const GET: APIRoute = async () => {
   try {
     const users = await db
@@ -13,6 +13,10 @@ export const GET: APIRoute = async () => {
         ruta: Usuario.ruta,
         rol: Usuario.rol,
         firebaseUid: Usuario.firebaseUid,
+        nombreEvento: Usuario.nombreEvento,
+        fechaEvento: Usuario.fechaEvento,
+        addonMesas: Usuario.addonMesas,
+        addonRecordatorios: Usuario.addonRecordatorios,
         guestCount: sql<number>`COUNT(${Invitados.id})`.mapWith(Number),
       })
       .from(Usuario)
@@ -33,10 +37,20 @@ export const GET: APIRoute = async () => {
   }
 };
 
-// POST: Create a new user
+// POST: Create a new user with event details and addons configuration
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { email, password, ruta, tipoInvitacion, rol } = await request.json();
+    const { 
+      email, 
+      password, 
+      ruta, 
+      tipoInvitacion, 
+      rol, 
+      nombreEvento, 
+      fechaEvento, 
+      addonMesas, 
+      addonRecordatorios 
+    } = await request.json();
 
     if (!email || !password || !ruta || !tipoInvitacion) {
       return new Response(
@@ -108,6 +122,10 @@ export const POST: APIRoute = async ({ request }) => {
       tipo: cleanTipo,
       rol: cleanRol,
       firebaseUid: firebaseUid,
+      nombreEvento: nombreEvento ? sanitize(nombreEvento.trim()) : null,
+      fechaEvento: fechaEvento ? new Date(fechaEvento) : null,
+      addonMesas: !!addonMesas,
+      addonRecordatorios: !!addonRecordatorios,
     });
 
     return new Response(
@@ -123,10 +141,20 @@ export const POST: APIRoute = async ({ request }) => {
   }
 };
 
-// PATCH: Edit an existing user
+// PATCH: Edit an existing user (including event details and addons configuration)
 export const PATCH: APIRoute = async ({ request }) => {
   try {
-    const { id, email, ruta, tipoInvitacion, rol } = await request.json();
+    const { 
+      id, 
+      email, 
+      ruta, 
+      tipoInvitacion, 
+      rol, 
+      nombreEvento, 
+      fechaEvento, 
+      addonMesas, 
+      addonRecordatorios 
+    } = await request.json();
 
     if (!id) {
       return new Response(
@@ -153,6 +181,20 @@ export const PATCH: APIRoute = async ({ request }) => {
     if (ruta) updateFields.ruta = sanitize(ruta.trim().toLowerCase());
     if (tipoInvitacion) updateFields.tipo = sanitize(tipoInvitacion.trim());
     if (rol) updateFields.rol = rol === "admin" ? "admin" : "cliente";
+    
+    // Permitir nulo si vienen vacíos
+    if (nombreEvento !== undefined) {
+      updateFields.nombreEvento = nombreEvento ? sanitize(nombreEvento.trim()) : null;
+    }
+    if (fechaEvento !== undefined) {
+      updateFields.fechaEvento = fechaEvento ? new Date(fechaEvento) : null;
+    }
+    if (addonMesas !== undefined) {
+      updateFields.addonMesas = !!addonMesas;
+    }
+    if (addonRecordatorios !== undefined) {
+      updateFields.addonRecordatorios = !!addonRecordatorios;
+    }
 
     await db
       .update(Usuario)

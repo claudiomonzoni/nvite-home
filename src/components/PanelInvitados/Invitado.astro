@@ -66,7 +66,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           invitadoData.mesa && (
             <p class="info-item">
               <Icon name="mdi:table-furniture" size={20} />
-              <span>Mesa {invitadoData.mesa}</span>
+              <span>Mesa: {invitadoData.mesa}</span>
             </p>
           )
         }
@@ -294,7 +294,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       ) as HTMLInputElement;
       const mesaInput = dialogo.querySelector(
         "input[name='mesa']",
-      ) as HTMLInputElement;
+      ) as HTMLInputElement | null;
       const numeroWhatsInput = dialogo.querySelector(
         "input[name='numeroWhats']",
       ) as HTMLInputElement;
@@ -324,7 +324,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
           pasesInput.value = invitadoData[0].pases;
-          mesaInput.value = invitadoData[0].mesa?.toString() || "";
+          if (mesaInput) {
+            mesaInput.value = invitadoData[0].mesa?.toString() || "";
+          }
           numeroWhatsInput.value =
             invitadoData[0].numeroWhats?.toString() || "";
           confirmadoCheckbox.checked = invitadoData[0].confirmado;
