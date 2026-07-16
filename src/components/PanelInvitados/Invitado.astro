@@ -3,23 +3,24 @@ import { Icon } from "astro-icon/components";
 
 export type InvitadoProps = {
   id: number;
-  uuid: string;
+  uuid: string | null;
   usuarioId: number;
   nombre: string;
   pases: string;
-  mesa: number;
-  numeroWhats: number;
+  mesa: string | number | null;
+  mesaId: number | null;
+  numeroWhats: number | null;
   confirmado: boolean;
   vip: boolean;
   InvitacionEnviada: boolean;
   noAsiste: boolean;
-  tipoInvitacion: string;
-  mensajePersonalizado?: string;
+  tipoInvitacion: string | null;
+  mensajePersonalizado?: string | null;
 };
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
-const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}%26uid=${invitadoData.usuarioId}`;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}%26uid=${invitadoData.usuarioId}`;
 ---
 
 <article
@@ -53,6 +54,25 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         )
       }
     </h2>
+
+    
+  </div>
+  <div class="actions-section">
+     <div class="edit-actions">
+        <button
+          class="btn-icon"
+          data-edit
+          data-id={invitadoData.uuid}
+          data-uid={invitadoData.usuarioId}
+        >
+          <Icon name="mdi:account-edit-outline" size={20} />
+          <span>Editar</span>
+        </button>
+        <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
+          <Icon name="borrar" size={20} />
+          <span>Borrar</span>
+        </button>
+      </div>
   </div>
 
   <div class="invitado-content">
@@ -109,21 +129,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     </div>
 
     <div class="actions-section">
-      <div class="edit-actions">
-        <button
-          class="btn-icon"
-          data-edit
-          data-id={invitadoData.uuid}
-          data-uid={invitadoData.usuarioId}
-        >
-          <Icon name="mdi:account-edit-outline" size={20} />
-          <span>Editar</span>
-        </button>
-        <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
-          <Icon name="borrar" size={20} />
-          <span>Borrar</span>
-        </button>
-      </div>
+     
 
       <div class="share-actions">
         {
@@ -146,7 +152,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           href="#"
           class="btn-action copy"
           id="copiar"
-          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}&uid=${invitadoData.usuarioId}`}
+          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}&uid=${invitadoData.usuarioId}`}
         >
           <Icon name="mdi:content-copy" size={20} />
           <span>Copiar enlace</span>
@@ -190,7 +196,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     const invitacion = btn.dataset.copiarwa;
     const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`;
     if (!numeroWhats) {
-      btn.closest(".control").querySelector("h4").style.display = "none";
+      const control = btn.closest(".control") as HTMLElement | null;
+      const title = control?.querySelector("h4") as HTMLHeadingElement | null;
+      if (title) {
+        title.style.display = "none";
+      }
       btn.style.display = "none";
     }
 
@@ -275,7 +285,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     });
 
     //funcion de llenado
-    const getInvitadoData = async (id, uid) => {
+    const getInvitadoData = async (id: string | undefined, uid: string | undefined) => {
       const baseURL = window.location.origin;
       const response = await fetch(
         `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`,
@@ -285,7 +295,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       return idInvitacion;
     };
 
-    const llenar = (dialogo, id, uid) => {
+    const llenar = (dialogo: HTMLDialogElement, id: string | undefined, uid: string | undefined) => {
       const nombreInput = dialogo.querySelector(
         "input[name='nombre']",
       ) as HTMLInputElement;
@@ -454,7 +464,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
 
     h2 {
       color: $primario;
-      font-size: clamp(1.4rem, 1.5vw, 1.8rem);
+      font-size: clamp(1.2rem, 1.3vw, 1.2rem);
       margin: 0;
       display: flex;
       align-items: center;
@@ -486,7 +496,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     gap: 1rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba($primario, 0.3);
   }
 
   .info-item {
@@ -494,6 +504,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     align-items: center;
     gap: 0.5rem;
     margin: 0;
+    font-size: .8rem;
    // color: white;
 
     &.warning {
@@ -516,11 +527,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
+  
   .status-tag {
-    font-size: 0.85rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 1rem;
+    font-size: .6rem;
+    padding: 0rem 0.7rem;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.1);
 
     &.confirmed {
@@ -542,8 +553,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .edit-actions {
+    padding-bottom: 1rem;
     display: flex;
     gap: 0.75rem;
   }
@@ -551,8 +563,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   .share-actions {
     display: flex;
     gap: 0.75rem;
-
-   
   }
 
   .btn-icon {
@@ -562,14 +572,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.4rem 1rem;
+    padding: 0.2rem .7rem;
     border-radius: 8px;
     border: 1px solid rgba($primario, 0.6);
     color: $primario;
     background: none !important;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    svg{
+     width: 16px;
+    }
 
     &:hover {
       transform: translateY(-1px);
@@ -587,12 +600,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.4rem .8rem;
+    padding: 0.5rem .8rem;
     border-radius: 8px;
     background-color: #fff;
     color: $primario;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: clamp(.7rem, .7rem, 1rem);
     flex: 1;
     transition: all 0.2s ease;
     @extend .sombra;

@@ -8,7 +8,7 @@ export default async function seed() {
       tipo: "bodas",
       ruta: "nvita-bodas-clasica",
       rol: "admin",
-      nombreEvento: "Boda de Claudio y Mónica",
+      nombreEvento: "Boda de Claudio y Wendy",
       fechaEvento: new Date("2026-07-27"), // Faltan 12 días (Alerta preventiva 15 días)
       addonMesas: true,
       addonRecordatorios: false,
@@ -19,7 +19,7 @@ export default async function seed() {
       tipo: "bodas",
       ruta: "nvita-bodas-lux",
       rol: "cliente",
-      nombreEvento: "Enlace de Claudio y Mónica Plus",
+      nombreEvento: "Enlace de Claudio y Wendy Plus",
       fechaEvento: new Date("2026-08-15"), // Faltan 31 días (Normal)
       addonMesas: false,
       addonRecordatorios: false,

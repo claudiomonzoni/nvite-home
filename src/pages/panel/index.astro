@@ -10,6 +10,13 @@ import GestorMesas from "../../components/PanelInvitados/GestorMesas.astro";
 import { Usuario, Invitados, Mesas, db, eq, desc } from "astro:db";
 import { Icon } from "astro-icon/components";
 
+type MesaData = {
+  id: number;
+  usuarioId: number;
+  nombre: string;
+  capacidad: number;
+};
+
 // Ensure the user is authenticated
 const user = Astro.locals.user;
 
@@ -25,8 +32,8 @@ const nombreEvento = user.nombreEvento;
 const fechaEvento = user.fechaEvento;
 const addonMesas = user.addonMesas;
 
-let invitadosData = [];
-let mesasData = [];
+let invitadosData: InvitadoProps[] = [];
+let mesasData: MesaData[] = [];
 
 try {
   // Obtén los datos de los invitados
@@ -424,12 +431,15 @@ if (fechaEvento) {
       border: none;
       padding: 0.75rem 1.5rem;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 500;
       color: $gris;
       cursor: pointer;
       border-radius: 8px 8px 0 0;
       position: relative;
       transition: all 0.2s ease;
+      @include cel{
+        flex-direction: column;
+      }
 
       &:hover {
         color: $primario;
@@ -552,7 +562,7 @@ if (fechaEvento) {
 
   #invitados-list {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+       grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
     gap: 1rem;
     .invitado-item {
       flex: 1 1 30%;

@@ -14,10 +14,11 @@ const { tipo, ruta, nombreEvento } = Astro.props;
 <nav>
   <ul>
     <a href={Astro.url.origin}
-      ><img src="/nvita-logo-panel.svg" alt="nvitaciones" id="logo" /></a
+      ><img src="/nvita-logo.svg" alt="nvitaciones" id="logo" /></a
     >
-    <li>{nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}</li>
-    <li>      <form data-authForm action="../api/salir.json" method="POST">
+    <li>      
+      {nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}
+      <form data-authForm action="../api/salir.json" method="POST">
         <button type="submit" class="btn-claro">
           <Icon name="mdi:logout" size={20} /> Salir
         </button>
@@ -36,22 +37,23 @@ const { tipo, ruta, nombreEvento } = Astro.props;
         fill: #fff;
     }
     @include cel {
-        width: 100vw;
+        width: 50vw;
     }
   }
   li {
+    display: flex;
     text-align: center;
     list-style: none;
     text-decoration: none;
-    color: #fff;
-    display: block;
-    font-weight: bold;
+    color:$primario;
+    gap: 1rem;
+    align-items: center;
  
   }
 
   nav {
-    background-color: $primario;
-    margin-bottom: $margen;
+    background-color: $terciario;
+    margin-bottom: $margen-min;
   
     ul {
       display: flex;
@@ -63,7 +65,7 @@ const { tipo, ruta, nombreEvento } = Astro.props;
  
 
     button {
-      background-color: $acento;
+      background-color: $primario;
       border-radius: 5px;
       color: #fff;
       border: none;
@@ -71,7 +73,7 @@ const { tipo, ruta, nombreEvento } = Astro.props;
       text-align: center;
       padding: 0.3rem 0.8rem;
       font-weight: bold;
-      margin: 0;
+      margin: 0!important;
 
       svg {
         vertical-align: middle;

@@ -10,14 +10,17 @@ interface MesaData {
 
 interface InvitadoData {
   id: number;
-  uuid: string;
+  uuid: string | null;
   usuarioId: number;
   nombre: string;
   pases: string;
-  mesa: string | null;
+  mesa: string | number | null;
   mesaId: number | null;
   confirmado: boolean;
   noAsiste: boolean;
+  vip?: boolean;
+  InvitacionEnviada?: boolean;
+  tipoInvitacion?: string | null;
 }
 
 interface Props {
@@ -482,13 +485,20 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     gap: 2rem;
     margin-top: 1rem;
     font-family: $fuenteA;
+
+    @include cel {
+      padding: 0 1rem;
+      margin-left: -1rem;
+      margin-right: -1rem;
+      gap: 1.5rem;
+    }
   }
 
   .resumen-pases-bar {
     display: flex;
     gap: 2rem;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem ;
     background: white;
     border-radius: $radio;
     flex-wrap: wrap;
@@ -572,7 +582,7 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
 
   .gestor-layout {
     display: grid;
-    grid-template-columns: 1.8fr 1.2fr;
+    grid-template-columns: 3fr 1.2fr;
     gap: 2rem;
     align-items: start;
 
@@ -588,10 +598,15 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     margin-bottom: 1.25rem;
 
     h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       color: $primario;
-      font-weight: bold;
+      font-weight: 500;
       margin: 0;
+      @include cel {
+        font-size: 1rem;
+        padding-bottom: 0rem;
+        
+      }
     }
   }
 
@@ -619,8 +634,8 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
   /* Listado de Mesas */
   .mesas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
   }
 
   .mesa-card {
@@ -731,8 +746,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     .mesa-guest-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       font-size: 0.85rem;
+        margin-left: 0!important;
+      
 
       .guest-info {
         display: flex;
@@ -755,6 +771,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
         .guest-name {
           color: $primario;
           font-weight: 500;
+          font-size: clamp(.8rem, .7rem , .9rem);
+          padding-right: .4rem;
+          flex: 1;
         }
       }
 
@@ -764,8 +783,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
         gap: 0.5rem;
 
         .guest-passes {
+          padding: 0 .3rem;
           color: #999;
-          font-size: 0.8rem;
+          font-size: 0.6rem;
         }
       }
     }
@@ -782,13 +802,21 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      font-size: 0.8rem;
-      color: #9ca3af;
-      padding-top: 0.25rem;
+      font-size: 0.6rem;
+      color: $gris;
+      padding: 0.25rem 0;
       font-style: italic;
+      background-color: $terciario;
+      border-radius: 5px;
+      
+        margin-left: 0!important;
+
 
       svg {
         color: #d1d5db;
+      }
+      @include cel {
+        font-size: 0.7rem;
       }
     }
   }
@@ -823,11 +851,14 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
 
   /* Pool de Invitados Sin Asignar */
   .unassigned-pool-column {
-    background-color: white;
+    position: sticky;
+    top: $margen-cel;
+    background-color: rgba($primario, .2);
     border-radius: 12px;
     border: 1px solid rgba($primario, 0.06);
     box-shadow: 0 4px 20px rgba($primario, 0.03);
     padding: 1.5rem;
+    margin-bottom: $margen-cel;
 
     .unassigned-list-container {
       max-height: 600px;
