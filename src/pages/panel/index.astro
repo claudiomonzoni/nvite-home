@@ -140,7 +140,13 @@ if (fechaEvento) {
   )}
 
   <!-- Contenido de la pestaña INVITADOS -->
-  <div id="tab-invitados" class="tab-content active">
+  <div
+    id="tab-invitados"
+    class="tab-content active"
+    data-nombre-evento={nombreEvento || "Mi Evento"}
+    data-fecha-evento={fechaEvento ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
+    data-invitados={JSON.stringify(invitadosData)}
+  >
     <section class="grid contenido">
       <div id="hero">
         <div class="barra-progreso-container">
@@ -251,6 +257,10 @@ if (fechaEvento) {
               <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
               <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
             </div>
+            <button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
+              <Icon name="mdi:microsoft-excel" size={18} />
+              <span>Descargar Excel</span>
+            </button>
           </div>
         </div>
       </div>
@@ -318,7 +328,7 @@ if (fechaEvento) {
   {addonMesas && (
     <div id="tab-mesas" class="tab-content">
       <section class="grid contenido">
-        <GestorMesas mesas={mesasData} invitados={invitadosData} />
+        <GestorMesas mesas={mesasData} invitados={invitadosData} nombreEvento={nombreEvento} fechaEvento={fechaEvento} />
       </section>
     </div>
   )}
@@ -404,6 +414,115 @@ if (fechaEvento) {
         });
       });
     }
+
+    // 3. Exportar a Excel (SheetJS)
+    const loadSheetJS = () => {
+      return new Promise<void>((resolve, reject) => {
+        if ((window as any).XLSX) {
+          resolve();
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("No se pudo cargar la librería de Excel."));
+        document.head.appendChild(script);
+      });
+    };
+
+    const btnExportar = document.getElementById("btn-exportar-invitados") as HTMLButtonElement | null;
+    btnExportar?.addEventListener("click", async () => {
+      if (!btnExportar) return;
+      try {
+        btnExportar.disabled = true;
+        const originalText = btnExportar.innerHTML;
+        btnExportar.innerHTML = "<span>Generando...</span>";
+        
+        await loadSheetJS();
+        
+        const tabInvitados = document.getElementById("tab-invitados");
+        const invitados = JSON.parse(tabInvitados?.getAttribute("data-invitados") || "[]");
+        const nombreEvento = tabInvitados?.getAttribute("data-nombre-evento") || "evento";
+        const fechaEvento = tabInvitados?.getAttribute("data-fecha-evento") || "";
+        
+        interface ExportRow {
+          Nombre: string;
+          Pases: number;
+          Estado: string;
+          Tipo: string;
+          WhatsApp: string;
+          "Invitación Enviada": string;
+          "Invitado VIP": string;
+          Mesa: string;
+        }
+        
+        const formattedData: ExportRow[] = invitados.map((inv: any) => {
+          let estado = "Sin confirmar";
+          if (inv.noAsiste) estado = "No asiste";
+          else if (inv.confirmado) estado = "Confirmado";
+          
+          return {
+            Nombre: String(inv.nombre || ""),
+            Pases: parseInt(String(inv.pases || "0"), 10),
+            Estado: estado,
+            Tipo: String(inv.tipoInvitacion || "Familiar"),
+            WhatsApp: String(inv.numeroWhats || "Sin registrar"),
+            "Invitación Enviada": inv.InvitacionEnviada ? "Sí" : "No",
+            "Invitado VIP": inv.vip ? "Sí" : "No",
+            Mesa: String(inv.mesa || "Sin asignar")
+          };
+        });
+        
+        // Ordenar: mesas agrupadas, al final Sin asignar
+        formattedData.sort((a, b) => {
+          if (a.Mesa !== "Sin asignar" && b.Mesa === "Sin asignar") return -1;
+          if (a.Mesa === "Sin asignar" && b.Mesa !== "Sin asignar") return 1;
+          if (a.Mesa !== "Sin asignar" && b.Mesa !== "Sin asignar") {
+            return a.Mesa.localeCompare(b.Mesa);
+          }
+          return a.Nombre.localeCompare(b.Nombre);
+        });
+        
+        const XLSX = (window as any).XLSX;
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Invitados");
+        
+        // Ajustar ancho de columnas automáticamente
+        const maxLen = formattedData.reduce((acc, row) => {
+          acc.Nombre = Math.max(acc.Nombre, row.Nombre.length);
+          acc.Estado = Math.max(acc.Estado, row.Estado.length);
+          acc.Tipo = Math.max(acc.Tipo, row.Tipo.length);
+          acc.WhatsApp = Math.max(acc.WhatsApp, row.WhatsApp.toString().length);
+          acc.Mesa = Math.max(acc.Mesa, row.Mesa.length);
+          return acc;
+        }, { Nombre: 10, Pases: 6, Estado: 15, Tipo: 12, WhatsApp: 15, Mesa: 15 });
+        
+        worksheet["!cols"] = [
+          { wch: maxLen.Nombre + 3 },
+          { wch: 10 },
+          { wch: maxLen.Estado + 3 },
+          { wch: maxLen.Tipo + 3 },
+          { wch: maxLen.WhatsApp + 3 },
+          { wch: 20 },
+          { wch: 15 },
+          { wch: maxLen.Mesa + 3 }
+        ];
+        
+        const sanitizedNombre = nombreEvento.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+        const fileName = `invitados-${sanitizedNombre}-${fechaEvento || new Date().toISOString().split("T")[0]}.xlsx`;
+        
+        XLSX.writeFile(workbook, fileName);
+        
+        btnExportar.innerHTML = originalText;
+        btnExportar.disabled = false;
+      } catch (err) {
+        console.error(err);
+        alert("Ocurrió un error al descargar el Excel.");
+        btnExportar.innerHTML = "<span>Descargar Excel</span>";
+        btnExportar.disabled = false;
+      }
+    });
   });
 </script>
 
@@ -657,6 +776,35 @@ if (fechaEvento) {
       background: $secundario;
       color: white;
       border: 1px solid $secundario;
+    }
+  }
+
+  .btn-excel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #bbf7d0;
+    border-radius: $radio;
+    background-color: #f0fdf4;
+    color: #166534;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #dcfce7;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
   }
 

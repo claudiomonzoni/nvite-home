@@ -26,9 +26,11 @@ interface InvitadoData {
 interface Props {
   mesas: MesaData[];
   invitados: InvitadoData[];
+  nombreEvento?: string | null;
+  fechaEvento?: Date | string | null;
 }
 
-const { mesas, invitados } = Astro.props;
+const { mesas, invitados, nombreEvento = "Mi Evento", fechaEvento = "" } = Astro.props;
 
 // Filtrar los invitados que no tienen mesa asignada (y que asistirán o están pendientes)
 const invitadosSinAsignar = invitados.filter(
@@ -54,7 +56,13 @@ const resumenPases = invitados.reduce(
 const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
 ---
 
-<div class="gestor-mesas-container">
+<div
+  class="gestor-mesas-container"
+  data-nombre-evento={nombreEvento}
+  data-fecha-evento={fechaEvento ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
+  data-invitados={JSON.stringify(invitados)}
+  data-mesas={JSON.stringify(mesas)}
+>
   <!-- Resumen de pases -->
   <div class="resumen-pases-bar">
     <div class="resumen-item confirmado">
@@ -83,10 +91,16 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     <div class="mesas-grid-column">
       <div class="section-header">
         <h2>Distribución de Mesas ({mesas.length})</h2>
-        <button id="btn-nueva-mesa" class="btn-primary-sm">
-          <Icon name="mdi:table-plus" size={18} />
-          <span>Agregar Mesa</span>
-        </button>
+        <div class="header-actions-group">
+          <button id="btn-nueva-mesa" class="btn-primary-sm">
+            <Icon name="mdi:table-plus" size={18} />
+            <span>Agregar Mesa</span>
+          </button>
+          <button id="btn-exportar-mesas" class="btn-excel-sm" title="Exportar Distribución de Mesas a Excel">
+            <Icon name="mdi:microsoft-excel" size={18} />
+            <span>Descargar Excel</span>
+          </button>
+        </div>
       </div>
 
       <div class="mesas-grid">
@@ -110,13 +124,14 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
               const pasesTotales = pasesConfirmados + pasesPendientes;
               const libres = Math.max(0, mesa.capacidad - pasesTotales);
               const esExcedido = pasesTotales > mesa.capacidad;
+              const esLlena = pasesTotales === mesa.capacidad;
 
               // Porcentajes para la barra visual
               const pctConf = Math.min(100, (pasesConfirmados / mesa.capacidad) * 100);
               const pctPend = Math.min(100 - pctConf, (pasesPendientes / mesa.capacidad) * 100);
 
               return (
-                <div class={`mesa-card ${esExcedido ? "excedido" : ""}`} data-mesa-id={mesa.id}>
+                <div class={`mesa-card ${esExcedido ? "excedido" : ""} ${esLlena ? "llena" : ""}`} data-mesa-id={mesa.id}>
                   <div class="mesa-card-header">
                     <div>
                       <h3 class="mesa-name">{mesa.nombre}</h3>
@@ -473,6 +488,101 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
         }
       });
     });
+
+    // 6. Exportar a Excel (SheetJS)
+    const loadSheetJS = () => {
+      return new Promise<void>((resolve, reject) => {
+        if ((window as any).XLSX) {
+          resolve();
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("No se pudo cargar la librería de Excel."));
+        document.head.appendChild(script);
+      });
+    };
+
+    const btnExportarMesas = document.getElementById("btn-exportar-mesas") as HTMLButtonElement | null;
+    btnExportarMesas?.addEventListener("click", async () => {
+      if (!btnExportarMesas) return;
+      try {
+        btnExportarMesas.disabled = true;
+        const originalText = btnExportarMesas.innerHTML;
+        btnExportarMesas.innerHTML = "<span>Generando...</span>";
+        
+        await loadSheetJS();
+        
+        const container = document.querySelector(".gestor-mesas-container");
+        const invitados = JSON.parse(container?.getAttribute("data-invitados") || "[]");
+        const nombreEvento = container?.getAttribute("data-nombre-evento") || "evento";
+        const fechaEvento = container?.getAttribute("data-fecha-evento") || "";
+        
+        interface ExportRow {
+          Nombre: string;
+          Pases: number;
+          Estado: string;
+          Mesa: string;
+        }
+        
+        const formattedData: ExportRow[] = invitados.map((inv: any) => {
+          let estado = "Sin confirmar";
+          if (inv.noAsiste) estado = "No asiste";
+          else if (inv.confirmado) estado = "Confirmado";
+          
+          return {
+            Nombre: String(inv.nombre || ""),
+            Pases: parseInt(String(inv.pases || "0"), 10),
+            Estado: estado,
+            Mesa: String(inv.mesa || "Sin asignar")
+          };
+        });
+        
+        // Ordenar: mesas agrupadas, al final Sin asignar
+        formattedData.sort((a, b) => {
+          if (a.Mesa !== "Sin asignar" && b.Mesa === "Sin asignar") return -1;
+          if (a.Mesa === "Sin asignar" && b.Mesa !== "Sin asignar") return 1;
+          if (a.Mesa !== "Sin asignar" && b.Mesa !== "Sin asignar") {
+            return a.Mesa.localeCompare(b.Mesa);
+          }
+          return a.Nombre.localeCompare(b.Nombre);
+        });
+        
+        const XLSX = (window as any).XLSX;
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Distribución de Mesas");
+        
+        // Ajustar ancho de columnas automáticamente
+        const maxLen = formattedData.reduce((acc, row) => {
+          acc.Nombre = Math.max(acc.Nombre, row.Nombre.length);
+          acc.Estado = Math.max(acc.Estado, row.Estado.length);
+          acc.Mesa = Math.max(acc.Mesa, row.Mesa.length);
+          return acc;
+        }, { Nombre: 10, Pases: 6, Estado: 15, Mesa: 15 });
+        
+        worksheet["!cols"] = [
+          { wch: maxLen.Nombre + 3 },
+          { wch: 10 },
+          { wch: maxLen.Estado + 3 },
+          { wch: maxLen.Mesa + 3 }
+        ];
+        
+        const sanitizedNombre = nombreEvento.toLowerCase().replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+        const fileName = `mesas-${sanitizedNombre}-${fechaEvento || new Date().toISOString().split("T")[0]}.xlsx`;
+        
+        XLSX.writeFile(workbook, fileName);
+        
+        btnExportarMesas.innerHTML = originalText;
+        btnExportarMesas.disabled = false;
+      } catch (err) {
+        console.error(err);
+        alert("Ocurrió un error al descargar el Excel.");
+        btnExportarMesas.innerHTML = "<span>Descargar Excel</span>";
+        btnExportarMesas.disabled = false;
+      }
+    });
   });
 </script>
 
@@ -631,6 +741,38 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     }
   }
 
+  .header-actions-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .btn-excel-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #dcfce7;
+      transform: translateY(-1px);
+    }
+
+    &[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
   /* Listado de Mesas */
   .mesas-grid {
     display: grid;
@@ -641,17 +783,20 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
   .mesa-card {
     background-color: white;
     border-radius: 12px;
-    border: 1px solid rgba($primario, 0.08);
     box-shadow: 0 4px 15px rgba($primario, 0.02);
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
 
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba($primario, 0.06);
+    }
+
+    &.llena {
+      background-color: rgba($fondo, .5);
     }
   }
 
