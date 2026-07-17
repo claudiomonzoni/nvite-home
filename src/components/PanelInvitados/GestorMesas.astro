@@ -774,6 +774,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
           font-size: clamp(.8rem, .7rem , .9rem);
           padding-right: .4rem;
           flex: 1;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
       }
 
@@ -912,6 +915,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
         font-weight: 600;
         color: $primario;
         display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       .guest-sub {
@@ -949,6 +955,9 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
     outline: none;
     cursor: pointer;
     transition: border-color 0.2s;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:focus {
       border-color: $acento;
@@ -959,7 +968,7 @@ const totalEstimado = resumenPases.confirmados + resumenPases.pendientes;
       font-size: 0.75rem;
       border: 1px solid #e5e7eb;
       border-radius: 4px;
-      max-width: 100px;
+      max-width: 90px;
     }
   }
 
