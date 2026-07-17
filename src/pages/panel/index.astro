@@ -43,6 +43,21 @@ try {
     .where(eq(Invitados.usuarioId, usuarioId))
     .orderBy(desc(Invitados.id));
 
+  // Ordenar: sin confirmar primero (!confirmado && !noAsiste), luego confirmados (confirmado && !noAsiste), y al final no asiste (noAsiste)
+  invitadosData.sort((a, b) => {
+    const getCategory = (inv: InvitadoProps) => {
+      if (inv.noAsiste) return 3;
+      if (inv.confirmado) return 2;
+      return 1;
+    };
+    const catA = getCategory(a);
+    const catB = getCategory(b);
+    if (catA !== catB) {
+      return catA - catB;
+    }
+    return b.id - a.id; // Mantener orden cronológico por ID dentro de cada grupo
+  });
+
   // Obtén las mesas si tiene el add-on activo
   if (addonMesas) {
     mesasData = await db
@@ -61,10 +76,32 @@ const totalInvitados = invitadosData.length;
 const totalConfirmados = invitadosData.filter((inv) => inv.confirmado && !inv.noAsiste).length;
 const porcentajeConfirmados = totalInvitados > 0 ? (totalConfirmados / totalInvitados) * 100 : 0;
 
+const totalPasesAsignados = invitadosData.reduce(
+  (sum, inv) => sum + parseInt(inv.pasesOriginales || inv.pases || "0"),
+  0
+);
+
+const totalPasesConfirmados = invitadosData.reduce(
+  (sum, inv) => sum + (inv.confirmado && !inv.noAsiste ? parseInt(inv.pases || "0") : 0),
+  0
+);
+
+const pasesLiberados = invitadosData.reduce((sum, inv) => {
+  const original = parseInt(inv.pasesOriginales || inv.pases || "0");
+  if (inv.noAsiste) {
+    return sum + original;
+  }
+  if (inv.confirmado) {
+    const confirmados = parseInt(inv.pases || "0");
+    return sum + Math.max(0, original - confirmados);
+  }
+  return sum;
+}, 0);
+
 const pasesPendientes = invitadosData.reduce(
   (sum, inv) =>
     !inv.confirmado && !inv.noAsiste
-      ? sum + parseInt(inv.pases || "0")
+      ? sum + parseInt(inv.pasesOriginales || inv.pases || "0")
       : sum,
   0
 );
@@ -106,7 +143,6 @@ if (fechaEvento) {
     <section class="grid contenido no-margin-bottom">
       <div class={`alerta-panel ${alertaTipo}`}>
         <div class="alerta-icon">
-          <Icon name={alertaTipo === "celebrativa" ? "mdi:party-popper" : "mdi:calendar-heart"} size={24} />
         </div>
         <div class="alerta-mensaje">
           {alertaTipo === "celebrativa" ? (
@@ -182,28 +218,8 @@ if (fechaEvento) {
                   : 0
               }%</span
             > de invitaciones confirmadas,
-            <span class="confirmados"
-              >{
-                invitadosData.reduce(
-                  (sum, inv) =>
-                    inv.confirmado && !inv.noAsiste
-                      ? sum + parseInt(inv.pases || "0")
-                      : sum,
-                  0
-                )
-              }</span
-            > pases confirmados,
-            <span class="pendientes"
-              >{
-                invitadosData.reduce(
-                  (sum, inv) =>
-                    !inv.confirmado && !inv.noAsiste
-                      ? sum + parseInt(inv.pases || "0")
-                      : sum,
-                  0
-                )
-              }</span
-            > pases por confirmar
+            <span class="confirmados">{totalPasesConfirmados}</span> pases confirmados,
+            <span class="pendientes">{pasesPendientes}</span> pases por confirmar
           </p>
         </div>
         <div class="estadisticas">
@@ -211,35 +227,31 @@ if (fechaEvento) {
             <span class="stat-numero">{invitadosData.length}</span>
             <span class="stat-label">Invitaciones creadas</span>
           </div>
-          <div class="stat-item">
-            <span class="stat-numero">
-              {
-                invitadosData.reduce((sum, inv) => {
-                  const pases = Math.round(parseFloat(inv.pases || "0"));
-                  return sum + (inv.noAsiste ? 0 : pases);
-                }, 0)
-              }
-            </span>
-            <span class="stat-label">Pases asignados</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-numero"
-              >{invitadosData.filter((inv) => inv.confirmado && !inv.noAsiste).length}</span
-            >
-            <span class="stat-label">Invitaciones confirmadas</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-numero"
-              >{invitadosData.filter((inv) => inv.noAsiste).length}</span
-            >
-            <span class="stat-label">No asisten</span>
-          </div>
-          <div class="stat-item">
+            <div class="stat-item">
             <span class="stat-numero"
               >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
             >
             <span class="stat-label">Invitaciones enviadas</span>
           </div>
+          <div class="stat-item">
+            <span class="stat-numero">{totalPasesAsignados}</span>
+            <span class="stat-label">Pases asignados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero">{totalPasesConfirmados}</span>
+            <span class="stat-label">Pases confirmados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero">{pasesLiberados}</span>
+            <span class="stat-label">Pases liberados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-numero"
+              >{invitadosData.filter((inv) => inv.noAsiste).length}</span
+            >
+            <span class="stat-label">declinaciones</span>
+          </div>
+        
         </div>
 
         <div class="conteFiltros">
@@ -611,17 +623,13 @@ if (fechaEvento) {
     }
 
     &.motivacional {
-      background-color: #fffbeb;
-      color: #92400e;
-      border: 1px solid #fef3c7;
-      .alerta-icon { color: #d97706; }
+      background-color: rgba($secundario, 0.2);
+      color: $acento;
     }
 
     &.celebrativa {
-      background-color: #f0fdf4;
-      color: #166534;
-      border: 1px solid #dcfce7;
-      .alerta-icon { color: #22c55e; }
+      background-color: rgba($terciario, 0.4);
+      color: $primario;
     }
   }
 

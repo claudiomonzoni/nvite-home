@@ -31,6 +31,7 @@ const Invitados = defineTable({
     usuarioId: column.number({references: () => Usuario.columns.id}),
     nombre: column.text(),
     pases: column.text(),
+    pasesOriginales: column.text({ optional: true }),
     mesa: column.text({ optional: true }),
     mesaId: column.number({ references: () => Mesas.columns.id, optional: true }),
     numeroWhats: column.number({ optional: true }),
@@ -52,6 +53,9 @@ const Invitados = defineTable({
     mensajePersonalizado: column.text({ optional: true }),
     comentarios: column.text({ optional: true }),
     personasNoAsisten: column.text({ optional: true }),
+    // Campos para sistema de recordatorios automáticos
+    recordatorioEnviado: column.boolean({ default: false }),
+    fechaRecordatorioEnviado: column.date({ optional: true }),
   },
 });
 

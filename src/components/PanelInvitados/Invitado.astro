@@ -7,6 +7,7 @@ export type InvitadoProps = {
   usuarioId: number;
   nombre: string;
   pases: string;
+  pasesOriginales?: string | null;
   mesa: string | number | null;
   mesaId: number | null;
   numeroWhats: number | null;
@@ -80,7 +81,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       <div class="info-primary">
         <p class="info-item">
           <Icon name="mdi:ticket" size={20} />
-          <span>{Math.round(parseFloat(invitadoData.pases))} pases</span>
+          <span>
+            {
+              (invitadoData.confirmado || invitadoData.noAsiste) && 
+              invitadoData.pasesOriginales && 
+              parseInt(invitadoData.pasesOriginales) !== Math.round(parseFloat(invitadoData.pases || "0")) ? (
+                `${Math.round(parseFloat(invitadoData.pases || "0"))} de ${Math.round(parseFloat(invitadoData.pasesOriginales))} pases`
+              ) : (
+                `${Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0"))} pases`
+              )
+            }
+          </span>
         </p>
         {
           invitadoData.mesa && (
@@ -140,10 +151,24 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               id="enviarwa"
               data-wa={invitadoData.numeroWhats}
               data-copiarwa={urlWA}
+              data-dbid={invitadoData.id}
+              data-status={
+                invitadoData.confirmado
+                  ? "confirmado"
+                  : invitadoData.noAsiste
+                    ? "noAsiste"
+                    : invitadoData.InvitacionEnviada
+                      ? "recordar"
+                      : "invitar"
+              }
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Invitar: </span>
+              <span>
+                {invitadoData.confirmado ? "Confirmado" : 
+                 invitadoData.noAsiste ? "No asiste" : 
+                 invitadoData.InvitacionEnviada ? "Recordar" : "Invitar"}
+              </span>
               <Icon name="mdi:whatsapp" size={20} />
             </a>
           )
@@ -175,7 +200,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       if (copyValue) {
         navigator.clipboard.writeText(copyValue).then(
           () => {
-            alert("Texto copiado al portapapeles: " + copyValue);
+            alert("Texto copiado, pegalo en el whatsapp de tu invitado: " + copyValue);
           },
           (err) => {
             console.error("Error al copiar el texto: ", err);
@@ -194,7 +219,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
     const invitacion = btn.dataset.copiarwa;
-    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`;
+    const status = btn.dataset.status;
+    const dbid = btn.dataset.dbid;
+
     if (!numeroWhats) {
       const control = btn.closest(".control") as HTMLElement | null;
       const title = control?.querySelector("h4") as HTMLHeadingElement | null;
@@ -202,17 +229,50 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         title.style.display = "none";
       }
       btn.style.display = "none";
+      return;
     }
+
+    let mensaje = "";
+    if (status === "recordar") {
+      mensaje = `¡Hola! Te escribo para recordarte que estamos por cerrar la lista de invitados. ¿Nos confirmas si podrás acompañarnos? ¡Nos encantaría verte! URL: ${invitacion}`;
+    } else {
+      mensaje = invitacion || "";
+    }
+
+    const mensajeEncoded = encodeURIComponent(mensaje);
 
     let whats = "";
     if (/Mobile/i.test(ua)) {
-      whats = `https://api.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+      whats = `https://api.whatsapp.com/send/?phone=${numeroWhats}&text=${mensajeEncoded}`;
     } else {
-      whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+      whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${mensajeEncoded}`;
     }
 
-    const url = `${whats}`;
-    btn.href = url;
+    btn.href = whats;
+
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      window.open(btn.href, "_blank");
+
+      if (status === "invitar" && dbid) {
+        try {
+          const response = await fetch(`/api/${dbid}.json`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ InvitacionEnviada: true }),
+          });
+
+          if (response.ok) {
+            location.reload();
+          }
+        } catch (err) {
+          console.error("Error al marcar como enviado:", err);
+        }
+      }
+    });
   });
 
   // btn borrar
@@ -285,13 +345,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     });
 
     //funcion de llenado
-    const getInvitadoData = async (id: string | undefined, uid: string | undefined) => {
+    const getInvitadoData = async (id: string | undefined, uid: string | undefined): Promise<any> => {
       const baseURL = window.location.origin;
       const response = await fetch(
         `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`,
       );
       // const idfetch = await fetch(`http://localhost:4321/api/getInvitado.json?id=${id}&uid=${uid}`);
-      const idInvitacion = await response.json();
+      const idInvitacion = await response.json() as any;
       return idInvitacion;
     };
 
@@ -328,12 +388,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       ) as HTMLDivElement;
 
       const invitadoDataPromise = getInvitadoData(id, uid);
-      invitadoDataPromise.then((invitadoData) => {
+      invitadoDataPromise.then((invitadoData: any) => {
         console.log(invitadoData[0].nombre);
         if (invitadoData) {
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
-          pasesInput.value = invitadoData[0].pases;
+          pasesInput.value = invitadoData[0].pasesOriginales || invitadoData[0].pases;
           if (mesaInput) {
             mesaInput.value = invitadoData[0].mesa?.toString() || "";
           }

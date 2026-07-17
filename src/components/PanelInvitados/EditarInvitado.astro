@@ -334,12 +334,12 @@ import Checkbox from "./Checkbox.astro";
   import sanitize from "sanitize-html";
 
   // Función para obtener los datos del invitado
-  const getInvitadoData = async (id, uid) => {
+  const getInvitadoData = async (id: string | undefined, uid: string | undefined): Promise<any> => {
     const baseURL = window.location.origin;
     const response = await fetch(
       `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`
     );
-    const idInvitacion = await response.json();
+    const idInvitacion = await response.json() as any;
     return idInvitacion;
   };
 
@@ -444,7 +444,7 @@ import Checkbox from "./Checkbox.astro";
       } else {
         throw new Error(res.message || "Ocurrió un error desconocido.");
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error("Error en la solicitud:", e);
       alert(e.message);
     }
@@ -459,7 +459,7 @@ import Checkbox from "./Checkbox.astro";
   closeDialogBtn.addEventListener("click", () => dialogEditar.close());
 
   // Función para llenar el formulario con los datos del invitado
-  const llenar = (dialogo, id, uid) => {
+  const llenar = (dialogo: HTMLDialogElement, id: string | undefined, uid: string | undefined) => {
     const nombreInput = dialogo.querySelector(
       "input[name='nombre']"
     ) as HTMLInputElement;
@@ -489,11 +489,11 @@ import Checkbox from "./Checkbox.astro";
     ) as HTMLTextAreaElement;
 
     const invitadoDataPromise = getInvitadoData(id, uid);
-    invitadoDataPromise.then((invitadoData) => {
+    invitadoDataPromise.then((invitadoData: any) => {
       if (invitadoData && invitadoData[0]) {
         dialogo.dataset.refedit = invitadoData[0].id;
         nombreInput.value = invitadoData[0].nombre;
-        pasesInput.value = invitadoData[0].pases;
+        pasesInput.value = invitadoData[0].pasesOriginales || invitadoData[0].pases;
         mesaInput.value = invitadoData[0].mesa?.toString() || "";
         numeroWhatsInput.value = invitadoData[0].numeroWhats?.toString() || "";
         confirmadoCheckbox.checked = invitadoData[0].confirmado;

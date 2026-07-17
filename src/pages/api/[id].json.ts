@@ -113,6 +113,7 @@ export const PATCH: APIRoute = async ({ params, request, locals }) => {
     const updateFields: any = {
       ...(nombre && { nombre }),
       ...(pases && { pases: Math.trunc(Number(pases)).toString() }),
+      ...(pases && { pasesOriginales: Math.trunc(Number(pases)).toString() }),
       ...(numeroWhats !== undefined && { numeroWhats }),
       ...(confirmado !== undefined && { confirmado }),
       ...(vip !== undefined && { vip }),

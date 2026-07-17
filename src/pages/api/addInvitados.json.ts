@@ -41,6 +41,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       uuid: uuidv4().split('-')[0], 
       nombre: sanitize(nombre),
       pases: sanitize(pases),
+      pasesOriginales: sanitize(pases),
       mesa: sanitize(mesa),
       numeroWhats: sanitize(numeroWhats),
       confirmado,
