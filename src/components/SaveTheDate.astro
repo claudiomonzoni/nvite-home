@@ -42,7 +42,7 @@ const { h2, p, imagenes } = Astro.props;
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
   h2{
-    color: $acento;
+    color: $secundario;
     font-weight: normal;
   }
 
@@ -53,7 +53,7 @@ const { h2, p, imagenes } = Astro.props;
     position: relative;
   }
   .izq {
-    flex: 1 0 40%;
+    flex: 1 0 50%;
     justify-content: center;
     align-items: center;
     order: 1;
@@ -74,7 +74,7 @@ const { h2, p, imagenes } = Astro.props;
   }
   #Savethedate {
     display: flex;
-    background: url("/fondo-reserva-la-fecha.webp") $fondo no-repeat;
+    background: rgba($terciario, .4) no-repeat;
     background-size: contain;
     background-position: 20%;
     border-radius: $radio;
