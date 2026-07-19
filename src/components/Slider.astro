@@ -70,18 +70,16 @@ const slides: Slide[] = [
   <div class="controls-wrap">
     <!-- Play / Pause / Replay circular button (izquierda) -->
     <button class="play-btn" aria-label="Reproducir/Pausar">
-      <!-- <svg class="play-icon hidden" viewBox="0 0 24 24" fill="#111">
-        <path d="M8 5v14l11-7z" />
-      </svg> -->
       <svg class="pause-icon hidden" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"></path>
+        <rect x="4" y="4" width="4" height="16" rx="2" ry="2"></rect>
+        <rect x="12" y="4" width="4" height="16" rx="2" ry="2"></rect>
       </svg>
-      <svg class="replay-icon" viewBox="0 0 24 24" fill="currentColor"
-        ><path fill="currentColor" d="M8 5.14v14l11-7z"></path></svg
-      >
-      <!-- <svg class="replay-icon" viewBox="0 0 24 24" fill="#111">
-        <path d="M12 5V1L7 6l5 5V7c3.86 0 7 3.14 7 7 0 1.2-.3 2.33-.84 3.33l1.46 1.46C20.54 17.74 21 15.93 21 14c0-4.97-4.03-9-9-9zM6.34 6.34L4.93 4.93C3.46 6.4 2.5 8.55 2.22 10.95L3.66 12.4C3.87 10.66 4.66 8.98 6.34 6.34z"/>
-      </svg> -->
+      <svg class="replay-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          fill="currentColor"
+          d="M8.4 5.1c0-.35.28-.63.63-.63.12 0 .24.03.34.09l10.75 6.95c.25.16.4.44.4.74 0 .3-.15.58-.4.74L8.37 19.44c-.1.06-.22.09-.34.09-.35 0-.63-.28-.63-.63V5.1Z"
+        ></path>
+      </svg>
     </button>
 
     <!-- Centro: pill con indicador y bullet móvil -->
@@ -109,7 +107,7 @@ const slides: Slide[] = [
     position: relative;
     width: 100%;
     height: auto;
-margin-top: $margen;
+    margin-top: $margen;
   }
 
   svg {
@@ -173,11 +171,11 @@ margin-top: $margen;
     flex-direction: column;
     justify-content: center;
     gap: 1rem;
-    padding: $margen-cel ;
+    padding: $margen-cel;
     @include cel {
       padding: $margen-cel $margen-cel 0 $margen-cel;
       width: 100%;
-      gap:0;
+      gap: 0;
       text-align: center;
     }
   }
@@ -227,10 +225,10 @@ margin-top: $margen;
     transform: translateY(30px);
     color: $secundario;
     transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
   }
-  
+
   .slide-description {
     font-size: clamp(1rem, 3vw, 1.25rem);
     text-align: center;
@@ -275,26 +273,27 @@ margin-top: $margen;
     gap: 18px;
     z-index: 20;
     pointer-events: auto;
-    margin-top: 2rem;
+    margin: 2rem 0;
   }
 
   /* Botón circular Play/Pause (izquierda) */
   .play-btn {
-    width: 56px;
-    height: 56px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: inline-grid;
     place-items: center;
-    background: rgba($fondoGlobal, 1);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 10px rgba($gris, 0.16);
+    background: white;
+    border: 1px solid $fondoGlobal;
     cursor: pointer;
     padding: 0;
+    @extend .sombra;
   }
 
   .play-btn svg {
-    width: 28px;
-    height: 28px;
+    width: 23px;
+    height: 23px;
+    color: $primario;
   }
   .play-btn .pause-icon.hidden,
   .play-btn .play-icon.hidden,
@@ -305,13 +304,13 @@ margin-top: $margen;
   /* Pill central que contiene track y bullet */
   .progress-pill {
     width: 280px;
-    height: 56px;
+    height: 40px;
     border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($fondoGlobal, 1);
-    box-shadow: 0 4px 10px rgba($gris, 0.18);
+    background:#ffffff;
+    @extend .sombra;
     padding: 8px 12px;
     @include cel {
       width: calc(100vw - 140px);
@@ -335,7 +334,7 @@ margin-top: $margen;
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba($acento, 0.95);
+    background: rgba($primario, .8);
     border: none;
     padding: 0;
     transition:
@@ -357,7 +356,7 @@ margin-top: $margen;
     width: 120px; /* ancho del segmento expandido */
     height: 12px;
     border-radius: 999px;
-    background: rgba($secundario, 0.2);
+    background: rgba($terciario, .7);
   }
 
   /* barra de progreso interna que se llena cuando el slide está activo */
@@ -383,7 +382,7 @@ margin-top: $margen;
   .progress-bar {
     width: 200px;
     height: 4px;
-    background: rgba(255, 255, 255, 0.3);
+    background: $fondoGlobal;
     border-radius: 2px;
     overflow: hidden;
     cursor: pointer;
@@ -551,7 +550,7 @@ margin-top: $margen;
       // Limpiar todos los Lotties
       this.stopAllLotties();
       this.lottieAnimations.clear();
-      
+
       // Cancelar animaciones pendientes
       if (this.raf !== null) {
         cancelAnimationFrame(this.raf);
@@ -559,7 +558,7 @@ margin-top: $margen;
       }
 
       // Remover clases activas
-      this.slides.forEach(slide => {
+      this.slides.forEach((slide) => {
         slide.classList.remove("active");
       });
 
