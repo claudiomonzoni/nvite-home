@@ -452,20 +452,7 @@ mark {
   }
 }
 
-.azulBG {
-  border-radius: $radio;
-  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-    linear-gradient(43deg, $fondoGlobal 30%, $terciario 100%) no-repeat;
-  background-position: center right, top left;
-  background-size: 50%, 100%;
-  margin-bottom: $margen-min;
-  @include cel {
-    background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-      linear-gradient(0deg, $fondoGlobal 0%, $terciario 100%) no-repeat;
-    background-position: center bottom;
-    background-size: 120%;
-  }
-}
+
 .texto-izq {
   text-align: left;
 }

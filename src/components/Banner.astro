@@ -1,18 +1,20 @@
 ---
-
-const{dondeEstoy} = Astro.props
+const { dondeEstoy } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
 ---
 
-
 <div class="banner azulBG">
   <div class="der">
+    <div id="titulo">
+      <h2>Simple, precios transparentes</h2>
+      <p>Envios ilimitados, sin sorpresas</p>
+    </div>
     <div class="bande">
-      <article class="lista">
-        <small>Bodas & 15 Años</small>
-        <h2>Nvitación Esencial</h2>
-        <!-- <div class="precio">$529</div> -->
+      <!--
+        <article class="lista">
+          <small>Bodas & 15 Años</small>
+          <h2>Nvitación Esencial</h2>
         <ul>
           <li>Detalles del evento</li>
           <li>Cuenta regresiva</li>
@@ -23,8 +25,8 @@ import Btn from "./Btn.astro";
         </ul>
         <div class="conteBtn">
         
-          {
-            dondeEstoy === 'home' ? (
+        {
+          dondeEstoy === 'home' ? (
             <Btn
             liga="/nvitaciones/invitacion-bodas-esencial"
             clases="btn-bordes"
@@ -39,16 +41,16 @@ import Btn from "./Btn.astro";
             icono="mdi:chevron-double-right"
             //claro={true}
             />
-          ) : (
+            ) : (
             
             dondeEstoy === "bodas"  ? (
-               <Btn
-                liga="/nvitaciones/invitacion-bodas-esencial"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
+            <Btn
+            liga="/nvitaciones/invitacion-bodas-esencial"
+            clases="btn-oscuro"
+            texto="Así se ve →"
+            icono="mdi:chevron-double-right"
+            claro={true}
+            />
             ):(
                 <Btn
                 liga="/nvitaciones/invitacion-xv-esencial"
@@ -61,34 +63,46 @@ import Btn from "./Btn.astro";
           )
         }
          
-        </div>
- 
+      </div>
+      
     </article>
-    
-    <article class="lista">
-      <div class="bandeDestacada">
-        <small>Bodas & 15 Años</small>
-        <h2> 
-          Nvitación Clásica
-          <!-- <div id="masvendido">Más vendida</div> -->
-        </h2>
-        <!-- <div class="precio">$1087</div> -->
-        <ul>
-          <li><b>Panel de invitados</b></li>
-          <li><b>Nombre del invitado</b></li>
-          <li><b>Pases del invitado</b></li>
-          <li><b>Galería de imágenes</b></li>
-          <li><b>Sugerencia de regalos</b></li>
-          <li>Detalles del evento</li>
-          <li>Cuenta regresiva</li>
-          <li>Datos de tu evento</li>
-          <li>Mapas de ubicación</li>
-          <li>Frase animada</li>
-          <li>Formulario de confirmación</li>
-        </ul>
-        
-        <div class="conteBtn">
-          {
+    -->
+
+      <article class="lista destacada">
+        <div class="bandeDestacada">
+          <small>Bodas & 15 Años</small>
+          <h2>
+            Nvitación Clásica
+            <!-- <div id="masvendido">Más vendida</div> -->
+          </h2>
+          <ul>
+            <h4>Personalización</h4>
+            <li>Nombre del invitado</li>
+            <li>Asigna Pases</li>
+            <li>Mensajes personales</li>
+            <h4>Ambientación</h4>
+            <li>Tu canción</li>
+            <li>Galería de imágenes</li>
+            <li>Frase animada</li>
+            <h4>Información del Evento</h4>
+            <li>Dress Code</li>
+            <li>Mapas de ubicación</li>
+            <li>Cuenta regresiva</li>
+            <h4>Confirmación y Control</h4>
+            <li>Sugerencia de regalos</li>
+            <li>Formulario de confirmación</li>
+            <li>Panel de invitados</li>
+          </ul>
+          <div class="precio">
+            <price>$1290<sup>MXN</sup></price>
+            <small
+              >Pago unico / Desde 13 pesos por invitado y baja entre más
+              invitados tengas</small
+            >
+          </div>
+          <!--
+          <div class="conteBtn">
+            {
             dondeEstoy === 'home' ? (
               <Btn
               liga="/nvitaciones/invitacion-bodas-clasica"
@@ -114,7 +128,7 @@ import Btn from "./Btn.astro";
                 icono="mdi:chevron-double-right"
                 claro={true}
                 />
-              ):(
+                ):(
                 <Btn
                 liga="/nvitaciones/invitacion-xv-clasica"
                 clases="btn-oscuro"
@@ -125,32 +139,60 @@ import Btn from "./Btn.astro";
               )
             )}
           
-          
+            
+          </div>
+          -->
         </div>
-        
- 
-    </div>
-  </article>
-  
-  <article class="lista destacada">
-    <small>Bodas & 15 Años</small>
-    <h2>Nvitación Lux</h2>
-    <!-- <div class="precio">$1279</div> -->
-    <ul>
-      <li><b>Panel de invitados</b></li>
-      <li><b>Música ambiental</b></li>
-      <li><b>Itinerario</b></li>
-      <li><b>Nombre del invitado</b></li>
-      <li><b>Pases del invitado</b></li>
-      <li><b>Galería de imágenes</b></li>
-      <li><b>Sugerencia de regalos</b></li>
-      <li>Detalles del evento</b></li>
-      <li>Cuenta regresiva</li>
-      <li>Datos de tu evento</li>
-      <li>Mapas de ubicación</li>
-      <li>Frase animada</li>
-      <li>Formulario de confirmación</li>
-    </ul>
+      </article>
+
+      <article class="lista">
+        <small>Bodas & 15 Años</small>
+        <h2>Nvitación Lux</h2>
+
+        <ul id="lux">
+          <h3>Todo lo que incluye la Clásica, más:</h3>
+
+          <li>
+            <b>Gestor de mesas</b>
+            <p>
+              Organiza a tus invitados y asigna sus mesas fácilmente. Exporta
+              todo en Excel para compartirlo con tu equipo.
+            </p>
+          </li>
+
+          <li>
+            <b>Itinerario</b>
+            <p>
+              Haz que tus invitados sepan qué sigue y disfruten cada momento de
+              tu celebración.
+            </p>
+          </li>
+
+          <li>
+            <b>Porcentaje  de confirmados</b>
+            <p>
+              Muestra a tus invitados cuántos ya confirmaron y dales ese último
+              empujón para decir: ¡Sí, ahí estaremos!
+            </p>
+          </li>
+
+          <li>
+            <b>QR de entrada</b>
+            <p>
+              Agiliza el acceso y controla tus pases. Escanea el QR para saber
+              quién llegó y en qué mesa está.
+            </p>
+          </li>
+        </ul>
+        <div class="precio">
+          <prince> $1688<sup>MXN</sup> </prince>
+          <small
+            >Pago unico / Desde 17 pesos por invitado y baja entre más invitados
+            tengas</small
+          >
+        </div>
+      </article>
+      <!--     
     <div class="conteBtn">
       {
         dondeEstoy === 'home' ? (
@@ -189,13 +231,11 @@ import Btn from "./Btn.astro";
             )
           }
          
-        </div>
-
- 
-      </article>
+        </div> -->
     </div>
   </div>
-  <!-- {
+</div>
+<!-- {
     dondeEstoy === 'home' ? (
 
     <div class="izq">
@@ -209,9 +249,18 @@ import Btn from "./Btn.astro";
       ''
     )
   } -->
-</div>
+
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
+  #titulo {
+    text-align: center;
+    margin-top: $margen;
+    flex: 1 0 100%;
+    h2 {
+      font-weight: 600;
+      color: $primario;
+    }
+  }
   h2 {
     color: $acento;
     font-size: clamp(2.2rem, 1.5vw, 2.7vw);
@@ -227,12 +276,19 @@ import Btn from "./Btn.astro";
     text-decoration-thickness: 0.9px;
   }
   .precio {
-    display: inline-block;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
     padding-bottom: 1rem;
     border-bottom: solid 1px $terciario;
     font-weight: bolder;
     color: $primario;
-    font-size: clamp(1.9rem, 1.7vw, 3vw);
+    font-size: clamp(1.5rem, 1.2vw, 1.5vw);
+    small {
+      color: $primario;
+      font-weight: normal;
+      font-size: clamp(0.6rem, 0.7rem, 1rem);
+    }
   }
   .banner {
     display: flex;
@@ -247,6 +303,7 @@ import Btn from "./Btn.astro";
     }
   }
   .der {
+    flex-wrap: wrap;
     flex: 1 0 70%;
     @tableta_land {
       flex: 1 0 80%;
@@ -261,40 +318,71 @@ import Btn from "./Btn.astro";
     }
   }
   .bande {
-    margin: $margen 0;
     display: flex;
+    margin: $margen-cel 0 $margen;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .bandeDestacada {
+    width: 80%;
+    padding: $margen-min;
+    @include cel {
+      width: 100%;
+    }
   }
   .lista {
-    min-width: min-content;
+    flex: 1;
+    max-width: min(100%, 50ch);
     justify-content: center;
     align-self: center;
-    flex: 1;
-    // border-right: solid 1px $primario;
-    padding: 0 1.5rem;
-    @include hd{
+    padding: 2rem $margen-cel;
+    @include hd {
       padding: 0 3rem;
     }
+    li {
+      font-size: clamp(1rem, 0.8rem, 1rem);
+    }
+    li:nth-of-type(3n) {
+      padding-bottom: 8px;
+    }
     a {
-
       justify-self: flex-start;
       svg {
         vertical-align: middle;
       }
     }
-    
-      @include cel {
-        flex:1 0 100%;
-        border-right: none;
-        // border-bottom: solid 1px $primario;
-        padding: 2rem 1.5rem;
-        position: relative;
-        a {
-       width: 100%;
+
+    @include cel {
+      flex: 1 0 100%;
+      border-right: none;
+
+      position: relative;
+      a {
+        width: 100%;
+      }
+    }
+    #lux {
+      max-width: 90%;
+    }
+  }
+  #lux {
+    h3 {
+      padding-bottom: $margen-min;
+      border: solid 1px rgba($primario, 0.4);
+      border-radius: $radio;
+      text-align: center;
+      padding: 10px $margen-min;
+      margin-bottom: $margen-min;
+    }
+    li {
+      padding-bottom: 8px;
+      p {
       }
     }
   }
   .destacada {
+    display: flex;
     background: white;
     background: linear-gradient(
       0deg,
@@ -304,6 +392,14 @@ import Btn from "./Btn.astro";
     border-radius: $radio;
     padding: 1rem;
     @extend .sombra;
+
+    @include cel {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 100%
+      );
+    }
   }
   #masvendido {
     border-bottom: solid 2px $primario;
@@ -325,7 +421,7 @@ import Btn from "./Btn.astro";
     flex-wrap: wrap;
     gap: 0.5rem;
     @include cel {
-      gap: .2rem;
+      gap: 0.2rem;
     }
   }
   .conteBtn > * {
@@ -344,5 +440,27 @@ import Btn from "./Btn.astro";
     .der {
       flex: 1 0 100%;
     }
+  }
+
+  .azulBG {
+    border-radius: $radio;
+    background:
+      url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+      linear-gradient(43deg, $fondoGlobal 30%, $terciario 100%) no-repeat;
+    background-position:
+      center left,
+      top left;
+    background-size: 50%, 100%;
+    margin-bottom: $margen-min;
+    @include cel {
+      background:
+        url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
+        linear-gradient(0deg, $fondoGlobal 0%, $terciario 100%) no-repeat;
+      background-position: center bottom;
+      background-size: 120%;
+    }
+  }
+  sup {
+    font-size: 0.7rem;
   }
 </style>
