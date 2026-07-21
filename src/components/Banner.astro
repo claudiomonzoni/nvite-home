@@ -260,10 +260,16 @@ import Btn from "./Btn.astro";
       font-weight: 600;
       color: $primario;
     }
+    @include cel{
+      margin-top: 0;
+      text-align: left;
+      padding-left: $margen-cel;
+    }
   }
   h2 {
-    color: $acento;
-    font-size: clamp(2.2rem, 1.5vw, 2.7vw);
+    color: $primario;
+    font-weight: 600;
+    font-size: clamp(2rem, 1.3vw, 2.2vw);
     position: relative;
   }
   small {
@@ -374,6 +380,9 @@ import Btn from "./Btn.astro";
       text-align: center;
       padding: 10px $margen-min;
       margin-bottom: $margen-min;
+      @include cel{
+        text-align: left;
+      }
     }
     li {
       padding-bottom: 8px;
