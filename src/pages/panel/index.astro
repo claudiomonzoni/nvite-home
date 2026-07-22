@@ -254,6 +254,25 @@ if (fechaEvento) {
         
         </div>
 
+        <div class="section-header invitados-section-header">
+          <h2>Invitaciones ({invitadosData.length})</h2>
+
+          <div id="conteAgregar">
+
+            {usuarioId ? (
+
+<button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
+              <Icon name="mdi:microsoft-excel" size={18} />
+              <span>Descargar Excel</span>
+            </button>
+              <button id="agregar-invitado" class="btn-primary-sm">
+              <Icon name="mdi:account-plus-outline" size={18} />
+              <span>Agregar invitado</span>
+            </button>
+          ) : null}
+          </div>
+        </div>
+
         <div class="conteFiltros">
           <input
             id="search-input"
@@ -269,10 +288,7 @@ if (fechaEvento) {
               <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
               <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
             </div>
-            <button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
-              <Icon name="mdi:microsoft-excel" size={18} />
-              <span>Descargar Excel</span>
-            </button>
+            
           </div>
         </div>
       </div>
@@ -312,9 +328,6 @@ if (fechaEvento) {
       {
         usuarioId ? (
           <>
-            <button id="agregar-invitado">
-              <Icon name="mdi:account-plus-outline" size={25} /> Agregar invitado
-            </button>
             <AgregarInvitado usuarioId={usuarioId} />
             <EditarInvitado />
           </>
@@ -792,10 +805,10 @@ if (fechaEvento) {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid #bbf7d0;
+    border: 1px solid $primario;
     border-radius: $radio;
-    background-color: #f0fdf4;
-    color: #166534;
+    background-color: $fondoGlobal;
+    color: $primario;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -884,26 +897,79 @@ if (fechaEvento) {
     }
   }
 
-  #agregar-invitado {
+  .invitados-section-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba($primario, 0.12);
+    width: 100%;
+
+
+
+    h2 {
+      font-size: 1.2rem;
+      color: $primario;
+      font-weight: 500;
+      margin: $margen-min 0;
+      padding: 0;
+      @include cel{
+        flex: 1 0 100%;
+      }
+    }
+
+    @include cel{
+      position: fixed;
+      background: rgba($fondoGlobal, .9);
+      width: 100%;
+      z-index: 1999;
+      border-top: solid 1px $primario;
+      left: 0;
+      bottom: 0;
+      text-align: center;
+      justify-content: center;
+      h2, button{
+        font-size: .8rem;
+      }
+      h2{
+        margin: 1rem 0 0;
+      }
+
+    }
+  }
+
+  .btn-primary-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     background-color: $acento;
-    border-radius: $radio;
     color: #fff;
     border: none;
-    display: inline-block;
-    text-align: center;
+    border-radius: $radio;
     padding: 0.5rem 1rem;
-    font-size: clamp(1.1rem, 1rem, 2rem);
-    font-weight: bold;
-    margin: 1rem 0;
-    position: fixed;
-    right: 5%;
-    bottom: 2%;
-    z-index: 99;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
     @extend .sombra;
-    
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba($acento, 0.25);
+    }
+
     svg {
       vertical-align: middle;
-      margin-right: 0.2rem;
     }
+  }
+
+  #agregar-invitado {
+    margin: 0;
+    position: static;
+    right: auto;
+    bottom: auto;
+    z-index: auto;
   }
 </style>
