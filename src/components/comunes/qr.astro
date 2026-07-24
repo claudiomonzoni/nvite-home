@@ -1,0 +1,182 @@
+---
+
+import QRCode from "qrcode";
+
+type Props = {
+  invitacion?: string | null;
+  nombreInvitacion?: string | null;
+  pases?: string | number | null;
+  mesa?: string | number | null;
+  noAsiste?: boolean | null;
+  value?: string;
+  title?: string;
+  subtitle?: string;
+  alt?: string;
+  size?: number;
+};
+
+const {
+  invitacion = null,
+  nombreInvitacion = null,
+  pases,
+  mesa,
+  noAsiste = false,
+  value,
+  title = "Información de invitación",
+  subtitle = "Escanea para ver tus datos",
+  alt,
+  size = 240,
+} = Astro.props as Props;
+
+const displayName = invitacion ?? nombreInvitacion ?? "Invitación";
+const displayPases =
+  pases === null || pases === undefined || pases === ""
+    ? "Sin pases asignados"
+    : String(pases);
+
+const displayMesa =
+  mesa === null || mesa === undefined || mesa === ""
+    ? "Sin mesa asignada"
+    : String(mesa);
+
+const qrValue =
+  value ??
+  `Invitado: ${displayName}\nPases de invitados: ${displayPases}\nMesa asignada: ${displayMesa}`;
+
+const qrDataUrl = !noAsiste
+  ? await QRCode.toDataURL(qrValue, {
+      width: size,
+      margin: 1,
+      color: {
+        dark: "#111827",
+        light: "#ffffff",
+      },
+    })
+  : "";
+---
+
+<div class={`qr-card ${noAsiste ? 'qr-card--no-asiste' : ''}`}>
+  <div class="qr-card__info">
+    <p class="qr-card__eyebrow">{title}</p>
+    <h3>{displayName}</h3>
+
+    {noAsiste ? (
+      <div class="qr-card__no-asistencia">
+        <p>Este invitado indicó que no asiste al evento</p>
+      </div>
+    ) : (
+      <ul class="qr-card__list">
+        <li>
+          <span>Pases</span>
+          {displayPases}
+        </li>
+        <li>
+          <span>Mesa</span>
+          {displayMesa}
+        </li>
+      </ul>
+    )}
+  </div>
+
+  {!noAsiste && (
+    <div class="qr-card__image">
+      <img src={qrDataUrl} alt={alt ?? `Código QR de ${displayName}`} />
+      {subtitle && <p class="qr-card__subtitle">{subtitle}</p>}
+    </div>
+  )}
+</div>
+
+<style>
+  .qr-card {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    margin:4rem auto 0;
+    max-width:750px;
+  }
+
+  .qr-card--no-asiste {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .qr-card__eyebrow {
+    margin-bottom: .35rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color:$primario;
+    text-align: center;
+  }
+
+  .qr-card h3 {
+    text-align: center;
+    margin: 0 0 1rem;
+    font-size: clamp(3.2rem, 2vw, 1.5rem);
+    color: $secundario;
+  }
+
+  .qr-card__no-asistencia {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  .qr-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .qr-card__list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: $margen-min 0.6rem;
+    border-radius: 0.75rem;
+    background: $terciario;
+    font-size:1.5rem;
+  }
+
+
+  .qr-card__image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .qr-card__image img {
+    width: min(100%, 150px);
+    height: auto;
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.5rem;
+  }
+
+  .qr-card__subtitle {
+    margin: 0;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .qr-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

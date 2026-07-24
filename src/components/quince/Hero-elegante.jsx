@@ -140,7 +140,7 @@ function useSparkleCanvas(canvasRef, isActive) {
   }, [canvasRef, isActive]);
 }
 
-export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es-ES' }) {
+export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es-ES', initialInvitado = null }) {
   const l = {
     loading: labels?.loading || "Quiero que sean parte de la celebración de mis XV años",
     tap: labels?.tap || "Toca para comenzar",
@@ -148,8 +148,8 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
     saveDate: labels?.saveDate || "SAVE THE DATE",
     passes: labels?.passes || "No. de pases",
   };
-  const [invitado, setInvitado] = useState("-");
-  const [pase, setPase] = useState(0);
+  const [invitado, setInvitado] = useState(initialInvitado ? initialInvitado.nombre : "-");
+  const [pase, setPase] = useState(initialInvitado ? initialInvitado.pases : 0);
   const [iniciado, setIniciado] = useState(false);
   const [animandoSalida, setAnimandoSalida] = useState(false);
   const loadingTextRef = useRef(null);
@@ -170,20 +170,29 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
   };
 
   useEffect(() => {
+    if (initialInvitado) {
+      return;
+    }
+
     // confirmacion de id
     const valores = window.location.search;
     const params = new URLSearchParams(valores);
     const id = params.get("id");
     const uid = params.get("uid");
 
-    // Fetch data cuando se monta el componente
-    fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
-      .then(res => res.json())
-      .then(json => {
-        setInvitado(json[0].nombre);
-        setPase(json[0].pases);
-      })
-  }, []);
+    if (id && uid) {
+      // Fetch data cuando se monta el componente
+      fetch(`${window.location.origin}/api/getInvitado.json?id=${id}&uid=${uid}`)
+        .then(res => res.json())
+        .then(json => {
+          if (json && json[0]) {
+            setInvitado(json[0].nombre);
+            setPase(json[0].pases);
+          }
+        })
+        .catch(err => console.error("Error fetching guest in Hero-elegante:", err));
+    }
+  }, [initialInvitado]);
 
   // Animación del texto de carga
   useEffect(() => {

@@ -7,6 +7,7 @@ interface Props {
     mostrarSiempre: boolean;
     frase: string;
     email: string;
+    usuarioId?: number | null;
     labels?: {
         confirmed?: string;
         passesConfirmed?: string;
@@ -21,6 +22,7 @@ const {
     mostrarSiempre,
     frase,
     email,
+    usuarioId = null,
     labels = {},
 } = Astro.props;
 
@@ -39,41 +41,50 @@ let porcentajeConfirmados = 0;
 let mostrarComponente = false;
 
 try {
-    // 1. Obtener el usuario por email
-    const users = await db
-        .select()
-        .from(Usuario)
-        .where(eq(Usuario.email, email));
+    let invitados = [];
 
-    if (users.length > 0) {
-        const userId = users[0].id;
-
-        // 2. Obtener los invitados de ese usuario
-        const invitados = await db
-            .select()
+    if (usuarioId) {
+        // Consulta directa si ya tenemos el id de usuario
+        invitados = await db
+            .select({
+                pases: Invitados.pases,
+                confirmado: Invitados.confirmado,
+                noAsiste: Invitados.noAsiste,
+            })
             .from(Invitados)
-            .where(eq(Invitados.usuarioId, userId));
+            .where(eq(Invitados.usuarioId, Number(usuarioId)));
+    } else {
+        // Consulta única con JOIN si solo tenemos el email
+        invitados = await db
+            .select({
+                pases: Invitados.pases,
+                confirmado: Invitados.confirmado,
+                noAsiste: Invitados.noAsiste,
+            })
+            .from(Invitados)
+            .innerJoin(Usuario, eq(Invitados.usuarioId, Usuario.id))
+            .where(eq(Usuario.email, email));
+    }
 
-        // 3. Calcular totales
-        totalPases = invitados.reduce((sum, invitado) => {
+    // Calcular totales
+    totalPases = invitados.reduce((sum, invitado) => {
+        const pases = parseInt(invitado.pases) || 0;
+        return sum + pases;
+    }, 0);
+
+    pasesConfirmados = invitados.reduce((sum, invitado) => {
+        if (invitado.confirmado && !invitado.noAsiste) {
             const pases = parseInt(invitado.pases) || 0;
             return sum + pases;
-        }, 0);
+        }
+        return sum;
+    }, 0);
 
-        pasesConfirmados = invitados.reduce((sum, invitado) => {
-            if (invitado.confirmado && !invitado.noAsiste) {
-                const pases = parseInt(invitado.pases) || 0;
-                return sum + pases;
-            }
-            return sum;
-        }, 0);
+    porcentajeConfirmados = totalPases > 0
+        ? Math.round((pasesConfirmados / totalPases) * 100)
+        : 0;
 
-        porcentajeConfirmados = totalPases > 0
-            ? Math.round((pasesConfirmados / totalPases) * 100)
-            : 0;
-
-        mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMostrarInvitados;
-    }
+    mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMostrarInvitados;
 } catch (error) {
     console.error("Error al calcular progreso de invitados en SSR:", error);
 }

@@ -5,7 +5,7 @@ import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss
 import stylesBodasElegante from "../../estilos/temas/elegante/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
-export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', themeName = 'base', labels = {} }) {
+export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', themeName = 'base', labels = {}, initialInvitado = null }) {
   const t = {
     title: labels.title || "¿Contamos con tu presencia?",
     subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
@@ -45,11 +45,11 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   };
   const styles = themeMap[tipo]?.[themeName] || themeMap[tipo]?.base || stylesBodas;
 
-  const [invitado, setInvitado] = useState("sin datos");
-  const [pases, setPases] = useState(0);
-  const [id, setId] = useState(0);
-  const [uuid, setUuid] = useState("");
-  const [asistira, setAsistira] = useState(false);
+  const [invitado, setInvitado] = useState(initialInvitado ? initialInvitado.nombre : "sin datos");
+  const [pases, setPases] = useState(initialInvitado ? Math.trunc(initialInvitado.pases) : 0);
+  const [id, setId] = useState(initialInvitado ? initialInvitado.id : 0);
+  const [uuid, setUuid] = useState(initialInvitado ? initialInvitado.uuid : "");
+  const [asistira, setAsistira] = useState(initialInvitado ? initialInvitado.confirmado : false);
   const [selectedPases, setSelectedPases] = useState("0");
   const [comentarios, setComentarios] = useState("");
   const [error, setError] = useState(null);
@@ -70,6 +70,10 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   }, []);
 
   useEffect(() => {
+    if (initialInvitado) {
+      return;
+    }
+
     const fetchInvitado = async () => {
       setIsLoading(true);
       setError(null);
@@ -114,7 +118,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
     };
 
     fetchInvitado();
-  }, []);
+  }, [initialInvitado]);
 
   const actualizarUrlWhatsapp = useCallback(
     (pasesValue, comentariosValue) => {

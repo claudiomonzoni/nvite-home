@@ -118,9 +118,8 @@
     margin-bottom: 0rem;
   }
   b {
-    color: var(--acento);
+    color: var(--secundario);
     font-style: normal;
-    font-family: var(--font-heading), serif;
     font-weight: 300;
   }
 
@@ -286,11 +285,11 @@
       }
     }
   }
-  #lluvia {
-    b {
-      color: var(--secundario);
-    }
-  }
+  // #lluvia {
+  //   b {
+  //     color: var(--secundario);
+  //   }
+  // }
   .conte-cartas {
     display: flex;
     gap: $margen-min;
@@ -321,7 +320,7 @@
       text-align: center;
       font-family: $garigol, serif;
       font-size: clamp(1.5rem, 2vw, 3rem);
-      color: var(--acento);
+      color: var(--secundario);
     }
     .bande {
       background: rgb(254, 241, 241);
@@ -426,9 +425,7 @@
       margin-bottom: 1.5rem;
       color: var(--primario);
 
-      b {
-        color: var(--acento);
-      }
+    
     }
   }
 
@@ -499,8 +496,12 @@
         }
       }
     }
-    h3 {
-      margin-bottom: $margen-cel;
+    h2 {
+    font-size: clamp(1.8rem, 2.5vw, 3.5rem);
+    }
+    h3{
+      font-family: $txt, serif;
+      font-size: clamp(1.5rem, 2vw, 3rem);
     }
     #pase {
       z-index: 10;
@@ -619,7 +620,7 @@
   }
   //componente frase animada
   .frase {
-    color: var(--acento);
+    color: var(--secundario);
     font-family: $garigol, serif;
     font-size: clamp(1.8rem, 5vw, 7vw);
     text-align: center;
@@ -627,6 +628,7 @@
     padding: $margen $margen-min;
     border-top: 1px solid var(--acento);
     border-bottom: 1px solid var(--acento);
+    line-height: 1.1em;
   }
 
   // Componente Titulos

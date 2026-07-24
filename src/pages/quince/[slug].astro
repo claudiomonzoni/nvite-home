@@ -1,5 +1,6 @@
 ---
 import matter from "gray-matter";
+import { db, Invitados, and, eq } from "astro:db";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/quince/Layout.astro";
 
@@ -24,6 +25,7 @@ import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import Padres from "../../components/quince/Padres.astro";
 import Footer from "../../components/quince/Footer.astro";
 import Padrinos from "../../components/comunes/Padrinos.astro";
+import Qr from "../../components/comunes/qr.astro";
 
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
@@ -163,6 +165,42 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
 
 const lang = (quince.data.idioma as keyof typeof ui) || "es";
 const t = useTranslations(lang);
+
+//qr
+const idParam = Astro.url.searchParams.get("id");
+const uidParam = Astro.url.searchParams.get("uid");
+
+let dbInvitado = null;
+if (idParam && uidParam) {
+  try {
+    const response = await db
+      .select()
+      .from(Invitados)
+      .where(
+        and(
+          eq(Invitados.uuid, idParam),
+          eq(Invitados.usuarioId, Number(uidParam))
+        )
+      );
+    if (response && response.length > 0) {
+      dbInvitado = response[0];
+    }
+  } catch (e) {
+    console.error("Error fetching invitado in Astro:", e);
+  }
+}
+
+const qrNombre = dbInvitado
+  ? dbInvitado.nombre
+  : String(fm?.nombreInvitacion ?? slug ?? "Invitación");
+
+const qrPases = dbInvitado
+  ? String(dbInvitado.pases ?? "")
+  : String(fm?.pases ?? fm?.pasesInvitados ?? fm?.pasesAsignados ?? "");
+
+const qrMesa = dbInvitado
+  ? String(dbInvitado.mesa ?? "")
+  : String(fm?.mesaAsignada ?? fm?.mesa ?? fm?.mesaAsignadaInvitado ?? "");
 ---
 
 <Layout
@@ -184,6 +222,7 @@ const t = useTranslations(lang);
                 cover={quince.data.cover}
                 client:load
                 lang={lang}
+                initialInvitado={dbInvitado as any}
                 labels={{
                   loading: t("hero.loadingQuince"),
                   tap: t("hero.tap"),
@@ -202,6 +241,7 @@ const t = useTranslations(lang);
                 cover={quince.data.cover}
                 client:load
                 lang={lang}
+                initialInvitado={dbInvitado as any}
                 labels={{
                   loading: t("hero.loadingQuince"),
                   tap: t("hero.tap"),
@@ -221,6 +261,7 @@ const t = useTranslations(lang);
                 cover={quince.data.cover}
                 client:load
                 lang={lang}
+                initialInvitado={dbInvitado as any}
                 labels={{
                   loading: t("hero.loadingQuince"),
                   tap: t("hero.tap"),
@@ -252,6 +293,18 @@ const t = useTranslations(lang);
     )
   }
 
+ {
+  quince.data.version === "Lux" && (
+    <Qr
+      nombreInvitacion={qrNombre}
+      pases={qrPases}
+      mesa={qrMesa}
+      noAsiste={dbInvitado?.noAsiste}
+      title="Datos de la invitación"
+      subtitle="Muestra tus pases y mesa asignada"
+    />
+  )
+}
   <section class="grid contenido">
     <Frase frase={quince.data.frase_amor} />
   </section>
@@ -414,6 +467,7 @@ const t = useTranslations(lang);
       <section class="grid pantalla">
         <ProgresoInvitados
           email={quince.data.email ?? "nvitacionluxquince@nvitaciones.com"}
+          usuarioId={dbInvitado?.usuarioId}
           porcentajeMostrarInvitados={
             (quince.data.progresoPorcentaje ?? 20) as number
           }
@@ -437,6 +491,7 @@ const t = useTranslations(lang);
               tipo="quince"
               themeName={quince.data.theme.name}
               client:only="react"
+              initialInvitado={dbInvitado as any}
               labels={{
                 title: t("invitation.rsvp"),
                 subtitle: t("invitation.rsvp.daysBefore"),
