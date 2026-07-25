@@ -150,34 +150,40 @@ import Btn from "./Btn.astro";
         <h2>Nvitación Lux</h2>
 
         <ul id="lux">
-          <h3>Todo lo que incluye la Clásica, más:</h3>
+          <h3>Todo lo que incluye la Clásica, además:</h3>
 
-          <li>
-            <b>Gestor de mesas</b>
+          <li class="resalta">
+            <h4>
+              <Icon name="mdi:table" size={25} /> Gestor
+              de mesas
+            </h4>
             <p>
               Organiza a tus invitados y asigna sus mesas fácilmente. Exporta
               todo en Excel para compartirlo con tu equipo.
             </p>
           </li>
 
-          <li>
-            <b>Itinerario</b>
+          <li class="resalta">
+            <h4><Icon name="mdi:calendar" size={25} /> Itinerario</h4>
             <p>
               Haz que tus invitados sepan qué sigue y disfruten cada momento de
               tu celebración.
             </p>
           </li>
 
-          <li>
-            <b>Porcentaje  de confirmados</b>
+          <li class="resalta">
+            <h4>
+              <Icon name="mdi:account-multiple-check-outline" size={25} /> Porcentaje
+              de confirmados
+            </h4>
             <p>
               Muestra a tus invitados cuántos ya confirmaron y dales ese último
               empujón para decir: ¡Sí, ahí estaremos!
             </p>
           </li>
 
-          <li>
-            <b>QR de entrada</b>
+          <li class="resalta">
+            <h4><Icon name="mdi:qrcode" size={25} /> QR de entrada</h4>
             <p>
               Agiliza el acceso y controla tus pases. Escanea el QR para saber
               quién llegó y en qué mesa está.
@@ -260,10 +266,11 @@ import Btn from "./Btn.astro";
       font-weight: 600;
       color: $primario;
     }
-    @include cel{
+    @include cel {
       margin-top: 0;
       text-align: left;
       padding-left: $margen-cel;
+      padding-top: $margen-cel;
     }
   }
   h2 {
@@ -271,6 +278,23 @@ import Btn from "./Btn.astro";
     font-weight: 600;
     font-size: clamp(2rem, 1.3vw, 2.2vw);
     position: relative;
+  }
+  h4{
+        color: rgba($gris, .8);
+        font-weight: 600;
+  }
+  .resalta {
+    font-size: clamp(1rem, 1vw, 1rem);
+    list-style: none;
+    margin-bottom: 1rem;
+
+    h4 {
+      font-weight: 600;
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+      padding-bottom: .2rem;
+    }
   }
   small {
     color: $gris;
@@ -380,7 +404,7 @@ import Btn from "./Btn.astro";
       text-align: center;
       padding: 10px $margen-min;
       margin-bottom: $margen-min;
-      @include cel{
+      @include cel {
         text-align: left;
       }
     }

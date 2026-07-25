@@ -81,6 +81,7 @@ type NvitacionInfo = {
 import BannerGeneral from "../../components/BannerGeneral.astro";
 import Caracteristicas from "../../components/Caracteristicas.astro";
 import Faq from "../../components/Faq.astro";
+import MesasHome from "../../components/MesasHome.astro";
 
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -570,7 +571,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       </div>
     </div>
   </div>
-
+ <MesasHome />
   <div class="grid contenido">
     <BannerGeneral
       encabezado="Recibes con tu <b>Nvitación</b>"
