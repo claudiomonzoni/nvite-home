@@ -36,6 +36,7 @@ const l = {
 };
 
 let totalPases = 0;
+let totalPasesAsistentes = 0;
 let pasesConfirmados = 0;
 let porcentajeConfirmados = 0;
 let mostrarComponente = false;
@@ -72,6 +73,14 @@ try {
         return sum + pases;
     }, 0);
 
+    // Para el porcentaje: solo pases de quienes ASISTEN
+    // Los noAsiste se excluyen del denominador (no son pases pendientes de confirmar)
+    totalPasesAsistentes = invitados.reduce((sum, invitado) => {
+        const pases = parseInt(invitado.pases) || 0;
+        if (invitado.noAsiste) return sum;
+        return sum + pases;
+    }, 0);
+
     pasesConfirmados = invitados.reduce((sum, invitado) => {
         if (invitado.confirmado && !invitado.noAsiste) {
             const pases = parseInt(invitado.pases) || 0;
@@ -80,8 +89,8 @@ try {
         return sum;
     }, 0);
 
-    porcentajeConfirmados = totalPases > 0
-        ? Math.round((pasesConfirmados / totalPases) * 100)
+    porcentajeConfirmados = totalPasesAsistentes > 0
+        ? Math.round((pasesConfirmados / totalPasesAsistentes) * 100)
         : 0;
 
     mostrarComponente = mostrarSiempre || porcentajeConfirmados >= porcentajeMostrarInvitados;
@@ -94,7 +103,7 @@ try {
     <div id="progreso-invitados" class="progreso-invitados">
         <div class="contenido">
             <h2 id="frase-titulo">
-                {porcentajeConfirmados === 100 ? l.allReady : frase}
+                {porcentajeConfirmados >= 94 ? l.allReady : frase}
             </h2>
             <p class="porcentaje">
                 <span class="numero">{porcentajeConfirmados}%</span>
@@ -105,9 +114,9 @@ try {
                     <div class="barra" style={`--progress: ${porcentajeConfirmados}%`}></div>
                 </div>
                 <p class="detalles">
-                    <span class="confirmados">{pasesConfirmados}</span>
+                    <span class="confirmados"> {pasesConfirmados} </span>
                     {l.of}
-                    <span class="total">{totalPases}</span>
+                    <span class="total"> {totalPases} </span>
                     {l.passesConfirmed}
                 </p>
             </div>

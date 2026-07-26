@@ -157,14 +157,14 @@ top: 0;
   pointer-events: none;
 }
 .asistira {
-  background-color: rgba(var(--primario), 0.1);
+  background-color: rgba(var(--primario-rgb), 0.1);
   .slider {
     background-color: var(--acento) !important;
   }
 }
 
 .noAsistira {
-  background-color: rgba(var(--gris), 0.2);
+  background-color: rgba(var(--gris-rgb), 0.2);
   .slider {
     background-color: var(--primario) !important;
   }

@@ -1,10 +1,18 @@
 @mixin invierno-quince() {
   --primario: #4e415f;
+  --primario-rgb: 78, 65, 95;
   --secundario: #597ca6;
+  --secundario-rgb: 89, 124, 166;
   --terciario: #d3cac2;
+  --terciario-rgb: 211, 202, 194;
   --acento: #8f39bb;
+  --acento-rgb: 143, 57, 187;
   --gris: #748080;
+  --gris-rgb: 116, 128, 128;
   --fondo: #dce9e9;
+  --fondo-rgb: 220, 233, 233;
   --sombra: rgba(122, 132, 140, 0.5);
+  --sombra-rgb: 122, 132, 140;
   --fondoBurn: #fef1f1;
+  --fondoBurn-rgb: 254, 241, 241;
   }

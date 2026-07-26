@@ -110,6 +110,7 @@ export const ui = {
     'hero.passes': 'No. de pases',
 
     // Progreso Invitados
+    'progress.heading': 'Confirma tu asistencia, ¡te queremos ver en la fiesta!',
     'progress.confirmed': 'de invitados han confirmado',
     'progress.passesConfirmed': 'pases confirmados',
     'progress.of': 'de',
@@ -248,6 +249,7 @@ export const ui = {
     'hero.passes': 'No. of passes',
 
     // Progreso Invitados
+    'progress.heading': 'Confirm your attendance, we want to see you at the party!',
     'progress.confirmed': 'of guests have confirmed',
     'progress.passesConfirmed': 'passes confirmed',
     'progress.of': 'of',

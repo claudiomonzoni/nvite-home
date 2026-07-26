@@ -125,9 +125,9 @@
 
   #BaseItinerario {
     h2 {
-      color: var(--acento);
+      color: var(--primario)!important;
     }
-    background: var(--primario);
+    background: rgba(var(--secundario-rgb), 0.2);
     position: relative;
     z-index: -1;
     overflow: hidden;
@@ -140,12 +140,14 @@
       list-style: none;
 
       h4 {
-        color: var(--acento);
-        font-family: $garigol, serif;
+        color: var(--primario);
+        font-family: var(--font-txt), serif;
         line-height: 2.2rem;
+        font-size: clamp(1.7rem, 2vw, 3rem);
       }
       p {
-        color: white;
+        color: var(--secundario);
+        font-size: clamp(1.3rem, 1.7vw, 2rem);
         margin-bottom: none;
       }
       li {
@@ -162,14 +164,14 @@
       height: 100%;
       background: url("/bodas/corona-flores-negro.png")
         no-repeat;
-      background-size: 40%;
+      background-size: 70%;
       background-position: center 110%;
-      mix-blend-mode: multiply;
-      opacity: 0.2;
+      mix-blend-mode:exclusion;
+      opacity: 0.1;
       transform: rotate(180deg);
       @include cel {
-        background-position: center 105%;
-        background-size: 120%;
+        background-position: 0 105%;
+        background-size: 170%;
         padding-top: $margen;
       }
     }
@@ -586,9 +588,16 @@
     color: var(--primario);
   }
 
+  #frase-titulo{
+    font-size: 4.2rem;
+    color: var(--primario);
+  }
   .detalles {
     font-size: 1.1rem;
     color: var(--primario);
+  }
+  .detalles span {
+    margin: 0 0.3rem;
   }
 
   .detalles .confirmados,
@@ -620,15 +629,18 @@
   }
   //componente frase animada
   .frase {
-    color: var(--secundario);
-    font-family: $garigol, serif;
+    color: var(--primario);
     font-size: clamp(1.8rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-min $margen-min 0 $margen-min;
     padding: $margen $margen-min;
-    border-top: 1px solid var(--acento);
-    border-bottom: 1px solid var(--acento);
-    line-height: 1.1em;
+    border-top: 1px solid var(--secundario);
+    border-bottom: 1px solid var(--secundario);
+    line-height: 1em;
+    .word{
+      font-family: var(--font-heading), serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+    }
   }
 
   // Componente Titulos

@@ -124,6 +124,7 @@ const boda = {
       lat: fm?.recepcion?.lat ?? "",
       lng: fm?.recepcion?.lng ?? "",
     },
+    
     itinerario: Array.isArray(fm?.itinerario) ? fm.itinerario : [],
     consideraciones: Array.isArray(fm?.consideraciones)
       ? fm.consideraciones
@@ -138,6 +139,12 @@ const boda = {
     beneficiario: fm.beneficiario ?? "",
     banco: fm.banco ?? "",
     cuenta: fm.cuenta ?? "",
+    progresoEmail: fm.progresoEmail ?? "",
+    progresoPorcentaje:
+      typeof fm.progresoPorcentaje === "number" ? fm.progresoPorcentaje : 20,
+    progresoFrase: fm.progresoFrase ?? "",
+    progresoAllReady: fm.progresoAllReady ?? "",
+    progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
     paleta: fm.paleta ?? "base",
     theme: fm.theme ?? { name: "base" },
     content: parsed.content ?? "",
@@ -285,7 +292,7 @@ const qrMesa = dbInvitado
   )
 }
   {
-    boda.data.version === "Lux" && boda.data.audioMusica && (
+    boda.data.audioMusica && (
       <section class="grid contenido">
       <AudioPlayer
         src={boda.data.audioMusica}
@@ -435,10 +442,10 @@ const qrMesa = dbInvitado
   }
 
   {
-    boda.data.itinerario.length > 0 && (
+    boda.data.itinerario.length > 0 && boda.data.version === "Lux" && (
       <section class="grid pantalla" id="BaseItinerario">
-        <Encabezados texto={t("invitation.itinerary")} />
-        <Itinerario listado={boda.data.itinerario} />
+        
+        <Itinerario listado={boda.data.itinerario} titulo={t("invitation.itinerary")} />
       </section>
     )
   }
@@ -447,7 +454,7 @@ const qrMesa = dbInvitado
     boda.data.version === "Lux" && (
       <section class="grid contenido">
         <ProgresoInvitados
-          frase={boda.data.progresoFrase || t("invitation.rsvp.daysBefore")}
+          frase={boda.data.progresoFrase || t("progress.heading")}
           porcentajeMostrarInvitados={20}
           mostrarSiempre={true}
           email={boda.data.email}
@@ -457,7 +464,7 @@ const qrMesa = dbInvitado
             passesConfirmed: t("progress.passesConfirmed"),
             of: t("progress.of"),
             btnConfirm: t("progress.btnConfirm"),
-            allReady: t("progress.allReady"),
+            allReady: boda.data.progresoAllReady || t("progress.allReady"),
           }}
         />
       </section>

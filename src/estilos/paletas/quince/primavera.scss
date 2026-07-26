@@ -1,10 +1,18 @@
 @mixin primavera-quince() {
-    --primario: #485369;       // Azul cielo primaveral
-    --secundario: #ac74af;     // Rosa durazno suave
-    --terciario: #f8f9fa;      // Blanco luminoso
-    --acento: #d46f5b;         // Coral floral
-    --gris: #fff;           // Gris perla
-    --fondo: #fff9f5;          // Blanco melocotón
-    --sombra: rgba(194, 213, 219, 0.4); // Sombra azul cielo
-    --fondoBurn: #fdf6f0;      // Fondo durazno claro
+    --primario: #485369;
+    --primario-rgb: 72, 83, 105;
+    --secundario: #ac74af;
+    --secundario-rgb: 172, 116, 175;
+    --terciario: #f8f9fa;
+    --terciario-rgb: 248, 249, 250;
+    --acento: #d46f5b;
+    --acento-rgb: 212, 111, 91;
+    --gris: #fff;
+    --gris-rgb: 255, 255, 255;
+    --fondo: #fff9f5;
+    --fondo-rgb: 255, 249, 245;
+    --sombra: rgba(194, 213, 219, 0.4);
+    --sombra-rgb: 194, 213, 219;
+    --fondoBurn: #fdf6f0;
+    --fondoBurn-rgb: 253, 246, 240;
 }

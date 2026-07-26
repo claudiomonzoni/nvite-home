@@ -1,9 +1,16 @@
 @mixin verano-quince() {
   --primario: rgb(120, 96, 73);
+  --primario-rgb: 120, 96, 73;
   --secundario: rgb(172, 99, 68);
+  --secundario-rgb: 172, 99, 68;
   --terciario: rgb(255, 250, 240);
+  --terciario-rgb: 255, 250, 240;
   --acento: rgb(254, 96, 91);
+  --acento-rgb: 254, 96, 91;
   --gris: rgb(127, 140, 141);
+  --gris-rgb: 127, 140, 141;
   --sombra: rgba(154, 90, 78, 0.643);
+  --sombra-rgb: 154, 90, 78;
   --fondoBurn: #fef8e7;
+  --fondoBurn-rgb: 254, 248, 231;
 }

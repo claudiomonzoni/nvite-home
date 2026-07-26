@@ -165,14 +165,14 @@ svg {
   pointer-events: none;
 }
 .asistira {
-  background-color: rgba(var(--primario), 0.1);
+  background-color: rgba(var(--primario-rgb), 0.1);
   .slider {
     background-color: var(--secundario) !important;
   }
 }
 
 .noAsistira {
-  background-color: rgba(var(--gris), 0.2);
+  background-color: rgba(var(--gris-rgb), 0.2);
   .slider {
     background-color: var(--primario) !important;
   }
@@ -202,7 +202,7 @@ span {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(var(--acento), 0.8);
+  background-color: rgba(var(--acento-rgb), 0.8);
   display: flex;
   justify-content: center;
   align-items: center;

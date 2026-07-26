@@ -127,10 +127,11 @@ const quince = {
     beneficiario: fm.beneficiario ?? "",
     banco: fm.banco ?? "",
     cuenta: fm.cuenta ?? "",
+    progresoEmail: fm.progresoEmail ?? "",
     progresoPorcentaje:
       typeof fm.progresoPorcentaje === "number" ? fm.progresoPorcentaje : 20,
-    progresoFrase:
-      fm.progresoFrase ?? "¡Ya casi completamos la lista de invitados!",
+    progresoFrase: fm.progresoFrase ?? "",
+    progresoAllReady: fm.progresoAllReady ?? "",
     progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
     consideraciones: Array.isArray(fm?.consideraciones)
       ? fm.consideraciones
@@ -278,7 +279,7 @@ const qrMesa = dbInvitado
   </section>
 
   {
-    quince.data.version === "Lux" && quince.data.audioMusica && (
+      quince.data.audioMusica && (
       <AudioPlayer
         src={quince.data.audioMusica}
         labels={{
@@ -430,7 +431,7 @@ const qrMesa = dbInvitado
   }
 
   {
-    quince.data.version === "Lux" && (
+    quince.data.itinerario.length > 0 && quince.data.version === "Lux" && (
       <Itinerario listado={quince.data.itinerario} />
     )
   }
@@ -471,8 +472,11 @@ const qrMesa = dbInvitado
           porcentajeMostrarInvitados={
             (quince.data.progresoPorcentaje ?? 20) as number
           }
-          frase={quince.data.progresoFrase ?? t("invitation.rsvp.daysBefore")}
+          frase={quince.data.progresoFrase ?? t("progress.heading")}
           mostrarSiempre={quince.data.progresoMostrarSiempre ?? true}
+          labels={{
+            allReady: quince.data.progresoAllReady ?? t("progress.allReady"),
+          }}
         />
       </section>
     )
