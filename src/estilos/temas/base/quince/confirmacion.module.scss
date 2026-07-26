@@ -8,17 +8,22 @@ h2 {
 }
 .confirmacion {
   margin-top: $margen;
-  background: url("/quince/confirma-fondo-izq.webp"),
+  background:
+    url("/quince/confirma-fondo-izq.webp"),
     url("/quince/confirma-fondo-der.webp");
   background-repeat: no-repeat, no-repeat;
-  background-position: left top, right bottom;
+  background-position:
+    left top,
+    right bottom;
   background-size: contain;
   background-blend-mode: color-burn, color-burn;
   border-radius: $radio;
   transition: all 0.3s ease;
   @extend .sombra;
   @include cel {
-    background-position: -30% top, right bottom;
+    background-position:
+      -30% top,
+      right bottom;
     background-size: 35%, 80%;
     background-blend-mode: color-burn, normal;
     background-blend-mode: overlay, color-burn;
@@ -189,12 +194,14 @@ span {
 }
 
 .error {
-  background-color: var(--gris);
-  color: #fff;
+  background-color: var(--terciario);
+  color: var(--primario);
   text-align: center;
   padding: $margen-cel;
   margin-bottom: 2rem;
-  font-family: $txt;
+  font-size: 1.2rem;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
 }
 
 .modal {
@@ -222,7 +229,7 @@ span {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  
+
   p {
     flex: 1 0 100%;
     font-size: 1.2rem;
@@ -238,7 +245,7 @@ span {
     border-radius: $radio;
     cursor: pointer;
     margin-top: 1rem;
-    padding: 0.5rem ;
+    padding: 0.5rem;
     width: 50%;
   }
 }

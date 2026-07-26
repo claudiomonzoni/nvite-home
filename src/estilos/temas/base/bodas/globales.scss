@@ -320,9 +320,9 @@
   #padres {
     h2 {
       text-align: center;
-      font-family: $garigol, serif;
+       font-family: var(--font-heading), serif;
       font-size: clamp(1.5rem, 2vw, 3rem);
-      color: var(--secundario);
+      color: var(--primario);
     }
     .bande {
       background: rgb(254, 241, 241);
@@ -862,7 +862,11 @@
         background-size: contain;
         mix-blend-mode: color-burn;
         pointer-events: none;
+        opacity: .3;
         z-index: 0;
+        @include cel {
+          background-size:300%;
+        }
       }
       color: white;
       text-align: center;
@@ -874,14 +878,14 @@
         border-bottom: 1px solid white;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
-        font-size: clamp(4rem, 1.8vw, 3rem);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       h3 {
         color: white;
         padding-bottom: 0 !important;
         margin: 0;
-        font-size: clamp(3rem, 1.8vw, 3rem);
-        text-shadow: 2px 2px 4px #000000;
+        font-size: clamp(2rem, 1.8vw, 3rem);
+        text-shadow: 2px 2px 4px var(--primario);
       }
       svg {
         max-width: 2.5rem;
@@ -894,7 +898,7 @@
     #lluvia {
       h3 {
         color: var(--primario);
-        font-size: clamp(4rem, 1.8vw, 3rem);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       background: url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
@@ -915,15 +919,15 @@
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: var(--acento);
+      background: rgba(var(--acento-rgb), .4);
       position: relative;
       overflow: hidden;
-
+      
       > * {
         position: relative;
         z-index: 1;
       }
-
+      
       &::before {
         content: "";
         position: absolute;
@@ -934,20 +938,24 @@
         background-size: 40%;
         mix-blend-mode: color-burn;
         pointer-events: none;
+        opacity: .2;
         z-index: 0;
+        @include cel {
+          background-size:300%;
+        }
       }
       color: var(--terciario);
       @extend .sombra;
       h3 {
-        color: white;
-        font-size: clamp(3.2rem, 1.8vw, 3rem);
-        text-shadow: 2px 2px 4px #000000;
+        color: var(--primario);
+        text-shadow: 2px 2px 4px var(--primario);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       b {
-        color: white;
+        color: var(--primario);
       }
       ul {
-        color: white;
+        color: var(--primario);
         display: flex;
         flex-direction: column;
         @include cel {
