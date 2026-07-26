@@ -1,11 +1,19 @@
 @mixin base() {
-    --primario: #262d44;     // Azul marino más elegante
-    --secundario: #e5989b;   // Rosa suave y romántico
-    --terciario: #f7ede2;    // Crema cálido
-    --acento: #af7e61;       // Dorado suave
-    --gris: #f5ebe0;         // Gris cálido
-    --fondo: #faf9f9;        // Blanco roto
-    --sombra: rgba(211, 196, 185, 0.5);  // Sombra más suave
-    --fondoBurn: #fff1e6;    // Fondo cálido
+    --primario: #262d44;
+    --primario-rgb: 38, 45, 68;
+    --secundario: #e5989b;
+    --secundario-rgb: 229, 152, 155;
+    --terciario: #f7ede2;
+    --terciario-rgb: 247, 237, 226;
+    --acento: #af7e61;
+    --acento-rgb: 175, 126, 97;
+    --gris: #f5ebe0;
+    --gris-rgb: 245, 235, 224;
+    --fondo: #faf9f9;
+    --fondo-rgb: 250, 249, 249;
+    --sombra: rgba(211, 196, 185, 0.5);
+    --sombra-rgb: 211, 196, 185;
+    --fondoBurn: #fff1e6;
+    --fondoBurn-rgb: 255, 241, 230;
   }
 

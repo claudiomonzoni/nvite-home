@@ -452,20 +452,7 @@ mark {
   }
 }
 
-.azulBG {
-  border-radius: $radio;
-  background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-    linear-gradient(43deg, $fondoGlobal 30%, $terciario 100%) no-repeat;
-  background-position: center right, top left;
-  background-size: 50%, 100%;
-  margin-bottom: $margen-min;
-  @include cel {
-    background: url("/fondo-nvite-caracteristicas-banner.png") no-repeat,
-      linear-gradient(0deg, $fondoGlobal 0%, $terciario 100%) no-repeat;
-    background-position: center bottom;
-    background-size: 120%;
-  }
-}
+
 .texto-izq {
   text-align: left;
 }
@@ -525,7 +512,7 @@ mark {
     border: none;
     background: white;
     border-radius: 10px;
-    @extend .sombra;
+   // @extend .sombra;
   }
 }
 
@@ -667,7 +654,7 @@ input::placeholder {
   h2 {
     color: $primario;
     margin-bottom: $margen-cel;
-    font-weight: 200;
+    font-weight: 600;
   }
   @include cel {
     padding: $margen $margen-cel 0;

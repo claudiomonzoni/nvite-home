@@ -81,6 +81,7 @@ type NvitacionInfo = {
 import BannerGeneral from "../../components/BannerGeneral.astro";
 import Caracteristicas from "../../components/Caracteristicas.astro";
 import Faq from "../../components/Faq.astro";
+import MesasHome from "../../components/MesasHome.astro";
 
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -362,7 +363,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             </div>
 
             <p class="price-anchor-detail">
-              ≈ ${costPerGuest} por invitado para 100 personas · Sin límite de envíos
+              <b>Equivale a ${costPerGuest}MXN</b> <small>(cálculo x100 personas).</small> ¡Entre más invitados tengas, más barato porque tus envíos son ilimitados!
             </p>
 
             <Btn
@@ -383,8 +384,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               Fecha estimada de entrega: {calculateDeliveryDate()}
             </p>
             <p class="price-vs">
-              Imprimir 100 invitaciones: $3,200 MXN — sin música, sin galería de
-              fotos, sin confirmación automática.
+              Imprimir 100 invitaciones: $2,600 MXN — sin música, sin galería de
+              fotos, sin confirmación automática, pero con estrés y mucho tiempo perdido.
             </p>
           </div>
 
@@ -557,6 +558,9 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               <li>
                 <b>Una invitación que</b> guardan en su teléfono — no en un cajón
               </li>
+              <li class="enfasis">
+                <b>Y para tí</b>, un panel privado para organizar a tus invitados y las mesas de tu evento, lo que te ahorrará horas de trabajo y estrés.
+              </li>
             </ul>
           </div>
 
@@ -567,7 +571,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       </div>
     </div>
   </div>
-
+ <MesasHome />
   <div class="grid contenido">
     <BannerGeneral
       encabezado="Recibes con tu <b>Nvitación</b>"
@@ -579,7 +583,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
    <b>Panel de invitados</b>, controla tus invitaciones.
     </li>
     <li>
-    Tu invitación disponible <b> hasta 1 semana</b> después del evento.
+    <b>Tu invitación web te acompaña</b> durante todo el proceso y permanece disponible hasta la semana posterior al evento.
     </li>
     <li><mark>Envíos ilimitados.</mark></li>
        
@@ -1030,6 +1034,14 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         color: $acento;
         font-size: 10px;
         top: 2px;
+      }
+    }
+    .enfasis{
+      border: solid rgba($secundario, .3);
+      border-radius: $radio;
+      padding: $margen-min;
+      &::before {
+        display: none;
       }
     }
   }

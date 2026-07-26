@@ -118,17 +118,16 @@
     margin-bottom: 0rem;
   }
   b {
-    color: var(--acento);
+    color: var(--secundario);
     font-style: normal;
-    font-family: var(--font-heading), serif;
     font-weight: 300;
   }
 
   #BaseItinerario {
     h2 {
-      color: var(--acento);
+      color: var(--primario)!important;
     }
-    background: var(--primario);
+    background: rgba(var(--secundario-rgb), 0.2);
     position: relative;
     z-index: -1;
     overflow: hidden;
@@ -141,12 +140,14 @@
       list-style: none;
 
       h4 {
-        color: var(--acento);
-        font-family: $garigol, serif;
+        color: var(--primario);
+        font-family: var(--font-txt), serif;
         line-height: 2.2rem;
+        font-size: clamp(1.7rem, 2vw, 3rem);
       }
       p {
-        color: white;
+        color: var(--secundario);
+        font-size: clamp(1.3rem, 1.7vw, 2rem);
         margin-bottom: none;
       }
       li {
@@ -163,14 +164,14 @@
       height: 100%;
       background: url("/bodas/corona-flores-negro.png")
         no-repeat;
-      background-size: 40%;
+      background-size: 70%;
       background-position: center 110%;
-      mix-blend-mode: multiply;
-      opacity: 0.2;
+      mix-blend-mode:exclusion;
+      opacity: 0.1;
       transform: rotate(180deg);
       @include cel {
-        background-position: center 105%;
-        background-size: 120%;
+        background-position: 0 105%;
+        background-size: 170%;
         padding-top: $margen;
       }
     }
@@ -286,11 +287,11 @@
       }
     }
   }
-  #lluvia {
-    b {
-      color: var(--secundario);
-    }
-  }
+  // #lluvia {
+  //   b {
+  //     color: var(--secundario);
+  //   }
+  // }
   .conte-cartas {
     display: flex;
     gap: $margen-min;
@@ -319,9 +320,9 @@
   #padres {
     h2 {
       text-align: center;
-      font-family: $garigol, serif;
+       font-family: var(--font-heading), serif;
       font-size: clamp(1.5rem, 2vw, 3rem);
-      color: var(--acento);
+      color: var(--primario);
     }
     .bande {
       background: rgb(254, 241, 241);
@@ -426,9 +427,7 @@
       margin-bottom: 1.5rem;
       color: var(--primario);
 
-      b {
-        color: var(--acento);
-      }
+    
     }
   }
 
@@ -499,8 +498,12 @@
         }
       }
     }
-    h3 {
-      margin-bottom: $margen-cel;
+    h2 {
+    font-size: clamp(1.8rem, 2.5vw, 3.5rem);
+    }
+    h3{
+      font-family: $txt, serif;
+      font-size: clamp(1.5rem, 2vw, 3rem);
     }
     #pase {
       z-index: 10;
@@ -585,9 +588,16 @@
     color: var(--primario);
   }
 
+  #frase-titulo{
+    font-size: 4.2rem;
+    color: var(--primario);
+  }
   .detalles {
     font-size: 1.1rem;
     color: var(--primario);
+  }
+  .detalles span {
+    margin: 0 0.3rem;
   }
 
   .detalles .confirmados,
@@ -619,14 +629,18 @@
   }
   //componente frase animada
   .frase {
-    color: var(--acento);
-    font-family: $garigol, serif;
+    color: var(--primario);
     font-size: clamp(1.8rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-min $margen-min 0 $margen-min;
     padding: $margen $margen-min;
-    border-top: 1px solid var(--acento);
-    border-bottom: 1px solid var(--acento);
+    border-top: 1px solid var(--secundario);
+    border-bottom: 1px solid var(--secundario);
+    line-height: 1em;
+    .word{
+      font-family: var(--font-heading), serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+    }
   }
 
   // Componente Titulos
@@ -848,7 +862,11 @@
         background-size: contain;
         mix-blend-mode: color-burn;
         pointer-events: none;
+        opacity: .3;
         z-index: 0;
+        @include cel {
+          background-size:300%;
+        }
       }
       color: white;
       text-align: center;
@@ -860,14 +878,14 @@
         border-bottom: 1px solid white;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
-        font-size: clamp(4rem, 1.8vw, 3rem);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       h3 {
         color: white;
         padding-bottom: 0 !important;
         margin: 0;
-        font-size: clamp(3rem, 1.8vw, 3rem);
-        text-shadow: 2px 2px 4px #000000;
+        font-size: clamp(2rem, 1.8vw, 3rem);
+        text-shadow: 2px 2px 4px var(--primario);
       }
       svg {
         max-width: 2.5rem;
@@ -880,7 +898,7 @@
     #lluvia {
       h3 {
         color: var(--primario);
-        font-size: clamp(4rem, 1.8vw, 3rem);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       background: url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
@@ -901,15 +919,15 @@
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: var(--acento);
+      background: rgba(var(--acento-rgb), .4);
       position: relative;
       overflow: hidden;
-
+      
       > * {
         position: relative;
         z-index: 1;
       }
-
+      
       &::before {
         content: "";
         position: absolute;
@@ -920,20 +938,24 @@
         background-size: 40%;
         mix-blend-mode: color-burn;
         pointer-events: none;
+        opacity: .2;
         z-index: 0;
+        @include cel {
+          background-size:300%;
+        }
       }
       color: var(--terciario);
       @extend .sombra;
       h3 {
-        color: white;
-        font-size: clamp(3.2rem, 1.8vw, 3rem);
-        text-shadow: 2px 2px 4px #000000;
+        color: var(--primario);
+        text-shadow: 2px 2px 4px var(--primario);
+        font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
       b {
-        color: white;
+        color: var(--primario);
       }
       ul {
-        color: white;
+        color: var(--primario);
         display: flex;
         flex-direction: column;
         @include cel {

@@ -1,11 +1,16 @@
 ---
+import Encabezados from './Encabezados.astro';
+
 interface Props {
   listado: Array<any>;
+    titulo: string;
 }
-const { listado } = Astro.props;
+const { listado, titulo } = Astro.props;
+
 ---
 
 <section class="grid contenido">
+  <Encabezados texto={titulo} />
   <ol>
     {
       listado.map((item, index) => (
@@ -27,21 +32,19 @@ const { listado } = Astro.props;
 
   window.addEventListener("hero:ready", () => {
     console.log("hero:ready itinerario");
-    let eventoItinerario = gsap.utils.toArray("ol li");
+    const eventoItinerario = gsap.utils.toArray("ol li") as HTMLElement[];
     gsap.registerPlugin(ScrollTrigger);
 
-    eventoItinerario.map((evento: HTMLElement) => {
-      let mm = gsap.matchMedia();
+    eventoItinerario.forEach((evento) => {
+      const mm = gsap.matchMedia();
 
       mm.add("(min-width: 800px)", () => {
-        // desktop setup code here...
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: evento as HTMLElement,
+            trigger: evento,
             start: "top 100%",
             end: "bottom 70%",
             scrub: true,
-            // markers: true,
           },
         });
         tl.from(evento.children, {
@@ -56,7 +59,7 @@ const { listado } = Astro.props;
       mm.add("(max-width: 799px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: evento as HTMLElement,
+            trigger: evento,
             start: "top 80%",
             end: "top 50%",
             scrub: true,

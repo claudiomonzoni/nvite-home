@@ -1,10 +1,18 @@
 @mixin verano() {
     --primario: #355070;
+    --primario-rgb: 53, 80, 112;
     --secundario: #6d597a;
+    --secundario-rgb: 109, 89, 122;
     --terciario: #b56576;
+    --terciario-rgb: 181, 101, 118;
     --acento: #e56b6f;
+    --acento-rgb: 229, 107, 111;
     --gris: #e0b1cb;
+    --gris-rgb: 224, 177, 203;
     --fondo: #f7ede2;
+    --fondo-rgb: 247, 237, 226;
     --sombra: rgba(149, 115, 115, 0.317);
+    --sombra-rgb: 149, 115, 115;
     --fondoBurn: #f9ecec;
+    --fondoBurn-rgb: 249, 236, 236;
   }

@@ -30,12 +30,20 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     }
 
     // Preparar campos autorizados para actualizar (solo confirmación)
-    const updateFields = {
+    const guest = guests[0];
+
+    // Si pasesOriginales es null (registro anterior al feature), lo inicializamos
+    // con el valor actual de pases ANTES de que lo sobreescribamos con los confirmados.
+    const pasesOriginalesActual = guest.pasesOriginales ?? guest.pases;
+
+    const updateFields: Record<string, any> = {
       ...(confirmado !== undefined && { confirmado: !!confirmado }),
       ...(noAsiste !== undefined && { noAsiste: !!noAsiste }),
       ...(pases !== undefined && { pases: Math.trunc(Number(pases)).toString() }),
       ...(comentarios !== undefined && { comentarios: sanitize(comentarios) }),
       ...(personasNoAsisten !== undefined && { personasNoAsisten: sanitize(personasNoAsisten) }),
+      // Siempre preservar el valor original de pases asignados
+      pasesOriginales: pasesOriginalesActual,
     };
 
     await db

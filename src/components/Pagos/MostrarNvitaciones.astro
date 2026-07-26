@@ -123,6 +123,10 @@ const categorias = [
 
 <style lang="scss">
   @use "../../estilos/_variables.scss" as *;
+  h2{
+    font-weight: 600;
+    color: $primario;
+  }
   .productos-swiper {
     margin: 1rem 0 6rem 0;
     width: 100%;
@@ -179,7 +183,7 @@ const categorias = [
 
   .filtro-btn.filtro-activo {
     color: white;
-    background: $acento;
+    background: rgba($primario, .8);
   }
 
   .filtro-btn:hover {

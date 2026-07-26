@@ -1,10 +1,18 @@
 @mixin invierno() {
-  --primario: #202a45;       // Azul marino desaturado, elegante
-  --secundario: #8299a6;     // Azul grisáceo suave
-  --terciario: #f5e6d3;      // Beige cálido para balance
-  --acento: #76418a;         // Morado para iconos
-  --gris: #e2e4e6;          // Gris perla neutro
-  --fondo: #faf7f5;         // Blanco cálido
-  --sombra: rgba(137, 150, 165, 0.3); // Sombra azul desaturada
-  --fondoBurn: #fff1e6;     // Fondo melocotón muy suave
+  --primario: #202a45;
+  --primario-rgb: 32, 42, 69;
+  --secundario: #8299a6;
+  --secundario-rgb: 130, 153, 166;
+  --terciario: #f5e6d3;
+  --terciario-rgb: 245, 230, 211;
+  --acento: #76418a;
+  --acento-rgb: 118, 65, 138;
+  --gris: #e2e4e6;
+  --gris-rgb: 226, 228, 230;
+  --fondo: #faf7f5;
+  --fondo-rgb: 250, 247, 245;
+  --sombra: rgba(137, 150, 165, 0.3);
+  --sombra-rgb: 137, 150, 165;
+  --fondoBurn: #fff1e6;
+  --fondoBurn-rgb: 255, 241, 230;
 }

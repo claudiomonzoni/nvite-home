@@ -1,10 +1,16 @@
 @mixin otono-quince() {
-    /* Valores balanceados: juvenil, fresco y elegante. Sólo se modificaron los valores existentes. */
-    --primario: rgb(109, 72, 128);    /* mauve más cálido y vivo para encabezados/botones */
-    --secundario: rgb(170, 123, 107); /* terracota suave para bloques y tarjetas */
-    --terciario: rgb(227, 214, 205);  /* crema muy suave para fondos */
-    --acento: rgb(203, 101, 142); /* acento dorado/coral para detalles */
-    --gris: rgb(120, 103, 119);       /* gris cálido con tinte violeta para armonizar */
-    --sombra: rgba(109, 72, 128, 0.08);/* sombra suave usando primario a baja opacidad */
+    --primario: rgb(109, 72, 128);
+    --primario-rgb: 109, 72, 128;
+    --secundario: rgb(170, 123, 107);
+    --secundario-rgb: 170, 123, 107;
+    --terciario: rgb(227, 214, 205);
+    --terciario-rgb: 227, 214, 205;
+    --acento: rgb(203, 101, 142);
+    --acento-rgb: 203, 101, 142;
+    --gris: rgb(120, 103, 119);
+    --gris-rgb: 120, 103, 119;
+    --sombra: rgba(109, 72, 128, 0.08);
+    --sombra-rgb: 109, 72, 128;
     --fondoBurn: #FBF6F4;
+    --fondoBurn-rgb: 251, 246, 244;
   }

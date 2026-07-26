@@ -3,23 +3,25 @@ import { Icon } from "astro-icon/components";
 
 export type InvitadoProps = {
   id: number;
-  uuid: string;
+  uuid: string | null;
   usuarioId: number;
   nombre: string;
   pases: string;
-  mesa: number;
-  numeroWhats: number;
+  pasesOriginales?: string | null;
+  mesa: string | number | null;
+  mesaId: number | null;
+  numeroWhats: number | null;
   confirmado: boolean;
   vip: boolean;
   InvitacionEnviada: boolean;
   noAsiste: boolean;
-  tipoInvitacion: string;
-  mensajePersonalizado?: string;
+  tipoInvitacion: string | null;
+  mensajePersonalizado?: string | null;
 };
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
-const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}%26uid=${invitadoData.usuarioId}`;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}%26uid=${invitadoData.usuarioId}`;
 ---
 
 <article
@@ -53,6 +55,25 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         )
       }
     </h2>
+
+    
+  </div>
+  <div class="actions-section">
+     <div class="edit-actions">
+        <button
+          class="btn-icon"
+          data-edit
+          data-id={invitadoData.uuid}
+          data-uid={invitadoData.usuarioId}
+        >
+          <Icon name="mdi:account-edit-outline" size={20} />
+          <span>Editar</span>
+        </button>
+        <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
+          <Icon name="borrar" size={20} />
+          <span>Borrar</span>
+        </button>
+      </div>
   </div>
 
   <div class="invitado-content">
@@ -60,13 +81,23 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       <div class="info-primary">
         <p class="info-item">
           <Icon name="mdi:ticket" size={20} />
-          <span>{Math.round(parseFloat(invitadoData.pases))} pases</span>
+          <span>
+            {
+              (invitadoData.confirmado || invitadoData.noAsiste) && 
+              invitadoData.pasesOriginales && 
+              parseInt(invitadoData.pasesOriginales) !== Math.round(parseFloat(invitadoData.pases || "0")) ? (
+                `${Math.round(parseFloat(invitadoData.pases || "0"))} de ${Math.round(parseFloat(invitadoData.pasesOriginales))} pases`
+              ) : (
+                `${Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0"))} pases`
+              )
+            }
+          </span>
         </p>
         {
           invitadoData.mesa && (
             <p class="info-item">
               <Icon name="mdi:table-furniture" size={20} />
-              <span>Mesa {invitadoData.mesa}</span>
+              <span>Mesa: {invitadoData.mesa}</span>
             </p>
           )
         }
@@ -109,21 +140,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     </div>
 
     <div class="actions-section">
-      <div class="edit-actions">
-        <button
-          class="btn-icon"
-          data-edit
-          data-id={invitadoData.uuid}
-          data-uid={invitadoData.usuarioId}
-        >
-          <Icon name="mdi:account-edit-outline" size={20} />
-          <span>Editar</span>
-        </button>
-        <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
-          <Icon name="borrar" size={20} />
-          <span>Borrar</span>
-        </button>
-      </div>
+     
 
       <div class="share-actions">
         {
@@ -134,10 +151,24 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               id="enviarwa"
               data-wa={invitadoData.numeroWhats}
               data-copiarwa={urlWA}
+              data-dbid={invitadoData.id}
+              data-status={
+                invitadoData.confirmado
+                  ? "confirmado"
+                  : invitadoData.noAsiste
+                    ? "noAsiste"
+                    : invitadoData.InvitacionEnviada
+                      ? "recordar"
+                      : "invitar"
+              }
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Invitar: </span>
+              <span>
+                {invitadoData.confirmado ? "Confirmado" : 
+                 invitadoData.noAsiste ? "No asiste" : 
+                 invitadoData.InvitacionEnviada ? "Recordar" : "Invitar"}
+              </span>
               <Icon name="mdi:whatsapp" size={20} />
             </a>
           )
@@ -146,7 +177,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           href="#"
           class="btn-action copy"
           id="copiar"
-          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid}&uid=${invitadoData.usuarioId}`}
+          data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}&uid=${invitadoData.usuarioId}`}
         >
           <Icon name="mdi:content-copy" size={20} />
           <span>Copiar enlace</span>
@@ -169,7 +200,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       if (copyValue) {
         navigator.clipboard.writeText(copyValue).then(
           () => {
-            alert("Texto copiado al portapapeles: " + copyValue);
+            alert("Texto copiado, pegalo en el whatsapp de tu invitado: " + copyValue);
           },
           (err) => {
             console.error("Error al copiar el texto: ", err);
@@ -188,21 +219,60 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
     const invitacion = btn.dataset.copiarwa;
-    const invitaciontxt = `Hola,%20te%20entrego%20una%20invitación,%20para%20mi%20evento%20por%20favor%20ingresa%20al%0aenlace:%20${invitacion}%20confirma%20tu%20asistencia.`;
+    const status = btn.dataset.status;
+    const dbid = btn.dataset.dbid;
+
     if (!numeroWhats) {
-      btn.closest(".control").querySelector("h4").style.display = "none";
+      const control = btn.closest(".control") as HTMLElement | null;
+      const title = control?.querySelector("h4") as HTMLHeadingElement | null;
+      if (title) {
+        title.style.display = "none";
+      }
       btn.style.display = "none";
+      return;
     }
+
+    let mensaje = "";
+    if (status === "recordar") {
+      mensaje = `¡Hola! Te escribo para recordarte que estamos por cerrar la lista de invitados. ¿Nos confirmas si podrás acompañarnos? ¡Nos encantaría verte! URL: ${invitacion}`;
+    } else {
+      mensaje = invitacion || "";
+    }
+
+    const mensajeEncoded = encodeURIComponent(mensaje);
 
     let whats = "";
     if (/Mobile/i.test(ua)) {
-      whats = `https://api.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+      whats = `https://api.whatsapp.com/send/?phone=${numeroWhats}&text=${mensajeEncoded}`;
     } else {
-      whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${invitacion}`;
+      whats = `https://web.whatsapp.com/send/?phone=${numeroWhats}&text=${mensajeEncoded}`;
     }
 
-    const url = `${whats}`;
-    btn.href = url;
+    btn.href = whats;
+
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      window.open(btn.href, "_blank");
+
+      if (status === "invitar" && dbid) {
+        try {
+          const response = await fetch(`/api/${dbid}.json`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ InvitacionEnviada: true }),
+          });
+
+          if (response.ok) {
+            location.reload();
+          }
+        } catch (err) {
+          console.error("Error al marcar como enviado:", err);
+        }
+      }
+    });
   });
 
   // btn borrar
@@ -275,17 +345,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     });
 
     //funcion de llenado
-    const getInvitadoData = async (id, uid) => {
+    const getInvitadoData = async (id: string | undefined, uid: string | undefined): Promise<any> => {
       const baseURL = window.location.origin;
       const response = await fetch(
         `${baseURL}/api/getInvitado.json?id=${id}&uid=${uid}`,
       );
       // const idfetch = await fetch(`http://localhost:4321/api/getInvitado.json?id=${id}&uid=${uid}`);
-      const idInvitacion = await response.json();
+      const idInvitacion = await response.json() as any;
       return idInvitacion;
     };
 
-    const llenar = (dialogo, id, uid) => {
+    const llenar = (dialogo: HTMLDialogElement, id: string | undefined, uid: string | undefined) => {
       const nombreInput = dialogo.querySelector(
         "input[name='nombre']",
       ) as HTMLInputElement;
@@ -294,7 +364,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       ) as HTMLInputElement;
       const mesaInput = dialogo.querySelector(
         "input[name='mesa']",
-      ) as HTMLInputElement;
+      ) as HTMLInputElement | null;
       const numeroWhatsInput = dialogo.querySelector(
         "input[name='numeroWhats']",
       ) as HTMLInputElement;
@@ -318,13 +388,15 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       ) as HTMLDivElement;
 
       const invitadoDataPromise = getInvitadoData(id, uid);
-      invitadoDataPromise.then((invitadoData) => {
+      invitadoDataPromise.then((invitadoData: any) => {
         console.log(invitadoData[0].nombre);
         if (invitadoData) {
           dialogo.dataset.refedit = invitadoData[0].id;
           nombreInput.value = invitadoData[0].nombre;
-          pasesInput.value = invitadoData[0].pases;
-          mesaInput.value = invitadoData[0].mesa?.toString() || "";
+          pasesInput.value = invitadoData[0].pasesOriginales || invitadoData[0].pases;
+          if (mesaInput) {
+            mesaInput.value = invitadoData[0].mesa?.toString() || "";
+          }
           numeroWhatsInput.value =
             invitadoData[0].numeroWhats?.toString() || "";
           confirmadoCheckbox.checked = invitadoData[0].confirmado;
@@ -358,14 +430,15 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     color: $primario;
     transition: all 0.2s ease;
     position: relative;
-    @extend .sombra;
+   // @extend .sombra;
+   
 
     &:hover {
       transform: translateY(-2px);
     }
 
     &.enviada {
-      background-color: #edf8fd;
+      background-color: rgba($terciario, 0.3);
       color: #4b7c91;
       h2 {
         color: $primario;
@@ -373,11 +446,15 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     }
 
     &.confirmado {
-      background-color: rgba($fondo, 0.8);
+      background-color: rgba($fondo, 0.5);
       color: #4b7c91;
       h2 {
-        color: $acento;
+        color: $primario;
       }
+       .info-section {
+    background-color: rgba(#ffffff, 0.4);
+
+  }
     }
 
     &.NoAsiste {
@@ -387,7 +464,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         color: #e3e3e3;
       }
       .info-section {
-        background-color: #687378;
+        background-color: #afbac0;
       }
     }
   }
@@ -446,8 +523,8 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     margin-bottom: 1.25rem;
 
     h2 {
-      color: $acento;
-      font-size: clamp(1.4rem, 1.5vw, 1.8rem);
+      color: $primario;
+      font-size: clamp(1.2rem, 1.3vw, 1.2rem);
       margin: 0;
       display: flex;
       align-items: center;
@@ -467,10 +544,10 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   }
 
   .info-section {
-    background-color: $primario;
+    background-color: rgba($terciario, 0.4);
     border-radius: 12px;
     padding: 1.25rem;
-    color: #fff;
+//    color: #fff;
   }
 
   .info-primary {
@@ -479,7 +556,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     gap: 1rem;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba($primario, 0.3);
   }
 
   .info-item {
@@ -487,10 +564,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     align-items: center;
     gap: 0.5rem;
     margin: 0;
-    color: white;
+    font-size: .8rem;
+   // color: white;
 
     &.warning {
-      color: #ffd700;
+      color: $acento;
     }
 
     svg {
@@ -509,11 +587,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
+  
   .status-tag {
-    font-size: 0.85rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 1rem;
+    font-size: .6rem;
+    padding: 0rem 0.7rem;
+    border-radius: 12px;
     background: rgba(255, 255, 255, 0.1);
 
     &.confirmed {
@@ -535,39 +613,36 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .edit-actions {
+    padding-bottom: 1rem;
     display: flex;
     gap: 0.75rem;
-
-    @include cel {
-      flex-direction: column;
-    }
   }
 
   .share-actions {
     display: flex;
     gap: 0.75rem;
-
-    @include cel {
-      flex-direction: column;
-    }
   }
 
   .btn-icon {
+    flex:1;
+    max-width: fit-content;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.2rem .7rem;
     border-radius: 8px;
-    border: 1px solid rgba($acento, 0.6);
-    color: $acento;
+    border: 1px solid rgba($primario, 0.6);
+    color: $primario;
     background: none !important;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     cursor: pointer;
     transition: all 0.2s ease;
+    svg{
+     width: 16px;
+    }
 
     &:hover {
       transform: translateY(-1px);
@@ -575,6 +650,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     }
 
     &.delete {
+    color: $acento;
       border: 1px solid $acento;
     }
   }
@@ -584,13 +660,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.5rem .8rem;
     border-radius: 8px;
     background-color: #fff;
     color: $primario;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
+    font-size: clamp(.7rem, .7rem, 1rem);
     flex: 1;
     transition: all 0.2s ease;
     @extend .sombra;
@@ -605,7 +680,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     }
 
     &.copy {
-      background-color: #f8f9fa;
+      background: none !important;
+      border: 1px solid $primario;
+      box-shadow: none;
     }
   }
 

@@ -1,0 +1,414 @@
+---
+import { Image } from "astro:assets";
+import mesaImg from "../assets/home/mesas-home.jpg";
+import { Icon } from "astro-icon/components";
+---
+
+<div class="grid contenido">
+  <div id="mesa-home">
+    <div id="info">
+      <div class="conte">
+        <h2>
+          <span>Control de tu evento</span>Quién va, cuántos son y dónde se
+          sientan
+        </h2>
+        <p>
+          Agrega a tus invitados, asigna pases, recibe confirmaciones en tiempo
+          real y organiza las mesas, todo desde un solo lugar.
+        </p>
+        <div id="caracteristicas">
+          <h3>Características clave</h3>
+          <div id="conteGrid">
+            <div class="item">
+              <Icon name="mdi:check" size={24} />
+              <h4>Confirmaciones en tiempo real</h4>
+              <p>
+                Deja de preguntar "¿vas a ir?". Tus invitados confirman solos y
+                tú lo ves al instante.
+              </p>
+            </div>
+            <div class="item">
+              <Icon name="mdi:table" size={24} />
+              <h4>Gestor de mesas *Lux</h4>
+              <p>
+                Acomoda a tus invitados antes del evento. Sabes exactamente
+                quién va en cada mesa y cuántos espacios quedan.
+              </p>
+            </div>
+            <div class="item">
+              <Icon name="mdi:message-lock-outline" size={24} />
+              <h4>Mensajes personales</h4>
+              <p>
+                Para los que siempre han estado contigo, un mensaje que solo
+                ellos verán en su invitación.
+              </p>
+            </div>
+            <div class="item">
+              <Icon name="mdi:microsoft-excel" size={24} />
+              <h4>Todo en Excel cuando lo necesites</h4>
+              <p>
+                Comparte el estado de tu evento con tu equipo o coordinador con
+                un solo clic.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="img">
+      <div id="poster-container">
+        <Image src={mesaImg} alt="mesas" />
+        <button id="play-btn" aria-label="Reproducir video">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="currentColor"
+              d="M8.4 5.1c0-.35.28-.63.63-.63.12 0 .24.03.34.09l10.75 6.95c.25.16.4.44.4.74 0 .3-.15.58-.4.74L8.37 19.44c-.1.06-.22.09-.34.09-.35 0-.63-.28-.63-.63V5.1Z"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="video-modal" class="modal" aria-hidden="true">
+  <div class="modal-overlay" data-close></div>
+  <div
+    class="modal-content"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <button class="modal-close" aria-label="Cerrar video" data-close>
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M18 6L6 18M6 6l12 12"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+      </svg>
+    </button>
+    <div class="video-wrapper">
+      <video id="modal-video" preload="none" playsinline controls>
+        <source
+          src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1784771274/panel_zunh9z.mp4"
+          type="video/mp4"
+        />
+      </video>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+  h2 {
+    font-weight: 600;
+    color: $primario;
+    position: relative;
+    padding-bottom: $margen-cel;
+    span {
+      position: absolute;
+      top: -2rem;
+      left: 0;
+      font-size: 1rem;
+      font-weight: 200;
+      color: $acento;
+      font-weight: 200;
+    }
+  }
+  #mesa-home {
+    display: flex;
+    margin: $margen 0;
+ 
+    flex-wrap: wrap;
+    @include cel {
+      padding: 0;
+      margin: $margen-cel 0;
+    }
+  }
+  #info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 0 50%;
+    padding: 2rem;
+    box-sizing: border-box;
+    border-top-left-radius: $radio;
+    border-bottom-left-radius: $radio;
+    background: rgba($terciario, 0.8);
+    margin-right: -10px;
+    .conte {
+      max-width: min(100%, 50ch);
+    }
+    @include cel {
+      padding: 3.3rem 2rem 2.5rem;
+      margin-right: 0;
+      margin-bottom: -10px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-right-radius: $radio;
+      border-top-left-radius: $radio;
+    }
+  }
+  #caracteristicas {
+    margin-top: $margen-cel;
+    h3 {
+      font-size: 1.2rem;
+      color: $secundario;
+      margin-bottom: $margen-min;
+    }
+  }
+  #conteGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 2rem;
+    .item {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+      svg {
+        color: rgba($primario, 0.8);
+      }
+      h4 {
+        font-weight: 600;
+        color: $primario;
+      }
+    }
+  }
+  #img {
+    flex: 1 0 50%;
+    border-radius: $radio;
+    overflow: hidden;
+  }
+  #poster-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    border-radius: $radio;
+    overflow: hidden;
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  #play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba($fondoGlobal, 0.9);
+    border: none;
+    cursor: pointer;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+    @extend .sombra;
+    svg {
+      width: 56px;
+      height: 56px;
+      margin-left: -2px;
+      color: $primario;
+    }
+    &:hover {
+      background: $fondo;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
+  :global(.modal) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2147483647 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+    &.open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  :global(.modal-overlay) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  :global(.modal-content) {
+    position: relative;
+    width: 90%;
+    max-width: 960px;
+    max-height: 90vh;
+    border-radius: $radio;
+    overflow: hidden;
+    background: #000;
+    animation: modalIn 0.3s ease forwards;
+    z-index: 1;
+  }
+  @keyframes modalIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  :global(.modal-close) {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: rotate(90deg);
+    }
+  }
+  :global(.video-wrapper) {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 10 / 10;
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+  }
+  @include cel {
+    #poster-container {
+      min-height: 300px;
+    }
+    #play-btn {
+      width: 64px;
+      height: 64px;
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+    :global(.modal-content) {
+      width: 95%;
+    }
+    :global(.modal-close) {
+      top: 8px;
+      right: 8px;
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+  class VideoModal {
+    listenersAdded = false;
+    constructor() {
+      document.addEventListener('astro:page-load', () => this.init());
+      if (document.readyState === 'complete') {
+        this.init();
+      }
+    }
+
+    init() {
+      const modal = document.getElementById("video-modal") as HTMLElement | null;
+      const video = document.getElementById(
+        "modal-video",
+      ) as HTMLVideoElement | null;
+      const playBtn = document.getElementById("play-btn") as HTMLElement | null;
+      const closeTriggers = document.querySelectorAll(
+        "[data-close]",
+      ) as NodeListOf<HTMLElement>;
+
+      if (!modal || !video || !playBtn) return;
+
+      if (!modal.dataset.portalized) {
+        document.body.appendChild(modal);
+        modal.dataset.portalized = "true";
+      }
+
+      const openModal = () => {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error: unknown) => {
+            console.error("Error al reproducir el video:", error);
+          });
+        }
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        video.pause();
+        video.currentTime = 0;
+      };
+
+      if (!this.listenersAdded) {
+        playBtn.addEventListener("click", openModal);
+
+        closeTriggers.forEach((trigger) => {
+          trigger.addEventListener("click", closeModal);
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("open")) {
+            closeModal();
+          }
+        });
+
+        this.listenersAdded = true;
+      }
+    }
+  }
+
+  new VideoModal();
+  document.addEventListener('astro:after-swap', () => {
+    new VideoModal();
+  });
+</script>

@@ -1,11 +1,18 @@
 @mixin otono() {
-    --primario: #374050;
+    --primario: #394f76;
+    --primario-rgb: 57, 79, 118;
     --secundario: #6b8ba5;
+    --secundario-rgb: 107, 139, 165;
     --terciario: #d3c5c5;
-    --acento: #e68e78;
+    --terciario-rgb: 211, 197, 197;
+    --acento: #ad786b;
+    --acento-rgb: 173, 120, 107;
     --gris: #eadbd3;
+    --gris-rgb: 234, 219, 211;
     --fondo: #f1e8e3;
+    --fondo-rgb: 241, 232, 227;
     --sombra: rgba(145, 139, 132, 0.317);
+    --sombra-rgb: 145, 139, 132;
     --fondoBurn: #f2e9e9;
+    --fondoBurn-rgb: 242, 233, 233;
   }
-  

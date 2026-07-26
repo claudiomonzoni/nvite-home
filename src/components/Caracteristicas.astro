@@ -37,8 +37,13 @@ colorBg ? colorBg : colorBg = "#ffd9b0";
 }
 
 h3{
+  color: $primario!important;
+  font-weight: 600;
   padding-bottom: .5rem;
   line-height: normal;
+}
+p{
+  font-size: clamp(.8rem, .9rem, 1rem);
 }
 .icono{
   svg{
@@ -46,8 +51,7 @@ h3{
     height: 100%;
     object-fit: contain;
     object-position: center;
-    color: $primario!important;
-    fill:$primario!important;
+    color: $secundario!important;
   }
 }
 </style>

@@ -160,25 +160,21 @@
 }
 
 .loadingText {
-  font-family: var(--font-heading), serif;
   font-size: clamp(2.5rem, 5vw, 5rem);
   font-weight: 300;
-  color: rgba(var(--acento-rgb, 212, 175, 55), 0.15);
   line-height: 1.4;
   margin: 0 0 3rem;
   letter-spacing: 0.02em;
-
-
+  
+  
   span {
+    color: var(--primario);
+    font-family: var(--font-heading), serif;
     display: inline-block;
     opacity: 0.2;
-    font-size: clamp(3.5rem, 5vw, 5rem);
+    font-size: clamp(2.6rem, 5vw, 5rem);
     line-height: 1;
-  }
-
-  @include cel {
-    font-size: clamp(1.8rem, 6vw, 3rem);
-    margin: 0 0 2rem;
+    
   }
 }
 

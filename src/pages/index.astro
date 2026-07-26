@@ -17,6 +17,7 @@ import Slider from "../components/Slider.astro";
 import caracteristicasImg from "../assets/home/home-invitaciones-digitales-caracteristicas-nvitaciones.webp";
 import coverDesktopHome from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv.webp";
 import coverMobileHome from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel.webp";
+import MesasHome from "../components/MesasHome.astro";
 ---
 
   <Layout
@@ -84,9 +85,7 @@ import coverMobileHome from "../assets/home/nvitaciones-invitaciones-digitales-b
   </div>
 
 
-  <div id="precios" class="grid contenido">
-    <Banner dondeEstoy="home" />
-  </div>
+  
 
   <!-- <Galeriaslide /> -->
   <div class="grid contenido">
@@ -100,7 +99,7 @@ import coverMobileHome from "../assets/home/nvitaciones-invitaciones-digitales-b
    <b>Panel de invitados</b>, controla tus invitaciones.
     </li>
     <li>
-    Tu invitación en línea hasta <b> 1 semana</b> después de terminado el evento.
+   <b>Tu invitación web te acompaña</b> durante todo el proceso y permanece disponible hasta la semana posterior al evento.
     </li>
     <li><mark>Envíos ilimitados.</mark></li>
        
@@ -126,6 +125,12 @@ import coverMobileHome from "../assets/home/nvitaciones-invitaciones-digitales-b
   </div>
 
   <Testimonios />
+
+  <MesasHome />
+  <div id="precios" class="grid pantalla">
+    <Banner dondeEstoy="home" />
+  </div>
+
 
   <div class="grid contenido" id="faq">
     <Faq />

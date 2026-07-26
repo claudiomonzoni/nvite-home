@@ -1,5 +1,6 @@
 ---
 import matter from "gray-matter";
+import { db, Invitados, and, eq } from "astro:db";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/bodas/Layout.astro";
 import Footer from "../../components/bodas/Footer.astro";
@@ -27,6 +28,7 @@ import Confirmacion from "../../components/comunes/Confirmacion";
 import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
+import Qr from "../../components/comunes/qr.astro";
 
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
@@ -122,6 +124,7 @@ const boda = {
       lat: fm?.recepcion?.lat ?? "",
       lng: fm?.recepcion?.lng ?? "",
     },
+    
     itinerario: Array.isArray(fm?.itinerario) ? fm.itinerario : [],
     consideraciones: Array.isArray(fm?.consideraciones)
       ? fm.consideraciones
@@ -136,6 +139,12 @@ const boda = {
     beneficiario: fm.beneficiario ?? "",
     banco: fm.banco ?? "",
     cuenta: fm.cuenta ?? "",
+    progresoEmail: fm.progresoEmail ?? "",
+    progresoPorcentaje:
+      typeof fm.progresoPorcentaje === "number" ? fm.progresoPorcentaje : 20,
+    progresoFrase: fm.progresoFrase ?? "",
+    progresoAllReady: fm.progresoAllReady ?? "",
+    progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
     paleta: fm.paleta ?? "base",
     theme: fm.theme ?? { name: "base" },
     content: parsed.content ?? "",
@@ -158,6 +167,42 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
 
 const lang = (boda.data.idioma as keyof typeof ui) || "es";
 const t = useTranslations(lang);
+
+//qr
+const idParam = Astro.url.searchParams.get("id");
+const uidParam = Astro.url.searchParams.get("uid");
+
+let dbInvitado = null;
+if (idParam && uidParam) {
+  try {
+    const response = await db
+      .select()
+      .from(Invitados)
+      .where(
+        and(
+          eq(Invitados.uuid, idParam),
+          eq(Invitados.usuarioId, Number(uidParam))
+        )
+      );
+    if (response && response.length > 0) {
+      dbInvitado = response[0];
+    }
+  } catch (e) {
+    console.error("Error fetching invitado in Astro:", e);
+  }
+}
+
+const qrNombre = dbInvitado
+  ? dbInvitado.nombre
+  : String(fm?.nombreInvitacion ?? slug ?? "Invitación");
+
+const qrPases = dbInvitado
+  ? String(dbInvitado.pases ?? "")
+  : String(fm?.pases ?? fm?.pasesInvitados ?? fm?.pasesAsignados ?? "");
+
+const qrMesa = dbInvitado
+  ? String(dbInvitado.mesa ?? "")
+  : String(fm?.mesaAsignada ?? fm?.mesa ?? fm?.mesaAsignadaInvitado ?? "");
 ---
 
 <Layout
@@ -234,8 +279,20 @@ const t = useTranslations(lang);
     }
   </section>
 
+ {
+  boda.data.version === "Lux" && (
+    <Qr
+      nombreInvitacion={qrNombre}
+      pases={qrPases}
+      mesa={qrMesa}
+      noAsiste={dbInvitado?.noAsiste}
+      title="Datos de la invitación"
+      subtitle="Muestra tus pases y mesa asignada"
+    />
+  )
+}
   {
-    boda.data.version === "Lux" && boda.data.audioMusica && (
+    boda.data.audioMusica && (
       <section class="grid contenido">
       <AudioPlayer
         src={boda.data.audioMusica}
@@ -385,10 +442,10 @@ const t = useTranslations(lang);
   }
 
   {
-    boda.data.itinerario.length > 0 && (
+    boda.data.itinerario.length > 0 && boda.data.version === "Lux" && (
       <section class="grid pantalla" id="BaseItinerario">
-        <Encabezados texto={t("invitation.itinerary")} />
-        <Itinerario listado={boda.data.itinerario} />
+        
+        <Itinerario listado={boda.data.itinerario} titulo={t("invitation.itinerary")} />
       </section>
     )
   }
@@ -397,16 +454,17 @@ const t = useTranslations(lang);
     boda.data.version === "Lux" && (
       <section class="grid contenido">
         <ProgresoInvitados
-          frase={boda.data.progresoFrase || t("invitation.rsvp.daysBefore")}
+          frase={boda.data.progresoFrase || t("progress.heading")}
           porcentajeMostrarInvitados={20}
           mostrarSiempre={true}
           email={boda.data.email}
+          usuarioId={dbInvitado?.usuarioId}
           labels={{
             confirmed: t("progress.confirmed"),
             passesConfirmed: t("progress.passesConfirmed"),
             of: t("progress.of"),
             btnConfirm: t("progress.btnConfirm"),
-            allReady: t("progress.allReady"),
+            allReady: boda.data.progresoAllReady || t("progress.allReady"),
           }}
         />
       </section>
@@ -456,6 +514,7 @@ const t = useTranslations(lang);
       <Pases
         folder={boda.data.json}
         client:load
+        initialInvitado={dbInvitado as any}
         labels={{
           attendance: t("passes.attendance"),
           weDeliver: t("passes.weDeliver"),
@@ -480,6 +539,7 @@ const t = useTranslations(lang);
               version={boda.data.version}
               tipo="bodas"
               client:only="react"
+              initialInvitado={dbInvitado as any}
               labels={{
                 title: t("invitation.rsvp"),
                 subtitle: t("invitation.rsvp.daysBefore"),
