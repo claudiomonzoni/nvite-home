@@ -30,11 +30,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   <div class="status-indicator">
     {
       invitadoData.confirmado ? (
-        <Icon name="mdi:check-circle" size={24} title="Confirmado" />
+        <Icon name="mdi:check-circle-outline" size={24} title="Confirmado" />
       ) : invitadoData.noAsiste ? (
-        <Icon name="mdi:calendar-remove" size={24} title="No asiste" />
+        <Icon name="mdi:calendar-remove-outline" size={24} title="No asiste" />
       ) : invitadoData.InvitacionEnviada ? (
-        <Icon name="mdi:send" size={24} title="Invitación enviada" />
+        <Icon name="mdi:send-outline" size={24} title="Invitación enviada" />
       ) : (
         <Icon name="mdi:send-outline" size={24} title="Invitación no enviada" />
       )
@@ -47,7 +47,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       {
         invitadoData.vip && (
           <Icon
-            name="mdi:crown"
+            name="mdi:crown-outline"
             size={20}
             class="vip-icon"
             title="Invitado VIP"
@@ -70,7 +70,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           <span>Editar</span>
         </button>
         <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
-          <Icon name="borrar" size={20} />
+          <Icon name="mdi:delete-outline" size={20} />
           <span>Borrar</span>
         </button>
       </div>
@@ -80,7 +80,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     <div class="info-section">
       <div class="info-primary">
         <p class="info-item">
-          <Icon name="mdi:ticket" size={20} />
+          <Icon name="mdi:ticket-outline" size={20} />
           <span>
             {
               (invitadoData.confirmado || invitadoData.noAsiste) && 
@@ -525,6 +525,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     h2 {
       color: $primario;
       font-size: clamp(1.2rem, 1.3vw, 1.2rem);
+      font-weight: bold;
       margin: 0;
       display: flex;
       align-items: center;

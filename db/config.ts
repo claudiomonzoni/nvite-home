@@ -12,6 +12,7 @@ const Usuario = defineTable({
     fechaEvento: column.date({ optional: true }),
     addonMesas: column.boolean({ default: false }),
     addonRecordatorios: column.boolean({ default: false }),
+    addonProveedores: column.boolean({ default: false }),
   },
 });
 
@@ -67,6 +68,40 @@ const Sesion = defineTable({
   },
 });
 
+const Proveedores = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    usuarioId: column.number({ references: () => Usuario.columns.id }),
+    nombre: column.text(),
+    categoria: column.text(),
+    contactoNombre: column.text({ optional: true }),
+    contactoTelefono: column.text({ optional: true }),
+    presupuestoTotal: column.number({ default: 0 }),
+    fechaLimitePago: column.date({ optional: true }),
+    notas: column.text({ optional: true }),
+  },
+});
+
+const PagosProveedor = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    proveedorId: column.number({ references: () => Proveedores.columns.id }),
+    monto: column.number(),
+    fecha: column.date(),
+    concepto: column.text({ optional: true }),
+  },
+});
+
+const TareasProveedor = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    proveedorId: column.number({ references: () => Proveedores.columns.id }),
+    titulo: column.text(),
+    fechaLimite: column.date({ optional: true }),
+    completada: column.boolean({ default: false }),
+  },
+});
+
 export default defineDb({
-  tables: { Usuario, Invitados, Sesion, Mesas },
+  tables: { Usuario, Invitados, Sesion, Mesas, Proveedores, PagosProveedor, TareasProveedor },
 });

@@ -1,25 +1,128 @@
 ---
 import { Icon } from "astro-icon/components";
-import Boton from "../comunes/Boton.astro";
-import Btn from "../Btn.astro";
 
 interface Props {
   tipo: string;
   ruta: string;
   nombreEvento?: string | null;
+  invitados?: any[];
+  proveedores?: any[];
 }
-const { tipo, ruta, nombreEvento } = Astro.props;
+
+const { tipo, ruta, nombreEvento, invitados = [], proveedores = [] } = Astro.props;
+
+// Calculate initial alerts for SSG/SSR
+const hoy = new Date();
+hoy.setHours(0, 0, 0, 0);
+
+// Guests confirmed alerts
+const confirmadosAlerts = invitados
+  .filter((inv) => inv.confirmado && !inv.noAsiste)
+  .map((inv) => ({
+    id: `guest-${inv.id}`,
+    tipo: "invitado",
+    titulo: `${inv.nombre} confirmó su asistencia (${inv.pases || 1} pases)`,
+    fecha: null,
+    urgente: false,
+  }));
+
+// Provider alerts (ONLY if date is set)
+const proveedoresAlerts: any[] = [];
+
+proveedores.forEach((p) => {
+  // Check main payment deadline
+  if (p.fechaLimitePago && p.saldoPendiente > 0) {
+    const fPago = new Date(p.fechaLimitePago);
+    fPago.setHours(0, 0, 0, 0);
+    const diffDays = Math.ceil((fPago.getTime() - hoy.getTime()) / (1000 * 3600 * 24));
+    if (diffDays <= 7) {
+      proveedoresAlerts.push({
+        id: `pago-${p.id}`,
+        tipo: "proveedor",
+        titulo: `${p.nombre}: ${diffDays < 0 ? 'Pago VENCIDO' : diffDays === 0 ? 'Hoy vence fecha de pago' : `${diffDays} día(s) para fecha de pago`}`,
+        fecha: p.fechaLimitePago,
+        urgente: diffDays <= 2,
+      });
+    }
+  }
+
+  // Check tasks with date
+  if (p.tareas && Array.isArray(p.tareas)) {
+    p.tareas.forEach((t: any) => {
+      if (!t.completada && t.fechaLimite) {
+        const fTarea = new Date(t.fechaLimite);
+        fTarea.setHours(0, 0, 0, 0);
+        const diffDays = Math.ceil((fTarea.getTime() - hoy.getTime()) / (1000 * 3600 * 24));
+        if (diffDays <= 7) {
+          proveedoresAlerts.push({
+            id: `tarea-${t.id}`,
+            tipo: "proveedor",
+            titulo: `${p.nombre} - ${t.titulo}: ${diffDays < 0 ? 'Vencida' : diffDays === 0 ? 'Vence hoy' : `${diffDays} día(s) restante(s)`}`,
+            fecha: t.fechaLimite,
+            urgente: diffDays <= 2,
+          });
+        }
+      }
+    });
+  }
+});
+
+const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
 ---
 
-<nav>
-  <ul>
-    <a href={Astro.url.origin}
-      ><img src="/nvita-logo.svg" alt="nvitaciones" id="logo" /></a
-    >
-    <li>      
-      {nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}
+<nav class="nav-container">
+  <ul class="nav-list">
+    <a href={Astro.url.origin}>
+      <img src="/nvita-logo.svg" alt="nvitaciones" id="logo" />
+    </a>
+    
+    <li class="nav-right">
+      <span class="nombre-evento">{nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}</span>
+
+      <!-- Burbuja / Icono de Notificaciones -->
+      <div class="notif-wrapper">
+        <button id="notif-bell-btn" class="notif-btn" type="button" aria-label="Notificaciones">
+          <Icon name="mdi:bell-outline" size={22} />
+          <span id="notif-badge" class="notif-badge" style={todasNotificaciones.length === 0 ? "display:none;" : ""}>
+            {todasNotificaciones.length}
+          </span>
+        </button>
+
+        <!-- Dropdown Menú de Notificaciones -->
+        <div id="notif-dropdown" class="notif-dropdown hidden">
+          <div class="notif-header">
+            <h4>Notificaciones</h4>
+            <span id="notif-count-text" class="notif-subtext">{todasNotificaciones.length} pendientes</span>
+          </div>
+
+          <div id="notif-items-list" class="notif-body">
+            {todasNotificaciones.length === 0 ? (
+              <p class="notif-vacio">No tienes notificaciones pendientes.</p>
+            ) : (
+              todasNotificaciones.map((n) => (
+                <div class={`notif-item ${n.urgente ? "urgente" : ""} ${n.tipo}`} data-notif-id={n.id}>
+                  <div class="notif-icon">
+                    {n.tipo === "invitado" ? (
+                      <Icon name="mdi:account-check-outline" size={20} class="icon-invitado" />
+                    ) : (
+                      <Icon name="mdi:calendar-clock-outline" size={20} class="icon-proveedor" />
+                    )}
+                  </div>
+                  <div class="notif-texto">
+                    <p>{n.titulo}</p>
+                  </div>
+                  <button type="button" class="btn-dismiss-notif" data-dismiss-id={n.id} title="Descartar notificación">
+                    <Icon name="mdi:close" size={16} />
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+
       <form data-authForm action="../api/salir.json" method="POST">
-        <button type="submit" class="btn-claro">
+        <button type="submit" class="btn-claro btn-logout">
           <Icon name="mdi:logout" size={20} /> Salir
         </button>
       </form>
@@ -27,58 +130,322 @@ const { tipo, ruta, nombreEvento } = Astro.props;
   </ul>
 </nav>
 
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const bellBtn = document.getElementById("notif-bell-btn");
+    const dropdown = document.getElementById("notif-dropdown");
+    const itemsList = document.getElementById("notif-items-list");
+    const badge = document.getElementById("notif-badge");
+    const countText = document.getElementById("notif-count-text");
+
+    if (!bellBtn || !dropdown || !itemsList) return;
+
+    // Toggle Dropdown
+    bellBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("hidden");
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target as Node) && !bellBtn.contains(e.target as Node)) {
+        dropdown.classList.add("hidden");
+      }
+    });
+
+    // Handle dismissed notifications saved in localStorage
+    const getDismissed = (): string[] => {
+      try {
+        return JSON.parse(localStorage.getItem("dismissed_notifs") || "[]");
+      } catch {
+        return [];
+      }
+    };
+
+    const saveDismissed = (id: string) => {
+      const current = getDismissed();
+      if (!current.includes(id)) {
+        current.push(id);
+        localStorage.setItem("dismissed_notifs", JSON.stringify(current));
+      }
+    };
+
+    // Filter out already dismissed on render
+    const dismissedIds = getDismissed();
+    const allItems = itemsList.querySelectorAll(".notif-item");
+    
+    let visibleCount = 0;
+    allItems.forEach((el) => {
+      const id = el.getAttribute("data-notif-id");
+      if (id && dismissedIds.includes(id)) {
+        el.remove();
+      } else {
+        visibleCount++;
+      }
+    });
+
+    const updateBadge = () => {
+      const remaining = itemsList.querySelectorAll(".notif-item").length;
+      if (badge) {
+        badge.textContent = remaining.toString();
+        badge.style.display = remaining > 0 ? "inline-flex" : "none";
+      }
+      if (countText) {
+        countText.textContent = remaining > 0 ? `${remaining} pendientes` : "Sin notificaciones";
+      }
+      if (remaining === 0) {
+        itemsList.innerHTML = `<p class="notif-vacio">No tienes notificaciones pendientes.</p>`;
+      }
+    };
+
+    updateBadge();
+
+    // Attach click handlers to X dismiss buttons
+    itemsList.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest(".btn-dismiss-notif");
+      if (btn) {
+        const id = btn.getAttribute("data-dismiss-id");
+        if (id) {
+          saveDismissed(id);
+          const itemEl = btn.closest(".notif-item");
+          if (itemEl) {
+            itemEl.remove();
+            updateBadge();
+          }
+        }
+      }
+    });
+  });
+</script>
+
 <style lang="scss">
   @use "../../estilos/_variables.scss" as *;
+
   #logo {
     width: 10vw;
     height: auto;
     svg {
-        border: solid 1px #fff;
-        fill: #fff;
+      border: solid 1px #fff;
+      fill: #fff;
     }
     @include cel {
-        width: 50vw;
+      width: 40vw;
     }
   }
-  li {
-    display: flex;
-    text-align: center;
-    list-style: none;
-    text-decoration: none;
-    color:$primario;
-    gap: 1rem;
-    align-items: center;
- 
-  }
 
-  nav {
+  .nav-container {
     background-color: $terciario;
     margin-bottom: $margen-min;
-  
-    ul {
-      display: flex;
-      color: white;
-      justify-content: space-between;
-      align-items: center;
-      padding: $margen-min;
+    position: relative;
+    z-index: 100;
+  }
+
+  .nav-list {
+    display: flex;
+    color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: $margen-min;
+    list-style: none;
+    margin: 0;
+  }
+
+  .nav-right {
+    display: flex;
+    text-align: center;
+    color: $primario;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .nombre-evento {
+    font-weight: 600;
+    @include cel {
+      display: none;
     }
- 
+  }
 
-    button {
-      background-color: $primario;
-      border-radius: 5px;
-      color: #fff;
-      border: none;
-      display: inline-block;
-      text-align: center;
-      padding: 0.3rem 0.8rem;
+  .notif-wrapper {
+    position: relative;
+  }
+
+  .notif-btn {
+    background: white;
+    color: $primario;
+    border: none;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: #f8f9fa;
+    }
+  }
+
+  .notif-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background-color: $acento;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border: 2px solid white;
+  }
+
+  .notif-dropdown {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 320px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    z-index: 1000;
+    text-align: left;
+    color: #333;
+
+    &.hidden {
+      display: none;
+    }
+
+    @include cel {
+      right: -50px;
+      width: 290px;
+    }
+  }
+
+  .notif-header {
+    background: $terciario;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #cbd5e1;
+
+    h4 {
+      margin: 0;
+      font-size: 0.95rem;
+      color: $primario;
       font-weight: bold;
-      margin: 0!important;
+    }
 
-      svg {
-        vertical-align: middle;
-        margin-right: 0.2rem;
-      }
+    .notif-subtext {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+  }
+
+  .notif-body {
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  .notif-vacio {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .notif-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+
+    &.urgente {
+      background-color: #fff5f5;
+    }
+  }
+
+  .notif-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+
+    .icon-invitado {
+      color: #10b981;
+    }
+
+    .icon-proveedor {
+      color: #f59e0b;
+    }
+  }
+
+  .notif-texto {
+    flex: 1;
+
+    p {
+      margin: 0;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      color: #334155;
+    }
+  }
+
+  .btn-dismiss-notif {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px;
+
+    &:hover {
+      color: $acento;
+      background: #fee2e2;
+    }
+  }
+
+  .btn-logout {
+    background-color: $primario;
+    border-radius: 5px;
+    color: #fff;
+    border: none;
+    display: inline-block;
+    text-align: center;
+    padding: 0.3rem 0.8rem;
+    font-weight: bold;
+    margin: 0 !important;
+    cursor: pointer;
+
+    svg {
+      vertical-align: middle;
+      margin-right: 0.2rem;
     }
   }
 </style>

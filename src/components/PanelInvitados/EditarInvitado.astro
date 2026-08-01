@@ -456,7 +456,15 @@ import Checkbox from "./Checkbox.astro";
   const closeDialogBtn = document.getElementById(
     "cerrar-dialog-editar"
   ) as HTMLButtonElement;
-  closeDialogBtn.addEventListener("click", () => dialogEditar.close());
+  
+  if (closeDialogBtn && dialogEditar) {
+    closeDialogBtn.addEventListener("click", () => dialogEditar.close());
+    dialogEditar.addEventListener("click", (e) => {
+      if (e.target === dialogEditar) {
+        dialogEditar.close();
+      }
+    });
+  }
 
   // Función para llenar el formulario con los datos del invitado
   const llenar = (dialogo: HTMLDialogElement, id: string | undefined, uid: string | undefined) => {

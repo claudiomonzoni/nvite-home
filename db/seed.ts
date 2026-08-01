@@ -1,4 +1,4 @@
-import { Usuario, Invitados, Mesas, db } from 'astro:db';
+import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db } from 'astro:db';
 
 export default async function seed() {
   await db.insert(Usuario).values([
@@ -12,6 +12,7 @@ export default async function seed() {
       fechaEvento: new Date("2026-07-27"), // Faltan 12 días (Alerta preventiva 15 días)
       addonMesas: true,
       addonRecordatorios: false,
+      addonProveedores: true,
     },
     {
       id: 2,
@@ -23,6 +24,7 @@ export default async function seed() {
       fechaEvento: new Date("2026-08-15"), // Faltan 31 días (Normal)
       addonMesas: false,
       addonRecordatorios: false,
+      addonProveedores: false,
     },
     {
       id: 3,
@@ -34,6 +36,7 @@ export default async function seed() {
       fechaEvento: new Date("2026-07-19"), // Faltan 4 días (Alerta crítica 5 días)
       addonMesas: true,
       addonRecordatorios: false,
+      addonProveedores: true,
     }
   ]);
 
@@ -278,6 +281,79 @@ export default async function seed() {
       InvitacionEnviada: true,
       noAsiste: false,
       tipoInvitacion: "grupal"
+    }
+  ]);
+
+  await db.insert(Proveedores).values([
+    {
+      id: 1,
+      usuarioId: 1,
+      nombre: "Fotografía y Video Studio Lux",
+      categoria: "Fotografía y Video",
+      contactoNombre: "Carlos Mendoza",
+      contactoTelefono: "5512345678",
+      presupuestoTotal: 15000,
+      fechaLimitePago: new Date("2026-07-30"),
+      notas: "Incluye sesión de novios previa y álbum digital.",
+    },
+    {
+      id: 2,
+      usuarioId: 1,
+      nombre: "DJ & Iluminación Pro",
+      categoria: "Música / DJ",
+      contactoNombre: "DJ Alex",
+      contactoTelefono: "5598765432",
+      presupuestoTotal: 12000,
+      fechaLimitePago: new Date("2026-08-05"),
+      notas: "Requiere conexión de 220v en la pista de baile.",
+    }
+  ]);
+
+  await db.insert(PagosProveedor).values([
+    {
+      id: 1,
+      proveedorId: 1,
+      monto: 5000,
+      fecha: new Date("2026-06-01"),
+      concepto: "Anticipo 33%",
+    },
+    {
+      id: 2,
+      proveedorId: 1,
+      monto: 5000,
+      fecha: new Date("2026-07-01"),
+      concepto: "Segundo abono",
+    },
+    {
+      id: 3,
+      proveedorId: 2,
+      monto: 4000,
+      fecha: new Date("2026-06-15"),
+      concepto: "Anticipo apartado",
+    }
+  ]);
+
+  await db.insert(TareasProveedor).values([
+    {
+      id: 1,
+      proveedorId: 1,
+      titulo: "Entregar lista de tomas requeridas",
+      fechaLimite: new Date("2026-07-29"),
+      completada: false,
+    },
+    {
+      id: 2,
+      proveedorId: 1,
+      titulo: "Firmar contrato de servicio",
+      fechaLimite: null,
+      completada: true,
+    },
+    {
+      id: 3,
+      proveedorId: 2,
+      titulo: "Definir canciones para vals y entrada",
+      fechaLimite: new Date("2026-08-01"),
+      completada: false,
     }
   ]);
 }

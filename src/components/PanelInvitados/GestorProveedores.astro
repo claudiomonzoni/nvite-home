@@ -1,0 +1,2208 @@
+---
+import { Icon } from "astro-icon/components";
+import { PROVEEDORES_COMUNES, isCommonProviderCovered } from "../../pages/api/proveedores.json.ts";
+
+export interface PagoProps {
+  id: number;
+  proveedorId: number;
+  monto: number;
+  fecha: Date | string;
+  concepto?: string | null;
+}
+
+export interface TareaProps {
+  id: number;
+  proveedorId: number;
+  titulo: string;
+  fechaLimite?: Date | string | null;
+  completada: boolean;
+}
+
+export interface ProveedorProps {
+  id: number;
+  usuarioId: number;
+  nombre: string;
+  categoria: string;
+  contactoNombre?: string | null;
+  contactoTelefono?: string | null;
+  presupuestoTotal: number;
+  fechaLimitePago?: Date | string | null;
+  notas?: string | null;
+  totalPagado: number;
+  saldoPendiente: number;
+  pagos: PagoProps[];
+  tareas: TareaProps[];
+}
+
+interface Props {
+  proveedores: ProveedorProps[];
+  nombreEvento?: string | null;
+}
+
+const { proveedores = [], nombreEvento } = Astro.props;
+
+// Calculate Global Metrics
+const presupuestoTotalGlobal = proveedores.reduce((sum, p) => sum + (p.presupuestoTotal || 0), 0);
+const totalPagadoGlobal = proveedores.reduce((sum, p) => sum + (p.totalPagado || 0), 0);
+const saldoPendienteGlobal = Math.max(0, presupuestoTotalGlobal - totalPagadoGlobal);
+const porcentajePagadoGlobal = presupuestoTotalGlobal > 0 ? Math.round((totalPagadoGlobal / presupuestoTotalGlobal) * 100) : 0;
+
+const categoriasDisponibles = [
+  "Todos",
+  "Fotografía y Video",
+  "Banquete",
+  "Salón / Locación",
+  "Música / DJ",
+  "Flores y Decoración",
+  "Bebidas y Barra",
+  "Postres y Pastelería",
+  "Otros",
+];
+
+const comunesFaltantes = PROVEEDORES_COMUNES.filter(
+  (c) => !isCommonProviderCovered(c, proveedores)
+);
+const todosComunesPrecargados = comunesFaltantes.length === 0;
+---
+
+<div id="gestor-proveedores-root" class="gestor-proveedores-wrapper" data-proveedores={JSON.stringify(proveedores)}>
+  <!-- Top Bar Metrics -->
+  <div class="metricas-container">
+    <div class="card-metrica">
+      <div class="icon-box primario">
+        <Icon name="mdi:calculator-variant-outline" size={26} />
+      </div>
+      <div class="metrica-data">
+        <span class="metrica-val">${presupuestoTotalGlobal.toLocaleString("es-MX")}</span>
+        <span class="metrica-lbl">Presupuesto Comprometido</span>
+      </div>
+    </div>
+
+    <div class="card-metrica">
+      <div class="icon-box primario">
+        <Icon name="mdi:cash-check" size={26} />
+      </div>
+      <div class="metrica-data">
+        <span class="metrica-val">${totalPagadoGlobal.toLocaleString("es-MX")}</span>
+        <span class="metrica-lbl">Total Abonado ({porcentajePagadoGlobal}%)</span>
+      </div>
+    </div>
+
+    <div class="card-metrica">
+      <div class="icon-box primario">
+        <Icon name="mdi:cash-clock" size={26} />
+      </div>
+      <div class="metrica-data">
+        <span class="metrica-val">${saldoPendienteGlobal.toLocaleString("es-MX")}</span>
+        <span class="metrica-lbl">Saldo Pendiente</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Bar & Category Filters -->
+  <div class="controls-bar">
+    <div class="filtros-scroll">
+      {categoriasDisponibles.map((cat) => (
+        <button
+          type="button"
+          class={`cat-filter-btn ${cat === "Todos" ? "active" : ""}`}
+          data-categoria={cat}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <div class="actions-group">
+      <button
+        type="button"
+        id="btn-precargar-proveedores"
+        class={`btn-action btn-precargar ${todosComunesPrecargados ? "disabled" : ""}`}
+        title={todosComunesPrecargados ? "Todos los proveedores comunes ya fueron agregados" : "Inyectar proveedores estándar"}
+        disabled={todosComunesPrecargados}
+      >
+        <Icon name={todosComunesPrecargados ? "mdi:check-all" : "mdi:flash-outline"} size={18} />
+        <span>{todosComunesPrecargados ? "Comunes Precargados" : "Precargar Comunes"}</span>
+      </button>
+
+      <button type="button" id="btn-nuevo-proveedor" class="btn-primary-sm">
+        <Icon name="mdi:store-plus-outline" size={18} />
+        <span>Agregar Proveedor</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Providers Cards Grid (Responsivo en Celular) -->
+  <div id="proveedores-grid" class="proveedores-cards-grid">
+    {proveedores.length === 0 ? (
+      <div class="empty-state-box">
+        <Icon name="mdi:store-search-outline" size={54} />
+        <h3>Aún no tienes proveedores registrados</h3>
+        <p>Gestiona tu presupuesto de fotografía, salón, música y floristas. Agrega uno manualmente o usa <strong>⚡ Precargar Comunes</strong>.</p>
+      </div>
+    ) : (
+      proveedores.map((p) => {
+        const numPagos = p.pagos ? p.pagos.length : 0;
+        const pctPagado = p.presupuestoTotal > 0 ? Math.round((p.totalPagado / p.presupuestoTotal) * 100) : 0;
+        const tareasCompletadas = p.tareas ? p.tareas.filter((t) => t.completada).length : 0;
+        const totalTareas = p.tareas ? p.tareas.length : 0;
+        const esLiquidado = p.presupuestoTotal > 0 && p.saldoPendiente === 0;
+
+        return (
+          <article class="prov-card-item" data-categoria={p.categoria} data-provider-id={p.id}>
+            <div class="card-head">
+              <div class="card-head-left">
+                <span class="cat-pill">{p.categoria}</span>
+                <h3 class="prov-name">{p.nombre}</h3>
+              </div>
+              <span class={`status-badge ${esLiquidado ? "liquidado" : p.saldoPendiente > 0 ? "pendiente" : "indefinido"}`}>
+                {esLiquidado ? "Liquidado" : p.saldoPendiente > 0 ? `Pendiente $${p.saldoPendiente.toLocaleString("es-MX")}` : "Por definir"}
+              </span>
+            </div>
+
+            <div class="prov-card-actions">
+              <button type="button" class="btn-icon" data-id={p.id} title="Editar Proveedor">
+                <Icon name="mdi:pencil-outline" size={20} />
+                <span>Editar</span>
+              </button>
+              <button type="button" class="btn-icon delete btn-delete-prov-card" data-id={p.id} data-nombre={p.nombre} title="Eliminar Proveedor">
+                <Icon name="mdi:delete-outline" size={20} />
+                <span>Borrar</span>
+              </button>
+            </div>
+
+            <div class="card-contact-row">
+              {p.contactoNombre && <span class="c-nombre"><Icon name="mdi:account-outline" size={18} /> {p.contactoNombre}</span>}
+              {p.contactoTelefono && (
+                <a
+                  href={`https://wa.me/${p.contactoTelefono.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="wa-btn"
+                  title="Abrir WhatsApp"
+                  onclick="event.stopPropagation()"
+                >
+                  <Icon name="mdi:whatsapp" size={18} /> {p.contactoTelefono}
+                </a>
+              )}
+            </div>
+
+            <!-- Resumen Financiero -->
+            <div class="card-fin-box">
+              <div class="fin-text-row">
+                <span><strong>{numPagos} {numPagos === 1 ? 'pago' : 'pagos'}:</strong> ${p.totalPagado.toLocaleString("es-MX")} / ${p.presupuestoTotal.toLocaleString("es-MX")}</span>
+                <span class="pct-val">{pctPagado}%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style={`width: ${Math.min(100, pctPagado)}%;`}></div>
+              </div>
+            </div>
+
+            <!-- Checklist status info -->
+            <div class="card-checklist-row">
+              <span><Icon name="mdi:checkbox-marked-circle-outline" size={18} /> Checklist: {tareasCompletadas} de {totalTareas} completadas</span>
+            </div>
+          </article>
+        );
+      })
+    )}
+  </div>
+</div>
+
+<!-- MODAL: AGREGAR PROVEEDOR -->
+<dialog id="agregar-prov-dialog" class="prov-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>+ Agregar Nuevo Proveedor</h2>
+      <button type="button" class="btn-close-modal" data-close="agregar-prov-dialog" title="Cerrar ventana">X</button>
+    </div>
+
+    <form id="form-nuevo-proveedor" class="modal-form-body">
+      <label class="form-label">
+        <span>Nombre del Proveedor *</span>
+        <input type="text" id="new-nombre" name="nombre" required placeholder="Ej. Fotografía Studio Guadalajara" />
+      </label>
+
+      <div class="fields-row">
+        <label class="form-label">
+          <span>Categoría / Giro *</span>
+          <select id="new-categoria" name="categoria" required>
+            {categoriasDisponibles.filter((c) => c !== "Todos").map((cat) => (
+              <option value={cat}>{cat}</option>
+            ))}
+          </select>
+        </label>
+
+        <label class="form-label">
+          <span>Presupuesto Comprometido ($)</span>
+          <input type="number" id="new-presupuesto" name="presupuestoTotal" min="0" placeholder="0.00" />
+        </label>
+      </div>
+
+      <div class="fields-row">
+        <label class="form-label">
+          <span>Nombre de Contacto</span>
+          <input type="text" id="new-contacto" name="contactoNombre" placeholder="Ej. Carlos Mendoza" />
+        </label>
+
+        <label class="form-label">
+          <span>Celular / WhatsApp</span>
+          <input type="tel" id="new-telefono" name="contactoTelefono" placeholder="10 dígitos" />
+        </label>
+      </div>
+
+      <label class="form-label">
+        <span>Fecha Límite de Liquidación (Opcional)</span>
+        <input type="date" id="new-fecha-pago" name="fechaLimitePago" />
+      </label>
+
+      <label class="form-label">
+        <span>Notas o Requerimientos</span>
+        <textarea id="new-notas" name="notas" rows="2" placeholder="Detalles de contrato, ubicación, requerimientos..."></textarea>
+      </label>
+
+      <div class="modal-foot">
+        <button type="button" class="btn-cancel" data-close="agregar-prov-dialog">Cancelar</button>
+        <button type="submit" class="btn-submit">Guardar Proveedor</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- MODAL: DETALLE COMPLETO CON BOTÓN DE CIERRE [X] COHERENTE Y DISEÑO RESPONSIVO -->
+<dialog id="detalle-prov-dialog" class="prov-modal modal-wide">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-titles">
+        <span id="det-categoria-badge" class="cat-pill">Categoría</span>
+        <h2 id="det-nombre-title">Editar Proveedor</h2>
+      </div>
+      <!-- Boton de Cierre X Coherente con EditarInvitado.astro -->
+      <button type="button" id="btn-cerrar-modal-detalle" class="btn-close-modal" title="Cerrar ventana">X</button>
+    </div>
+
+    <!-- Scroll Único del Cuerpo del Modal -->
+    <div class="modal-scroll-body">
+      <div class="modal-body-columns">
+        <!-- Left Column: Data Edit & Payments -->
+        <div class="col-stack">
+          <!-- Accordion Panel 1: General Info -->
+          <div class="sub-panel accordion-panel" data-panel="info">
+            <input type="hidden" id="det-prov-id" name="id" />
+            <div class="accordion-head">
+              <div class="accordion-title">
+                <Icon name="mdi:pencil-box-outline" size={22} />
+                <h3>Información del Proveedor</h3>
+              </div>
+              <div class="accordion-right">
+                <span id="badge-summary-info" class="accordion-badge">Datos básicos</span>
+                <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
+              </div>
+            </div>
+
+            <div class="accordion-content">
+              <div class="fields-row">
+                <label class="form-label">
+                  <span>Nombre del Proveedor</span>
+                  <input type="text" id="det-nombre" name="nombre" required />
+                </label>
+                <label class="form-label">
+                  <span>Categoría / Giro</span>
+                  <select id="det-categoria" name="categoria">
+                    {categoriasDisponibles.filter((c) => c !== "Todos").map((cat) => (
+                      <option value={cat}>{cat}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div class="fields-row">
+                <label class="form-label">
+                  <span>Nombre de Contacto</span>
+                  <input type="text" id="det-contacto" name="contactoNombre" />
+                </label>
+                <label class="form-label">
+                  <span>Celular / WhatsApp</span>
+                  <input type="tel" id="det-telefono" name="contactoTelefono" />
+                </label>
+              </div>
+
+              <div class="fields-row">
+                <label class="form-label">
+                  <span>Presupuesto Comprometido ($)</span>
+                  <input type="number" id="det-presupuesto" name="presupuestoTotal" min="0" />
+                </label>
+                <label class="form-label">
+                  <span>Fecha Límite Pago (Opcional)</span>
+                  <input type="date" id="det-fecha-pago" name="fechaLimitePago" />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion Panel 2: Payments History -->
+          <div class="sub-panel accordion-panel" data-panel="pagos">
+            <div class="accordion-head">
+              <div class="accordion-title">
+                <Icon name="mdi:cash-register" size={22} />
+                <h3>Historial de Abonos / Pagos</h3>
+              </div>
+              <div class="accordion-right">
+                <span id="badge-summary-pagos" class="accordion-badge green">$0 abonado</span>
+                <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
+              </div>
+            </div>
+
+            <div class="accordion-content">
+              <div class="fin-summary-card">
+                <div class="fin-stat">
+                  <span class="l">Acordado</span>
+                  <span id="det-fin-total" class="v">$0</span>
+                </div>
+                <div class="fin-stat">
+                  <span class="l">Abonado</span>
+                  <span id="det-fin-pagado" class="v verde">$0</span>
+                </div>
+                <div class="fin-stat">
+                  <span class="l">Pendiente</span>
+                  <span id="det-fin-pendiente" class="v rojo">$0</span>
+                </div>
+              </div>
+
+              <form id="form-nuevo-pago" class="inline-add-form">
+                <input type="number" id="inp-pago-monto" min="1" step="any" placeholder="Monto $" class="inp-monto" />
+                <input type="date" id="inp-pago-fecha" class="inp-fecha" />
+                <input type="text" id="inp-pago-concepto" placeholder="Concepto (ej. Anticipo 50%)" class="inp-desc" />
+                <button type="submit" class="btn-inline-add">+ Abonar</button>
+              </form>
+
+              <div id="lista-pagos-container" class="items-list">
+                <!-- Dynamic Payments Rows -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Checklist & Notes -->
+        <div class="col-stack">
+          <!-- Accordion Panel 3: Checklist -->
+          <div class="sub-panel accordion-panel" data-panel="tareas">
+            <div class="accordion-head">
+              <div class="accordion-title">
+                <Icon name="mdi:format-list-checks" size={22} />
+                <h3>Checklist de Tareas</h3>
+              </div>
+              <div class="accordion-right">
+                <span id="badge-summary-tareas" class="accordion-badge purple">0 tareas</span>
+                <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
+              </div>
+            </div>
+
+            <div class="accordion-content">
+              <div class="presets-bar">
+                <span class="p-title">Agregar rápido:</span>
+                <button type="button" class="preset-chip" data-task="Anticipo / Reserva apartado">
+                  + Anticipo
+                </button>
+                <button type="button" class="preset-chip" data-task="Firmar contrato de servicio">
+                  + Contrato
+                </button>
+                <button type="button" class="preset-chip" data-task="Definir horario de montaje">
+                  + Montaje
+                </button>
+                <button type="button" class="preset-chip" data-task="Entrega de material final">
+                  + Entregables
+                </button>
+              </div>
+
+              <form id="form-nueva-tarea" class="inline-add-form">
+                <input type="text" id="inp-tarea-titulo" placeholder="Nombre de la tarea..." class="inp-desc" />
+                <input type="date" id="inp-tarea-fecha" title="Fecha límite (Opcional)" class="inp-fecha" />
+                <button type="submit" class="btn-inline-add primary">+ Agregar</button>
+              </form>
+
+              <div id="lista-tareas-container" class="items-list">
+                <!-- Dynamic Tasks Rows -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Accordion Panel 4: Notes & Requirements -->
+          <div class="sub-panel accordion-panel" data-panel="notas">
+            <div class="accordion-head">
+              <div class="accordion-title">
+                <Icon name="mdi:note-text-outline" size={22} />
+                <h3>Notas y Requerimientos</h3>
+              </div>
+              <div class="accordion-right">
+                <span id="badge-summary-notas" class="accordion-badge">Notas</span>
+                <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
+              </div>
+            </div>
+
+            <div class="accordion-content">
+              <textarea id="det-notas" name="notas" rows="3" placeholder="Requerimientos de luz, ubicación, playlists..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Footer for Single Batch Save Action -->
+    <div class="modal-footer-sticky">
+      <div class="save-indicator">
+        <span id="save-status-badge" class="badge-status">Sin cambios</span>
+      </div>
+      <div class="footer-actions">
+        <button type="button" id="btn-cancelar-edicion" class="btn-cancel">Cancelar</button>
+        <button type="button" id="btn-guardar-edicion-global" class="btn-submit btn-save-global">
+           Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const dialogAgregar = document.getElementById("agregar-prov-dialog") as HTMLDialogElement;
+    const dialogDetalle = document.getElementById("detalle-prov-dialog") as HTMLDialogElement;
+
+    const rootElem = document.getElementById("gestor-proveedores-root");
+    let localProveedores: any[] = [];
+    if (rootElem) {
+      try {
+        localProveedores = JSON.parse(rootElem.getAttribute("data-proveedores") || "[]");
+      } catch (e) {}
+    }
+
+    // Decode HTML entities (e.g. &amp; -> &)
+    const decodeHTML = (html: string) => {
+      const txt = document.createElement("textarea");
+      txt.innerHTML = html;
+      return txt.value;
+    };
+
+    // Accordion Toggle Handlers
+    document.querySelectorAll(".accordion-head").forEach((head) => {
+      head.addEventListener("click", () => {
+        const panel = head.closest(".accordion-panel");
+        if (panel) {
+          panel.classList.toggle("collapsed");
+        }
+      });
+    });
+
+    // In-memory draft state for active modal editing without flickering/reloads
+    let draftProv: any = null;
+    let isDirty = false;
+
+    const setDirty = (dirty: boolean) => {
+      isDirty = dirty;
+      const badge = document.getElementById("save-status-badge");
+      const btnSave = document.getElementById("btn-guardar-edicion-global");
+      if (badge) {
+        if (dirty) {
+          badge.textContent = "● Cambios pendientes por guardar";
+          badge.className = "badge-status dirty";
+        } else {
+          badge.textContent = "✓ Todo guardado";
+          badge.className = "badge-status clean";
+        }
+      }
+      if (btnSave) {
+        if (dirty) {
+          btnSave.classList.add("highlight");
+        } else {
+          btnSave.classList.remove("highlight");
+        }
+      }
+    };
+
+    const attemptCloseDetailModal = async () => {
+      if (isDirty) {
+        const confirmSave = confirm("Tienes cambios pendientes por guardar en este proveedor. ¿Deseas guardarlos antes de salir?\n\n[Aceptar] = Guardar cambios\n[Cancelar] = Descartar cambios y salir");
+        if (confirmSave) {
+          await saveGlobalEdits();
+          return;
+        }
+      }
+      setDirty(false);
+      dialogDetalle.close();
+    };
+
+    // Close on backdrop click for both dialogs
+    [dialogAgregar, dialogDetalle].forEach((dialog) => {
+      if (dialog) {
+        dialog.addEventListener("click", (e) => {
+          if (e.target === dialog) {
+            if (dialog === dialogDetalle) {
+              attemptCloseDetailModal();
+            } else {
+              dialog.close();
+            }
+          }
+        });
+      }
+    });
+
+    const btnCerrarDetalle = document.getElementById("btn-cerrar-modal-detalle");
+    if (btnCerrarDetalle) {
+      btnCerrarDetalle.addEventListener("click", attemptCloseDetailModal);
+    }
+
+    const btnCancelarEdicion = document.getElementById("btn-cancelar-edicion");
+    if (btnCancelarEdicion) {
+      btnCancelarEdicion.addEventListener("click", attemptCloseDetailModal);
+    }
+
+    // Close buttons using data-close attribute (e.g. Agregar Proveedor modal)
+    document.querySelectorAll("[data-close]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const dialogId = btn.getAttribute("data-close");
+        if (dialogId) {
+          const dialog = document.getElementById(dialogId) as HTMLDialogElement | null;
+          if (dialog) {
+            dialog.close();
+          }
+        }
+      });
+    });
+
+    // Category Filter Buttons
+    const filterBtns = document.querySelectorAll(".cat-filter-btn");
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const catSelected = btn.getAttribute("data-categoria");
+        const cards = document.querySelectorAll(".prov-card-item");
+
+        cards.forEach((card) => {
+          const cardCat = card.getAttribute("data-categoria");
+          if (catSelected === "Todos" || cardCat === catSelected) {
+            (card as HTMLElement).style.display = "flex";
+          } else {
+            (card as HTMLElement).style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Open Agregar Dialog
+    const btnNuevo = document.getElementById("btn-nuevo-proveedor");
+    if (btnNuevo && dialogAgregar) {
+      btnNuevo.addEventListener("click", () => dialogAgregar.showModal());
+    }
+
+    // Form Nuevo Proveedor
+    const formNuevo = document.getElementById("form-nuevo-proveedor") as HTMLFormElement;
+    if (formNuevo) {
+      formNuevo.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(formNuevo);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const res = await fetch("/api/proveedores.json", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          if (res.ok) {
+            window.location.reload();
+          } else {
+            const err = await res.json();
+            alert(err.error || "Error al agregar proveedor");
+          }
+        } catch (error) {
+          alert("Error de conexión");
+        }
+      });
+    }
+
+    // Precargar Proveedores Comunes
+    const btnPrecargar = document.getElementById("btn-precargar-proveedores") as HTMLButtonElement | null;
+    if (btnPrecargar) {
+      btnPrecargar.addEventListener("click", async () => {
+        if (btnPrecargar.disabled) {
+          alert("Todos los proveedores comunes ya han sido agregados a tu lista.");
+          return;
+        }
+
+        const provs = localProveedores || [];
+        const listaComunes = [
+          { nombre: "Fotografía y Video", categoria: "Fotografía y Video" },
+          { nombre: "Banquete y Catering", categoria: "Banquete" },
+          { nombre: "Locación / Salón de Eventos", categoria: "Salón / Locación" },
+          { nombre: "Música / DJ / Grupo En Vivo", categoria: "Música / DJ" },
+          { nombre: "Flores y Decoración", categoria: "Flores y Decoración" },
+          { nombre: "Bebidas y Barra de Cocteles", categoria: "Bebidas y Barra" },
+          { nombre: "Mesa de Dulces / Pastel", categoria: "Postres y Pastelería" },
+          { nombre: "Vestido / Traje / Maquillaje", categoria: "Estilo y Vestuario" },
+        ];
+
+        const norm = (s: string = "") => s.toLowerCase().trim();
+        const checkCovered = (item: any) => {
+          const tNom = norm(item.nombre);
+          const tCat = norm(item.categoria);
+          return provs.some((p: any) => {
+            const pNom = norm(p.nombre || "");
+            const pCat = norm(p.categoria || "");
+            if (pNom === tNom || pCat === tCat) return true;
+            if (pCat && tCat && (pCat.includes(tCat) || tCat.includes(pCat))) return true;
+            if ((tCat.includes("fotografía") || tCat.includes("video")) && (pCat.includes("fotograf") || pCat.includes("video") || pNom.includes("foto") || pNom.includes("video"))) return true;
+            if (tCat.includes("banquete") && (pCat.includes("banquete") || pNom.includes("banquete") || pNom.includes("catering"))) return true;
+            if ((tCat.includes("salón") || tCat.includes("locación")) && (pCat.includes("salón") || pCat.includes("salon") || pCat.includes("locación") || pCat.includes("locacion") || pNom.includes("salón") || pNom.includes("salon"))) return true;
+            if ((tCat.includes("música") || tCat.includes("dj")) && (pCat.includes("música") || pCat.includes("musica") || pCat.includes("dj") || pNom.includes("dj") || pNom.includes("música") || pNom.includes("musica"))) return true;
+            if ((tCat.includes("flores") || tCat.includes("decoración")) && (pCat.includes("flor") || pCat.includes("decor") || pNom.includes("flor") || pNom.includes("decor"))) return true;
+            if ((tCat.includes("bebidas") || tCat.includes("barra")) && (pCat.includes("bebida") || pCat.includes("barra") || pNom.includes("bebida") || pNom.includes("barra"))) return true;
+            if ((tCat.includes("postres") || tCat.includes("pastelería")) && (pCat.includes("postre") || pCat.includes("pastel") || pNom.includes("dulce") || pNom.includes("pastel"))) return true;
+            if ((tCat.includes("estilo") || tCat.includes("vestuario")) && (pCat.includes("estilo") || pCat.includes("vestuario") || pNom.includes("vestido") || pNom.includes("traje"))) return true;
+            return false;
+          });
+        };
+
+        const faltantes = listaComunes.filter((item) => !checkCovered(item));
+
+        if (faltantes.length === 0) {
+          alert("Todos los proveedores comunes ya han sido agregados a tu lista.");
+          btnPrecargar.disabled = true;
+          btnPrecargar.classList.add("disabled");
+          return;
+        }
+
+        const confirmMsg =
+          faltantes.length === 8
+            ? "¿Deseas precargar la lista de los 8 proveedores más comunes (Fotografía, Banquete, DJ, Flores, etc.)?"
+            : `¿Deseas agregar los ${faltantes.length} proveedores comunes faltantes a tu lista?`;
+
+        if (!confirm(confirmMsg)) {
+          return;
+        }
+
+        btnPrecargar.disabled = true;
+        btnPrecargar.style.opacity = "0.6";
+
+        try {
+          const res = await fetch("/api/proveedores.json", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "precargar" }),
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            alert(data.message || "Proveedores precargados correctamente.");
+            window.location.reload();
+          } else {
+            alert(data.error || "Error al precargar proveedores");
+            btnPrecargar.disabled = false;
+            btnPrecargar.style.opacity = "1";
+          }
+        } catch (e) {
+          alert("Error de conexión");
+          btnPrecargar.disabled = false;
+          btnPrecargar.style.opacity = "1";
+        }
+      });
+    }
+
+    // Render payments locally in memory (0ms delay)
+    const renderPagos = () => {
+      const container = document.getElementById("lista-pagos-container");
+      if (!container || !draftProv) return;
+
+      const pagos = draftProv.pagos || [];
+      const totalPagado = pagos.reduce((sum: number, p: any) => sum + Number(p.monto || 0), 0);
+      draftProv.totalPagado = totalPagado;
+      draftProv.saldoPendiente = Math.max(0, Number(draftProv.presupuestoTotal || 0) - totalPagado);
+
+      (document.getElementById("det-fin-total") as HTMLElement).textContent = `$${Number(draftProv.presupuestoTotal || 0).toLocaleString("es-MX")}`;
+      (document.getElementById("det-fin-pagado") as HTMLElement).textContent = `$${Number(totalPagado).toLocaleString("es-MX")}`;
+      (document.getElementById("det-fin-pendiente") as HTMLElement).textContent = `$${Number(draftProv.saldoPendiente).toLocaleString("es-MX")}`;
+
+      const summaryBadge = document.getElementById("badge-summary-pagos");
+      if (summaryBadge) {
+        summaryBadge.textContent = `$${Number(totalPagado).toLocaleString("es-MX")} abonado`;
+      }
+
+      if (pagos.length === 0) {
+        container.innerHTML = `<p class="empty-msg">No hay abonos registrados aún.</p>`;
+        return;
+      }
+
+      container.innerHTML = pagos
+        .map((p: any, idx: number) => {
+          const fechaStr = p.fecha ? new Date(p.fecha).toLocaleDateString("es-MX") : "";
+          return `
+            <div class="item-row" data-pago-index="${idx}">
+              <div class="row-text">
+                <strong>$${Number(p.monto).toLocaleString("es-MX")}</strong>
+                <span class="sub">${p.concepto || 'Abono'} (${fechaStr})</span>
+              </div>
+              <button type="button" class="btn-del-mini btn-del-pago-draft" data-index="${idx}" title="Eliminar abono">✕</button>
+            </div>
+          `;
+        })
+        .join("");
+
+      container.querySelectorAll(".btn-del-pago-draft").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-index"));
+          draftProv.pagos.splice(idx, 1);
+          renderPagos();
+          setDirty(true);
+        });
+      });
+    };
+
+    // Render tasks locally in memory (0ms delay)
+    const renderTareas = () => {
+      const container = document.getElementById("lista-tareas-container");
+      if (!container || !draftProv) return;
+
+      const tareas = draftProv.tareas || [];
+      const completadas = tareas.filter((t: any) => t.completada).length;
+
+      const summaryBadge = document.getElementById("badge-summary-tareas");
+      if (summaryBadge) {
+        summaryBadge.textContent = `${completadas} de ${tareas.length} completadas`;
+      }
+
+      if (tareas.length === 0) {
+        container.innerHTML = `<p class="empty-msg">No hay tareas en el checklist.</p>`;
+        return;
+      }
+
+      container.innerHTML = tareas
+        .map((t: any, idx: number) => {
+          const fechaStr = t.fechaLimite ? new Date(t.fechaLimite).toLocaleDateString("es-MX") : "";
+          return `
+            <div class="item-row ${t.completada ? 'done' : ''}" data-tarea-index="${idx}">
+              <label class="chk-label">
+                <input type="checkbox" class="chk-tarea-draft" data-index="${idx}" ${t.completada ? 'checked' : ''} />
+                <span class="t-title">${t.titulo}</span>
+              </label>
+              ${fechaStr ? `<span class="date-chip">📅 ${fechaStr}</span>` : ''}
+              <button type="button" class="btn-del-mini btn-del-tarea-draft" data-index="${idx}" title="Eliminar tarea">✕</button>
+            </div>
+          `;
+        })
+        .join("");
+
+      container.querySelectorAll(".chk-tarea-draft").forEach((chk) => {
+        chk.addEventListener("change", (e) => {
+          const idx = Number((e.target as HTMLElement).getAttribute("data-index"));
+          draftProv.tareas[idx].completada = (e.target as HTMLInputElement).checked;
+          renderTareas();
+          setDirty(true);
+        });
+      });
+
+      container.querySelectorAll(".btn-del-tarea-draft").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-index"));
+          draftProv.tareas.splice(idx, 1);
+          renderTareas();
+          setDirty(true);
+        });
+      });
+    };
+
+    const openDetailModal = async (provId: number | string) => {
+      try {
+        let found = localProveedores.find((p: any) => String(p.id) === String(provId));
+
+        if (!found) {
+          try {
+            const res = await fetch("/api/proveedores.json");
+            if (res.ok) {
+              const list = await res.json();
+              found = list.find((p: any) => String(p.id) === String(provId));
+            }
+          } catch (err) {}
+        }
+
+        if (!found) {
+          console.warn("Proveedor no encontrado para ID:", provId);
+          return;
+        }
+
+        // Clone into draft memory object
+        draftProv = JSON.parse(JSON.stringify(found));
+        draftProv.pagos = draftProv.pagos || [];
+        draftProv.tareas = draftProv.tareas || [];
+
+        // Safe element setters with HTML entity decoding
+        const setVal = (id: string, val: any) => {
+          const elem = document.getElementById(id) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+          if (elem) elem.value = decodeHTML(String(val ?? ""));
+        };
+        const setText = (id: string, text: string) => {
+          const elem = document.getElementById(id);
+          if (elem) elem.textContent = decodeHTML(text);
+        };
+
+        setVal("det-prov-id", draftProv.id);
+        setText("det-nombre-title", draftProv.nombre);
+        setText("det-categoria-badge", draftProv.categoria);
+        setVal("det-nombre", draftProv.nombre);
+        setVal("det-categoria", draftProv.categoria);
+        setVal("det-contacto", draftProv.contactoNombre || "");
+        setVal("det-telefono", draftProv.contactoTelefono || "");
+        setVal("det-presupuesto", draftProv.presupuestoTotal || 0);
+        setVal("det-fecha-pago", draftProv.fechaLimitePago ? new Date(draftProv.fechaLimitePago).toISOString().split("T")[0] : "");
+        setVal("det-notas", draftProv.notas || "");
+
+        renderPagos();
+        renderTareas();
+        setDirty(false);
+
+        // Reset all accordion panels to expanded on open
+        document.querySelectorAll(".accordion-panel").forEach((panel) => panel.classList.remove("collapsed"));
+
+        if (dialogDetalle && !dialogDetalle.open) {
+          dialogDetalle.showModal();
+        }
+      } catch (e) {
+        console.error("Error opening detail modal:", e);
+      }
+    };
+
+    // Clean Event Delegation on Providers Grid
+    const provGrid = document.getElementById("proveedores-grid");
+    if (provGrid) {
+      provGrid.addEventListener("click", async (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest(".wa-btn")) {
+          return;
+        }
+        const btnDelete = target.closest(".btn-delete-prov-card");
+        if (btnDelete) {
+          const id = btnDelete.getAttribute("data-id");
+          const nombre = btnDelete.getAttribute("data-nombre");
+          if (!id) return;
+          if (!confirm(`¿Estás seguro de eliminar el proveedor "${nombre}" y todos sus registros?`)) {
+            return;
+          }
+          try {
+            const res = await fetch(`/api/proveedores.json?id=${id}`, {
+              method: "DELETE",
+            });
+            if (res.ok) {
+              window.location.reload();
+            } else {
+              alert("Error al eliminar proveedor");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Error al eliminar proveedor");
+          }
+          return;
+        }
+        const card = target.closest(".prov-card-item");
+        if (card) {
+          const provId = card.getAttribute("data-provider-id");
+          if (provId) {
+            openDetailModal(provId);
+          }
+        }
+      });
+    }
+
+    // Mark dirty on basic field input changes
+    ["det-nombre", "det-categoria", "det-contacto", "det-telefono", "det-presupuesto", "det-fecha-pago", "det-notas"].forEach((fieldId) => {
+      const elem = document.getElementById(fieldId);
+      if (elem) {
+        elem.addEventListener("input", () => {
+          if (draftProv) {
+            draftProv.nombre = (document.getElementById("det-nombre") as HTMLInputElement).value;
+            draftProv.categoria = (document.getElementById("det-categoria") as HTMLSelectElement).value;
+            draftProv.contactoNombre = (document.getElementById("det-contacto") as HTMLInputElement).value;
+            draftProv.contactoTelefono = (document.getElementById("det-telefono") as HTMLInputElement).value;
+            draftProv.presupuestoTotal = Number((document.getElementById("det-presupuesto") as HTMLInputElement).value) || 0;
+            draftProv.fechaLimitePago = (document.getElementById("det-fecha-pago") as HTMLInputElement).value || null;
+            draftProv.notas = (document.getElementById("det-notas") as HTMLTextAreaElement).value;
+            
+            // Recalculate totals
+            const totalPagado = (draftProv.pagos || []).reduce((sum: number, p: any) => sum + Number(p.monto || 0), 0);
+            draftProv.totalPagado = totalPagado;
+            draftProv.saldoPendiente = Math.max(0, draftProv.presupuestoTotal - totalPagado);
+
+            (document.getElementById("det-fin-total") as HTMLElement).textContent = `$${draftProv.presupuestoTotal.toLocaleString("es-MX")}`;
+            (document.getElementById("det-fin-pendiente") as HTMLElement).textContent = `$${draftProv.saldoPendiente.toLocaleString("es-MX")}`;
+
+            setDirty(true);
+          }
+        });
+      }
+    });
+
+    // Local Payment Addition (0ms delay, no reload)
+    const formPago = document.getElementById("form-nuevo-pago") as HTMLFormElement;
+    if (formPago) {
+      formPago.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!draftProv) return;
+
+        const inputMonto = document.getElementById("inp-pago-monto") as HTMLInputElement;
+        const inputFecha = document.getElementById("inp-pago-fecha") as HTMLInputElement;
+        const inputConcepto = document.getElementById("inp-pago-concepto") as HTMLInputElement;
+
+        const monto = Number(inputMonto.value);
+        if (!monto || monto <= 0) {
+          alert("Ingresa un monto válido");
+          return;
+        }
+
+        draftProv.pagos.push({
+          id: Date.now(),
+          proveedorId: draftProv.id,
+          monto,
+          fecha: inputFecha.value || new Date().toISOString().split("T")[0],
+          concepto: inputConcepto.value.trim() || "Abono",
+        });
+
+        inputMonto.value = "";
+        inputConcepto.value = "";
+        
+        renderPagos();
+        setDirty(true);
+      });
+    }
+
+    // Task presets
+    document.querySelectorAll(".preset-chip").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const taskName = btn.getAttribute("data-task");
+        const inputT = document.getElementById("inp-tarea-titulo") as HTMLInputElement;
+        if (inputT && taskName) {
+          inputT.value = taskName;
+          inputT.focus();
+        }
+      });
+    });
+
+    // Local Task Addition (0ms delay, no reload)
+    const formTarea = document.getElementById("form-nueva-tarea") as HTMLFormElement;
+    if (formTarea) {
+      formTarea.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!draftProv) return;
+
+        const inputTitulo = document.getElementById("inp-tarea-titulo") as HTMLInputElement;
+        const inputFecha = document.getElementById("inp-tarea-fecha") as HTMLInputElement;
+
+        const titulo = inputTitulo.value.trim();
+        if (!titulo) {
+          alert("Ingresa el título de la tarea");
+          return;
+        }
+
+        draftProv.tareas.push({
+          id: Date.now(),
+          proveedorId: draftProv.id,
+          titulo,
+          fechaLimite: inputFecha.value || null,
+          completada: false,
+        });
+
+        inputTitulo.value = "";
+        
+        renderTareas();
+        setDirty(true);
+      });
+    }
+
+    // Single Batch Save Action Handler
+    const saveGlobalEdits = async () => {
+      if (!draftProv) return;
+
+      try {
+        const res = await fetch("/api/proveedores.json", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(draftProv),
+        });
+
+        if (res.ok) {
+          setDirty(false);
+          window.location.reload();
+        } else {
+          alert("Error al guardar los cambios del proveedor");
+        }
+      } catch (e) {
+        alert("Error de conexión al guardar los cambios");
+      }
+    };
+
+    const btnSaveGlobal = document.getElementById("btn-guardar-edicion-global");
+    if (btnSaveGlobal) {
+      btnSaveGlobal.addEventListener("click", saveGlobalEdits);
+    }
+  });
+</script>
+
+<style lang="scss">
+  @use "../../estilos/_variables.scss" as *;
+
+  .gestor-proveedores-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0.5rem 0 2rem 0;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      gap: 1.2rem;
+      padding-bottom: 6rem !important;
+    }
+  }
+
+  /* Metric Cards Top (Responsivo Celular) */
+  .metricas-container {
+    display: flex;
+    flex-wrap: wrap;  
+    width: 100%;
+    background: white;
+    border-radius: $radio;
+    justify-content: center;
+    @extend .sombra;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+
+  .card-metrica {
+    flex: 1 0 33%;
+    padding: 1.35rem 1.6rem;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
+    
+    @media (max-width: 768px) {
+      flex: 1 0 100%;
+      padding: 0.95rem 1.1rem;
+      gap: 0.9rem;
+      border-radius: $radio;
+      width: 100%;
+      justify-content: left;
+    }
+  }
+
+  .icon-box {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 44px;
+      height: 44px;
+    }
+
+    &.primario {
+      color: $primario;
+    }
+   
+  }
+
+  .metrica-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metrica-val {
+    font-size: 1.55rem;
+    font-weight: bold;
+    color: $primario;
+    font-family: $fuenteA;
+    line-height: 1.2;
+
+    @media (max-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .metrica-lbl {
+    font-size: 0.85rem;
+    color: $gris;
+    margin-top: 2px;
+
+    @media (max-width: 768px) {
+      font-size: 0.78rem;
+    }
+  }
+
+  /* Controls Bar & Filters (Responsivo Celular) */
+  .controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    width: 100%;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.85rem;
+    }
+  }
+
+  .filtros-scroll {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 4px 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: $margen-min 0;
+    }
+
+    .cat-filter-btn {
+      flex: 1 0 auto;
+      padding: 0.5rem 1rem;
+      border: 1px solid $primario;
+      border-radius: $radio;
+      background: transparent;
+      color: $primario;
+      max-width: fit-content;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      font-family: $fuenteA;
+
+      @media (max-width: 768px) {
+        padding: 0.4rem 0.85rem;
+      }
+
+      &:hover {
+        background: rgba($primario, 0.1);
+      }
+
+      &.active {
+        background: $secundario;
+        color: white;
+        border-color: $secundario;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .actions-group {
+    display: flex;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    margin-left: auto;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+      position: fixed !important;
+      background: rgba(255, 246, 240, 0.96) !important; // Match $fondoGlobal
+      width: 100% !important;
+      max-width: 100vw !important;
+      z-index: 1999 !important;
+      border-top: solid 1px $primario !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      padding: 0.85rem 1rem !important;
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 0.6rem !important;
+      box-sizing: border-box !important;
+      box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08) !important;
+
+      button {
+        flex: 1 !important;
+        width: auto !important;
+        font-size: 0.78rem !important;
+        padding: 0.65rem 0.5rem !important;
+        justify-content: center !important;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  .btn-primary-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: $acento;
+    color: #fff;
+    border: none;
+    border-radius: $radio;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    @extend .sombra;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba($acento, 0.25);
+    }
+  }
+
+  .btn-action {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: $radio;
+    font-size: 0.95rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+
+    @media (max-width: 768px) {
+      padding: 0.7rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    &.btn-agregar {
+      background: $primario;
+      color: white;
+      &:hover {
+        background: darken($primario, 8%);
+      }
+    }
+
+    &.btn-precargar {
+      background: #fdf4ff;
+      color: #a855f7;
+      border: 1px solid #f0abfc;
+      &:hover {
+        background: #fae8ff;
+      }
+      &.disabled, &[disabled] {
+        background: #f3f4f6 !important;
+        color: #9ca3af !important;
+        border-color: #e5e7eb !important;
+        cursor: not-allowed !important;
+        opacity: 0.85 !important;
+        box-shadow: none !important;
+        &:hover {
+          background: #f3f4f6 !important;
+        }
+      }
+    }
+  }
+
+  /* Cards Grid: Responsivo Celular */
+  .proveedores-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 1.75rem;
+    width: 100%;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+  }
+
+  .empty-state-box {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed #cbd5e1;
+    color: #64748b;
+
+    @media (max-width: 768px) {
+      padding: 2.5rem 1rem;
+    }
+
+    h3 {
+      margin: 1rem 0 0.4rem 0;
+      color: $primario;
+      font-size: 1.25rem;
+      font-family: $fuenteA;
+    }
+
+    p {
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  }
+
+  .prov-card-item {
+    background: white;
+    border-radius: $radio;
+    padding: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      padding: 1.2rem;
+      border-radius: $radio;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  .card-head-left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .cat-pill {
+    background: rgba($primario, 0.15);
+    color: $primario;
+    font-size: 0.5rem;
+    padding: 0.1rem 0.7rem;
+    border-radius: $radio;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .prov-name {
+    margin: 0;
+    font-size: clamp(1.2rem, 1.3vw, 1.2rem);
+    color: $primario;
+    font-weight: bold;
+    line-height: 1.3;
+    font-family: $fuenteA;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+
+  .status-badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.1rem 0.7rem;
+    border-radius: 12px;
+    white-space: nowrap;
+
+    &.liquidado {
+      background: rgba($terciario, 0.7);
+      color: $primario;
+    }
+
+    &.pendiente {
+      background: rgba($acento, 0.5);
+      color: white;
+    }
+
+    &.indefinido {
+      background: rgba($fondo, 1);
+      color: white;
+    }
+  }
+
+  .card-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.88rem;
+    color: #475569;
+    flex-wrap: wrap;
+
+    .c-nombre {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+
+  .wa-btn {
+    color: $primario;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba($terciario, 0.5);
+    padding: 4px 12px;
+    border-radius: 8px;
+
+    &:hover {
+      background: #dcfce7;
+    }
+  }
+
+  .card-fin-box {
+    background: #f8fafc;
+    padding: 0.95rem 1.1rem;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .fin-text-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: #334155;
+
+    .pct-val {
+      font-weight: 800;
+      color: $primario;
+    }
+  }
+
+  .progress-track {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #10b981;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+  }
+
+  .card-checklist-row {
+    font-size: 0.85rem;
+    color: #64748b;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+
+  .prov-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .btn-icon {
+    flex: 1;
+    max-width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.2rem .7rem;
+    border-radius: 8px;
+    border: 1px solid rgba($primario, 0.6);
+    color: $primario;
+    background: none !important;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    svg{
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+
+    &.delete {
+      color: $acento;
+      border: 1px solid $acento;
+    }
+  }
+
+  /* MODALS STYLING: BOTÓN [X] COHERENTE CON EDITARINVITADO & RESPONSIVO CELULAR */
+  dialog.prov-modal {
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+   // max-width: 580px;
+    width: 92vw;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    background: white;
+    overflow: hidden;
+    position: relative;
+
+    &::backdrop {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(5px);
+    }
+
+    @media (max-width: 768px) {
+      width: 95vw !important;
+      max-width: 95vw !important;
+      border-radius: 14px !important;
+    }
+
+    &.modal-wide {
+      width: 80vw;
+      max-width: 3000px;
+      height: auto;
+      max-height: 88vh;
+
+      @media (max-width: 768px) {
+        width: 95vw !important;
+        max-width: 95vw !important;
+        max-height: 92vh !important;
+      }
+    }
+  }
+
+  .modal-box {
+    padding: 1.8rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 100%;
+    max-height: 88vh;
+    box-sizing: border-box;
+
+    @media (max-width: 768px) {
+      padding: 1.2rem 1rem !important;
+      max-height: 92vh !important;
+    }
+  }
+
+  .modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1rem;
+    flex-shrink: 0;
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+      color: $primario;
+      font-weight: 700;
+      font-family: $fuenteA;
+      padding-top: .7rem;
+    }
+  }
+
+  .modal-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1rem;
+}
+
+  /* BOTÓN [X] EXACTO A EDITARINVITADO.ASTRO (#cerrar-dialog-editar) */
+  .btn-close-modal {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: white;
+    color: $primario;
+    width: clamp(32px, 4vw, 40px);
+    height: clamp(32px, 4vw, 40px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-weight: 600;
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    z-index: 10;
+    cursor: pointer;
+
+    &:hover {
+      background: #f8f9fa;
+      transform: rotate(90deg);
+    }
+  }
+
+  .modal-scroll-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.25rem 0.2rem 1.25rem 0;
+
+    @media (max-width: 768px) {
+      padding: 0.9rem 0 !important;
+    }
+  }
+
+  .modal-body-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr !important;
+      gap: 1rem !important;
+    }
+  }
+
+  /* ACCORDION PANELS PLEGABLES (RESPONSIVOS) */
+  .sub-panel.accordion-panel {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      border-radius: 12px !important;
+      margin-bottom: 0.85rem !important;
+    }
+
+    .accordion-head {
+      padding: 1.1rem 1.3rem;
+      background: #f8fafc;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.2s ease;
+
+      @media (max-width: 768px) {
+        padding: 0.85rem 1rem !important;
+      }
+
+      &:hover {
+        background: #f1f5f9;
+      }
+    }
+
+    .accordion-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: $primario;
+
+      h3 {
+        margin: 0;
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: $primario;
+        font-family: $fuenteA;
+
+        @media (max-width: 768px) {
+          font-size: 0.95rem !important;
+        }
+      }
+    }
+
+    .accordion-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .accordion-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: #e2e8f0;
+      color: #475569;
+
+      @media (max-width: 768px) {
+        font-size: 0.7rem !important;
+        padding: 2px 8px !important;
+      }
+
+      &.green {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      &.purple {
+        background: #f3e8ff;
+        color: #7e22ce;
+      }
+    }
+
+    .chevron-toggle {
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-content {
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+
+      @media (max-width: 768px) {
+        padding: 1rem !important;
+        gap: 0.95rem !important;
+      }
+    }
+
+    &.collapsed {
+      .accordion-head {
+        border-bottom: none;
+      }
+
+      .chevron-toggle {
+        transform: rotate(-90deg);
+      }
+
+      .accordion-content {
+        display: none !important;
+      }
+    }
+  }
+
+  /* STRICT FORM LABELS & INPUTS DESIGN */
+  label.form-label {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.45rem !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    font-size: 0.88rem !important;
+    padding-top: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    text-align: left !important;
+
+    span {
+      display: block !important;
+      color: #334155 !important;
+      font-weight: 700 !important;
+      font-family: $fuenteA !important;
+    }
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 0.65rem 0.9rem !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    background: white !important;
+    color: #1e293b !important;
+    height: 46px !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    transition: all 0.2s ease !important;
+
+    &:focus {
+      outline: none !important;
+      border-color: $primario !important;
+      box-shadow: 0 0 0 3px rgba(101, 106, 141, 0.15) !important;
+    }
+  }
+
+  textarea {
+    height: auto !important;
+    min-height: 85px !important;
+  }
+
+  .fields-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.2rem !important;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr !important;
+      gap: 0.85rem !important;
+    }
+  }
+
+  /* FORMS RESPONSIVOS EN CELULAR */
+  .inline-add-form {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+
+    input {
+      font-size: 0.84rem !important;
+      padding: 0.5rem 0.7rem !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 8px !important;
+      height: 40px !important;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 0.6rem !important;
+
+      input {
+        width: 100% !important;
+      }
+
+      .btn-inline-add {
+        width: 100% !important;
+        text-align: center !important;
+      }
+    }
+  }
+
+  /* MODAL BUTTONS & INTERACTIVE ELEMENTS STYLING */
+  .btn-submit {
+    background: $acento;
+    color: white;
+    padding: 0.65rem 1.3rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    &:hover {
+      background: darken($primario, 8%);
+      transform: translateY(-1px);
+    }
+
+    &.btn-save-global {
+      background: $primario;
+      color: white;
+      font-size: 0.95rem;
+
+      &.highlight {
+        background: #10b981;
+        box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      }
+    }
+  }
+
+  .btn-cancel {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.65rem 1.2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: 1px solid #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+
+    &:hover {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+  }
+
+  .btn-inline-add {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+    white-space: nowrap;
+
+    &:hover {
+      background: #059669;
+    }
+
+    &.primary {
+      background: $primario;
+      &:hover {
+        background: darken($primario, 8%);
+      }
+    }
+  }
+
+  .preset-chip {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+
+    &:hover {
+      background: #e2e8f0;
+      color: $primario;
+      border-color: #94a3b8;
+    }
+  }
+
+  .presets-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+
+    .p-title {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+  }
+
+  .btn-delete-prov {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 0.55rem 1.1rem;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: $fuenteA;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    &:hover {
+      background: #fee2e2;
+      border-color: #fca5a5;
+    }
+  }
+
+  .badge-status {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 14px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-family: $fuenteA;
+
+    &.dirty {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    &.clean {
+      background: #dcfce7;
+      color: #15803d;
+    }
+  }
+
+  .fin-summary-card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    background: #f8fafc;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    border: 1px solid #f1f5f9;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+
+  .fin-stat {
+    display: flex;
+    flex-direction: column;
+
+    .l {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .v {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #1e293b;
+      font-family: $fuenteA;
+
+      &.verde {
+        color: #10b981;
+      }
+      &.rojo {
+        color: $acento;
+      }
+    }
+  }
+
+  .items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+
+    .empty-msg {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-style: italic;
+      margin: 0.5rem 0;
+    }
+  }
+
+  .item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0.85rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 0.88rem;
+
+    &.done {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+      .t-title {
+        text-decoration: line-through;
+        color: #64748b;
+      }
+    }
+
+    .row-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      .sub {
+        font-size: 0.78rem;
+        color: #64748b;
+      }
+    }
+
+    .chk-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: #1e293b;
+
+      input[type="checkbox"] {
+        width: 18px !important;
+        height: 18px !important;
+        cursor: pointer;
+      }
+    }
+
+    .date-chip {
+      font-size: 0.76rem;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+  }
+
+  :global(.btn-del-mini) {
+    background: $secundario;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 0.65rem;
+    line-height: 1;
+    transition: all 0.2s ease;
+    padding: 0;
+
+    &:hover {
+      transform: scale(1.1);
+      filter: brightness(1.1);
+    }
+  }
+
+  .modal-foot{
+    padding: $margen-min 0;
+    display: flex;
+    justify-content: right;
+    gap: $margen-min;
+  }
+  .modal-footer-sticky {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.1rem;
+    border-top: 2px solid #f1f5f9;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: stretch;
+    }
+  }
+
+  .footer-actions {
+    display: flex;
+    gap: 0.75rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 100%;
+
+      button {
+        width: 100% !important;
+      }
+    }
+  }
+</style>
