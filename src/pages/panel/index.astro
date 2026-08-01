@@ -33,7 +33,8 @@ const ruta = user.ruta;
 const nombreEvento = user.nombreEvento;
 const fechaEvento = user.fechaEvento;
 const addonMesas = user.addonMesas;
-const addonProveedores = user.addonProveedores || user.ruta?.includes("lux");
+// user may not have addonProveedores in its type; cast to any to avoid TS error
+const addonProveedores = (user as any).addonProveedores ?? user.ruta?.includes("lux");
 
 let invitadosData: InvitadoProps[] = [];
 let mesasData: MesaData[] = [];

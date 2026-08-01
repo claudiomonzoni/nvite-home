@@ -69,8 +69,8 @@ export function isCommonProviderCovered(
     ) return true;
 
     if (
-      (targetCat.includes("estilo") || targetCat.includes("vestuario")) &&
-      (pCat.includes("estilo") || pCat.includes("vestuario") || pNom.includes("vestido") || pNom.includes("traje") || pNom.includes("maquillaje"))
+      (targetCat.includes("estilo") || targetCat.includes("vestuario") || targetCat.includes("vestido") || targetCat.includes("traje") || targetCat.includes("maquillaje")) &&
+      (pCat.includes("estilo") || pCat.includes("vestuario") || pCat.includes("vestido") || pCat.includes("traje") || pCat.includes("maquillaje") || pNom.includes("vestido") || pNom.includes("traje") || pNom.includes("maquillaje"))
     ) return true;
 
     return false;
