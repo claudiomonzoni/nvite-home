@@ -15,16 +15,41 @@ const { tipo, ruta, nombreEvento, invitados = [], proveedores = [] } = Astro.pro
 const hoy = new Date();
 hoy.setHours(0, 0, 0, 0);
 
-// Guests confirmed alerts
-const confirmadosAlerts = invitados
-  .filter((inv) => inv.confirmado && !inv.noAsiste)
-  .map((inv) => ({
-    id: `guest-${inv.id}`,
-    tipo: "invitado",
-    titulo: `${inv.nombre} confirmó su asistencia (${inv.pases || 1} pases)`,
-    fecha: null,
-    urgente: false,
-  }));
+// Guests alerts: confirmed, declined, or fewer passes
+const guestsAlerts: any[] = [];
+
+invitados.forEach((inv) => {
+  const pasesAsignados = parseInt(inv.pasesOriginales || inv.pases || "0", 10);
+  const pasesConfirmados = parseInt(inv.pases || "0", 10);
+
+  if (inv.noAsiste) {
+    guestsAlerts.push({
+      id: `guest-declined-${inv.id}`,
+      tipo: "invitado",
+      titulo: `😔 ${inv.nombre} declinó la invitación (No asistirá)`,
+      fecha: null,
+      urgente: false,
+    });
+  } else if (inv.confirmado) {
+    if (pasesConfirmados < pasesAsignados) {
+      guestsAlerts.push({
+        id: `guest-fewer-${inv.id}`,
+        tipo: "invitado",
+        titulo: `⚠️ ${inv.nombre} confirmó con menos pases (${pasesConfirmados} de ${pasesAsignados} asignados)`,
+        fecha: null,
+        urgente: true,
+      });
+    } else {
+      guestsAlerts.push({
+        id: `guest-confirmed-${inv.id}`,
+        tipo: "invitado",
+        titulo: `✅ ${inv.nombre} confirmó su asistencia (${pasesConfirmados} pases)`,
+        fecha: null,
+        urgente: false,
+      });
+    }
+  }
+});
 
 // Provider alerts (ONLY if date is set)
 const proveedoresAlerts: any[] = [];
@@ -67,7 +92,7 @@ proveedores.forEach((p) => {
   }
 });
 
-const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
+const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
 ---
 
 <nav class="nav-container">
@@ -112,7 +137,7 @@ const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
                     <p>{n.titulo}</p>
                   </div>
                   <button type="button" class="btn-dismiss-notif" data-dismiss-id={n.id} title="Descartar notificación">
-                    <Icon name="mdi:close" size={16} />
+                    &times;
                   </button>
                 </div>
               ))
@@ -156,7 +181,10 @@ const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
     // Handle dismissed notifications saved in localStorage
     const getDismissed = (): string[] => {
       try {
-        return JSON.parse(localStorage.getItem("dismissed_notifs") || "[]");
+        const item = localStorage.getItem("dismissed_notifs");
+        if (!item) return [];
+        const parsed = JSON.parse(item);
+        return Array.isArray(parsed) ? parsed : [];
       } catch {
         return [];
       }
@@ -174,13 +202,10 @@ const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
     const dismissedIds = getDismissed();
     const allItems = itemsList.querySelectorAll(".notif-item");
     
-    let visibleCount = 0;
     allItems.forEach((el) => {
       const id = el.getAttribute("data-notif-id");
       if (id && dismissedIds.includes(id)) {
         el.remove();
-      } else {
-        visibleCount++;
       }
     });
 
@@ -204,6 +229,7 @@ const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
     itemsList.addEventListener("click", (e) => {
       const btn = (e.target as HTMLElement).closest(".btn-dismiss-notif");
       if (btn) {
+        e.stopPropagation(); // Evita que se cierre el dropdown al eliminar
         const id = btn.getAttribute("data-dismiss-id");
         if (id) {
           saveDismissed(id);
@@ -412,17 +438,23 @@ const todasNotificaciones = [...confirmadosAlerts, ...proveedoresAlerts];
   .btn-dismiss-notif {
     background: none;
     border: none;
-    color: #94a3b8;
+    color: #64748b;
     cursor: pointer;
-    padding: 2px;
-    border-radius: 4px;
-    display: flex;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 4px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    font-size: 1.4rem;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s ease;
 
     &:hover {
-      color: $acento;
+      color: #ef4444;
       background: #fee2e2;
     }
   }
