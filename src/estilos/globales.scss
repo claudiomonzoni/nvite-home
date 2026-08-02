@@ -479,13 +479,21 @@ mark {
     vertical-align: middle;
     margin: 0;
   }
-  @include cel {
-    width: 100%;
-    img {
-      width: 20px;
+  input,
+  select{
+    padding: .3rem $margen-min;
+    flex: 1 0 100%;
+    font-size: clamp(0.9rem, 0.8vw, 1rem);
+    color: $primario;
+    box-shadow: 0px 5px 6px 0px rgba($primario, 0.3)!important;
+  }
+  a {
+    margin-top: $margen-min;
+    background: rgba($primario, 0.8);
+    &:hover {
+      background: rgba($secundario, 0.5);
     }
   }
-  @extend .sombra;
   form {
     display: flex;
     flex-wrap: wrap;
@@ -504,6 +512,13 @@ mark {
     color: $primario;
     padding-top: $margen-min !important;
   }
+  @include cel {
+    width: 100%;
+    img {
+      width: 20px;
+    }
+  }
+  @extend .sombra;
 }
 
 // Estilos globales de dialogos y backdrop
