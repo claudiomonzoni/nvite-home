@@ -13,6 +13,7 @@ declare namespace App {
       nombreEvento?: string | null;
       fechaEvento?: Date | null;
       addonMesas?: boolean;
+      addonProveedores?: boolean;
       addonRecordatorios?: boolean;
     };
   }

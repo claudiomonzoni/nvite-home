@@ -16,6 +16,7 @@ export const GET: APIRoute = async () => {
         nombreEvento: Usuario.nombreEvento,
         fechaEvento: Usuario.fechaEvento,
         addonMesas: Usuario.addonMesas,
+        addonProveedores: Usuario.addonProveedores,
         addonRecordatorios: Usuario.addonRecordatorios,
         guestCount: sql<number>`COUNT(${Invitados.id})`.mapWith(Number),
       })
@@ -49,6 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
       nombreEvento, 
       fechaEvento, 
       addonMesas, 
+      addonProveedores,
       addonRecordatorios 
     } = await request.json();
 
@@ -125,6 +127,7 @@ export const POST: APIRoute = async ({ request }) => {
       nombreEvento: nombreEvento ? sanitize(nombreEvento.trim()) : null,
       fechaEvento: fechaEvento ? new Date(fechaEvento) : null,
       addonMesas: !!addonMesas,
+      addonProveedores: !!addonProveedores,
       addonRecordatorios: !!addonRecordatorios,
     });
 
@@ -153,6 +156,7 @@ export const PATCH: APIRoute = async ({ request }) => {
       nombreEvento, 
       fechaEvento, 
       addonMesas, 
+      addonProveedores,
       addonRecordatorios 
     } = await request.json();
 
@@ -191,6 +195,9 @@ export const PATCH: APIRoute = async ({ request }) => {
     }
     if (addonMesas !== undefined) {
       updateFields.addonMesas = !!addonMesas;
+    }
+    if (addonProveedores !== undefined) {
+      updateFields.addonProveedores = !!addonProveedores;
     }
     if (addonRecordatorios !== undefined) {
       updateFields.addonRecordatorios = !!addonRecordatorios;

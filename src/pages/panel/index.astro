@@ -7,7 +7,9 @@ import AgregarInvitado from "../../components/PanelInvitados/AgregarInvitado.ast
 import EditarInvitado from "../../components/PanelInvitados/EditarInvitado.astro";
 import AddonCTA from "../../components/PanelInvitados/AddonCTA.astro";
 import GestorMesas from "../../components/PanelInvitados/GestorMesas.astro";
-import { Usuario, Invitados, Mesas, db, eq, desc } from "astro:db";
+import GestorProveedores from "../../components/PanelInvitados/GestorProveedores.astro";
+import type { ProveedorProps } from "../../components/PanelInvitados/GestorProveedores.astro";
+import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db, eq, desc, inArray } from "astro:db";
 import { Icon } from "astro-icon/components";
 
 type MesaData = {
@@ -31,9 +33,12 @@ const ruta = user.ruta;
 const nombreEvento = user.nombreEvento;
 const fechaEvento = user.fechaEvento;
 const addonMesas = user.addonMesas;
+// user may not have addonProveedores in its type; cast to any to avoid TS error
+const addonProveedores = (user as any).addonProveedores ?? user.ruta?.includes("lux");
 
 let invitadosData: InvitadoProps[] = [];
 let mesasData: MesaData[] = [];
+let proveedoresData: ProveedorProps[] = [];
 
 try {
   // Obtén los datos de los invitados
@@ -65,10 +70,39 @@ try {
       .from(Mesas)
       .where(eq(Mesas.usuarioId, usuarioId));
   }
+
+  // Obtén los proveedores si es plan LUX o tiene add-on activo
+  if (addonProveedores) {
+    const provs = await db
+      .select()
+      .from(Proveedores)
+      .where(eq(Proveedores.usuarioId, usuarioId));
+
+    if (provs.length > 0) {
+      const pIds = provs.map((p) => p.id);
+      const pagos = await db.select().from(PagosProveedor).where(inArray(PagosProveedor.proveedorId, pIds));
+      const tareas = await db.select().from(TareasProveedor).where(inArray(TareasProveedor.proveedorId, pIds));
+
+      proveedoresData = provs.map((p) => {
+        const pPagos = pagos.filter((pago) => pago.proveedorId === p.id);
+        const pTareas = tareas.filter((tarea) => tarea.proveedorId === p.id);
+        const totalPagado = pPagos.reduce((sum, pago) => sum + pago.monto, 0);
+
+        return {
+          ...p,
+          totalPagado,
+          saldoPendiente: Math.max(0, p.presupuestoTotal - totalPagado),
+          pagos: pPagos,
+          tareas: pTareas,
+        };
+      });
+    }
+  }
 } catch (error) {
   console.error("Error al obtener los datos:", error);
   invitadosData = [];
   mesasData = [];
+  proveedoresData = [];
 }
 
 // Calcular estadísticas de confirmación
@@ -136,7 +170,7 @@ if (fechaEvento) {
 ---
 
 <Layout title={nombreEvento ? `Panel - ${nombreEvento}` : "Panel de Administración"}>
-  <Menu tipo={tipoInvitacion} ruta={ruta} nombreEvento={nombreEvento} />
+  <Menu tipo={tipoInvitacion} ruta={ruta} nombreEvento={nombreEvento} invitados={invitadosData} proveedores={proveedoresData} />
   
   <!-- Banner de Cuenta Regresiva Amigable (Alineado en el grid original) -->
   {alertaTipo && (
@@ -159,18 +193,28 @@ if (fechaEvento) {
     </section>
   )}
 
-  <!-- Pestañas de Navegación del Panel si el Add-on está activo (Alineado en el grid original) -->
-  {addonMesas && (
+  <!-- Pestañas de Navegación del Panel si Add-ons o LUX están activos -->
+  {(addonMesas || addonProveedores) && (
     <section class="grid contenido no-margin-bottom">
       <div class="tabs-container">
         <button class="tab-btn active" data-tab="invitados">
-          <Icon name="mdi:account-group" size={20} />
+          <Icon name="mdi:account-group-outline" size={20} />
           <span>Invitaciones</span>
         </button>
-        <button class="tab-btn" data-tab="mesas">
-          <Icon name="mdi:table-furniture" size={20} />
-          <span>Gestión de Mesas</span>
-        </button>
+
+        {addonMesas && (
+          <button class="tab-btn" data-tab="mesas">
+            <Icon name="mdi:table-furniture" size={20} />
+            <span>Gestión de Mesas</span>
+          </button>
+        )}
+
+        {addonProveedores && (
+          <button class="tab-btn" data-tab="proveedores">
+            <Icon name="mdi:store-outline" size={20} />
+            <span>Proveedores</span>
+          </button>
+        )}
       </div>
     </section>
   )}
@@ -262,7 +306,7 @@ if (fechaEvento) {
             {usuarioId ? (
 
 <button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
-              <Icon name="mdi:microsoft-excel" size={18} />
+              <Icon name="mdi:file-excel-outline" size={18} />
               <span>Descargar Excel</span>
             </button>
               <button id="agregar-invitado" class="btn-primary-sm">
@@ -354,6 +398,15 @@ if (fechaEvento) {
     <div id="tab-mesas" class="tab-content">
       <section class="grid contenido">
         <GestorMesas mesas={mesasData} invitados={invitadosData} nombreEvento={nombreEvento} fechaEvento={fechaEvento} />
+      </section>
+    </div>
+  )}
+
+  <!-- Contenido de la pestaña PROVEEDORES -->
+  {addonProveedores && (
+    <div id="tab-proveedores" class="tab-content">
+      <section class="grid contenido">
+        <GestorProveedores proveedores={proveedoresData} nombreEvento={nombreEvento} />
       </section>
     </div>
   )}
@@ -610,6 +663,9 @@ if (fechaEvento) {
 
   .tab-content {
     display: none;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 
     &.active {
       display: block;
@@ -704,6 +760,7 @@ if (fechaEvento) {
     display: grid;
        grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
     gap: 1rem;
+    margin-bottom: $margen;
     .invitado-item {
       flex: 1 1 30%;
       list-style: none;

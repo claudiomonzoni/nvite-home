@@ -210,7 +210,8 @@ span {
 }
 
 .modalContent {
-  background-color: var(--primario);
+  background-color: white;
+  color: var(--primario);
   padding: $margen;
   border-radius: $radio;
   text-align: center;

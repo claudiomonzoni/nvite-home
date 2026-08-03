@@ -18,6 +18,7 @@ interface AdminUserData {
   nombreEvento: string | null;
   fechaEvento: Date | null;
   addonMesas: boolean;
+  addonProveedores: boolean;
   addonRecordatorios: boolean;
   guestCount: number;
 }
@@ -34,6 +35,7 @@ try {
       nombreEvento: Usuario.nombreEvento,
       fechaEvento: Usuario.fechaEvento,
       addonMesas: Usuario.addonMesas,
+      addonProveedores: Usuario.addonProveedores,
       addonRecordatorios: Usuario.addonRecordatorios,
       guestCount: sql<number>`COUNT(${Invitados.id})`.mapWith(Number),
     })
@@ -115,7 +117,11 @@ try {
                   usersData.map((cliente) => (
                     <tr class="client-row" data-search-email={cliente.email.toLowerCase()} data-search-ruta={cliente.ruta.toLowerCase()} data-search-tipo={cliente.tipo.toLowerCase()}>
                       <td><strong>{cliente.id}</strong></td>
-                      <td>{cliente.email}</td>
+                      <td>
+                        <a href={`mailto:${cliente.email}`} class="tooltip-btn" title={`Enviar correo a: ${cliente.email}`}>
+                          <Icon name="mdi:email" size={20} />
+                        </a>
+                      </td>
                       <td>{cliente.nombreEvento || <span class="muted">-</span>}</td>
                       <td>
                         {cliente.fechaEvento ? (
@@ -130,15 +136,17 @@ try {
                         </span>
                       </td>
                       <td>
-                        <a href={`/${cliente.tipo}/${cliente.ruta}`} target="_blank" class="invite-link">
-                          /{cliente.ruta}
-                          <Icon name="mdi:open-in-new" size={14} />
+                        <a href={`/${cliente.tipo}/${cliente.ruta}`} target="_blank" class="tooltip-btn route-btn" title={`Ver invitación: /${cliente.ruta}`}>
+                          <Icon name="mdi:link-variant" size={20} />
                         </a>
                       </td>
                       <td>
                         <div class="addons-list-cell">
                           <span class={`status-badge ${cliente.addonMesas ? "active" : "inactive"}`} title="Gestor de Mesas">
                             Mesas
+                          </span>
+                          <span class={`status-badge ${cliente.addonProveedores ? "active" : "inactive"}`} title="Gestor de Proveedores">
+                            Proveedores
                           </span>
                           <span class={`status-badge ${cliente.addonRecordatorios ? "active" : "inactive"}`} title="Recordatorios Automáticos">
                             Recordatorios
@@ -160,6 +168,7 @@ try {
                           data-nombre-evento={cliente.nombreEvento || ""}
                           data-fecha-evento={cliente.fechaEvento ? new Date(cliente.fechaEvento).toISOString().split('T')[0] : ""}
                           data-addon-mesas={cliente.addonMesas ? "true" : "false"}
+                          data-addon-proveedores={cliente.addonProveedores ? "true" : "false"}
                           data-addon-recordatorios={cliente.addonRecordatorios ? "true" : "false"}
                         >
                           <Icon name="mdi:pencil-outline" size={18} />
@@ -232,6 +241,10 @@ try {
             <span>Activar Gestor de Mesas</span>
           </label>
           <label class="checkbox-label">
+            <input type="checkbox" name="addonProveedores" />
+            <span>Activar Proveedores</span>
+          </label>
+          <label class="checkbox-label">
             <input type="checkbox" name="addonRecordatorios" />
             <span>Activar Recordatorios</span>
           </label>
@@ -284,6 +297,10 @@ try {
           <label class="checkbox-label">
             <input type="checkbox" name="addonMesas" id="edit-addon-mesas" />
             <span>Activar Gestor de Mesas</span>
+          </label>
+          <label class="checkbox-label">
+            <input type="checkbox" name="addonProveedores" id="edit-addon-proveedores" />
+            <span>Activar Proveedores</span>
           </label>
           <label class="checkbox-label">
             <input type="checkbox" name="addonRecordatorios" id="edit-addon-recordatorios" />
@@ -354,6 +371,7 @@ try {
         nombreEvento: formData.get("nombreEvento") || null,
         fechaEvento: formData.get("fechaEvento") || null,
         addonMesas: (crearForm.querySelector("[name='addonMesas']") as HTMLInputElement).checked,
+        addonProveedores: (crearForm.querySelector("[name='addonProveedores']") as HTMLInputElement).checked,
         addonRecordatorios: (crearForm.querySelector("[name='addonRecordatorios']") as HTMLInputElement).checked,
         rol: (crearForm.querySelector("[name='isAdmin']") as HTMLInputElement).checked ? "admin" : "cliente"
       };
@@ -389,6 +407,7 @@ try {
         const nombreEvento = btn.getAttribute("data-nombre-evento");
         const fechaEvento = btn.getAttribute("data-fecha-evento");
         const addonMesas = btn.getAttribute("data-addon-mesas") === "true";
+        const addonProveedores = btn.getAttribute("data-addon-proveedores") === "true";
         const addonRecordatorios = btn.getAttribute("data-addon-recordatorios") === "true";
 
         (document.getElementById("edit-id") as HTMLInputElement).value = id || "";
@@ -399,6 +418,7 @@ try {
         (document.getElementById("edit-nombre-evento") as HTMLInputElement).value = nombreEvento || "";
         (document.getElementById("edit-fecha-evento") as HTMLInputElement).value = fechaEvento || "";
         (document.getElementById("edit-addon-mesas") as HTMLInputElement).checked = addonMesas;
+        (document.getElementById("edit-addon-proveedores") as HTMLInputElement).checked = addonProveedores;
         (document.getElementById("edit-addon-recordatorios") as HTMLInputElement).checked = addonRecordatorios;
 
         editarDialog.showModal();
@@ -417,6 +437,7 @@ try {
         nombreEvento: formData.get("nombreEvento") || null,
         fechaEvento: formData.get("fechaEvento") || null,
         addonMesas: (document.getElementById("edit-addon-mesas") as HTMLInputElement).checked,
+        addonProveedores: (document.getElementById("edit-addon-proveedores") as HTMLInputElement).checked,
         addonRecordatorios: (document.getElementById("edit-addon-recordatorios") as HTMLInputElement).checked,
         rol: (document.getElementById("edit-is-admin") as HTMLInputElement).checked ? "admin" : "cliente"
       };
@@ -536,9 +557,7 @@ try {
   }
 
   .admin-content {
-    max-width: 1800px;
     width: 100%;
-    margin: 0 auto;
     padding: 2.5rem 1.5rem;
     flex: 1;
 
@@ -546,7 +565,7 @@ try {
       font-size: 2rem;
       color: $primario;
       margin-bottom: 2rem;
-      font-family: $fuenteB;
+      font-family: $fuenteA;
     }
   }
 
@@ -666,6 +685,41 @@ try {
       text-align: center;
       color: #999;
       padding: 3rem 1.5rem;
+    }
+
+    .tooltip-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: $primario;
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: white;
+        background-color: $acento;
+        border-color: $acento;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba($acento, 0.2);
+      }
+
+      &.route-btn {
+        color: #a855f7;
+        background-color: #faf5ff;
+        border-color: #f3e8ff;
+
+        &:hover {
+          color: white;
+          background-color: #a855f7;
+          border-color: #a855f7;
+          box-shadow: 0 4px 10px rgba(#a855f7, 0.2);
+        }
+      }
     }
 
     .invite-link {

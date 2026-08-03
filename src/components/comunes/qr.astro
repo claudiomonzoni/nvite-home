@@ -7,6 +7,7 @@ type Props = {
   nombreInvitacion?: string | null;
   pases?: string | number | null;
   mesa?: string | number | null;
+  confirmado?: boolean | null;
   noAsiste?: boolean | null;
   value?: string;
   title?: string;
@@ -20,6 +21,7 @@ const {
   nombreInvitacion = null,
   pases,
   mesa,
+  confirmado = false,
   noAsiste = false,
   value,
   title = "Información de invitación",
@@ -43,7 +45,8 @@ const qrValue =
   value ??
   `Invitado: ${displayName}\nPases de invitados: ${displayPases}\nMesa asignada: ${displayMesa}`;
 
-const qrDataUrl = !noAsiste
+const shouldRender = Boolean(confirmado || noAsiste);
+const qrDataUrl = confirmado && !noAsiste
   ? await QRCode.toDataURL(qrValue, {
       width: size,
       margin: 1,
@@ -55,36 +58,38 @@ const qrDataUrl = !noAsiste
   : "";
 ---
 
-<div class={`qr-card ${noAsiste ? 'qr-card--no-asiste' : ''}`}>
-  <div class="qr-card__info">
-    <p class="qr-card__eyebrow">{title}</p>
-    <h3>{displayName}</h3>
+{shouldRender ? (
+  <div class={`qr-card ${noAsiste ? 'qr-card--no-asiste' : ''}`}>
+    <div class="qr-card__info">
+      <p class="qr-card__eyebrow">{title}</p>
+      <h3>{displayName}</h3>
 
-    {noAsiste ? (
-      <div class="qr-card__no-asistencia">
-        <p>Este invitado indicó que no asiste al evento</p>
+      {noAsiste ? (
+        <div class="qr-card__no-asistencia">
+          <p>Este invitado indicó que no asiste al evento</p>
+        </div>
+      ) : (
+        <ul class="qr-card__list">
+          <li>
+            <span>Pases</span>
+            {displayPases}
+          </li>
+          <li>
+            <span>Mesa</span>
+            {displayMesa}
+          </li>
+        </ul>
+      )}
+    </div>
+
+    {!noAsiste && (
+      <div class="qr-card__image">
+        <img src={qrDataUrl} alt={alt ?? `Código QR de ${displayName}`} />
+        {subtitle && <p class="qr-card__subtitle">{subtitle}</p>}
       </div>
-    ) : (
-      <ul class="qr-card__list">
-        <li>
-          <span>Pases</span>
-          {displayPases}
-        </li>
-        <li>
-          <span>Mesa</span>
-          {displayMesa}
-        </li>
-      </ul>
     )}
   </div>
-
-  {!noAsiste && (
-    <div class="qr-card__image">
-      <img src={qrDataUrl} alt={alt ?? `Código QR de ${displayName}`} />
-      {subtitle && <p class="qr-card__subtitle">{subtitle}</p>}
-    </div>
-  )}
-</div>
+) : null}
 
 <style>
   .qr-card {

@@ -83,7 +83,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       )
     }
     <div class="resumen-item completa">
-      <span class="resumen-icon"><Icon name="mdi:calendar-check" size={24} /></span>
+      <span class="resumen-icon"><Icon name="mdi:calendar-check-outline" size={24} /></span>
       <span class="num">{mesasCompletas}</span>
       <span class="lbl">{mesasCompletas === 1 ? 'Mesa completa' : 'Mesas completas'}</span>
     </div>
@@ -101,7 +101,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         <h2>Distribución de Mesas ({mesas.length})</h2>
         <div class="header-actions-group">
           <button id="btn-exportar-mesas" class="btn-excel-sm" title="Exportar Distribución de Mesas a Excel">
-            <Icon name="mdi:microsoft-excel" size={18} />
+            <Icon name="mdi:file-excel-outline" size={18} />
             <span>Descargar Excel</span>
           </button>
           <button id="btn-nueva-mesa" class="btn-primary-sm">
@@ -147,27 +147,30 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                         Capacidad: {mesa.capacidad} asientos
                       </span>
                     </div>
-                    <div class="mesa-header-actions">
-                      <button
-                        class="btn-mesa-edit"
-                        data-action-edit-mesa
-                        data-id={mesa.id}
-                        data-nombre={mesa.nombre}
-                        data-capacidad={mesa.capacidad}
-                        title="Editar Mesa"
-                      >
-                        <Icon name="mdi:pencil" size={16} />
-                      </button>
-                      <button
-                        class="btn-mesa-delete"
-                        data-action-delete-mesa
-                        data-id={mesa.id}
-                        data-nombre={mesa.nombre}
-                        title="Eliminar Mesa"
-                      >
-                        <Icon name="mdi:delete" size={16} />
-                      </button>
-                    </div>
+                  </div>
+
+                  <div class="mesa-header-actions">
+                    <button
+                      class="btn-icon"
+                      data-action-edit-mesa
+                      data-id={mesa.id}
+                      data-nombre={mesa.nombre}
+                      data-capacidad={mesa.capacidad}
+                      title="Editar Mesa"
+                    >
+                      <Icon name="mdi:pencil-outline" size={20} />
+                      <span>Editar</span>
+                    </button>
+                    <button
+                      class="btn-icon delete"
+                      data-action-delete-mesa
+                      data-id={mesa.id}
+                      data-nombre={mesa.nombre}
+                      title="Eliminar Mesa"
+                    >
+                      <Icon name="mdi:delete-outline" size={20} />
+                      <span>Borrar</span>
+                    </button>
                   </div>
 
                   <!-- Barra de Ocupación Visual -->
@@ -188,7 +191,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                       </span>
                       {esExcedido && (
                         <span class="excedido-badge" title="La ocupación supera la capacidad de la mesa">
-                          <Icon name="mdi:alert-circle" size={14} />
+                          <Icon name="mdi:alert-circle-outline" size={14} />
                           <span>Sobrecupo (+{pasesTotales - mesa.capacidad})</span>
                         </span>
                       )}
@@ -307,6 +310,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
   <!-- Modal Crear Mesa -->
   <dialog id="modal-mesa-crear" class="admin-dialog">
+    <button type="button" class="btn-close-modal" data-close-mesa-modal title="Cerrar ventana">X</button>
     <div class="dialog-content">
       <h2>Agregar Nueva Mesa</h2>
       <form id="form-mesa-crear">
@@ -328,6 +332,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
   <!-- Modal Editar Mesa -->
   <dialog id="modal-mesa-editar" class="admin-dialog">
+    <button type="button" class="btn-close-modal" data-close-mesa-modal title="Cerrar ventana">X</button>
     <div class="dialog-content">
       <h2>Editar Mesa</h2>
       <form id="form-mesa-editar">
@@ -356,6 +361,17 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     const editarMesaDialog = document.getElementById("modal-mesa-editar") as HTMLDialogElement;
     const btnNuevaMesa = document.getElementById("btn-nueva-mesa");
     const closeBtns = document.querySelectorAll("[data-close-mesa-modal]");
+
+    // Close on backdrop click for both dialogs
+    [crearMesaDialog, editarMesaDialog].forEach((dialog) => {
+      if (dialog) {
+        dialog.addEventListener("click", (e) => {
+          if (e.target === dialog) {
+            dialog.close();
+          }
+        });
+      }
+    });
 
     btnNuevaMesa?.addEventListener("click", () => {
       crearMesaDialog.showModal();
@@ -703,9 +719,11 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     grid-template-columns: 3fr 1.2fr;
     gap: 2rem;
     align-items: start;
-
+    margin-bottom: $margen;
+    
     @include cel {
       grid-template-columns: 1fr;
+      margin-bottom: 0;
     }
   }
 
@@ -809,17 +827,15 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
   .mesa-card {
     background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba($primario, 0.02);
+    border-radius: $radio;
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+    transition: transform 0.2s, background-color 0.3s;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba($primario, 0.06);
     }
 
     &.llena {
@@ -833,7 +849,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     align-items: flex-start;
 
     .mesa-name {
-      font-size: 1.15rem;
+      font-size: clamp(1.2rem, 1.3vw, 1.2rem);
       color: $primario;
       font-weight: bold;
       margin: 0;
@@ -843,32 +859,43 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       font-size: 0.8rem;
       color: #999;
     }
+  }
 
-    .mesa-header-actions {
-      display: flex;
-      gap: 0.35rem;
+  .mesa-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
 
-      button {
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 0.3rem;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.2s;
+  .btn-icon {
+    flex: 1;
+    max-width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.2rem .7rem;
+    border-radius: 8px;
+    border: 1px solid rgba($primario, 0.6);
+    color: $primario;
+    background: none !important;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    svg{
+      width: 16px;
+      height: 16px;
+    }
 
-        &.btn-mesa-edit {
-          color: $primario;
-          &:hover { background-color: rgba($primario, 0.05); }
-        }
+    &:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
 
-        &.btn-mesa-delete {
-          color: #dc2626;
-          &:hover { background-color: #fef2f2; }
-        }
-      }
+    &.delete {
+      color: $acento;
+      border: 1px solid $acento;
     }
   }
 
@@ -1029,10 +1056,10 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     position: sticky;
     top: $margen-cel;
     background-color: rgba($primario, .2);
-    border-radius: 12px;
+    border-radius: $radio;
     border: 1px solid rgba($primario, 0.06);
     box-shadow: 0 4px 20px rgba($primario, 0.03);
-    padding: 1.5rem;
+    padding: $margen-min 0;
     margin-bottom: $margen-cel;
 
     .unassigned-list-container {
@@ -1067,8 +1094,10 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.6rem 0;
+    padding: 0.6rem ;
     border-bottom: 1px solid #f9fafb;
+    gap: .5rem;
+    margin-left: .3rem!important;
 
     .guest-main {
       display: flex;
@@ -1168,9 +1197,10 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
     h2 {
       font-size: 1.25rem;
-      color: $primario;
+      color: $acento;
+      font-weight: 600;
       margin-bottom: 1rem;
-      font-family: $fuenteB;
+      font-family: $fuenteA;
     }
 
     form {
