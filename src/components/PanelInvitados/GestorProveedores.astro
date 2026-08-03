@@ -1329,10 +1329,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
     gap: 1.75rem;
     width: 100%;
-
+    margin-bottom: $margen;
+    
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       gap: 1.1rem;
+      margin-bottom: 0;
     }
   }
 

@@ -72,7 +72,7 @@ export default async function seed() {
       id: 1,
       uuid: "00000000-0000-0000-0000-000000000001",
       usuarioId: 1,
-      nombre: "Ricardo Salinas Pliego",
+      nombre: "Ricardo Martínez Serra",
       pases: "3",
       mesa: "Mesa Principal",
       mesaId: 1,

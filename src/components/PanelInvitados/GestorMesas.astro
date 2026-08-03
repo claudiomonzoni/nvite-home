@@ -719,9 +719,11 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     grid-template-columns: 3fr 1.2fr;
     gap: 2rem;
     align-items: start;
-
+    margin-bottom: $margen;
+    
     @include cel {
       grid-template-columns: 1fr;
+      margin-bottom: 0;
     }
   }
 

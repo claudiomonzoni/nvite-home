@@ -59,6 +59,9 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
+  const isLuxVersion = typeof version === "string" && version.toLowerCase() === "lux";
+  const luxMessage = '<strong>Tus pases ya están disponibles en código QR al recargar la invitación</strong>';
+
   const btnconfirmarRef = useRef(null);
 
   // Memoizar la URL base de WhatsApp
@@ -275,11 +278,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
           }
         } else {
           // Si no hay mensaje ni nombres, mostramos agradecimiento según el caso
-          setModalMessage(
-            asistira 
-              ? t.modalYes
-              : t.modalNo
-          );
+          const baseMessage = asistira ? t.modalYes : t.modalNo;
+          const finalMessage = isLuxVersion
+            ? `${baseMessage}\n\n${luxMessage}`
+            : baseMessage;
+
+          setModalMessage(finalMessage);
           setModalVisible(true);
         }
       } catch (err) {
@@ -457,10 +461,17 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
       </div>
 
       {modalVisible && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <p>{modalMessage}</p>
-            <button onClick={() => setModalVisible(false)}>Cerrar</button>
+        <div className={styles.modal} onClick={() => setModalVisible(false)}>
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p
+              className={styles.modalText}
+              dangerouslySetInnerHTML={{
+                __html: modalMessage.replace(/\n\n/g, "<br /><br />"),
+              }}
+            />
           </div>
         </div>
       )}

@@ -150,7 +150,7 @@ import Btn from "./Btn.astro";
         <h2>Nvitación Lux</h2>
 
         <ul id="lux">
-          <h3>Todo lo que incluye la Clásica, además:</h3>
+          <h3>Todo lo que incluye la Clásica, más:</h3>
 
           <li class="resalta">
             <h4>
@@ -399,11 +399,15 @@ import Btn from "./Btn.astro";
   #lux {
     h3 {
       padding-bottom: $margen-min;
-      border: solid 1px rgba($primario, 0.4);
+      //border: solid 1px rgba($primario, 0.4);
+      background: rgba($secundario, 1);
+      font-weight: 600;
       border-radius: $radio;
       text-align: center;
       padding: 10px $margen-min;
       margin-bottom: $margen-min;
+      color: white;
+      font-size: clamp(.9rem, 1vw, .9rem);
       @include cel {
         text-align: left;
       }

@@ -194,3 +194,41 @@ span {
   margin-bottom: 2rem;
   font-family: $txt;
 }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 99999;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  opacity: 1;
+}
+
+.modalContent {
+  background-color: white;
+  color: var(--primario);
+  padding: $margen;
+  border-radius: $radio;
+  text-align: center;
+  width: min(100%, 480px);
+  max-width: 480px;
+  box-sizing: border-box;
+  cursor: default;
+  opacity: 1;
+
+  @include cel {
+    padding: $margen-cel;
+  }
+}
+
+.modalText {
+  margin: 0;
+  line-height: 1.6;
+  font-size: clamp(0.95rem, 2.2vw, 1rem);
+  color: var(--primario);
+}
