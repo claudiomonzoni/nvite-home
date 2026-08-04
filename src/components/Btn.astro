@@ -99,13 +99,15 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   .btn-ver-nvitaciones {
     background:#ffffff !important;
     color: $primario;
-    justify-content: left !important;
-
     @include btn;
     @extend .sombra;
 
     &:hover {
       color: $secundario !important;
+    }
+    @include cel{
+      background-color: $secundario !important;
+      color: #fff !important;
     }
   }
   .btn-whatsapp {
