@@ -106,9 +106,11 @@ a {
   }
 }
 .selected {
-  color: $acento;
-  font-weight: 700;
-  font-family: $fuenteB, serif;
+  font-weight: bold;
+  color: white;
+  @include cel {
+    color: $acento;
+  }
 }
 p {
   margin-bottom: 0.6rem;
