@@ -2,9 +2,11 @@
 interface Props {
   title: string;
   description?: string;
+  whatsappProduct?: string;
+  whatsappIconOnly?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, whatsappProduct, whatsappIconOnly } = Astro.props;
 import { ClientRouter } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -188,7 +190,7 @@ import {Font} from "astro:assets";
       <slot />
     </main>
     <Analytics />
-    <WhatsappFloat />
+    <WhatsappFloat product={whatsappProduct} iconOnly={whatsappIconOnly} />
     <script src="../js/reserva.js"></script>
     <script src="../js/globals.ts"></script>
  

@@ -15,9 +15,13 @@ import Btn from "../../components/Btn.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import SocialShare from "../../components/SocialShare.astro";
 import RelatedProducts from "../../components/Pagos/RelatedProducts.astro";
-import Testimonios from "../../components/Testimonios.astro";
 import PreviewModal from "../../components/PreviewModal.astro";
 import BeneficioCard from "../../components/BeneficioCard.astro";
+import BannerGeneral from "../../components/BannerGeneral.astro";
+import Faq from "../../components/Faq.astro";
+import MesasHome from "../../components/MesasHome.astro";
+// Datos
+import nvitacionesData from "./nvitaciones.json";
 
 const panelTestimonials = [
   {
@@ -56,8 +60,7 @@ function getTestimonialIndex(seed: string | undefined, length: number) {
 const testimonial =
   panelTestimonials[getTestimonialIndex(slug, panelTestimonials.length)];
 
-// Datos
-import nvitacionesData from "./nvitaciones.json";
+
 
 // Define the type for nvitacionInfo to include detalles
 type NvitacionInfo = {
@@ -78,10 +81,6 @@ type NvitacionInfo = {
   detalles?: string; // Add detalles property
   video?: string; // Add video property
 };
-import BannerGeneral from "../../components/BannerGeneral.astro";
-import Caracteristicas from "../../components/Caracteristicas.astro";
-import Faq from "../../components/Faq.astro";
-import MesasHome from "../../components/MesasHome.astro";
 
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -188,6 +187,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 <Layout
   title=`${product.data.name} - Invitación Digitales para tu evento`
   description={metaDescription}
+  whatsappProduct={product.data.name}
+  whatsappIconOnly={true}
 >
   <div class="grid contenido">
     <Nav />
@@ -363,7 +364,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             </div>
 
             <p class="price-anchor-detail">
-              <b>Equivale a ${costPerGuest}MXN</b> <small>(cálculo x100 personas).</small> ¡Entre más invitados tengas, más barato porque tus envíos son ilimitados!
+              <b>Equivale a ${costPerGuest}MXN</b> <small>(cálculo x100 personas).</small> ¡Entre más invitados tengas, más barato porque <b> tus envíos son ilimitados!</b>
             </p>
 
             <Btn
@@ -379,39 +380,18 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             <!-- <p class="price-note">
               Compra ahora y personaliza tu invitación, con los colores, tipografía, música, fotos y datos de tu evento · Lista en 2 días hábiles 
             </p> -->
-            <p>
+            <p id="fecha-estimada">
               <!-- <b>Compra ahora y agenda tu invitación sin preocupaciones.</b>  -->
               Fecha estimada de entrega: {calculateDeliveryDate()}
             </p>
+
+
             <p class="price-vs">
-              Imprimir 100 invitaciones: $2,600 MXN — sin música, sin galería de
-              fotos, sin confirmación automática, pero con estrés y mucho tiempo perdido.
+              <b>Invitación impresa: $40–$70 pesos c/u</b> — sin música, sin galerías, sin mapa, sin confirmación. Súmale repartirlas una por una: más gasto y tiempo perdido.
             </p>
           </div>
 
-          <div class="panel-testimonial">
-            {
-              panelTestimonials.map((t, index) => {
-                const isDefault =
-                  index === getTestimonialIndex(slug, panelTestimonials.length);
-                return (
-                  <div
-                    class="testimonial-item"
-                    data-index={index}
-                    style={isDefault ? "display: block;" : "display: none;"}
-                  >
-                    <div class="stars">
-                      {Array.from({ length: t.stars }).map(() => (
-                        <Icon name="solar:star-bold" class="star-icon" />
-                      ))}
-                    </div>
-                    <p class="testimonial-text">{t.text}</p>
-                    <span class="testimonial-author">{t.author}</span>
-                  </div>
-                );
-              })
-            }
-          </div>
+         
           <!-- <Btn
             data-cart
             data-action="increment"
@@ -451,6 +431,32 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               </li>
             </ul>
           </div>
+
+           <div class="panel-testimonial">
+            {
+              panelTestimonials.map((t, index) => {
+                const isDefault =
+                  index === getTestimonialIndex(slug, panelTestimonials.length);
+                return (
+                  <div
+                    class="testimonial-item"
+                    data-index={index}
+                    style={isDefault ? "display: block;" : "display: none;"}
+                  >
+                    <div class="stars">
+                      {Array.from({ length: t.stars }).map(() => (
+                        <Icon name="solar:star-bold" class="star-icon" />
+                      ))}
+                    </div>
+                    <p class="testimonial-text">{t.text}</p>
+                    <span class="testimonial-author">{t.author}</span>
+                  </div>
+                );
+              })
+            }
+          </div>
+
+          
           <a id="terminos" href="/terminos-condiciones"
             >ver terminos y condiciones</a
           >
@@ -608,7 +614,6 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     </BannerGeneral>
   </div>
 
-  <Testimonios />
 
   <div class="grid contenido otrosProductos">
     <RelatedProducts
@@ -622,6 +627,25 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
   <Faq />
   <Footer />
+
+  <!-- Barra de compra sticky en móvil -->
+  <div class="mobile-sticky-bar" id="mobile-sticky-bar">
+    <div class="mobile-sticky-bar-content">
+      <!-- <div class="mobile-price-info">
+        <span class="mobile-price-val">{price.replace(/\.00$/, "")}<sup>.00</sup></span>
+      </div> -->
+      <Btn
+        data-cart
+        data-action="buy-now"
+        data-productid={product.data.id}
+        liga="#"
+        clases="btn-claro btn-carrito mobile-sticky-btn"
+        texto={`Comprar ${product.data.name.replace(/^Nvitaci[oó]n\s+/i, "")}`}
+        icono="mdi:cart-check"
+        claro={true}
+      />
+    </div>
+  </div>
 </Layout>
 
 <style lang="scss">
@@ -648,6 +672,12 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     }
   }
 
+  #fecha-estimada{
+    font-size: 0.9rem;
+    color: $gris;
+    padding-bottom: 1rem;
+    font-weight: bold;
+  }
   #producto-conte {
     display: grid;
     grid-template-columns: 1fr 2.5fr;
@@ -992,6 +1022,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
   }
 
   #quesucede {
+    margin-top: 1rem;
     font-size: 0.9rem;
     color: $gris;
   }
@@ -1110,7 +1141,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     font-size: 12px;
     color: #888;
     background: #fdf8f4;
-    border-left: 3px solid $acento;
+    border-left: 3px solid $fondo;
     padding: 8px 12px;
     border-radius: 0 6px 6px 0;
     margin: 4px 0 8px;
@@ -1245,6 +1276,67 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       }
     }
   }
+
+  /* Estilos para la barra de compra sticky en móvil */
+  .mobile-sticky-bar {
+    display: none; // Oculto por defecto en desktop
+    
+    @include cel {
+      display: block;
+      position: fixed;
+      bottom:0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba($fondoGlobal, .6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: $margen-min $margen-min;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      opacity: 0;
+
+      &.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+
+  .mobile-sticky-bar-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 16px;
+  }
+
+  .mobile-price-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    
+    .mobile-price-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+    
+    .mobile-price-val {
+      font-size: 20px;
+      font-weight: 700;
+      color: $primario;
+      line-height: 1.2;
+      
+      sup {
+        font-size: 0.6em;
+      }
+    }
+  }
+
+ 
 </style>
 
 <script>
@@ -1275,6 +1367,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       this.initializeGallery();
       this.initializePreviewModal();
       this.initializeRandomTestimonial();
+      this.initializeMobileStickyBar();
     }
 
     // Seleccionar un testimonio aleatorio al cargar la página
@@ -1637,6 +1730,38 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
       closeBtn?.addEventListener("click", closeModal);
       backdrop?.addEventListener("click", closeModal);
+    }
+
+    // Inicializa la barra de compra flotante en móvil con IntersectionObserver
+    initializeMobileStickyBar() {
+      // Limpiar clase de transiciones previas
+      document.body.classList.remove("has-mobile-sticky-bar");
+
+      const priceBlock = document.querySelector(".price-block");
+      const stickyBar = document.getElementById("mobile-sticky-bar");
+      if (!priceBlock || !stickyBar) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Solo mostramos la barra flotante si el bloque de precio NO es visible
+            // Y además ha salido por la parte superior de la pantalla (top < 0)
+            const isScrolledPast = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+            if (isScrolledPast) {
+              stickyBar.classList.add("show");
+              document.body.classList.add("has-mobile-sticky-bar");
+            } else {
+              stickyBar.classList.remove("show");
+              document.body.classList.remove("has-mobile-sticky-bar");
+            }
+          });
+        },
+        {
+          rootMargin: "0px 0px -60px 0px", // Margen de anticipación
+        }
+      );
+
+      observer.observe(priceBlock);
     }
   }
 
