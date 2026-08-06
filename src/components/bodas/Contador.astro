@@ -33,21 +33,23 @@ const l = {
   <div class="bande">
     <p id="falta">{l.title}</p>
     <div class="tiempo-container">
-      <div class="tiempo-item">
+      <div class="tiempo-item" id="dias">
         <div id="dias-numero" class="numero"></div>
         <p id="dias-texto">{l.days}</p>
       </div>
-      <div class="tiempo-item">
-        <div id="horas-numero" class="numero"></div>
-        <p>{l.hours}</p>
-      </div>
-      <div class="tiempo-item">
-        <div id="minutos-numero" class="numero"></div>
-        <p>{l.minutes}</p>
-      </div>
-      <div class="tiempo-item">
-        <div id="segundos-numero" class="numero"></div>
-        <p>{l.seconds}</p>
+      <div class="conte-items">
+        <div class="tiempo-item">
+          <div id="horas-numero" class="numero"></div>
+          <p>{l.hours}</p>
+        </div>
+        <div class="tiempo-item">
+          <div id="minutos-numero" class="numero"></div>
+          <p>{l.minutes}</p>
+        </div>
+        <div class="tiempo-item">
+          <div id="segundos-numero" class="numero"></div>
+          <p>{l.seconds}</p>
+        </div>
       </div>
     </div>
   </div>

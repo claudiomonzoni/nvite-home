@@ -60,19 +60,22 @@ import Anchor from "../comunes/Anchor.astro";
       tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
         <div id="mesa-regalos">
           <h3>{l.stores}</h3>
+          <div id="botones">
+
           {mesas.map((mesa) => (
             <Anchor
-              url={mesa.url}
-              id={"estilo"}
-              clases={"large"}
-              conBorde={false}
-              redondo={true}
-              sombra={false}
-              tema={"primario"}
-              texto={mesa.titulo}
-              target="_blank"
+            url={mesa.url}
+            id={"estilo"}
+            clases={"large"}
+            conBorde={false}
+            redondo={true}
+            sombra={false}
+            icono={"mdi:shopping-search-outline"}
+            texto={mesa.titulo}
+            target="_blank"
             />
           ))}
+          </div>
         </div>
       )
     }

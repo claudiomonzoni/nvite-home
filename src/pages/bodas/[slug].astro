@@ -203,6 +203,15 @@ const qrPases = dbInvitado
 const qrMesa = dbInvitado
   ? String(dbInvitado.mesa ?? "")
   : String(fm?.mesaAsignada ?? fm?.mesa ?? fm?.mesaAsignadaInvitado ?? "");
+
+// Calcular fecha límite de confirmación (fecha de la boda menos 30 días)
+const fechaConfirmacion = new Date(boda.data.fecha);
+fechaConfirmacion.setDate(fechaConfirmacion.getDate() - 30);
+const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "es" ? "es-MX" : "en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 ---
 
 <Layout
@@ -279,19 +288,24 @@ const qrMesa = dbInvitado
     }
   </section>
 
- {
-  boda.data.version === "Lux" && (
-    <Qr
-      nombreInvitacion={qrNombre}
-      pases={qrPases}
-      mesa={qrMesa}
-      confirmado={Boolean(dbInvitado?.confirmado)}
-      noAsiste={dbInvitado?.noAsiste}
-      title="Datos de la invitación"
-      subtitle="Muestra tus pases y mesa asignada"
-    />
-  )
-}
+
+  <div class="grid contenido">
+
+    
+    {
+      boda.data.version === "Lux" && (
+        <Qr
+        nombreInvitacion={qrNombre}
+        pases={qrPases}
+        mesa={qrMesa}
+        confirmado={Boolean(dbInvitado?.confirmado)}
+        noAsiste={dbInvitado?.noAsiste}
+        title="Datos de la invitación"
+        subtitle="Muestra tus pases y mesa asignada"
+        />
+      )
+    }
+      </div>
   {
     boda.data.audioMusica && (
       <section class="grid contenido">
@@ -543,7 +557,7 @@ const qrMesa = dbInvitado
               initialInvitado={dbInvitado as any}
               labels={{
                 title: t("invitation.rsvp"),
-                subtitle: t("invitation.rsvp.daysBefore"),
+                subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
                 confirmYes: t("rsvp.confirmYes"),
                 confirmNo: t("rsvp.confirmNo"),
                 howMany: t("rsvp.howMany"),
@@ -579,7 +593,7 @@ const qrMesa = dbInvitado
                   btnConfirm: t("rsvp.btnConfirm"),
                   whatsappMsg: t("rsvp.whatsappMsgYes"),
                   label: t("rsvp.label"),
-                  subtitle: t("invitation.rsvp.daysBefore"),
+                  subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
                   title: t("invitation.rsvp"),
                 }}
               />

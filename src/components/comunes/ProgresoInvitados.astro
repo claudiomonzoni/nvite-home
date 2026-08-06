@@ -114,9 +114,12 @@ try {
                     <div class="barra" style={`--progress: ${porcentajeConfirmados}%`}></div>
                 </div>
                 <p class="detalles">
-                    <span class="confirmados"> {pasesConfirmados} </span>
+                    <span class="confirmados">{pasesConfirmados}</span>
+                    {" "}
                     {l.of}
-                    <span class="total"> {totalPases} </span>
+                    {" "}
+                    <span class="total">{totalPases}</span>
+                    {" "}
                     {l.passesConfirmed}
                 </p>
             </div>
@@ -125,12 +128,13 @@ try {
                 id="confirmacion-btn-progreso"
                 icono="solar:check-read-outline"
                 clases={"large"}
-                neumorfismo={true}
-                redondo={false}
+                redondo={true}
                 sombra={false}
                 tema={"primario"}
                 texto={l.btnConfirm}
             />
+
+            
         </div>
     </div>
 )}

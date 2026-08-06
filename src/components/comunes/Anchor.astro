@@ -43,32 +43,31 @@ const {
   ]}
   {...rest}
 >
-  {icono && <Icon name={icono} size={22} />}
   {texto}
+  {icono && <Icon name={icono} size={22} />}
 </a>
 
 <style lang="scss">
   @use "../../estilos/bodas/_variables.scss" as *;
 
   @mixin liga($conBorde, $redondo, $sombra) {
+    all: unset;
+    display: inline-block !important;
     margin: $margen-min 0;
-    color: white !important;
-    font-family: $txt;
-    background: var(--acento) !important;
-    padding: 0.7rem $margen-cel;
+    color: var(--primario);
+    background: rgba(var(--primario-rgb), 0.1);
+    padding: calc($margen-min - 2px) calc($margen-cel - 7px) $margen-min
+      $margen-cel;
+    text-transform: lowercase;
+    font-size: clamp(1.3rem, 1.5vw, 1.5rem);
     svg {
       vertical-align: middle;
-      padding-bottom: 2px;
+      max-height: 1.2rem;
       color: currentColor !important;
     }
-    img {
-      max-width: 1.5rem !important;
-      height: auto;
-      vertical-align: middle;
-      margin-right: 0.5rem;
-    }
+
     @if $conBorde {
-      border: 1px solid var(--acento);
+      border: 1px solid rgba(var(--primario-rgb), 0.5);
       opacity: 0.8;
     }
     @if $redondo {
@@ -78,7 +77,6 @@ const {
       filter: drop-shadow(0.4rem 0.4rem 0.3rem var(--primario));
     }
     @include cel {
-      display: block;
       width: 100%;
       max-width: 70%;
       box-sizing: border-box;
@@ -88,15 +86,19 @@ const {
   }
 
   .btn {
+    //con-borde, redondo y sombra
     @include liga(false, false, false);
   }
   .con-borde {
+    //con-borde, redondo y sombra
     @include liga(true, null, null);
   }
   .redondo {
+    //con-borde, redondo y sombra
     @include liga(null, true, null);
   }
   .sombra {
+    //con-borde, redondo y sombra
     @include liga(null, null, true);
   }
   .btn-neumorfismo {

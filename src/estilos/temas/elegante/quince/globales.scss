@@ -878,16 +878,11 @@
   // Componente Regalos
 
   #bandejaRegalos {
-    svg {
-      max-width: 2.5rem;
-      height: auto;
-      position: relative;
-      left: 50%;
-      transform: translate(-50%, 0);
-      margin: $margen-min 0;
-
-      path {
-        fill: var(--primario);
+ .titulo {
+      margin-top: $margen;
+      text-align: center;
+      svg {
+        color: var(--secundario);
       }
     }
 
@@ -1109,197 +1104,145 @@
   }
 
   // Componente contador (cuenta regresiva)
-  #demo {
-    color: var(--acento);
-    text-align: center;
-    font-size: clamp(3rem, 5vw, 5rem);
-    font-family: var(--font-heading), serif;
-    padding: $margen 0;
-
-    @include cel {
-      padding: $margen 0 0;
-    }
-  }
-
   #contador {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--secundario);
     position: relative;
 
-    position: relative;
-    margin: 0 0 calc($margen + 3rem) 0;
-    @include cel {
-      margin: $margen-cel 0 0;
-    }
+    padding: $margen 1rem;
 
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0%;
-      right: 0px;
-      transform: translate(-50%, 50%);
-      width: 130px;
-      height: 130px;
-      transform-origin: center;
-      rotate: 180deg;
-      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
-      background-size: contain;
-    }
-
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0%;
-      left: 0px;
-      transform: translate(-50%, 50%);
-      width: 130px;
-      height: 130px;
-      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
-      background-size: contain;
-    }
-
-    &:before,
-    &:after {
-      @include cel {
-        width: 50px;
-        height: 50px;
-      }
-    }
-
-    h3 {
-      color: var(--primario);
+    #falta {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
       font-family: var(--font-heading), serif;
+      font-size: clamp(3.2rem, 6vw, 5.6rem);
+      color: var(--primario);
+      background-color: transparent;
+      padding: 0;
       text-align: center;
-      margin-top: $margen-cel;
-      font-size: clamp(1.8rem, 2vw, 3rem);
+      margin-bottom: 1.5rem;
     }
 
-    #dias-numero {
-      font-weight: bold;
-      color: #fff;
-      font-size: clamp(4rem, 1.5vw, 2rem);
-      @include cel {
-        padding: 0;
-        margin: -10px;
-      }
-    }
-
-    #horas-numero,
-    #minutos-numero,
-    #segundos-numero {
-      font-size: clamp(1.5rem, 2vw, 2.5rem);
-    }
-
-    .tiempo-container {
+    .dias-bloque {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
 
-      @include cel {
-        flex-direction: column;
+      .dias-cards {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
         align-items: center;
-        gap: 0rem;
       }
-    }
 
-    .tiempo-item {
-      text-align: center;
-      padding-right: 2rem;
-      margin-right: 2rem;
-      border-right: solid 1px var(--secundario);
+      .flip-card {
+        position: relative;
+        width: clamp(75px, 16vw, 120px);
+        height: clamp(95px, 20vw, 150px);
+        background: linear-gradient(180deg, color-mix(in srgb, #000, var(--primario) 70%) 0%, var(--primario) 50%);
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(var(--primario-rgb), .5),
+                    inset 0 1px 1px rgba(var(--primario-rgb), .12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
 
-      &:first-child {
-        border-bottom-left-radius: 100px;
-        border-bottom-right-radius: 100px;
-        background-color: var(--acento);
-        padding: $margen $margen $margen-cel;
+        // Línea horizontal divisoria tipo split-flap
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: var(--primario);
+          box-shadow: 0 1px 0 rgba(var(--primario-rgb) 0.12);
+          transform: translateY(-50%);
+          z-index: 2;
+        }
 
-        p {
-          color: #fff !important;
+        // Muescas laterales del split-flap
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: -4px;
+          width: 8px;
+          height: 8px;
+          background: var(--fondo, #fff);
+          border-radius: 50%;
+          transform: translateY(-50%);
+          z-index: 3;
+        }
+
+        .flip-card-inner {
+          
+          font-size: clamp(4.5rem, 9vw, 7.5rem);
+          font-weight: 800;
+          color: var(--terciario);
+          line-height: 1;
+          text-shadow: 0 2px 5px color-mix(in srgb, var(--primario) 70%, black);
+          user-select: none;
         }
       }
 
-      &:last-child {
-        border-right: none;
+      .dias-label {
+        margin-top: 0.8rem;
+        font-family: var(--font-heading), serif;
+        font-size: clamp(6.4rem, 5vw, 10.2rem);
+        font-weight: 800;
+        letter-spacing: 3px;
+        color: var(--primario);
+        text-transform: capitalize;
       }
+    }
 
-      @include cel {
-        padding-right: 0;
-        margin-right: 0;
-        margin-bottom: $margen-cel;
-        border-right: none;
-        border-bottom: solid 1px var(--secundario);
-      }
+    .tiempo-secundario {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: rgba(var(--secundario-rgb), 0.2);
+      padding: 0.6rem 0;
+      border-radius: $radio;
+      width: 100%;
 
-      &:first-child {
-        @include cel {
-          margin-bottom: $margen-min;
+      .secundario-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35rem;
+
+        .secundario-num {
+          font-size: clamp(1.1rem, 2vw, 1.5rem);
+          font-weight: 700;
+          color: var(--primario);
         }
+
+        .secundario-lbl {
+          font-family: var(--font-body), sans-serif;
+          font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+          color: var(--secundario);
+          text-transform: lowercase;
+        }
+
       }
-    }
 
-    .numero {
-      // margin-top: $margen-cel;
-      font-size: clamp(3rem, 5vw, 7rem);
-      color: var(--acento);
-      font-family: var(--font-heading), serif;
-    }
-
-    //recuadro del encabezado
-    p:first-child {
-      color: var(--primario);
-      font-size: clamp(0.8rem, 1.1vw, 1.3rem);
-      background-color: #fff;
-      padding: $margen-min;
-      text-align: center;
-      margin: $margen-cel;
-      text-transform: uppercase;
-      border-bottom: solid 1px var(--acento);
-      border-top: solid 1px var(--acento);
-
-      @include cel {
-        position: absolute;
-        top: 0%;
-        width: 100%;
-        margin: 0px;
-      }
-    }
-
-    p {
-      font-family: var(--font-body), serif;
-      color: var(--primario);
-      font-size: clamp(1.5rem, 1.5vw, 1.5rem);
-      margin: 0;
-    }
-
-    &:before {
-      content: "";
-      width: 90vw;
-      height: 60vh;
-      overflow: hidden;
-      position: absolute;
-      top: 0%;
-      left: 50%;
-      transform: translateX(50%);
-      background: url("/bodas/floral-decor-eleggante-1.svg") no-repeat;
-      background-size: 60%;
-      background-position: center 100%;
-      background-blend-mode: overlay;
-      z-index: -1;
-      opacity: 0.1;
-
-      @include cel {
-        border: solid;
-        background-position: 50% 80%;
-        width: 100vw;
-        background-size: 200%;
-        opacity: 0.2;
+      .secundario-sep {
+        font-weight: 700;
+        color: var(--secundario);
+        opacity: 0.4;
+        font-size: 1.1rem;
       }
     }
   }
+
 
   //componente mensaje Vip
   #mensaje-vip-container {

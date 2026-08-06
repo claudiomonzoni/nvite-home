@@ -202,6 +202,15 @@ const qrPases = dbInvitado
 const qrMesa = dbInvitado
   ? String(dbInvitado.mesa ?? "")
   : String(fm?.mesaAsignada ?? fm?.mesa ?? fm?.mesaAsignadaInvitado ?? "");
+
+// Calcular fecha límite de confirmación (fecha de los XV años menos 30 días)
+const fechaConfirmacion = new Date(quince.data.fecha);
+fechaConfirmacion.setDate(fechaConfirmacion.getDate() - 30);
+const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "es" ? "es-MX" : "en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 ---
 
 <Layout
@@ -499,7 +508,7 @@ const qrMesa = dbInvitado
               initialInvitado={dbInvitado as any}
               labels={{
                 title: t("invitation.rsvp"),
-                subtitle: t("invitation.rsvp.daysBefore"),
+                subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
                 confirmYes: t("rsvp.confirmYes"),
                 confirmNo: t("rsvp.confirmNo"),
                 howMany: t("rsvp.howMany"),
@@ -533,7 +542,7 @@ const qrMesa = dbInvitado
                 client:only="react"
                 labels={{
                   title: t("invitation.rsvp"),
-                  subtitle: t("invitation.rsvp.daysBefore"),
+                  subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
                   btnConfirm: t("rsvp.btnConfirm"),
                   whatsappMsg: t("rsvp.whatsappMsgYes"),
                   label: t("rsvp.label"),

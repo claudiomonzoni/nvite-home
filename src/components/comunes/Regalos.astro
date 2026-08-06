@@ -50,25 +50,30 @@ import Anchor from "../comunes/Anchor.astro";
 ---
 
 <div id="bandejaRegalos">
-  <Icon name={"mdi:wallet-giftcard"} size={40} />
+<div class="titulo">
+    <Icon name={"mdi:wallet-giftcard"} size={40} />
   <h2>{l.title}</h2>
+</div>
   <p set:html={frase} />
   {
     tipo.includes("mesa") && Array.isArray(mesas) && mesas.length > 0 && (
       <div id="regalo">
         <h3>{l.stores}</h3>
+        <div id="botones">
+
         {mesas.map((mesa) => (
           <Anchor
-            url={mesa.url}
-            id={"estilo"}
-            clases={"large"}
-            conBorde={true}
-            redondo={false}
-            neumorfismo={true}
-    
-            texto={mesa.titulo}
+          url={mesa.url}
+          id={"estilo"}
+          tema={"primario"}
+          clases={"large"}
+          conBorde={false}
+          redondo={true}
+          icono={"mdi:shopping-search-outline"}
+          texto={mesa.titulo}
           />
         ))}
+        </div>
       </div>
     )
   }
@@ -105,104 +110,7 @@ import Anchor from "../comunes/Anchor.astro";
     )
   }
 </div>
-<style lang="scss">
-  @use "../../estilos/bodas/_variables.scss" as *;
 
-  //   h3 {
-  //     padding-bottom: 0 !important;
-  //     margin: 0;
-  //   }
-  //    #regalo {
-  //     margin-top: $margen;
-  //     padding: $margen;
-  //     background: url("/bg-floral-regalos-izq.svg") var(--primario);
-  //     background-repeat: no-repeat;
-  //     background-size: contain;
-  //     background-blend-mode: color-burn;
-  //     color: white;
-  //     text-align: center;
-  //    :global(b) {
-  //       color: var(--terciario);
-  //     }
-  //     h2 {
-  //       color: white;
-  //       border-bottom: 1px solid white;
-  //       margin-bottom: $margen-min;
-  //       padding-bottom: $margen-min;
-  //     }
-  //     svg {
-  //       max-width: 2.5rem;
-  //       height: auto;
-  //       margin: 0 auto;
-  //     }
-  //     border-radius: $radio;
-  //     @extend .sombra;
-  //   }
-  //   #lluvia {
-  //     h3 {
-  //       color: var(--acento);
-  //       font-size: clamp(2.2rem, 1.5vw, 2rem);
-  //     }
-  //     background: url("/lluvia.webp") var(--fondoBurn) repeat;
-  //     background-size: contain;
-  //     background-blend-mode:overlay;
-  //     margin: $margen-cel 0;
-  //     padding: $margen $margen-cel;
-  //     text-align: center;
-  //     border-radius: $radio;
-  //     @extend .sombra;
-  //   }
-  //   #transferencias {
-  //     border-radius: $radio;
-  //     padding: $margen $margen-min;
-  //     display: flex;
-  //     flex-wrap: wrap;
-  //     gap: $margen-cel;
-  //     justify-content: center;
-  //     align-items: center;
-  //     text-align: center;
-  //     margin-bottom: $margen-cel;
-  //     background: url("/bg-floral-regalos-der.svg") var(--acento);
-  //     background-position: top right;
-  //     background-repeat: no-repeat;
-  //     background-size: 40%;
-  //     background-blend-mode: color-burn;
-  //     color: var(--terciario);
-  //     @extend .sombra;
-
-  //     h3 {
-  //       color: white;
-  //       font-size: clamp(2rem, 1vw, 2rem);
-  //     }
-  //     b {
-  //       color: white;
-  //     }
-  //     ul {
-  //       color: white;
-  //       text-align: left;
-  //     }
-  //   }
-  //  #regalo,
-  //   #lluvia,
-  //   #transferencias {
-  //     @include cel {
-  //       background-size: cover;
-  //       background-blend-mode: soft-light;
-  //     }
-  //   }
-
-  //   #bandeja {
-  //     margin: 0 auto;
-  //     max-width: 70%;
-  //     padding-bottom: $margen;
-  //     text-align: center;
-  //     @include cel {
-  //       max-width: 100%;
-  //       padding: 0;
-  //       padding-bottom: $margen;
-  //     }
-  //   }
-</style>
 <!-- <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";

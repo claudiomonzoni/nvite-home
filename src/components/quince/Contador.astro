@@ -29,25 +29,32 @@ const l = {
 };
 ---
 
-<div id="demo"></div>
+
+
 <div id="contador">
-<p id="falta">{l.onlyMissing}</p>
-    <div class="tiempo-container">
-        <div class="tiempo-item">
-            <div id="dias-numero" class="numero"></div>
-            <p id="dias-texto">{l.days}</p>
+    <p id="falta">{l.onlyMissing}</p>
+    
+    <!-- Bloque de Días estilo Aeropuerto Split-Flap -->
+    <div class="dias-bloque">
+        <div id="dias-cards" class="dias-cards"></div>
+        <p id="dias-texto" class="dias-label">{l.days}</p>
+    </div>
+
+    <!-- Resto de tiempo (Horas, Minutos, Segundos) en pequeño y en línea -->
+    <div class="tiempo-secundario">
+        <div class="secundario-item">
+            <span id="horas-numero" class="secundario-num">00</span>
+            <span class="secundario-lbl">{l.hours}</span>
         </div>
-        <div class="tiempo-item">
-            <div id="horas-numero" class="numero"></div>
-            <p>{l.hours}</p>
+        <span class="secundario-sep">:</span>
+        <div class="secundario-item">
+            <span id="minutos-numero" class="secundario-num">00</span>
+            <span class="secundario-lbl">{l.minutes}</span>
         </div>
-        <div class="tiempo-item">
-            <div id="minutos-numero" class="numero"></div>
-            <p>{l.minutes}</p>
-        </div>
-        <div class="tiempo-item">
-            <div id="segundos-numero" class="numero"></div>
-            <p>{l.seconds}</p>
+        <span class="secundario-sep">:</span>
+        <div class="secundario-item">
+            <span id="segundos-numero" class="secundario-num">00</span>
+            <span class="secundario-lbl">{l.seconds}</span>
         </div>
     </div>
 </div>
@@ -89,17 +96,24 @@ const l = {
     function actualizarContador() {
         const tiempo = calcularTiempoRestante(fecha);
 
-        const diasElement = document.getElementById("dias-numero");
+        const diasCardsElement = document.getElementById("dias-cards");
         const horasElement = document.getElementById("horas-numero");
         const minutosElement = document.getElementById("minutos-numero");
         const segundosElement = document.getElementById("segundos-numero");
         const contadorContainer = document.getElementById("contador");
         const demoElement = document.getElementById("demo");
 
-        if (diasElement) diasElement.innerHTML = tiempo.dias;
-        if (horasElement) horasElement.innerHTML = tiempo.horas;
-        if (minutosElement) minutosElement.innerHTML = tiempo.minutos;
-        if (segundosElement) segundosElement.innerHTML = tiempo.segundos;
+        if (diasCardsElement) {
+            const diasStr = String(tiempo.dias).padStart(2, "0");
+            diasCardsElement.innerHTML = diasStr
+                .split("")
+                .map((d) => `<div class="flip-card"><span class="flip-card-inner">${d}</span></div>`)
+                .join("");
+        }
+
+        if (horasElement) horasElement.innerHTML = String(tiempo.horas).padStart(2, "0");
+        if (minutosElement) minutosElement.innerHTML = String(tiempo.minutos).padStart(2, "0");
+        if (segundosElement) segundosElement.innerHTML = String(tiempo.segundos).padStart(2, "0");
 
         const faltaElement = document.getElementById("falta");
         const diasTexto = document.getElementById("dias-texto");

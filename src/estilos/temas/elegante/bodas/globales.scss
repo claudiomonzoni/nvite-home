@@ -45,7 +45,7 @@
       background-blend-mode: overlay;
       z-index: -1;
       opacity: 0.1;
-      
+
       @include cel {
         left: 0;
         top: 40%;
@@ -124,7 +124,6 @@
     font-size: clamp(1.3em, 1vw, 2vw);
     font-family: $encabezados, serif;
   }
-  
 
   #BaseItinerario {
     h2 {
@@ -145,19 +144,19 @@
         color: var(--fondo);
         font-family: $garigol, serif;
         line-height: 2.2rem;
-        font-size: clamp(2.5rem, 2vw, 2.5rem)!important;
+        font-size: clamp(2.5rem, 2vw, 2.5rem) !important;
       }
       p {
         color: var(--secundario);
         margin-bottom: none;
-        font-size: clamp(1.2rem, 1.5vw, 2rem)!important;
+        font-size: clamp(1.2rem, 1.5vw, 2rem) !important;
       }
       P:last-child {
         margin: 0 auto;
-        font-size: clamp(1.6rem, 1.8vw, 2rem)!important;
-       border-top: 1px solid;
-       padding-top: $margen-min;
-       max-width: 30%;
+        font-size: clamp(1.6rem, 1.8vw, 2rem) !important;
+        border-top: 1px solid;
+        padding-top: $margen-min;
+        max-width: 30%;
       }
       li {
         margin: $margen 0;
@@ -171,8 +170,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url("/bodas/corona-flores-negro.png")
-        no-repeat;
+      background: url("/bodas/corona-flores-negro.png") no-repeat;
       background-size: 40%;
       background-position: center 110%;
       mix-blend-mode: multiply;
@@ -326,7 +324,7 @@
   }
 
   // compoenente padres
- #padres {
+  #padres {
     h2 {
       text-align: center;
       font-family: $garigol, serif;
@@ -478,7 +476,7 @@
 
   //componente pases...
   #pases {
-    #invitados{
+    #invitados {
       font-size: clamp(2.5rem, 4vw, 4rem);
     }
     #bande {
@@ -533,7 +531,7 @@
     margin: 0 auto;
     padding: $margen 0;
     @include cel {
-      padding: 8rem 0 $margen 0!important;
+      padding: 8rem 0 $margen 0 !important;
     }
   }
 
@@ -586,28 +584,26 @@
 
   .porcentaje .numero {
     font-family: $encabezados, serif;
-    font-size: clamp(5rem, 4vw, 5vw)!important;
+    font-size: clamp(5rem, 4vw, 5vw) !important;
     font-weight: 100;
     padding-bottom: $margen-min;
   }
-  
-  
-  
+
   .detalles .confirmados,
   .detalles .total {
     font-weight: bold;
     color: var(--acento);
   }
-  
+
   @media (max-width: 768px) {
     .progreso-invitados {
       padding: 1rem;
     }
-    
+
     .porcentaje .numero {
       font-size: 2.5rem;
     }
-    
+
     .porcentaje .texto {
       font-weight: 100;
       font-size: 1rem;
@@ -631,7 +627,6 @@
     padding: $margen $margen-min;
     border-top: 1px solid var(--acento);
     border-bottom: 1px solid var(--acento);
-   
   }
 
   // Componente Titulos
@@ -679,12 +674,15 @@
       z-index: 100;
       position: absolute;
       border-radius: calc(5px * var($radio));
-      box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      box-shadow:
+        0 0 #0000,
+        0 0 #0000,
+        0 25px 50px -12px rgba(0, 0, 0, 0.25);
       padding: 1.6rem;
       scale: 1;
       transition: scale 0.5s ease-in-out;
       border: none;
-      
+
       // Estado inicial para animación
       &:not([open]) {
         scale: 0;
@@ -804,7 +802,7 @@
     }
     .conte {
       padding: $margen-cel $margen;
-      svg{
+      svg {
         width: 2rem;
         height: auto;
         vertical-align: middle;
@@ -839,17 +837,19 @@
       padding-bottom: 0 !important;
       margin: 0;
     }
+    #botones {
+      display: flex;
+      justify-content: center;
+      gap: $margen-min;
+      margin-top: $margen-min;
+      flex-wrap: wrap;
+    }
     #regalo {
       margin-top: $margen;
-      padding: $margen;
-      // background: url("/bg-floral-regalos-izq.svg") var(--primario);
-      // background-repeat: no-repeat;
-      // background-size: contain;
-      // background-blend-mode: color-burn;
-      // color: white;
+      padding: $margen $margen-cel;
       text-align: center;
       border: solid 1px var(--acento);
-    
+
       h2 {
         color: var(--primario);
         border-bottom: 1px solid white;
@@ -866,13 +866,14 @@
     }
     #lluvia {
       h3 {
-      font-family: $garigol, serif;
-      color: var(--primario);
-      font-size: clamp(2rem, 2vw, 3rem);
+        font-family: $garigol, serif;
+        color: var(--primario);
+        font-size: clamp(2rem, 2vw, 3rem);
       }
-      background: 
-      linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)), // capa blanca semitransparente
-      url("/lluvia.webp") var(--fondoBurn) repeat;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+        // capa blanca semitransparente
+        url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
       background-blend-mode: overlay;
       margin: $margen-cel 0;
@@ -880,13 +881,12 @@
       text-align: center;
       color: var(--primario);
       @extend .sombra;
-      p{
+      p {
         max-width: 80%;
         margin: 0 auto;
       }
     }
     #transferencias {
-   
       padding: $margen $margen-min;
       display: flex;
       flex-direction: column;
@@ -911,7 +911,7 @@
       }
       color: var(--terciario);
       @extend .sombra;
-      
+
       h3 {
         font-family: $garigol, serif;
         color: white;
@@ -923,8 +923,7 @@
       ul {
         color: white;
         text-align: left;
-        li{
-
+        li {
           text-align: center;
         }
       }
@@ -948,8 +947,7 @@
   }
 
   // Componente contador (cuenta regresiva)
-
-  #contador {
+ #contador {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -957,83 +955,72 @@
     border: 0.5px solid var(--acento);
     position: relative;
     padding: $margen;
-    margin-bottom: $margen;
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0%;
-      right: 0px;
-      transform: translate(-50%, 50%);
-      width: 130px;
-      height: 130px;
-      transform-origin: center;
-      rotate: 180deg;
-      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
-      background-size: contain;
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0%;
-      left: 0px;
-      transform: translate(-50%, 50%);
-      width: 130px;
-      height: 130px;
-      // background: url("/bodas/esquina-floral-1.jpg") no-repeat center;
-      background-size: contain;
-    }
-    &:before,
-    &:after {
-      @include cel {
-        width: 50px;
-        height: 50px;
+    margin: $margen 0;
+
+   
+
+
+    #dias {
+      //transform: translateY(-60%);
+      flex: 1 0 100%;
+
+      .numero {
+        font-size: clamp(4rem, 6vw, 8.5rem);
+      }
+
+      p {
+        font-family: var(--font-heading), serif;
+        color: var(--secundario);
+        font-weight: lighter;
+        font-size: clamp(3rem, 4vw, 5rem);
+        margin: 0;
       }
     }
 
-    h3 {
-      color: var(--primario);
-      font-family: $garigol, serif;
-      text-align: center;
-      margin-top: $margen-cel;
-      font-size: clamp(1.8rem, 2vw, 3rem);
-    }
-    #dias {
-      transform: translateY(-60%);
-    }
-
+    
     .tiempo-container {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+      margin-top: 1rem;
+      
       @include cel {
-        align-items: center;
-        gap: 0rem;
+        gap: 1rem;
       }
+    }
+    
+    .conte-items {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
     }
     .tiempo-item {
       text-align: center;
       padding-right: 2rem;
-      margin-right: 2rem;
-      border-right: solid 1px var(--secundario);
+
       &:last-child {
         border-right: none;
       }
+
       @include cel {
-        flex: 1 0 40%;
-        margin: 0 $margen-min;
         padding-right: 0;
-        margin-right: 0;
-        border-right: none;
-        // border-bottom: solid 1px var(--secundario);
+        padding: 0 1rem;
+       
+        
       }
     }
+
     .numero {
-      margin-top: $margen-cel;
-      font-size: clamp(3rem, 5vw, 7rem);
+      font-size: clamp(1.5rem, 2vw, 3rem);
       color: var(--acento);
       font-family: $encabezados, serif;
     }
-    // este es el encabezado
+
+    #segundos-numero {
+      color: var(--secundario);
+    }
+
     p:first-child {
       position: absolute;
       top: 0%;
@@ -1041,25 +1028,21 @@
       transform: translate(-50%, -50%);
       color: var(--acento);
       border: solid 0.5px var(--secundario);
-      background: white;
-      padding: .7rem $margen-min;
+      background: url("textuta-bg-2.webp") var(--fondo) no-repeat;
+      padding: $margen-min $margen-cel;
       text-align: center;
     }
+
     p {
-      font-family: $encabezados, serif;
-      color: var(--primario);
-      font-size: clamp(1.5rem, 1.5vw, 1.5rem);
+      font-family: var(--font-heading), serif;
+      color: var(--secundario);
+      font-weight: 300;
+      font-size: clamp(1rem, 1.5vw, 1.5rem);
       margin: 0;
     }
+
     @include cel {
       padding: $margen-cel;
-      h3 {
-        font-size: clamp(1.5rem, 2vw, 2.5rem);
-      }
-      .numero {
-        font-size: clamp(3rem, 4vw, 4rem);
-        margin-top: $margen-min;
-      }
     }
   }
   // Componente galeria Gsap
@@ -1118,13 +1101,13 @@
   #mensaje-vip-container {
     display: none;
     margin: $margen;
-    
+
     .mensaje-vip {
       padding-top: $margen;
-      
+
       position: relative;
     }
-    
+
     .etiqueta-vip {
       position: absolute;
       top: 0rem;
@@ -1132,9 +1115,9 @@
       border: solid 1px var(--primario);
       color: var(--primario);
       font-size: 0.8rem;
-      padding: 0.3rem 1.3rem
+      padding: 0.3rem 1.3rem;
     }
-    
+
     .mensaje-contenido {
       display: flex;
       align-items: flex-start;
@@ -1157,8 +1140,8 @@
         }
       }
     }
-  
-      @include cel{
+
+    @include cel {
       margin: $margen-cel;
     }
   }
