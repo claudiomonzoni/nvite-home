@@ -1847,7 +1847,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     border-radius: 8px !important;
     font-size: 0.9rem !important;
     background: white !important;
-    color: #1e293b !important;
+    color: $primario !important;
+    font-family: $fuenteA !important;
     height: 46px !important;
     box-shadow: none !important;
     margin: 0 !important;
@@ -2110,22 +2111,22 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     }
   }
 
-  .item-row {
+  #lista-pagos-container :global(.item-row),
+  #lista-tareas-container :global(.item-row) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.65rem 0.85rem;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: $radio;
     font-size: 0.88rem;
+    background: rgba($terciario, 0.3);
 
     &.done {
-      background: #f0fdf4;
-      border-color: #bbf7d0;
+      background: transparent;
       .t-title {
         text-decoration: line-through;
-        color: #64748b;
+        color: #94a3b8;
       }
     }
 
@@ -2133,6 +2134,9 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       display: flex;
       flex-direction: column;
       gap: 2px;
+      flex: 1;
+      min-width: 0;
+
       .sub {
         font-size: 0.78rem;
         color: #64748b;
@@ -2146,11 +2150,20 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       cursor: pointer;
       font-weight: 600;
       color: #1e293b;
+      flex: 1;
+      min-width: 0;
 
       input[type="checkbox"] {
         width: 18px !important;
         height: 18px !important;
         cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      .t-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
 
@@ -2161,7 +2174,13 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       padding: 2px 8px;
       border-radius: 8px;
       font-weight: 600;
+      flex-shrink: 0;
     }
+  }
+
+  #lista-pagos-container :global(.item-row:last-child),
+  #lista-tareas-container :global(.item-row:last-child) {
+    border-bottom: none;
   }
 
   :global(.btn-del-mini) {
@@ -2180,6 +2199,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     line-height: 1;
     transition: all 0.2s ease;
     padding: 0;
+    flex-shrink: 0;
+    margin-left: auto;
 
     &:hover {
       transform: scale(1.1);
