@@ -1006,7 +1006,6 @@ p{
     align-items: center;
     color: var(--secundario);
     position: relative;
-
     padding: $margen 1rem;
 
     #falta {
@@ -1107,6 +1106,10 @@ p{
       background: rgba(var(--secundario-rgb), 0.2);
       padding: 0.6rem 1.6rem;
       border-radius: $radio;
+      @include cel {
+        gap: 0.5rem;
+        padding: .7rem 1rem;
+      }
 
       .secundario-item {
         display: flex;
@@ -1133,6 +1136,9 @@ p{
         opacity: 0.4;
         font-size: 1.1rem;
       }
+    }
+    @include cel {
+      padding: $margen-cel 0;
     }
   }
 

@@ -526,7 +526,6 @@
   }
 
   .bloqueMapa:last-child .der {
-
     margin-top: 3rem;
   }
 
@@ -693,7 +692,7 @@
     padding: $margen;
     position: relative;
     font-size: clamp(1.3rem, 1.3vw, 2vw);
-    
+
     &::before {
       content: "";
       position: absolute;
@@ -878,7 +877,7 @@
   // Componente Regalos
 
   #bandejaRegalos {
- .titulo {
+    .titulo {
       margin-top: $margen;
       text-align: center;
       svg {
@@ -1145,10 +1144,15 @@
         position: relative;
         width: clamp(75px, 16vw, 120px);
         height: clamp(95px, 20vw, 150px);
-        background: linear-gradient(180deg, color-mix(in srgb, #000, var(--primario) 70%) 0%, var(--primario) 50%);
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, #000, var(--primario) 70%) 0%,
+          var(--primario) 50%
+        );
         border-radius: 16px;
-        box-shadow: 0 10px 25px rgba(var(--primario-rgb), .5),
-                    inset 0 1px 1px rgba(var(--primario-rgb), .12);
+        box-shadow:
+          0 10px 25px rgba(var(--primario-rgb), 0.5),
+          inset 0 1px 1px rgba(var(--primario-rgb), 0.12);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1183,7 +1187,6 @@
         }
 
         .flip-card-inner {
-          
           font-size: clamp(4.5rem, 9vw, 7.5rem);
           font-weight: 800;
           color: var(--terciario);
@@ -1214,6 +1217,10 @@
       border-radius: $radio;
       width: 100%;
 
+      @include cel {
+        gap: 0.5rem;
+        padding: 0.7rem 1rem;
+      }
       .secundario-item {
         display: flex;
         align-items: baseline;
@@ -1231,7 +1238,6 @@
           color: var(--secundario);
           text-transform: lowercase;
         }
-
       }
 
       .secundario-sep {
@@ -1242,7 +1248,6 @@
       }
     }
   }
-
 
   //componente mensaje Vip
   #mensaje-vip-container {

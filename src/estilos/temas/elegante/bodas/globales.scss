@@ -1005,8 +1005,11 @@
 
       @include cel {
         padding-right: 0;
-        padding: 0 1rem;
-       
+        padding: 0 .6rem;
+         p{ 
+          font-size: 1.4rem;
+        }
+   
         
       }
     }
