@@ -1146,24 +1146,25 @@
       }
     }
 
-    
+
     .tiempo-container {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       margin-top: 1rem;
-      
+
       @include cel {
         gap: 1rem;
       }
     }
-    
+
     .conte-items {
       display: flex;
       justify-content: center;
       align-items: center;
 
     }
+
     .tiempo-item {
       text-align: center;
       padding-right: 2rem;
@@ -1175,10 +1176,11 @@
       @include cel {
         padding-right: 0;
         padding: 0 1rem;
-        p{ 
+
+        p {
           font-size: 1.2rem;
         }
-        
+
       }
     }
 

@@ -29,10 +29,17 @@
   @include primavera-quince();
 }
 
-// Variables CSS para tipografías personalizables
+// Variables CSS para tipografías personalizables y Glassmorfismo iOS
 :root[data-theme="glass"] {
   --font-heading: "Sacramento", serif;
   --font-body: "Old Standard TT", serif;
+  
+  // iOS Glassmorphism variables
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-blur: blur(20px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --glass-text-shadow: 0 1px 4px rgba(255,255,255,0.8);
 }
 
 

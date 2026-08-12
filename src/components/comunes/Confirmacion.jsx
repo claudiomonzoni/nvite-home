@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.scss";
 import stylesQuinceElegante from "../../estilos/temas/elegante/quince/confirmacion.module.scss";
+import stylesQuinceGlass from "../../estilos/temas/glass/quince/confirmacion.module.scss";
 import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 import stylesBodasElegante from "../../estilos/temas/elegante/bodas/confirmacion.module.scss";
+import stylesBodasGlass from "../../estilos/temas/glass/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', themeName = 'base', labels = {}, initialInvitado = null }) {
@@ -22,7 +24,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
     btnConfirm: labels.btnConfirm || "Confirmar mi asistencia",
     btnDecline: labels.btnDecline || "No podré asistir",
     messageNoAttend: labels.messageNoAttend || "¿Deseas dejar un mensaje? (opcional):",
-    importantNote: labels.importantNote || "IMPORTANTE: En caso de que si puedan acompañarnos, les pedimos amablemente que nos confirmen directamente al menos {dias} días antes del evento.",
+    importantNote: labels.importantNote || "IMPORTANTE: En caso de que puedan acompañarnos, les pedimos amablemente nos confirmen directamente al menos {dias} días antes del evento.",
     modalYes: labels.modalYes || "¡Muchas gracias por confirmar su asistencia! Nos llena de alegría saber que podremos contar con su presencia en este día tan especial.",
     modalNo: labels.modalNo || "Agradecemos mucho su pronta respuesta. Lamentamos que no pueda acompañarnos en esta ocasión tan especial.",
     loading: labels.loading || "Cargando...",
@@ -37,10 +39,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
     bodas: {
       base: stylesBodas,
       elegante: stylesBodasElegante,
+      glass: stylesBodasGlass,
     },
     quince: {
       base: stylesQuince,
       elegante: stylesQuinceElegante,
+      glass: stylesQuinceGlass,
     }
   };
   const styles = themeMap[tipo]?.[themeName] || themeMap[tipo]?.base || stylesBodas;

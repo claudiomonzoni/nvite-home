@@ -13,12 +13,15 @@
     background-size: 40%, auto;
     background-position: -8vw 120vh, 0%;
     scroll-behavior: smooth;
+
     @include hd {
       font-size: clamp(10px, 0.9vw, 20px);
     }
+
     @include cel {
       font-size: clamp(16px, 1.8vw, 18px);
     }
+
     @include hdplus {
       font-size: clamp(14px, 7vw, 22px);
     }
@@ -29,9 +32,11 @@
   *:after {
     box-sizing: inherit;
   }
+
   body {
     position: relative;
   }
+
   body,
   h1,
   h2,
@@ -46,9 +51,11 @@
     padding: 0;
     font-weight: normal;
   }
-p{
-  font-family: var(--font-body), serif;
-}
+
+  p {
+    font-family: var(--font-body), serif;
+  }
+
   h1,
   h2,
   h3,
@@ -58,12 +65,15 @@ p{
     padding-bottom: 0.7rem;
     color: var(--secundario);
   }
+
   h1 {
     color: white;
     font-size: clamp(3rem, 6vw, 30vw);
   }
+
   h2 {
     font-size: clamp(2.2em, 2vw, 30vw);
+
     @include hd {
       font-size: clamp(3em, 2vw, 50vw);
     }
@@ -82,36 +92,45 @@ p{
     background-size: cover;
     shape-margin: 0.75rem;
   }
+
   a {
     text-decoration: none;
     display: inline-block;
     @extend .anime;
+
     &:hover {
       transform: scale(0.9);
     }
   }
+
   p {
     margin-bottom: 1rem;
   }
+
   p:last-child {
     margin-bottom: 0rem;
   }
+
   b {
     font-weight: bold;
   }
 
   #zigzag {
     padding: $margen 0;
+
     .bloqueMapa:last-child {
       z-index: 400;
       transform: translateY(-2rem);
+
       .izq {
         order: 2;
       }
+
       .der {
         order: 1;
       }
     }
+
     @include cel {
       padding: $margen-min 0;
       transform: translateY(0);
@@ -120,25 +139,23 @@ p{
 
   .fondo-mitad {
     background: var(--fondoBurn);
-    background: linear-gradient(
-      0deg,
-      var(--fondoBurn) 88%,
-      rgba(255, 255, 255, 0) 88%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(0deg,
+        var(--fondoBurn) 88%,
+        rgba(255, 255, 255, 0) 88%,
+        rgba(255, 255, 255, 0) 100%);
+
     @include cel {
-      background: linear-gradient(
-        0deg,
-        var(--fondoBurn) 80%,
-        rgba(255, 255, 255, 0) 100%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      background: linear-gradient(0deg,
+          var(--fondoBurn) 80%,
+          rgba(255, 255, 255, 0) 100%,
+          rgba(255, 255, 255, 0) 100%);
     }
   }
 
   .desactivado {
     pointer-events: none;
   }
+
   .opa {
     visibility: hidden;
     border: 10px solid red !important;
@@ -159,6 +176,7 @@ p{
       height: 10px;
       width: 10px;
     }
+
     *::-webkit-scrollbar-track {
       border-radius: 5px;
       background-color: var(--acento);
@@ -187,19 +205,12 @@ p{
 
     $min: -16deg;
     $max: 16deg;
+
     @for $i from 1 through 10 {
       img:nth-child(#{$i}) {
-        transform: rotate(
-          math.max(
-            math.min(
-              (math.random() * 2 - 1) *
-                math.random(math.div($max, 1deg)) *
-                1deg,
-              $max
-            ),
-            -$max
-          )
-        );
+        transform: rotate(math.max(math.min((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg,
+                $max ),
+              -$max ));
       }
     }
 
@@ -209,10 +220,12 @@ p{
       aspect-ratio: 6/5;
       border: solid 15px white;
       @extend .sombra;
+
       @include cel {
         aspect-ratio: 5/5;
       }
     }
+
     p {
       overflow-x: auto;
       overscroll-behavior-inline: contain;
@@ -230,6 +243,7 @@ p{
       }
     }
   }
+
   //componente parrado libres
 
   .parrafos-libres {
@@ -244,111 +258,118 @@ p{
   .tituloEncabezados {
     margin: $margen-top $margen $margen-cel $margen;
     text-align: center;
+
     @include cel {
       margin: $margen-cel $margen-min $margen-min $margen-min;
     }
+
     h2 {
       color: var(--secundario);
       font-size: clamp(3.3rem, 3vw, 4vw);
       margin-top: $margen-min;
     }
+
     path {
       fill: var(--acento);
     }
+
     img {
       margin: $margen-min;
       filter: saturate(2951%) contrast(52%);
     }
   }
 
-   //audio fixed comunes
+  //audio fixed comunes
 
-   .fixed-bottom-bar {
-        position:fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%) translateY(50px);
-        z-index: 1000;
-        width: 100%;
-        
-        /* Efecto Glass */
-        background-color: var(--glass-bg, rgba(227, 202, 192, 0.4));
-        backdrop-filter: var(--glass-blur, blur(10px));
-        -webkit-backdrop-filter: var(--glass-blur, blur(10px));
-        
-        padding: $margen-min $margen-cel;
-        transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        opacity: 0;
-        pointer-events: none;
-    }
+  .fixed-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50px);
+    z-index: 1000;
+    width: 100%;
 
-    .fixed-bottom-bar.visible {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateX(-50%) translateY(0);
-    }
+    /* Efecto Glass */
+    background-color: var(--glass-bg, rgba(227, 202, 192, 0.4));
+    backdrop-filter: var(--glass-blur, blur(10px));
+    -webkit-backdrop-filter: var(--glass-blur, blur(10px));
 
-    .fixed-bottom-bar ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        align-items: center;
-    }
+    padding: $margen-min $margen-cel;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    pointer-events: none;
+  }
 
-    .fixed-bottom-bar li {
-        flex-wrap: wrap;
-        display: flex;
-        align-items: center;
-        a, button{
-            display: flex;
-            span{
-                color: var(--acento);
-                font-family: $txt;
-                font-weight: light;
-            }
-        }
-    }
+  .fixed-bottom-bar.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
 
-    .icon-circle {
-        width: 21px;
-        height: 21px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        color: var(--primario)!important;
-    }
+  .fixed-bottom-bar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
 
-    .action-btn {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        white-space: nowrap;
-        gap: 8px;
-        background: none;
-        border: none;
-        font-family: "Montserrat", sans-serif;
-        font-size: 13px;
-        font-weight: 400;
-        cursor: pointer;
-        text-decoration: none;
-        padding: 0;
-        transition: opacity 0.2s ease, transform 0.1s ease;
-    }
+  .fixed-bottom-bar li {
+    flex-wrap: wrap;
+    display: flex;
+    align-items: center;
 
-    .action-btn:hover {
-        opacity: 0.8;
-    }
+    a,
+    button {
+      display: flex;
 
-    .action-btn:active {
-        transform: scale(0.95);
+      span {
+        color: var(--acento);
+        font-family: $txt;
+        font-weight: light;
+      }
     }
+  }
 
-    .action-btn span:not(.icon-circle) {
-        white-space: nowrap;
-    }
+  .icon-circle {
+    width: 21px;
+    height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--primario) !important;
+  }
+
+  .action-btn {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    gap: 8px;
+    background: none;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    transition: opacity 0.2s ease, transform 0.1s ease;
+  }
+
+  .action-btn:hover {
+    opacity: 0.8;
+  }
+
+  .action-btn:active {
+    transform: scale(0.95);
+  }
+
+  .action-btn span:not(.icon-circle) {
+    white-space: nowrap;
+  }
 
 
   // componente audio
@@ -365,10 +386,12 @@ p{
       color: var(--primario);
       font-size: clamp(1.6rem, 2vw, 2.5rem);
       font-weight: 300;
+
       b {
         color: var(--acento);
       }
     }
+
     @include cel {
       max-width: auto;
       margin: 0rem auto 1rem;
@@ -386,10 +409,12 @@ p{
     display: flex;
     position: relative;
     align-items: center;
+
     .izq {
       flex: 1.3;
       height: auto;
     }
+
     .der {
       padding: $margen;
       flex: 0.6;
@@ -398,6 +423,7 @@ p{
       align-items: center;
       text-align: center;
       flex-direction: column;
+
       .bandeja p {
         font-size: clamp(1.1rem, 1.1rem, 1.6rem);
       }
@@ -408,20 +434,24 @@ p{
       font-family: var(--font-body), serif;
       color: var(--secundario);
       font-size: clamp(1.1rem, 1.2vw, 1.6rem);
-      b{
+
+      b {
         color: var(--primario);
       }
+
       svg {
         width: 20px;
         height: auto;
         vertical-align: middle;
         margin: 10px 3px;
       }
+
       path {
         // filter: invert(1);
         fill: var(--primario);
       }
     }
+
     address {
       margin: 1rem 0;
       border-bottom: solid 1px var(--secundario);
@@ -429,20 +459,22 @@ p{
       font-style: normal;
     }
 
-        time{
-      font-size: clamp(2rem, 2.5vw, 3rem)!important;
+    time {
+      font-size: clamp(2rem, 2.5vw, 3rem) !important;
       font-weight: bold;
-      color: var(--primario)!important;
+      color: var(--primario) !important;
       display: flex;
       justify-content: center;
       align-items: center;
       padding-bottom: $margen-min;
+
       svg {
         width: 20px;
         height: auto;
         vertical-align: middle;
         margin: 0px 3px;
-         path {
+
+        path {
           fill: var(--acento);
         }
       }
@@ -451,14 +483,17 @@ p{
 
     @include cel {
       flex-wrap: wrap;
+
       .izq,
       .der {
         flex: 1 0 100%;
         margin-top: 3rem;
       }
+
       .izq {
         order: 2;
       }
+
       .der {
         order: 1;
         padding: $margen-cel 0;
@@ -499,6 +534,7 @@ p{
     position: absolute;
     border: solid 1.2rem white;
     @extend .sombra;
+
     @include cel {
       width: 90%;
       height: 70%;
@@ -506,6 +542,7 @@ p{
       position: absolute;
     }
   }
+
   //componente de itinerario riel
 
   /* Firefox */
@@ -519,6 +556,7 @@ p{
     height: 10px;
     width: 10px;
   }
+
   *::-webkit-scrollbar-track {
     border-radius: 5px;
     background-color: var(--terciario);
@@ -555,9 +593,11 @@ p{
       grid-auto-flow: column;
       padding-bottom: $margen-cel;
     }
-    p{
+
+    p {
       color: var(--primario);
     }
+
     li {
       display: flex;
       flex-direction: column;
@@ -572,15 +612,18 @@ p{
       border-top: 1px solid transparent;
       border-bottom: 1px solid transparent;
       border-left: 1px solid transparent;
+
       @include cel {
         padding: $margen-cel;
         width: 60vw;
       }
+
       // background: var(--urlPatron), var(--primario);
       // background-blend-mode:overlay;
       // background-size: cover;
       // background-position: center;
     }
+
     h4 {
       font-size: clamp(2.5rem, 3vw, 4vw);
       color: var(--primario);
@@ -602,6 +645,7 @@ p{
     flex: 1;
     text-align: center;
     background: var(--fondoBurn);
+
     &::before {
       content: "";
       position: absolute;
@@ -612,6 +656,7 @@ p{
       pointer-events: none;
       z-index: 0;
     }
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -620,25 +665,30 @@ p{
     padding: $margen-min;
     position: relative;
     font-size: clamp(1.3rem, 1.3vw, 2vw);
+
     li {
       list-style: none;
       padding-bottom: $margen-min;
       color: var(--primario);
       width: 70%;
+
       @include cel {
         width: 200px;
       }
     }
+
     p {
       overflow-wrap: break-word;
       color: var(--primario);
     }
+
     h3 {
       width: fit-content;
       color: var(--secundario);
       border-bottom: solid 0.5px var(--primario);
       margin: $margen-min 0;
       font-size: clamp(2.5rem, 1.6vw, 3rem);
+
       @include cel {
         border-bottom: solid 1px var(--secundario);
       }
@@ -649,24 +699,28 @@ p{
       height: auto;
       margin: 0 auto;
     }
+
     @extend .sombra;
 
     @include cel {
       flex: 1 0 auto;
     }
-    
+
     .icono {
       svg {
         color: var(--acento) !important;
       }
+
       path,
       svg path {
         fill: var(--acento) !important;
       }
+
       circle,
       svg circle {
         fill: var(--acento) !important;
       }
+
       polygon,
       svg polygon {
         fill: var(--acento) !important;
@@ -707,6 +761,7 @@ p{
     from {
       width: 0;
     }
+
     to {
       width: var(--progress);
     }
@@ -775,7 +830,8 @@ p{
       height: 15px;
     }
   }
-// componente frase
+
+  // componente frase
   .frase {
     color: var(--primario);
     font-size: clamp(3rem, 5vw, 7vw);
@@ -784,18 +840,20 @@ p{
     padding: $margen $margen-min;
     border-top: .7px solid var(--primario);
     border-bottom: .7px solid var(--primario);
-    
-    .word{
+
+    .word {
       font-family: var(--font-heading), serif;
       font-size: clamp(2.6rem, 5vw, 5rem);
     }
   }
+
   // Componente Regalos
 
   #bandejaRegalos {
     .titulo {
       margin-top: $margen;
       text-align: center;
+
       svg {
         color: var(--secundario);
       }
@@ -806,12 +864,14 @@ p{
       text-align: center;
       font-size: clamp(3.2rem, 4.5vw, 7rem);
     }
+
     h3 {
       padding-bottom: 0 !important;
       font-size: clamp(2.3rem, 3vw, 4rem);
-       
+
       margin: 0;
     }
+
     p,
     ul,
     li {
@@ -819,6 +879,7 @@ p{
       text-align: center;
       color: var(--primario);
     }
+
     #regalo {
       margin-top: $margen;
       padding: $margen $margen-cel;
@@ -828,6 +889,7 @@ p{
       background-blend-mode: screen;
       text-align: center;
       margin-bottom: $margen-cel;
+
       #botones {
         display: flex;
         justify-content: center;
@@ -835,7 +897,8 @@ p{
         gap: $margen-min;
         flex-wrap: wrap;
       }
-      h3{
+
+      h3 {
         color: var(--primario);
         // text-shadow:  3px 3px 4px var(--primario);
       }
@@ -850,11 +913,10 @@ p{
         padding-bottom: $margen-min;
       }
     }
+
     #lluvia {
-      background: linear-gradient(
-          rgba(255, 255, 255, 0.4),
-          rgba(255, 255, 255, 0.4)
-        ),
+      background: linear-gradient(rgba(255, 255, 255, 0.4),
+          rgba(255, 255, 255, 0.4)),
         // capa blanca semitransparente
         url("/lluvia.webp") var(--fondoBurn) repeat;
       background-size: contain;
@@ -863,12 +925,14 @@ p{
       padding: $margen $margen-cel;
       text-align: center;
       color: var(--primario);
-     // @extend .sombra;
+
+      // @extend .sombra;
       p {
         max-width: 80%;
         margin: 0 auto;
       }
     }
+
     #transferencias {
       padding: $margen $margen-min;
       display: flex;
@@ -881,6 +945,7 @@ p{
       margin-bottom: $margen-cel;
       background: var(--terciario);
       position: relative;
+
       &::before {
         content: "";
         position: absolute;
@@ -893,31 +958,38 @@ p{
         pointer-events: none;
         z-index: 0;
       }
+
       color: var(--primario);
+
       p {
-        
+
         max-width: 80%;
         margin: 0 auto;
       }
+
       @extend .sombra;
 
       h3 {
         color: var(--acento);
       }
+
       b {
         color: var(--acento);
       }
+
       ul {
         color: var(--acento);
         text-align: left;
         display: flex;
         flex-direction: column;
+
         li {
           text-align: center;
           width: 100%;
         }
       }
     }
+
     #regalo,
     #lluvia,
     #transferencias {
@@ -926,16 +998,19 @@ p{
         background-blend-mode: soft-light;
       }
     }
+
     margin: 0 auto;
     max-width: 70%;
     padding-bottom: $margen;
+
     @include cel {
       max-width: 100%;
       padding: 0;
       padding-bottom: $margen;
     }
   }
-// componente padres
+
+  // componente padres
   #padres {
     width: 100%;
     display: flex;
@@ -948,11 +1023,9 @@ p{
   .bande {
     width: 90%;
     max-width: 800px;
-    background: linear-gradient(
-      to top,
-      var(--fondoBurn) 0%,
-      rgba(255, 255, 255, 0.8) 100%
-    );
+    background: linear-gradient(to top,
+        var(--fondoBurn) 0%,
+        rgba(255, 255, 255, 0.8) 100%);
     padding: $margen 1rem;
     text-align: center;
     font-family: $txt, serif;
@@ -997,6 +1070,7 @@ p{
     margin-top: 1rem;
     @extend .sombra;
   }
+
   // Componente contador (cuenta regresiva)
 
   #contador {
@@ -1042,7 +1116,7 @@ p{
         background: linear-gradient(180deg, color-mix(in srgb, #000, var(--acento) 70%) 0%, var(--acento) 50%);
         border-radius: 16px;
         box-shadow: 0 10px 25px rgba(var(--acento-rgb), .5),
-                    inset 0 1px 1px rgba(var(--acento-rgb), .12);
+          inset 0 1px 1px rgba(var(--acento-rgb), .12);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1077,7 +1151,7 @@ p{
         }
 
         .flip-card-inner {
-          
+
           font-size: clamp(4.5rem, 9vw, 7.5rem);
           font-weight: 800;
           color: var(--terciario);
@@ -1106,6 +1180,7 @@ p{
       background: rgba(var(--secundario-rgb), 0.2);
       padding: 0.6rem 1.6rem;
       border-radius: $radio;
+
       @include cel {
         gap: 0.5rem;
         padding: .7rem 1rem;
@@ -1137,6 +1212,7 @@ p{
         font-size: 1.1rem;
       }
     }
+
     @include cel {
       padding: $margen-cel 0;
     }
@@ -1146,6 +1222,7 @@ p{
   #mensaje-vip-container {
     display: none;
     margin: $margen;
+
     .mensaje-vip {
       padding-top: $margen;
       margin-top: $margen;
@@ -1190,32 +1267,39 @@ p{
       }
     }
   }
-} //fin mixin tema
+}
+
+//fin mixin tema
 
 @mixin btn-mix($claro) {
   padding: 1rem $margen-cel;
   color: white;
   border: 1px solid white;
   margin: 0.5rem 0.5rem 0.5rem 0;
+
   &:hover {
     background: white;
     border-radius: $margen-min;
     color: var(--primario);
   }
+
   @if $claro {
     background: var(--acento);
     color: var(--primario);
     border-radius: $radio;
     border: none !important;
   }
+
   @include cel {
     width: 100%;
     text-align: center;
   }
 }
+
 .btn {
   @include btn-mix($claro: false);
 }
+
 .btn-claro {
   border: solid;
   @include btn-mix($claro: true);
@@ -1226,73 +1310,85 @@ footer {
   padding: $margen 0;
   margin: 0 auto;
   text-align: center;
+
   img {
     margin-bottom: 1.5rem;
   }
 }
+
 .logo {
   width: 200px;
   max-width: 200px;
 }
+
 ul {
   display: flex;
   justify-content: center;
   gap: 1rem;
   padding: $margen-min;
 }
+
 li {
   list-style: none;
+
   svg {
     width: 2rem;
     height: auto;
   }
+
   path {
     fill: var(--primario);
   }
 }
 
- @mixin liga($conBorde, $redondo) {
-    margin: $margen-min 0;
-    color: var(--primario);
-    background: var(--terciario);
-    padding: 0.7rem $margen-cel;
-    
-    svg {
-      vertical-align: middle;
-    }
-    img {
-      max-width: 1.5rem !important;
-      height: auto;
-      vertical-align: middle;
-      margin-right: 0.8rem;
-    }
-    @if $conBorde {
-      border: 1px solid var(--acento);
-      background: var(--secundario);
-      opacity: 0.8;
-      color: var(--primario) !important;
-    }
-    @if $redondo {
-      border-radius: $radio;
-    }
-    @include cel {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      margin-left: 0;
-      margin-right: 0;
-      border-radius: .3rem;
-      font-size: 1.2rem;
-    }
+@mixin liga($conBorde, $redondo) {
+  margin: $margen-min 0;
+  color: var(--primario);
+  background: var(--terciario);
+  padding: 0.7rem $margen-cel;
+
+  svg {
+    vertical-align: middle;
   }
 
-  .btn {
-    @include liga(false, false);
+  img {
+    max-width: 1.5rem !important;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 0.8rem;
   }
-  .con-borde {
-    @include liga(true, null);
+
+  @if $conBorde {
+    border: 1px solid var(--acento);
+    background: var(--secundario);
+    opacity: 0.8;
+    color: var(--primario) !important;
   }
-  .redondo {
-    @include liga(null, true);
+
+  @if $redondo {
+    border-radius: $radio;
   }
+
+  @include cel {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: .3rem;
+    font-size: 1.2rem;
+  }
+}
+
+.btn {
+  @include liga(false, false);
+}
+
+.con-borde {
+  @include liga(true, null);
+}
+
+.redondo {
+  @include liga(null, true);
+}
