@@ -27,29 +27,66 @@ export const POST: APIRoute = async ({ request, locals }) => {
       mensajePersonalizado,
     } = body;
 
-    // comprobamos que los campos no esten vacios
+    // comprobamos que los campos no esten vacios o invalidos
     if (
       typeof nombre !== "string" ||
       typeof pases !== "string"
     ) {
-      throw new Error("llene los campos obligatorios");
+      throw new Error("Llene los campos obligatorios.");
     }
+
+    const cleanNombre = sanitize(nombre.trim());
+    if (!cleanNombre) {
+      throw new Error("El nombre no puede estar vacío.");
+    }
+    if (cleanNombre.length > 80) {
+      throw new Error("El nombre del invitado no puede exceder los 80 caracteres.");
+    }
+
+    const parsedPases = parseInt(pases, 10);
+    if (isNaN(parsedPases) || parsedPases < 1 || parsedPases > 50) {
+      throw new Error("El número de pases debe ser un número entre 1 y 50.");
+    }
+    const cleanPasesStr = parsedPases.toString();
+
+    // Sanitizar y limpiar número de WhatsApp (guardar como número entero)
+    let cleanWhats = null;
+    if (numeroWhats) {
+      const digitsOnly = numeroWhats.toString().replace(/\D/g, "");
+      if (digitsOnly) {
+        if (digitsOnly.length < 8 || digitsOnly.length > 15) {
+          throw new Error("El número de WhatsApp debe tener entre 8 y 15 dígitos.");
+        }
+        cleanWhats = parseInt(digitsOnly, 10);
+      }
+    }
+
+    if (mesa && sanitize(mesa.toString()).length > 50) {
+      throw new Error("El nombre de la mesa no puede exceder los 50 caracteres.");
+    }
+    const cleanMesa = mesa ? sanitize(mesa.toString().trim()) : null;
+    const cleanTipo = tipoInvitacion ? sanitize(tipoInvitacion.toString().trim()) : "Familiar";
+
+    if (vip && mensajePersonalizado && sanitize(mensajePersonalizado.toString()).length > 500) {
+      throw new Error("El mensaje personalizado no puede exceder los 500 caracteres.");
+    }
+    const cleanMsg = vip && mensajePersonalizado ? sanitize(mensajePersonalizado.toString().trim()) : null;
+
     // hacemos el reg en la bd
     const req = await db.insert(Invitados).values({
       usuarioId: user.id,
-      //uuid: uuidv4().split('-')[0] + uuidv4().split('-')[1]  // "550e8400e29b" (12 caracteres, menos riesgo de coalicion)
       uuid: uuidv4().split('-')[0], 
-      nombre: sanitize(nombre),
-      pases: sanitize(pases),
-      pasesOriginales: sanitize(pases),
-      mesa: sanitize(mesa),
-      numeroWhats: sanitize(numeroWhats),
-      confirmado,
-      vip,
-      InvitacionEnviada,
-      noAsiste,
-      tipoInvitacion,
-      mensajePersonalizado: vip ? sanitize(mensajePersonalizado) : null,
+      nombre: cleanNombre,
+      pases: cleanPasesStr,
+      pasesOriginales: cleanPasesStr,
+      mesa: cleanMesa,
+      numeroWhats: cleanWhats,
+      confirmado: !!confirmado,
+      vip: !!vip,
+      InvitacionEnviada: !!InvitacionEnviada,
+      noAsiste: !!noAsiste,
+      tipoInvitacion: cleanTipo,
+      mensajePersonalizado: cleanMsg,
     });
 
     return new Response(

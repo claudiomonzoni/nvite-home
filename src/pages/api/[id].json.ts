@@ -110,18 +110,60 @@ export const PATCH: APIRoute = async ({ params, request, locals }) => {
       mensajePersonalizado,
     } = await request.json();
 
-    const updateFields: any = {
-      ...(nombre && { nombre }),
-      ...(pases && { pases: Math.trunc(Number(pases)).toString() }),
-      ...(pases && { pasesOriginales: Math.trunc(Number(pases)).toString() }),
-      ...(numeroWhats !== undefined && { numeroWhats }),
-      ...(confirmado !== undefined && { confirmado }),
-      ...(vip !== undefined && { vip }),
-      ...(InvitacionEnviada !== undefined && { InvitacionEnviada }),
-      ...(noAsiste !== undefined && { noAsiste }),
-      ...(tipoInvitacion !== undefined && { tipoInvitacion }),
-      ...(vip && mensajePersonalizado !== undefined && { mensajePersonalizado }),
-    };
+    const isVip = vip !== undefined ? !!vip : guests[0].vip;
+
+    const updateFields: any = {};
+    
+    if (nombre !== undefined) {
+      const cleanNombre = sanitize(nombre.trim());
+      if (!cleanNombre) {
+        throw new Error("El nombre no puede estar vacío.");
+      }
+      if (cleanNombre.length > 80) {
+        throw new Error("El nombre no puede exceder los 80 caracteres.");
+      }
+      updateFields.nombre = cleanNombre;
+    }
+
+    if (pases !== undefined) {
+      const parsedPases = Math.trunc(Number(pases));
+      if (isNaN(parsedPases) || parsedPases < 1 || parsedPases > 50) {
+        throw new Error("El número de pases debe ser un número entre 1 y 50.");
+      }
+      updateFields.pases = parsedPases.toString();
+      updateFields.pasesOriginales = parsedPases.toString();
+    }
+
+    if (numeroWhats !== undefined) {
+      if (numeroWhats) {
+        const digitsOnly = numeroWhats.toString().replace(/\D/g, "");
+        if (digitsOnly) {
+          if (digitsOnly.length < 8 || digitsOnly.length > 15) {
+            throw new Error("El número de WhatsApp debe tener entre 8 y 15 dígitos.");
+          }
+          updateFields.numeroWhats = parseInt(digitsOnly, 10);
+        } else {
+          updateFields.numeroWhats = null;
+        }
+      } else {
+        updateFields.numeroWhats = null;
+      }
+    }
+
+    if (confirmado !== undefined) updateFields.confirmado = !!confirmado;
+    if (vip !== undefined) updateFields.vip = !!vip;
+    if (InvitacionEnviada !== undefined) updateFields.InvitacionEnviada = !!InvitacionEnviada;
+    if (noAsiste !== undefined) updateFields.noAsiste = !!noAsiste;
+    if (tipoInvitacion !== undefined) updateFields.tipoInvitacion = sanitize(tipoInvitacion.toString().trim());
+
+    if (mensajePersonalizado !== undefined) {
+      if (mensajePersonalizado && sanitize(mensajePersonalizado.toString()).length > 500) {
+        throw new Error("El mensaje personalizado no puede exceder los 500 caracteres.");
+      }
+      updateFields.mensajePersonalizado = (isVip && mensajePersonalizado) 
+        ? sanitize(mensajePersonalizado.toString().trim())
+        : null;
+    }
 
     // Lógica para sincronizar mesaId y mesa (texto)
     if (mesaId !== undefined) {

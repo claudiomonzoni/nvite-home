@@ -12,6 +12,7 @@ import Checkbox from "./Checkbox.astro";
           type="text"
           name="nombre"
           required
+          maxlength="80"
           placeholder="Nombre que aparecerá en la invitación"
         />
       </label>
@@ -21,6 +22,8 @@ import Checkbox from "./Checkbox.astro";
           type="number"
           name="pases"
           required
+          min="1"
+          max="50"
           placeholder="Asignar numero de pases"
         />
       </label>
@@ -29,6 +32,7 @@ import Checkbox from "./Checkbox.astro";
         <input
           type="tel"
           name="numeroWhats"
+          maxlength="15"
           placeholder="Numero de whatsapp del invitado"
         />
       </label>
@@ -383,6 +387,10 @@ import Checkbox from "./Checkbox.astro";
       alert("El nombre no puede estar vacío.");
       return;
     }
+    if (nombre.length > 80) {
+      alert("El nombre no puede exceder los 80 caracteres.");
+      return;
+    }
 
     const pases = parseInt(
       (addFormEdit.querySelector("input[name='pases']") as HTMLInputElement)
@@ -390,9 +398,20 @@ import Checkbox from "./Checkbox.astro";
       10
     );
 
-    if (isNaN(pases) || pases < 0) {
-      alert("El número de pases debe ser un número positivo.");
+    if (isNaN(pases) || pases < 1 || pases > 50) {
+      alert("El número de pases debe ser un número entre 1 y 50.");
       return;
+    }
+
+    const whatsappInput = addFormEdit.querySelector(
+      "input[name='numeroWhats']"
+    ) as HTMLInputElement;
+    if (whatsappInput && whatsappInput.value) {
+      const whatsappVal = whatsappInput.value.replace(/\D/g, "");
+      if (whatsappVal.length < 8 || whatsappVal.length > 15) {
+        alert("Por favor ingresa un número de WhatsApp válido (debe tener entre 8 y 15 dígitos).");
+        return;
+      }
     }
 
     const refere = dialoged.dataset.refedit;
@@ -476,7 +495,7 @@ import Checkbox from "./Checkbox.astro";
     ) as HTMLInputElement;
     const mesaInput = dialogo.querySelector(
       "input[name='mesa']"
-    ) as HTMLInputElement;
+    ) as HTMLInputElement | null;
     const numeroWhatsInput = dialogo.querySelector(
       "input[name='numeroWhats']"
     ) as HTMLInputElement;
@@ -502,7 +521,9 @@ import Checkbox from "./Checkbox.astro";
         dialogo.dataset.refedit = invitadoData[0].id;
         nombreInput.value = invitadoData[0].nombre;
         pasesInput.value = invitadoData[0].pasesOriginales || invitadoData[0].pases;
-        mesaInput.value = invitadoData[0].mesa?.toString() || "";
+        if (mesaInput) {
+          mesaInput.value = invitadoData[0].mesa?.toString() || "";
+        }
         numeroWhatsInput.value = invitadoData[0].numeroWhats?.toString() || "";
         confirmadoCheckbox.checked = invitadoData[0].confirmado;
         vipCheckbox.checked = invitadoData[0].vip;

@@ -16,6 +16,7 @@ import Checkbox from "./Checkbox.astro";
         <input
           type="text"
           name="nombre"
+          maxlength="80"
           placeholder="Nombre que aparecerá en la invitación"
           required
         />
@@ -27,6 +28,8 @@ import Checkbox from "./Checkbox.astro";
           type="number"
           name="pases"
           required
+          min="1"
+          max="50"
           placeholder="Asignar numero de pases"
         />
       </label>
@@ -36,6 +39,7 @@ import Checkbox from "./Checkbox.astro";
         <input
           type="tel"
           name="numeroWhats"
+          maxlength="15"
           placeholder="Numero de whatsapp del invitado"
         />
       </label>
@@ -156,14 +160,29 @@ import Checkbox from "./Checkbox.astro";
       alert("El nombre no puede estar vacío.");
       return;
     }
+    if (nombre.length > 80) {
+      alert("El nombre no puede exceder los 80 caracteres.");
+      return;
+    }
 
     const pases = parseInt(
       (addForm.querySelector("input[name='pases']") as HTMLInputElement).value,
       10
     );
-    if (isNaN(pases) || pases < 1) {
-      alert("El número de pases debe ser un número positivo.");
+    if (isNaN(pases) || pases < 1 || pases > 50) {
+      alert("El número de pases debe ser un número entre 1 y 50.");
       return;
+    }
+
+    const whatsappInput = addForm.querySelector(
+      "input[name='numeroWhats']"
+    ) as HTMLInputElement;
+    if (whatsappInput && whatsappInput.value) {
+      const whatsappVal = whatsappInput.value.replace(/\D/g, "");
+      if (whatsappVal.length < 8 || whatsappVal.length > 15) {
+        alert("Por favor ingresa un número de WhatsApp válido (debe tener entre 8 y 15 dígitos).");
+        return;
+      }
     }
 
     try {

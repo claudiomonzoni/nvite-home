@@ -1,0 +1,200 @@
+---
+interface Props {
+  count: number;
+  class?: string;
+  id?: string;
+}
+
+const { count, class: className = "", id = "" } = Astro.props;
+---
+
+<div class={`controls-wrap ${className}`} id={id}>
+  <!-- Play / Pause / Replay circular button (izquierda) -->
+  <button class="play-btn" aria-label="Reproducir/Pausar" type="button">
+    <svg class="play-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+      <path fill="currentColor" d="M8 5v14l11-7z"></path>
+    </svg>
+    <svg class="pause-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+      <rect x="4" y="4" width="4" height="16" rx="2" ry="2"></rect>
+      <rect x="12" y="4" width="4" height="16" rx="2" ry="2"></rect>
+    </svg>
+    <svg class="replay-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        fill="currentColor"
+        d="M8.4 5.1c0-.35.28-.63.63-.63.12 0 .24.03.34.09l10.75 6.95c.25.16.4.44.4.74 0 .3-.15.58-.4.74L8.37 19.44c-.1.06-.22.09-.34.09-.35 0-.63-.28-.63-.63V5.1Z"
+      ></path>
+    </svg>
+  </button>
+
+  <!-- Centro: pill con indicador y bullet móvil -->
+  <div class="progress-pill" role="region" aria-label="Progreso del slide">
+    <div class="pill-inner">
+      {
+        Array.from({ length: count }).map((_, i) => (
+          <button
+            type="button"
+            class={`pill-segment ${i === 0 ? "active-segment" : ""}`}
+            data-seg={i}
+            aria-label={`Segmento ${i + 1}`}
+          >
+            <span class="segment-progress" />
+          </button>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .controls-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 20;
+    pointer-events: auto;
+    margin: 1.5rem 0;
+  }
+
+  svg {
+    color: $primario;
+  }
+
+  /* Botón circular Play/Pause (izquierda) */
+  .play-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    background: white;
+    border: 1px solid $fondoGlobal;
+    cursor: pointer;
+    padding: 0;
+    @extend .sombra;
+    flex-shrink: 0;
+  }
+
+  .play-btn svg {
+    width: 23px;
+    height: 23px;
+    color: $primario;
+  }
+
+  .play-btn .pause-icon.hidden,
+  .play-btn .play-icon.hidden,
+  .play-btn .replay-icon.hidden {
+    display: none;
+  }
+
+  /* Pill central que contiene track y bullet */
+  .progress-pill {
+    width: 280px;
+    height: 40px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    @extend .sombra;
+    padding: 8px 12px;
+
+    @include cel {
+      width: calc(100vw - 140px);
+      max-width: 240px;
+      padding: 8px 10px;
+    }
+  }
+
+  .pill-inner {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 3px;
+  }
+
+  /* Cada segmento representa un slide; por defecto es pequeño (círculo) */
+  .pill-segment {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba($primario, 0.8);
+    border: none;
+    padding: 0;
+    transition:
+      width 560ms cubic-bezier(0.2, 0.9, 0.2, 1),
+      border-radius 560ms,
+      background 220ms;
+    display: inline-block;
+    overflow: hidden;
+    flex-shrink: 0;
+    cursor: pointer;
+
+    @include cel {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  /* Cuando el segmento está activo se expande a una barra (pill) */
+  .pill-segment.active-segment {
+    width: 120px; /* ancho del segmento expandido */
+    height: 12px;
+    border-radius: 999px;
+    background: rgba($terciario, 0.7);
+  }
+
+  /* barra de progreso interna que se llena cuando el slide está activo */
+  .pill-segment .segment-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: $primario; /* más contraste */
+    border-radius: 999px;
+    transition: width 120ms linear;
+  }
+
+  /* cuando no activo, el segmento se muestra como círculo oscuro */
+  .pill-segment:not(.active-segment) .segment-progress {
+    display: none;
+  }
+
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .controls-wrap {
+      gap: 12px;
+    }
+    .pill-segment.active-segment {
+      width: 80px;
+    }
+    .play-btn {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .controls-wrap {
+      gap: 8px;
+    }
+    .pill-segment.active-segment {
+      width: 60px;
+    }
+    .play-btn {
+      width: 40px;
+      height: 40px;
+    }
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>

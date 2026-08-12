@@ -304,7 +304,8 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
       </option>,
     ];
 
-    for (let i = 1; i <= pases; i++) {
+    const safeMaxPases = Math.min(Math.max(0, pases), 50);
+    for (let i = 1; i <= safeMaxPases; i++) {
       options.push(
         <option key={i} value={i}>
           {i}

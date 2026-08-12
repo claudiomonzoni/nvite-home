@@ -54,12 +54,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const cleanNombre = sanitize(nombre.trim());
-    const cleanCapacidad = Math.max(1, parseInt(capacidad, 10) || 10);
+    if (!cleanNombre) {
+      return new Response(JSON.stringify({ error: "El nombre de la mesa no puede estar vacío." }), { status: 400 });
+    }
+    if (cleanNombre.length > 50) {
+      return new Response(JSON.stringify({ error: "El nombre de la mesa no puede exceder los 50 caracteres." }), { status: 400 });
+    }
+
+    const parsedCapacidad = parseInt(capacidad, 10);
+    if (isNaN(parsedCapacidad) || parsedCapacidad < 1 || parsedCapacidad > 100) {
+      return new Response(JSON.stringify({ error: "La capacidad de asientos debe estar entre 1 y 100." }), { status: 400 });
+    }
 
     await db.insert(Mesas).values({
       usuarioId: user.id,
       nombre: cleanNombre,
-      capacidad: cleanCapacidad,
+      capacidad: parsedCapacidad,
     });
 
     return new Response(JSON.stringify({ message: "Mesa creada exitosamente.", success: true }), {
@@ -96,8 +106,23 @@ export const PATCH: APIRoute = async ({ request, locals }) => {
     }
 
     const updateFields: any = {};
-    if (nombre !== undefined) updateFields.nombre = sanitize(nombre.trim());
-    if (capacidad !== undefined) updateFields.capacidad = Math.max(1, parseInt(capacidad, 10) || 10);
+    if (nombre !== undefined) {
+      const cleanNombre = sanitize(nombre.trim());
+      if (!cleanNombre) {
+        return new Response(JSON.stringify({ error: "El nombre de la mesa no puede estar vacío." }), { status: 400 });
+      }
+      if (cleanNombre.length > 50) {
+        return new Response(JSON.stringify({ error: "El nombre de la mesa no puede exceder los 50 caracteres." }), { status: 400 });
+      }
+      updateFields.nombre = cleanNombre;
+    }
+    if (capacidad !== undefined) {
+      const parsedCapacidad = parseInt(capacidad, 10);
+      if (isNaN(parsedCapacidad) || parsedCapacidad < 1 || parsedCapacidad > 100) {
+        return new Response(JSON.stringify({ error: "La capacidad de asientos debe estar entre 1 y 100." }), { status: 400 });
+      }
+      updateFields.capacidad = parsedCapacidad;
+    }
 
     await db
       .update(Mesas)
@@ -106,9 +131,10 @@ export const PATCH: APIRoute = async ({ request, locals }) => {
 
     // Sincronizar columna mesa (texto) de los invitados si el nombre cambió
     if (nombre !== undefined) {
+      const cleanNombre = sanitize(nombre.trim());
       await db
         .update(Invitados)
-        .set({ mesa: sanitize(nombre.trim()) })
+        .set({ mesa: cleanNombre })
         .where(eq(Invitados.mesaId, Number(id)));
     }
 

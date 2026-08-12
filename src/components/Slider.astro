@@ -568,9 +568,10 @@ const slides: Slide[] = [
     }
 
     private attachEventListeners(): void {
-      this.playBtn = document.querySelector(".play-btn");
-      const indicators = document.querySelectorAll(".indicator");
-      const pill = document.querySelector(".progress-pill");
+      if (!this.sliderContainer) return;
+      this.playBtn = this.sliderContainer.querySelector(".play-btn");
+      const indicators = this.sliderContainer.querySelectorAll(".indicator");
+      const pill = this.sliderContainer.querySelector(".progress-pill");
 
       this.playBtn?.addEventListener("click", () => this.togglePlayPause());
 
@@ -589,7 +590,7 @@ const slides: Slide[] = [
         this.goToSlide(Math.min(idx, this.slides.length - 1));
       });
 
-      const segments = document.querySelectorAll(".pill-segment");
+      const segments = this.sliderContainer.querySelectorAll(".pill-segment");
       segments.forEach((el, idx) => {
         (el as HTMLElement).addEventListener("click", (ev: Event) => {
           ev.stopPropagation();
@@ -715,7 +716,8 @@ const slides: Slide[] = [
     }
 
     private updateIndicators(): void {
-      const indicators = document.querySelectorAll(".indicator");
+      if (!this.sliderContainer) return;
+      const indicators = this.sliderContainer.querySelectorAll(".indicator");
       indicators.forEach((el, idx) => {
         (el as HTMLElement).classList.toggle(
           "active",
@@ -728,7 +730,8 @@ const slides: Slide[] = [
       index: number,
       progressBetween: number = 0,
     ): void {
-      const segments = document.querySelectorAll(".pill-segment");
+      if (!this.sliderContainer) return;
+      const segments = this.sliderContainer.querySelectorAll(".pill-segment");
       segments.forEach((el, idx) => {
         const progressEl = (el as HTMLElement).querySelector(
           ".segment-progress",

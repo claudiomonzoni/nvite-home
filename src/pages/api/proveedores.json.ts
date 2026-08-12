@@ -198,17 +198,51 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return new Response(JSON.stringify({ error: "Nombre y categoría son requeridos" }), { status: 400 });
     }
 
+    const cleanNombre = sanitize(nombre.trim());
+    const cleanCategoria = sanitize(categoria.trim());
+    
+    if (!cleanNombre || !cleanCategoria) {
+      return new Response(JSON.stringify({ error: "Nombre y categoría no pueden estar vacíos." }), { status: 400 });
+    }
+    if (cleanNombre.length > 80) {
+      return new Response(JSON.stringify({ error: "El nombre del proveedor no puede exceder los 80 caracteres." }), { status: 400 });
+    }
+    if (cleanCategoria.length > 50) {
+      return new Response(JSON.stringify({ error: "La categoría del proveedor no puede exceder los 50 caracteres." }), { status: 400 });
+    }
+
+    const cleanContactoNombre = contactoNombre ? sanitize(contactoNombre.trim()) : null;
+    if (cleanContactoNombre && cleanContactoNombre.length > 80) {
+      return new Response(JSON.stringify({ error: "El nombre de contacto no puede exceder los 80 caracteres." }), { status: 400 });
+    }
+
+    const cleanContactoTelefono = contactoTelefono ? sanitize(contactoTelefono.trim()) : null;
+    if (cleanContactoTelefono && cleanContactoTelefono.length > 15) {
+      return new Response(JSON.stringify({ error: "El teléfono de contacto no puede exceder los 15 caracteres." }), { status: 400 });
+    }
+
+    const numPresupuesto = Number(presupuestoTotal) || 0;
+    if (numPresupuesto < 0 || numPresupuesto > 10000000) {
+      return new Response(JSON.stringify({ error: "El presupuesto debe ser un número entre 0 y 10,000,000." }), { status: 400 });
+    }
+
+    const cleanNotas = notas ? sanitize(notas.trim()) : null;
+    if (cleanNotas && cleanNotas.length > 1000) {
+      return new Response(JSON.stringify({ error: "Las notas no pueden exceder los 1000 caracteres." }), { status: 400 });
+    }
+
     const [nuevo] = await db
       .insert(Proveedores)
       .values({
         usuarioId: user.id,
-        nombre: sanitize(nombre.trim()),
-        categoria: sanitize(categoria.trim()),
-        contactoNombre: contactoNombre ? sanitize(contactoNombre.trim()) : null,
-        contactoTelefono: contactoTelefono ? sanitize(contactoTelefono.trim()) : null,
-        presupuestoTotal: Math.max(0, Number(presupuestoTotal) || 0),
+        nombre: cleanNombre,
+        categoria: cleanCategoria,
+        contactoNombre: cleanContactoNombre,
+        contactoTelefono: cleanContactoTelefono,
+        presupuestoTotal: numPresupuesto,
         fechaLimitePago: fechaLimitePago ? new Date(fechaLimitePago) : null,
-        notas: notas ? sanitize(notas.trim()) : null,
+        notes: undefined,
+        notas: cleanNotas,
       })
       .returning();
 
@@ -248,16 +282,49 @@ export const PUT: APIRoute = async ({ request, locals }) => {
     }
 
     // Update main provider record
+    const cleanNombre = nombre ? sanitize(nombre.trim()) : existente.nombre;
+    const cleanCategoria = categoria ? sanitize(categoria.trim()) : existente.categoria;
+
+    if (!cleanNombre || !cleanCategoria) {
+      return new Response(JSON.stringify({ error: "El nombre y la categoría no pueden estar vacíos." }), { status: 400 });
+    }
+    if (cleanNombre.length > 80) {
+      return new Response(JSON.stringify({ error: "El nombre del proveedor no puede exceder los 80 caracteres." }), { status: 400 });
+    }
+    if (cleanCategoria.length > 50) {
+      return new Response(JSON.stringify({ error: "La categoría del proveedor no puede exceder los 50 caracteres." }), { status: 400 });
+    }
+
+    const cleanContactoNombre = contactoNombre !== undefined ? (contactoNombre ? sanitize(contactoNombre.trim()) : null) : existente.contactoNombre;
+    if (cleanContactoNombre && cleanContactoNombre.length > 80) {
+      return new Response(JSON.stringify({ error: "El nombre de contacto no puede exceder los 80 caracteres." }), { status: 400 });
+    }
+
+    const cleanContactoTelefono = contactoTelefono !== undefined ? (contactoTelefono ? sanitize(contactoTelefono.trim()) : null) : existente.contactoTelefono;
+    if (cleanContactoTelefono && cleanContactoTelefono.length > 15) {
+      return new Response(JSON.stringify({ error: "El teléfono de contacto no puede exceder los 15 caracteres." }), { status: 400 });
+    }
+
+    const cleanPresupuesto = presupuestoTotal !== undefined ? Number(presupuestoTotal) : existente.presupuestoTotal;
+    if (cleanPresupuesto < 0 || cleanPresupuesto > 10000000) {
+      return new Response(JSON.stringify({ error: "El presupuesto debe ser un número entre 0 y 10,000,000." }), { status: 400 });
+    }
+
+    const cleanNotas = notas !== undefined ? (notas ? sanitize(notas.trim()) : null) : existente.notas;
+    if (cleanNotas && cleanNotas.length > 1000) {
+      return new Response(JSON.stringify({ error: "Las notas no pueden exceder los 1000 caracteres." }), { status: 400 });
+    }
+
     const [actualizado] = await db
       .update(Proveedores)
       .set({
-        nombre: nombre ? sanitize(nombre.trim()) : existente.nombre,
-        categoria: categoria ? sanitize(categoria.trim()) : existente.categoria,
-        contactoNombre: contactoNombre !== undefined ? (contactoNombre ? sanitize(contactoNombre.trim()) : null) : existente.contactoNombre,
-        contactoTelefono: contactoTelefono !== undefined ? (contactoTelefono ? sanitize(contactoTelefono.trim()) : null) : existente.contactoTelefono,
-        presupuestoTotal: presupuestoTotal !== undefined ? Math.max(0, Number(presupuestoTotal) || 0) : existente.presupuestoTotal,
+        nombre: cleanNombre,
+        categoria: cleanCategoria,
+        contactoNombre: cleanContactoNombre,
+        contactoTelefono: cleanContactoTelefono,
+        presupuestoTotal: cleanPresupuesto,
         fechaLimitePago: fechaLimitePago !== undefined ? (fechaLimitePago ? new Date(fechaLimitePago) : null) : existente.fechaLimitePago,
-        notas: notas !== undefined ? (notas ? sanitize(notas.trim()) : null) : existente.notas,
+        notas: cleanNotas,
       })
       .where(eq(Proveedores.id, Number(id)))
       .returning();
@@ -266,12 +333,20 @@ export const PUT: APIRoute = async ({ request, locals }) => {
     if (Array.isArray(pagos)) {
       await db.delete(PagosProveedor).where(eq(PagosProveedor.proveedorId, Number(id)));
       for (const p of pagos) {
-        if (Number(p.monto) > 0) {
+        const cleanMonto = Number(p.monto) || 0;
+        if (cleanMonto < 0 || cleanMonto > 10000000) {
+          return new Response(JSON.stringify({ error: "El monto de los abonos debe estar entre 0 y 10,000,000." }), { status: 400 });
+        }
+        const cleanConcepto = p.concepto ? sanitize(String(p.concepto).trim()) : "Abono";
+        if (cleanConcepto.length > 80) {
+          return new Response(JSON.stringify({ error: "El concepto de abono no puede exceder los 80 caracteres." }), { status: 400 });
+        }
+        if (cleanMonto > 0) {
           await db.insert(PagosProveedor).values({
             proveedorId: Number(id),
-            monto: Number(p.monto),
+            monto: cleanMonto,
             fecha: p.fecha ? new Date(p.fecha) : new Date(),
-            concepto: p.concepto ? sanitize(String(p.concepto).trim()) : "Abono",
+            concepto: cleanConcepto,
           });
         }
       }
@@ -281,10 +356,14 @@ export const PUT: APIRoute = async ({ request, locals }) => {
     if (Array.isArray(tareas)) {
       await db.delete(TareasProveedor).where(eq(TareasProveedor.proveedorId, Number(id)));
       for (const t of tareas) {
-        if (t.titulo) {
+        const cleanTitulo = t.titulo ? sanitize(String(t.titulo).trim()) : "";
+        if (cleanTitulo && cleanTitulo.length > 100) {
+          return new Response(JSON.stringify({ error: "El título de la tarea no puede exceder los 100 caracteres." }), { status: 400 });
+        }
+        if (cleanTitulo) {
           await db.insert(TareasProveedor).values({
             proveedorId: Number(id),
-            titulo: sanitize(String(t.titulo).trim()),
+            titulo: cleanTitulo,
             fechaLimite: t.fechaLimite ? new Date(t.fechaLimite) : null,
             completada: Boolean(t.completada),
           });

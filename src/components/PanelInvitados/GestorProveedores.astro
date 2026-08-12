@@ -235,7 +235,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     <form id="form-nuevo-proveedor" class="modal-form-body">
       <label class="form-label">
         <span>Nombre del Proveedor *</span>
-        <input type="text" id="new-nombre" name="nombre" required placeholder="Ej. Fotografía Studio Guadalajara" />
+        <input type="text" id="new-nombre" name="nombre" required maxlength="80" placeholder="Ej. Fotografía Studio Guadalajara" />
       </label>
 
       <div class="fields-row">
@@ -250,19 +250,19 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
         <label class="form-label">
           <span>Presupuesto Comprometido ($)</span>
-          <input type="number" id="new-presupuesto" name="presupuestoTotal" min="0" placeholder="0.00" />
+          <input type="number" id="new-presupuesto" name="presupuestoTotal" min="0" max="10000000" placeholder="0.00" />
         </label>
       </div>
 
       <div class="fields-row">
         <label class="form-label">
           <span>Nombre de Contacto</span>
-          <input type="text" id="new-contacto" name="contactoNombre" placeholder="Ej. Carlos Mendoza" />
+          <input type="text" id="new-contacto" name="contactoNombre" maxlength="80" placeholder="Ej. Carlos Mendoza" />
         </label>
 
         <label class="form-label">
           <span>Celular / WhatsApp</span>
-          <input type="tel" id="new-telefono" name="contactoTelefono" placeholder="10 dígitos" />
+          <input type="tel" id="new-telefono" name="contactoTelefono" maxlength="15" placeholder="10 dígitos" />
         </label>
       </div>
 
@@ -319,7 +319,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
               <div class="fields-row">
                 <label class="form-label">
                   <span>Nombre del Proveedor</span>
-                  <input type="text" id="det-nombre" name="nombre" required />
+                  <input type="text" id="det-nombre" name="nombre" required maxlength="80" />
                 </label>
                 <label class="form-label">
                   <span>Categoría / Giro</span>
@@ -334,18 +334,18 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
               <div class="fields-row">
                 <label class="form-label">
                   <span>Nombre de Contacto</span>
-                  <input type="text" id="det-contacto" name="contactoNombre" />
+                  <input type="text" id="det-contacto" name="contactoNombre" maxlength="80" />
                 </label>
                 <label class="form-label">
                   <span>Celular / WhatsApp</span>
-                  <input type="tel" id="det-telefono" name="contactoTelefono" />
+                  <input type="tel" id="det-telefono" name="contactoTelefono" maxlength="15" />
                 </label>
               </div>
 
               <div class="fields-row">
                 <label class="form-label">
                   <span>Presupuesto Comprometido ($)</span>
-                  <input type="number" id="det-presupuesto" name="presupuestoTotal" min="0" />
+                  <input type="number" id="det-presupuesto" name="presupuestoTotal" min="0" max="10000000" />
                 </label>
                 <label class="form-label">
                   <span>Fecha Límite Pago (Opcional)</span>
@@ -385,9 +385,9 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
               </div>
 
               <form id="form-nuevo-pago" class="inline-add-form">
-                <input type="number" id="inp-pago-monto" min="1" step="any" placeholder="Monto $" class="inp-monto" />
+                <input type="number" id="inp-pago-monto" min="1" max="10000000" step="any" placeholder="Monto $" class="inp-monto" />
                 <input type="date" id="inp-pago-fecha" class="inp-fecha" />
-                <input type="text" id="inp-pago-concepto" placeholder="Concepto (ej. Anticipo 50%)" class="inp-desc" />
+                <input type="text" id="inp-pago-concepto" placeholder="Concepto (ej. Anticipo 50%)" maxlength="80" class="inp-desc" />
                 <button type="submit" class="btn-inline-add">+ Abonar</button>
               </form>
 
@@ -431,7 +431,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
               </div>
 
               <form id="form-nueva-tarea" class="inline-add-form">
-                <input type="text" id="inp-tarea-titulo" placeholder="Nombre de la tarea..." class="inp-desc" />
+                <input type="text" id="inp-tarea-titulo" placeholder="Nombre de la tarea..." maxlength="100" class="inp-desc" />
                 <input type="date" id="inp-tarea-fecha" title="Fecha límite (Opcional)" class="inp-fecha" />
                 <button type="submit" class="btn-inline-add primary">+ Agregar</button>
               </form>
@@ -617,6 +617,33 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       formNuevo.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(formNuevo);
+        const nombre = (formData.get("nombre") as string || "").trim();
+        const categoria = (formData.get("categoria") as string || "").trim();
+        const presupuestoTotal = Number(formData.get("presupuestoTotal")) || 0;
+        const contactoNombre = (formData.get("contactoNombre") as string || "").trim();
+        const contactoTelefono = (formData.get("contactoTelefono") as string || "").trim();
+
+        if (!nombre || !categoria) {
+          alert("El nombre y la categoría son requeridos.");
+          return;
+        }
+        if (nombre.length > 80) {
+          alert("El nombre del proveedor no puede exceder los 80 caracteres.");
+          return;
+        }
+        if (contactoNombre.length > 80) {
+          alert("El nombre de contacto no puede exceder los 80 caracteres.");
+          return;
+        }
+        if (contactoTelefono.length > 15) {
+          alert("El teléfono de contacto no puede exceder los 15 caracteres.");
+          return;
+        }
+        if (presupuestoTotal < 0 || presupuestoTotal > 10000000) {
+          alert("El presupuesto debe ser un número entre 0 y 10,000,000.");
+          return;
+        }
+
         const data = Object.fromEntries(formData.entries());
 
         try {
@@ -966,8 +993,13 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         const inputConcepto = document.getElementById("inp-pago-concepto") as HTMLInputElement;
 
         const monto = Number(inputMonto.value);
-        if (!monto || monto <= 0) {
-          alert("Ingresa un monto válido");
+        if (!monto || monto <= 0 || monto > 10000000) {
+          alert("Ingresa un monto válido entre $1 y $10,000,000.");
+          return;
+        }
+        const concepto = inputConcepto.value.trim();
+        if (concepto.length > 80) {
+          alert("El concepto de pago no puede exceder los 80 caracteres.");
           return;
         }
 
@@ -976,7 +1008,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
           proveedorId: draftProv.id,
           monto,
           fecha: inputFecha.value || new Date().toISOString().split("T")[0],
-          concepto: inputConcepto.value.trim() || "Abono",
+          concepto: concepto || "Abono",
         });
 
         inputMonto.value = "";
@@ -1014,6 +1046,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
           alert("Ingresa el título de la tarea");
           return;
         }
+        if (titulo.length > 100) {
+          alert("El título de la tarea no puede exceder los 100 caracteres.");
+          return;
+        }
 
         draftProv.tareas.push({
           id: Date.now(),
@@ -1033,6 +1069,28 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     // Single Batch Save Action Handler
     const saveGlobalEdits = async () => {
       if (!draftProv) return;
+
+      // Validaciones finales antes de guardar
+      if (!draftProv.nombre || !draftProv.categoria) {
+        alert("El nombre y la categoría son requeridos.");
+        return;
+      }
+      if (draftProv.nombre.length > 80) {
+        alert("El nombre del proveedor no puede exceder los 80 caracteres.");
+        return;
+      }
+      if (draftProv.contactoNombre && draftProv.contactoNombre.length > 80) {
+        alert("El nombre de contacto no puede exceder los 80 caracteres.");
+        return;
+      }
+      if (draftProv.contactoTelefono && draftProv.contactoTelefono.length > 15) {
+        alert("El teléfono de contacto no puede exceder los 15 caracteres.");
+        return;
+      }
+      if (draftProv.presupuestoTotal < 0 || draftProv.presupuestoTotal > 10000000) {
+        alert("El presupuesto debe ser un número entre 0 y 10,000,000.");
+        return;
+      }
 
       try {
         const res = await fetch("/api/proveedores.json", {

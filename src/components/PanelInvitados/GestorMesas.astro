@@ -316,7 +316,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       <form id="form-mesa-crear">
         <label>
           Nombre de la mesa
-          <input type="text" name="nombre" required placeholder="ej: Mesa de Novios, Mesa 4" />
+          <input type="text" name="nombre" required maxlength="50" placeholder="ej: Mesa de Novios, Mesa 4" />
         </label>
         <label>
           Capacidad de asientos
@@ -339,7 +339,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         <input type="hidden" name="id" id="edit-mesa-id" />
         <label>
           Nombre de la mesa
-          <input type="text" name="nombre" id="edit-mesa-nombre" required />
+          <input type="text" name="nombre" id="edit-mesa-nombre" required maxlength="50" />
         </label>
         <label>
           Capacidad de asientos
@@ -389,9 +389,25 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     formCrear?.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(formCrear);
+      const nombre = (formData.get("nombre") as string).trim();
+      const capacidad = parseInt(formData.get("capacidad") as string, 10);
+
+      if (!nombre) {
+        alert("El nombre de la mesa es requerido.");
+        return;
+      }
+      if (nombre.length > 50) {
+        alert("El nombre de la mesa no puede exceder los 50 caracteres.");
+        return;
+      }
+      if (isNaN(capacidad) || capacidad < 1 || capacidad > 100) {
+        alert("La capacidad de asientos debe ser un número entre 1 y 100.");
+        return;
+      }
+
       const payload = {
-        nombre: formData.get("nombre"),
-        capacidad: formData.get("capacidad")
+        nombre,
+        capacidad
       };
 
       try {
@@ -432,10 +448,31 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     formEditar?.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(formEditar);
+      const id = formData.get("id");
+      const nombre = (formData.get("nombre") as string).trim();
+      const capacidad = parseInt(formData.get("capacidad") as string, 10);
+
+      if (!id) {
+        alert("ID de mesa no válido.");
+        return;
+      }
+      if (!nombre) {
+        alert("El nombre de la mesa es requerido.");
+        return;
+      }
+      if (nombre.length > 50) {
+        alert("El nombre de la mesa no puede exceder los 50 caracteres.");
+        return;
+      }
+      if (isNaN(capacidad) || capacidad < 1 || capacidad > 100) {
+        alert("La capacidad de asientos debe ser un número entre 1 y 100.");
+        return;
+      }
+
       const payload = {
-        id: formData.get("id"),
-        nombre: formData.get("nombre"),
-        capacidad: formData.get("capacidad")
+        id,
+        nombre,
+        capacidad
       };
 
       try {

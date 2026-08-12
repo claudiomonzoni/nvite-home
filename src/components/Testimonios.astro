@@ -2,6 +2,7 @@
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import SliderControls from "./SliderControls.astro";
 
 const reviews = [
   {
@@ -108,11 +109,9 @@ const schemaReviews = {
           </div>
         ))}
       </div>
-
-      <div class="swiper-pagination"></div>
-      <!-- <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div> -->
     </div>
+
+    <SliderControls count={reviews.length} id="testimonios-controls" />
   </div>
 </section>
 
@@ -126,7 +125,6 @@ const schemaReviews = {
       margin-bottom: 0;
       color: $primario;
       font-weight: 600;
-
     }
     p {
       text-align: center;
@@ -151,7 +149,6 @@ const schemaReviews = {
       background-color: $fondoGlobal;
       padding: 2rem;
       border-radius: $radio;
-      //  @extend .sombra;
     }
 
     &__image {
@@ -177,49 +174,58 @@ const schemaReviews = {
       padding: 2rem 0 5rem 0;
     }
   }
-
-  :global(.swiper-button-next),
-  :global(.swiper-button-prev) {
-    color: $acento;
-    top: 2rem;
-
-    &::after {
-      font-size: 1.3rem; // Reduce el tamaño del ícono
-      font-weight: bold;
-    }
-
-    @include cel {
-      display: none;
-    }
-  }
-
-  :global(.swiper-button-next) {
-    right: 1rem; // Ajustado de la posición original
-  }
-
-  :global(.swiper-button-prev) {
-    left: 1rem; // Ajustado de la posición original
-  }
-
-  :global(.swiper-pagination-bullet-active) {
-    background: $acento;
-  }
 </style>
 
 <script>
   import Swiper from "swiper";
-  import { Navigation, Pagination, Autoplay } from "swiper/modules";
+  import { Navigation, Autoplay } from "swiper/modules";
+
   function initializeTestimonios() {
-    // Destruir instancia existente si hay alguna
     const swiperElement = document.querySelector(".testimonios-swiper");
-    const existingSwiper = swiperElement && (swiperElement as any).swiper;
+    const controls = document.querySelector("#testimonios-controls");
+    if (!swiperElement || !controls) return;
+
+    const existingSwiper = (swiperElement as any).swiper;
     if (existingSwiper) {
       existingSwiper.destroy(true, true);
     }
 
-    // Crear nueva instancia
-    new Swiper(".testimonios-swiper", {
-      modules: [Navigation, Pagination, Autoplay],
+    const playBtn = controls.querySelector(".play-btn");
+    const playIcon = playBtn?.querySelector(".play-icon");
+    const pauseIcon = playBtn?.querySelector(".pause-icon");
+    const replayIcon = playBtn?.querySelector(".replay-icon");
+    const segments = controls.querySelectorAll(".pill-segment");
+
+    let isPlaying = true;
+
+    function updatePlayPauseIcon(running: boolean) {
+      isPlaying = running;
+      if (running) {
+        replayIcon?.classList.add("hidden");
+        playIcon?.classList.add("hidden");
+        pauseIcon?.classList.remove("hidden");
+      } else {
+        pauseIcon?.classList.add("hidden");
+        replayIcon?.classList.add("hidden");
+        playIcon?.classList.remove("hidden");
+      }
+    }
+
+    function updateSegments(index: number, progressPct: number = 0) {
+      segments.forEach((el, idx) => {
+        const progressEl = el.querySelector(".segment-progress") as HTMLElement | null;
+        if (idx === index) {
+          el.classList.add("active-segment");
+          if (progressEl) progressEl.style.width = Math.round(progressPct) + "%";
+        } else {
+          el.classList.remove("active-segment");
+          if (progressEl) progressEl.style.width = "0%";
+        }
+      });
+    }
+
+    const swiper = new Swiper(".testimonios-swiper", {
+      modules: [Navigation, Autoplay],
       slidesPerView: 1,
       spaceBetween: 30,
       loop: true,
@@ -227,16 +233,6 @@ const schemaReviews = {
         delay: 4000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-        dynamicBullets: true, // Hace que los bullets sean más dinámicos
-        dynamicMainBullets: 3, // Muestra 3 bullets principales
-      },
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
       },
       breakpoints: {
         640: {
@@ -246,6 +242,45 @@ const schemaReviews = {
           slidesPerView: 3,
         },
       },
+      on: {
+        init(s) {
+          updatePlayPauseIcon(true);
+          updateSegments(s.realIndex, 0);
+        },
+        slideChange(s) {
+          updateSegments(s.realIndex, 0);
+        },
+        autoplayTimeLeft(_s, _timeLeft, percentage) {
+          const progress = (1 - percentage) * 100;
+          const activeSegmentProgress = controls.querySelector(".active-segment .segment-progress") as HTMLElement | null;
+          if (activeSegmentProgress) {
+            activeSegmentProgress.style.width = Math.round(progress) + "%";
+          }
+        },
+        autoplayStart() {
+          updatePlayPauseIcon(true);
+        },
+        autoplayStop() {
+          updatePlayPauseIcon(false);
+        },
+      },
+    });
+
+    playBtn?.addEventListener("click", () => {
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+      } else {
+        swiper.autoplay.start();
+      }
+    });
+
+    segments.forEach((seg, idx) => {
+      seg.addEventListener("click", () => {
+        swiper.slideToLoop(idx);
+        if (swiper.autoplay.running) {
+          swiper.autoplay.start(); // restart timer
+        }
+      });
     });
   }
 
@@ -253,7 +288,7 @@ const schemaReviews = {
   document.addEventListener("astro:page-load", initializeTestimonios);
 
   // Inicializar si el documento ya está cargado
-  if (document.readyState === "complete") {
+  if (document.readyState === "complete" || document.readyState === "interactive") {
     initializeTestimonios();
   }
 </script>

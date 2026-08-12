@@ -20,6 +20,7 @@ import BeneficioCard from "../../components/BeneficioCard.astro";
 import BannerGeneral from "../../components/BannerGeneral.astro";
 import Faq from "../../components/Faq.astro";
 import MesasHome from "../../components/MesasHome.astro";
+import SliderControls from "../../components/SliderControls.astro";
 // Datos
 import nvitacionesData from "./nvitaciones.json";
 
@@ -106,12 +107,12 @@ async function getProductImages(nvitacionInfo: NvitacionInfo | undefined) {
   try {
     const imagenes = [];
 
-    // Primero añadir la imagen de Stripe si está disponible
+    // Primero añadir la imagen de portada/Stripe si está disponible (poster de video/portada)
     if (product.data.images?.length > 0) {
       imagenes.push(product.data.images[0]);
     }
 
-    // Luego añadir imágenes desde nvitacionInfo
+    // Luego añadir las imágenes detalladas desde nvitacionInfo
     if (nvitacionInfo?.imagenes) {
       for (const imagePath of nvitacionInfo.imagenes) {
         const normalizedPath = imagePath.replace(/\\/g, "/");
@@ -208,17 +209,16 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     >
       <div id="izq">
         <div id="fix">
-          <div class="gallery-container" id="nv-gallery">
-            <div class="thumbnails-container" id="nv-thumbs">
+          <div
+            class="gallery-carousel-wrapper"
+            id="nv-gallery"
+            data-video-url={nvitacionInfo?.video}
+          >
+            <div class="gallery-carousel-track" id="nv-carousel-track">
               {
                 imagenes.map((imagen, index) => (
                   <div
-                    class="thumbnail-wrapper"
-                    role="button"
-                    tabindex="0"
-                    data-full-img={
-                      isImageMetadata(imagen) ? imagen.src : imagen
-                    }
+                    class={`gallery-slide ${index === 0 ? "active" : ""}`}
                     data-index={index}
                     data-video-url={
                       index === 0 && nvitacionInfo?.video
@@ -226,78 +226,39 @@ const metaDescription = `La invitación digital más completa para tu boda — $
                         : undefined
                     }
                   >
-                    {isImageMetadata(imagen) ? (
-                      <Image
-                        src={imagen}
-                        alt={`Imagen de ${product.data.name}`}
-                        height={80}
-                        width={80}
-                        class="thumbnail"
-                        quality="max"
-                      />
-                    ) : (
-                      <img
-                        src={imagen}
-                        alt={`Imagen de ${product.data.name}`}
-                        height={80}
-                        width={80}
-                        class="thumbnail"
-                      />
-                    )}
-                    {index === 0 && nvitacionInfo?.video && (
-                      <div class="thumb-play" aria-hidden="false">
-                        <Icon name="mdi:play-circle" color="white" size={28} />
-                      </div>
-                    )}
+                    <div class="slide-media-wrap">
+                      {isImageMetadata(imagen) ? (
+                        <Image
+                          src={imagen}
+                          loading={index === 0 ? "eager" : "lazy"}
+                          alt={`${product.data.name} - ${index + 1}`}
+                          class="gallery-image"
+                          quality="max"
+                        />
+                      ) : (
+                        <img
+                          src={imagen}
+                          loading={index === 0 ? "eager" : "lazy"}
+                          alt={`${product.data.name} - ${index + 1}`}
+                          class="gallery-image"
+                        />
+                      )}
+                      {index === 0 && nvitacionInfo?.video && (
+                        <button
+                          id="nv-play"
+                          class="video-play"
+                          aria-label="Reproducir video"
+                        >
+                          <Icon name="mdi:play-circle" color="white" size={70} />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))
               }
             </div>
 
-            <div
-              class="main-image-container"
-              id="nv-main"
-              data-video-url={nvitacionInfo?.video}
-            >
-              <div class="media-poster">
-                {
-                  isImageMetadata(imagenes[0]) ? (
-                    <Image
-                      src={imagenes[0]}
-                      loading="eager"
-                      alt={product.data.name}
-                      height={800}
-                      width={800}
-                      class="main-image"
-                      id="nv-poster"
-                      quality="max"
-                    />
-                  ) : (
-                    <img
-                      src={imagenes[0]}
-                      loading="eager"
-                      alt={product.data.name}
-                      height={800}
-                      width={800}
-                      class="main-image"
-                      id="nv-poster"
-                    />
-                  )
-                }
-
-                {
-                  nvitacionInfo?.video && (
-                    <button
-                      id="nv-play"
-                      class="video-play"
-                      aria-label="Reproducir video"
-                    >
-                      <Icon name="mdi:play-circle" color="white" size={70} />
-                    </button>
-                  )
-                }
-              </div>
-            </div>
+            <SliderControls count={imagenes.length} id="nv-gallery-controls" />
           </div>
         </div>
       </div>
@@ -791,8 +752,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
   h1 {
     color: $primario;
     font-size: clamp(1.7rem, 4vw, 2rem);
-    border-bottom: solid 1px $primario;
-    margin-bottom: $margen-cel;
+    font-weight: bold;
   }
 
   //contenedor de precio
@@ -825,107 +785,100 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     margin: 0;
   }
 
-  // Gallery styles
-  .gallery-container {
-    display: flex;
-    gap: 1rem;
-    margin: 0 auto;
-  }
-
-  .thumbnails-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100px;
-  }
-
-  .thumbnail-wrapper {
+  // Gallery Carousel Styles
+  .gallery-carousel-wrapper {
+    width: 100%;
     position: relative;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: $radio;
     overflow: hidden;
-    transition: all 0.3s ease;
+    border-right: solid 1px rgba($primario, .6);
+    padding-bottom: $margen-cel;
+    margin-bottom: $margen-cel;
+    
+    @include cel {
+      overflow: auto;
+      scrollbar-width: none;
+      border-right: none;
+      border-bottom: solid 1px rgba($primario, .3);
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .gallery-carousel-track {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+
+    @include cel {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 12px;
+      padding-right: 16%; /* Muestra un % de la siguiente imagen */
+      padding-bottom: 8px;
+
+      /* Ocultar scrollbar visualmente manteniendo scroll funcional */
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .gallery-slide {
+    flex: 0 0 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: $radio;
+    position: relative;
+
+    @include cel {
+      flex: 0 0 84%; /* 84% de ancho para que asome la siguiente */
+      max-width: 84%;
+      scroll-snap-align: start;
+    }
+  }
+
+  .slide-media-wrap {
+    position: relative;
+    width: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
-
-    &:hover {
-      background: #c8c8c8;
-    }
-
-    &.active {
-      border: $acento;
-    }
+    align-items: center;
   }
 
-  /* Play overlay on thumbnails */
-  .thumb-play {
+  .gallery-image {
+    width: 90%;
+    height: auto;
+    display: block;
+    border-radius: $radio;
+  }
+
+  .video-play {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 20;
+    background: rgba(0, 0, 0, 0.45);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.45);
-    pointer-events: auto;
-  }
+    width: 70px;
+    height: 70px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 10;
 
-  .thumbnail {
-    width: 60%;
-    height: auto;
-    display: block;
-    @include cel {
-      width: 40%;
-    }
-  }
-
-  .main-image-container {
-    position: sticky;
-    top: 4rem;
-    height: fit-content;
-    flex: 1;
-    overflow: hidden;
-    border-radius: 8px;
-
-    .media-poster {
-      position: relative;
-      display: block;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    .main-image {
-      max-width: 100%;
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      object-fit: contain;
-      transition: transform 0.3s ease;
-      z-index: 1;
-      position: relative;
-    }
-
-    .video-play {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 30;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: auto;
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.35);
-      cursor: pointer;
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(0, 0, 0, 0.65);
     }
   }
 
@@ -1054,6 +1007,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       list-style: none;
       color: #555;
       padding-left: 20px;
+      margin-left:0;
       position: relative;
       line-height: 1.5;
       text-align: left;
@@ -1192,7 +1146,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     color: white !important;
     font-weight: bold;
     &:hover {
-      background-color: darken($acento, 10%) !important;
+     // background-color: color.scale($acento, $lightness: -10%) !important;
     }
   }
 
@@ -1459,200 +1413,232 @@ const metaDescription = `La invitación digital más completa para tu boda — $
     // con las transiciones de Astro (viewTransitions / SPA navigation).
     initializeGallery() {
       const GKEY = "__NV_GALLERY__";
-      // Destroy previous instance if present (handles SPA navigation/transitions)
       try {
         (window as any)[GKEY]?.destroy?.();
-      } catch (e) {
-        /* ignore */
-      }
+      } catch (e) {}
 
       const root = document.getElementById("nv-gallery");
       if (!root) return;
 
-      const thumbs = Array.from(
-        root.querySelectorAll(".thumbnail-wrapper"),
-      ) as HTMLElement[];
-      const poster = document.getElementById(
-        "nv-poster",
-      ) as HTMLImageElement | null;
-      const mainContainer = document.getElementById(
-        "nv-main",
-      ) as HTMLElement | null;
-      const playButton = document.getElementById(
-        "nv-play",
-      ) as HTMLButtonElement | null;
-      const mediaPoster = root.querySelector(
-        ".media-poster",
-      ) as HTMLElement | null;
+      const track = root.querySelector("#nv-carousel-track") as HTMLElement | null;
+      const slides = Array.from(root.querySelectorAll(".gallery-slide")) as HTMLElement[];
+      const controls = root.querySelector("#nv-gallery-controls") as HTMLElement | null;
+      const videoPlayBtn = root.querySelector("#nv-play") as HTMLButtonElement | null;
+      const videoUrl = root.getAttribute("data-video-url");
 
-      if (!poster || !thumbs.length || !mainContainer || !mediaPoster) return;
+      if (!track || !slides.length || !controls) return;
 
-      const posterSrc = poster.getAttribute("src") || "";
-      const videoUrl = mainContainer.getAttribute("data-video-url") || null;
+      const playBtn = controls.querySelector(".play-btn") as HTMLButtonElement | null;
+      const playIcon = playBtn?.querySelector(".play-icon");
+      const pauseIcon = playBtn?.querySelector(".pause-icon");
+      const replayIcon = playBtn?.querySelector(".replay-icon");
+      const segments = Array.from(controls.querySelectorAll(".pill-segment")) as HTMLElement[];
 
       let currentIndex = 0;
+      let isPlaying = false;
+      let finished = false;
+      let slideDuration = 5000;
+      let raf: number | null = null;
+      let slideStartTime = 0;
       let videoEl: HTMLVideoElement | null = null;
-      let videoPlayHandler:
-        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
-      let videoPauseHandler:
-        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
-      let videoEndedHandler:
-        ((this: HTMLVideoElement, ev: Event) => any) | null = null;
 
-      // Marca visualmente la miniatura activa.
-      const setActive = (index: number) => {
-        thumbs.forEach((t) => t.classList.remove("active"));
-        const t = thumbs[index];
-        if (t) t.classList.add("active");
+      const updatePlayPauseIcon = () => {
+        if (isPlaying) {
+          replayIcon?.classList.add("hidden");
+          playIcon?.classList.add("hidden");
+          pauseIcon?.classList.remove("hidden");
+        } else {
+          pauseIcon?.classList.add("hidden");
+          if (finished) {
+            playIcon?.classList.add("hidden");
+            replayIcon?.classList.remove("hidden");
+          } else {
+            replayIcon?.classList.add("hidden");
+            playIcon?.classList.remove("hidden");
+          }
+        }
       };
 
-      const clearVideoHandlers = () => {
-        if (!videoEl) return;
-        if (videoPlayHandler)
-          videoEl.removeEventListener("play", videoPlayHandler);
-        if (videoPauseHandler)
-          videoEl.removeEventListener("pause", videoPauseHandler);
-        if (videoEndedHandler)
-          videoEl.removeEventListener("ended", videoEndedHandler);
-        videoPlayHandler = null;
-        videoPauseHandler = null;
-        videoEndedHandler = null;
+      const updateSegments = (index: number, progressPct: number = 0) => {
+        segments.forEach((el, idx) => {
+          const progressEl = el.querySelector(".segment-progress") as HTMLElement | null;
+          if (idx === index) {
+            el.classList.add("active-segment");
+            if (progressEl) progressEl.style.width = Math.round(progressPct) + "%";
+          } else {
+            el.classList.remove("active-segment");
+            if (progressEl) progressEl.style.width = "0%";
+          }
+        });
       };
 
-      // Detiene y limpia el elemento de video cuando cambiamos de miniatura
-      // o cuando el usuario abandona el modo video.
+      const isMobileView = () => window.matchMedia("(max-width: 768px)").matches;
+
+      const coverImg = slides[0]?.querySelector(".gallery-image") as HTMLElement | null;
+
       const destroyVideo = () => {
         if (videoEl) {
-          clearVideoHandlers();
-          if (playButton) playButton.style.display = "none";
-          try {
-            videoEl.pause();
-          } catch (e) {}
+          try { videoEl.pause(); } catch(e) {}
           videoEl.remove();
           videoEl = null;
         }
-        if (poster) poster.style.display = "";
+        const mediaWrap = slides[0]?.querySelector(".slide-media-wrap");
+        if (mediaWrap) {
+          const existingVideos = mediaWrap.querySelectorAll("video");
+          existingVideos.forEach((v) => v.remove());
+        }
+        if (coverImg) coverImg.style.display = "";
+        if (videoPlayBtn) videoPlayBtn.style.display = "flex";
       };
 
-      const selectIndex = (index: number) => {
+      const goToSlide = (index: number) => {
+        if (index < 0 || index >= slides.length) return;
+
+        if (index !== 0) destroyVideo();
+
+        slides[currentIndex]?.classList.remove("active");
         currentIndex = index;
-        const thumb = thumbs[index];
-        const thumbVideo = thumb.getAttribute("data-video-url");
-        const full = thumb.getAttribute("data-full-img") || posterSrc;
+        slides[currentIndex]?.classList.add("active");
 
-        // If we had a playing video, stop it
-        destroyVideo();
+        updateSegments(currentIndex, 0);
 
-        // If the selected thumb is the video (index 0 with video)
-        if (thumbVideo) {
-          // Restore poster to the original posterSrc for video
-          if (poster) poster.setAttribute("src", posterSrc);
-          if (playButton) playButton.style.display = "flex";
+        if (isMobileView()) {
+          const targetSlide = slides[currentIndex];
+          if (targetSlide) {
+            const scrollLeftPos = targetSlide.offsetLeft - 16;
+            track.scrollTo({ left: scrollLeftPos, behavior: "smooth" });
+          }
         } else {
-          // Show selected image as poster
-          if (poster) poster.setAttribute("src", full);
-          if (playButton) playButton.style.display = "none";
+          track.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
-        setActive(index);
+        if (isPlaying) {
+          slideStartTime = performance.now();
+        }
       };
 
-      // Crea el elemento <video> dinámicamente y lo inserta en el poster.
-      // Se vinculan eventos para mostrar/ocultar el botón Play y limpiar al finalizar.
-      const createVideo = () => {
-        if (!videoUrl) return;
+      const pause = () => {
+        isPlaying = false;
+        updatePlayPauseIcon();
+        if (raf !== null) {
+          cancelAnimationFrame(raf);
+          raf = null;
+        }
+      };
+
+      const tick = (ts: DOMHighResTimeStamp) => {
+        if (!isPlaying) return;
+        const elapsed = ts - slideStartTime;
+        const progress = Math.min(elapsed / slideDuration, 1);
+        updateSegments(currentIndex, progress * 100);
+
+        if (progress >= 1) {
+          if (currentIndex === slides.length - 1) {
+            finished = true;
+            pause();
+            return;
+          }
+          goToSlide(currentIndex + 1);
+          slideStartTime = performance.now();
+        }
+        raf = requestAnimationFrame(tick);
+      };
+
+      const play = () => {
+        if (isPlaying) return;
+        if (finished) {
+          finished = false;
+          goToSlide(0);
+        }
+        isPlaying = true;
+        updatePlayPauseIcon();
+        slideStartTime = performance.now();
+        raf = requestAnimationFrame(tick);
+      };
+
+      const togglePlayPause = () => {
+        if (isPlaying) pause();
+        else play();
+      };
+
+      playBtn?.addEventListener("click", togglePlayPause);
+
+      const segmentClickHandlers: Array<{ el: HTMLElement; handler: (e: Event) => void }> = [];
+      segments.forEach((seg, idx) => {
+        const handler = (e: Event) => {
+          e.stopPropagation();
+          goToSlide(idx);
+        };
+        seg.addEventListener("click", handler);
+        segmentClickHandlers.push({ el: seg, handler });
+      });
+
+      let scrollTimeout: any = null;
+
+      const handleTrackScroll = () => {
+        if (!isMobileView()) return;
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const slideWidth = slides[0]?.offsetWidth || 1;
+          const gap = 12;
+          const newIndex = Math.round(track.scrollLeft / (slideWidth + gap));
+          if (newIndex >= 0 && newIndex < slides.length && newIndex !== currentIndex) {
+            slides[currentIndex]?.classList.remove("active");
+            currentIndex = newIndex;
+            slides[currentIndex]?.classList.add("active");
+            updateSegments(currentIndex, 0);
+            if (currentIndex !== 0) destroyVideo();
+          }
+        }, 80);
+      };
+
+      track.addEventListener("scroll", handleTrackScroll, { passive: true });
+
+      const handleVideoPlayClick = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pause();
         destroyVideo();
 
         videoEl = document.createElement("video");
-        videoEl.src = videoUrl;
+        videoEl.src = videoUrl!;
         videoEl.controls = true;
         videoEl.autoplay = true;
         videoEl.playsInline = true;
-        videoEl.className = "main-image";
-        videoEl.id = "nv-video";
-        if (posterSrc) videoEl.setAttribute("poster", posterSrc);
-
-        // Aplicar estilos inline al video
         videoEl.style.width = "100%";
-        videoEl.style.maxWidth = "500px";
-        videoEl.style.margin = "0 auto";
-        videoEl.style.display = "block";
-        videoEl.style.borderRadius = "10px";
+        videoEl.style.height = "auto";
+        videoEl.style.borderRadius = "12px";
 
-        // Hide poster and append video
-        if (poster) poster.style.display = "none";
-        mediaPoster.appendChild(videoEl);
+        const mediaWrap = slides[0]?.querySelector(".slide-media-wrap");
+        if (mediaWrap) {
+          if (coverImg) coverImg.style.display = "none";
+          if (videoPlayBtn) videoPlayBtn.style.display = "none";
+          mediaWrap.appendChild(videoEl);
+        }
 
-        // Update playButton visibility
-        if (playButton) playButton.style.display = "none";
-
-        videoPlayHandler = () => {
-          if (playButton) playButton.style.display = "none";
-        };
-        videoPauseHandler = () => {
-          if (playButton) playButton.style.display = "flex";
-        };
-        videoEndedHandler = () => {
+        videoEl.addEventListener("ended", () => {
           destroyVideo();
-        };
-
-        videoEl.addEventListener("play", videoPlayHandler);
-        videoEl.addEventListener("pause", videoPauseHandler);
-        videoEl.addEventListener("ended", videoEndedHandler);
+        });
       };
 
-      // Handlers
-      const thumbClickHandler = (e: Event) => {
-        const el = e.currentTarget as HTMLElement;
-        const idx = Number(el.getAttribute("data-index")) || 0;
-        selectIndex(idx);
-      };
-
-      const thumbKeyHandler = (e: KeyboardEvent) => {
-        if (e.key === "Enter" || e.key === " ") {
-          (e.currentTarget as HTMLElement).click();
-          e.preventDefault();
-        }
-      };
-
-      thumbs.forEach((t) => {
-        t.addEventListener("click", thumbClickHandler);
-        t.addEventListener("keydown", thumbKeyHandler as any);
-      });
-
-      const playClickHandler = (e: Event) => {
-        e.preventDefault();
-        // Toggle if video exists
-        if (videoEl) {
-          if (videoEl.paused) videoEl.play().catch(() => {});
-          else videoEl.pause();
-          return;
-        }
-        createVideo();
-      };
-
-      if (playButton) {
-        playButton.addEventListener("click", playClickHandler);
+      if (videoPlayBtn && videoUrl) {
+        videoPlayBtn.addEventListener("click", handleVideoPlayClick);
       }
 
-      // expose destroy to window so SPA navigation can cleanup
       (window as any)[GKEY] = {
         destroy() {
-          thumbs.forEach((t) => {
-            t.removeEventListener("click", thumbClickHandler);
-            t.removeEventListener("keydown", thumbKeyHandler as any);
-          });
-          if (playButton)
-            playButton.removeEventListener("click", playClickHandler);
+          pause();
           destroyVideo();
-          try {
-            delete (window as any)[GKEY];
-          } catch (e) {}
-        },
+          track.removeEventListener("scroll", handleTrackScroll);
+          playBtn?.removeEventListener("click", togglePlayPause);
+          if (videoPlayBtn) videoPlayBtn.removeEventListener("click", handleVideoPlayClick);
+          segmentClickHandlers.forEach(({ el, handler }) => el.removeEventListener("click", handler));
+          try { delete (window as any)[GKEY]; } catch(e) {}
+        }
       };
 
-      // initialize
-      selectIndex(0);
+      goToSlide(0);
+      updatePlayPauseIcon();
     }
 
     // Manejo de botones de compra
