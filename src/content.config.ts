@@ -24,6 +24,17 @@ const themeSchema = z.object({
   }).optional()
 }).optional();
 
+const hospedajeSchema = z.array(
+  z.object({
+    nombre: z.string(),
+    imagen: z.string().optional(),
+    direccion: z.string().optional(),
+    telefono: z.string().optional(),
+    codigoDescuento: z.string().optional(),
+    urlReservacion: z.string().optional(),
+  })
+).max(3).optional();
+
 // 3. Define your collection(s)
 const bodas = defineCollection({
   // type: "content", // v2.5.0 and later
@@ -118,7 +129,8 @@ const bodas = defineCollection({
       imagenesSolitarias: z.array(z.string()).optional(),
       // Carpeta de pases
       json: z.string().optional(),
-      theme: themeSchema
+      theme: themeSchema,
+      hospedaje: hospedajeSchema
     }),
 });
 
@@ -200,7 +212,8 @@ const quince = defineCollection({
     galeria: z.array(z.string()).optional(),
     // Imágenes solitarias (máximo 3)
     imagenesSolitarias: z.array(z.string()).optional(),
-    theme: themeSchema
+    theme: themeSchema,
+    hospedaje: hospedajeSchema
   }),
 });
 

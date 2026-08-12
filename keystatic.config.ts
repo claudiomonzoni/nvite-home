@@ -325,6 +325,29 @@ export default config({
           },
           { label: "Tema" }
         ),
+        hospedaje: fields.array(
+          fields.object(
+            {
+              nombre: fields.text({ label: "Nombre del Hotel" }),
+              imagen: fields.image({
+                label: "Imagen del Hotel",
+                directory: "public/bodas/hospedaje",
+                publicPath: "/bodas/hospedaje/",
+              }),
+              direccion: fields.text({ label: "Dirección" }),
+              telefono: fields.text({ label: "Teléfono" }),
+              codigoDescuento: fields.text({ label: "Código de descuento / Palabra clave" }),
+              urlReservacion: fields.text({ label: "Enlace para reservar" }),
+            },
+            { label: "Hotel" }
+          ),
+          {
+            label: "Recomendaciones de Hospedaje (Máximo 3)",
+            description: "Agrega hoteles recomendados con tarifas especiales o descuentos para tus invitados",
+            itemLabel: (props) => props.fields.nombre.value || "Hotel",
+            validation: { length: { max: 3 } },
+          }
+        ),
         // === CONTENIDO ===
         content: fields.mdx({ label: "Contenido" }),
       },
@@ -610,6 +633,29 @@ export default config({
             ),
           },
           { label: "Tema" }
+        ),
+        hospedaje: fields.array(
+          fields.object(
+            {
+              nombre: fields.text({ label: "Nombre del Hotel" }),
+              imagen: fields.image({
+                label: "Imagen del Hotel",
+                directory: "public/quince/hospedaje",
+                publicPath: "/quince/hospedaje/",
+              }),
+              direccion: fields.text({ label: "Dirección" }),
+              telefono: fields.text({ label: "Teléfono" }),
+              codigoDescuento: fields.text({ label: "Código de descuento / Palabra clave" }),
+              urlReservacion: fields.text({ label: "Enlace para reservar" }),
+            },
+            { label: "Hotel" }
+          ),
+          {
+            label: "Recomendaciones de Hospedaje (Máximo 3)",
+            description: "Agrega hoteles recomendados con tarifas especiales o descuentos para tus invitados",
+            itemLabel: (props) => props.fields.nombre.value || "Hotel",
+            validation: { length: { max: 3 } },
+          }
         ),
 
         content: fields.mdx({

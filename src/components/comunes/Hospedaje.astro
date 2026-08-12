@@ -1,0 +1,108 @@
+---
+import { Icon } from "astro-icon/components";
+import Anchor from "./Anchor.astro";
+
+interface HospedajeItem {
+  nombre: string;
+  imagen?: string;
+  direccion?: string;
+  telefono?: string;
+  codigoDescuento?: string;
+  urlReservacion?: string;
+}
+
+interface Props {
+  hospedajes?: HospedajeItem[];
+  labels?: {
+    title?: string;
+    subtitle?: string;
+    code?: string;
+    book?: string;
+    phone?: string;
+    address?: string;
+  };
+}
+
+const { hospedajes = [], labels = {} } = Astro.props;
+
+// Fallbacks para etiquetas en español e inglés
+const l = {
+  title: labels.title || "Hospedaje Recomendado",
+  subtitle: labels.subtitle || "Para tu comodidad, te sugerimos las siguientes opciones de hospedaje con tarifas especiales:",
+  code: labels.code || "Código / Palabra Clave",
+  book: labels.book || "Reservar",
+  phone: labels.phone || "Llamar",
+  address: labels.address || "Ver Ubicación",
+};
+---
+
+{
+  Array.isArray(hospedajes) && hospedajes.length > 0 && (
+    <div id="bandejaHospedaje">
+      <div class="titulo-seccion">
+        <Icon name="mdi:hotel" size={40} />
+        <h2>{l.title}</h2>
+      </div>
+      <p class="intro-texto">{l.subtitle}</p>
+
+      <div class="hoteles-grid">
+        {hospedajes.map((hotel) => (
+          <div class="hotel-card">
+            {hotel.imagen && (
+              <div class="hotel-imagen-wrapper">
+                <img
+                  src={hotel.imagen}
+                  alt={`Hotel ${hotel.nombre}`}
+                  loading="lazy"
+                />
+              </div>
+            )}
+            
+            <div class="hotel-info">
+              <h3>{hotel.nombre}</h3>
+              
+              {(hotel.direccion || hotel.telefono) && (
+                <div class="hotel-detalles">
+                  {hotel.direccion && (
+                    <div class="detalle-item">
+                      <Icon name="mdi:map-marker" size={18} />
+                      <span>{hotel.direccion}</span>
+                    </div>
+                  )}
+                  {hotel.telefono && (
+                    <div class="detalle-item">
+                      <Icon name="mdi:phone" size={18} />
+                      <a href={`tel:${hotel.telefono.replace(/\s+/g, '')}`}>{hotel.telefono}</a>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {hotel.codigoDescuento && (
+                <div class="hotel-descuento">
+                  <span class="descuento-label">{l.code}</span>
+                  <span class="descuento-codigo">{hotel.codigoDescuento}</span>
+                </div>
+              )}
+
+              {hotel.urlReservacion && (
+                <div class="hotel-accion">
+                  <Anchor
+                    url={hotel.urlReservacion}
+                    clases="large"
+                    tema="primario"
+                    conBorde={false}
+                    redondo={true}
+                    icono="mdi:open-in-new"
+                    texto={l.book}
+                    target="_blank"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

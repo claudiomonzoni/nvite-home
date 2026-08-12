@@ -144,6 +144,12 @@ export const ui = {
     'quince.countdown.thanks': 'Gracias por ser parte de la celebración de mis XV años',
     'quince.countdown.day': 'Día',
     'quince.countdown.onlyOne': 'Solo falta',
+    
+    // Hospedaje
+    'lodging.title': 'Hospedaje Recomendado',
+    'lodging.subtitle': 'Para tu comodidad, te sugerimos las siguientes opciones de hospedaje con tarifas especiales:',
+    'lodging.code': 'Código / Palabra Clave',
+    'lodging.book': 'Reservar',
   },
   en: {
     'nav.home': 'Home',
@@ -283,6 +289,12 @@ export const ui = {
     'quince.countdown.thanks': 'Thank you for being part of my Quinceañera celebration',
     'quince.countdown.day': 'Day',
     'quince.countdown.onlyOne': 'Only left',
+
+    // Lodging
+    'lodging.title': 'Recommended Lodging',
+    'lodging.subtitle': 'For your comfort, we suggest the following lodging options with special rates:',
+    'lodging.code': 'Code / Keyword',
+    'lodging.book': 'Book Room',
   },
 } as const;
 

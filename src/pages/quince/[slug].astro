@@ -26,6 +26,7 @@ import Padres from "../../components/quince/Padres.astro";
 import Footer from "../../components/quince/Footer.astro";
 import Padrinos from "../../components/comunes/Padrinos.astro";
 import Qr from "../../components/comunes/qr.astro";
+import Hospedaje from "../../components/comunes/hospedaje.astro";
 
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
@@ -142,6 +143,16 @@ const quince = {
       : [],
     paleta: fm.paleta ?? "base",
     theme: fm.theme ?? { name: "base" },
+    hospedaje: Array.isArray(fm?.hospedaje)
+      ? fm.hospedaje.map((h: any) => ({
+          nombre: h?.nombre ?? "",
+          imagen: toRawUrl(h?.imagen) ?? "",
+          direccion: h?.direccion ?? "",
+          telefono: h?.telefono ?? "",
+          codigoDescuento: h?.codigoDescuento ?? "",
+          urlReservacion: h?.urlReservacion ?? "",
+        }))
+      : [],
     content: parsed.content ?? "",
   },
 } as any;
@@ -443,6 +454,22 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
   {
     quince.data.itinerario.length > 0 && quince.data.version === "Lux" && (
       <Itinerario listado={quince.data.itinerario} />
+    )
+  }
+
+  {
+    quince.data.hospedaje && quince.data.hospedaje.length > 0 && (
+      <section class="grid contenido">
+        <Hospedaje
+          hospedajes={quince.data.hospedaje}
+          labels={{
+            title: t("lodging.title"),
+            subtitle: t("lodging.subtitle"),
+            code: t("lodging.code"),
+            book: t("lodging.book"),
+          }}
+        />
+      </section>
     )
   }
 

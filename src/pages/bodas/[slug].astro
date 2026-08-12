@@ -29,6 +29,7 @@ import ConfirmacionBasica from "../../components/bodas/ConfirmacionBasica";
 import Itinerario from "../../components/bodas/Itinerario.astro";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import Qr from "../../components/comunes/qr.astro";
+import Hospedaje from "../../components/comunes/Hospedaje.astro";
 
 // SSR: fetch MDX/frontmatter from GitHub Raw using the slug on every request
 const slug = Astro.params.slug as string;
@@ -147,6 +148,16 @@ const boda = {
     progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
     paleta: fm.paleta ?? "base",
     theme: fm.theme ?? { name: "base" },
+    hospedaje: Array.isArray(fm?.hospedaje)
+      ? fm.hospedaje.map((h: any) => ({
+          nombre: h?.nombre ?? "",
+          imagen: toRawUrl(h?.imagen) ?? "",
+          direccion: h?.direccion ?? "",
+          telefono: h?.telefono ?? "",
+          codigoDescuento: h?.codigoDescuento ?? "",
+          urlReservacion: h?.urlReservacion ?? "",
+        }))
+      : [],
     content: parsed.content ?? "",
   },
 } as any;
@@ -480,6 +491,22 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
             of: t("progress.of"),
             btnConfirm: t("progress.btnConfirm"),
             allReady: boda.data.progresoAllReady || t("progress.allReady"),
+          }}
+        />
+      </section>
+    )
+  }
+
+  {
+    boda.data.hospedaje && boda.data.hospedaje.length > 0 && (
+      <section class="grid contenido">
+        <Hospedaje
+          hospedajes={boda.data.hospedaje}
+          labels={{
+            title: t("lodging.title"),
+            subtitle: t("lodging.subtitle"),
+            code: t("lodging.code"),
+            book: t("lodging.book"),
           }}
         />
       </section>
