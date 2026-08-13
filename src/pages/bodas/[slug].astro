@@ -81,6 +81,7 @@ const mdxRaw = await res.text();
 const parsed = matter(mdxRaw);
 const fm = parsed.data as any;
 
+
 // Normalizar datos esperados por la página
 const boda = {
   id: slug,
@@ -166,6 +167,7 @@ const base = new URL(Astro.url.pathname, Astro.site);
 const galeria: string[] = (boda.data as any).galeria ?? [];
 const imagenesSolitarias: string[] =
   (boda.data as any).imagenesSolitarias ?? [];
+
 
 type Mesa = { url: string; titulo: string };
 const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
