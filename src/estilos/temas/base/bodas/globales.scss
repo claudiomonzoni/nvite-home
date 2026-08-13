@@ -1091,9 +1091,8 @@
     color: var(--secundario);
     border: 0.5px solid var(--acento);
     position: relative;
-    padding: $margen;
+    padding: $margen-cel 1rem!important;
     margin: $margen 0;
-
     &:before {
       content: "";
       position: absolute;
@@ -1167,7 +1166,7 @@
 
     .tiempo-item {
       text-align: center;
-      padding-right: 2rem;
+      padding-right: 1rem;
 
       &:last-child {
         border-right: none;
@@ -1178,7 +1177,7 @@
         padding: 0 1rem;
 
         p {
-          font-size: 1.2rem;
+          font-size: 1.4rem;
         }
 
       }
@@ -1215,7 +1214,12 @@
     }
 
     @include cel {
-      padding: $margen-cel;
+      .conte-items {
+        flex-direction: column;
+      }
+      padding: $margen-cel 0 !important;
+      width: 80%;
+      margin: $margen auto ;
     }
   }
 
