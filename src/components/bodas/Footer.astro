@@ -22,7 +22,8 @@ const l = {
   <p>{l.developedBy}</p>
   <a href="https://nvitaciones.com" target="_blank">
     <img src=`/nvita-logo.svg` alt={l.altLogo} class="logo" />
-    <ul>
+  </a>
+    <!-- <ul>
       <li>
         <a href="https://www.instagram.com/nvitaciones/" target="_blank">
           <svg width="24" height="24" viewBox="0 0 24 24"
@@ -59,7 +60,7 @@ const l = {
           </svg>
         </a>
       </li>
-    </ul>
+    </ul> -->
   </a>
   <p>© 2022 - {new Date().getFullYear()} {l.rights}</p>
 </footer>
@@ -67,14 +68,18 @@ const l = {
 <style lang="scss">
   @use "../../estilos/temas/base/bodas/variables" as *;
   footer {
-    border-top: solid 1px var(--secundario);
-    padding: $margen 0;
+    border-top: solid 1px rgba(var(--secundario-rgb), 0.5);
+    padding: $margen-cel 0;
     margin: 0 auto;
     text-align: center;
+    font-size: 0.8rem;
+    width: 100%;
   }
   .logo {
     width: 200px;
-    max-width: 200px;
+    @include cel {
+      width: 150px;
+    }
   }
   ul {
     display: flex;

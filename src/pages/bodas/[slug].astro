@@ -499,21 +499,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     )
   }
 
-  {
-    boda.data.hospedaje && boda.data.hospedaje.length > 0 && (
-      <section class="grid contenido">
-        <Hospedaje
-          hospedajes={boda.data.hospedaje}
-          labels={{
-            title: t("lodging.title"),
-            subtitle: t("lodging.subtitle"),
-            code: t("lodging.code"),
-            book: t("lodging.book"),
-          }}
-        />
-      </section>
-    )
-  }
+
 
   <section class="grid contenido">
     <Regalos
@@ -632,6 +618,22 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
           return null;
       }
     })()
+  }
+
+    {
+    boda.data.hospedaje && boda.data.hospedaje.length > 0 && (
+      <section class="grid contenido">
+        <Hospedaje
+          hospedajes={boda.data.hospedaje}
+          labels={{
+            title: t("lodging.title"),
+            subtitle: t("lodging.subtitle"),
+            code: t("lodging.code"),
+            book: t("lodging.book"),
+          }}
+        />
+      </section>
+    )
   }
 
   <section class="grid contenido">
