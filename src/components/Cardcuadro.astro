@@ -1,0 +1,77 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  titulo: string;
+  description: string;
+  fondo: string;
+  icono: string;
+}
+const { titulo, description, fondo, icono } = Astro.props;
+const fondoUrl = `url("${fondo}")`;
+---
+
+<div class="cartaBaseInt">
+  <div class="icono">
+    <Icon name={icono} size="50" />
+  </div>
+  <div class="info">
+    <h2 set:html={titulo} />
+    <p set:html={description} />
+  </div>
+</div>
+
+<style lang="scss" define:vars={{ fondoUrl }}>
+  @use "../estilos/_variables.scss" as *;
+  .cartaBaseInt {
+    background:
+    linear-gradient(0deg, rgba($terciario, 1) 20%, rgba($terciario, 0) 50%),
+      var(--fondoUrl) no-repeat center;
+    background-size: cover, cover;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 1 0 20%;
+    height: 35vw;
+    overflow: hidden;
+    border-radius: $radio;
+
+    .icono {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 3rem;
+      svg {
+        color: white;
+        width: 100%;
+      }
+    }
+    h2 {
+      color: $primario;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+    }
+    .info {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      width: calc(100% - 2rem);
+      padding: $margen-cel;
+      p {
+        color: $primario;
+        margin-top: 0.5rem;
+      }
+    }
+
+    @include cel {
+         height: 60vh;
+         flex: 1 0 100%;
+      h2 {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+      .info{
+        padding: $margen-min;
+      }
+    }
+  }
+</style>

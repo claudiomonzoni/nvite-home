@@ -16,6 +16,7 @@ import bodasCaracteristicasImg from "../assets/bodas/caracteristicas-bodas.webp"
 import coverDesktopBoda from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-intBoda.webp";
 import coverMobileBoda from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel-intBoda.webp";
 import MesasHome from "../components/MesasHome.astro";
+import Cardcuadro from "../components/Cardcuadro.astro";
 ---
 
 <Layout
@@ -88,7 +89,28 @@ import MesasHome from "../components/MesasHome.astro";
   <Banner dondeEstoy="bodas" />
 </div>
 
+
 <section class="grid contenido">
+  <div class="flex">
+   <Cardcuadro
+      titulo="Recomendación de <b>hospedaje</b>"
+      description="<b>¿Tus invitados viajan?</b> Dales sugerencias de hospedaje y aprovecha los descuentos hoteleros con tus invitados."
+      fondo="/hospedaje.webp"
+      icono="mdi:hotel-outline"
+    />
+    <Cardcuadro
+    titulo="Porcentaje de <b>confirmados</b>"
+    description="<b>Empuja a confirmar a los rezagados</b> aprovechado el empuje que da mostrar, que todos van."
+    fondo="/confirmando.webp"
+    icono="mdi:account-arrow-right-outline"
+    />
+    <Cardcuadro
+       titulo="Pases <b>QR</b>"
+       description="<b>Al confirmar</b> tus invitados, tendrán un código QR para una entrada sin contratiempos a tu evento."
+       fondo="/qr-nvitaciones-3.webp"
+       icono="mdi:qrcode"
+     />
+  </div>
   <BannerGeneral
     encabezado="Confirmación de asistencia"
     texto="Tus invitados sabrán exactamente cuántos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
@@ -113,45 +135,10 @@ import MesasHome from "../components/MesasHome.astro";
     icono="mdi:image-plus"
     urlImagen="../assets/home/gale/frase.webp"
   />
-  <div class="flex">
-    <div class="cartaBase2">
-      <h2>Invitación de boda personalizada <b>para cada invitado</b></h2>
-      <p>
-        Haz que tus invitados se sientan especiales desde el primer momento. <b>Cada invitación llevará el nombre del invitado o su familia,</b> creando una experiencia única y personal para tu evento."
-      </p>
-      <img
-        id="decor"
-        src="/decoracion-muestra-invitacion-digital-nvite.webp"
-        alt="decoracion invitacion"
-        loading="lazy"
-        decoding="async"
-      />
-      <img
-        class="imaCelular"
-        src="/muestra-invitacion-digital-nvite-personalizada.webp"
-        alt="invitacion personalizada"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-    <div class="cartaBase2">
-      <h2>Gestiona los pases y <b>confirmaciones de asistencia</b></h2>
-      <p>
-        <b>Tus invitados podrán confirmar en tiempo real</b> su asistencia directamente
-        desde su invitación digital, dándote tranquilidad y el control que necesitas
-        para organizar tu evento."
-      </p>
-      <img
-        src="/muestra-invitacion-digital-nvite-confirmacion-whatsapp.webp"
-        alt="invitacion con confirmación de asistencia"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-  </div>
+
 
   <!-- carcateristicas -->
-
+<!-- 
   <div id="conteCaracteristicas">
     <Caracteristicas
       encabezado="Invitación con mapas"
@@ -174,7 +161,7 @@ import MesasHome from "../components/MesasHome.astro";
       fondo="fondo-nvite-caracteristicas-3.png"
     />
 
-  </div>
+  </div> -->
  
 </section>
 
