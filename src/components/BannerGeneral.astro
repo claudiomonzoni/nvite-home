@@ -140,47 +140,33 @@ const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
     }
   }
   .primario {
-    background: var(--banner-bg, linear-gradient(43deg, $terciario 10%, $primario 80%));
-    svg {
-      color: var(--banner-svg, $fondo) !important;
-      fill: var(--banner-svg, $fondo) !important;
-    }
-    h2 {
-      color: var(--banner-heading, $fondo) !important;
-    }
-    p {
-      color: var(--banner-text, white);
-    }
+
     @include cel {
-      background: var(--banner-bg-mobile, linear-gradient(43deg, $primario 10%, $secundario 80%));
+      .bande{
+        svg {
+          color: $secundario !important;
+        }
+        h2 {
+          color: $primario!important;
+        }
+        p {
+          color: $primario;
+        }
+      }
+      
     }
   }
   .secundario {
+
     svg {
-      color: var(--banner-svg, $secundario) !important;
-      fill: var(--banner-svg, $secundario) !important;
+      color: var(--banner-svg, $secundario) ;
+      fill: var(--banner-svg, $secundario) ;
     }
     h2{
-      color: var(--banner-heading, $primario) !important;
+      color: var(--banner-heading, $primario) ;
     }
     color: var(--banner-text, $primario);
-    background: var(--banner-bg, linear-gradient(43deg, $terciario 10%, rgb(255, 247, 233) 80%));
-  }
-  .terciario {
-    svg {
-      fill: var(--banner-svg, $acento) !important;
-      color: var(--banner-svg, $acento) !important;
-    }
-
-    h2 {
-      color: var(--banner-heading, $fondoGlobal) !important;
-    }
-
-    background: var(--banner-bg, linear-gradient(83deg, #a2a4ba 10%, $primario 60%));
-    color: var(--banner-text, #fff);
-    @include cel {
-      background: var(--banner-bg-mobile, linear-gradient(123deg, #a2a4ba 10%, $primario 60%));
-    }
+    //background: var(--banner-bg), linear-gradient(43deg, $terciario 10%, $primario 80%);
   }
 
   // Cel

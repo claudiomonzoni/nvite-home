@@ -23,34 +23,33 @@ import Cardcuadro from "../components/Cardcuadro.astro";
   title="Invitaciones Digitales de Boda con RSVP | Nvitaciones México"
   description="Invitaciones digitales de boda en México. Desde $20 por invitado — personalizadas con tu música, tus fotos y tus colores. Tus invitados confirman asistencia solos. Lista en 2 días hábiles."
 >
-  <div class="grid contenido">
-    
-  </div>
+  <div class="grid contenido"></div>
 
-    <Hero h1='Invitaciones digitales </br>de <b>Bodas </b> </br> <span id="spanHeroH1">Tu boda, organizada.</br> Tus invitados, encantados. </span>'
-  p='<span id="pHero">Invitaciones personalizadas que tus invitados abren en su celular y confirman al instante.</span> Tú controlas todo desde un panel, sin estrés.'
-  textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
-  imagenDesktop={coverDesktopBoda}
-  imagenMobile={coverMobileBoda}/>
+  <Hero
+    h1='Invitaciones digitales </br>de <b>Bodas </b> </br> <span id="spanHeroH1">Tu boda, organizada.</br> Tus invitados, encantados. </span>'
+    p='<span id="pHero">Invitaciones personalizadas que tus invitados abren en su celular y confirman al instante.</span> Tú controlas todo desde un panel, sin estrés.'
+    textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
+    imagenDesktop={coverDesktopBoda}
+    imagenMobile={coverMobileBoda}
+  />
 
   <div class="grid contenido">
     <div id="choro">
       <h2>Tu boda perfecta desde la primera notificación</h2>
-      <p><b>Invitaciones personalizadas</b> con el nombre de tus invitados, te confirman por WhatsApp directamente desde la invitación, lo sigues <b>en tiempo real desde tu panel</b> y sin limite de envios.</p>
-
+      <p>
+        <b>Invitaciones personalizadas</b> con el nombre de tus invitados, te confirman
+        por WhatsApp directamente desde la invitación, lo sigues <b
+          >en tiempo real desde tu panel</b
+        > y sin limite de envios.
+      </p>
     </div>
   </div>
-
-
-
 
   <div id="nvitaciones">
     <MostrarNvitaciones dondeEstoy="bodas" />
   </div>
 
-  
-
-<CaracteristicasGrid
+  <CaracteristicasGrid
     matriz={[
       {
         imagen: bodasCaracteristicasImg,
@@ -82,63 +81,59 @@ import Cardcuadro from "../components/Cardcuadro.astro";
     ]}
   />
 
- <MesasHome />
+  <MesasHome />
 
-
-<div id="precios" class="grid contenido">
-  <Banner dondeEstoy="bodas" />
-</div>
-
-
-<section class="grid contenido">
-  <div class="flex">
-   <Cardcuadro
-      titulo="Recomendación de <b>hospedaje</b>"
-      description="<b>¿Tus invitados viajan?</b> Dales sugerencias de hospedaje y aprovecha los descuentos hoteleros con tus invitados."
-      fondo="/hospedaje.webp"
-      icono="mdi:hotel-outline"
-    />
-    <Cardcuadro
-    titulo="Porcentaje de <b>confirmados</b>"
-    description="<b>Empuja a confirmar a los rezagados</b> aprovechado el empuje que da mostrar, que todos van."
-    fondo="/confirmando.webp"
-    icono="mdi:account-arrow-right-outline"
-    />
-    <Cardcuadro
-       titulo="Pases <b>QR</b>"
-       description="<b>Al confirmar</b> tus invitados, tendrán un código QR para una entrada sin contratiempos a tu evento."
-       fondo="/qr-nvitaciones-3.webp"
-       icono="mdi:qrcode"
-     />
+  <div id="precios" class="grid contenido">
+    <Banner dondeEstoy="bodas" />
   </div>
-  <BannerGeneral
-    encabezado="Confirmación de asistencia"
-    texto="Tus invitados sabrán exactamente cuántos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
-    tema="primario azul"
-    icono="mdi:archive-clock-outline"
-    urlImagen="../assets/home/gale/confirmacion.webp"
-  >
-  </BannerGeneral>
-  <BannerGeneral
-    encabezado="Invitación digital con Música"
-    texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
-    tema="secundario "
-    icono="mdi:music"
-    izquierda={true}
-    urlImagen="../assets/home/gale/musica.webp"
-  />
 
-  <BannerGeneral
-    encabezado="Invitación digital con Frase de amor y galería de fotos"
-    texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
-    tema="primario"
-    icono="mdi:image-plus"
-    urlImagen="../assets/home/gale/frase.webp"
-  />
+  <section class="grid contenido">
+    <div class="flex">
+      <Cardcuadro
+        titulo="Recomendación de <b>hospedaje</b>"
+        description="<b>¿Tus invitados viajan?</b> Dales sugerencias de hospedaje y aprovecha los descuentos hoteleros con tus invitados."
+        fondo="/hospedaje.webp"
+        icono="mdi:hotel-outline"
+      />
+      <Cardcuadro
+        titulo="Porcentaje de <b>confirmados</b>"
+        description="<b>Empuja a confirmar a los rezagados</b> aprovechado el empuje que da mostrar, que todos van."
+        fondo="/confirmando.webp"
+        icono="mdi:account-arrow-right-outline"
+      />
+      <Cardcuadro
+        titulo="Pases <b>QR</b>"
+        description="<b>Al confirmar</b> tus invitados, tendrán un código QR para una entrada sin contratiempos a tu evento."
+        fondo="/qr-nvitaciones-3.webp"
+        icono="mdi:qrcode"
+      />
+    </div>
+    <BannerGeneral
+      encabezado="Confirmación de asistencia"
+      texto="Tus invitados sabrán exactamente cuántos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+      tema="primario"
+      icono="mdi:archive-clock-outline"
+      urlImagen="../assets/home/gale/confirmacion.webp"
+    />
+    <BannerGeneral
+      encabezado="Invitación digital con Música"
+      texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
+      tema="secundario"
+      icono="mdi:music"
+      izquierda={true}
+      urlImagen="../assets/home/gale/musica.webp"
+    />
 
+    <BannerGeneral
+      encabezado="Invitación digital con Frase de amor y galería de fotos"
+      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
+      tema="primario"
+      icono="mdi:image-plus"
+      urlImagen="../assets/home/gale/frase.webp"
+    />
 
-  <!-- carcateristicas -->
-<!-- 
+    <!-- carcateristicas -->
+    <!-- 
   <div id="conteCaracteristicas">
     <Caracteristicas
       encabezado="Invitación con mapas"
@@ -162,13 +157,12 @@ import Cardcuadro from "../components/Cardcuadro.astro";
     />
 
   </div> -->
- 
-</section>
+  </section>
 
-<div class="grid contenido">
-  <BannerGeneral
-    encabezado="Recibes con tu <b>Nvitación</b>"
-    texto={`
+  <div class="grid contenido">
+    <BannerGeneral
+      encabezado="Recibes con tu <b>Nvitación</b>"
+      texto={`
     <ul>
     <li><b>Trato personalizado.</b></li>
     <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
@@ -184,46 +178,43 @@ import Cardcuadro from "../components/Cardcuadro.astro";
         <small>*Panel de invitados no aplica en la versión "basic"</small>
         <br>
         `}
-    tema="terciario"
-    icono="mdi:deal"
-    urlImagen="../assets/home/gale/recibes.webp"
-    margenAbajo={true}
-  >
-    <Btn
-      liga="#formu"
-      texto="Obtén tu invitación"
-      clases="btn-oscuro"
-      claro={true}
-      blank={false}
+      tema="terciario"
+      icono="mdi:deal"
+      urlImagen="../assets/home/gale/recibes.webp"
+      margenAbajo={true}
     >
-      <Icon name="bag" size={25} />
-    </Btn>
-  </BannerGeneral>
-</div>
+      <Btn
+        liga="#formu"
+        texto="Obtén tu invitación"
+        clases="btn-oscuro"
+        claro={true}
+        blank={false}
+      >
+        <Icon name="bag" size={25} />
+      </Btn>
+    </BannerGeneral>
+  </div>
 
-
-
-<div class="grid contenido">
-  <SaveTheDate
-    h2="Save the date <span>Gratis</span>"
-    p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Studio)</i></small>"
-    imagenes={[
-      {
-        imagen: "/reserva-la-fecha-1.webp",
-        liga: "https://drive.google.com/file/d/1p8vFvo8Nrcfg1hc7kWKPuZelHMvTDyEW/view?usp=drive_link",
-      },
-      {
-        imagen: "/reserva-la-fecha-2.webp",
-        liga: "https://drive.google.com/file/d/17ZyXf4TW5NZvJTBz8l3n8tFrXHpDIPsI/view?usp=drive_link",
-      },
-      {
-        imagen: "/reserva-la-fecha-3.webp",
-        liga: "https://drive.google.com/file/d/1r_vCzGdy2ahv0QqYPf23KGxokH_9ncQ5/view?usp=drive_link",
-      },
-    ]}
-  />
-</div>
-
+  <div class="grid contenido">
+    <SaveTheDate
+      h2="Save the date <span>Gratis</span>"
+      p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Studio)</i></small>"
+      imagenes={[
+        {
+          imagen: "/reserva-la-fecha-1.webp",
+          liga: "https://drive.google.com/file/d/1p8vFvo8Nrcfg1hc7kWKPuZelHMvTDyEW/view?usp=drive_link",
+        },
+        {
+          imagen: "/reserva-la-fecha-2.webp",
+          liga: "https://drive.google.com/file/d/17ZyXf4TW5NZvJTBz8l3n8tFrXHpDIPsI/view?usp=drive_link",
+        },
+        {
+          imagen: "/reserva-la-fecha-3.webp",
+          liga: "https://drive.google.com/file/d/1r_vCzGdy2ahv0QqYPf23KGxokH_9ncQ5/view?usp=drive_link",
+        },
+      ]}
+    />
+  </div>
 
   <section class="grid contenido">
     <div id="conteCaracteristicas">
@@ -263,49 +254,46 @@ import Cardcuadro from "../components/Cardcuadro.astro";
     </div>
   </section>
 
-<section class="grid contenido" id="formulario">
-  <div class="flex">
-    <div class="fondo-formu">
-      <div class="bande">
-        <h3>Prueba tu Nvitación <br /> sin compromiso</h3>
-        <p>
-          <b>¿Tienes dudas o pedidos especiales?</b>, <br /> Escríbenos por WhatsApp y hagamos
-          que tu invitación sea perfecta <br />😊
-        </p>
-      </div>
+  <section class="grid contenido" id="formulario">
+    <div class="flex">
+      <div class="fondo-formu">
+        <div class="bande">
+          <h3>Prueba tu Nvitación <br /> sin compromiso</h3>
+          <p>
+            <b>¿Tienes dudas o pedidos especiales?</b>, <br /> Escríbenos por WhatsApp
+            y hagamos que tu invitación sea perfecta <br />😊
+          </p>
+        </div>
 
-      <div id="formu">
-        <form>
+        <div id="formu">
+          <form>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" />
+            <label for="fecha">Fecha del evento</label>
+            <input type="date" name="fecha" id="fecha" />
+            <label for="evento">Tipo de evento</label>
+            <select name="evento" id="evento">
+              <option value="Boda">Boda</option>
+              <option value="Xv">XV años</option>
+              <option value="Cumple">Cumpleaños</option>
+            </select>
 
-
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Tu nombre" />
-          <label for="fecha">Fecha del evento</label>
-          <input type="date" name="fecha" id="fecha" />
-          <label for="evento">Tipo de evento</label>
-          <select name="evento" id="evento">
-            <option value="Boda">Boda</option>
-            <option value="Xv">XV años</option>
-            <option value="Cumple">Cumpleaños</option>
-          </select>
-
-          <Btn
-            liga="#"
-            id="empezar"
-            texto="<b>Enviar</b> ahora"
-            clases="desactivado, btn-oscuro"
-            claro={false}
-            blank={true}
-          >
-            <Icon name="mdi:whatsapp" />
-          </Btn>
-
-        </form>
+            <Btn
+              liga="#"
+              id="empezar"
+              texto="<b>Enviar</b> ahora"
+              clases="desactivado, btn-oscuro"
+              claro={false}
+              blank={true}
+            >
+              <Icon name="mdi:whatsapp" />
+            </Btn>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-<Footer />
+  </section>
+  <Footer />
 </Layout>
 
 <style lang="scss">
@@ -352,10 +340,9 @@ import Cardcuadro from "../components/Cardcuadro.astro";
 
 <script>
   const mivideobodas = document.getElementById(
-    "video-bodas-cel"
+    "video-bodas-cel",
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
-
 
   play.addEventListener("click", playPause);
 

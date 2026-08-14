@@ -25,7 +25,7 @@ const fondoUrl = `url("${fondo}")`;
   @use "../estilos/_variables.scss" as *;
   .cartaBaseInt {
     background:
-    linear-gradient(0deg, rgba($terciario, 1) 20%, rgba($terciario, 0) 50%),
+    linear-gradient(0deg, rgba($terciario, 1) 20%, rgba($terciario, 0) 55%),
       var(--fondoUrl) no-repeat center;
     background-size: cover, cover;
     position: relative;
@@ -57,7 +57,7 @@ const fondoUrl = `url("${fondo}")`;
       width: calc(100% - 2rem);
       padding: $margen-cel;
       p {
-        color: $primario;
+        color: $gris;
         margin-top: 0.5rem;
       }
     }
@@ -72,6 +72,16 @@ const fondoUrl = `url("${fondo}")`;
       .info{
         padding: $margen-min;
       }
+    }
+    &:nth-of-type(2n){
+         background:
+    linear-gradient(0deg, rgba($primario, 1) 20%, rgba($terciario, 0) 55%),
+      var(--fondoUrl) center;
+      background-size: cover, cover;
+      h2, .info p{
+        color: white;
+      }
+        @extend .sombra;
     }
   }
 </style>
