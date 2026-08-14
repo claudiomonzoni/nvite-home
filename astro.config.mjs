@@ -13,6 +13,10 @@ import invitaciones from "./src/pages/nvitaciones/nvitaciones.json";
 export default defineConfig({
   base: "/",
   site: "https://nvitaciones.com",
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   i18n: {
     defaultLocale: "es",
     locales: ["es", "en"],

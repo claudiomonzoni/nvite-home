@@ -194,16 +194,20 @@ const categorias = [
 </style>
 
 <script>
-  import Swiper from "swiper";
-  import { Pagination, Autoplay } from "swiper/modules";
-
   interface SwiperElement extends HTMLElement {
-    swiper?: Swiper;
+    swiper?: any;
   }
 
-  function initSwiper() {
+  async function initSwiper() {
     const swipers =
       document.querySelectorAll<SwiperElement>(".productos-swiper");
+    if (swipers.length === 0) return;
+
+    const [{ default: Swiper }, { Pagination, Autoplay }] = await Promise.all([
+      import("swiper"),
+      import("swiper/modules")
+    ]);
+
     swipers.forEach((swiperEl) => {
       if (swiperEl.swiper) {
         swiperEl.swiper.destroy(true, true);

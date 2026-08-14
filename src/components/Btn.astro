@@ -11,6 +11,7 @@ interface Props {
   icono?: string;
 }
 const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
+const resolvedRel = rel || (blank ? "noopener noreferrer" : undefined);
 ---
 
 <a
@@ -18,7 +19,7 @@ const { liga, texto, claro, blank, clases, rel, icono, ...rest } = Astro.props;
   class:list={clases}
   target={blank ? "_blank" : ""}
   {...rest}
-  rel={rel}
+  rel={resolvedRel}
   set:html={texto}
 >
   {icono ? <Icon name={icono} size={25} /> : ""}

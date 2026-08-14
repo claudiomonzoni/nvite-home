@@ -25,6 +25,8 @@ const {
   ...rest
 } = Astro.props;
 
+const cleanAlt = encabezado.replace(/<[^>]*>/g, "");
+
 const temaBase =
   typeof tema === "string"
     ? tema.split(/\s+/).find((t) => ["primario", "secundario", "terciario"].includes(t)) ?? "primario"
@@ -78,7 +80,7 @@ const imagenCargada = urlImagen ? imagen[urlImagen]() : null;
   </div>
   {imagenCargada && (
     <div class:list={["imagen", { izq: izquierda }]}>
-      <Image src={imagenCargada} alt={encabezado} />
+      <Image src={imagenCargada} alt={cleanAlt} />
     </div>
   )}
 </div>

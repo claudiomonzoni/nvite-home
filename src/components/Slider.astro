@@ -433,8 +433,6 @@ const slides: Slide[] = [
 </style>
 
 <script>
-  import lottie from "lottie-web/build/player/lottie_light";
-
   let currentSliderInstance: AppleSlider | null = null;
 
   class AppleSlider {
@@ -479,6 +477,9 @@ const slides: Slide[] = [
 
     private async initializeLottieAnimations(): Promise<void> {
       const lottieContainers = document.querySelectorAll(".lottie-container");
+      if (lottieContainers.length === 0) return;
+
+      const { default: lottie } = await import("lottie-web/build/player/lottie_light");
 
       for (const container of lottieContainers) {
         const path = container.getAttribute("data-lottie-path");

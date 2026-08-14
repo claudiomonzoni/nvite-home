@@ -3,7 +3,7 @@ import Nav from "./Nav.astro";
 import Btn from "./Btn.astro";
 
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import Logos from "./Logos.astro";
 
@@ -23,6 +23,9 @@ const {
   imagenMobile,
   alt = "nvitaciones digitales para eventos bodas y quince años",
 } = Astro.props;
+
+const optimizedDesktop = await getImage({ src: imagenDesktop, format: "webp", width: 1200 });
+const optimizedMobile = await getImage({ src: imagenMobile, format: "webp", width: 600 });
 ---
 
 <Nav />
@@ -32,8 +35,8 @@ const {
     <h1 set:html={h1} id="heroh1" />
 
     <picture class="imgContainer">
-      <source srcset={imagenDesktop.src} media="(min-width: 479px)" />
-      <source srcset={imagenMobile.src} media="(max-width: 479px)" />
+      <source srcset={optimizedDesktop.src} media="(min-width: 479px)" />
+      <source srcset={optimizedMobile.src} media="(max-width: 479px)" />
       <Image
         src={imagenDesktop}
         alt={alt}
@@ -60,10 +63,12 @@ const {
             media="(max-width: 479px)"
           />
           <img
-            src="/enviados.svg"
+            src="/sello-nvitaciones.svg"
             alt="Más de 23,788 invitaciones enviadas en México"
             loading="lazy"
             decoding="async"
+            width="66"
+            height="85"
           />
         </picture>
         <p set:html={textoValidacion} />

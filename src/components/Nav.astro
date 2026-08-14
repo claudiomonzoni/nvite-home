@@ -14,12 +14,14 @@ if (Astro.cookies.has("cartItems")) {
 <nav id="main-nav">
   <div class="grid contenido">
     <div class="nav-content">
-      <a href="/" class="logo-container">
+      <a href="/" class="logo-container" aria-label="Ir a la página de inicio de Nvitaciones">
         <img
           src="/nvita-logo.svg"
           alt="Nvita invitaciones digitales"
           id="logo"
           fetchpriority="high"
+          width="1182"
+          height="189"
         />
       </a>
 
@@ -80,23 +82,23 @@ if (Astro.cookies.has("cartItems")) {
               </>
             )
           }
+          <li id="carrito">
+            <a href="/nvitaciones/cart" aria-label="Ir al carrito">
+              <Icon
+                name="solar:cart-large-minimalistic-outline"
+                width="32"
+                height="32"
+              />
+              <span
+                class="count"
+                id="cart-count"
+                class:list={[{ hidden: cartItemsCount === 0 }]}
+              >
+                {cartItemsCount > 0 ? cartItemsCount : ""}
+              </span>
+            </a>
+          </li>
         </ul>
-        <li id="carrito">
-          <a href="/nvitaciones/cart" aria-label="Ir al carrito">
-            <Icon
-              name="solar:cart-large-minimalistic-outline"
-              width="32"
-              height="32"
-            />
-            <span
-              class="count"
-              id="cart-count"
-              class:list={[{ hidden: cartItemsCount === 0 }]}
-            >
-              {cartItemsCount > 0 ? cartItemsCount : ""}
-            </span>
-          </a>
-        </li>
       </div>
     </div>
   </div>

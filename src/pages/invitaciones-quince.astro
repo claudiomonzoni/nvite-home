@@ -304,10 +304,14 @@ import Cardcuadro from "../components/Cardcuadro.astro";
   ) as HTMLVideoElement;
   const play = document.getElementById("play") as HTMLDivElement;
 
-  play.addEventListener("click", playPause);
+  if (play && mivideoquince) {
+    play.addEventListener("click", playPause);
+  }
 
   function playPause() {
-    if (mivideoquince.paused) mivideoquince.play();
-    else mivideoquince.pause();
+    if (mivideoquince) {
+      if (mivideoquince.paused) mivideoquince.play();
+      else mivideoquince.pause();
+    }
   }
 </script>

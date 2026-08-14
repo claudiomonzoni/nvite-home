@@ -177,13 +177,15 @@ const schemaReviews = {
 </style>
 
 <script>
-  import Swiper from "swiper";
-  import { Navigation, Autoplay } from "swiper/modules";
-
-  function initializeTestimonios() {
+  async function initializeTestimonios() {
     const swiperElement = document.querySelector(".testimonios-swiper");
     const controls = document.querySelector("#testimonios-controls");
     if (!swiperElement || !controls) return;
+
+    const [{ default: Swiper }, { Navigation, Autoplay }] = await Promise.all([
+      import("swiper"),
+      import("swiper/modules")
+    ]);
 
     const existingSwiper = (swiperElement as any).swiper;
     if (existingSwiper) {
