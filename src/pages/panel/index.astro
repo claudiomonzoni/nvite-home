@@ -634,8 +634,10 @@ if (fechaEvento) {
       border-radius: 8px 8px 0 0;
       position: relative;
       transition: all 0.2s ease;
+      font-family: var(--font-hurme), sans-serif;
       @include cel{
         flex-direction: column;
+        font-size: .7rem;
       }
 
       &:hover {
@@ -863,13 +865,14 @@ if (fechaEvento) {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid $primario;
+    border: none;
     border-radius: $radio;
-    background-color: $fondoGlobal;
+    background-color: rgba($fondo, .8);
     color: $primario;
-    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    font-size: .8rem;
+    font-family: var(--font-hurme), sans-serif;
 
     &:hover {
       background-color: #dcfce7;
@@ -909,7 +912,7 @@ if (fechaEvento) {
     h3 {
       color: $primario;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
+      font-size: .8rem;
     }
   }
 
@@ -939,7 +942,7 @@ if (fechaEvento) {
   }
 
   .porcentaje-texto {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: $primario;
     margin-top: 0.5rem;
     line-height: 1.5;
@@ -977,6 +980,7 @@ if (fechaEvento) {
         flex: 1 0 100%;
       }
     }
+  
 
     @include cel{
       position: fixed;
@@ -1001,27 +1005,28 @@ if (fechaEvento) {
   .btn-primary-sm {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.3rem;
     background-color: $acento;
-    color: #fff;
+    color: white;
     border: none;
     border-radius: $radio;
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    font-weight: 700;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.2s ease;
-    @extend .sombra;
+    box-shadow: 0 4px 10px rgba($acento, 0.15);
+    transition: all 0.2s;
+    font-family: var(--font-hurme), sans-serif;
 
     &:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 14px rgba($acento, 0.25);
     }
-
-    svg {
+     svg {
       vertical-align: middle;
     }
   }
+
+
 
   #agregar-invitado {
     margin: 0;

@@ -803,26 +803,30 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     }
   }
 
-  .btn-primary-sm {
+ .btn-primary-sm {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
     background-color: $acento;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: $radio;
     padding: 0.45rem 0.9rem;
-    font-weight: bold;
     font-size: 0.85rem;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba($acento, 0.15);
     transition: all 0.2s;
+    font-family: var(--font-hurme), sans-serif;
 
     &:hover {
       transform: translateY(-1px);
       box-shadow: 0 6px 14px rgba($acento, 0.25);
     }
+     svg {
+      vertical-align: middle;
+    }
   }
+
 
   .header-actions-group {
     display: flex;
@@ -830,22 +834,27 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     align-items: center;
   }
 
-  .btn-excel-sm {
-      display: inline-flex;
+   .btn-excel-sm {
+    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border: 1px solid $primario;
+    border: none;
     border-radius: $radio;
-    background-color: $fondoGlobal;
+    background-color: rgba($fondo, .8);
     color: $primario;
-    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    font-size: .8rem;
+    font-family: var(--font-hurme), sans-serif;
 
     &:hover {
       background-color: #dcfce7;
       transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
     }
 
     &[disabled] {
