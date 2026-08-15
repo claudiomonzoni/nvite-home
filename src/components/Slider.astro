@@ -118,6 +118,8 @@ const slides: Slide[] = [
     width: 100%;
     overflow: hidden;
     margin: 0 auto;
+    border-radius: $radio;
+     @extend .sombra;
   }
 
   .slide {
@@ -147,12 +149,13 @@ const slides: Slide[] = [
     align-items: center;
     min-height: 80%;
     // padding: clamp(20px, 5vw, 60px) clamp(20px, 5vw, 40px);
-    background: white;
-    border-radius: 20px;
+    background: linear-gradient(60deg, $fondoGlobal 0%, white 70%);
+    border-radius: $radio;
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     z-index: 1;
     gap: 1rem;
+
     @include cel {
       flex-direction: column;
       text-align: center;
@@ -288,7 +291,6 @@ const slides: Slide[] = [
     border: 1px solid $fondoGlobal;
     cursor: pointer;
     padding: 0;
-    @extend .sombra;
   }
 
   .play-btn svg {
@@ -301,6 +303,11 @@ const slides: Slide[] = [
   .play-btn .replay-icon.hidden {
     display: none;
   }
+  .pause-icon {
+    width: 24px !important;
+    padding: none !important;
+    margin-left: 3px !important;
+  }
 
   /* Pill central que contiene track y bullet */
   .progress-pill {
@@ -310,8 +317,7 @@ const slides: Slide[] = [
     display: flex;
     align-items: center;
     justify-content: center;
-    background:#ffffff;
-    @extend .sombra;
+    background: #ffffff;
     padding: 8px 12px;
     @include cel {
       width: calc(100vw - 140px);
@@ -335,7 +341,7 @@ const slides: Slide[] = [
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: rgba($primario, .8);
+    background: rgba($primario, 0.8);
     border: none;
     padding: 0;
     transition:
@@ -357,7 +363,7 @@ const slides: Slide[] = [
     width: 120px; /* ancho del segmento expandido */
     height: 12px;
     border-radius: 999px;
-    background: rgba($terciario, .7);
+    background: rgba($terciario, 0.7);
   }
 
   /* barra de progreso interna que se llena cuando el slide está activo */
@@ -479,7 +485,8 @@ const slides: Slide[] = [
       const lottieContainers = document.querySelectorAll(".lottie-container");
       if (lottieContainers.length === 0) return;
 
-      const { default: lottie } = await import("lottie-web/build/player/lottie_light");
+      const { default: lottie } =
+        await import("lottie-web/build/player/lottie_light");
 
       for (const container of lottieContainers) {
         const path = container.getAttribute("data-lottie-path");

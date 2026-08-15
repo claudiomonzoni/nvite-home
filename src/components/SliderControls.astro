@@ -14,7 +14,7 @@ const { count, class: className = "", id = "" } = Astro.props;
     <svg class="play-icon hidden" viewBox="0 0 24 24" fill="currentColor">
       <path fill="currentColor" d="M8 5v14l11-7z"></path>
     </svg>
-    <svg class="pause-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+    <svg class="pause-icon hidden" viewBox="0 0 22 22" fill="currentColor">
       <rect x="4" y="4" width="4" height="16" rx="2" ry="2"></rect>
       <rect x="12" y="4" width="4" height="16" rx="2" ry="2"></rect>
     </svg>
@@ -88,6 +88,11 @@ const { count, class: className = "", id = "" } = Astro.props;
   .play-btn .play-icon.hidden,
   .play-btn .replay-icon.hidden {
     display: none;
+  }
+    .pause-icon{
+    width:24px!important;
+    padding: none!important;
+    margin-left: 1px!important;
   }
 
   /* Pill central que contiene track y bullet */

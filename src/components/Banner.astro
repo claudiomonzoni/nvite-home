@@ -90,58 +90,17 @@ import Btn from "./Btn.astro";
             <li>Cuenta regresiva</li>
             <h4>Confirmación y Control</h4>
             <li>Sugerencia de regalos</li>
+            <li>Sugerencia de hospedaje</li>
             <li>Formulario de confirmación</li>
             <li>Panel de invitados</li>
           </ul>
           <div class="precio">
             <span>$1290<sup>MXN</sup></span>
-            <small
-              >Pago unico / Desde 13 pesos por invitado y baja entre más
+            <small><b>Pago unico / Desde 13 pesos</b> por invitado y baja entre más
               invitados tengas</small
             >
           </div>
-          <!--
-          <div class="conteBtn">
-            {
-            dondeEstoy === 'home' ? (
-              <Btn
-              liga="/nvitaciones/invitacion-bodas-clasica"
-              clases="btn-bordes"
-              texto="Bodas"
-              icono="mdi:chevron-double-right"
-              claro={false}
-              />
-              <Btn
-              liga="/nvitaciones/invitacion-xv-clasica"
-              clases="btn-oscuro"
-              texto="Xv Años"
-              icono="mdi:chevron-double-right"
-              claro={true}
-              />
-            ) : (
-              
-              dondeEstoy === "bodas"  ? (
-              <Btn
-                liga="/nvitaciones/invitacion-bodas-clasica"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
-                ):(
-                <Btn
-                liga="/nvitaciones/invitacion-xv-clasica"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
-              )
-            )}
-          
-            
-          </div>
-          -->
+ 
         </div>
       </article>
 
@@ -199,68 +158,15 @@ import Btn from "./Btn.astro";
         <div class="precio">
           <span> $1688<sup>MXN</sup> </span>
           <small
-            >Pago unico / Desde 17 pesos por invitado y baja entre más invitados
+            ><b>Pago unico / Desde 17 pesos </b>por invitado y baja entre más invitados
             tengas</small
           >
         </div>
       </article>
-      <!--     
-    <div class="conteBtn">
-      {
-        dondeEstoy === 'home' ? (
-          <Btn
-          liga="/nvitaciones/invitacion-bodas-lux-elegante"
-          clases="btn-bordes"
-          texto="Bodas"
-          icono="mdi:chevron-double-right"
-          claro={false} 
-          />
-          <Btn
-          liga="/nvitaciones/invitacion-xv-lux"
-          clases="btn-oscuro"
-          texto="Xv Años"
-          icono="mdi:chevron-double-right"
-          claro={true}
-          />
-        ) : (
-          dondeEstoy === "bodas"  ? (
-            <Btn
-                liga="/nvitaciones/invitacion-bodas-lux-elegante"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
-          ):(
-            <Btn
-                liga="/nvitaciones/invitacion-xv-lux"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
-              )
-            )
-          }
-         
-        </div> -->
+   
     </div>
   </div>
 </div>
-<!-- {
-    dondeEstoy === 'home' ? (
-
-    <div class="izq">
-    <img
-      src="novios-cover-invitacion-digital-nvite.webp"
-      alt="Invitaciones de bodas"
-    />
-  </div>
-  
-    ) : (
-      ''
-    )
-  } -->
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
@@ -381,6 +287,9 @@ import Btn from "./Btn.astro";
     }
     li:nth-of-type(3n) {
       padding-bottom: 8px;
+    }
+    li:nth-of-type(12) {
+      padding-bottom: 0!important;
     }
     a {
       justify-self: flex-start;
