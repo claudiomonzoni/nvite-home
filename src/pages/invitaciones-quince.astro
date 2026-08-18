@@ -16,17 +16,37 @@ import quinceCaracteristicasImg from "../assets/quince/quince-caracteristicas.we
 import coverDesktopQuince from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel-intQuince.webp";
 import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel-intQuince-cel.webp";
 import Cardcuadro from "../components/Cardcuadro.astro";
+import MesasHome from "../components/MesasHome.astro";
+import Faq from "../components/Faq.astro";
+
+const schemaQuinceService = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Invitaciones Digitales de XV Años con RSVP y Gestor de Mesas",
+  "serviceType": "Diseño de Invitaciones de Quinceañera",
+  "description": "Diseño profesional de invitaciones digitales de XV años en todo México. Confirmación RSVP por WhatsApp, pases digitales con QR, gestor de mesas y proveedores.",
+  "provider": {
+    "@type": "ProfessionalService",
+    "name": "Nvitaciones",
+    "url": "https://nvitaciones.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "México"
+  }
+};
 ---
 
 <Layout
   title="Invitaciones Digitales de XV Años con RSVP | Nvitaciones México"
-  description="Invitaciones digitales para XV años en México. Desde $20 por invitada — con su canción, su galería y su nombre en cada invitación. Confirmación automática. Lista en 2 días hábiles."
+  description="Invitaciones de XV años diseñadas a tu medida para todo México. RSVP por WhatsApp, música, pases digitales y gestor de mesas. Lista en 48 horas."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schemaQuinceService)} />
   <div class="grid contenido"></div>
 
   <Hero
     h1='Invitaciones digitales </br>de <b>Xv años </b> </br> <span id="spanHeroH1">El día más especial de su vida, <b>merece la invitación perfecta.</b> </span>'
-    p='<span id="pHero">Sus invitadas abren su invitación desde WhatsApp y confirman con un clic.</span> Tú sabes en tiempo real quién va a festejarla.'
+    p='<span id="pHero"><b>La invitación digital más emotiva y moderna para sus quince años.</b></span> Con su música favorita, pases personalizados con código QR y confirmación automática por WhatsApp para amigas y familia.'
     textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
     imagenDesktop={coverDesktopQuince}
     imagenMobile={coverMobileQuince}
@@ -34,12 +54,10 @@ import Cardcuadro from "../components/Cardcuadro.astro";
 
   <div class="grid contenido">
     <div id="choro">
-      <h2>Invitaciones que enamoran a primera vista</h2>
+      <h2>Una celebración inolvidable desde el primer mensaje</h2>
 
       <p>
-        Un día planeado con tanto amor merece el mejor comienzo. Tu invitación
-        digital es la primera experiencia de los invitados; hazla tan hermosa
-        como la fiesta misma.
+        <b>Nosotros creamos el diseño perfecto</b> con sus fotos, colores y detalles en 48 horas. Desde tu panel de anfitrión sabrás al instante quién asistirá, cuántos pases están confirmados y podrás asignar los lugares en el salón fácilmente.
       </p>
     </div>
   </div>
@@ -83,6 +101,8 @@ import Cardcuadro from "../components/Cardcuadro.astro";
   />
 
 
+
+  <MesasHome />
 
   <div id="precios" class="grid contenido">
     <Banner dondeEstoy="quince" />
@@ -209,7 +229,9 @@ import Cardcuadro from "../components/Cardcuadro.astro";
         colorBg="#FFF1E1"
       />
     </div>
-  </section>
+  <div class="grid contenido" id="faq">
+    <Faq />
+  </div>
 
   <section class="grid contenido" id="formulario">
     <div class="flex">

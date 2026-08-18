@@ -75,28 +75,64 @@ import {Font} from "astro:assets";
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Invitaciones Digitales - Nvitaciones",
-        "url": "https://nvitaciones.com",
-        "logo": "https://nvitaciones.com/nvita-logo.svg",
-        "image": [
-          "https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp"
-        ],
-        "sameAs": [
-          "https://www.facebook.com/nvitaciones",
-          "https://www.instagram.com/nvitaciones"
-        ],
-        "description": "Organiza a tus invitados con invitaciones digitales. Envía por WhatsApp, confirma asistencias y gestiona tus invitados fácilmente con Nvitaciones.",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "México",
-          "addressCountry": "MX"
-        },
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+5217551132468",
-          "contactType": "customer service"
-        }
+        "@graph": [
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://nvitaciones.com/#organization",
+            "name": "Nvitaciones",
+            "alternateName": "Nvitaciones México",
+            "url": "https://nvitaciones.com",
+            "logo": "https://nvitaciones.com/nvita-logo.svg",
+            "image": "https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp",
+            "description": "Diseño de invitaciones digitales elegantes y personalizadas para bodas y XV años en todo México. Incluye panel de invitados con confirmación RSVP en tiempo real por WhatsApp, gestor de mesas y administración de proveedores.",
+            "priceRange": "$$",
+            "telephone": "+5217551132468",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "México",
+              "addressCountry": "MX"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "México"
+            },
+            "serviceType": [
+              "Diseño de Invitaciones Digitales Personalizadas",
+              "Confirmación de Asistencia RSVP en Tiempo Real",
+              "Gestor de Mesas para Eventos",
+              "Administración de Proveedores y Presupuesto",
+              "Pases Digitales con Código QR"
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "128",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "sameAs": [
+              "https://www.facebook.com/nvitaciones",
+              "https://www.instagram.com/nvitaciones"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+5217551132468",
+              "contactType": "customer service",
+              "availableLanguage": "Spanish"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://nvitaciones.com/#website",
+            "url": "https://nvitaciones.com",
+            "name": "Nvitaciones",
+            "description": "Invitaciones digitales elegantes, organizador de mesas y confirmación RSVP en tiempo real en México.",
+            "publisher": {
+              "@id": "https://nvitaciones.com/#organization"
+            },
+            "inLanguage": "es-MX"
+          }
+        ]
       }
     </script>
     <ClientRouter />

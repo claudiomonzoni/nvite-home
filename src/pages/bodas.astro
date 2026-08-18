@@ -17,17 +17,60 @@ import coverDesktopBoda from "../assets/home/nvitaciones-invitaciones-digitales-
 import coverMobileBoda from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel-intBoda.webp";
 import MesasHome from "../components/MesasHome.astro";
 import Cardcuadro from "../components/Cardcuadro.astro";
+import Faq from "../components/Faq.astro";
+
+const schemaBodasService = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Invitaciones Digitales de Boda Elegantes con RSVP y Mesas",
+  "serviceType": "Diseño de Invitaciones de Boda",
+  "description": "Diseño profesional de invitaciones digitales de boda en todo México. Incluye confirmación RSVP en tiempo real por WhatsApp, gestor de mesas para el banquete, administración de proveedores y mapas interactivos para bodas destino.",
+  "provider": {
+    "@type": "ProfessionalService",
+    "name": "Nvitaciones",
+    "url": "https://nvitaciones.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "México"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Invitaciones de Boda",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Invitación Digital de Boda Lux"
+        },
+        "priceCurrency": "MXN",
+        "price": "1699"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Invitación Digital de Boda Clásica"
+        },
+        "priceCurrency": "MXN",
+        "price": "1299"
+      }
+    ]
+  }
+};
 ---
 
 <Layout
-  title="Invitaciones Digitales de Boda con RSVP | Nvitaciones México"
-  description="Invitaciones digitales de boda en México. Desde $20 por invitado — personalizadas con tu música, tus fotos y tus colores. Tus invitados confirman asistencia solos. Lista en 2 días hábiles."
+  title="Invitaciones de Boda Elegantes con RSVP y Mesas | Nvitaciones"
+  description="Invitaciones digitales de boda en todo México. Diseño a tu medida, confirmación RSVP por WhatsApp, gestor de mesas y proveedores. ¡Entrega en 48 horas!"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schemaBodasService)} />
   <div class="grid contenido"></div>
 
   <Hero
     h1='Invitaciones digitales </br>de <b>Bodas </b> </br> <span id="spanHeroH1"><b>Tu boda, organizada.</b></br> Tus invitados, encantados. </span>'
-    p='<span id="pHero">Invitaciones personalizadas que tus invitados abren en su celular y confirman al instante.</span> Tú controlas todo desde un panel, sin estrés.'
+    p='<span id="pHero"><b>Invitaciones de boda elegantes para tu evento y bodas destino en todo México.</b></span> RSVP en tiempo real por WhatsApp, mapas interactivos, recomendaciones de hospedaje, gestor de mesas y proveedores.'
     textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
     imagenDesktop={coverDesktopBoda}
     imagenMobile={coverMobileBoda}
@@ -35,12 +78,9 @@ import Cardcuadro from "../components/Cardcuadro.astro";
 
   <div class="grid contenido">
     <div id="choro">
-      <h2>Tu boda perfecta desde la primera notificación</h2>
+      <h2>Tu boda de ensueño con la logística bajo control</h2>
       <p>
-        <b>Invitaciones personalizadas</b> con el nombre de tus invitados, te confirman
-        por WhatsApp directamente desde la invitación, lo sigues <b
-          >en tiempo real desde tu panel</b
-        > y sin limite de envios.
+        <b>Diseñamos tu invitación web a tu medida</b> con su historia de amor, música, galería de fotos e itinerario. Tus invitados confirman su asistencia con un clic por WhatsApp y tú gestionas <b>asistencias, acomodo de mesas y proveedores en tiempo real</b> desde tu panel exclusivo, sin complicaciones.
       </p>
     </div>
   </div>
@@ -252,7 +292,9 @@ import Cardcuadro from "../components/Cardcuadro.astro";
         colorBg="#FFF1E1"
       />
     </div>
-  </section>
+  <div class="grid contenido" id="faq">
+    <Faq />
+  </div>
 
   <section class="grid contenido" id="formulario">
     <div class="flex">
