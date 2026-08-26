@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Proveedores, PagosProveedor, eq, and } from "astro:db";
+import { db, Proveedores, PagosProveedor, eq, and } from "@/db";
 import sanitize from "sanitize-html";
 
 // POST: Add a new payment for a provider

@@ -196,7 +196,7 @@ import Btn from "./Btn.astro";
         font-weight: 600;
   }
   .resalta {
-    font-size: clamp(1rem, 1vw, 1rem);
+    font-size: 1rem;
     list-style: none;
     margin-bottom: 1rem;
 
@@ -229,7 +229,7 @@ import Btn from "./Btn.astro";
     small {
       color: $primario;
       font-weight: normal;
-      font-size: clamp(0.6rem, 0.7rem, 1rem);
+      font-size: 0.7rem;
     }
   }
   .banner {
@@ -247,7 +247,7 @@ import Btn from "./Btn.astro";
   .der {
     flex-wrap: wrap;
     flex: 1 0 70%;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 80%;
     }
   }
@@ -255,7 +255,7 @@ import Btn from "./Btn.astro";
     flex: 1 0 30%;
     width: 100px;
     align-items: center;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 20%;
     }
   }
@@ -283,7 +283,7 @@ import Btn from "./Btn.astro";
       padding: 0 3rem;
     }
     li {
-      font-size: clamp(1rem, 0.8rem, 1rem);
+      font-size: 0.9rem;
     }
     li:nth-of-type(3n) {
       padding-bottom: 8px;
@@ -322,7 +322,7 @@ import Btn from "./Btn.astro";
       padding: 10px $margen-min;
       margin-bottom: $margen-min;
       color: white;
-      font-size: clamp(.9rem, 1vw, .9rem);
+      font-size: 0.9rem;
       @include cel {
         text-align: left;
       }

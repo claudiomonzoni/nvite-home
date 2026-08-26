@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import sanitize from "sanitize-html";
-import { Invitados, db } from "astro:db";
+import { Invitados, db } from "@/db";
 import { v4 as uuidv4 } from 'uuid';
 
 export const POST: APIRoute = async ({ request, locals }) => {

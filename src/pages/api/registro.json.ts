@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Usuario, Sesion, eq } from "astro:db";
+import { db, Usuario, Sesion, eq } from "@/db";
 import sanitize from "sanitize-html";
 
 export const POST: APIRoute = async ({ request, cookies }) => {

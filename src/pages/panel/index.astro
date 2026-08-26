@@ -9,7 +9,7 @@ import AddonCTA from "../../components/PanelInvitados/AddonCTA.astro";
 import GestorMesas from "../../components/PanelInvitados/GestorMesas.astro";
 import GestorProveedores from "../../components/PanelInvitados/GestorProveedores.astro";
 import type { ProveedorProps } from "../../components/PanelInvitados/GestorProveedores.astro";
-import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db, eq, desc, inArray } from "astro:db";
+import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db, eq, desc, inArray } from "@/db";
 import { Icon } from "astro-icon/components";
 
 type MesaData = {
@@ -143,27 +143,28 @@ const pasesPendientes = invitadosData.reduce(
 // Calcular días restantes y alertas dinámicas de cuenta regresiva
 let diasRestantes = null;
 let alertaTipo = null; // "motivacional" | "celebrativa"
-let totalPendientesConfirmacion = 0;
-
+let totalPendientesConfirmacion = 0; 
 if (fechaEvento) {
   const hoy = new Date();
   hoy.setHours(0, 0, 0, 0);
-  const fechaEv = new Date(fechaEvento);
-  fechaEv.setHours(0, 0, 0, 0);
+  const fechaEv = fechaEvento instanceof Date ? fechaEvento : new Date(fechaEvento);
+  if (!isNaN(fechaEv.getTime())) {
+    fechaEv.setHours(0, 0, 0, 0);
 
-  const diffTime = fechaEv.getTime() - hoy.getTime();
-  diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = fechaEv.getTime() - hoy.getTime();
+    diasRestantes = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  // Contar los invitados que aún no confirman (y no han cancelado/asisten)
-  totalPendientesConfirmacion = invitadosData.filter(
-    (inv) => !inv.confirmado && !inv.noAsiste
-  ).length;
+    // Contar los invitados que aún no confirman (y no han cancelado/asisten)
+    totalPendientesConfirmacion = invitadosData.filter(
+      (inv) => !inv.confirmado && !inv.noAsiste
+    ).length;
 
-  if (diasRestantes <= 15 && diasRestantes >= 0) {
-    if (porcentajeConfirmados >= 80 || totalPendientesConfirmacion === 0) {
-      alertaTipo = "celebrativa";
-    } else {
-      alertaTipo = "motivacional";
+    if (diasRestantes <= 15 && diasRestantes >= 0) {
+      if (porcentajeConfirmados >= 80 || totalPendientesConfirmacion === 0) {
+        alertaTipo = "celebrativa";
+      } else {
+        alertaTipo = "motivacional";
+      }
     }
   }
 }
@@ -224,7 +225,7 @@ if (fechaEvento) {
     id="tab-invitados"
     class="tab-content active"
     data-nombre-evento={nombreEvento || "Mi Evento"}
-    data-fecha-evento={fechaEvento ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
+    data-fecha-evento={fechaEvento && !isNaN(new Date(fechaEvento).getTime()) ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
     data-invitados={JSON.stringify(invitadosData)}
   >
     <section class="grid contenido">

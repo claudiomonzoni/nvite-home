@@ -7,7 +7,7 @@
  */
 
 import type { APIRoute } from "astro";
-import { db, Invitados, Usuario, eq, and, sql } from "astro:db";
+import { db, Invitados, Usuario, eq, and, sql } from "@/db";
 import { enviarRecordatorio } from "../../../lib/metaWhatsapp";
 
 // Días antes del evento para enviar recordatorio

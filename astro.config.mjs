@@ -4,7 +4,6 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import keystatic from "@keystatic/astro";
 import icon from "astro-icon";
-import db from "@astrojs/db";
 // import netlify from "@astrojs/netlify";
 import vercelServerless from "@astrojs/vercel";
 import invitaciones from "./src/pages/nvitaciones/nvitaciones.json";
@@ -55,16 +54,11 @@ export default defineConfig({
           item.url === "https://nvitaciones.com/" ? "weekly" : "monthly";
         return item;
       },
-      routes: invitaciones.map((inv) => ({
-        url: `/nvitaciones/${inv.slug}`,
-        changefreq: "monthly",
-        priority: 0.85,
-      })),
+      customPages: invitaciones.map((inv) => `https://nvitaciones.com/nvitaciones/${inv.slug}`),
     }),
     react(),
     mdx(),
     icon(),
-    db(),
     keystatic(),
   ],
   fonts: [
@@ -92,6 +86,9 @@ export default defineConfig({
   // adapter: netlify()
   adapter: vercelServerless(),
   vite: {
+    build: {
+      cssMinify: "esbuild",
+    },
     ssr: {
       noExternal: ["gsap"],
     },

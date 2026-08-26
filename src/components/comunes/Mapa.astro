@@ -17,10 +17,18 @@ const { lat, lng, mapName } = Astro.props;
     height: 100%;
   }
 
-
   :global(.custom-marker) {
     color: var(--acento);
     font-size: 2.5rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+  }
+
+  :global(.leaflet-tile-pane),
+  :global(.leaflet-tile-pane img),
+  :global(.leaflet-tile-container img),
+  :global(#mapa1 .leaflet-tile-pane img),
+  :global(#mapa2 .leaflet-tile-pane img) {
+    filter: saturate(0.55) brightness(1.02) contrast(0.96) !important;
   }
 </style>
 <link
@@ -44,10 +52,9 @@ const { lat, lng, mapName } = Astro.props;
       attributionControl: false // Remove attribution
     }).setView([lat, lng], 16);
 
-    // Using CartoDB Positron for a light, clean style
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      maxZoom: 27,
-      subdomains: 'abcd',
+    // OpenStreetMap con estilo limpio y minimalista
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
     }).addTo(map);
 
     // Custom marker icon

@@ -62,7 +62,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 <div
   class="gestor-mesas-container"
   data-nombre-evento={nombreEvento}
-  data-fecha-evento={fechaEvento ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
+  data-fecha-evento={fechaEvento && !isNaN(new Date(fechaEvento).getTime()) ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
   data-invitados={JSON.stringify(invitados)}
   data-mesas={JSON.stringify(mesas)}
 >
@@ -1016,7 +1016,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         .guest-name {
           color: $primario;
           font-weight: 500;
-          font-size: clamp(.8rem, .7rem , .9rem);
+          font-size: 0.8rem;
           padding-right: .4rem;
           flex: 1;
           overflow: hidden;

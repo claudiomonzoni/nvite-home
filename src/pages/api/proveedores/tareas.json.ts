@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Proveedores, TareasProveedor, eq, and } from "astro:db";
+import { db, Proveedores, TareasProveedor, eq, and } from "@/db";
 import sanitize from "sanitize-html";
 
 // POST: Add a checklist task

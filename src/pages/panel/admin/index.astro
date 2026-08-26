@@ -1,6 +1,6 @@
 ---
 import Layout from "../../../layouts/panelInvitados.astro";
-import { db, Usuario, Invitados, eq, sql } from "astro:db";
+import { db, Usuario, Invitados, eq, sql } from "@/db";
 import { Icon } from "astro-icon/components";
 
 // Ensure user is authenticated and is admin
@@ -124,7 +124,7 @@ try {
                       </td>
                       <td>{cliente.nombreEvento || <span class="muted">-</span>}</td>
                       <td>
-                        {cliente.fechaEvento ? (
+                        {cliente.fechaEvento && !isNaN(new Date(cliente.fechaEvento).getTime()) ? (
                           new Date(cliente.fechaEvento).toLocaleDateString("es-MX", { timeZone: "UTC" })
                         ) : (
                           <span class="muted">-</span>
@@ -166,7 +166,7 @@ try {
                           data-tipo={cliente.tipo}
                           data-rol={cliente.rol}
                           data-nombre-evento={cliente.nombreEvento || ""}
-                          data-fecha-evento={cliente.fechaEvento ? new Date(cliente.fechaEvento).toISOString().split('T')[0] : ""}
+                          data-fecha-evento={cliente.fechaEvento && !isNaN(new Date(cliente.fechaEvento).getTime()) ? new Date(cliente.fechaEvento).toISOString().split('T')[0] : ""}
                           data-addon-mesas={cliente.addonMesas ? "true" : "false"}
                           data-addon-proveedores={cliente.addonProveedores ? "true" : "false"}
                           data-addon-recordatorios={cliente.addonRecordatorios ? "true" : "false"}

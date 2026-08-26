@@ -70,7 +70,7 @@ import Btn from "./Btn.astro";
     align-items: center;
     display: flex;
     flex: 1 0 60%;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 80%;
     }
     @include cel {
@@ -85,7 +85,7 @@ import Btn from "./Btn.astro";
     flex: 1 0 40%;
     width: 100px;
     align-items: end;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 20%;
     }
     @include cel {
