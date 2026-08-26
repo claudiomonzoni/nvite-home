@@ -29,9 +29,21 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const authData = await authResponse.json();
 
     if (!authResponse.ok) {
-      const errMsg = authData.error?.message || "Credenciales inválidas.";
+      const errorCode = authData.error?.message;
+      const isPasswordError = [
+        "INVALID_PASSWORD",
+        "INVALID_LOGIN_CREDENTIALS",
+      ].includes(errorCode);
       return new Response(
-        JSON.stringify({ error: errMsg }),
+        JSON.stringify({
+          error: isPasswordError
+            ? "La contraseña es incorrecta. Verifica tus datos e inténtalo de nuevo."
+            : errorCode === "EMAIL_NOT_FOUND"
+              ? "No encontramos una cuenta con ese email."
+              : "El email o la contraseña no son correctos.",
+          code: errorCode || "INVALID_CREDENTIALS",
+          field: isPasswordError ? "password" : undefined,
+        }),
         { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
