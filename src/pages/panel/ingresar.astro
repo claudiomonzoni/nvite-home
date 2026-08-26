@@ -22,6 +22,7 @@ import Layout from "../../layouts/panelInvitados.astro";
               type="email"
               name="email"
               id="email"
+              autocomplete="username"
               placeholder="Agrega un email válido"
             />
           </label>
@@ -33,10 +34,12 @@ import Layout from "../../layouts/panelInvitados.astro";
               name="password"
               id="password"
               autocomplete="password"
-              placeholder="Agrega una contraseña segura"
+              aria-describedby="auth-error"
+              placeholder="Ingresa tu contraseña "
             />
           </label>
-          <button>Ingresa</button>
+          <p id="auth-error" data-form-error role="alert" hidden></p>
+          <button type="submit">Ingresar</button>
         </form>
       </div>
     </div>
@@ -121,12 +124,29 @@ import Layout from "../../layouts/panelInvitados.astro";
     color: #fff;
     font-weight: bold;
     font-size: clamp(1rem, .7vw, 1.2rem);
+    &:disabled {
+      cursor: wait;
+      opacity: .65;
+    }
     @include cel {
       left: 50%;
       transform: translateY( -50%);
       max-width: 100%;
       margin-top: $margen;
     }
+  }
+  [aria-invalid="true"] {
+    border: 2px solid #d9534f;
+    outline: none;
+  }
+  #auth-error {
+    flex: 1 0 100%;
+    margin: $margen-cel 0 0;
+    color: $primario;
+    font-size: .8rem;
+    border: solid 1px $secundario;
+    padding: .5rem $margen-min;
+    border-radius: $radio;
   }
   .der {
     flex: 1 0 50%;

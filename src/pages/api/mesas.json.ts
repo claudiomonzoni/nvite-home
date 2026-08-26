@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Mesas, Invitados, eq, and } from "astro:db";
+import { db, Mesas, Invitados, eq, and } from "@/db";
 import sanitize from "sanitize-html";
 
 // GET: Get all tables with their assigned guests

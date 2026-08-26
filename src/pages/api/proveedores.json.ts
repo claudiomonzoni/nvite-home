@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Proveedores, PagosProveedor, TareasProveedor, eq, and, inArray } from "astro:db";
+import { db, Proveedores, PagosProveedor, TareasProveedor, eq, and, inArray } from "@/db";
 import sanitize from "sanitize-html";
 
 // LIST OF COMMON PRELOADED PROVIDERS FOR WEDDINGS / XV YEARS
@@ -241,7 +241,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
         contactoTelefono: cleanContactoTelefono,
         presupuestoTotal: numPresupuesto,
         fechaLimitePago: fechaLimitePago ? new Date(fechaLimitePago) : null,
-        notes: undefined,
         notas: cleanNotas,
       })
       .returning();

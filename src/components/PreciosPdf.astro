@@ -47,7 +47,7 @@ import Btn from "./Btn.astro";
 
       <article class="lista destacada">
         <small>Bodas, 15 Años</small>
-        <h2>Nvitación </br> Bodas & 15 Años  <div id="masvendido">Más vendida</div></h2>
+        <h2>Nvitación <br /> Bodas & 15 Años  <div id="masvendido">Más vendida</div></h2>
         <div class="precio">$347</div>
         <ul>
           <li><b>Foto principal</b></li>
@@ -133,7 +133,7 @@ import Btn from "./Btn.astro";
   }
   .der {
     flex: 1 0 70%;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 80%;
     }
   }
@@ -141,7 +141,7 @@ import Btn from "./Btn.astro";
     flex: 1 0 30%;
     width: 100px;
     align-items: center;
-    @tableta_land {
+    @include tableta_land {
       flex: 1 0 20%;
     }
   }

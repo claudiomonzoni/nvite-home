@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Invitados, eq } from "astro:db";
+import { db, Invitados, eq } from "@/db";
 import sanitize from "sanitize-html";
 
 export const PATCH: APIRoute = async ({ params, request }) => {

@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Usuario, Sesion, Invitados, eq, sql } from "astro:db";
+import { db, Usuario, Sesion, Invitados, eq, sql } from "@/db";
 import sanitize from "sanitize-html";
 
 // GET: List all users with guest count and new event/addon details

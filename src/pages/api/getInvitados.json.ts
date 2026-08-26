@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { Invitados, db, eq, desc } from "astro:db";
+import { Invitados, db, eq, desc } from "@/db";
 
 export const GET: APIRoute = async ({ locals }) => {
   const user = locals.user;

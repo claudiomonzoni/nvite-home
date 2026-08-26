@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Invitados, Mesas, eq, and } from "astro:db";
+import { db, Invitados, Mesas, eq, and } from "@/db";
 import sanitize from "sanitize-html";
 
 // DELETE is used by the authenticated panel to delete a guest by UUID

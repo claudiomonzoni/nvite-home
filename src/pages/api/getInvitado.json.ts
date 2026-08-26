@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { Invitados, db, eq, and } from "astro:db";
+import { Invitados, db, eq, and } from "@/db";
 
 export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);

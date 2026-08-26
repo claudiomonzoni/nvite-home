@@ -1,4 +1,4 @@
-import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db } from 'astro:db';
+import { Usuario, Invitados, Mesas, Proveedores, PagosProveedor, TareasProveedor, db } from './index';
 
 export default async function seed() {
   await db.insert(Usuario).values([
@@ -356,4 +356,14 @@ export default async function seed() {
       completada: false,
     }
   ]);
+}
+
+if (process.argv[1] && (process.argv[1].endsWith('seed.ts') || process.argv[1].endsWith('seed.js'))) {
+  seed().then(() => {
+    console.log("Database seeded successfully!");
+    process.exit(0);
+  }).catch((err) => {
+    console.error("Error seeding database:", err);
+    process.exit(1);
+  });
 }

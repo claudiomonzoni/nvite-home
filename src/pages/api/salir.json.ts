@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db, Sesion, eq } from "astro:db";
+import { db, Sesion, eq } from "@/db";
 
 export const POST: APIRoute = async ({ cookies }) => {
   try {

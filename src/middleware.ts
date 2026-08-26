@@ -1,5 +1,5 @@
 import { defineMiddleware } from "astro:middleware";
-import { db, Usuario, Sesion, eq } from "astro:db";
+import { db, Usuario, Sesion, eq } from "@/db";
 
 export const onRequest = defineMiddleware(async (context, next) => {
     const { pathname } = context.url;
