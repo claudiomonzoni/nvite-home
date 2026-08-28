@@ -17,8 +17,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     aria-label="Cambiar idioma / Change language"
     data-current-lang={currentLang}
   >
-    <Icon name="mdi:translate" size={18} class="translate-icon" />
-    <span class="lang-text">{currentLang.toUpperCase()}</span>
+    <span class="lang-text">{currentLang}</span>
     <Icon name="mdi:chevron-down" size={14} class="chevron-icon" />
   </button>
 
@@ -28,7 +27,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
       class={`lang-option ${currentLang === "es" ? "active" : ""}`}
       data-lang="es"
     >
-      <span class="lang-flag">🇲🇽</span>
+
       <span class="lang-label">Español</span>
       {currentLang === "es" && <Icon name="mdi:check" size={16} class="check-icon" />}
     </button>
@@ -37,7 +36,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
       class={`lang-option ${currentLang === "en" ? "active" : ""}`}
       data-lang="en"
     >
-      <span class="lang-flag">🇺🇸</span>
+  
       <span class="lang-label">English</span>
       {currentLang === "en" && <Icon name="mdi:check" size={16} class="check-icon" />}
     </button>
@@ -59,14 +58,13 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.4rem 0.75rem;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.08);
+    padding: 0.3rem 0.6rem;
+    border-radius: $radio;
+    border: none;
+    background: rgba($terciario, 0.1);
     color: $primario;
     cursor: pointer;
     font-size: 0.85rem;
-    font-weight: 600;
     transition: all 0.25s ease;
     backdrop-filter: blur(8px);
 
@@ -93,9 +91,8 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     top: calc(100% + 6px);
     right: 0;
     min-width: 140px;
-    background: #1a1a24;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
+    background: rgba($primario, .7);
+    border-radius: $radio;
     padding: 0.35rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
     display: flex;
@@ -106,6 +103,9 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
 
     &.hidden {
       display: none;
+    }
+    @include cel{
+      top: -90px;
     }
   }
 
@@ -125,7 +125,6 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     background: transparent;
     color: #f1f5f9;
     font-size: 0.85rem;
-    font-weight: 500;
     cursor: pointer;
     text-align: left;
     width: 100%;
@@ -137,8 +136,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     }
 
     &.active {
-      font-weight: 700;
-      color: $primario;
+      color: $fondo;
       background: rgba(255, 255, 255, 0.05);
     }
   }

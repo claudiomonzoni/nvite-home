@@ -1,6 +1,5 @@
 ---
 import { Icon } from "astro-icon/components";
-import Btn from "./Btn.astro";
 import LanguageSelector from "./LanguageSelector.astro";
 import { useTranslations } from "../i18n/ui";
 
@@ -161,7 +160,7 @@ if (Astro.cookies.has("cartItems")) {
                 <li class="mobile-nav-item">
                   <a href="#faq" class="mobile-nav-link">
                     <Icon name="solar:question-circle-linear" size={22} class="item-icon" />
-                    <span>Preguntas frecuentes</span>
+                    <span> {t('nav.preguntas')}</span>
                   </a>
                 </li>
               ) : null}
@@ -371,7 +370,7 @@ if (Astro.cookies.has("cartItems")) {
   .mobile-cart-btn {
     color: $primario;
     padding: 0.35rem;
-    border-radius: 50%;
+    border-radius: $radio;
     transition: transform 0.2s ease;
 
     &:active {
@@ -388,12 +387,13 @@ if (Astro.cookies.has("cartItems")) {
     gap: 5px;
     width: 42px;
     height: 42px;
-    padding: 8px;
+    padding: 2px;
     border: none;
-   // background: rgba($primario, 0.08);
+    background: transparent;
+    background-color: transparent;
     border-radius: 12px;
     cursor: pointer;
-   // transition: background-color 0.25s ease, transform 0.2s ease;
+    transition: background-color 0.25s ease, transform 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
 
@@ -500,8 +500,8 @@ if (Astro.cookies.has("cartItems")) {
     font-weight: 600;
     color: $primario;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba($primario, 0.08);
+    background: rgba($terciario, 0.2);
+
     transition: all 0.2s ease;
 
     .item-icon {
