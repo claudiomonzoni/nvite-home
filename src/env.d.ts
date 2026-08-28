@@ -3,6 +3,7 @@
 
 declare namespace App {
   interface Locals {
+    lang: "es" | "en";
     user?: {
       id: number;
       email: string;

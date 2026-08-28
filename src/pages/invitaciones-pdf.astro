@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 import { Icon } from "astro-icon/components";
 import Btn from "../components/Btn.astro";
 import Caracteristicas from "../components/Caracteristicas.astro";
@@ -13,6 +12,10 @@ import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import PreciosPdf from "../components/PreciosPdf.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 import pdfCaracteristicasImg from "../assets/home/pdf-caracteristicas.webp";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
 <Layout
@@ -151,41 +154,33 @@ import pdfCaracteristicasImg from "../assets/home/pdf-caracteristicas.webp";
   <div class="flex">
     <div class="fondo-formu">
       <div class="bande">
-        <h2>Prueba tu Nvitación <br /> sin compromiso</h2>
-        <p>
-          <b>¿Tienes dudas o pedidos especiales?</b>, <br /> Escríbenos por WhatsApp y hagamos
-          que tu invitación sea perfecta <br />😊
-        </p>
+        <h2>{lang === 'en' ? 'Try your Invitation with zero commitment' : 'Prueba tu Nvitación sin compromiso'}</h2>
+        <p set:html={t('landing.form.desc')} />
       </div>
 
       <div id="formu">
         <form>
-          <!-- <h3>
-          <img src="/whatsapp.png" alt="logo whatsapp">
-          <b>whatsapp</b></h3> -->
-
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Tu nombre" />
-          <label for="fecha">Fecha del evento</label>
+          <label for="nombre">{t('landing.form.name')}</label>
+          <input type="text" id="nombre" placeholder={t('landing.form.namePlaceholder')} />
+          <label for="fecha">{t('landing.form.date')}</label>
           <input type="date" name="fecha" id="fecha" />
-          <label for="evento">Tipo de evento</label>
+          <label for="evento">{t('landing.form.type')}</label>
           <select name="evento" id="evento">
-            <option value="Boda">Boda</option>
-            <option value="Xv">Xv años</option>
-            <option value="Cumple">Cumpleaños</option>
+            <option value="Boda">{t('landing.form.boda')}</option>
+            <option value="Xv">{t('landing.form.quince')}</option>
+            <option value="Cumple">{lang === 'en' ? 'Birthday' : 'Cumpleaños'}</option>
           </select>
 
           <Btn
             liga="#"
             id="empezar"
-            texto="<b>Enviar</b> ahora"
+            texto={t('landing.form.send')}
             clases="desactivado, btn-oscuro"
             claro={false}
             blank={true}
           >
             <Icon name="mdi:whatsapp" />
           </Btn>
-          <!-- <button type="submit" id="empezar" class="desactivado">Empezemos</button> -->
         </form>
       </div>
     </div>

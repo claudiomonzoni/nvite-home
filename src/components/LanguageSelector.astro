@@ -1,0 +1,224 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Lang } from "../i18n/detector";
+
+interface Props {
+  currentLang?: Lang;
+  variant?: "nav" | "panel" | "minimal";
+}
+
+const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.props;
+---
+
+<div class={`lang-switcher-container variant-${variant}`}>
+  <button
+    type="button"
+    class="lang-btn"
+    aria-label="Cambiar idioma / Change language"
+    data-current-lang={currentLang}
+  >
+    <Icon name="mdi:translate" size={18} class="translate-icon" />
+    <span class="lang-text">{currentLang.toUpperCase()}</span>
+    <Icon name="mdi:chevron-down" size={14} class="chevron-icon" />
+  </button>
+
+  <div class="lang-dropdown hidden">
+    <button
+      type="button"
+      class={`lang-option ${currentLang === "es" ? "active" : ""}`}
+      data-lang="es"
+    >
+      <span class="lang-flag">🇲🇽</span>
+      <span class="lang-label">Español</span>
+      {currentLang === "es" && <Icon name="mdi:check" size={16} class="check-icon" />}
+    </button>
+    <button
+      type="button"
+      class={`lang-option ${currentLang === "en" ? "active" : ""}`}
+      data-lang="en"
+    >
+      <span class="lang-flag">🇺🇸</span>
+      <span class="lang-label">English</span>
+      {currentLang === "en" && <Icon name="mdi:check" size={16} class="check-icon" />}
+    </button>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+
+  .lang-switcher-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-family: inherit;
+    z-index: 100;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    color: $primario;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+  }
+
+  .variant-panel .lang-btn {
+    border-color: #e2e8f0;
+    background: #f8fafc;
+    color: #1e293b;
+
+    &:hover {
+      background: #edf2f7;
+      border-color: #cbd5e1;
+    }
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 140px;
+    background: #1a1a24;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 0.35rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    backdrop-filter: blur(12px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .variant-panel .lang-dropdown {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: #f1f5f9;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    &.active {
+      font-weight: 700;
+      color: $primario;
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+
+  .variant-panel .lang-option {
+    color: #334155;
+
+    &:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    &.active {
+      color: #2563eb;
+      background: #eff6ff;
+    }
+  }
+
+  .check-icon {
+    margin-left: auto;
+    color: $primario;
+  }
+
+  .variant-panel .check-icon {
+    color: #2563eb;
+  }
+</style>
+
+<script>
+  function initLanguageSwitchers() {
+    const containers = document.querySelectorAll(".lang-switcher-container");
+
+    containers.forEach((container) => {
+      // Avoid attaching listeners multiple times
+      if ((container as any).__langInitialized) return;
+      (container as any).__langInitialized = true;
+
+      const toggleBtn = container.querySelector(".lang-btn");
+      const menu = container.querySelector(".lang-dropdown");
+      const options = container.querySelectorAll(".lang-option");
+
+      if (!toggleBtn || !menu) return;
+
+      toggleBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menu.classList.toggle("hidden");
+      });
+
+      options.forEach((opt) => {
+        opt.addEventListener("click", async (e) => {
+          e.stopPropagation();
+          const targetLang = opt.getAttribute("data-lang");
+          if (!targetLang) return;
+
+          // Set cookie immediately in browser
+          document.cookie = `nvite_lang=${targetLang};path=/;max-age=31536000;SameSite=Lax`;
+
+          try {
+            await fetch("/api/set-lang.json", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ lang: targetLang }),
+            });
+          } catch (err) {
+            console.error("Error calling set-lang api:", err);
+          }
+
+          // Hard reload to guarantee fresh SSR rendering with new cookie
+          window.location.reload();
+        });
+      });
+    });
+
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".lang-dropdown").forEach((menu) => {
+        menu.classList.add("hidden");
+      });
+    });
+  }
+
+  initLanguageSwitchers();
+  document.addEventListener("astro:page-load", initLanguageSwitchers);
+</script>

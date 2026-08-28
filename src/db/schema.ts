@@ -5,9 +5,9 @@ export const customDate = (name: string) =>
     dataType() {
       return "text";
     },
-    fromDriver(value: string | number | null | undefined): any {
+    fromDriver(value: string | number | Date | null | undefined): any {
       if (value === null || value === undefined || value === "") return null;
-      if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
+      if (typeof value === "object" && value instanceof Date) return isNaN(value.getTime()) ? null : value;
       if (typeof value === "number") {
         const d = value < 1e11 ? new Date(value * 1000) : new Date(value);
         return isNaN(d.getTime()) ? null : d;

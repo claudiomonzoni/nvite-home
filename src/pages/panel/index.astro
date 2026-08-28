@@ -168,9 +168,14 @@ if (fechaEvento) {
     }
   }
 }
+
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
-<Layout title={nombreEvento ? `Panel - ${nombreEvento}` : "Panel de Administración"}>
+<Layout title={nombreEvento ? `Panel - ${nombreEvento}` : t('panel.menu.title')}>
   <Menu tipo={tipoInvitacion} ruta={ruta} nombreEvento={nombreEvento} invitados={invitadosData} proveedores={proveedoresData} />
   
   <!-- Banner de Cuenta Regresiva Amigable (Alineado en el grid original) -->
@@ -182,11 +187,11 @@ if (fechaEvento) {
         <div class="alerta-mensaje">
           {alertaTipo === "celebrativa" ? (
             <span>
-              <strong>¡Solo {diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día!</strong> 🎉 ¡Excelente avance! Todo está marchando de maravilla, tienes más del 80% de tus invitados confirmados. ¡A disfrutar los preparativos!
+              <strong>{lang === 'en' ? `Only ${diasRestantes} ${diasRestantes === 1 ? 'day' : 'days'} until the big day! 🎉` : `¡Solo ${diasRestantes} ${diasRestantes === 1 ? 'día' : 'días'} para el gran día! 🎉`}</strong> {t('panel.countdown.celebrate', { days: diasRestantes ?? 0, dayText: diasRestantes === 1 ? t('panel.countdown.day') : t('panel.countdown.days') })}
             </span>
           ) : (
             <span>
-              <strong>{diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día.</strong> Aún quedan <strong>{totalPendientesConfirmacion}</strong> {totalPendientesConfirmacion === 1 ? 'invitación' : 'invitaciones'} sin confirmar y <strong>{pasesPendientes}</strong> {pasesPendientes === 1 ? 'pase libre' : 'pases libres'}. ¡Tú puedes, falta muy poco!
+              <strong>{lang === 'en' ? `${diasRestantes} ${diasRestantes === 1 ? 'day' : 'days'} until the big day.` : `${diasRestantes} ${diasRestantes === 1 ? 'día' : 'días'} para el gran día.`}</strong> {t('panel.countdown.motivational', { days: diasRestantes ?? 0, dayText: diasRestantes === 1 ? t('panel.countdown.day') : t('panel.countdown.days'), pending: totalPendientesConfirmacion, invText: totalPendientesConfirmacion === 1 ? t('panel.countdown.invitation') : t('panel.countdown.invitations'), passes: pasesPendientes, passText: pasesPendientes === 1 ? t('panel.countdown.pass') : t('panel.countdown.passes') })}
             </span>
           )}
         </div>
@@ -200,20 +205,20 @@ if (fechaEvento) {
       <div class="tabs-container">
         <button class="tab-btn active" data-tab="invitados">
           <Icon name="mdi:account-group-outline" size={20} />
-          <span>Invitaciones</span>
+          <span>{t('panel.tabs.invitations')}</span>
         </button>
 
         {addonMesas && (
           <button class="tab-btn" data-tab="mesas">
             <Icon name="mdi:table-furniture" size={20} />
-            <span>Gestión de Mesas</span>
+            <span>{t('panel.tabs.tables')}</span>
           </button>
         )}
 
         {addonProveedores && (
           <button class="tab-btn" data-tab="proveedores">
             <Icon name="mdi:store-outline" size={20} />
-            <span>Proveedores</span>
+            <span>{t('panel.tabs.vendors')}</span>
           </button>
         )}
       </div>
@@ -231,7 +236,7 @@ if (fechaEvento) {
     <section class="grid contenido">
       <div id="hero">
         <div class="barra-progreso-container">
-          <h3>Progreso de confirmaciones de tus invitaciones</h3>
+          <h3>{t('panel.hero.progressTitle')}</h3>
           <div class="barra-progreso">
             <div
               class="barra"
@@ -262,57 +267,57 @@ if (fechaEvento) {
                     )
                   : 0
               }%</span
-            > de invitaciones confirmadas,
-            <span class="confirmados">{totalPasesConfirmados}</span> pases confirmados,
-            <span class="pendientes">{pasesPendientes}</span> pases por confirmar
+            > {lang === 'en' ? 'of invitations confirmed,' : 'de invitaciones confirmadas,'}
+            <span class="confirmados">{totalPasesConfirmados}</span> {lang === 'en' ? 'passes confirmed,' : 'pases confirmados,'}
+            <span class="pendientes">{pasesPendientes}</span> {lang === 'en' ? 'passes to confirm' : 'pases por confirmar'}
           </p>
         </div>
         <div class="estadisticas">
           <div class="stat-item">
             <span class="stat-numero">{invitadosData.length}</span>
-            <span class="stat-label">Invitaciones creadas</span>
+            <span class="stat-label">{t('panel.stats.created')}</span>
           </div>
             <div class="stat-item">
             <span class="stat-numero"
               >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
             >
-            <span class="stat-label">Invitaciones enviadas</span>
+            <span class="stat-label">{t('panel.stats.sent')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{totalPasesAsignados}</span>
-            <span class="stat-label">Pases asignados</span>
+            <span class="stat-label">{t('panel.stats.assignedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{totalPasesConfirmados}</span>
-            <span class="stat-label">Pases confirmados</span>
+            <span class="stat-label">{t('panel.stats.confirmedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{pasesLiberados}</span>
-            <span class="stat-label">Pases liberados</span>
+            <span class="stat-label">{t('panel.stats.releasedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero"
               >{invitadosData.filter((inv) => inv.noAsiste).length}</span
             >
-            <span class="stat-label">declinaciones</span>
+            <span class="stat-label">{t('panel.stats.declined')}</span>
           </div>
         
         </div>
 
         <div class="section-header invitados-section-header">
-          <h2>Invitaciones ({invitadosData.length})</h2>
+          <h2>{t('panel.tabs.invitations')} ({invitadosData.length})</h2>
 
           <div id="conteAgregar">
 
             {usuarioId ? (
 
-<button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
+<button id="btn-exportar-invitados" class="btn-excel" title={t('panel.actions.downloadExcel')}>
               <Icon name="mdi:file-excel-outline" size={18} />
-              <span>Descargar Excel</span>
+              <span>{t('panel.actions.downloadExcel')}</span>
             </button>
               <button id="agregar-invitado" class="btn-primary-sm">
               <Icon name="mdi:account-plus-outline" size={18} />
-              <span>Agregar invitado</span>
+              <span>{t('panel.actions.addGuest')}</span>
             </button>
           ) : null}
           </div>
@@ -322,16 +327,16 @@ if (fechaEvento) {
           <input
             id="search-input"
             type="text"
-            placeholder="Buscar invitado por nombre..."
+            placeholder={t('panel.actions.searchPlaceholder')}
             class="buscador"
           />
           <div class="filtros">
             <div class="filtros-estado">
-              <button class="filtro-btn activo" data-estado="todos">Todos</button>
-              <button class="filtro-btn" data-estado="enviada">Enviada</button>
-              <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
-              <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
-              <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
+              <button class="filtro-btn activo" data-estado="todos">{t('panel.filters.all')}</button>
+              <button class="filtro-btn" data-estado="enviada">{t('panel.filters.sent')}</button>
+              <button class="filtro-btn" data-estado="confirmado">{t('panel.filters.confirmed')}</button>
+              <button class="filtro-btn" data-estado="NoAsiste">{t('panel.filters.declined')}</button>
+              <button class="filtro-btn" data-estado="noEnviada">{t('panel.filters.pending')}</button>
             </div>
             
           </div>

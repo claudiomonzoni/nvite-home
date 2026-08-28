@@ -2,7 +2,18 @@
   {
     "id": "prod_SK7Bqg9HjOSmhW",
     "slug": "invitacion-xv-clasica",
-    "muestra": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
+    "nombre": {
+      "es": "Invitación de XV Años Clásica",
+      "en": "Classic Quinceañera Invitation"
+    },
+    "descripcion": {
+      "es": "Invitación digital interactiva con música, cuenta regresiva, galería fotográfica y panel privado de confirmación de invitados.",
+      "en": "Interactive digital invitation featuring music, countdown, photo gallery, and a private RSVP guest management dashboard."
+    },
+    "muestra": {
+      "es": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
+      "en": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12&lang=en"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -35,8 +46,18 @@
   {
     "id": "prod_QNpXQx0LWRjRFh",
     "slug": "invitacion-bodas-esencial",
-    "titulo": "Invitación Bodas esencial",
-    "muestra": "/bodas/invitacion-bodas-esencial",
+    "nombre": {
+      "es": "Invitación de Bodas Esencial",
+      "en": "Essential Wedding Invitation"
+    },
+    "descripcion": {
+      "es": "Invitación web práctica y elegante con frase de amor animada, cuenta regresiva, mapas GPS interactivos y confirmación directa por WhatsApp.",
+      "en": "Clean and elegant web invitation featuring an animated love quote, countdown, interactive GPS maps, and one-tap WhatsApp RSVP."
+    },
+    "muestra": {
+      "es": "/bodas/invitacion-bodas-esencial",
+      "en": "/bodas/invitacion-bodas-esencial?lang=en"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -65,7 +86,18 @@
   {
     "id": "prod_SK7ICkqFPPgSuJ",
     "slug": "invitacion-xv-esencial",
-    "muestra": "/quince/invitacion-bodas-esencial",
+    "nombre": {
+      "es": "Invitación de XV Años Esencial",
+      "en": "Essential Quinceañera Invitation"
+    },
+    "descripcion": {
+      "es": "Invitación web moderna y accesible con frase animada, reloj de cuenta regresiva, mapa interactivo y confirmación rápida por WhatsApp.",
+      "en": "Modern and accessible digital invitation featuring an animated quote, countdown, interactive map, and quick WhatsApp RSVP."
+    },
+    "muestra": {
+      "es": "/quince/invitacion-bodas-esencial",
+      "en": "/quince/invitacion-bodas-esencial?lang=en"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -95,7 +127,18 @@
   {
     "id": "prod_QNpO0T7kRp1zkL",
     "slug": "invitacion-bodas-clasica",
-    "muestra": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
+    "nombre": {
+      "es": "Invitación de Bodas Clásica",
+      "en": "Classic Wedding Invitation"
+    },
+    "descripcion": {
+      "es": "Invitación digital con frase animada, cuenta regresiva, galería fotográfica, enlaces a mesa de regalos y panel privado de invitados.",
+      "en": "Digital wedding invitation featuring an animated quote, countdown, photo gallery, gift registry links, and a private guest dashboard."
+    },
+    "muestra": {
+      "es": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11",
+      "en": "/bodas/nvita-bodas-clasica?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11&lang=en"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -129,7 +172,18 @@
     "precioTachado": false,
     "masvista": true,
     "slug": "elegante-lux-xv",
-    "muestra": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+    "nombre": {
+      "es": "Invitación de XV Años Lux Elegante",
+      "en": "Lux Elegant Quinceañera Invitation"
+    },
+    "descripcion": {
+      "es": "Nuestra versión más sofisticada para quinceañeras con video preview, música personalizada, itinerario, mapa interactivo y control de pases.",
+      "en": "Our most sophisticated quinceañera design featuring video preview, custom music, event timeline, interactive map, and pass management."
+    },
+    "muestra": {
+      "es": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+      "en": "/quince/cloe-guadalupe-en"
+    },
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
     "beneficios": [
       {
@@ -163,7 +217,18 @@
     "precioTachado": false,
     "masvista": true,
     "slug": "invitacion-xv-lux",
-    "muestra": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+    "nombre": {
+      "es": "Invitación de XV Años Lux",
+      "en": "Lux Quinceañera Invitation"
+    },
+    "descripcion": {
+      "es": "La experiencia completa de quinceañera con música de fondo, itinerario detallado, dress code, mesa de regalos y panel de confirmación en tiempo real.",
+      "en": "The complete quinceañera experience with background music, detailed timeline, dress code, gift registry, and real-time RSVP dashboard."
+    },
+    "muestra": {
+      "es": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+      "en": "/quince/cloe-guadalupe-en"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -199,7 +264,18 @@
     "precioTachado": false,
     "masvista": true,
     "slug": "invitacion-bodas-lux",
-    "muestra": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
+    "nombre": {
+      "es": "Invitación de Bodas Lux",
+      "en": "Lux Wedding Invitation"
+    },
+    "descripcion": {
+      "es": "Nuestra invitación de bodas más completa: incluye música especial, galería de romance, cuenta regresiva, itinerario, mapa GPS y panel privado para organizar a tus invitados y mesas.",
+      "en": "Our most complete wedding invitation: includes custom music, romance gallery, countdown, timeline, GPS map, and a private guest & table seating management dashboard."
+    },
+    "muestra": {
+      "es": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
+      "en": "/bodas/nvitacion-bodas-lux-elegante-en?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",
@@ -234,7 +310,18 @@
     "precioTachado": false,
     "masvista": true,
     "slug": "invitacion-bodas-lux-elegante",
-    "muestra": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
+    "nombre": {
+      "es": "Invitación de Bodas Lux Elegante",
+      "en": "Lux Elegant Wedding Invitation"
+    },
+    "descripcion": {
+      "es": "Diseño exclusivo y refinado con canción favorita, frase animada de bienvenida, dress code de gala, pase digital y panel de gestión de invitados.",
+      "en": "Exclusive and refined design featuring your favorite song, animated welcome quote, gala dress code, digital passes, and private guest dashboard."
+    },
+    "muestra": {
+      "es": "/bodas/nvitacion-bodas-lux-elegante?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13",
+      "en": "/bodas/nvitacion-bodas-lux-elegante-en?id=f0fc4ef7-b808-4a4f-a54e-4ad114619861&uid=13"
+    },
     "beneficios": [
       {
         "titulo": "Cuando la abren",

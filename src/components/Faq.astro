@@ -1,5 +1,7 @@
 ---
-const faqs = [
+const lang = Astro.locals.lang || "es";
+
+const faqsEs = [
   {
     question: "¿Qué es exactamente una Nvitación?",
     answer: "Es una invitación digital personalizada que tus invitados reciben por WhatsApp o email. La abren en su celular, ven todos los detalles de tu evento (fecha, lugar, fotos) y confirman su asistencia con un solo clic. Además desde tu panel de control puedes agregar tus invitados, sus datos y pases, ver en tiempo real cuantos invitados han confirmado su asistencia y cuantos faltan por confirmar."
@@ -58,6 +60,67 @@ const faqs = [
   }
 ];
 
+const faqsEn = [
+  {
+    question: "What exactly is an Nvitación?",
+    answer: "It is a personalized digital invitation that your guests receive via WhatsApp or email. They open it on their mobile phone, see all your event details (date, GPS map, photo gallery, soundtrack) and confirm their attendance in one click. Plus, from your private dashboard you can add guests, assign passes, and track real-time RSVP confirmations."
+  },
+  {
+    question: "How do I send my invitations to guests?",
+    answer: "Sending invitations is effortless: you can send them via WhatsApp, email, or share your link on social media. With Classic and Lux versions, you have a private dashboard where you can invite guests in one tap or copy each personalized guest link."
+  },
+  {
+    question: "How do I know who is coming to my wedding or party?",
+    answer: "We provide real-time guest management tools. On web invitations (Lux & Classic), you can see the percentage of confirmed guests, who hasn't responded yet, and who declined."
+  },
+  {
+    question: "How do guests RSVP?",
+    answer: "Every invitation includes an intuitive RSVP confirmation button that sends instant confirmations directly to your dashboard and via WhatsApp."
+  },
+  {
+    question: "Can invitations be customized per guest?",
+    answer: "Yes! Each guest sees their own name and assigned number of passes. On Lux invitations, you can also add <b>custom personal notes</b> for VIP guests such as parents, grandparents, and wedding party members."
+  },
+  {
+    question: "Can I customize colors, music, and details?",
+    answer: "Yes! You can customize your photos, background song, texts, guest names, schedules, gift registries, hotel suggestions, and choose between 3 designer color palettes to match your wedding theme."
+  },
+  {
+    question: "How long is my digital invitation available online?",
+    answer: "Your invitation is available from delivery until one week after your event date. Maximum online availability is 1 year and 1 week."
+  },
+  {
+    question: "What guarantees do I get?",
+    answer: "We guarantee that your digital invitations work smoothly on all modern smartphones, tablets, and computers. <b>Or your money back.</b>"
+  },
+  {
+    question: "What payment methods do you accept?",
+    answer: "We accept all major credit and debit cards (Visa, Mastercard, Amex), Apple Pay, and Google Pay securely processed via Stripe."
+  },
+  {
+    question: "How does the Table Seating Manager work?",
+    answer: "From your dashboard you can arrange guests into tables, see available seats, and export the complete seating layout to Excel for your wedding planner or venue."
+  },
+  {
+    question: "Can I track my event vendors and budget?",
+    answer: "Yes! The Lux edition includes a vendor management section to track contracts, payments, deadlines, and pending tasks."
+  },
+  {
+    question: "Does it work for destination weddings?",
+    answer: "Absolutely! It's the perfect tool for destination weddings. Guests have GPS directions, hotel recommendations with discount codes, and full event itineraries in their pocket."
+  },
+  {
+    question: "Do I have to build the website myself?",
+    answer: "No! Our design team handles the entire setup, layout, and customization. You simply send your details and photos, and within 48 hours your invitation and dashboard are live."
+  },
+  {
+    question: "Have more questions? How can I reach you?",
+    answer: "You can message us directly on WhatsApp at +52 1 755 113 2468 or email us at nvitaciones@gmail.com. We are here to help!"
+  }
+];
+
+const faqs = lang === "en" ? faqsEn : faqsEs;
+
 const schemaFAQ = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -66,7 +129,7 @@ const schemaFAQ = {
     "name": faq.question,
     "acceptedAnswer": {
       "@type": "Answer",
-      "text": faq.answer.replace(/<[^>]*>?/gm, '') // Remove HTML tags for Schema
+      "text": faq.answer.replace(/<[^>]*>?/gm, '')
     }
   }))
 };
@@ -75,7 +138,7 @@ const schemaFAQ = {
 <script type="application/ld+json" set:html={JSON.stringify(schemaFAQ)} />
 
 <div class="conte">
-  <h2>Dudas más frecuentes</h2>
+  <h2>{lang === 'en' ? 'Frequently Asked Questions' : 'Dudas más frecuentes'}</h2>
 
   {faqs.map((faq) => (
     <details>
@@ -93,7 +156,6 @@ const schemaFAQ = {
     margin-bottom: $margen;
     margin-top: -20px;
     transform: translateY(-$margen-min);
-    // max-width: fit-content;
     margin-left: auto;
     margin-right: auto;
     width: 65%;
@@ -105,7 +167,6 @@ const schemaFAQ = {
     }
     @include cel {
       width: 100%;
-     
     }
   }
   details {
@@ -144,7 +205,6 @@ const schemaFAQ = {
 
   details[open] div {
     padding: $margen-cel;
-    //background: linear-gradient(0deg, $primario 80%, rgba($terciario, 1) 40%);
     background: $primario;
     font-size: 1rem;
     color: white;

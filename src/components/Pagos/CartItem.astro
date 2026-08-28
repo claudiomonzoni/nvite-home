@@ -9,10 +9,11 @@ type Props = {
 };
 
 const { cartItem } = Astro.props;
+const lang = Astro.locals.lang || "es";
 
 const { data } = cartItem.product;
 
-const finalPrice = await getProductPrice(cartItem.product);
+const finalPrice = await getProductPrice(cartItem.product, lang);
 ---
 
 <li class="cart-item">

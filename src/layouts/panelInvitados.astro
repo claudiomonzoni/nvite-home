@@ -7,11 +7,11 @@ const { title } = Astro.props;
 import "../estilos/globales.scss";
 import {Font} from "astro:assets";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
+const lang = Astro.locals.lang || "es";
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang === "en" ? "en" : "es"}>
   <head>
     <meta charset="UTF-8" />
     <meta

@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+import LanguageSelector from "../LanguageSelector.astro";
+import { useTranslations } from "../../i18n/ui";
 
 interface Props {
   tipo: string;
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const { tipo, ruta, nombreEvento, invitados = [], proveedores = [] } = Astro.props;
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 // Calculate initial alerts for SSG/SSR
 const hoy = new Date();
@@ -26,7 +30,7 @@ invitados.forEach((inv) => {
     guestsAlerts.push({
       id: `guest-declined-${inv.id}`,
       tipo: "invitado",
-      titulo: `😔 ${inv.nombre} declinó la invitación (No asistirá)`,
+      titulo: `😔 ${inv.nombre} ${lang === 'en' ? 'declined the invitation (Cannot attend)' : 'declinó la invitación (No asistirá)'}`,
       fecha: null,
       urgente: false,
     });
@@ -35,7 +39,7 @@ invitados.forEach((inv) => {
       guestsAlerts.push({
         id: `guest-fewer-${inv.id}`,
         tipo: "invitado",
-        titulo: `⚠️ ${inv.nombre} confirmó con menos pases (${pasesConfirmados} de ${pasesAsignados} asignados)`,
+        titulo: `⚠️ ${inv.nombre} ${lang === 'en' ? `confirmed with fewer passes (${pasesConfirmados} of ${pasesAsignados} assigned)` : `confirmó con menos pases (${pasesConfirmados} de ${pasesAsignados} asignados)`}`,
         fecha: null,
         urgente: true,
       });
@@ -43,7 +47,7 @@ invitados.forEach((inv) => {
       guestsAlerts.push({
         id: `guest-confirmed-${inv.id}`,
         tipo: "invitado",
-        titulo: `✅ ${inv.nombre} confirmó su asistencia (${pasesConfirmados} pases)`,
+        titulo: `✅ ${inv.nombre} ${lang === 'en' ? `confirmed attendance (${pasesConfirmados} passes)` : `confirmó su asistencia (${pasesConfirmados} pases)`}`,
         fecha: null,
         urgente: false,
       });
@@ -58,37 +62,20 @@ proveedores.forEach((p) => {
   // Check main payment deadline
   if (p.fechaLimitePago && p.saldoPendiente > 0) {
     const fPago = new Date(p.fechaLimitePago);
-    fPago.setHours(0, 0, 0, 0);
-    const diffDays = Math.ceil((fPago.getTime() - hoy.getTime()) / (1000 * 3600 * 24));
-    if (diffDays <= 7) {
-      proveedoresAlerts.push({
-        id: `pago-${p.id}`,
-        tipo: "proveedor",
-        titulo: `${p.nombre}: ${diffDays < 0 ? 'Pago VENCIDO' : diffDays === 0 ? 'Hoy vence fecha de pago' : `${diffDays} día(s) para fecha de pago`}`,
-        fecha: p.fechaLimitePago,
-        urgente: diffDays <= 2,
-      });
-    }
-  }
+    if (!isNaN(fPago.getTime())) {
+      fPago.setHours(0, 0, 0, 0);
+      const diffDias = Math.ceil((fPago.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
 
-  // Check tasks with date
-  if (p.tareas && Array.isArray(p.tareas)) {
-    p.tareas.forEach((t: any) => {
-      if (!t.completada && t.fechaLimite) {
-        const fTarea = new Date(t.fechaLimite);
-        fTarea.setHours(0, 0, 0, 0);
-        const diffDays = Math.ceil((fTarea.getTime() - hoy.getTime()) / (1000 * 3600 * 24));
-        if (diffDays <= 7) {
-          proveedoresAlerts.push({
-            id: `tarea-${t.id}`,
-            tipo: "proveedor",
-            titulo: `${p.nombre} - ${t.titulo}: ${diffDays < 0 ? 'Vencida' : diffDays === 0 ? 'Vence hoy' : `${diffDays} día(s) restante(s)`}`,
-            fecha: t.fechaLimite,
-            urgente: diffDays <= 2,
-          });
-        }
+      if (diffDias >= 0 && diffDias <= 7) {
+        proveedoresAlerts.push({
+          id: `prov-pago-${p.id}`,
+          tipo: "proveedor",
+          titulo: `💳 ${lang === 'en' ? `Payment deadline for "${p.nombre}" in ${diffDias} ${diffDias === 1 ? 'day' : 'days'}` : `Pago pendiente a "${p.nombre}" vence en ${diffDias} ${diffDias === 1 ? 'día' : 'días'}`}`,
+          fecha: fPago,
+          urgente: diffDias <= 2,
+        });
       }
-    });
+    }
   }
 });
 
@@ -104,9 +91,12 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
     <li class="nav-right">
       <span class="nombre-evento">{nombreEvento ? nombreEvento : `${tipo} de ${ruta}`}</span>
 
+      <!-- Selector de Idioma en Panel -->
+      <LanguageSelector currentLang={lang} variant="panel" />
+
       <!-- Burbuja / Icono de Notificaciones -->
       <div class="notif-wrapper">
-        <button id="notif-bell-btn" class="notif-btn" type="button" aria-label="Notificaciones">
+        <button id="notif-bell-btn" class="notif-btn" type="button" aria-label={t('panel.menu.notifications')}>
           <Icon name="mdi:bell-outline" size={22} />
           <span id="notif-badge" class="notif-badge" style={todasNotificaciones.length === 0 ? "display:none;" : ""}>
             {todasNotificaciones.length}
@@ -116,13 +106,13 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
         <!-- Dropdown Menú de Notificaciones -->
         <div id="notif-dropdown" class="notif-dropdown hidden">
           <div class="notif-header">
-            <h4>Notificaciones</h4>
-            <span id="notif-count-text" class="notif-subtext">{todasNotificaciones.length} pendientes</span>
+            <h4>{t('panel.menu.notifications')}</h4>
+            <span id="notif-count-text" class="notif-subtext">{todasNotificaciones.length} {lang === 'en' ? 'pending' : 'pendientes'}</span>
           </div>
 
           <div id="notif-items-list" class="notif-body">
             {todasNotificaciones.length === 0 ? (
-              <p class="notif-vacio">No tienes notificaciones pendientes.</p>
+              <p class="notif-vacio">{t('panel.menu.noNotifications')}</p>
             ) : (
               todasNotificaciones.map((n) => (
                 <div class={`notif-item ${n.urgente ? "urgente" : ""} ${n.tipo}`} data-notif-id={n.id}>
@@ -148,7 +138,7 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
 
       <form data-authForm action="../api/salir.json" method="POST">
         <button type="submit" class="btn-claro btn-logout">
-          <Icon name="mdi:logout" size={20} /> Salir
+          <Icon name="mdi:logout" size={20} /> {t('panel.menu.logout')}
         </button>
       </form>
     </li>

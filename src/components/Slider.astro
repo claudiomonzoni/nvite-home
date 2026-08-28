@@ -10,7 +10,39 @@ interface Slide {
   lottiePath?: string;
 }
 
-const slides: Slide[] = [
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
+
+const slides: Slide[] = isEn ? [
+  {
+    title: "Easy to send, impossible to ignore",
+    description:
+      "Share via WhatsApp, social media, or email. No downloads, zero hassle.",
+    lottiePath: "/sliders/home/slide-1.json",
+  },
+  {
+    title: "You're in control, without the stress",
+    description:
+      "Assign passes, see who RSVPs in real time, and avoid unexpected surprises.",
+    lottiePath: "/sliders/home/slide-2.json",
+  },
+  {
+    title: "Every “I'm coming” is instantly tracked",
+    description:
+      "Guests confirm from their phones and you track everything from one central dashboard.",
+    lottiePath: "/sliders/home/slide-3.json",
+  },
+  {
+    title: "Not generic cards. Made for who matters most",
+    description: "Personalize names and messages for a truly meaningful invitation.",
+    lottiePath: "/sliders/home/slide-4.json",
+  },
+  {
+    title: "More than an invite, an unforgettable experience",
+    description: "Design, emotion, and technology for your special day.",
+    lottiePath: "/sliders/home/slide-5.json",
+  },
+] : [
   {
     title: "Fáciles de enviar, imposibles de ignorar",
     description:

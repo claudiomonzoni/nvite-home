@@ -2,165 +2,103 @@
 const { dondeEstoy } = Astro.props;
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
+const isEn = lang === "en";
 ---
 
 <div class="banner azulBG">
   <div class="der">
     <div id="titulo">
-      <h2>Simple, precios transparentes</h2>
-      <p>Envios ilimitados, sin sorpresas</p>
+      <h2>{isEn ? "Simple, transparent pricing" : "Simple, precios transparentes"}</h2>
+      <p>{isEn ? "Unlimited sends, zero surprises" : "Envios ilimitados, sin sorpresas"}</p>
     </div>
     <div class="bande">
-      <!--
-        <article class="lista">
-          <small>Bodas & 15 Años</small>
-          <h2>Nvitación Esencial</h2>
-        <ul>
-          <li>Detalles del evento</li>
-          <li>Cuenta regresiva</li>
-          <li>Datos de tu evento</li>
-          <li>Mapas de ubicación</li>
-          <li>Frase animada</li>
-          <li>Formulario <b>sencillo</b> de confirmación</li>
-        </ul>
-        <div class="conteBtn">
-        
-        {
-          dondeEstoy === 'home' ? (
-            <Btn
-            liga="/nvitaciones/invitacion-bodas-esencial"
-            clases="btn-bordes"
-            texto="Bodas"
-            icono="mdi:chevron-double-right"
-            //claro={true}
-            />
-            <Btn
-            liga="/nvitaciones/invitacion-xv-esencial"
-            clases="btn-oscuro "
-            texto="Xv Años"
-            icono="mdi:chevron-double-right"
-            //claro={true}
-            />
-            ) : (
-            
-            dondeEstoy === "bodas"  ? (
-            <Btn
-            liga="/nvitaciones/invitacion-bodas-esencial"
-            clases="btn-oscuro"
-            texto="Así se ve →"
-            icono="mdi:chevron-double-right"
-            claro={true}
-            />
-            ):(
-                <Btn
-                liga="/nvitaciones/invitacion-xv-esencial"
-                clases="btn-oscuro"
-                texto="Así se ve →"
-                icono="mdi:chevron-double-right"
-                claro={true}
-                />
-            )
-          )
-        }
-         
-      </div>
-      
-    </article>
-    -->
-
       <article class="lista destacada">
         <div class="bandeDestacada">
-          <small>Bodas & 15 Años</small>
+          <small>{isEn ? "Weddings & Celebrations" : "Bodas & 15 Años"}</small>
           <h2>
-            Nvitación Clásica
-            <!-- <div id="masvendido">Más vendida</div> -->
+            {isEn ? "Classic Invitation" : "Nvitación Clásica"}
           </h2>
           <ul>
-            <h4>Personalización</h4>
-            <li>Nombre del invitado</li>
-            <li>Asigna Pases</li>
-            <li>Mensajes personales</li>
-            <h4>Ambientación</h4>
-            <li>Tu canción</li>
-            <li>Galería de imágenes</li>
-            <li>Frase animada</li>
-            <h4>Información del Evento</h4>
-            <li>Dress Code</li>
-            <li>Mapas de ubicación</li>
-            <li>Cuenta regresiva</li>
-            <h4>Confirmación y Control</h4>
-            <li>Sugerencia de regalos</li>
-            <li>Sugerencia de hospedaje</li>
-            <li>Formulario de confirmación</li>
-            <li>Panel de invitados</li>
+            <h4>{isEn ? "Personalization" : "Personalización"}</h4>
+            <li>{isEn ? "Guest name" : "Nombre del invitado"}</li>
+            <li>{isEn ? "Assign passes" : "Asigna Pases"}</li>
+            <li>{isEn ? "Personal notes" : "Mensajes personales"}</li>
+            <h4>{isEn ? "Atmosphere" : "Ambientación"}</h4>
+            <li>{isEn ? "Your song" : "Tu canción"}</li>
+            <li>{isEn ? "Image gallery" : "Galería de imágenes"}</li>
+            <li>{isEn ? "Animated quote" : "Frase animada"}</li>
+            <h4>{isEn ? "Event Information" : "Información del Evento"}</h4>
+            <li>{isEn ? "Dress Code" : "Dress Code"}</li>
+            <li>{isEn ? "Location maps" : "Mapas de ubicación"}</li>
+            <li>{isEn ? "Countdown" : "Cuenta regresiva"}</li>
+            <h4>{isEn ? "RSVP & Management" : "Confirmación y Control"}</h4>
+            <li>{isEn ? "Gift registry" : "Sugerencia de regalos"}</li>
+            <li>{isEn ? "Lodging suggestions" : "Sugerencia de hospedaje"}</li>
+            <li>{isEn ? "Confirmation form" : "Formulario de confirmación"}</li>
+            <li>{isEn ? "Guest dashboard" : "Panel de invitados"}</li>
           </ul>
           <div class="precio">
-            <span>$1290<sup>MXN</sup></span>
-            <small><b>Pago unico / Desde 13 pesos</b> por invitado y baja entre más
-              invitados tengas</small
-            >
+            <span>{isEn ? "$79" : "$1290"}<sup>{isEn ? "USD" : "MXN"}</sup></span>
+            <small><b>{isEn ? "One-time payment / From $0.79 USD" : "Pago unico / Desde 13 pesos"}</b> {isEn ? "per guest and gets cheaper with more guests" : "por invitado y baja entre más invitados tengas"}</small>
           </div>
  
         </div>
       </article>
 
       <article class="lista">
-        <small>Bodas & 15 Años</small>
-        <h2>Nvitación Lux</h2>
+        <small>{isEn ? "Weddings & Celebrations" : "Bodas & 15 Años"}</small>
+        <h2>{isEn ? "Lux Invitation" : "Nvitación Lux"}</h2>
 
         <ul id="lux">
-          <h3>Todo lo que incluye la Clásica, más:</h3>
+          <h3>{isEn ? "Everything in Classic, plus:" : "Todo lo que incluye la Clásica, más:"}</h3>
 
           <li class="resalta">
             <h4>
-              <Icon name="mdi:table" size={25} /> Gestor
-              de mesas
+              <Icon name="mdi:table" size={25} /> {isEn ? "Table seating manager" : "Gestor de mesas"}
             </h4>
             <p>
-              Organiza a tus invitados y asigna sus mesas fácilmente; luego, exporta todo en Excel para compartirlo con tu equipo..
+              {isEn ? "Organize your guests and assign tables easily; then export everything to Excel to share with your team." : "Organiza a tus invitados y asigna sus mesas fácilmente; luego, exporta todo en Excel para compartirlo con tu equipo.."}
             </p>
           </li>
           <li class="resalta">
             <h4>
-              <Icon name="mdi:account-balance-wallet-outline" size={25} /> Gestión de Proveedores
+              <Icon name="mdi:account-balance-wallet-outline" size={25} /> {isEn ? "Vendor Management" : "Gestión de Proveedores"}
             </h4>
             <p>
-              Centraliza sus datos, organiza tus tareas pendientes y mantén tus pagos bajo control.
+              {isEn ? "Centralize vendor details, organize pending to-dos, and keep your budget under control." : "Centraliza sus datos, organiza tus tareas pendientes y mantén tus pagos bajo control."}
             </p>
           </li>
 
           <li class="resalta">
-            <h4><Icon name="mdi:calendar" size={25} /> Itinerario</h4>
+            <h4><Icon name="mdi:calendar" size={25} /> {isEn ? "Itinerary" : "Itinerario"}</h4>
             <p>
-              Haz que tus invitados sepan qué sigue y disfruten cada momento de
-              tu celebración.
+              {isEn ? "Let guests know what's next and enjoy every moment of your celebration." : "Haz que tus invitados sepan qué sigue y disfruten cada momento de tu celebración."}
             </p>
           </li>
 
           <li class="resalta">
             <h4>
-              <Icon name="mdi:account-multiple-check-outline" size={25} /> Porcentaje
-              de confirmados
+              <Icon name="mdi:account-multiple-check-outline" size={25} /> {isEn ? "Confirmation progress" : "Porcentaje de confirmados"}
             </h4>
             <p>
-              Muestra a tus invitados cuántos ya confirmaron y dales ese último
-              empujón para decir: ¡Sí, ahí estaremos!
+              {isEn ? "Show guests how many have already RSVP'd to encourage quick confirmations!" : "Muestra a tus invitados cuántos ya confirmaron y dales ese último empujón para decir: ¡Sí, ahí estaremos!"}
             </p>
           </li>
 
           <li class="resalta">
-            <h4><Icon name="mdi:qrcode" size={25} /> QR de entrada</h4>
+            <h4><Icon name="mdi:qrcode" size={25} /> {isEn ? "Entrance QR Pass" : "QR de entrada"}</h4>
             <p>
-              Al confirmar, tus invitados reciben un código QR en su invitación con pases y mesa asignada, asegurando un acceso rápido y ordenado.
+              {isEn ? "Upon confirmation, guests receive a QR pass with assigned seats for smooth entrance." : "Al confirmar, tus invitados reciben un código QR en su invitación con pases y mesa asignada, asegurando un acceso rápido y ordenado."}
             </p>
           </li>
         </ul>
         <div class="precio">
-          <span> $1688<sup>MXN</sup> </span>
-          <small
-            ><b>Pago unico / Desde 17 pesos </b>por invitado y baja entre más invitados
-            tengas</small
-          >
+          <span>{isEn ? "$99" : "$1688"}<sup>{isEn ? "USD" : "MXN"}</sup> </span>
+          <small><b>{isEn ? "One-time payment / From $0.99 USD" : "Pago unico / Desde 17 pesos"} </b>{isEn ? "per guest and gets cheaper with more guests" : "por invitado y baja entre más invitados tengas"}</small>
         </div>
       </article>
    

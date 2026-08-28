@@ -80,14 +80,19 @@ const schemaReviews = {
     "reviewBody": review.text
   }))
 };
+
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(schemaReviews)} />
 
 <section class="testimonios">
   <div class="testimonios__container">
-    <h2 class="testimonios__title">Lo que dicen nuestros clientes</h2>
-    <p>de nuestro servicio e invitaciones</p>
+    <h2 class="testimonios__title">{t('landing.testimonials.title')}</h2>
+    <p>{t('landing.testimonials.subtitle')}</p>
 
     <div class="swiper testimonios-swiper">
       <div class="swiper-wrapper">

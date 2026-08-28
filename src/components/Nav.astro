@@ -1,13 +1,22 @@
 ---
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+import LanguageSelector from "./LanguageSelector.astro";
+import { useTranslations } from "../i18n/ui";
+
 const url = Astro.url.pathname;
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 let cartItemsCount = 0;
 
 if (Astro.cookies.has("cartItems")) {
   const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
-  cartItemsCount = JSON.parse(cookie).length;
+  try {
+    cartItemsCount = JSON.parse(cookie).length;
+  } catch (e) {
+    cartItemsCount = 0;
+  }
 }
 ---
 
@@ -25,13 +34,14 @@ if (Astro.cookies.has("cartItems")) {
         />
       </a>
 
-      <div class="menu-items">
+      <!-- Navegación de Escritorio (Intacta para pantallas grandes) -->
+      <div class="menu-items desktop-menu">
         <ul>
           {
             url === "/terminos-condiciones" ? (
               <li>
                 <a href="/" class="selected">
-                  Regresar
+                  {t('nav.home')}
                 </a>
               </li>
             ) : (
@@ -39,27 +49,19 @@ if (Astro.cookies.has("cartItems")) {
                 <li>
                   <a
                     href="/bodas"
-                    class={url == "/bodas/" ? "selected" : "none"}
+                    class={url == "/bodas/" || url == "/bodas" ? "selected" : "none"}
                   >
-                    Bodas
+                    {t('nav.bodas')}
                   </a>
                 </li>
                 <li>
                   <a
                     href="/invitaciones-quince"
-                    class={url == "/invitaciones-quince/" ? "selected" : "none"}
+                    class={url == "/invitaciones-quince/" || url == "/invitaciones-quince" ? "selected" : "none"}
                   >
-                    XV años
+                    {t('nav.quince')}
                   </a>
                 </li>
-                {/* <li>
-                  <a
-                    href="/invitaciones-pdf"
-                    class={url == "/invitaciones-pdf/" ? "selected" : "none"}
-                  >
-                    Invitaciones PDF
-                  </a>
-                </li> */}
                 {url === "/" ? (
                   <li>
                     <a href="#faq">FAQ</a>
@@ -67,31 +69,21 @@ if (Astro.cookies.has("cartItems")) {
                 ) : (
                   ""
                 )}
-                {/* <li>
-                  <Btn
-                    liga="https://wa.me/527551132468?text=Hola%2C%20me%20gustar%C3%ADa%20ver%20c%C3%B3mo%20quedar%C3%ADa%20mi%20invitaci%C3%B3n%20%F0%9F%98%8A"
-                    texto="Ver mi ejemplo gratis →"
-                    clases="btn-whatsapp panel-home"
-                    claro={false}
-                    blank={true}
-                    rel="noopener noreferrer nofollow"
-                  >
-                    <Icon name="whatsapp" size={22} />
-                  </Btn>
-                </li> */}
               </>
             )
           }
-          <li id="carrito">
-            <a href="/nvitaciones/cart" aria-label="Ir al carrito">
+          <li>
+            <LanguageSelector currentLang={lang} variant="nav" />
+          </li>
+          <li class="cart-item-desktop" id="carrito">
+            <a href="/nvitaciones/cart" aria-label={t('nav.cart')}>
               <Icon
                 name="solar:cart-large-minimalistic-outline"
                 width="32"
                 height="32"
               />
               <span
-                class="count"
-                id="cart-count"
+                class="count cart-count-badge"
                 class:list={[{ hidden: cartItemsCount === 0 }]}
               >
                 {cartItemsCount > 0 ? cartItemsCount : ""}
@@ -100,12 +92,113 @@ if (Astro.cookies.has("cartItems")) {
           </li>
         </ul>
       </div>
+
+      <!-- Acciones Móviles (Carrito + Botón Hamburguesa) -->
+      <div class="mobile-actions">
+        <a href="/nvitaciones/cart" class="mobile-cart-btn" aria-label={t('nav.cart')}>
+          <Icon
+            name="solar:cart-large-minimalistic-outline"
+            width="28"
+            height="28"
+          />
+          <span
+            class="count cart-count-badge"
+            class:list={[{ hidden: cartItemsCount === 0 }]}
+          >
+            {cartItemsCount > 0 ? cartItemsCount : ""}
+          </span>
+        </a>
+
+        <button
+          id="nav-hamburger"
+          class="hamburger-btn"
+          type="button"
+          aria-label="Abrir menú de navegación"
+          aria-expanded="false"
+          aria-controls="mobile-nav-drawer"
+        >
+          <span class="hamburger-line line-1"></span>
+          <span class="hamburger-line line-2"></span>
+          <span class="hamburger-line line-3"></span>
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- Menú Drawer para Celular -->
+  <div id="mobile-nav-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer-inner">
+      <ul class="mobile-nav-links">
+        {
+          url === "/terminos-condiciones" ? (
+            <li class="mobile-nav-item">
+              <a href="/" class="mobile-nav-link selected">
+                {/* <Icon name="solar:home-2-linear" size={22} class="item-icon" /> */}
+                <span>{t('nav.home')}</span>
+              </a>
+            </li>
+          ) : (
+            <>
+              <li class="mobile-nav-item">
+                <a
+                  href="/bodas"
+                  class={`mobile-nav-link ${url == "/bodas/" || url == "/bodas" ? "selected" : ""}`}
+                >
+                  {/* <Icon name="solar:hearts-linear" size={22} class="item-icon" /> */}
+                  <span>{t('nav.bodas')}</span>
+                </a>
+              </li>
+              <li class="mobile-nav-item">
+                <a
+                  href="/invitaciones-quince"
+                  class={`mobile-nav-link ${url == "/invitaciones-quince/" || url == "/invitaciones-quince" ? "selected" : ""}`}
+                >
+                  {/* <Icon name="solar:crown-line-duotone" size={22} class="item-icon" /> */}
+                  <span>{t('nav.quince')}</span>
+                </a>
+              </li>
+              {url === "/" ? (
+                <li class="mobile-nav-item">
+                  <a href="#faq" class="mobile-nav-link">
+                    <Icon name="solar:question-circle-linear" size={22} class="item-icon" />
+                    <span>Preguntas frecuentes</span>
+                  </a>
+                </li>
+              ) : null}
+            </>
+          )
+        }
+        <li class="mobile-nav-item">
+          <a href="/nvitaciones/cart" class="mobile-nav-link">
+            <Icon name="solar:cart-large-minimalistic-outline" size={22} class="item-icon" />
+            <span>{t('nav.cart')}</span>
+            <span
+              class="mobile-badge cart-count-badge"
+              class:list={[{ hidden: cartItemsCount === 0 }]}
+            >
+              {cartItemsCount > 0 ? cartItemsCount : ""}
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mobile-drawer-footer">
+        <div class="mobile-lang-row">
+          <span class="lang-label-txt">{lang === "en" ? "Language:" : "Idioma:"}</span>
+          <LanguageSelector currentLang={lang} variant="nav" />
+        </div>
+        <div class="mobile-extra-links">
+          <a href="/terminos-condiciones">Términos y condiciones</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </nav>
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
+
   .btn-whatsapp {
     margin-bottom: 0;
     background-color: white;
@@ -114,30 +207,30 @@ if (Astro.cookies.has("cartItems")) {
     }
     @extend .sombra;
   }
-  .panel-home {
-    margin: 0;
-  }
 
   .nav-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
-    @include cel {
-      align-items: center;
-    }
+    width: 100%;
   }
 
   #logo {
     max-width: 270px;
     width: 13vw;
     transition: all 0.3s ease;
-    @include cel {
+    display: block;
+    @media (max-width: 768px) {
       width: 44vw;
-      padding: 0.5rem 0;
+      max-width: 180px;
+      padding: 0.4rem 0;
     }
   }
 
+  /* ============================
+     ESCRITORIO (>768px)
+     ============================ */
   .menu-items {
     display: flex;
     align-items: center;
@@ -152,88 +245,60 @@ if (Astro.cookies.has("cartItems")) {
       margin-top: 5px;
     }
 
-    @include cel {
-      ul {
-        width: 100%;
-      }
-      ul li {
-        padding-bottom: 1.5rem;
-      }
-      ul li:last-child {
-        margin-right: 10%;
-        // flex: 1 0 100%;
-        // display: flex;
-        // justify-content: center;
-      }
+    @media (max-width: 768px) {
+      display: none !important;
     }
   }
 
   nav {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 9999;
-    // background-color: $secundario;
     background-color: rgba($fondoGlobal, 0.1);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     width: 100%;
     padding: $margen-min 0;
     transition: all 0.3s ease;
     border-bottom-right-radius: $radio;
     border-bottom-left-radius: $radio;
-    @include cel {
-      background-color: rgba($fondoGlobal, 1);
+
+    @media (max-width: 768px) {
+      background-color: rgba($fondoGlobal, 0.95);
+      padding: 0.6rem 0;
     }
 
     &.collapsed {
-      background-color: rgba($fondoGlobal, 0.8);
-      backdrop-filter: blur(8px);
+      background-color: rgba($fondoGlobal, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       padding: 0.5rem 0.4rem;
 
       #logo {
         width: 8vw;
-        @include cel {
-          width: 37vw;
+        @media (max-width: 768px) {
+          width: 38vw;
+          max-width: 160px;
         }
       }
 
-      ul {
+      .desktop-menu ul {
         opacity: 0;
         visibility: hidden;
         transform: translateY(-10px);
-      }
-      @include cel {
-        .nav-content {
-          margin: 0;
-        }
       }
     }
 
     &.hide-nav {
       transform: translateY(-100%);
     }
-    @include cel {
-      padding: $margen-min 0;
-      flex-wrap: wrap;
-      justify-content: center;
-      ul {
-        justify-content: center;
-        margin-top: 1rem;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        position: fixed;
-        left: 0;
-        top: 4rem;
 
-        background: linear-gradient(
-          0deg,
-          rgba($fondoGlobal, 0) 10%,
-          rgba($fondoGlobal, 1) 45%
-        );
-        backdrop-filter: blur(8px);
-        border-bottom-right-radius: $radio;
-        border-bottom-left-radius: $radio;
-      }
-      a {
-        font-size: 0.9rem;
+    &.menu-open {
+      @media (max-width: 768px) {
+        background-color: rgba($fondoGlobal, 1);
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
       }
     }
   }
@@ -242,42 +307,306 @@ if (Astro.cookies.has("cartItems")) {
     transition: all 0.3s ease;
     display: flex;
     gap: $margen-min;
+    margin: 0;
+    padding: 0;
   }
+
   li {
     list-style: none;
     align-items: center;
+    margin: 0;
     a {
       margin-bottom: 0;
     }
-    @include cel {
-      margin: 0.4rem 1rem;
-    }
   }
-  #carrito {
+
+  .cart-item-desktop,
+  .mobile-cart-btn {
     position: relative;
-    span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .cart-count-badge {
       background-color: $fondoGlobal;
       font-weight: bold;
       color: $acento;
       border-radius: 50%;
       border: solid 2px $primario;
       aspect-ratio: 1/1;
-      width: 1.2rem;
-      height: 1.2rem;
-      font-size: 0.8rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      font-size: 0.75rem;
       display: flex;
       justify-content: center;
       align-items: center;
       position: absolute;
-      top: -0.5rem;
-      right: -0.6rem;
+      top: -0.4rem;
+      right: -0.5rem;
+      transition: transform 0.2s ease;
 
       &.hidden {
-        display: none;
+        display: none !important;
       }
     }
+
     :global(svg) {
       color: $primario;
+    }
+  }
+
+  /* ============================
+     MÓVIL (<=768px)
+     ============================ */
+  .mobile-actions {
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  .mobile-cart-btn {
+    color: $primario;
+    padding: 0.35rem;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+
+    &:active {
+      transform: scale(0.92);
+    }
+  }
+
+  /* Botón Hamburguesa Animado */
+  .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 8px;
+    border: none;
+   // background: rgba($primario, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+   // transition: background-color 0.25s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+
+    &:active {
+      transform: scale(0.94);
+    }
+
+    .hamburger-line {
+      display: block;
+      width: 22px;
+      height: 2.5px;
+      background-color: $primario;
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.2s ease,
+                  background-color 0.2s ease;
+      transform-origin: center;
+      pointer-events: none;
+    }
+
+    &.is-active {
+     // background: rgba($acento, 0.12);
+
+      .line-1 {
+        transform: translateY(7.5px) rotate(45deg);
+        //background-color: $acento;
+      }
+      .line-2 {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .line-3 {
+        transform: translateY(-7.5px) rotate(-45deg);
+        //background-color: $acento;
+      }
+    }
+  }
+
+  /* Drawer / Menú Desplegable */
+  .mobile-drawer {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      max-height: calc(100vh - 4.5rem);
+      overflow-y: auto;
+      background: rgba($fondoGlobal, 0.98);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba($primario, 0.12);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.25s ease,
+                  transform 0.25s ease,
+                  visibility 0.25s ease;
+      pointer-events: none;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .mobile-drawer-inner {
+    padding: 1.25rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .mobile-nav-item {
+    margin: 0;
+    list-style: none;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $primario;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba($primario, 0.08);
+    transition: all 0.2s ease;
+
+    .item-icon {
+      color: $primario;
+      opacity: 0.85;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    &:active,
+    &:hover {
+      background: #ffffff;
+      color: $acento;
+      transform: translateX(4px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+
+      .item-icon {
+        color: $acento;
+        transform: scale(1.1);
+      }
+    }
+
+    &.selected {
+      background: $primario;
+      color: #ffffff !important;
+      border-color: $primario;
+
+      .item-icon {
+        color: #ffffff !important;
+        opacity: 1;
+      }
+    }
+
+    .mobile-badge {
+      margin-left: auto;
+      background: $acento;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 12px;
+
+      &.hidden {
+        display: none !important;
+      }
+    }
+  }
+
+  .mobile-drawer-footer {
+    padding-top: 1rem;
+    border-top: 1px solid rgba($primario, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .mobile-lang-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.25rem 0.5rem;
+
+    .lang-label-txt {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba($primario, 0.8);
+    }
+  }
+
+  .mobile-extra-links {
+    text-align: center;
+    a {
+      font-size: 0.8rem;
+      color: rgba($primario, 0.6);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      &:hover {
+        color: $acento;
+      }
+    }
+  }
+
+  .mobile-backdrop {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      z-index: -1;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      pointer-events: none;
+
+      &.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
     }
   }
 </style>
@@ -286,69 +615,127 @@ if (Astro.cookies.has("cartItems")) {
   import { getCartCookie } from "../../src/js/utils";
 
   function initializeCartCount() {
-    const countCartSpan = document.querySelector(
-      "#cart-count",
-    ) as HTMLSpanElement;
-    if (!countCartSpan) return;
+    const badges = document.querySelectorAll(".cart-count-badge");
+    if (!badges || badges.length === 0) return;
 
     const updateCartValue = () => {
       const cartItems = getCartCookie();
-      if (cartItems && cartItems.length > 0) {
-        countCartSpan.textContent = cartItems.length.toString();
-        countCartSpan.classList.remove("hidden");
-      } else {
-        countCartSpan.textContent = "";
-        countCartSpan.classList.add("hidden");
-      }
+      const count = (cartItems && cartItems.length > 0) ? cartItems.length : 0;
+
+      badges.forEach((badge) => {
+        if (count > 0) {
+          badge.textContent = count.toString();
+          badge.classList.remove("hidden");
+        } else {
+          badge.textContent = "";
+          badge.classList.add("hidden");
+        }
+      });
     };
 
-    // Actualizar cuando cambie el carrito
     document.addEventListener("cart:updated", updateCartValue);
-
-    // Actualizar el valor inicial
     updateCartValue();
   }
-
-  // Inicializar en la carga inicial
-  initializeCartCount();
-
-  // Reinicializar después de la navegación manteniendo el valor de la cookie
-  document.addEventListener("astro:after-swap", initializeCartCount);
 
   function initializeNavScroll() {
     const nav = document.getElementById("main-nav");
     let lastScroll = 0;
 
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
+      if (nav?.classList.contains("menu-open")) return;
+
       const currentScroll = window.scrollY;
 
-      if (currentScroll > lastScroll && currentScroll > 100) {
-        // Scrolling down - collapse nav
+      if (currentScroll > lastScroll && currentScroll > 80) {
         nav?.classList.add("collapsed");
       } else {
-        // Scrolling up - expand nav
         nav?.classList.remove("collapsed");
       }
 
       lastScroll = currentScroll;
+    };
+
+    window.removeEventListener("scroll", (window as any).__navScrollHandler);
+    (window as any).__navScrollHandler = handleScroll;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
+
+  function setupMobileMenu() {
+    const hamburgerBtn = document.getElementById("nav-hamburger");
+    const drawer = document.getElementById("mobile-nav-drawer");
+    const backdrop = document.getElementById("mobile-nav-backdrop");
+    const nav = document.getElementById("main-nav");
+
+    if (!hamburgerBtn || !drawer) return;
+
+    const closeMenu = () => {
+      hamburgerBtn.classList.remove("is-active");
+      hamburgerBtn.setAttribute("aria-expanded", "false");
+      drawer.classList.remove("is-open");
+      drawer.setAttribute("aria-hidden", "true");
+      backdrop?.classList.remove("is-active");
+      nav?.classList.remove("menu-open");
+      document.body.style.overflow = "";
+    };
+
+    const openMenu = () => {
+      hamburgerBtn.classList.add("is-active");
+      hamburgerBtn.setAttribute("aria-expanded", "true");
+      drawer.classList.add("is-open");
+      drawer.setAttribute("aria-hidden", "false");
+      backdrop?.classList.add("is-active");
+      nav?.classList.add("menu-open");
+      document.body.style.overflow = "hidden";
+    };
+
+    const toggleMenu = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = drawer.classList.contains("is-open");
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    };
+
+    hamburgerBtn.onclick = toggleMenu;
+
+    if (backdrop) {
+      backdrop.onclick = (e) => {
+        e.preventDefault();
+        closeMenu();
+      };
+    }
+
+    const navLinks = drawer.querySelectorAll(".mobile-nav-link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        closeMenu();
+      });
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && drawer.classList.contains("is-open")) {
+        closeMenu();
+      }
     });
   }
 
-  // Inicializar en la carga inicial
-  initializeNavScroll();
-
-  // Reinicializar después de la navegación
-  document.addEventListener("astro:page-load", initializeNavScroll);
-
-  function initializeMenuToggle() {
-    const menuItems = document.querySelector(".menu-items");
-
-    menuItems?.classList.toggle("active");
+  function initAll() {
+    initializeCartCount();
+    initializeNavScroll();
+    setupMobileMenu();
   }
 
-  // Inicializar en la carga inicial
-  initializeMenuToggle();
-
-  // Reinicializar después de la navegación
-  document.addEventListener("astro:page-load", initializeMenuToggle);
+  // Inicializar en carga y eventos Astro
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initAll);
+  } else {
+    initAll();
+  }
+  document.addEventListener("astro:page-load", initAll);
+  document.addEventListener("astro:after-swap", initAll);
 </script>
+
+

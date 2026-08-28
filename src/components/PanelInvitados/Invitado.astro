@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { useTranslations } from "../../i18n/ui";
 
 export type InvitadoProps = {
   id: number;
@@ -21,6 +22,8 @@ export type InvitadoProps = {
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}%26uid=${invitadoData.usuarioId}`;
 ---
 
@@ -30,13 +33,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   <div class="status-indicator">
     {
       invitadoData.confirmado ? (
-        <Icon name="mdi:check-circle-outline" size={24} title="Confirmado" />
+        <Icon name="mdi:check-circle-outline" size={24} title={t('panel.guest.confirmed')} />
       ) : invitadoData.noAsiste ? (
-        <Icon name="mdi:calendar-remove-outline" size={24} title="No asiste" />
+        <Icon name="mdi:calendar-remove-outline" size={24} title={t('panel.guest.declined')} />
       ) : invitadoData.InvitacionEnviada ? (
-        <Icon name="mdi:send-outline" size={24} title="Invitación enviada" />
+        <Icon name="mdi:send-outline" size={24} title={t('panel.guest.sent')} />
       ) : (
-        <Icon name="mdi:send-outline" size={24} title="Invitación no enviada" />
+        <Icon name="mdi:send-outline" size={24} title={t('panel.guest.notSent')} />
       )
     }
   </div>
@@ -50,7 +53,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
             name="mdi:crown-outline"
             size={20}
             class="vip-icon"
-            title="Invitado VIP"
+            title={t('panel.guest.vip')}
           />
         )
       }
@@ -67,11 +70,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           data-uid={invitadoData.usuarioId}
         >
           <Icon name="mdi:account-edit-outline" size={20} />
-          <span>Editar</span>
+          <span>{t('panel.guest.edit')}</span>
         </button>
         <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
           <Icon name="mdi:delete-outline" size={20} />
-          <span>Borrar</span>
+          <span>{t('panel.guest.delete')}</span>
         </button>
       </div>
   </div>
@@ -86,9 +89,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               (invitadoData.confirmado || invitadoData.noAsiste) && 
               invitadoData.pasesOriginales && 
               parseInt(invitadoData.pasesOriginales) !== Math.round(parseFloat(invitadoData.pases || "0")) ? (
-                `${Math.round(parseFloat(invitadoData.pases || "0"))} de ${Math.round(parseFloat(invitadoData.pasesOriginales))} pases`
+                t('panel.guest.passesCount', { confirmed: Math.round(parseFloat(invitadoData.pases || "0")), original: Math.round(parseFloat(invitadoData.pasesOriginales)) })
               ) : (
-                `${Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0"))} pases`
+                t('panel.guest.passes', { count: Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0")) })
               )
             }
           </span>
@@ -97,7 +100,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           invitadoData.mesa && (
             <p class="info-item">
               <Icon name="mdi:table-furniture" size={20} />
-              <span>Mesa: {invitadoData.mesa}</span>
+              <span>{t('panel.guest.table')}: {invitadoData.mesa}</span>
             </p>
           )
         }
@@ -113,7 +116,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           ) : (
             <p class="info-item warning">
               <Icon name="mdi:whatsapp" size={20} />
-              <span>Sin WhatsApp</span>
+              <span>{t('panel.guest.noWhatsapp')}</span>
             </p>
           )
         }
@@ -121,17 +124,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         <div class="status-indicators">
           {
             invitadoData.confirmado && (
-              <span class="status-tag confirmed">Confirmado</span>
+              <span class="status-tag confirmed">{t('panel.guest.confirmed')}</span>
             )
           }
           {
             invitadoData.noAsiste && (
-              <span class="status-tag no-asiste">No asiste</span>
+              <span class="status-tag no-asiste">{t('panel.guest.declined')}</span>
             )
           }
           {
             invitadoData.InvitacionEnviada && (
-              <span class="status-tag sent">Enviada</span>
+              <span class="status-tag sent">{t('panel.guest.sent')}</span>
             )
           }
           <span class="status-tag type">{invitadoData.tipoInvitacion}</span>
@@ -165,9 +168,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               rel="noopener noreferrer"
             >
               <span>
-                {invitadoData.confirmado ? "Confirmado" : 
-                 invitadoData.noAsiste ? "No asiste" : 
-                 invitadoData.InvitacionEnviada ? "Recordar" : "Invitar"}
+                {invitadoData.confirmado ? t('panel.guest.confirmed') : 
+                 invitadoData.noAsiste ? t('panel.guest.declined') : 
+                 invitadoData.InvitacionEnviada ? t('panel.guest.remind') : t('panel.guest.invite')}
               </span>
               <Icon name="mdi:whatsapp" size={20} />
             </a>
@@ -180,7 +183,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}&uid=${invitadoData.usuarioId}`}
         >
           <Icon name="mdi:content-copy" size={20} />
-          <span>Copiar enlace</span>
+          <span>{t('panel.guest.copyLink')}</span>
         </a>
       </div>
     </div>

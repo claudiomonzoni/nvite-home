@@ -1,8 +1,10 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+
 export type FinalCartItem = {
   product: CollectionEntry<"productos">;
   quantity: number;
 };
+
 export const getTotalCartItems = async (
   cartItems: CollectionEntry<"productos">["id"][]
 ) => {
@@ -20,15 +22,50 @@ export const getTotalCartItems = async (
   return finalCartItems;
 };
 
-export const getProductPrice = async (product: CollectionEntry<"productos">) => {
-  if (!product.data.default_price) return "Sin precio";
-  
-  const priceItem = await getEntry("precios", product.data.default_price);
+export const getProductPrice = async (
+  product: CollectionEntry<"productos">,
+  lang: string = "es"
+) => {
+  if (!product.data.default_price) return lang === "en" ? "Price not available" : "Sin precio";
 
-  return priceItem
-    ? (priceItem.data.unit_amount / 100).toLocaleString("en-US", {
-        style: "currency",
-        currency: priceItem?.data.currency,
-      })
-    : "Price not available";
+  const targetCurrency = lang === "en" ? "usd" : "mxn";
+  const allPrices = await getCollection("precios");
+
+  // First try to find a price matching currency for this product
+  let priceItem = allPrices.find((p) => {
+    const currencyMatch = p.data.currency.toLowerCase() === targetCurrency;
+    const productMatch = (p.data as any).product === product.id || p.id === product.data.default_price;
+    return currencyMatch && productMatch;
+  });
+
+  // Fallback to default price entry
+  if (!priceItem && product.data.default_price) {
+    priceItem = await getEntry("precios", product.data.default_price);
+  }
+
+  if (!priceItem) return lang === "en" ? "Price not available" : "Sin precio";
+
+  const isUsd = priceItem.data.currency.toLowerCase() === "usd";
+  const locale = isUsd ? "en-US" : "es-MX";
+
+  return (priceItem.data.unit_amount / 100).toLocaleString(locale, {
+    style: "currency",
+    currency: priceItem.data.currency.toUpperCase(),
+  });
+};
+
+export const getProductPriceIdForLang = async (
+  product: CollectionEntry<"productos">,
+  lang: string = "es"
+): Promise<string | undefined> => {
+  const targetCurrency = lang === "en" ? "usd" : "mxn";
+  const allPrices = await getCollection("precios");
+
+  const match = allPrices.find((p) => {
+    const currencyMatch = p.data.currency.toLowerCase() === targetCurrency;
+    const productMatch = (p.data as any).product === product.id;
+    return currencyMatch && productMatch;
+  });
+
+  return match?.id || product.data.default_price || undefined;
 };

@@ -175,7 +175,10 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
     m.titulo,
 );
 
-const lang = (quince.data.idioma as keyof typeof ui) || "es";
+const queryLang = Astro.url.searchParams.get("lang");
+const lang = (queryLang === "en" || queryLang === "es")
+  ? queryLang
+  : ((quince.data.idioma as keyof typeof ui) || Astro.locals.lang || "es");
 const t = useTranslations(lang);
 
 //qr
@@ -225,7 +228,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
 ---
 
 <Layout
-  title=`Invitación Xv años de ${quince.data.quinceanera}`
+  title={lang === "en" ? `Quinceañera Invitation of ${quince.data.quinceanera}` : `Invitación XV años de ${quince.data.quinceanera}`}
   url={base.toString()}
   cover={quince.data.cover}
   paleta={quince.data.paleta}
@@ -322,8 +325,8 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       mesa={qrMesa}
       confirmado={Boolean(dbInvitado?.confirmado)}
       noAsiste={dbInvitado?.noAsiste}
-      title="Datos de la invitación"
-      subtitle="Muestra tus pases y mesa asignada"
+      title={lang === "en" ? "Invitation Details" : "Datos de la invitación"}
+      subtitle={lang === "en" ? "Show your passes and assigned table" : "Muestra tus pases y mesa asignada"}
     />
   )
 }

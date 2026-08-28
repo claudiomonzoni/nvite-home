@@ -1,6 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
 import { PROVEEDORES_COMUNES, isCommonProviderCovered } from "../../pages/api/proveedores.json.ts";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 export interface PagoProps {
   id: number;
@@ -47,7 +51,18 @@ const totalPagadoGlobal = proveedores.reduce((sum, p) => sum + (p.totalPagado ||
 const saldoPendienteGlobal = Math.max(0, presupuestoTotalGlobal - totalPagadoGlobal);
 const porcentajePagadoGlobal = presupuestoTotalGlobal > 0 ? Math.round((totalPagadoGlobal / presupuestoTotalGlobal) * 100) : 0;
 
-const categoriasDisponibles = [
+const categoriasDisponibles = lang === "en" ? [
+  "All",
+  "Photography & Video",
+  "Catering / Food",
+  "Venue / Location",
+  "Music / DJ",
+  "Flowers & Decor",
+  "Drinks & Bar",
+  "Cake & Desserts",
+  "Dress & Style",
+  "Others",
+] : [
   "Todos",
   "Fotografía y Video",
   "Banquete",
@@ -74,8 +89,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         <Icon name="mdi:calculator-variant-outline" size={26} />
       </div>
       <div class="metrica-data">
-        <span class="metrica-val">${presupuestoTotalGlobal.toLocaleString("es-MX")}</span>
-        <span class="metrica-lbl">Presupuesto Comprometido</span>
+        <span class="metrica-val">${presupuestoTotalGlobal.toLocaleString(lang === "en" ? "en-US" : "es-MX")}</span>
+        <span class="metrica-lbl">{t('panel.vendors.budget')}</span>
       </div>
     </div>
 
@@ -84,8 +99,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         <Icon name="mdi:cash-check" size={26} />
       </div>
       <div class="metrica-data">
-        <span class="metrica-val">${totalPagadoGlobal.toLocaleString("es-MX")}</span>
-        <span class="metrica-lbl">Total Abonado ({porcentajePagadoGlobal}%)</span>
+        <span class="metrica-val">${totalPagadoGlobal.toLocaleString(lang === "en" ? "en-US" : "es-MX")}</span>
+        <span class="metrica-lbl">{t('panel.vendors.paid')} ({porcentajePagadoGlobal}%)</span>
       </div>
     </div>
 
@@ -94,8 +109,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         <Icon name="mdi:cash-clock" size={26} />
       </div>
       <div class="metrica-data">
-        <span class="metrica-val">${saldoPendienteGlobal.toLocaleString("es-MX")}</span>
-        <span class="metrica-lbl">Saldo Pendiente</span>
+        <span class="metrica-val">${saldoPendienteGlobal.toLocaleString(lang === "en" ? "en-US" : "es-MX")}</span>
+        <span class="metrica-lbl">{t('panel.vendors.pending')}</span>
       </div>
     </div>
   </div>
@@ -103,10 +118,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
   <!-- Action Bar & Category Filters -->
   <div class="controls-bar">
     <div class="filtros-scroll">
-      {categoriasDisponibles.map((cat) => (
+      {categoriasDisponibles.map((cat, idx) => (
         <button
           type="button"
-          class={`cat-filter-btn ${cat === "Todos" ? "active" : ""}`}
+          class={`cat-filter-btn ${idx === 0 ? "active" : ""}`}
           data-categoria={cat}
         >
           {cat}
@@ -119,16 +134,16 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         type="button"
         id="btn-precargar-proveedores"
         class={`btn-action btn-precargar ${todosComunesPrecargados ? "disabled" : ""}`}
-        title={todosComunesPrecargados ? "Todos los proveedores comunes ya fueron agregados" : "Inyectar proveedores estándar"}
+        title={todosComunesPrecargados ? (lang === 'en' ? 'Standard vendors already added' : 'Todos los proveedores comunes ya fueron agregados') : (lang === 'en' ? 'Quick load standard vendors' : 'Inyectar proveedores estándar')}
         disabled={todosComunesPrecargados}
       >
         <Icon name={todosComunesPrecargados ? "mdi:check-all" : "mdi:flash-outline"} size={18} />
-        <span>{todosComunesPrecargados ? "Comunes Precargados" : "Precargar Comunes"}</span>
+        <span>{todosComunesPrecargados ? (lang === 'en' ? 'Preloaded' : 'Comunes Precargados') : (lang === 'en' ? 'Preload Standard' : 'Precargar Comunes')}</span>
       </button>
 
       <button type="button" id="btn-nuevo-proveedor" class="btn-primary-sm">
         <Icon name="mdi:store-plus-outline" size={18} />
-        <span>Agregar Proveedor</span>
+        <span>{t('panel.vendors.add')}</span>
       </button>
     </div>
   </div>
@@ -138,8 +153,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     {proveedores.length === 0 ? (
       <div class="empty-state-box">
         <Icon name="mdi:store-search-outline" size={54} />
-        <h3>Aún no tienes proveedores registrados</h3>
-        <p>Gestiona tu presupuesto de fotografía, salón, música y floristas. Agrega uno manualmente o usa <strong>⚡ Precargar Comunes</strong>.</p>
+        <h3>{t('panel.vendors.empty')}</h3>
+        <p>{t('panel.vendors.emptySub')}</p>
       </div>
     ) : (
       proveedores.map((p) => {
@@ -160,7 +175,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
                 p.categoria.toLowerCase().includes("traje") ||
                 p.categoria.toLowerCase().includes("maquillaje")
               )
-                ? "Estilo y Vestuario"
+                ? (lang === 'en' ? "Dress & Style" : "Estilo y Vestuario")
                 : p.categoria
             }
             data-provider-id={p.id}
@@ -171,18 +186,18 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
                 <h3 class="prov-name">{p.nombre}</h3>
               </div>
               <span class={`status-badge ${esLiquidado ? "liquidado" : p.saldoPendiente > 0 ? "pendiente" : "indefinido"}`}>
-                {esLiquidado ? "Liquidado" : p.saldoPendiente > 0 ? `Pendiente $${p.saldoPendiente.toLocaleString("es-MX")}` : "Por definir"}
+                {esLiquidado ? (lang === 'en' ? 'Paid in Full' : 'Liquidado') : p.saldoPendiente > 0 ? (lang === 'en' ? `Balance $${p.saldoPendiente.toLocaleString("en-US")}` : `Pendiente $${p.saldoPendiente.toLocaleString("es-MX")}`) : (lang === 'en' ? 'TBD' : 'Por definir')}
               </span>
             </div>
 
             <div class="prov-card-actions">
-              <button type="button" class="btn-icon" data-id={p.id} title="Editar Proveedor">
+              <button type="button" class="btn-icon" data-id={p.id} title={t('panel.guest.edit')}>
                 <Icon name="mdi:pencil-outline" size={20} />
-                <span>Editar</span>
+                <span>{t('panel.guest.edit')}</span>
               </button>
-              <button type="button" class="btn-icon delete btn-delete-prov-card" data-id={p.id} data-nombre={p.nombre} title="Eliminar Proveedor">
+              <button type="button" class="btn-icon delete btn-delete-prov-card" data-id={p.id} data-nombre={p.nombre} title={t('panel.guest.delete')}>
                 <Icon name="mdi:delete-outline" size={20} />
-                <span>Borrar</span>
+                <span>{t('panel.guest.delete')}</span>
               </button>
             </div>
 
@@ -194,7 +209,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
                   target="_blank"
                   rel="noopener noreferrer"
                   class="wa-btn"
-                  title="Abrir WhatsApp"
+                  title="WhatsApp"
                   onclick="event.stopPropagation()"
                 >
                   <Icon name="mdi:whatsapp" size={18} /> {p.contactoTelefono}
@@ -205,7 +220,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <!-- Resumen Financiero -->
             <div class="card-fin-box">
               <div class="fin-text-row">
-                <span><strong>{numPagos} {numPagos === 1 ? 'pago' : 'pagos'}:</strong> ${p.totalPagado.toLocaleString("es-MX")} / ${p.presupuestoTotal.toLocaleString("es-MX")}</span>
+                <span><strong>{numPagos} {lang === 'en' ? (numPagos === 1 ? 'payment' : 'payments') : (numPagos === 1 ? 'pago' : 'pagos')}:</strong> ${p.totalPagado.toLocaleString(lang === 'en' ? "en-US" : "es-MX")} / ${p.presupuestoTotal.toLocaleString(lang === 'en' ? "en-US" : "es-MX")}</span>
                 <span class="pct-val">{pctPagado}%</span>
               </div>
               <div class="progress-track">
@@ -215,7 +230,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
             <!-- Checklist status info -->
             <div class="card-checklist-row">
-              <span><Icon name="mdi:checkbox-marked-circle-outline" size={18} /> Checklist: {tareasCompletadas} de {totalTareas} completadas</span>
+              <span><Icon name="mdi:checkbox-marked-circle-outline" size={18} /> {lang === 'en' ? `Checklist: ${tareasCompletadas} of ${totalTareas} completed` : `Checklist: ${tareasCompletadas} de ${totalTareas} completadas`}</span>
             </div>
           </article>
         );
@@ -228,71 +243,70 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 <dialog id="agregar-prov-dialog" class="prov-modal">
   <div class="modal-box">
     <div class="modal-head">
-      <h2>+ Agregar Nuevo Proveedor</h2>
+      <h2>{lang === 'en' ? '+ Add New Vendor' : '+ Agregar Nuevo Proveedor'}</h2>
       <button type="button" class="btn-close-modal" data-close="agregar-prov-dialog" title="Cerrar ventana">X</button>
     </div>
 
     <form id="form-nuevo-proveedor" class="modal-form-body">
       <label class="form-label">
-        <span>Nombre del Proveedor *</span>
-        <input type="text" id="new-nombre" name="nombre" required maxlength="80" placeholder="Ej. Fotografía Studio Guadalajara" />
+        <span>{lang === 'en' ? 'Vendor Name *' : 'Nombre del Proveedor *'}</span>
+        <input type="text" id="new-nombre" name="nombre" required maxlength="80" placeholder={lang === 'en' ? "e.g. Photography Studio" : "Ej. Fotografía Studio Guadalajara"} />
       </label>
 
       <div class="fields-row">
         <label class="form-label">
-          <span>Categoría / Giro *</span>
+          <span>{lang === 'en' ? 'Category *' : 'Categoría / Giro *'}</span>
           <select id="new-categoria" name="categoria" required>
-            {categoriasDisponibles.filter((c) => c !== "Todos").map((cat) => (
+            {categoriasDisponibles.filter((c) => c !== "Todos" && c !== "All").map((cat) => (
               <option value={cat}>{cat}</option>
             ))}
           </select>
         </label>
 
         <label class="form-label">
-          <span>Presupuesto Comprometido ($)</span>
+          <span>{lang === 'en' ? 'Total Budget ($)' : 'Presupuesto Comprometido ($)'}</span>
           <input type="number" id="new-presupuesto" name="presupuestoTotal" min="0" max="10000000" placeholder="0.00" />
         </label>
       </div>
 
       <div class="fields-row">
         <label class="form-label">
-          <span>Nombre de Contacto</span>
-          <input type="text" id="new-contacto" name="contactoNombre" maxlength="80" placeholder="Ej. Carlos Mendoza" />
+          <span>{lang === 'en' ? 'Contact Name' : 'Nombre de Contacto'}</span>
+          <input type="text" id="new-contacto" name="contactoNombre" maxlength="80" placeholder={lang === 'en' ? "e.g. John Doe" : "Ej. Carlos Mendoza"} />
         </label>
 
         <label class="form-label">
-          <span>Celular / WhatsApp</span>
-          <input type="tel" id="new-telefono" name="contactoTelefono" maxlength="15" placeholder="10 dígitos" />
+          <span>{lang === 'en' ? 'Phone / WhatsApp' : 'Celular / WhatsApp'}</span>
+          <input type="tel" id="new-telefono" name="contactoTelefono" maxlength="15" placeholder={lang === 'en' ? "10 digits" : "10 dígitos"} />
         </label>
       </div>
 
       <label class="form-label">
-        <span>Fecha Límite de Liquidación (Opcional)</span>
+        <span>{lang === 'en' ? 'Payment Due Date (Optional)' : 'Fecha Límite de Liquidación (Opcional)'}</span>
         <input type="date" id="new-fecha-pago" name="fechaLimitePago" />
       </label>
 
       <label class="form-label">
-        <span>Notas o Requerimientos</span>
-        <textarea id="new-notas" name="notas" rows="2" placeholder="Detalles de contrato, ubicación, requerimientos..."></textarea>
+        <span>{lang === 'en' ? 'Notes or Requirements' : 'Notas o Requerimientos'}</span>
+        <textarea id="new-notas" name="notas" rows="2" placeholder={lang === 'en' ? "Contract details, venue requirements, playlist..." : "Detalles de contrato, ubicación, requerimientos..."}></textarea>
       </label>
 
       <div class="modal-foot">
-        <button type="button" class="btn-cancel" data-close="agregar-prov-dialog">Cancelar</button>
-        <button type="submit" class="btn-submit">Guardar Proveedor</button>
+        <button type="button" class="btn-cancel" data-close="agregar-prov-dialog">{t('panel.modal.cancel')}</button>
+        <button type="submit" class="btn-submit">{lang === 'en' ? 'Save Vendor' : 'Guardar Proveedor'}</button>
       </div>
     </form>
   </div>
 </dialog>
 
-<!-- MODAL: DETALLE COMPLETO CON BOTÓN DE CIERRE [X] COHERENTE Y DISEÑO RESPONSIVO -->
+<!-- MODAL: DETALLE COMPLETO -->
 <dialog id="detalle-prov-dialog" class="prov-modal modal-wide">
   <div class="modal-box">
     <div class="modal-head">
       <div class="modal-head-titles">
-        <span id="det-categoria-badge" class="cat-pill">Categoría</span>
-        <h2 id="det-nombre-title">Editar Proveedor</h2>
+        <span id="det-categoria-badge" class="cat-pill">{lang === 'en' ? 'Category' : 'Categoría'}</span>
+        <h2 id="det-nombre-title">{lang === 'en' ? 'Edit Vendor' : 'Editar Proveedor'}</h2>
       </div>
-      <!-- Boton de Cierre X Coherente con EditarInvitado.astro -->
       <button type="button" id="btn-cerrar-modal-detalle" class="btn-close-modal" title="Cerrar ventana">X</button>
     </div>
 
@@ -307,10 +321,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-head">
               <div class="accordion-title">
                 <Icon name="mdi:pencil-box-outline" size={22} />
-                <h3>Información del Proveedor</h3>
+                <h3>{lang === 'en' ? 'Vendor Information' : 'Información del Proveedor'}</h3>
               </div>
               <div class="accordion-right">
-                <span id="badge-summary-info" class="accordion-badge">Datos básicos</span>
+                <span id="badge-summary-info" class="accordion-badge">{lang === 'en' ? 'Basic info' : 'Datos básicos'}</span>
                 <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
               </div>
             </div>
@@ -318,13 +332,13 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-content">
               <div class="fields-row">
                 <label class="form-label">
-                  <span>Nombre del Proveedor</span>
+                  <span>{lang === 'en' ? 'Vendor Name' : 'Nombre del Proveedor'}</span>
                   <input type="text" id="det-nombre" name="nombre" required maxlength="80" />
                 </label>
                 <label class="form-label">
-                  <span>Categoría / Giro</span>
+                  <span>{lang === 'en' ? 'Category' : 'Categoría / Giro'}</span>
                   <select id="det-categoria" name="categoria">
-                    {categoriasDisponibles.filter((c) => c !== "Todos").map((cat) => (
+                    {categoriasDisponibles.filter((c) => c !== "Todos" && c !== "All").map((cat) => (
                       <option value={cat}>{cat}</option>
                     ))}
                   </select>
@@ -333,22 +347,22 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
               <div class="fields-row">
                 <label class="form-label">
-                  <span>Nombre de Contacto</span>
+                  <span>{lang === 'en' ? 'Contact Name' : 'Nombre de Contacto'}</span>
                   <input type="text" id="det-contacto" name="contactoNombre" maxlength="80" />
                 </label>
                 <label class="form-label">
-                  <span>Celular / WhatsApp</span>
+                  <span>{lang === 'en' ? 'Phone / WhatsApp' : 'Celular / WhatsApp'}</span>
                   <input type="tel" id="det-telefono" name="contactoTelefono" maxlength="15" />
                 </label>
               </div>
 
               <div class="fields-row">
                 <label class="form-label">
-                  <span>Presupuesto Comprometido ($)</span>
+                  <span>{lang === 'en' ? 'Total Budget ($)' : 'Presupuesto Comprometido ($)'}</span>
                   <input type="number" id="det-presupuesto" name="presupuestoTotal" min="0" max="10000000" />
                 </label>
                 <label class="form-label">
-                  <span>Fecha Límite Pago (Opcional)</span>
+                  <span>{lang === 'en' ? 'Payment Due Date (Optional)' : 'Fecha Límite Pago (Opcional)'}</span>
                   <input type="date" id="det-fecha-pago" name="fechaLimitePago" />
                 </label>
               </div>
@@ -360,10 +374,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-head">
               <div class="accordion-title">
                 <Icon name="mdi:cash-register" size={22} />
-                <h3>Historial de Abonos / Pagos</h3>
+                <h3>{lang === 'en' ? 'Payment History' : 'Historial de Abonos / Pagos'}</h3>
               </div>
               <div class="accordion-right">
-                <span id="badge-summary-pagos" class="accordion-badge green">$0 abonado</span>
+                <span id="badge-summary-pagos" class="accordion-badge green">{lang === 'en' ? '$0 paid' : '$0 abonado'}</span>
                 <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
               </div>
             </div>
@@ -371,24 +385,24 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-content">
               <div class="fin-summary-card">
                 <div class="fin-stat">
-                  <span class="l">Acordado</span>
+                  <span class="l">{lang === 'en' ? 'Total' : 'Acordado'}</span>
                   <span id="det-fin-total" class="v">$0</span>
                 </div>
                 <div class="fin-stat">
-                  <span class="l">Abonado</span>
+                  <span class="l">{lang === 'en' ? 'Paid' : 'Abonado'}</span>
                   <span id="det-fin-pagado" class="v verde">$0</span>
                 </div>
                 <div class="fin-stat">
-                  <span class="l">Pendiente</span>
+                  <span class="l">{lang === 'en' ? 'Balance' : 'Pendiente'}</span>
                   <span id="det-fin-pendiente" class="v rojo">$0</span>
                 </div>
               </div>
 
               <form id="form-nuevo-pago" class="inline-add-form">
-                <input type="number" id="inp-pago-monto" min="1" max="10000000" step="any" placeholder="Monto $" class="inp-monto" />
+                <input type="number" id="inp-pago-monto" min="1" max="10000000" step="any" placeholder={lang === 'en' ? "Amount $" : "Monto $"} class="inp-monto" />
                 <input type="date" id="inp-pago-fecha" class="inp-fecha" />
-                <input type="text" id="inp-pago-concepto" placeholder="Concepto (ej. Anticipo 50%)" maxlength="80" class="inp-desc" />
-                <button type="submit" class="btn-inline-add">+ Abonar</button>
+                <input type="text" id="inp-pago-concepto" placeholder={lang === 'en' ? "Description (e.g. 50% deposit)" : "Concepto (ej. Anticipo 50%)"} maxlength="80" class="inp-desc" />
+                <button type="submit" class="btn-inline-add">{lang === 'en' ? '+ Add Payment' : '+ Abonar'}</button>
               </form>
 
               <div id="lista-pagos-container" class="items-list">
@@ -405,35 +419,35 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-head">
               <div class="accordion-title">
                 <Icon name="mdi:format-list-checks" size={22} />
-                <h3>Checklist de Tareas</h3>
+                <h3>{lang === 'en' ? 'Task Checklist' : 'Checklist de Tareas'}</h3>
               </div>
               <div class="accordion-right">
-                <span id="badge-summary-tareas" class="accordion-badge purple">0 tareas</span>
+                <span id="badge-summary-tareas" class="accordion-badge purple">{lang === 'en' ? '0 tasks' : '0 tareas'}</span>
                 <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
               </div>
             </div>
 
             <div class="accordion-content">
               <div class="presets-bar">
-                <span class="p-title">Agregar rápido:</span>
-                <button type="button" class="preset-chip" data-task="Anticipo / Reserva apartado">
-                  + Anticipo
+                <span class="p-title">{lang === 'en' ? 'Quick add:' : 'Agregar rápido:'}</span>
+                <button type="button" class="preset-chip" data-task={lang === 'en' ? "Deposit / Reserve date" : "Anticipo / Reserva apartado"}>
+                  {lang === 'en' ? '+ Deposit' : '+ Anticipo'}
                 </button>
-                <button type="button" class="preset-chip" data-task="Firmar contrato de servicio">
-                  + Contrato
+                <button type="button" class="preset-chip" data-task={lang === 'en' ? "Sign service contract" : "Firmar contrato de servicio"}>
+                  {lang === 'en' ? '+ Contract' : '+ Contrato'}
                 </button>
-                <button type="button" class="preset-chip" data-task="Definir horario de montaje">
-                  + Montaje
+                <button type="button" class="preset-chip" data-task={lang === 'en' ? "Define setup timeline" : "Definir horario de montaje"}>
+                  {lang === 'en' ? '+ Setup' : '+ Montaje'}
                 </button>
-                <button type="button" class="preset-chip" data-task="Entrega de material final">
-                  + Entregables
+                <button type="button" class="preset-chip" data-task={lang === 'en' ? "Final deliverables" : "Entrega de material final"}>
+                  {lang === 'en' ? '+ Delivery' : '+ Entregables'}
                 </button>
               </div>
 
               <form id="form-nueva-tarea" class="inline-add-form">
-                <input type="text" id="inp-tarea-titulo" placeholder="Nombre de la tarea..." maxlength="100" class="inp-desc" />
-                <input type="date" id="inp-tarea-fecha" title="Fecha límite (Opcional)" class="inp-fecha" />
-                <button type="submit" class="btn-inline-add primary">+ Agregar</button>
+                <input type="text" id="inp-tarea-titulo" placeholder={lang === 'en' ? "Task description..." : "Nombre de la tarea..."} maxlength="100" class="inp-desc" />
+                <input type="date" id="inp-tarea-fecha" title={lang === 'en' ? "Due date (Optional)" : "Fecha límite (Opcional)"} class="inp-fecha" />
+                <button type="submit" class="btn-inline-add primary">{lang === 'en' ? '+ Add' : '+ Agregar'}</button>
               </form>
 
               <div id="lista-tareas-container" class="items-list">
@@ -447,16 +461,16 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             <div class="accordion-head">
               <div class="accordion-title">
                 <Icon name="mdi:note-text-outline" size={22} />
-                <h3>Notas y Requerimientos</h3>
+                <h3>{lang === 'en' ? 'Notes & Requirements' : 'Notas y Requerimientos'}</h3>
               </div>
               <div class="accordion-right">
-                <span id="badge-summary-notas" class="accordion-badge">Notas</span>
+                <span id="badge-summary-notas" class="accordion-badge">{lang === 'en' ? 'Notes' : 'Notas'}</span>
                 <span class="chevron-toggle"><Icon name="mdi:chevron-down" size={20} /></span>
               </div>
             </div>
 
             <div class="accordion-content">
-              <textarea id="det-notas" name="notas" rows="3" placeholder="Requerimientos de luz, ubicación, playlists..."></textarea>
+              <textarea id="det-notas" name="notas" rows="3" placeholder={lang === 'en' ? "Power requirements, location, playlists..." : "Requerimientos de luz, ubicación, playlists..."}></textarea>
             </div>
           </div>
         </div>
@@ -466,12 +480,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     <!-- Sticky Footer for Single Batch Save Action -->
     <div class="modal-footer-sticky">
       <div class="save-indicator">
-        <span id="save-status-badge" class="badge-status">Sin cambios</span>
+        <span id="save-status-badge" class="badge-status">{lang === 'en' ? 'No changes' : 'Sin cambios'}</span>
       </div>
       <div class="footer-actions">
-        <button type="button" id="btn-cancelar-edicion" class="btn-cancel">Cancelar</button>
+        <button type="button" id="btn-cancelar-edicion" class="btn-cancel">{t('panel.modal.cancel')}</button>
         <button type="button" id="btn-guardar-edicion-global" class="btn-submit btn-save-global">
-           Guardar Cambios
+           {t('panel.modal.save')}
         </button>
       </div>
     </div>

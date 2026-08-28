@@ -1,47 +1,51 @@
 ---
 import Checkbox from "./Checkbox.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
 <dialog id="editar-invitado-dialog">
   <div class="formulario">
-    <h2>Editar invitado</h2>
+    <h2>{t('panel.modal.editTitle')}</h2>
     <form id="editar-formu">
       <label for="nombre">
-        Nombre del invitado
+        {t('panel.modal.name')}
         <input
           type="text"
           name="nombre"
           required
           maxlength="80"
-          placeholder="Nombre que aparecerá en la invitación"
+          placeholder={t('panel.modal.namePlaceholder')}
         />
       </label>
       <label for="pases">
-        Número de pases
+        {t('panel.modal.passes')}
         <input
           type="number"
           name="pases"
           required
           min="1"
           max="50"
-          placeholder="Asignar numero de pases"
+          placeholder="1"
         />
       </label>
       <label for="whatsapp">
-        Número de WhatsApp
+        {t('panel.modal.phone')}
         <input
           type="tel"
           name="numeroWhats"
           maxlength="15"
-          placeholder="Numero de whatsapp del invitado"
+          placeholder={t('panel.modal.phonePlaceholder')}
         />
       </label>
       <label for="tipoInvitacion">
-        Tipo de invitación
+        {lang === 'en' ? 'Invitation Type' : 'Tipo de invitación'}
         <select name="tipoInvitacion" id="tipoInvitacion">
-          <option value="Familiar">Familiar</option>
-          <option value="Individual">Individual</option>
-          <option value="Grupal">Grupal</option>
+          <option value="Familiar">{lang === 'en' ? 'Family' : 'Familiar'}</option>
+          <option value="Individual">{lang === 'en' ? 'Individual' : 'Individual'}</option>
+          <option value="Grupal">{lang === 'en' ? 'Group' : 'Grupal'}</option>
         </select>
       </label>
 
@@ -50,27 +54,27 @@ import Checkbox from "./Checkbox.astro";
           checked={false}
           inputId={Math.random()}
           name="confirmado"
-          titulo="¿Ya confirmo sus asistencia?"
+          titulo={lang === 'en' ? 'Attendance confirmed' : '¿Ya confirmó su asistencia?'}
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
-          titulo="Invitado importante"
+          titulo={lang === 'en' ? 'VIP Guest' : 'Invitado importante'}
           name="vip"
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
-          titulo="Invitación enviada"
+          titulo={lang === 'en' ? 'Invitation sent' : 'Invitación enviada'}
           name="InvitacionEnviada"
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
-          titulo="No asistirá"
+          titulo={lang === 'en' ? 'Cannot attend' : 'No asistirá'}
           name="noAsiste"
         />
       </div>
@@ -81,15 +85,15 @@ import Checkbox from "./Checkbox.astro";
         style="display: none;"
       >
         <label for="mensajePersonalizado"
-          >Mensaje personalizado para invitado VIP</label
+          >{t('panel.modal.customMessage')}</label
         >
         <textarea
           name="mensajePersonalizado"
-          placeholder="Escribe un mensaje especial para este invitado VIP"
+          placeholder={lang === 'en' ? 'Write a special greeting for this VIP guest' : 'Escribe un mensaje especial para este invitado VIP'}
           rows="3"></textarea>
       </div>
 
-      <input type="submit" value="Editar invitado" />
+      <input type="submit" value={t('panel.modal.save')} />
     </form>
   </div>
   <a href="#" id="cerrar-dialog-editar">X</a>

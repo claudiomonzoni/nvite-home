@@ -29,11 +29,13 @@ const relatedProducts = allProducts
     );
   })
   .slice(0, 3); // Tomar solo 3 productos
+
+const lang = Astro.locals.lang || "es";
 ---
 
 {relatedProducts.length > 0 && (
   <section class="related-products">
-    <h2>Productos relacionados</h2>
+    <h2>{lang === "en" ? "Related Invitations" : "Productos relacionados"}</h2>
     <div class="products-grid">
       {relatedProducts.map((producto) => <ProductoCard producto={producto} />)}
     </div>

@@ -1,5 +1,4 @@
 ---
-export const prerender = true;
 import { Icon } from "astro-icon/components";
 import Btn from "../components/Btn.astro";
 import Caracteristicas from "../components/Caracteristicas.astro";
@@ -18,6 +17,10 @@ import coverMobileBoda from "../assets/home/nvitaciones-invitaciones-digitales-b
 import MesasHome from "../components/MesasHome.astro";
 import Cardcuadro from "../components/Cardcuadro.astro";
 import Faq from "../components/Faq.astro";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 const schemaBodasService = {
   "@context": "https://schema.org",
@@ -62,26 +65,24 @@ const schemaBodasService = {
 ---
 
 <Layout
-  title="Invitaciones de Boda Elegantes con RSVP y Mesas | Nvitaciones"
-  description="Invitaciones digitales de boda en todo México. Diseño a tu medida, confirmación RSVP por WhatsApp, gestor de mesas y proveedores. ¡Entrega en 48 horas!"
+  title={t('bodas.meta.title')}
+  description={t('bodas.meta.description')}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schemaBodasService)} />
   <div class="grid contenido"></div>
 
   <Hero
-    h1='Invitaciones digitales <br />de <b>Bodas </b> <br /> <span id="spanHeroH1"><b>Tu boda, organizada.</b><br /> Tus invitados, encantados. </span>'
-    p='<span id="pHero"><b>Invitaciones de boda elegantes para tu evento y bodas destino en todo México.</b></span> RSVP en tiempo real por WhatsApp, mapas interactivos, recomendaciones de hospedaje, gestor de mesas y proveedores.'
-    textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
+    h1={t('bodas.hero.h1')}
+    p={t('bodas.hero.p')}
+    textoValidacion={t('landing.hero.validation')}
     imagenDesktop={coverDesktopBoda}
     imagenMobile={coverMobileBoda}
   />
 
   <div class="grid contenido">
     <div id="choro">
-      <h2>Tu boda de ensueño con la logística bajo control</h2>
-      <p>
-        <b>Diseñamos tu invitación web a tu medida</b> con su historia de amor, música, galería de fotos e itinerario. Tus invitados confirman su asistencia con un clic por WhatsApp y tú gestionas <b>asistencias, acomodo de mesas y proveedores en tiempo real</b> desde tu panel exclusivo, sin complicaciones.
-      </p>
+      <h2>{t('bodas.intro.h2')}</h2>
+      <p set:html={t('bodas.intro.p')} />
     </div>
   </div>
 
@@ -93,30 +94,29 @@ const schemaBodasService = {
     matriz={[
       {
         imagen: bodasCaracteristicasImg,
-        titulo: "Invitaciones <span>personalizadas</span>",
-        texto:
-          "La persona más importante para ti merece ver su nombre antes de leer una sola línea. Cada invitación llega personalizada — con el nombre del invitado y los pases que le corresponden.",
+        titulo: lang === 'en' ? "Personalized <span>Invitations</span>" : "Invitaciones <span>personalizadas</span>",
+        texto: lang === 'en' 
+          ? "Your guests deserve to see their name before reading a single line. Every invitation arrives fully customized with their name and assigned passes."
+          : "La persona más importante para ti merece ver su nombre antes de leer una sola línea. Cada invitación llega personalizada — con el nombre del invitado y los pases que le corresponden.",
         enlace: "#precios",
       },
       {
         imagen: "mdi:email-check",
-        titulo: "Confirmación de asistencia",
-        texto:
-          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
+        titulo: lang === 'en' ? "Attendance Confirmation" : "Confirmación de asistencia",
+        texto: lang === 'en' ? "Total control of attendees, making RSVP confirmation effortless for your guests." : "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
         enlace: "#",
       },
       {
         imagen: "mdi:infinity-box",
-        texto:
-          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
+        texto: lang === 'en' ? "Unlimited invitations, send them to all your loved ones." : "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "Con <span>toda la información</span> necesaria para tu boda",
+        texto: lang === 'en' ? "With <span>all the essential details</span> for your wedding" : "Con <span>toda la información</span> necesaria para tu boda",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "<span>Cero</span> estrés por buscar a tus invitados en persona",
+        texto: lang === 'en' ? "<span>Zero</span> stress chasing guest responses manually" : "<span>Cero</span> estrés por buscar a tus invitados en persona",
       },
     ]}
   />
@@ -130,34 +130,34 @@ const schemaBodasService = {
   <section class="grid contenido">
     <div class="flex">
       <Cardcuadro
-        titulo="Recomendación de <b>hospedaje</b>"
-        description="<b>¿Tus invitados viajan?</b> Dales sugerencias de hospedaje y aprovecha los descuentos hoteleros con tus invitados."
+        titulo={t('bodas.card.lodging.title')}
+        description={t('bodas.card.lodging.desc')}
         fondo="/hospedaje.webp"
         icono="mdi:hotel-outline"
       />
       <Cardcuadro
-        titulo="Porcentaje de <b>confirmados</b>"
-        description="<b>Empuja a confirmar a los rezagados</b> aprovechado el empuje que da mostrar, que todos van."
+        titulo={t('bodas.card.confirmed.title')}
+        description={t('bodas.card.confirmed.desc')}
         fondo="/confirmando.webp"
         icono="mdi:account-arrow-right-outline"
       />
       <Cardcuadro
-        titulo="Pases <b>QR</b>"
-        description="<b>Al confirmar</b> tus invitados, tendrán un código QR para una entrada sin contratiempos a tu evento."
+        titulo={t('bodas.card.qr.title')}
+        description={t('bodas.card.qr.desc')}
         fondo="/qr-nvitaciones-3.webp"
         icono="mdi:qrcode"
       />
     </div>
     <BannerGeneral
-      encabezado="Confirmación de asistencia"
-      texto="Tus invitados sabrán exactamente cuántos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+      encabezado={t('bodas.banner1.heading')}
+      texto={t('bodas.banner1.text')}
       tema="primario"
       icono="mdi:archive-clock-outline"
       urlImagen="../assets/home/gale/confirmacion.webp"
     />
     <BannerGeneral
-      encabezado="Invitación digital con Música"
-      texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
+      encabezado={t('bodas.banner2.heading')}
+      texto={t('bodas.banner2.text')}
       tema="secundario"
       icono="mdi:music"
       izquierda={true}
@@ -165,59 +165,18 @@ const schemaBodasService = {
     />
 
     <BannerGeneral
-      encabezado="Invitación digital con Frase de amor y galería de fotos"
-      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
+      encabezado={t('bodas.banner3.heading')}
+      texto={t('bodas.banner3.text')}
       tema="primario"
       icono="mdi:image-plus"
       urlImagen="../assets/home/gale/frase.webp"
     />
-
-    <!-- carcateristicas -->
-    <!-- 
-  <div id="conteCaracteristicas">
-    <Caracteristicas
-      encabezado="Invitación con mapas"
-      texto="Tus invitados sabrán exactamente cómo llegar."
-      icono="mdi:map-check"
-      fondo="/fondo-nvite-caracteristicas.png"
-    />
-
-    <Caracteristicas
-      encabezado="Invitación con mesa de regalos"
-      texto="Sugiere que te gustaría de regalo."
-      icono="mdi:gift-open"
-      fondo="/fondo-nvite-caracteristicas-2.png"
-    />
-
-    <Caracteristicas
-      encabezado="Invitación con itinerario"
-      texto="Lista cada momento importante de tu evento"
-      icono="mdi:gift-open"
-      fondo="fondo-nvite-caracteristicas-3.png"
-    />
-
-  </div> -->
   </section>
 
   <div class="grid contenido">
     <BannerGeneral
-      encabezado="Recibes con tu <b>Nvitación</b>"
-      texto={`
-    <ul>
-    <li><b>Trato personalizado.</b></li>
-    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
-    <li>
-   <b>Panel de invitados</b>, controla tus invitaciones.
-    </li>
-    <li>
-   <b>Tu invitación web te acompaña</b> durante todo el proceso y permanece disponible hasta la semana posterior al evento.
-    </li>
-    <li><mark>Envíos ilimitados.</mark></li>
-       
-        </ul>
-        <small>*Panel de invitados no aplica en la versión "basic"</small>
-        <br>
-        `}
+      encabezado={t('landing.bannerGeneral.heading')}
+      texto={t('landing.bannerGeneral.text')}
       tema="terciario"
       icono="mdi:deal"
       urlImagen="../assets/home/gale/recibes.webp"
@@ -225,7 +184,7 @@ const schemaBodasService = {
     >
       <Btn
         liga="#formu"
-        texto="Obtén tu invitación"
+        texto={lang === 'en' ? 'Get your invitation' : 'Obtén tu invitación'}
         clases="btn-oscuro"
         claro={true}
         blank={false}
@@ -237,8 +196,8 @@ const schemaBodasService = {
 
   <div class="grid contenido">
     <SaveTheDate
-      h2="Save the date <span>Gratis</span>"
-      p="<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda. Personalízala online o con apps de PDF. <small><i> (Puedes usar Sedja, Illustrator o Affinity Studio)</i></small>"
+      h2={lang === 'en' ? "Save the date <span>Free</span>" : "Save the date <span>Gratis</span>"}
+      p={lang === 'en' ? "<b>Download your free Save the Date</b> in PDF format and share your date with loved ones." : "<b>Descarga gratis tu Save the Date</b>, en formato PDF y comparte con tus seres queridos la fecha de tu boda."}
       imagenes={[
         {
           imagen: "/reserva-la-fecha-1.webp",
@@ -259,34 +218,32 @@ const schemaBodasService = {
   <section class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-        encabezado="garantía"
-        texto="Tu invitación <b>siempre en línea.</b>"
+        encabezado={t('landing.guarantee.title')}
+        texto={t('landing.guarantee.text')}
         icono="mdi:shield-crown-outline"
         fondo="/fondo-nvite-caracteristicas.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="entrega"
-        texto="En 48 horas <b>o menos.</b>"
+        encabezado={t('landing.delivery.title')}
+        texto={t('landing.delivery.text')}
         icono="mdi:package-variant-closed-delivered"
         fondo="/fondo-nvite-caracteristicas-2.png"
         colorBg="#FFF1E1"
       />
 
       <Caracteristicas
-        encabezado="cambios"
-        texto="Ajustes <b>sin complicaciones</b>."
+        encabezado={t('landing.changes.title')}
+        texto={t('landing.changes.text')}
         icono="mdi:connect-without-contact"
         fondo="fondo-nvite-caracteristicas-3.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="soporte"
-        texto="Te guiamos <b>paso a paso.</b>"
+        encabezado={t('landing.support.title')}
+        texto={t('landing.support.text')}
         icono="mdi:support"
         fondo="fondo-nvite-caracteristicas-4.png"
         colorBg="#FFF1E1"
@@ -302,30 +259,27 @@ const schemaBodasService = {
     <div class="flex">
       <div class="fondo-formu">
         <div class="bande">
-          <h3>Prueba tu Nvitación <br /> sin compromiso</h3>
-          <p>
-            <b>¿Tienes dudas o pedidos especiales?</b>, <br /> Escríbenos por WhatsApp
-            y hagamos que tu invitación sea perfecta <br />😊
-          </p>
+          <h3>{lang === 'en' ? 'Try your Invitation with zero commitment' : 'Prueba tu Nvitación sin compromiso'}</h3>
+          <p set:html={t('landing.form.desc')} />
         </div>
 
         <div id="formu">
           <form>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" placeholder="Tu nombre" />
-            <label for="fecha">Fecha del evento</label>
+            <label for="nombre">{t('landing.form.name')}</label>
+            <input type="text" id="nombre" placeholder={t('landing.form.namePlaceholder')} />
+            <label for="fecha">{t('landing.form.date')}</label>
             <input type="date" name="fecha" id="fecha" />
-            <label for="evento">Tipo de evento</label>
+            <label for="evento">{t('landing.form.type')}</label>
             <select name="evento" id="evento">
-              <option value="Boda">Boda</option>
-              <option value="Xv">XV años</option>
-              <option value="Cumple">Cumpleaños</option>
+              <option value="Boda">{t('landing.form.boda')}</option>
+              <option value="Xv">{t('landing.form.quince')}</option>
+              <option value="Cumple">{lang === 'en' ? 'Birthday' : 'Cumpleaños'}</option>
             </select>
 
             <Btn
               liga="#"
               id="empezar"
-              texto="<b>Enviar</b> ahora"
+              texto={t('landing.form.send')}
               clases="desactivado, btn-oscuro"
               claro={false}
               blank={true}

@@ -10,11 +10,13 @@ type Props = {
 };
 
 const { producto } = Astro.props;
+const lang = Astro.locals.lang || "es";
 const nvitacionInfo = nvitacionesData.find(
   (item) => item.id === producto.data.id,
 );
 
-const precio = await getProductPrice(producto);
+const precio = await getProductPrice(producto, lang);
+const isUsd = precio.includes("USD") || precio.includes("$") && lang === "en";
 
 // Calcular precio tachado igual que en [id].astro
 let precioTachado = precio;
@@ -24,7 +26,7 @@ if (nvitacionInfo?.precioTachado) {
     const currency = match[1];
     const priceNumber = Number(match[2].replace(/,/g, ""));
     const priceTachadoNumber = Math.round(priceNumber * 1.4);
-    const priceTachadoStr = priceTachadoNumber.toLocaleString("es-MX", {
+    const priceTachadoStr = priceTachadoNumber.toLocaleString(lang === "en" ? "en-US" : "es-MX", {
       minimumFractionDigits: 0,
     });
     precioTachado = `${currency}${priceTachadoStr}`;
@@ -36,12 +38,60 @@ const priceNumberOnly = precio.replace(/[^\d.]/g, "");
 
 // Calcular precio por invitado dinámicamente
 const numericPrice = Number(precio.replace(/,/g, "").replace(/[^\d.]/g, ""));
-const costPerGuest = Math.round(numericPrice / 100);
+const costPerGuest = lang === "en" ? (numericPrice / 100).toFixed(2) : Math.round(numericPrice / 100);
+
+function localizeCategory(cat?: string, l: string = "es") {
+  if (!cat) return l === "en" ? "Invitations" : "Sin categoría";
+  if (l !== "en") return cat;
+  const lower = cat.toLowerCase();
+  if (lower.includes("boda")) return "Weddings";
+  if (lower.includes("xv") || lower.includes("quince")) return "Quinceañera";
+  if (lower.includes("cumple")) return "Birthdays";
+  if (lower.includes("bautizo")) return "Baptism";
+  if (lower.includes("baby")) return "Baby Shower";
+  return cat;
+}
+
+function localizeVersion(ver?: string, l: string = "es") {
+  if (!ver) return l === "en" ? "Standard" : "Sin versión";
+  if (l !== "en") return ver;
+  const lower = ver.toLowerCase();
+  if (lower.includes("clas")) return "Classic";
+  if (lower.includes("esenc")) return "Essential";
+  if (lower.includes("lux")) return "Lux";
+  return ver;
+}
+
+function localizeProductName(name: string, l: string = "es") {
+  if (l !== "en") return name;
+  return name
+    .replace(/Invitaci[oó]n de Bodas?/gi, "Wedding Invitation")
+    .replace(/Invitaci[oó]n de XV A[ñn]os?/gi, "Quinceañera Invitation")
+    .replace(/Invitaci[oó]n de Quincea[ñn]era/gi, "Quinceañera Invitation")
+    .replace(/Invitaci[oó]n/gi, "Invitation")
+    .replace(/Cl[aá]sica/gi, "Classic")
+    .replace(/Esencial/gi, "Essential");
+}
+
+function getLocalizedText(
+  field?: any,
+  l: string = "es",
+  fallback: string = ""
+): string {
+  if (!field) return fallback;
+  if (typeof field === "string") return field;
+  return (l === "en" ? field.en : field.es) || field.es || field.en || fallback;
+}
+
+const displayedCategory = localizeCategory(producto.data.metadata?.Categoria, lang);
+const displayedVersion = localizeVersion(producto.data.metadata?.Version || producto.data.metadata?.version || nvitacionInfo?.version, lang);
+const customName = getLocalizedText(nvitacionInfo?.nombre || (nvitacionInfo as any)?.titulo, lang);
+const displayedName = customName || localizeProductName(producto.data.name, lang);
 
 const schemaProduct = {
   "@context": "https://schema.org/",
   "@type": "Product",
-  name: producto.data.name,
+  name: displayedName,
   image: producto.data.images[0],
   description:
     producto.data.description || `Invitación digital ${producto.data.name}`,
@@ -53,7 +103,7 @@ const schemaProduct = {
   offers: {
     "@type": "Offer",
     url: `https://nvitaciones.com/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`,
-    priceCurrency: "MXN",
+    priceCurrency: lang === "en" ? "USD" : "MXN",
     price: priceNumberOnly,
     priceValidUntil: "2027-12-31",
     availability: "https://schema.org/InStock",
@@ -71,11 +121,14 @@ const schemaProduct = {
   <div class="portada">
     <a href={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}>
       <!-- <div class="verNvitacion">Ver Nvitación</div> -->
-      <div class="badge-invitado">Desde ${costPerGuest}MXN<br /><small>por invitado y baja entre más invites.</small></div>
+      <div class="badge-invitado">
+        {lang === 'en' ? `From $${costPerGuest} USD` : `Desde $${costPerGuest} MXN`}<br />
+        <small>{lang === 'en' ? 'per guest · lower cost with more invites' : 'por invitado y baja entre más invites.'}</small>
+      </div>
       <div class="crop">
         <Image
           src={producto.data.images[0]}
-          alt={producto.data.name}
+          alt={displayedName}
           height={320}
           width={320}
         />
@@ -84,33 +137,20 @@ const schemaProduct = {
   </div>
   <div class="info">
     <span>
-      <b>{producto.data.metadata?.Categoria || "Sin categoría"}</b> | {
-        producto.data.metadata?.Version || producto.data.metadata?.version || nvitacionInfo?.version || "Sin versión"
-      }
+      <b>{displayedCategory}</b> | {displayedVersion}
     </span>
     <div class="headinfo">
-      <h2>{producto.data.name}</h2>
-      <!-- <p class="precio">
-        {
-          nvitacionInfo?.precioTachado && (
-            <span class="precioTachado">
-              {precioTachado}
-              <sup>.00</sup>
-            </span>
-          )
-        }
-        {precio.replace(/\.00$/, "")}<sup>.00</sup>
-      </p> -->
+      <h2>{displayedName}</h2>
     </div>
-    <!-- NUEVO: línea de ancla emocional -->
-    <p  class="price-anchor">
-      ≈ ${costPerGuest} por invitado · Envíos ilimitados / <b></b>
+    <!-- línea de ancla emocional -->
+    <p class="price-anchor">
+      ≈ ${costPerGuest} {lang === 'en' ? 'per guest · Unlimited sends' : 'por invitado · Envíos ilimitados'}
     </p>
   </div>
   <div class="conteBtn">
     <Btn
     liga={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}
-    texto="Ver mi ejemplo →"
+    texto={lang === 'en' ? 'View demo →' : 'Ver mi ejemplo →'}
     clases="btn-bordes"
     claro={false}
     />

@@ -4,7 +4,7 @@
  * @param days Number of business days to add
  * @returns Delivery date as a string in format "Día DD de Mes"
  */
-export const calculateDeliveryDate = (days: number = 2): string => {
+export const calculateDeliveryDate = (days: number = 2, lang: string = "es"): string => {
   const today = new Date();
   let currentDate = new Date(today);
   
@@ -24,6 +24,15 @@ export const calculateDeliveryDate = (days: number = 2): string => {
     if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
       businessDaysToAdd--;
     }
+  }
+
+  if (lang === "en") {
+    const weekDaysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthsEn = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return `${weekDaysEn[currentDate.getDay()]}, ${monthsEn[currentDate.getMonth()]} ${currentDate.getDate()}`;
   }
 
   const weekDays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];

@@ -60,7 +60,15 @@ const filteredProducts = productos.filter((producto) => {
   return categoria === dondeEstoyLower;
 });
 
-const categorias = [
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
+
+const categorias = isEn ? [
+  { key: "todos", label: "All" },
+  { key: "bodas", label: "Weddings" },
+  { key: "quince", label: "Quinceañera" },
+  // { key: "cumple", label: "Birthdays" },
+] : [
   { key: "todos", label: "Todo" },
   { key: "bodas", label: "Bodas" },
   { key: "quince", label: "Xv años" },
@@ -73,7 +81,7 @@ const categorias = [
     <>
       <div class="grid pantalla-der">
         <div class="filtros-productos">
-          <h2>Más vistas</h2>
+          <h2>{isEn ? "Most Popular" : "Más vistas"}</h2>
           <div class="filtros">
             {categorias.map((cat, idx) => (
               <button

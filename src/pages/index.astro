@@ -18,24 +18,27 @@ import caracteristicasImg from "../assets/home/home-invitaciones-digitales-carac
 import coverDesktopHome from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv.webp";
 import coverMobileHome from "../assets/home/nvitaciones-invitaciones-digitales-boda-xv-cel.webp";
 import MesasHome from "../components/MesasHome.astro";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
   <Layout
-  title="Nvitaciones | Invitaciones Digitales, Gestor de Mesas y RSVP"
-  description="Tu invitación digital personalizada en México. Incluye confirmaciones en tiempo real por WhatsApp, organizador de mesas y proveedores. Lista en 48 hrs."
+  title={t('landing.meta.title')}
+  description={t('landing.meta.description')}
 >
 
-  <Hero h1='Invitaciones digitales de <br /> <b>Bodas y Xv años</b> <br /> <span id="spanHeroH1">Elegancia para tus invitados.<br /><b> Control total para ti.</b> </span>'
-  p='<span id="pHero"><b>Invitaciones digitales premium para bodas, XV años en México.</b></span> tu invitación personalizada en 48 hrs, confirmación RSVP por WhatsApp y gestión de mesas y proveedores.'
-  textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
+  <Hero h1={t('landing.hero.h1')}
+  p={t('landing.hero.p')}
+  textoValidacion={t('landing.hero.validation')}
   imagenDesktop={coverDesktopHome}
   imagenMobile={coverMobileHome}/>
   
   <div class="grid contenido">
     <div id="choro">
-      <h2>Invitaciones que enamoran a primera vista</h2>
-      <p>
-        En Nvitaciones <b>tenemos tu invitación personalizada</b> con música, fotos y GPS para tus <a href="/bodas" style="text-decoration: underline; color: inherit; font-weight: bold;">bodas</a> o <a href="/invitaciones-quince" style="text-decoration: underline; color: inherit; font-weight: bold;">XV años</a>, mientras tú disfrutas del control total de confirmaciones en tiempo real, acomodo de mesas y control de proveedores.
+      <h2>{t('landing.intro.h2')}</h2>
+      <p set:html={t('landing.intro.p')}>
       </p>
     </div>
   </div>
@@ -86,26 +89,10 @@ import MesasHome from "../components/MesasHome.astro";
 
   
 
-  <!-- <Galeriaslide /> -->
   <div class="grid contenido">
     <BannerGeneral
-      encabezado="Recibes con tu <b>invitación digital</b>"
-      texto={`
-    <ul>
-    <li><b>Trato personalizado.</b></li>
-    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
-    <li>
-   <b>Panel de invitados</b>, controla tus invitaciones.
-    </li>
-    <li>
-   <b>Tu invitación web te acompaña</b> durante todo el proceso y permanece disponible hasta la semana posterior al evento.
-    </li>
-    <li><mark>Envíos ilimitados.</mark></li>
-       
-        </ul>
-        <small>*Panel de invitados solo en versión Lux y Clásica</small>
-        <br>
-        `}
+      encabezado={t('landing.bannerGeneral.heading')}
+      texto={t('landing.bannerGeneral.text')}
       tema="terciario"
       icono="mdi:deal"
       urlImagen="../assets/home/gale/recibes.webp"
@@ -113,7 +100,7 @@ import MesasHome from "../components/MesasHome.astro";
     >
       <Btn
         liga="#faq"
-        texto="¿Tienes más dudas?"
+        texto={t('landing.bannerGeneral.btn')}
         clases="btn-oscuro"
         claro={true}
         blank={false}
@@ -130,7 +117,6 @@ import MesasHome from "../components/MesasHome.astro";
     <Banner dondeEstoy="home" />
   </div>
 
-
   <div class="grid contenido" id="faq">
     <Faq />
   </div>
@@ -139,37 +125,32 @@ import MesasHome from "../components/MesasHome.astro";
     matriz={[
       {
         imagen: caracteristicasImg,
-        titulo: "Iniciemos con tus <span>invitaciones</span>",
-        texto:
-          "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
-        txtbtn: "Contáctanos",
+        titulo: lang === 'en' ? "Let's start with your <span>invitations</span>" : "Iniciemos con tus <span>invitaciones</span>",
+        texto: lang === 'en' ? "Modern invitations with the tools to give you total control and peace of mind" : "Invitaciones modernas con las herramientas que te darán el control y la tranquilidad",
+        txtbtn: lang === 'en' ? "Contact us" : "Contáctanos",
         icono: "mdi:account-question-outline",
         enlace: "#formu",
       },
       {
         imagen: "mdi:infinity",
-        titulo: "Invita sin límites",
-        texto:
-          "Sin cargos extras por número de invitados, invita a todos los que quieras",
+        titulo: lang === 'en' ? "Invite without limits" : "Invita sin límites",
+        texto: lang === 'en' ? "No extra charges for guest count, invite everyone you love" : "Sin cargos extras por número de invitados, invita a todos los que quieras",
         enlace: "#",
       },
       {
         imagen: "mdi:account-multiple-check-outline",
-        titulo: "Motiva confirmaciones",
-        texto:
-          "Anima a más invitados mostrando en tiempo real quién ya confirmó asistencia",
+        titulo: lang === 'en' ? "Encourage RSVPs" : "Motiva confirmaciones",
+        texto: lang === 'en' ? "Inspire more guests by showing who has already confirmed attendance" : "Anima a más invitados mostrando en tiempo real quién ya confirmó asistencia",
       },
       {
         imagen: "mdi:infinity-box",
-        titulo: "Control total",
-        texto:
-          "<span>Consulta</span> y gestiona quién asiste a tu evento fácilmente",
+        titulo: lang === 'en' ? "Total control" : "Control total",
+        texto: lang === 'en' ? "<span>Track</span> and manage who attends your celebration easily" : "<span>Consulta</span> y gestiona quién asiste a tu evento fácilmente",
       },
       {
         imagen: "mdi:infinity-box",
-        titulo: "Asigna pases",
-        texto:
-          "<span>Asigna</span> pases personalizados por invitación para un control preciso",
+        titulo: lang === 'en' ? "Assign passes" : "Asigna pases",
+        texto: lang === 'en' ? "<span>Assign</span> customized passes per invitation for precise control" : "<span>Asigna</span> pases personalizados por invitación para un control preciso",
       },
     ]}
   />
@@ -177,34 +158,32 @@ import MesasHome from "../components/MesasHome.astro";
   <section class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-        encabezado="garantía"
-        texto="Tu invitación <b>siempre en línea.</b>"
+        encabezado={t('landing.guarantee.title')}
+        texto={t('landing.guarantee.text')}
         icono="mdi:shield-crown-outline"
         fondo="/fondo-nvite-caracteristicas.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="entrega"
-        texto="En 48 horas <b>o menos.</b>"
+        encabezado={t('landing.delivery.title')}
+        texto={t('landing.delivery.text')}
         icono="mdi:package-variant-closed-delivered"
         fondo="/fondo-nvite-caracteristicas-2.png"
         colorBg="#FFF1E1"
       />
 
       <Caracteristicas
-        encabezado="cambios"
-        texto="Ajustes <b>sin complicaciones</b>."
+        encabezado={t('landing.changes.title')}
+        texto={t('landing.changes.text')}
         icono="mdi:connect-without-contact"
         fondo="fondo-nvite-caracteristicas-3.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="soporte"
-        texto="Te guiamos <b>paso a paso.</b>"
+        encabezado={t('landing.support.title')}
+        texto={t('landing.support.text')}
         icono="mdi:support"
         fondo="fondo-nvite-caracteristicas-4.png"
         colorBg="#FFF1E1"
@@ -216,40 +195,33 @@ import MesasHome from "../components/MesasHome.astro";
     <div class="flex">
       <div class="fondo-formu">
         <div class="bande">
-          <h3>Empieza a planear tu evento</h3>
-          <p>
-            <b>¿Tienes dudas o pedidos especiales?</b>
-            <br /> Escríbenos por WhatsApp y hagamos que tu invitación sea perfecta <br />😊
-          </p>
+          <h3>{t('landing.form.title')}</h3>
+          <p set:html={t('landing.form.desc')} />
         </div>
 
         <div id="formu">
           <form>
-            <!-- <h3>
-          <img src="/whatsapp.png" alt="logo whatsapp">
-          <b>whatsapp</b></h3> -->
-
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" placeholder="Tu nombre" />
-            <label for="fecha">Fecha del evento</label>
+            <label for="nombre">{t('landing.form.name')}</label>
+            <input type="text" id="nombre" placeholder={t('landing.form.namePlaceholder')} />
+            <label for="fecha">{t('landing.form.date')}</label>
             <input type="date" name="fecha" id="fecha" />
-            <label for="evento">Tipo de evento</label>
+            <label for="evento">{t('landing.form.type')}</label>
             <select name="evento" id="evento">
-              <option value="Boda">Boda</option>
-              <option value="Xv">XV años</option>
+              <option value="Boda">{t('landing.form.boda')}</option>
+              <option value="Xv">{t('landing.form.quince')}</option>
+              <option value="Cumple">{lang === 'en' ? 'Birthday' : 'Cumpleaños'}</option>
             </select>
 
             <Btn
               liga="#"
               id="empezar"
-              texto="<b>Enviar</b> ahora"
+              texto={t('landing.form.send')}
               clases="desactivado, btn-oscuro"
               claro={false}
               blank={true}
             >
               <Icon name="mdi:whatsapp" />
             </Btn>
-
           </form>
         </div>
       </div>
