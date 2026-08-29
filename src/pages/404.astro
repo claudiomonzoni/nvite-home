@@ -4,21 +4,23 @@ import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 import Btn from "../components/Btn.astro";
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <Layout
-  title="Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"
+  title={isEn ? "Page Not Found (404) - Nvitaciones" : "Invitaciones PDF para XV Años, Bodas y Cumpleaños, ERROR 404 - Nvitaciones"}
 >
   <div class="grid contenido">
     <Nav />
     <div class="error404">
       <h1>404</h1>
-      <h2>Página no encontrada</h2>
-      <p>Lo sentimos, la página que buscas no existe.</p>
+      <h2>{isEn ? "Page not found" : "Página no encontrada"}</h2>
+      <p>{isEn ? "Sorry, the page you are looking for does not exist." : "Lo sentimos, la página que buscas no existe."}</p>
       <Btn
         liga="/"
         clases="btn-claro"
-        texto="Ir a Nvitaciones"
+        texto={isEn ? "Go to Home" : "Ir a Nvitaciones"}
         claro={true}
         blank={false}
       />

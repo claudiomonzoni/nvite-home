@@ -1,130 +1,185 @@
 ---
-import Footer from "../components/bodas/Footer.astro";
+import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
+
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
-<Layout title="Términos y condiciones de Nvitaciones.com">
-    <Nav />
-    <div class="grid contenido" id="terminos">
-        <h1>Términos y condiciones</h1>
+<Layout
+  title={isEn ? "Términos y condiciones de Nvitaciones.com" : "Términos y condiciones de Nvitaciones.com"}
+  description={isEn ? "Términos y condiciones del servicio, garantía de disponibilidad en línea y políticas de Nvitaciones.com" : "Términos y condiciones del servicio, garantía de disponibilidad en línea y políticas de Nvitaciones.com"}
+>
+  <Nav />
+  <div class="grid contenido" id="terminos">
+    <h1>{isEn ? "Terms and Conditions of Service" : "Términos y condiciones"}</h1>
 
-        <h2>Política de Reembolso</h2>
-        <p>
-            En <b>Nvitaciones.com</b>, nuestra prioridad es garantizar la
-            satisfacción de nuestros clientes al ofrecer invitaciones digitales
-            de alta calidad. Sabemos que, en ocasiones, pueden surgir
-            situaciones excepcionales que requieran la devolución del monto
-            abonado. A continuación, detallamos nuestra política de reembolso:
-        </p>
-        <ol>
-            <h3>Solicitud de Reembolso</h3>
-            <p>
-                Los clientes pueden solicitar el reembolso del valor abonado por
-                las invitaciones digitales dentro de un plazo de hasta 24 horas
-                posteriores a la entrega del producto final.
-            </p>
-            <h3>Retención por Gastos Administrativos</h3>
-            <p>
-                En caso de solicitar un reembolso, se aplicará una retención del
-                30% del valor total de la compra para cubrir los costos
-                administrativos relacionados con la transacción y la
-                personalización del producto.
-            </p>
-            <h3>Proceso de Reembolso</h3>
-            <p>
-                Los clientes deben ponerse en contacto con nuestro equipo de
-                atención al cliente a través de WhatsApp (+52 1 755 113 2468) o
-                por medio de nuestro correo electrónico de soporte
-                invitacionesnvite@gmail.com
-            </p>
-            <h3>Excepciones</h3>
-            <p>
-                No se aceptarán reembolsos después de las 24 horas posteriores a
-                la entrega del producto.
-            </p>
-            <h3>Tiempos de entrega</h3>
-            <p>
-                Los tiempos de entrega de las invitaciones digitales son de 24
-                horas a 48 horas. Sin embargo, en ocasiones excepcionales, el
-                tiempo de entrega puede extenderse de los 48 horas. En caso de
-                que esto ocurra, se informará al cliente a través del correo
-                electrónico o mensaje de WhatsApp proporcionado al momento de la
-                compra.
-            </p>
-            <h3>Compromiso de entrega</h3>
-            <p>
-                Nos comprometemos a entregar las invitaciones digitales en el
-                plazo acordado. Sin embargo, no nos hacemos responsables por
-                retrasos causados por problemas técnicos, errores en la
-                información proporcionada por el cliente o situaciones fuera de
-                nuestro control. <b
-                    >la fecha de entrega se calculará a partir de la entrega
-                    completa de los datos e imagenes del evento.</b
-                >
-            </p>
-        </ol>
-        <h2>Política de Privacidad</h2>
-        <p>
-            En Nvitaciones.com, valoramos y protegemos la privacidad de nuestros
-            clientes. Esta política explica cómo recopilamos, usamos y
-            resguardamos tu información personal al utilizar nuestros servicios.
-        </p>
-        <ol>
-            <h3>Información que Recopilamos</h3>
-            <ul>
-                <li>
-                    Nombre, dirección de correo electrónico, número de teléfono
-                    y datos relacionados con tus eventos (como nombres de
-                    invitados y detalles del evento).
-                </li>
-                <li>
-                    Archivos multimedia (fotos o imágenes) que deseas incluir en
-                    tus invitaciones digitales.
-                </li>
-            </ul>
-            <h3>Uso de la Información</h3>
-            <ul>
-                <li>Crear y personalizar tus invitaciones digitales.</li>
-                <li>
-                    Enviar notificaciones relacionadas con el estado de tus
-                    invitaciones.
-                </li>
-                <li>Proporcionar soporte técnico y responder consultas.</li>
-                <li>
-                    Realizar análisis internos para mejorar nuestros servicios.
-                </li>
-            </ul>
-            <h3>Protección de Datos</h3>
-            <p>
-                Implementamos medidas de seguridad avanzadas para evitar accesos
-                no autorizados, pérdidas de datos o filtraciones.
-            </p>
-            <h3>Retención y Eliminación de Datos</h3>
-            <p>
-                Conservamos tus datos durante el tiempo necesario para cumplir
-                con los servicios contratados o según lo exija la ley.
-            </p>
-            <h3>Cambios en la Política de Privacidad</h3>
-            <p>
-                Nos reservamos el derecho de actualizar esta política. Te
-                notificaremos sobre cambios relevantes a través de nuestra
-                página web o por correo electrónico.
-            </p>
-        </ol>
-    </div>
-    <Footer />
+    <h2>{isEn ? "1. Scope and Service Identification" : "1. Identificación y Alcance del Servicio"}</h2>
+    <p>
+      {isEn
+        ? "Nvitaciones.com is a specialized brand operated by CMN Design, located in Ixtapa Zihuatanejo, Guerrero, Mexico. By acquiring or using our services (digital invitations for weddings, quinceañeras, PDF invitations, and guest/table management panels), the client accepts these Terms and Conditions."
+        : "Nvitaciones.com es una marca especializada operada por CMN Design, con domicilio en Ixtapa Zihuatanejo, Guerrero, México. Al adquirir o utilizar cualquiera de nuestros servicios (incluyendo invitaciones digitales para bodas, XV años, invitaciones PDF y panel de gestión de invitados y mesas), el cliente acepta en su totalidad los presentes Términos y Condiciones."}
+    </p>
+
+    <h2>{isEn ? "2. Online Uptime Guarantee & Server Log Verification Protocol" : "2. Garantía de Disponibilidad en Línea y Auditoría de Logs"}</h2>
+    <p>
+      {isEn
+        ? "We guarantee that your digital invitation will be hosted on high-availability cloud infrastructure (Vercel Enterprise Edge Network & Cloudflare CDN), ensuring global loading speed and a 99.9% uptime target."
+        : "Garantizamos que tu invitación digital estará alojada en infraestructura de nube de alta disponibilidad (red Edge global de Vercel y CDN de Cloudflare), asegurando máxima velocidad y un objetivo de disponibilidad del 99.9%."}
+    </p>
+    <h3>{isEn ? "Technical Verification Protocol (Server Logs)" : "Protocolo de Verificación Técnica ante Reclamaciones"}</h3>
+    <p>
+      {isEn
+        ? "In the event that a client requests a refund or alleges that their digital invitation was offline during their event, Nvitaciones.com will perform a mandatory technical audit on the server access logs (Vercel Server Access Logs, HTTP status codes 200 OK, and edge metrics) for the exact timeframe reported."
+        : "En caso de que el cliente solicite un reembolso o reporte una supuesta caída o indisponibilidad de su invitación durante el evento, Nvitaciones.com realizará una auditoría técnica obligatoria en los registros oficiales del servidor (Logs de acceso de Vercel, códigos de estado HTTP 200 OK y métricas de red)."}
+    </p>
+    <p>
+      {isEn
+        ? "If the server logs confirm that the invitation was operating correctly (HTTP 200 OK) during the event, the claim of platform outage will be dismissed, attributing the issue to local client-side factors (e.g., poor mobile carrier reception at the venue, lack of mobile data, outdated browser, or device restrictions of the guest)."
+        : "Si los registros de Vercel certifican que el servidor respondió con normalidad (HTTP 200 OK) y estuvo disponible durante la fecha y horario indicados, la reclamación por caída del servicio se desestimará, atribuyéndose a factores locales ajenos (poca señal celular en el salón/iglesia, falta de datos móviles del invitado, navegadores desactualizados o problemas de conectividad del dispositivo receptor)."}
+    </p>
+
+    <h2>{isEn ? "3. Delivery Times, Revisions & Client Approval" : "3. Tiempos de Entrega y Compromiso"}</h2>
+    <h3>{isEn ? "Delivery Times" : "Tiempos de Entrega"}</h3>
+    <p>
+      {isEn
+        ? "The standard delivery time for digital invitations is between 24 and 48 business hours. The delivery date will be calculated strictly from the complete delivery of event data, text, photos, and music."
+        : "Los tiempos de entrega de las invitaciones digitales son de 24 a 48 horas hábiles. <b>La fecha de entrega se calculará a partir de la entrega completa de los datos, imágenes y música del evento.</b>"}
+    </p>
+    <h3>{isEn ? "Review Rounds & Final Approval" : "Revisiones y Visto Bueno"}</h3>
+    <p>
+      {isEn
+        ? "The service includes up to 2 rounds of adjustments. Once final approval (visto bueno) is given by the client to share the invitation, the client assumes full responsibility for the accuracy of dates, names, bank accounts, and addresses."
+        : "Se incluyen hasta 2 rondas de modificaciones para corregir datos o ajustar detalles. Una vez otorgado el visto bueno final por parte del cliente para el reparto de la invitación, el cliente asume la responsabilidad total de la exactitud de los nombres, itinerarios, cuentas bancarias y direcciones ingresadas."}
+    </p>
+
+    <h2>{isEn ? "4. Refund Policy by Payment Method" : "4. Política de Reembolso y Métodos de Pago"}</h2>
+    <p>
+      {isEn
+        ? "At Nvitaciones.com, our priority is client satisfaction. Due to custom graphic design, proprietary coding, and server setup involved in each project, refunds are subject to the following criteria and channel procedures:"
+        : "En Nvitaciones.com, nuestra prioridad es garantizar la satisfacción de nuestros clientes. Dado que las invitaciones conllevan trabajo de diseño gráfico y configuración técnica personalizada, los reembolsos se rigen bajo los siguientes términos y canales de pago:"}
+    </p>
+    <h3>{isEn ? "Refund Request Window" : "Solicitud de Reembolso"}</h3>
+    <p>
+      {isEn
+        ? "Clients may request a refund within a maximum period of up to 24 hours after delivery of the initial draft."
+        : "Los clientes pueden solicitar el reembolso dentro de un plazo de hasta 24 horas posteriores a la entrega del producto o borrador inicial."}
+    </p>
+    <h3>{isEn ? "Administrative Retention (30%)" : "Retención por Gastos Administrativos"}</h3>
+    <p>
+      {isEn
+        ? "In all approved refunds, a 30% retention fee of the total purchase amount will be applied to cover non-refundable payment processor fees, design hours invested, and technical server provisioning."
+        : "En cualquier reembolso aprobado, se aplicará una retención del 30% del valor total de la compra para cubrir las comisiones no reembolsables de las pasarelas de pago, costos administrativos de la transacción y las horas de diseño y personalización invertidas."}
+    </p>
+    <h3>{isEn ? "Credit / Debit Card Payments (Stripe)" : "Pagos con Tarjeta de Crédito / Débito (Stripe)"}</h3>
+    <p>
+      {isEn
+        ? "Refunds for card payments are processed directly through the Stripe platform back to the original payment card. Depending on the issuing bank, the funds will typically appear in the client's account within 5 to 10 business days."
+        : "Los reembolsos de pagos realizados con tarjeta se gestionan directamente a través de la plataforma de Stripe hacia la misma tarjeta con la que se efectuó la compra. El tiempo de acreditación depende de la institución bancaria emisora (habitualmente entre 5 y 10 días hábiles bancarios)."}
+    </p>
+    <h3>{isEn ? "Cash Payments (OXXO Pay) and SPEI Wire Transfers" : "Pagos en Efectivo (OXXO Pay) y Transferencias SPEI"}</h3>
+    <p>
+      {isEn
+        ? "In accordance with standard industry practices, convenience stores (such as OXXO) and cash collection points do not issue cash refunds at store counters. Any approved refund for cash or wire transfer payments will be executed strictly via bank transfer (SPEI) to the Mexican interbank CLABE account provided in writing by the client, deducting the 30% administrative and non-recoverable processor fees. Processing takes 3 to 5 business days after receiving valid account details."
+        : "En estricto apego a las normas del comercio electrónico y pasarelas de pago, los establecimientos OXXO y puntos de cobro en efectivo no realizan devoluciones de dinero en ventanilla. Cualquier reembolso aprobado para compras pagadas en efectivo (OXXO Pay) o transferencia bancaria se procesará exclusivamente vía transferencia interbancaria (SPEI) a la cuenta CLABE (18 dígitos) que el cliente proporcione por escrito a nombre del titular de la compra, aplicando la deducción del 30% por gastos administrativos y comisiones no recuperables. El tiempo de dispersión es de 3 a 5 días hábiles tras recibir la información bancaria."}
+    </p>
+    <h3>{isEn ? "Refund Exceptions" : "Excepciones de Reembolso"}</h3>
+    <p>
+      {isEn
+        ? "No refunds will be accepted after 24 hours following delivery, once the event has taken place, once final approval has been granted, or when server logs confirm full platform availability during the event."
+        : "No se aceptarán reembolsos después de las 24 horas posteriores a la entrega, si el evento ya ha transcurrido, si el cliente ya otorgó el visto bueno final, o si la auditoría técnica de logs comprueba que la plataforma estuvo 100% operativa."}
+    </p>
+
+    <h2>{isEn ? "5. Event Date Rescheduling and Postponements" : "5. Reprogramación y Cambios de Fecha del Evento"}</h2>
+    <p>
+      {isEn
+        ? "If the client needs to postpone or change the date of their event due to unforeseen circumstances, Nvitaciones.com includes 1 date and time update without additional cost, provided that the request is made before the original event date and the design template remains unchanged. Subsequent changes or complete template redesigns may incur an adjustment fee."
+        : "En caso de que el cliente deba posponer o cambiar la fecha de su evento por causas de fuerza mayor o decisión personal, Nvitaciones.com incluye <b>1 actualización de fecha y hora sin costo adicional</b> sobre la misma plantilla contratada, siempre que se solicite con anticipación a la fecha original del evento. Cambios posteriores o rediseños integrales de plantilla podrán generar una tarifa de ajuste."}
+    </p>
+
+    <h2>{isEn ? "6. Audio Playback Policy (Browser Autoplay)" : "6. Política de Reproducción de Música (Autoplay en Celulares)"}</h2>
+    <p>
+      {isEn
+        ? "Due to strict privacy and data policies implemented by modern mobile operating systems and browsers (Apple iOS / Safari and Google Android / Chrome), automatic sound playback is blocked by default until the guest interacts with the screen (tapping or clicking). The requirement of this first touch is a browser security policy and does not constitute a technical malfunction of Nvitaciones.com."
+        : "Por políticas estrictas de privacidad y seguridad implementadas por los sistemas operativos móviles y navegadores web (Apple iOS / Safari y Google Android / Chrome), la reproducción automática de sonido se encuentra bloqueada por defecto hasta que el usuario realiza una primera interacción (toque o clic en la pantalla). La necesidad de este primer toque responde a las políticas globales de los navegadores y no constituye una falla técnica de la plataforma Nvitaciones.com."}
+    </p>
+
+    <h2>{isEn ? "7. WhatsApp RSVP Number Accuracy" : "7. Exactitud del Número de WhatsApp para Confirmaciones (RSVP)"}</h2>
+    <p>
+      {isEn
+        ? "The client is solely responsible for verifying the accuracy of the WhatsApp phone number (including international country code and area code) configured to receive guest RSVP confirmations. Nvitaciones.com is not responsible for unreceived messages caused by typographical errors in the number provided by the client."
+        : "Es responsabilidad exclusiva del cliente verificar la correcta redacción y funcionamiento del número telefónico de WhatsApp (incluyendo código de país y lada) asignado para recibir las confirmaciones de asistencia (RSVP). Nvitaciones.com no se hace responsable por mensajes no recibidos debido a errores en el número suministrado por el cliente."}
+    </p>
+
+    <h2>{isEn ? "8. Hosting Duration and Link Validity" : "8. Vigencia del Hospedaje"}</h2>
+    <p>
+      {isEn
+        ? "Your digital invitation link will remain active and available online with unlimited sends throughout your event planning and up to 30 calendar days after the date of the event. After this period, the invitation will be archived."
+        : "Tu invitación digital web permanecerá activa, en línea y con envíos ilimitados durante todo el proceso de planeación y hasta 30 días naturales posteriores a la fecha de tu evento. Cumplido este plazo, la invitación pasa a proceso de archivado o baja."}
+    </p>
+
+    <h2>{isEn ? "9. Intellectual Property & User Content" : "9. Propiedad Intelectual y Contenidos"}</h2>
+    <p>
+      {isEn
+        ? "The client represents and warrants that they hold the necessary rights and licenses for all photos, music tracks, logos, and text provided for the invitation. Nvitaciones.com is held harmless from any copyright infringement claims arising from material supplied by the client."
+        : "El cliente declara y garantiza que posee los derechos y autorizaciones pertinentes para el uso de las fotografías, música, logotipos y textos suministrados para su invitación. Nvitaciones.com queda deslindada de cualquier reclamación por infracción a derechos de autor derivada del material provisto por el cliente."}
+    </p>
+
+    <h2>{isEn ? "10. Third-Party Services & WhatsApp Policies" : "10. Servicios de Terceros y Políticas de WhatsApp"}</h2>
+    <p>
+      {isEn
+        ? "Nvitaciones is not responsible for global outages or service interruptions of third-party platforms (WhatsApp, Google Maps, YouTube), nor for restrictions or blocks applied by WhatsApp to the client's personal phone number resulting from abusive mass messaging (spam)."
+        : "Nvitaciones no se hace responsable por caídas globales o fallos de servicio de plataformas de terceros (WhatsApp / Meta, Google Maps, YouTube), ni por bloqueos temporales o definitivos aplicados por WhatsApp a las líneas personales de los clientes derivados de prácticas de envío masivo consideradas spam por Meta."}
+    </p>
+
+    <h2>{isEn ? "11. Limitation of Financial Liability" : "11. Límite de Responsabilidad Económica"}</h2>
+    <p>
+      {isEn
+        ? "Under no circumstances shall Nvitaciones.com, CMN Design, or its affiliates be liable for indirect, incidental, or consequential damages (including event venue expenses, catering costs, or travel bookings). The maximum financial liability of Nvitaciones.com for any claim or dispute shall be strictly limited to the amount actually paid by the client for the contracted service."
+        : "Bajo ninguna circunstancia Nvitaciones.com, CMN Design o sus colaboradores serán responsables por daños indirectos, incidentales o consecuenciales (incluyendo gastos de salón, banquete, viajes o logística de invitados). La responsabilidad económica máxima de Nvitaciones.com ante cualquier reclamación o controversia estará estrictamente limitada al monto total efectivamente pagado por el cliente por el servicio contratado."}
+    </p>
+
+    <h2>{isEn ? "12. Privacy & Data Protection (LFPDPPP)" : "12. Política de Privacidad y Protección de Datos"}</h2>
+    <p>
+      {isEn
+        ? "In compliance with personal data protection regulations, contact data, guest lists, and multimedia files are used exclusively to create and manage the invitation and private guest panel. We never sell, share, or monetize your or your guests' personal data. Payment transactions are encrypted via Stripe; we do not store credit or debit card numbers."
+        : "En estricto apego a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (México), los datos de contacto, listas de invitados, teléfonos y archivos multimedia son tratados exclusivamente para la elaboración de la invitación y la operación del panel privado del evento. Nvitaciones.com jamás comercializará los datos de tus invitados con terceros. Las transacciones de pago son procesadas de forma encriptada por Stripe; no almacenamos información de tarjetas de crédito o débito."}
+    </p>
+
+    <h2>{isEn ? "13. Jurisdiction & Support" : "13. Jurisdicción y Contacto"}</h2>
+    <p>
+      {isEn
+        ? "For any legal dispute, both parties submit to the applicable laws of the United Mexican States and the jurisdiction of the competent courts in Zihuatanejo, Guerrero, Mexico, or PROFECO."
+        : "Para la interpretación y cumplimiento de estos términos, ambas partes se someten a la legislación vigente en los Estados Unidos Mexicanos y a la competencia de los tribunales de Zihuatanejo, Guerrero, México, y/o la Procuraduría Federal del Consumidor (PROFECO)."}
+    </p>
+    <p>
+      <b>{isEn ? "WhatsApp Support:" : "WhatsApp de atención:"}</b> +52 1 755 113 2468<br />
+      <b>{isEn ? "Email Support:" : "Correo electrónico de soporte:"}</b> invitacionesnvite@gmail.com
+    </p>
+  </div>
+  <Footer />
 </Layout>
 
 <style>
     #terminos {
         margin: 2rem 0;
+        padding-top: 4rem;
     }
     h2 {
-        padding: 1.4rem 0;
+        padding: 1.4rem 0 0.5rem;
+        color: #656A8D;
     }
     h3 {
         font-weight: bold;
         color: gray;
+        padding: 0.8rem 0 0.2rem;
+    }
+    p {
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+    }
+    b {
+        font-weight: 600;
     }
 </style>

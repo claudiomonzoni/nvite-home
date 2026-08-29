@@ -3,6 +3,9 @@ const { dondeEstoy } = Astro.props;
 
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <div class="banner azulBG">
@@ -10,17 +13,17 @@ import Btn from "./Btn.astro";
     <div class="bande">
       <article class="lista ">
         <div class="bandeDestacada">
-          <small>Cumpleaños</small>
+          <small>{isEn ? "Birthdays" : "Cumpleaños"}</small>
           <h2>
-            Nvitación Cumpleaños
+            {isEn ? "Birthday Invitation" : "Nvitación Cumpleaños"}
           </h2>
           <div class="precio">$250</div>
           <ul>
-            <li><b>Detalle del evento</b></li>
-            <li><b>Botón de ubicación</b></li>
-            <li><b>Botón de confirmación</b></li>
-            <li>Fecha del evento</li>
-            <li>Juego de preguntas</li>
+            <li><b>{isEn ? "Event details" : "Detalle del evento"}</b></li>
+            <li><b>{isEn ? "Location button" : "Botón de ubicación"}</b></li>
+            <li><b>{isEn ? "RSVP button" : "Botón de confirmación"}</b></li>
+            <li>{isEn ? "Event date" : "Fecha del evento"}</li>
+            <li>{isEn ? "Trivia game" : "Juego de preguntas"}</li>
           </ul>
 
           <!-- <Btn
@@ -36,7 +39,7 @@ import Btn from "./Btn.astro";
           <Btn
             liga="https://wa.link/k8nx3m"
             clases="btn-claro"
-            texto="Solicitar ahora"
+            texto={isEn ? "Order now" : "Solicitar ahora"}
             claro={true}
             blank={true}
           >
@@ -46,19 +49,19 @@ import Btn from "./Btn.astro";
       </article>
 
       <article class="lista destacada">
-        <small>Bodas, 15 Años</small>
-        <h2>Nvitación <br /> Bodas & 15 Años  <div id="masvendido">Más vendida</div></h2>
+        <small>{isEn ? "Weddings, Quinceañeras" : "Bodas, 15 Años"}</small>
+        <h2>{isEn ? "Wedding & Quince Invitation" : "Nvitación"} <br /> {isEn ? "" : "Bodas & 15 Años"}  <div id="masvendido">{isEn ? "Best seller" : "Más vendida"}</div></h2>
         <div class="precio">$347</div>
         <ul>
-          <li><b>Foto principal</b></li>
-          <li><b>Botón de confirmación</b></li>
-          <li><b>Botón de ubicación</b></li>
-          <li><b>Sugerencia de regalos</b></li>
-          <li><b>Codigo de vestir</b></li>
-          <li><b>Itinerario</b></li>
-          <li>Fecha del evento</li>
-          <li>Frase afectiva</li>
-          <li>Detalles del evento</li>
+          <li><b>{isEn ? "Main cover photo" : "Foto principal"}</b></li>
+          <li><b>{isEn ? "RSVP button" : "Botón de confirmación"}</b></li>
+          <li><b>{isEn ? "Location button" : "Botón de ubicación"}</b></li>
+          <li><b>{isEn ? "Gift registry suggestions" : "Sugerencia de regalos"}</b></li>
+          <li><b>{isEn ? "Dress code" : "Codigo de vestir"}</b></li>
+          <li><b>{isEn ? "Itinerary" : "Itinerario"}</b></li>
+          <li>{isEn ? "Event date" : "Fecha del evento"}</li>
+          <li>{isEn ? "Emotional quote" : "Frase afectiva"}</li>
+          <li>{isEn ? "Event details" : "Detalles del evento"}</li>
         </ul>
         <!-- <Btn
           liga="#nvitaciones"
@@ -72,7 +75,7 @@ import Btn from "./Btn.astro";
         <Btn
           liga="https://wa.link/l03byi"
           clases="btn-claro"
-          texto="Solicitar ahora"
+          texto={isEn ? "Order now" : "Solicitar ahora"}
           claro={true}
           blank={true}
         >

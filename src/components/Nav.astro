@@ -3,9 +3,19 @@ import { Icon } from "astro-icon/components";
 import LanguageSelector from "./LanguageSelector.astro";
 import { useTranslations } from "../i18n/ui";
 
+interface Props {
+  showLangSelector?: boolean;
+}
+
+const { showLangSelector } = Astro.props;
+
 const url = Astro.url.pathname;
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
+
+// Ocultar selector de idiomas en /nvitaciones (slug), carrito y checkout
+const isNvitacionesOrCheckout = url.startsWith("/nvitaciones") || url.includes("/cart") || url.includes("/checkout");
+const shouldShowLang = showLangSelector !== undefined ? showLangSelector : !isNvitacionesOrCheckout;
 
 let cartItemsCount = 0;
 
@@ -71,9 +81,13 @@ if (Astro.cookies.has("cartItems")) {
               </>
             )
           }
-          <li>
-            <LanguageSelector currentLang={lang} variant="nav" />
-          </li>
+          {
+            shouldShowLang && (
+              <li>
+                <LanguageSelector currentLang={lang} variant="nav" />
+              </li>
+            )
+          }
           <li class="cart-item-desktop" id="carrito">
             <a href="/nvitaciones/cart" aria-label={t('nav.cart')}>
               <Icon
@@ -182,12 +196,18 @@ if (Astro.cookies.has("cartItems")) {
       </ul>
 
       <div class="mobile-drawer-footer">
-        <div class="mobile-lang-row">
-          <span class="lang-label-txt">{lang === "en" ? "Language:" : "Idioma:"}</span>
-          <LanguageSelector currentLang={lang} variant="nav" />
-        </div>
+        {
+          shouldShowLang && (
+            <div class="mobile-lang-row">
+              <span class="lang-label-txt">{lang === "en" ? "Language:" : "Idioma:"}</span>
+              <LanguageSelector currentLang={lang} variant="nav" />
+            </div>
+          )
+        }
         <div class="mobile-extra-links">
-          <a href="/terminos-condiciones">Términos y condiciones</a>
+          <a href="/manual">{lang === "en" ? "User Guide" : "Manual de uso"}</a>
+          <span>•</span>
+          <a href="/terminos-condiciones">{lang === "en" ? "Terms & Conditions" : "Términos y condiciones"}</a>
         </div>
       </div>
     </div>

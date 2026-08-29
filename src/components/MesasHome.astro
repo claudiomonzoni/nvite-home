@@ -6,6 +6,11 @@ import { useTranslations } from "../i18n/ui";
 
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
+
+// URLs de video según idioma (dejar listo para la versión en inglés)
+const videoSrcEs = "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm";
+const videoSrcEn = "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm"; // <- Reemplazar con la URL en inglés cuando esté lista
+const videoSrc = lang === "en" ? videoSrcEn : videoSrcEs;
 ---
 
 <div class="grid contenido">
@@ -55,8 +60,8 @@ const t = useTranslations(lang);
     </div>
     <div id="img">
       <div id="poster-container">
-        <Image src={mesaImg} alt="mesas" />
-        <button id="play-btn" aria-label="Reproducir video">
+        <Image src={mesaImg} alt={lang === "en" ? "Guest seating and tables management" : "Gestión de mesas e invitados"} />
+        <button id="play-btn" aria-label={lang === "en" ? "Play demo video" : "Reproducir video"}>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -81,7 +86,7 @@ const t = useTranslations(lang);
     aria-modal="true"
     aria-labelledby="modal-title"
   >
-    <button class="modal-close" aria-label="Cerrar video" data-close>
+    <button class="modal-close" aria-label={lang === "en" ? "Close video" : "Cerrar video"} data-close>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M18 6L6 18M6 6l12 12"
@@ -93,7 +98,7 @@ const t = useTranslations(lang);
     <div class="video-wrapper">
       <video id="modal-video" preload="none" playsinline controls>
         <source
-          src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm"
+          src={videoSrc}
           type="video/webm"
         />
       </video>

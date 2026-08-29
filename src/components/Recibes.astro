@@ -1,33 +1,34 @@
 ---
 import { Icon } from "astro-icon/components";
 import Btn from "./Btn.astro";
+
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <div class="flex">
   <div id="recibes">
     <div class="a">
-      <h2>Recibes con tu invitación de <b>Nvita:</b></h2>
+      <h2>{isEn ? "Included with your" : "Recibes con tu invitación de"} <b>{isEn ? "Nvita invitation:" : "Nvita:"}</b></h2>
       <ul>
-        <li><b>Trato personalizado</b> durante y despues de tu compra</li>
-        <li>Recibes tu invitación, con los datos de tu evento <b> 2 días hábiles</b> despues de tu compra</li>
+        <li><b>{isEn ? "Personalized support" : "Trato personalizado"}</b> {isEn ? "during and after your purchase" : "durante y despues de tu compra"}</li>
+        <li>{isEn ? "Receive your customized invitation" : "Recibes tu invitación, con los datos de tu evento"} <b>{isEn ? "2 business days" : "2 días hábiles"}</b> {isEn ? "after purchase" : "despues de tu compra"}</li>
         <li>
-          Acceso a un <b>panel de invitados</b> para tener control total de tus
-          invitaciones
+          {isEn ? "Access to the" : "Acceso a un"} <b>{isEn ? "Guest Dashboard" : "panel de invitados"}</b> {isEn ? "for complete control" : "para tener control total de tus invitaciones"}
         </li>
-        <li>Tu invitación, sin importar la versión, tiene envios ilimitados</li>
+        <li>{isEn ? "Unlimited invitation sends, all versions included" : "Tu invitación, sin importar la versión, tiene envios ilimitados"}</li>
         <li>
-          Tu invitación queda en línea <b>hasta 1 mes</b> despues de la fecha de tu
-          evento
+          {isEn ? "Your invitation stays online" : "Tu invitación queda en línea"} <b>{isEn ? "up to 1 month" : "hasta 1 mes"}</b> {isEn ? "after your event" : "despues de la fecha de tu evento"}
         </li>
         <li>
-          Tu invitación <b>se verá bien en celulares y pantallas</b> de laptops o pc
+          {isEn ? "Optimized display on mobile and desktop screens" : "Tu invitación se verá bien en celulares y pantallas de laptops o pc"}
         </li>
       </ul>
-      <small>*Panel de invitados no aplica en la versión "basic"</small>
+      <small>{isEn ? "*Guest dashboard not included in basic version" : "*Panel de invitados no aplica en la versión \"basic\""}</small>
      <br>
       <Btn
       liga="#formu"
-      texto="Obtén tu invitación"
+      texto={isEn ? "Get your invitation" : "Obtén tu invitación"}
       claro={false}
       blank={false}
       >
