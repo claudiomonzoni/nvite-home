@@ -334,6 +334,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
   <main id="manual-page">
     <!-- Header Superior con Buscador Estilo Confirmalia -->
     <header class="manual-top-header">
+      <h1>{isEn ? "User Guide" : "Manual de uso"}</h1>
       <div class="search-centered-container">
         <div class="search-input-box">
           <Icon name="solar:magnifer-linear" size={22} class="search-ico" />
@@ -381,7 +382,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
             
             <nav class="explore-nav" id="explore-nav">
               <button type="button" class="topic-item active" data-target="all">
-                <span class="topic-num">✨</span>
+            
                 <span class="topic-text">{isEn ? "All Topics" : "Todos los temas"}</span>
               </button>
               {sections.map((sec) => (
@@ -618,10 +619,16 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
 <style lang="scss">
   @use "../estilos/_variables.scss" as *;
+  h1{
+    font-weight: bold;
+    font-size: clamp(2rem, 3vw, 3rem);
+    color: $primario;
+    text-align: center;
+  }
 
   #manual-page {
     min-height: 100vh;
-    background-color: #fcfdfe;
+    background-color:$fondoGlobal;
     padding-bottom: 6rem;
     font-family: $fuenteA, sans-serif;
   }
@@ -630,7 +637,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
   /* HEADER SUPERIOR CON BUSCADOR                                  */
   /* ------------------------------------------------------------- */
   .manual-top-header {
-    background: #ffffff;
+    background: $terciario;
     border-bottom: 1px solid #eef2f6;
     padding: 7.5rem 1.5rem 2.5rem;
 
@@ -1008,7 +1015,6 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
       .topic-huge-num {
         font-family: var(--font-hurme), serif;
-        font-style: italic;
         font-size: 2.35rem;
         line-height: 1;
         color: $primario;
@@ -1038,7 +1044,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
             font-family: var(--font-hurme), serif;
             font-size: clamp(1.85rem, 2.5vw, 2.35rem);
             font-weight: 700;
-            color: #0f172a;
+            color: $gris;
             line-height: 1.2;
             margin: 0;
             padding: 0;
@@ -1076,11 +1082,11 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
     transition: background 0.2s ease;
 
     &[open] {
-      background: #fafcff;
+      background: $fondoGlobal;
 
       .q-icon-circle {
         transform: rotate(45deg);
-        background: #f1f5f9;
+        background: $fondoGlobal;
         color: $primario;
       }
     }
@@ -1117,7 +1123,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
         font-family: var(--font-hurme), serif;
         font-size: clamp(1.1rem, 1.5vw, 1.28rem);
         font-weight: 600;
-        color: #1e293b;
+        color: $primario;
         flex: 1;
         min-width: 0;
         margin: 0;
