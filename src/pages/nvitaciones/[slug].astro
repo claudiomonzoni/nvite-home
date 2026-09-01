@@ -120,12 +120,20 @@ function localizeProductName(name: string, l: string = "es") {
 }
 
 function localizeBeneficio(
-  beneficio: { titulo: string; parrafo: string; imaFondo: string },
+  beneficio: { titulo: string; parrafo: string; imaFondo: string; tituloEn?: string; parrafoEn?: string },
   isEnglish: boolean,
   isWedding: boolean
 ) {
   if (!isEnglish) return beneficio;
   
+  if (beneficio.tituloEn && beneficio.parrafoEn) {
+    return {
+      titulo: beneficio.tituloEn,
+      parrafo: beneficio.parrafoEn,
+      imaFondo: beneficio.imaFondo,
+    };
+  }
+
   const titleLower = beneficio.titulo.toLowerCase();
   let titulo = beneficio.titulo;
   let parrafo = beneficio.parrafo;
@@ -168,6 +176,8 @@ type NvitacionInfo = {
     titulo: string;
     parrafo: string;
     imaFondo: string;
+    tituloEn?: string;
+    parrafoEn?: string;
   }[];
   categoria: string;
   tipo: string;

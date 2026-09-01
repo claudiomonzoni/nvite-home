@@ -17,17 +17,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Leen tu mensaje animado con tu frase favorita, disfrutan de tu galería de fotos y se emocionan con la cuenta regresiva.",
+        "tituloEn": "When they open it",
+        "parrafo": "Escuchan tu canción favorita de fondo, leen tu frase animada personalizada y disfrutan de tu galería de fotos con cuenta regresiva.",
+        "parrafoEn": "Your favorite song plays in the background, they read your animated personal quote, and enjoy your interactive photo gallery with live countdown.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Confirman su asistencia en segundos, eligen su número de pases y se registran automáticamente en tu panel de control.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman su asistencia en segundos, eligen cuántos de sus pases asignados utilizarán y se registran al instante en tu panel privado de invitados.",
+        "parrafoEn": "They RSVP in seconds, choose how many of their assigned passes they will use, and sync instantly to your private guest dashboard.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Abren la ubicación en Google Maps con un toque y revisan tu mesa de regalos con enlaces directos.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Abren la ruta GPS a la ceremonia y al salón con un solo toque, consultan el código de vestimenta y revisan tus sugerencias de regalos.",
+        "parrafoEn": "They launch the GPS route to the mass and reception with one tap, check the dress code, and view your gift registry.",
         "imaFondo": "/cuando-llegan.webp"
       }
     ],
@@ -61,17 +67,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Se deslumbran con su hermosa frase de amor animada, ven la cuenta regresiva y disfrutan de sus mejores fotos de portada.",
+        "tituloEn": "When they open it",
+        "parrafo": "Se deslumbran con su hermosa frase de amor animada, ven la cuenta regresiva en vivo y disfrutan de su foto principal de portada.",
+        "parrafoEn": "They are delighted by your animated love quote, watch the live countdown, and admire your featured cover photo.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Te envían su confirmación directamente a tu WhatsApp con un solo botón rápido e intuitivo.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Te confirman su asistencia con un formulario rápido y sencillo que envía sus datos y número de asistentes directo a tu WhatsApp.",
+        "parrafoEn": "They confirm attendance through a quick, simple form that sends their details and guest count directly to your WhatsApp.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Tienen el mapa interactivo y los detalles exactos del evento al alcance de su teléfono.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Tienen a la mano la ubicación con mapa GPS interactivo hacia la ceremonia y el banquete, el dress code y los datos de tu mesa de regalos.",
+        "parrafoEn": "They have one-tap interactive GPS maps to the ceremony and reception, the dress code, and your gift registry details right on their phone.",
         "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
@@ -101,17 +113,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Leen tu inspiradora frase animada de quinceañera, ven el reloj de cuenta regresiva y se emocionan con tu foto principal.",
+        "tituloEn": "When they open it",
+        "parrafo": "Leen tu inspiradora frase animada de quinceañera, ven el reloj de cuenta regresiva y se emocionan con tu foto principal de portada.",
+        "parrafoEn": "They read your inspiring animated quince quote, see the live countdown clock, and admire your featured cover photo.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Te envían su asistencia a través de un formulario sencillo directo a tu WhatsApp.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Te envían su asistencia de forma rápida y sencilla a través de un formulario interactivo directo a tu WhatsApp.",
+        "parrafoEn": "They send their RSVP quickly and effortlessly through an interactive form directly to your WhatsApp.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Acceden al mapa interactivo para llegar a la ceremonia y al salón sin perderse.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Acceden al mapa GPS interactivo para llegar a la iglesia y al salón sin perderse, consultan el dress code y tu sugerencia de regalos.",
+        "parrafoEn": "They open the interactive GPS map to the church and party venue, check the dress code, and view your gift registry ideas.",
         "imaFondo": "/cuando-llegan.webp"
       }
     ],
@@ -142,17 +160,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Leen su frase de amor animada personalizada, se emocionan con el reloj de cuenta regresiva y ven su galería de fotos.",
+        "tituloEn": "When they open it",
+        "parrafo": "Suena su canción especial de novios, leen su mensaje de amor animado y disfrutan de su galería de fotos interactiva con cuenta regresiva.",
+        "parrafoEn": "Your special love song plays in the background, they read your animated couple quote, and enjoy your interactive photo gallery with live countdown.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Confirman su asistencia, indican el número de pases y se registran en tu panel de control al instante.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman su asistencia en segundos, eligen cuántos de sus pases asignados utilizarán y se registran al instante en tu panel privado de invitados.",
+        "parrafoEn": "They RSVP in seconds, choose how many of their assigned passes they will use, and sync instantly to your private guest dashboard.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Tienen el mapa directo con GPS al salón de bodas y los enlaces directos a su mesa de regalos.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Tienen navegación directa por GPS hacia la ceremonia y el banquete, consultan el dress code sugerido y los enlaces a tu mesa de regalos.",
+        "parrafoEn": "They get one-tap GPS navigation to the ceremony and reception, check the suggested dress code, and access direct gift registry links.",
         "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
@@ -188,17 +212,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Escuchan la canción que amas, leen tu mensaje animado y ven tu galería con tus mejores fotos.",
+        "tituloEn": "When they open it",
+        "parrafo": "Escuchan tu canción favorita de fondo, leen tu dedicatoria especial animada y se deslumbran con tu galería fotográfica de gala.",
+        "parrafoEn": "Your favorite song plays in the background, they read your animated VIP dedication, and admire your elegant gala photo gallery.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Recibes su asistencia al instante, eligen su mesa de regalos y te dejan un mensaje de felicitación.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman sus pases asignados, te escriben una linda felicitación y obtienen su pase digital con código QR dinámico y número de mesa.",
+        "parrafoEn": "They confirm their assigned passes, leave you a warm greeting, and unlock their digital pass with dynamic QR code and assigned table.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Tienen el itinerario del evento, el mapa interactivo y su pase personalizado en su teléfono.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Muestran su código QR para el control de acceso en la entrada, consultan el itinerario minuto a minuto, mapa GPS y sugerencia de regalos.",
+        "parrafoEn": "They present their QR pass for fast entrance check-in, follow the minute-by-minute timeline, GPS map, and gift registry.",
         "imaFondo": "/cuando-llegan.webp"
       }
     ],
@@ -232,17 +262,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Escuchan tu canción favorita de fondo, se sorprenden con tu frase animada y ven tu hermosa galería interactiva.",
+        "tituloEn": "When they open it",
+        "parrafo": "Suena tu canción favorita de fondo, se sorprenden con tu frase animada personalizada y disfrutan de tu hermosa galería interactiva.",
+        "parrafoEn": "Your favorite song plays softly, they are surprised by your customized animated quote, and enjoy your beautiful photo gallery.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Confirman su asistencia en segundos, eligen sus pases y te dejan un mensaje de felicitación.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman sus pases asignados, te dejan un mensaje de felicitación y reciben su pase digital con código QR dinámico y mesa asignada.",
+        "parrafoEn": "They confirm their assigned passes, leave you a heartfelt message, and receive their digital pass with dynamic QR code and assigned table.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Acceden al mapa GPS, al itinerario detallado, al dress code y a la sugerencia de regalos con un solo toque.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Presentan su pase con código QR en la entrada, acceden al mapa GPS, al itinerario detallado, al dress code y a la mesa de regalos.",
+        "parrafoEn": "They show their QR pass at the entrance, access the GPS map, detailed timeline, dress code, and gift registry with a single tap.",
         "imaFondo": "/cuando-llegan.webp"
       }
     ],
@@ -279,17 +315,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
+        "tituloEn": "When they open it",
         "parrafo": "Suena su canción especial de novios, leen su mensaje de amor animado y disfrutan de la hermosa galería del romance.",
+        "parrafoEn": "Your special couple song plays softly, they read your animated love quote, and enjoy your romantic photo gallery.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Confirman de inmediato en el formulario de asistencia, eligen sus pases y se registran en tu panel de control.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman sus pases asignados, te escriben un mensaje de felicitación y se genera su pase digital con código QR dinámico y mesa asignada.",
+        "parrafoEn": "They confirm their assigned passes, leave you a congratulations note, and unlock their digital pass with dynamic QR code and assigned table.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Tienen a la mano el mapa exacto, el itinerario del gran día, la mesa de regalos y el dress code sugerido.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Muestran su código QR en recepción, tienen a la mano el mapa GPS, el itinerario detallado, dress code y recomendaciones de hospedaje.",
+        "parrafoEn": "They present their QR pass at reception, have one-tap GPS navigation, the detailed wedding timeline, dress code, and hotel lodging suggestions.",
         "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
@@ -325,17 +367,23 @@
     "beneficios": [
       {
         "titulo": "Cuando la abren",
-        "parrafo": "Se sumergen en su historia de amor con su canción favorita de fondo, su frase animada de bienvenida y su galería fotográfica.",
+        "tituloEn": "When they open it",
+        "parrafo": "Se sumergen en su historia de amor con su canción favorita de fondo, su dedicatoria animada VIP y su galería fotográfica de gala.",
+        "parrafoEn": "They immerse in your love story with your favorite song in the background, an animated VIP dedication, and your elegant gala photo gallery.",
         "imaFondo": "/cuando-reciben.webp"
       },
       {
         "titulo": "Cuando confirman",
-        "parrafo": "Te envían sus mejores deseos, seleccionan sus pases de invitado y registran su asistencia en tu panel en tiempo real.",
+        "tituloEn": "When they RSVP",
+        "parrafo": "Confirman sus pases asignados, te envían sus mejores deseos y obtienen su pase digital con código QR dinámico y mesa asignada.",
+        "parrafoEn": "They confirm their assigned passes, send their best wishes, and unlock their digital pass with dynamic QR code and assigned table.",
         "imaFondo": "/cuando-confirman.webp"
       },
       {
         "titulo": "Cuando el día llega",
-        "parrafo": "Tienen su pase personalizado en su teléfono, el dress code de gala y los enlaces de su mesa de regalos.",
+        "tituloEn": "When the big day arrives",
+        "parrafo": "Presentan su código QR para el acceso ágil en puerta, consultan el dress code de gala, el itinerario minuto a minuto y recomendaciones de hospedaje.",
+        "parrafoEn": "They present their QR pass for seamless entrance check-in, check the gala dress code, the minute-by-minute timeline, and hotel recommendations.",
         "imaFondo": "/cuando-llegan-boda.webp"
       }
     ],
