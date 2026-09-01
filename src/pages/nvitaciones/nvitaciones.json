@@ -12,7 +12,7 @@
     },
     "muestra": {
       "es": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
-      "en": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12&lang=en"
+      "en": "/quince/clasica-ingles?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12&lang=en"
     },
     "beneficios": [
       {
@@ -56,7 +56,7 @@
     },
     "muestra": {
       "es": "/bodas/invitacion-bodas-esencial",
-      "en": "/bodas/invitacion-bodas-esencial?lang=en"
+      "en": "/bodas/esencial-en?lang=en"
     },
     "beneficios": [
       {
@@ -96,7 +96,7 @@
     },
     "muestra": {
       "es": "/quince/invitacion-bodas-esencial",
-      "en": "/quince/invitacion-bodas-esencial?lang=en"
+      "en": "/quince/esencial-ingles"
     },
     "beneficios": [
       {
@@ -182,7 +182,7 @@
     },
     "muestra": {
       "es": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
-      "en": "/quince/cloe-guadalupe-en"
+      "en": "/quince/xv-lux-elegante-ingles?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8"
     },
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
     "beneficios": [
@@ -227,7 +227,7 @@
     },
     "muestra": {
       "es": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
-      "en": "/quince/cloe-guadalupe-en"
+      "en": "/quince/xv-lux-en?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8"
     },
     "beneficios": [
       {
