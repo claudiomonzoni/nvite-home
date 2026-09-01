@@ -324,21 +324,39 @@ const t = useTranslations(lang);
         </div>
 
         <div class="conteFiltros">
-          <input
-            id="search-input"
-            type="text"
-            placeholder={t('panel.actions.searchPlaceholder')}
-            class="buscador"
-          />
-          <div class="filtros">
-            <div class="filtros-estado">
-              <button class="filtro-btn activo" data-estado="todos">{t('panel.filters.all')}</button>
-              <button class="filtro-btn" data-estado="enviada">{t('panel.filters.sent')}</button>
-              <button class="filtro-btn" data-estado="confirmado">{t('panel.filters.confirmed')}</button>
-              <button class="filtro-btn" data-estado="NoAsiste">{t('panel.filters.declined')}</button>
-              <button class="filtro-btn" data-estado="noEnviada">{t('panel.filters.pending')}</button>
+          <div class="filtros-top-row">
+            <input
+              id="search-input"
+              type="text"
+              placeholder={t('panel.actions.searchPlaceholder')}
+              class="buscador"
+            />
+
+            <!-- Selector de Canal de Envío (WhatsApp / SMS / Ambos) -->
+            <div class="canal-envio-wrapper">
+              <span class="canal-label">{t('panel.channel.label')}</span>
+              <div class="canal-botones">
+                <button class="canal-btn activo" data-channel="whatsapp" type="button" title="WhatsApp">
+                  <Icon name="mdi:whatsapp" size={15} />
+                  <span>{t('panel.channel.whatsapp')}</span>
+                </button>
+                <button class="canal-btn" data-channel="sms" type="button" title="SMS / iMessage">
+                  <Icon name="mdi:message-text-outline" size={15} />
+                  <span>{t('panel.channel.sms')}</span>
+                </button>
+                <button class="canal-btn" data-channel="all" type="button" title={t('panel.channel.all')}>
+                  <span>{t('panel.channel.all')}</span>
+                </button>
+              </div>
             </div>
-            
+          </div>
+
+          <div class="filtros-estado">
+            <button class="filtro-btn activo" data-estado="todos">{t('panel.filters.all')}</button>
+            <button class="filtro-btn" data-estado="enviada">{t('panel.filters.sent')}</button>
+            <button class="filtro-btn" data-estado="confirmado">{t('panel.filters.confirmed')}</button>
+            <button class="filtro-btn" data-estado="NoAsiste">{t('panel.filters.declined')}</button>
+            <button class="filtro-btn" data-estado="noEnviada">{t('panel.filters.pending')}</button>
           </div>
         </div>
       </div>
@@ -498,6 +516,32 @@ const t = useTranslations(lang);
         });
       });
     }
+
+    // 2.1 Selector de Canal de Envío (WhatsApp / SMS / Ambos)
+    const canalBtns = document.querySelectorAll(".canal-btn") as NodeListOf<HTMLButtonElement>;
+    const setDispatchChannel = (channel: string) => {
+      document.documentElement.setAttribute("data-dispatch-channel", channel);
+      canalBtns.forEach((btn) => {
+        if (btn.getAttribute("data-channel") === channel) {
+          btn.classList.add("activo");
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("activo");
+          btn.classList.remove("active");
+        }
+      });
+      localStorage.setItem("nviteDispatchChannel", channel);
+    };
+
+    const savedChannel = localStorage.getItem("nviteDispatchChannel") || "whatsapp";
+    setDispatchChannel(savedChannel);
+
+    canalBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const channel = btn.getAttribute("data-channel") || "whatsapp";
+        setDispatchChannel(channel);
+      });
+    });
 
     // 3. Exportar a Excel (SheetJS)
     const loadSheetJS = () => {
@@ -737,30 +781,71 @@ const t = useTranslations(lang);
   }
 
   .buscador {
-    padding: 0.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    flex: 1 0 auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.45rem 0.85rem;
+    height: 40px;
+    border-radius: $radio;
+    font-size: 0.85rem;
+    font-family: $fuenteA;
     box-shadow: none; 
-    background-color: rgba($terciario, 0.5);
+    border: 1px solid rgba($primario, 0.2);
+    background-color: rgba($terciario, 0.35);
+    color: $primario;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: $primario;
+      background-color: #fff;
+    }
+
+    &::placeholder {
+      color: rgba($primario, 0.6);
+      font-family: $fuenteA;
+    }
 
     @include cel {
-      margin: $margen-min 0;
+      flex: none;
+      width: 100%;
+      height: 42px;
+      font-size: 0.85rem;
+      margin: 0;
     }
   }
 
   .conteFiltros {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: solid 1px #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
     padding-bottom: $margen-min;
-    flex-wrap: wrap;
-    gap: 1rem;
+    border: none;
+  }
+
+  .filtros-top-row {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .buscador {
+      flex: 1;
+      min-width: 220px;
+    }
 
     @include cel {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+
+      .buscador {
+        flex: none;
+        width: 100%;
+      }
     }
   }
 
@@ -822,47 +907,105 @@ const t = useTranslations(lang);
     }
   }
 
-  .filtros {
-    display: flex;
-    width: 100%;
-    flex: 1 0 auto;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    
-    @include cel {
-      order: 1;
-    }
-    input {
-      border-radius: $radio;
-    }
-  }
-
   .filtros-estado {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .filtro-btn {
-    flex: 1 0 auto;
-    padding: 0.5rem 1rem;
-    border: 1px solid $primario;
+    flex: 0 0 auto;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba($primario, 0.35);
     border-radius: $radio;
     background: transparent;
     color: $primario;
-    max-width: fit-content;
+    font-family: $fuenteA;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba($primario, 0.08);
+    }
+
+    &.activo, &.active {
+      background: $secundario;
+      color: #fff;
+      border: 1px solid $secundario;
+      font-weight: 600;
+    }
+  }
+
+  .canal-envio-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba($terciario, 0.4);
+    border: 1px solid rgba($primario, 0.15);
+    padding: 0.25rem 0.5rem;
+    border-radius: $radio;
+    font-family: $fuenteA;
+
+    @include cel {
+      width: 100%;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+  }
+
+  .canal-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $primario;
+    font-family: $fuenteA;
+    white-space: nowrap;
+    padding-left: 0.2rem;
+  }
+
+  .canal-botones {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .canal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: $radio;
+    border: 1px solid transparent;
+    background: transparent;
+    color: $primario;
+    font-size: 0.75rem;
+    font-family: $fuenteA;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
       background: rgba($primario, 0.1);
     }
 
     &.activo, &.active {
-      background: $secundario;
-      color: white;
-      border: 1px solid $secundario;
+      color: #fff;
+      font-weight: 600;
+
+      &[data-channel="whatsapp"] {
+        background: #2baf5b;
+        border-color: #2baf5b;
+      }
+
+      &[data-channel="sms"] {
+        background: $primario;
+        border-color: $primario;
+      }
+
+      &[data-channel="all"] {
+        background: $secundario;
+        border-color: $secundario;
+      }
     }
   }
 
@@ -878,7 +1021,7 @@ const t = useTranslations(lang);
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: .8rem;
-    font-family: var(--font-hurme), sans-serif;
+    font-family: $fuenteA;
 
     &:hover {
       background-color: #dcfce7;
