@@ -280,7 +280,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                       <span class="guest-name">{guest.nombre}</span>
                       <span class="guest-sub">
                         {t('panel.guest.passes', { count: guest.pases })} •{" "}
-                        {guest.confirmado ? t('panel.guest.confirmed') : t('panel.guest.pending')}
+                        {guest.confirmado ? t('panel.guest.confirmed') : lang === 'en' ? 'Pending' : 'Pendiente'}
                       </span>
                     </div>
                   </div>
