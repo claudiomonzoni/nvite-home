@@ -100,12 +100,14 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     gap: 0.25rem;
     backdrop-filter: blur(12px);
     transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 1000;
 
     &.hidden {
       display: none;
     }
     @include cel{
-      top: -90px;
+      top: calc(100% - 26px);
+      right: 100%;
     }
   }
 
@@ -113,6 +115,10 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     background: #ffffff;
     border: 1px solid #e2e8f0;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    @include cel{
+      top: calc(100% + 6px);
+      right: 0px;
+    }
   }
 
   .lang-option {

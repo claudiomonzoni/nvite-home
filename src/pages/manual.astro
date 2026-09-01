@@ -476,16 +476,17 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
   <Footer />
 </Layout>
 
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("manual-search-input");
+<script>
+  function setupManualScript() {
+    const searchInput = document.getElementById("manual-search-input") as HTMLInputElement | null;
     const clearBtn = document.getElementById("clear-search-btn");
     const topicButtons = document.querySelectorAll(".topic-item");
     const sections = document.querySelectorAll(".topic-section");
-    const accordionItems = document.querySelectorAll(".question-accordion-item");
     const emptyState = document.getElementById("search-empty-state");
     const freqButtons = document.querySelectorAll(".freq-btn");
     const clearFiltersBtn = document.getElementById("clear-filters-btn");
+
+    if (!searchInput && topicButtons.length === 0) return;
 
     let activeFilter = "all";
     let searchQuery = "";
@@ -503,23 +504,23 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
         questionsInSec.forEach((item) => {
           const keywords = item.getAttribute("data-keywords") || "";
-          const text = item.textContent.toLowerCase();
+          const text = item.textContent?.toLowerCase() || "";
           const matchesQuery = q === "" || keywords.includes(q) || text.includes(q);
 
           if (matchesTopic && matchesQuery) {
-            item.style.display = "block";
+            (item as HTMLElement).style.display = "block";
             secHasVisibleQuestions = true;
             totalVisibleQuestions++;
             if (q.length >= 3) {
-              item.open = true;
+              (item as HTMLDetailsElement).open = true;
             }
           } else {
-            item.style.display = "none";
+            (item as HTMLElement).style.display = "none";
           }
         });
 
         // Mostrar u ocultar la sección completa
-        sec.style.display = secHasVisibleQuestions ? "block" : "none";
+        (sec as HTMLElement).style.display = secHasVisibleQuestions ? "block" : "none";
       });
 
       if (emptyState) {
@@ -533,16 +534,19 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
     // Buscador
     if (searchInput) {
-      searchInput.addEventListener("input", (e) => {
-        searchQuery = e.target.value;
+      searchInput.addEventListener("input", (e: Event) => {
+        searchQuery = (e.target as HTMLInputElement).value;
         applyFilterAndSearch();
       });
 
       // Atajo de teclado Cmd+K / Ctrl+K
-      document.addEventListener("keydown", (e) => {
+      document.addEventListener("keydown", (e: KeyboardEvent) => {
         if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-          e.preventDefault();
-          searchInput.focus();
+          const currentSearch = document.getElementById("manual-search-input");
+          if (currentSearch) {
+            e.preventDefault();
+            currentSearch.focus();
+          }
         }
       });
     }
@@ -614,7 +618,9 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
         applyFilterAndSearch();
       });
     }
-  });
+  }
+
+  document.addEventListener("astro:page-load", setupManualScript);
 </script>
 
 <style lang="scss">

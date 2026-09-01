@@ -137,8 +137,9 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
       </div>
 
       <form data-authForm action="../api/salir.json" method="POST">
-        <button type="submit" class="btn-claro btn-logout">
-          <Icon name="mdi:logout" size={20} /> {t('panel.menu.logout')}
+        <button type="submit" class="btn-claro btn-logout" title={t('panel.menu.logout')} aria-label={t('panel.menu.logout')}>
+          <Icon name="mdi:logout" size={20} />
+          <span class="logout-text">{t('panel.menu.logout')}</span>
         </button>
       </form>
     </li>
@@ -272,6 +273,10 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
     color: $primario;
     gap: 1rem;
     align-items: center;
+
+    @include cel {
+      gap: 0.5rem;
+    }
   }
 
   .nombre-evento {
@@ -451,19 +456,44 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
 
   .btn-logout {
     background-color: $primario;
-    border-radius: 5px;
+    border-radius: 6px;
     color: #fff;
     border: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
     text-align: center;
-    padding: 0.3rem 0.8rem;
+    padding: 0.35rem 0.8rem;
     font-weight: bold;
     margin: 0 !important;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     svg {
       vertical-align: middle;
-      margin-right: 0.2rem;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    @include cel {
+      padding: 0;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+      .logout-text {
+        display: none;
+      }
+
+      svg {
+        margin: 0;
+      }
     }
   }
 </style>

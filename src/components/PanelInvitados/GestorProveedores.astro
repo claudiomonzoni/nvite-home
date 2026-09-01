@@ -51,29 +51,43 @@ const totalPagadoGlobal = proveedores.reduce((sum, p) => sum + (p.totalPagado ||
 const saldoPendienteGlobal = Math.max(0, presupuestoTotalGlobal - totalPagadoGlobal);
 const porcentajePagadoGlobal = presupuestoTotalGlobal > 0 ? Math.round((totalPagadoGlobal / presupuestoTotalGlobal) * 100) : 0;
 
-const categoriasDisponibles = lang === "en" ? [
-  "All",
-  "Photography & Video",
-  "Catering / Food",
-  "Venue / Location",
-  "Music / DJ",
-  "Flowers & Decor",
-  "Drinks & Bar",
-  "Cake & Desserts",
-  "Dress & Style",
-  "Others",
-] : [
-  "Todos",
-  "Fotografía y Video",
-  "Banquete",
-  "Salón / Locación",
-  "Música / DJ",
-  "Flores y Decoración",
-  "Bebidas y Barra",
-  "Postres y Pastelería",
-  "Estilo y Vestuario",
-  "Otros",
+export const CATEGORIAS_CONFIG = [
+  { key: "all", es: "Todos", en: "All" },
+  { key: "foto", es: "Fotografía y Video", en: "Photography & Video" },
+  { key: "banquete", es: "Banquete", en: "Catering / Food" },
+  { key: "salon", es: "Salón / Locación", en: "Venue / Location" },
+  { key: "musica", es: "Música / DJ", en: "Music / DJ" },
+  { key: "flores", es: "Flores y Decoración", en: "Flowers & Decor" },
+  { key: "bebidas", es: "Bebidas y Barra", en: "Drinks & Bar" },
+  { key: "postres", es: "Postres y Pastelería", en: "Cake & Desserts" },
+  { key: "estilo", es: "Estilo y Vestuario", en: "Dress & Style" },
+  { key: "otros", es: "Otros", en: "Others" },
 ];
+
+export function getCategoryKey(cat: string = ""): string {
+  const norm = (cat || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+  if (!norm || norm === "todos" || norm === "all") return "all";
+  if (norm.includes("fotograf") || norm.includes("video") || norm.includes("photo")) return "foto";
+  if (norm.includes("banquet") || norm.includes("cater") || norm.includes("food") || norm.includes("comida")) return "banquete";
+  if (norm.includes("salon") || norm.includes("locacion") || norm.includes("venue") || norm.includes("location") || norm.includes("lugar")) return "salon";
+  if (norm.includes("music") || norm.includes("dj") || norm.includes("musica") || norm.includes("banda") || norm.includes("grupo")) return "musica";
+  if (norm.includes("flor") || norm.includes("flower") || norm.includes("decor")) return "flores";
+  if (norm.includes("bebid") || norm.includes("drink") || norm.includes("bar") || norm.includes("coctel") || norm.includes("cocktail")) return "bebidas";
+  if (norm.includes("postre") || norm.includes("dessert") || norm.includes("pastel") || norm.includes("cake") || norm.includes("dulce")) return "postres";
+  if (norm.includes("estilo") || norm.includes("vest") || norm.includes("dress") || norm.includes("style") || norm.includes("traje") || norm.includes("suit") || norm.includes("maquillaj") || norm.includes("makeup")) return "estilo";
+  return "otros";
+}
+
+export function getCategoryLabel(cat: string = "", currentLang: string = "es"): string {
+  const key = getCategoryKey(cat);
+  const found = CATEGORIAS_CONFIG.find((c) => c.key === key);
+  if (found && key !== "otros") {
+    return currentLang === "en" ? found.en : found.es;
+  }
+  return cat || (currentLang === "en" ? "Others" : "Otros");
+}
+
+const categoriasDisponibles = CATEGORIAS_CONFIG.map((c) => (lang === "en" ? c.en : c.es));
 
 const comunesFaltantes = PROVEEDORES_COMUNES.filter(
   (c) => !isCommonProviderCovered(c, proveedores)
@@ -118,15 +132,19 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
   <!-- Action Bar & Category Filters -->
   <div class="controls-bar">
     <div class="filtros-scroll">
-      {categoriasDisponibles.map((cat, idx) => (
-        <button
-          type="button"
-          class={`cat-filter-btn ${idx === 0 ? "active" : ""}`}
-          data-categoria={cat}
-        >
-          {cat}
-        </button>
-      ))}
+      {CATEGORIAS_CONFIG.map((catObj, idx) => {
+        const catLabel = lang === "en" ? catObj.en : catObj.es;
+        return (
+          <button
+            type="button"
+            class={`cat-filter-btn ${idx === 0 ? "active" : ""}`}
+            data-cat-key={catObj.key}
+            data-categoria={catLabel}
+          >
+            {catLabel}
+          </button>
+        );
+      })}
     </div>
 
     <div class="actions-group">
@@ -167,22 +185,13 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         return (
           <article
             class="prov-card-item"
-            data-categoria={
-              p.categoria && (
-                p.categoria.toLowerCase().includes("estilo") ||
-                p.categoria.toLowerCase().includes("vestuario") ||
-                p.categoria.toLowerCase().includes("vestido") ||
-                p.categoria.toLowerCase().includes("traje") ||
-                p.categoria.toLowerCase().includes("maquillaje")
-              )
-                ? (lang === 'en' ? "Dress & Style" : "Estilo y Vestuario")
-                : p.categoria
-            }
+            data-cat-key={getCategoryKey(p.categoria)}
+            data-categoria={getCategoryLabel(p.categoria, lang)}
             data-provider-id={p.id}
           >
             <div class="card-head">
               <div class="card-head-left">
-                <span class="cat-pill">{p.categoria}</span>
+                <span class="cat-pill">{getCategoryLabel(p.categoria, lang)}</span>
                 <h3 class="prov-name">{p.nombre}</h3>
               </div>
               <span class={`status-badge ${esLiquidado ? "liquidado" : p.saldoPendiente > 0 ? "pendiente" : "indefinido"}`}>
@@ -605,12 +614,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         filterBtns.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
 
-        const catSelected = btn.getAttribute("data-categoria");
+        const catKeySelected = btn.getAttribute("data-cat-key");
         const cards = document.querySelectorAll(".prov-card-item");
 
         cards.forEach((card) => {
-          const cardCat = card.getAttribute("data-categoria");
-          if (catSelected === "Todos" || cardCat === catSelected) {
+          const cardCatKey = card.getAttribute("data-cat-key");
+          if (!catKeySelected || catKeySelected === "all" || cardCatKey === catKeySelected) {
             (card as HTMLElement).style.display = "flex";
           } else {
             (card as HTMLElement).style.display = "none";
