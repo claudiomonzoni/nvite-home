@@ -947,7 +947,7 @@ const t = useTranslations(lang);
     padding: 0.25rem 0.5rem;
     border-radius: $radio;
     font-family: $fuenteA;
-
+    
     @include cel {
       width: 100%;
       justify-content: space-between;
@@ -956,7 +956,7 @@ const t = useTranslations(lang);
   }
 
   .canal-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: $primario;
     font-family: $fuenteA;
@@ -978,9 +978,8 @@ const t = useTranslations(lang);
     border: 1px solid transparent;
     background: transparent;
     color: $primario;
-    font-size: 0.75rem;
+    font-size: clamp(0.6rem, 0.8vw, 0.85rem);
     font-family: $fuenteA;
-    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -998,7 +997,7 @@ const t = useTranslations(lang);
       }
 
       &[data-channel="sms"] {
-        background: $primario;
+        background: #007AFF;
         border-color: $primario;
       }
 
@@ -1052,6 +1051,7 @@ const t = useTranslations(lang);
     @include cel {
       gap: 1rem;
       padding: 0.5rem;
+      margin-bottom: $margen-min;
     }
   }
 

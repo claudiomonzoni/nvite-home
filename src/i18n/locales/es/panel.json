@@ -45,7 +45,7 @@
   "panel.guest.sendWhatsapp": "WhatsApp",
   "panel.guest.sendSms": "SMS / iMessage",
   "panel.guest.share": "Compartir",
-  "panel.channel.label": "Canal de envío:",
+  "panel.channel.label": "Canal:",
   "panel.channel.whatsapp": "WhatsApp",
   "panel.channel.sms": "SMS / iMessage",
   "panel.channel.all": "Ambos",

@@ -45,7 +45,7 @@
   "panel.guest.sendWhatsapp": "WhatsApp",
   "panel.guest.sendSms": "SMS / iMessage",
   "panel.guest.share": "Share",
-  "panel.channel.label": "Dispatch channel:",
+  "panel.channel.label": "Send by:",
   "panel.channel.whatsapp": "WhatsApp",
   "panel.channel.sms": "SMS / iMessage",
   "panel.channel.all": "Both",
