@@ -24,7 +24,31 @@ import SliderControls from "../../components/SliderControls.astro";
 // Datos
 import nvitacionesData from "./nvitaciones.json";
 
-const panelTestimonials = [
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
+
+const panelTestimonials = isEn ? [
+  {
+    stars: 5,
+    text: "They were wonderful! All our guests loved the interactive experience.",
+    author: "— Chris & Sarah / Miami, FL",
+  },
+  {
+    stars: 5,
+    text: "The LUX invitation was stunning and everyone RSVP'd on time. Highly recommended!",
+    author: "— Sophia & David / Austin, TX",
+  },
+  {
+    stars: 5,
+    text: "Loved the LUX design and the customer service was so attentive.",
+    author: "— Andrea P. / San Diego, CA",
+  },
+  {
+    stars: 5,
+    text: "They guided me throughout the entire process from purchase to sending out my first invite.",
+    author: "— Emily Watson / New York, NY",
+  },
+] : [
   {
     stars: 5,
     text: "Estuvieron excelentes, a todos mis amigos les encantaron",
@@ -61,27 +85,116 @@ function getTestimonialIndex(seed: string | undefined, length: number) {
 const testimonial =
   panelTestimonials[getTestimonialIndex(slug, panelTestimonials.length)];
 
+// Helper functions for translation
+function localizeCategory(cat?: string, l: string = "es") {
+  if (!cat) return l === "en" ? "Invitations" : "Sin categoría";
+  if (l !== "en") return cat;
+  const lower = cat.toLowerCase();
+  if (lower.includes("boda")) return "Weddings";
+  if (lower.includes("xv") || lower.includes("quince")) return "Quinceañera";
+  if (lower.includes("cumple")) return "Birthdays";
+  if (lower.includes("bautizo")) return "Baptism";
+  if (lower.includes("baby")) return "Baby Shower";
+  return cat;
+}
 
+function localizeVersion(ver?: string, l: string = "es") {
+  if (!ver) return l === "en" ? "Standard" : "Sin versión";
+  if (l !== "en") return ver;
+  const lower = ver.toLowerCase();
+  if (lower.includes("clas")) return "Classic";
+  if (lower.includes("esenc")) return "Essential";
+  if (lower.includes("lux")) return "Lux";
+  return ver;
+}
+
+function localizeProductName(name: string, l: string = "es") {
+  if (l !== "en") return name;
+  return name
+    .replace(/Invitaci[oó]n de Bodas?/gi, "Wedding Invitation")
+    .replace(/Invitaci[oó]n de XV A[ñn]os?/gi, "Quinceañera Invitation")
+    .replace(/Invitaci[oó]n de Quincea[ñn]era/gi, "Quinceañera Invitation")
+    .replace(/Invitaci[oó]n/gi, "Invitation")
+    .replace(/Cl[aá]sica/gi, "Classic")
+    .replace(/Esencial/gi, "Essential");
+}
+
+function localizeBeneficio(
+  beneficio: { titulo: string; parrafo: string; imaFondo: string; tituloEn?: string; parrafoEn?: string },
+  isEnglish: boolean,
+  isWedding: boolean
+) {
+  if (!isEnglish) return beneficio;
+  
+  if (beneficio.tituloEn && beneficio.parrafoEn) {
+    return {
+      titulo: beneficio.tituloEn,
+      parrafo: beneficio.parrafoEn,
+      imaFondo: beneficio.imaFondo,
+    };
+  }
+
+  const titleLower = beneficio.titulo.toLowerCase();
+  let titulo = beneficio.titulo;
+  let parrafo = beneficio.parrafo;
+
+  if (titleLower.includes("abren") || titleLower.includes("reciben")) {
+    titulo = "When they open it";
+    parrafo = isWedding
+      ? "Your special couple song plays softly, they read your customized animated love quote, and enjoy your romantic photo gallery."
+      : "Your favorite soundtrack plays in the background, they read your animated quote, and enjoy your interactive photo gallery.";
+  } else if (titleLower.includes("confirman")) {
+    titulo = "When they RSVP";
+    parrafo = "They confirm attendance in seconds, choose their assigned passes, and everything syncs instantly with your private dashboard.";
+  } else if (titleLower.includes("llega") || titleLower.includes("día") || titleLower.includes("dia")) {
+    titulo = "When the big day arrives";
+    parrafo = isWedding
+      ? "They have one-tap GPS navigation to the ceremony and reception, the detailed schedule, dress code, and gift registry right on their phone."
+      : "They access the interactive GPS map, celebration timeline, dress code, and gift registry with a single tap.";
+  }
+
+  return {
+    titulo,
+    parrafo,
+    imaFondo: beneficio.imaFondo,
+  };
+}
+
+type LocalizedField = string | { es?: string; en?: string };
 
 // Define the type for nvitacionInfo to include detalles
 type NvitacionInfo = {
   id: string;
   precioTachado?: string | boolean; // Make precioTachado optional and accept string or boolean
   slug: string;
-  muestra?: string;
-  titulo?: string;
+  muestra?: LocalizedField;
+  nombre?: LocalizedField;
+  titulo?: LocalizedField;
+  descripcion?: LocalizedField;
+  detalles?: LocalizedField;
   beneficios: {
     titulo: string;
     parrafo: string;
     imaFondo: string;
+    tituloEn?: string;
+    parrafoEn?: string;
   }[];
   categoria: string;
   tipo: string;
   version: string;
   imagenes: string[];
-  detalles?: string; // Add detalles property
   video?: string; // Add video property
 };
+
+function getLocalizedText(
+  field?: LocalizedField,
+  l: string = "es",
+  fallback: string = ""
+): string {
+  if (!field) return fallback;
+  if (typeof field === "string") return field;
+  return (l === "en" ? field.en : field.es) || field.es || field.en || fallback;
+}
 
 // Configuración de imágenes
 const imageModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -157,19 +270,19 @@ if (!product || !product.data.active) {
 
 const imagenes = await getProductImages(nvitacionInfo);
 
-const price = await getProductPrice(product);
+const price = await getProductPrice(product, lang);
 
 // Extraer símbolo de moneda y número (soporta decimales y separadores)
 const match = price.match(/^([^\d]+)([\d,.]+)/);
 let priceTachado = price;
 if (match) {
-  const currency = match[1]; // "MX$"
+  const currency = match[1];
   // Convertir a número (eliminando comas)
   const priceNumber = Number(match[2].replace(/,/g, ""));
   const priceTachadoNumber = Math.round(priceNumber * 1.4);
 
-  // Formatear con separador de miles y dos decimales si quieres
-  const priceTachadoStr = priceTachadoNumber.toLocaleString("es-MX", {
+  // Formatear con separador de miles y dos decimales
+  const priceTachadoStr = priceTachadoNumber.toLocaleString(isEn ? "en-US" : "es-MX", {
     minimumFractionDigits: 0,
   });
 
@@ -179,16 +292,33 @@ const productId = product.data.id;
 
 // Calcular precio por invitado dinámicamente
 const numericPrice = Number(price.replace(/,/g, "").replace(/[^\d.]/g, ""));
-const costPerGuest = Math.round(numericPrice / 100);
+const costPerGuest = isEn ? (numericPrice / 100).toFixed(2) : Math.round(numericPrice / 100);
+
+const customName = getLocalizedText(nvitacionInfo?.nombre || nvitacionInfo?.titulo, lang);
+const displayedName = customName || localizeProductName(product.data.name, lang);
+
+const customDescription = getLocalizedText(nvitacionInfo?.descripcion || nvitacionInfo?.detalles, lang);
+const displayedDescription = customDescription || product.data.description || "";
+
+const displayedCategory = localizeCategory(nvitacionInfo?.categoria || (product.data.metadata as Record<string, string> | undefined)?.Categoria, lang);
+const displayedVersion = localizeVersion(nvitacionInfo?.version, lang);
+const isWedding = (nvitacionInfo?.categoria || "").toLowerCase().includes("boda") || (product?.data?.name || "").toLowerCase().includes("boda");
+
+let previewUrl = getLocalizedText(nvitacionInfo?.muestra, lang);
+if (isEn && previewUrl && !previewUrl.includes("lang=")) {
+  previewUrl += (previewUrl.includes("?") ? "&" : "?") + "lang=en";
+}
 
 // Meta description emocional para SEO
-const metaDescription = `La invitación digital más completa para tu boda — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} por invitado. Con música, galería animada, cuenta regresiva y confirmación en tiempo real. Personalizada a tus colores.`;
+const metaDescription = isEn
+  ? `The most complete digital invitation for your celebration — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} per guest. Includes music, animated gallery, countdown and live RSVP.`
+  : `La invitación digital más completa para tu boda — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} por invitado. Con música, galería animada, cuenta regresiva y confirmación en tiempo real. Personalizada a tus colores.`;
 ---
 
 <Layout
-  title=`${product.data.name} - Invitación Digitales para tu evento`
+  title=`${displayedName} - ${isEn ? "Digital Invitations" : "Invitación Digitales para tu evento"}`
   description={metaDescription}
-  whatsappProduct={product.data.name}
+  whatsappProduct={displayedName}
   whatsappIconOnly={true}
 >
   <div class="grid contenido">
@@ -198,8 +328,8 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       <Breadcrumb
         categoria={nvitacionInfo?.tipo === "PDF"
           ? "pdf"
-          : nvitacionInfo?.categoria?.toLowerCase()}
-        nombre={product.data.name}
+          : displayedCategory.toLowerCase()}
+        nombre={displayedName}
       />
     </div>
 
@@ -274,31 +404,31 @@ const metaDescription = `La invitación digital más completa para tu boda — $
                   )} */}
                   {/* {nvitacionInfo.tipo && <li>Tipo: {nvitacionInfo.tipo}</li>} */}
                   {nvitacionInfo.version && (
-                    <li>Versión: {nvitacionInfo.version}</li>
+                    <li>{isEn ? "Version" : "Versión"}: {displayedVersion}</li>
                   )}
                 </>
               )
             }
           </ul>
           <!-- <p>{product.data.id}</p> -->
-          <h1>{product.data.name}</h1>
+          <h1>{displayedName}</h1>
 
           <div id="conteVerNvitacion">
-            <p>{product.data.description}</p>
+            <p>{displayedDescription}</p>
             {
-              nvitacionInfo && nvitacionInfo.muestra && (
+              nvitacionInfo && previewUrl && (
                 <>
                   <div class="liga-muestra">
                     <Btn
                       id="preview-btn"
                       liga="#"
-                      texto="<b>Ver</b> Nvitación demo"
+                      texto={isEn ? "<b>View</b> Demo Invitation" : "<b>Ver</b> Nvitación demo"}
                       icono="mdi:chevron-right"
                       clases="btn-ver-nvitaciones"
                       claro={false}
                     />
                   </div>
-                  <PreviewModal url={nvitacionInfo.muestra} />
+                  <PreviewModal url={previewUrl} />
                 </>
               )
             }
@@ -308,13 +438,13 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         </div>
 
         <div class="buttons-container">
-          <!-- Bloque de precio emocional — NUEVO -->
+          <!-- Bloque de precio emocional -->
           <div class="price-block">
             <div class="price-header">
               {
                 nvitacionInfo?.precioTachado && (
                   <p class="precioTachado">
-                    Antes: {priceTachado}
+                    {isEn ? "Was:" : "Antes:"} {priceTachado}
                     <sup>.00</sup>
                   </p>
                 )
@@ -325,7 +455,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             </div>
 
             <p class="price-anchor-detail">
-              <b>Equivale a ${costPerGuest}MXN</b> <small>(cálculo x100 personas).</small> ¡Entre más invitados tengas, más barato porque <b> tus envíos son ilimitados!</b>
+              <b>{isEn ? `Equivalent to $${costPerGuest} USD` : `Equivale a $${costPerGuest}MXN`}</b> <small>{isEn ? "(estimate for 100 guests)." : "(cálculo x100 personas)."}</small> {isEn ? "The more guests you have, the lower the cost per guest because" : "¡Entre más invitados tengas, más barato porque"} <b>{isEn ? "unlimited sends are included!" : "tus envíos son ilimitados!"}</b>
             </p>
 
             <Btn
@@ -334,7 +464,7 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               data-productid={product.data.id}
               liga="#"
               clases="btn-claro btn-carrito"
-              texto="Quiero esta invitación →"
+              texto={isEn ? "Get this invitation →" : "Quiero esta invitación →"}
               icono="mdi:cart-check"
               claro={true}
             />
@@ -343,12 +473,12 @@ const metaDescription = `La invitación digital más completa para tu boda — $
             </p> -->
             <p id="fecha-estimada">
               <!-- <b>Compra ahora y agenda tu invitación sin preocupaciones.</b>  -->
-              Fecha estimada de entrega: {calculateDeliveryDate()}
+              {isEn ? "Estimated delivery date:" : "Fecha estimada de entrega:"} {calculateDeliveryDate(2, lang)}
             </p>
 
 
             <p class="price-vs">
-              <b>Invitación impresa: $40–$70 pesos c/u</b> — sin música, sin galerías, sin mapa, sin confirmación. Súmale repartirlas una por una: más gasto y tiempo perdido.
+              <b>{isEn ? "Paper invitations: $4–$6 each" : "Invitación impresa: $40–$70 pesos c/u"}</b> {isEn ? "— no music, no interactive maps, no live RSVP, plus delivery hassle and printing delays." : "— sin música, sin galerías, sin mapa, sin confirmación. Súmale repartirlas una por una: más gasto y tiempo perdido."}
             </p>
           </div>
 
@@ -373,22 +503,19 @@ const metaDescription = `La invitación digital más completa para tu boda — $
               class="quesucede-toggle"
             />
             <label for="quesucede-toggle" class="quesucede-label"
-              >¿Qué sucede después de mi compra?</label
+              >{isEn ? "What happens after purchase?" : "¿Qué sucede después de mi compra?"}</label
             >
             <ul class="quesucede-content">
               <li>
-                <b>Te escribimos</b> a la brevedad y te enviamos un formulario para
-                recopilar las fotos y detalles de tu evento
+                <b>{isEn ? "We contact you" : "Te escribimos"}</b> {isEn ? "promptly with a form to collect your photos and event details" : "a la brevedad y te enviamos un formulario para recopilar las fotos y detalles de tu evento"}
               </li>
               <li>
-                <b>Obtienes acceso</b> a tu panel de invitados para generar y gestionar
-                todas tus invitaciones. <small>
-                  <b>Aplica en "Clásica" y "Lux"</b>
+                <b>{isEn ? "You get instant access" : "Obtienes acceso"}</b> {isEn ? "to your guest dashboard to manage RSVPs and seating tables." : "a tu panel de invitados para generar y gestionar todas tus invitaciones."} <small>
+                  <b>{isEn ? "Included in Classic and Lux" : "Aplica en 'Clásica' y 'Lux'"}</b>
                 </small>
               </li>
               <li>
-                <b>Revisas tu invitación personalizada</b> y puedes solicitar cambios
-                hasta en 2 rondas de ajustes
+                <b>{isEn ? "Review your custom invitation" : "Revisas tu invitación personalizada"}</b> {isEn ? "and request changes with up to 2 rounds of edits" : "y puedes solicitar cambios hasta en 2 rondas de ajustes"}
               </li>
             </ul>
           </div>
@@ -419,80 +546,28 @@ const metaDescription = `La invitación digital más completa para tu boda — $
 
           
           <a id="terminos" href="/terminos-condiciones"
-            >ver terminos y condiciones</a
+            >{isEn ? "View terms & conditions" : "ver terminos y condiciones"}</a
           >
           <SocialShare
             url={Astro.url.toString()}
-            title={`Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${product.data.name}`}
+            title={isEn ? `Check out this invitation on Nvitaciones.com: ${displayedName}` : `Mira esta ${nvitacionInfo?.tipo || "invitación"} en Nvitaciones.com: ${displayedName}`}
           />
         </div>
 
         <div id="datosjson">
-          <!-- {
-            nvitacionInfo.version ===
-            "Esencial" ? null : nvitacionInfo.version === "Clásica" ? (
-              <div class="BannerGeneralProducto">
-                <BannerGeneral
-                  encabezado="Confirmación de asistencia"
-                  texto="¡No pierdas el control! Descubre en tiempo real quién asistirá y permite que tus invitados confirmen su asistencia <b>desde la misma invitación.</b>"
-                  tema="secundario azul"
-                  icono="mdi:archive-clock-outline"
-                  izquierda={true}
-                />
-
-                <div id="conteCaracteristicas">
-                  <Caracteristicas
-                    encabezado="mapas"
-                    texto="Tus invitados sabrán exactamente como llegar."
-                    icono="mdi:map-check"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
-                  <Caracteristicas
-                    encabezado="pases"
-                    texto="Mentén el control asignando pases a cada invitación."
-                    icono="mdi:music-note-outline"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
-                </div>
-              </div>
-            ) : nvitacionInfo.version === "Lux" ? (
-              <div class="BannerGeneralProducto">
-                <BannerGeneral
-                  encabezado="Experiencia inolvidable"
-                  texto="Tu invitación contará con música y mensajes personalizados, cada <b>invitación será especial</b>."
-                  tema="secundario morado"
-                  icono="mdi:star-outline"
-                  izquierda={true}
-                />
-
-                <div id="conteCaracteristicas">
-                  <Caracteristicas
-                    encabezado="diseño"
-                    texto="Un estilo único que se adapta a tu evento en colores, frases y tipografía."
-                    icono="mdi:pencil-ruler"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
-                  <Caracteristicas
-                    encabezado="soporte"
-                    texto="Te acompañamos en todo el proceso, desde la compra hasta que invites."
-                    icono="mdi:headset"
-                    fondo="/fondo-nvite-caracteristicas.png"
-                  />
-                </div>
-              </div>
-            ) : null
-          } -->
-
           {
             nvitacionInfo && nvitacionInfo.beneficios && (
               <div class="beneficios-conte">
-                {nvitacionInfo.beneficios.map((beneficio) => (
-                  <BeneficioCard
-                    titulo={beneficio.titulo}
-                    parrafo={beneficio.parrafo}
-                    imaFondo={beneficio.imaFondo}
-                  />
-                ))}
+                {nvitacionInfo.beneficios.map((beneficio) => {
+                  const loc = localizeBeneficio(beneficio, isEn, isWedding);
+                  return (
+                    <BeneficioCard
+                      titulo={loc.titulo}
+                      parrafo={loc.parrafo}
+                      imaFondo={loc.imaFondo}
+                    />
+                  );
+                })}
               </div>
             )
           }
@@ -500,32 +575,32 @@ const metaDescription = `La invitación digital más completa para tu boda — $
           <!-- NUEVA sección: por qué vale lo que vale -->
           <div class="value-section">
             <h4>
-              Lo que ${costPerGuest} pesos le dan a cada uno de tus invitados
+              {isEn ? `What $${costPerGuest} gives to each of your guests` : `Lo que $${costPerGuest} pesos le dan a cada uno de tus invitados`}
             </h4>
             <ul class="value-list">
               <li>
-                <b>Su nombre en la invitación</b> — no es una tarjeta masiva 
+                <b>{isEn ? "Their name on the invite" : "Su nombre en la invitación"}</b> {isEn ? "— personalized, not a generic card" : "— no es una tarjeta masiva"}
               </li>
               <li>
-                <b>Tu música</b> sonando cuando la abren
+                <b>{isEn ? "Your favorite song" : "Tu música"}</b> {isEn ? "playing automatically as they open it" : "sonando cuando la abren"}
               </li>
-              <li><b>Tus fotos, animadas</b>, antes de leer un solo detalle</li>
+              <li><b>{isEn ? "Animated photo gallery" : "Tus fotos, animadas"}</b>{isEn ? ", before reading a single line" : ", antes de leer un solo detalle"}</li>
               <li>
-                <b>Itinerario detallado</b> de tu evento
-              </li>
-              <li>
-                <b>Mensaje personalizado</b> para invitados especiales 
-              </li>
-              <li><b>Confirman</b> asistencia en ese mismo momento</li>
-              <li><b>Un mapa</b> que los lleva directo al lugar</li>
-              <li>
-                <b>Una invitación que</b> guardan en su teléfono — no en un cajón
+                <b>{isEn ? "Detailed celebration timeline" : "Itinerario detallado"}</b> {isEn ? "for your event" : "de tu evento"}
               </li>
               <li>
-                <b>Si tus invitados viajan</b>, les recomiendas hospedaje
+                <b>{isEn ? "Personalized message" : "Mensaje personalizado"}</b> {isEn ? "for special VIP guests" : "para invitados especiales"}
+              </li>
+              <li><b>{isEn ? "RSVP in real time" : "Confirman"}</b> {isEn ? "directly from their phone" : "asistencia en ese mismo momento"}</li>
+              <li><b>{isEn ? "GPS map" : "Un mapa"}</b> {isEn ? "guiding them straight to the venue" : "que los lleva directo al lugar"}</li>
+              <li>
+                <b>{isEn ? "An invitation kept" : "Una invitación que"}</b> {isEn ? "on their smartphone, not lost in a drawer" : "guardan en su teléfono — no en un cajón"}
+              </li>
+              <li>
+                <b>{isEn ? "Lodging suggestions" : "Si tus invitados viajan"}</b>{isEn ? " for out-of-town guests" : ", les recomiendas hospedaje"}
               </li>
               <li class="enfasis">
-                <b>Y para tí</b>, un panel privado para organizar a tus invitados y las mesas de tu evento, lo que te ahorrará horas de trabajo y estrés.
+                <b>{isEn ? "And for you" : "Y para tí"}</b>, {isEn ? "a private guest & table seating dashboard that saves you hours of stress." : "un panel privado para organizar a tus invitados y las mesas de tu evento, lo que te ahorrará horas de trabajo y estrés."}
               </li>
             </ul>
           </div>
@@ -540,8 +615,18 @@ const metaDescription = `La invitación digital más completa para tu boda — $
  <MesasHome />
   <div class="grid contenido">
     <BannerGeneral
-      encabezado="Recibes con tu <b>Nvitación</b>"
-      texto={`
+      encabezado={isEn ? "What you receive with your <b>Nvitación</b>" : "Recibes con tu <b>Nvitación</b>"}
+      texto={isEn ? `
+    <ul>
+    <li><b>Dedicated 1-on-1 support.</b></li>
+    <li>Your invitation ready in <b>2 business days</b> after submitting details.</li>
+    <li><b>Guest Management Dashboard</b> to control RSVPs and seating.</li>
+    <li><b>Web invitation remains active</b> throughout the planning and 1 week post-event.</li>
+    <li><mark>Unlimited sends.</mark></li>
+    </ul>
+    <small>*Guest dashboard included in "Classic and Lux" versions</small>
+    <br>
+    ` : `
     <ul>
     <li><b>Trato personalizado.</b></li>
     <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
@@ -562,15 +647,6 @@ const metaDescription = `La invitación digital más completa para tu boda — $
       urlImagen="../assets/home/gale/recibes.webp"
       margenAbajo={true}
     >
-      <!-- <Btn
-        liga="#formu"
-        texto="Quiero mi ejemplo gratis →"
-        clases="btn-oscuro"
-        claro={true}
-        blank={false}
-      >
-        <Icon name="bag" size={25} />
-      </Btn> -->
     </BannerGeneral>
   </div>
 
@@ -591,16 +667,13 @@ const metaDescription = `La invitación digital más completa para tu boda — $
   <!-- Barra de compra sticky en móvil -->
   <div class="mobile-sticky-bar" id="mobile-sticky-bar">
     <div class="mobile-sticky-bar-content">
-      <!-- <div class="mobile-price-info">
-        <span class="mobile-price-val">{price.replace(/\.00$/, "")}<sup>.00</sup></span>
-      </div> -->
       <Btn
         data-cart
         data-action="buy-now"
         data-productid={product.data.id}
         liga="#"
         clases="btn-claro btn-carrito mobile-sticky-btn"
-        texto={`Comprar ${product.data.name.replace(/^Nvitaci[oó]n\s+/i, "")}`}
+        texto={isEn ? `Buy ${displayedName.replace(/^Nvitaci[oó]n\s+/i, "").replace(/^Invitation\s+/i, "")}` : `Comprar ${displayedName.replace(/^Nvitaci[oó]n\s+/i, "")}`}
         icono="mdi:cart-check"
         claro={true}
       />
@@ -1369,17 +1442,22 @@ const metaDescription = `La invitación digital más completa para tu boda — $
         const category = (
           productContainer?.dataset?.category || ""
         ).toLowerCase();
+        const isEn =
+          document.documentElement.lang?.startsWith("en") ||
+          document.cookie.includes("nvite_lang=en");
 
-        let subject = "parejas";
+        let subject = isEn ? "couples" : "parejas";
         if (category.includes("quince")) {
-          subject = "quinceañeras";
+          subject = isEn ? "families & quinceañeras" : "quinceañeras";
         } else if (category.includes("boda") || category.includes("bodas")) {
-          subject = "parejas";
+          subject = isEn ? "couples" : "parejas";
         }
 
         const vendidosDiv = document.createElement("p");
         vendidosDiv.id = "vendidos";
-        vendidosDiv.innerHTML = `<b>${salesNumber} ${subject} han confiado en esta invitación en los últimos 3 meses.</b>`;
+        vendidosDiv.innerHTML = isEn
+          ? `<b>${salesNumber} ${subject} have trusted this invitation in the last 3 months.</b>`
+          : `<b>${salesNumber} ${subject} han confiado en esta invitación en los últimos 3 meses.</b>`;
 
         const conteVerNvitacion = document.getElementById("conteVerNvitacion");
         if (conteVerNvitacion?.parentNode) {

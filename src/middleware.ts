@@ -1,9 +1,14 @@
 import { defineMiddleware } from "astro:middleware";
 import { db, Usuario, Sesion, eq } from "@/db";
+import { detectLanguage, LANG_COOKIE_NAME } from "./i18n/detector";
 
 export const onRequest = defineMiddleware(async (context, next) => {
     const { pathname } = context.url;
     const method = context.request.method;
+
+    // Detectar y asignar idioma al request actual
+    const cookieLang = context.cookies.get(LANG_COOKIE_NAME)?.value;
+    context.locals.lang = detectLanguage(context.request, cookieLang);
 
     // 📌 Permitir el acceso a imágenes generadas por Astro y archivos estáticos
     if (

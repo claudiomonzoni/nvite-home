@@ -178,7 +178,10 @@ const mesas: Mesa[] = ((boda.data as any).mesaRegalos ?? []).filter(
     m.titulo,
 );
 
-const lang = (boda.data.idioma as keyof typeof ui) || "es";
+const queryLang = Astro.url.searchParams.get("lang");
+const lang = (queryLang === "en" || queryLang === "es")
+  ? queryLang
+  : ((boda.data.idioma as keyof typeof ui) || Astro.locals.lang || "es");
 const t = useTranslations(lang);
 
 //qr
@@ -228,7 +231,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
 ---
 
 <Layout
-  title=`Invitación de boda de ${boda.data.novios}`
+  title={lang === "en" ? `Wedding Invitation of ${boda.data.novios}` : `Invitación de boda de ${boda.data.novios}`}
   url={base.toString()}
   cover={boda.data.cover}
   paleta={boda.data.paleta}
@@ -308,13 +311,13 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     {
       boda.data.version === "Lux" && (
         <Qr
-        nombreInvitacion={qrNombre}
-        pases={qrPases}
-        mesa={qrMesa}
-        confirmado={Boolean(dbInvitado?.confirmado)}
-        noAsiste={dbInvitado?.noAsiste}
-        title="Datos de la invitación"
-        subtitle="Muestra tus pases y mesa asignada"
+          nombreInvitacion={qrNombre}
+          pases={qrPases}
+          mesa={qrMesa}
+          confirmado={Boolean(dbInvitado?.confirmado)}
+          noAsiste={dbInvitado?.noAsiste}
+          title={lang === "en" ? "Invitation Details" : "Datos de la invitación"}
+          subtitle={lang === "en" ? "Show your passes and assigned table" : "Muestra tus pases y mesa asignada"}
         />
       )
     }
@@ -336,7 +339,10 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     <Frase frase={boda.data.frase_amor} />
   </section>
 
-  <section class="grid pantalla">
+  {
+    ["Lux", "Clasica"].includes(boda.data.version) && (
+
+      <section class="grid pantalla">
     <Padres
       mamaNovia={boda.data.padres.mamaNovia}
       papaNovia={boda.data.padres.papaNovia}
@@ -349,8 +355,10 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
         bride: t("parents.bride"),
         groom: t("parents.groom"),
       }}
-    />
+      />
   </section>
+)
+}
 
   <!-- Imágenes solitarias condicionales -->
   {

@@ -25,17 +25,20 @@ const relatedProducts = allProducts
   })
   .slice(0, 3); // Tomar solo 3 productos
 
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
+
 // Obtener precios
 const relatedProductsWithPrices = await Promise.all(
   relatedProducts.map(async (product) => ({
     ...product,
-    price: await getProductPrice(product)
+    price: await getProductPrice(product, lang)
   }))
 );
 ---
 
 <section class="related-products">
-  <h2>Productos relacionados</h2>
+  <h2>{isEn ? "Related Invitations" : "Productos relacionados"}</h2>
   <div class="products-grid">
     {relatedProductsWithPrices.map((product) => (
       <div class="product-card">
@@ -55,7 +58,7 @@ const relatedProductsWithPrices = await Promise.all(
           <p class="price">{product.price.slice(0, -2)}<sup>{product.price.slice(-2)}</sup></p>
           <Btn
             liga={`/nvitaciones/${product.id}`}
-            texto="Ver detalles"
+            texto={isEn ? "View details" : "Ver detalles"}
             clases="btn-oscuro"
             claro={false}
             icono="mdi:chevron-right"

@@ -4,25 +4,29 @@ interface Props {
 }
 const { usuarioId } = Astro.props;
 import Checkbox from "./Checkbox.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
 <dialog id="agrega-invitado-dialog" data-ref={usuarioId}>
   <div class="formulario">
-    <h2>Agregar invitado</h2>
+    <h2>{t('panel.modal.addTitle')}</h2>
     <form id="agregar-formu">
       <label for="nombre"
-        >Nombre del invitado
+        >{t('panel.modal.name')}
 
         <input
           type="text"
           name="nombre"
           maxlength="80"
-          placeholder="Nombre que aparecerá en la invitación"
+          placeholder={t('panel.modal.namePlaceholder')}
           required
         />
       </label>
       <label for="pases"
-        >Numero de pases
+        >{t('panel.modal.passes')}
 
         <input
           type="number"
@@ -30,25 +34,25 @@ import Checkbox from "./Checkbox.astro";
           required
           min="1"
           max="50"
-          placeholder="Asignar numero de pases"
+          placeholder="1"
         />
       </label>
       <label for="whatsapp"
-        >Numero de whatsapp
+        >{t('panel.modal.phone')}
 
         <input
           type="tel"
           name="numeroWhats"
           maxlength="15"
-          placeholder="Numero de whatsapp del invitado"
+          placeholder={t('panel.modal.phonePlaceholder')}
         />
       </label>
       <label for="tipoInvitacion">
-        Tipo de invitación
+        {lang === 'en' ? 'Invitation Type' : 'Tipo de invitación'}
         <select name="tipoInvitacion" id="tipoInvitacion">
-          <option value="Familiar">Familiar</option>
-          <option value="Individual">Individual</option>
-          <option value="Grupal">Grupal</option>
+          <option value="Familiar">{lang === 'en' ? 'Family' : 'Familiar'}</option>
+          <option value="Individual">{lang === 'en' ? 'Individual' : 'Individual'}</option>
+          <option value="Grupal">{lang === 'en' ? 'Group' : 'Grupal'}</option>
         </select>
       </label>
 
@@ -57,28 +61,28 @@ import Checkbox from "./Checkbox.astro";
           checked={false}
           inputId={Math.random()}
           name="confirmado"
-          titulo="Ya confirmo su asistencia"
+          titulo={lang === 'en' ? 'Attendance already confirmed' : 'Ya confirmó su asistencia'}
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
           name="vip"
-          titulo="Invitado importante"
+          titulo={lang === 'en' ? 'VIP Guest' : 'Invitado importante'}
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
           name="InvitacionEnviada"
-          titulo="Invitación enviada"
+          titulo={lang === 'en' ? 'Invitation sent' : 'Invitación enviada'}
         />
 
         <Checkbox
           checked={false}
           inputId={Math.random()}
           name="noAsiste"
-          titulo="No asistirá"
+          titulo={lang === 'en' ? 'Cannot attend' : 'No asistirá'}
         />
       </div>
 
@@ -88,15 +92,15 @@ import Checkbox from "./Checkbox.astro";
         style="display: none;"
       >
         <label for="mensajePersonalizado"
-          >Mensaje personalizado para invitado VIP</label
+          >{t('panel.modal.customMessage')}</label
         >
         <textarea
           name="mensajePersonalizado"
-          placeholder="Escribe un mensaje especial para este invitado VIP"
+          placeholder={lang === 'en' ? 'Write a special greeting for this VIP guest' : 'Escribe un mensaje especial para este invitado VIP'}
           rows="3"></textarea>
       </div>
 
-      <input type="submit" value="Agregar invitación" />
+      <input type="submit" value={t('panel.modal.save')} />
     </form>
   </div>
   <a href="#" id="cerrar-dialog">X</a>
@@ -180,7 +184,7 @@ import Checkbox from "./Checkbox.astro";
     if (whatsappInput && whatsappInput.value) {
       const whatsappVal = whatsappInput.value.replace(/\D/g, "");
       if (whatsappVal.length < 8 || whatsappVal.length > 15) {
-        alert("Por favor ingresa un número de WhatsApp válido (debe tener entre 8 y 15 dígitos).");
+        alert("Por favor ingresa un número de teléfono válido (debe tener entre 8 y 15 dígitos).");
         return;
       }
     }

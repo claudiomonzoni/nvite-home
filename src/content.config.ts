@@ -236,7 +236,10 @@ const precios = defineCollection({
     id: z.string(),
     currency: z.string(),
     unit_amount: z.number(),
-  })
+    product: z.union([z.string(), z.record(z.string(), z.any()), z.any()]).optional(),
+    active: z.boolean().optional(),
+    nickname: z.string().nullable().optional(),
+  }).passthrough()
 });
 
 

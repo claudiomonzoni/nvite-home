@@ -1,16 +1,18 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Stripe from "stripe";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 const sessionId = Astro.url.searchParams.get("session_id");
-
 
 if (!sessionId) {
   return Astro.redirect("/");
 }
 
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
-// const session = await stripe.checkout.sessions.retrieve(sessionId);
 const session = await stripe.checkout.sessions.retrieve(sessionId, {
   expand: ["line_items.data.price.product"],
 });
@@ -21,7 +23,7 @@ if (!session || !session.customer_details) {
 
 const { name, email } = session.customer_details;
 // Obtén todos los productos comprados
-const productos = session.line_items.data.map((item) => item.price.product);
+const productos = (session.line_items?.data || []).map((item) => item.price?.product);
 
 // Opcional: elimina duplicados si pueden repetirse productos
 const productosUnicos = Object.values(
@@ -36,24 +38,25 @@ const productosUnicos = Object.values(
 Astro.cookies.delete("cartItems");
 ---
 
-<Layout title="¡Compra Exitosa! - Nvitaciones">
+<Layout title={`${t('success.title')} - Nvitaciones`}>
 
   <div class="success-container">
     <div class="success-card">
       <img src="/nvita-logo.svg" alt="gracias por tu compra" class="logo" />
-      <h2>¡Gracias por tu compra, {name}!</h2>
+      <h2>{lang === 'en' ? `Thank you for your purchase, ${name}!` : `¡Gracias por tu compra, ${name}!`}</h2>
+      {session.metadata?.reservation_number && (
+        <p class="cart-info chirris">
+          {lang === 'en' ? `Your order number is: ${session.metadata.reservation_number}` : `Tu número de compra es: ${session.metadata.reservation_number}`}
+        </p>
+      )}
       <p class="cart-info chirris">
-        Tu numero de compra es: {session.metadata.reservation_number}
+        {lang === 'en' ? 'Please keep your receipt number for future reference' : 'Por favor, guarda tu número de compra para futuras consultas'}
       </p>
-      <p class="cart-info chirris">
-        Por favor, guarda tu numero de compra para futuras consultas
-      </p>
-      <p>Hemos enviado el recibo a {email}</p>
+      <p>{lang === 'en' ? `We have sent your receipt to ${email}` : `Hemos enviado el recibo a ${email}`}</p>
 
-      <h3>Siguiente paso</h3>
+      <h3>{lang === 'en' ? 'Next step' : 'Siguiente paso'}</h3>
       <p class="cart-info">
-        <b>Completa el formulario</b> de datos de tu evento para que podamos
-        personalizar tu Nvitación.
+        {lang === 'en' ? 'Fill out your event details form so our team can customize your invitation.' : 'Completa el formulario de datos de tu evento para que podamos personalizar tu Nvitación.'}
       </p>
       {
         productosUnicos.map(
@@ -70,24 +73,20 @@ Astro.cookies.delete("cartItems");
                 {(producto.metadata as { Tipo: string })?.Tipo?.toLowerCase() === "pdf" && (
                   <p><b>Formulario Nvitaciones PDF:</b> https://tally.so/r/mK2OyA</p>
                 )}
-                {/* Más condiciones según tus tipos */}
               </>
             )
         )
       }
       <p class="chirris">
-        <b>Tip:</b> guarda el enlace del formulario en tus favoritos para acceder fácilmente.
-      </p>
-      <p class="chirris borde">
-        <b>Nota:</b> Si pagaste por medio de OXXO, tu pago se reflejará en un plazo de 24 a 48 horas y el establecimiento aplica un cargo de servicio. 
+        <b>Tip:</b> {lang === 'en' ? 'bookmark the form link to access it anytime.' : 'guarda el enlace del formulario en tus favoritos para acceder fácilmente.'}
       </p>
       <p class="cart-info">
-        Cualquier duda, puedes contactarnos por WhatsApp al número
-        <a href="https://wa.me/+527551132468" target="_blank"><b>755.1132.468</b></a>
+        {lang === 'en' ? 'Any questions? Contact us on WhatsApp at ' : 'Cualquier duda, puedes contactarnos por WhatsApp al número '}
+        <a href="https://wa.me/+527551132468" target="_blank"><b>+52 755.1132.468</b></a>
       </p>
 
       <br />
-      <a href="/" class="success-btn">Volver al inicio</a>
+      <a href="/" class="success-btn">{t('success.backHome')}</a>
     </div>
   </div>
 </Layout>

@@ -26,6 +26,7 @@ const {
 
 const optimizedDesktop = await getImage({ src: imagenDesktop, format: "webp", width: 1200 });
 const optimizedMobile = await getImage({ src: imagenMobile, format: "webp", width: 600 });
+const lang = Astro.locals.lang || "es";
 ---
 
 <Nav />
@@ -49,7 +50,7 @@ const optimizedMobile = await getImage({ src: imagenMobile, format: "webp", widt
       <p set:html={p} />
       <Btn
         liga="#nvitaciones"
-        texto="Ver invitaciones"
+        texto={lang === "en" ? "View invitations" : "Ver invitaciones"}
         clases="btn-ver-nvitaciones"
         claro={false}
       >

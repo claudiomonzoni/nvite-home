@@ -11,6 +11,8 @@ import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import coverDesktop from "../assets/home/invitaciones-digitales-cover-nvitacines.webp";
 import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-cel.webp";
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <Nav />
@@ -20,19 +22,19 @@ import coverMobile from "../assets/home/invitaciones-digitales-cover-nvitacines-
     <div class="izq anime">
       <div class="bandeja anime">
         <h1>
-          <span>Boda y XV años  </span> <br />Invitaciones digitales memorables.
+          <span>{isEn ? "Weddings & Quinceañeras" : "Boda y XV años"}</span> <br />{isEn ? "Memorable digital invitations." : "Invitaciones digitales memorables."}
         </h1>
         <p set:html={description} />
         <div class="cta">
           <Btn
             liga="#nvitaciones"
-            texto="Ver ejemplos →"
+            texto={isEn ? "View examples →" : "Ver ejemplos →"}
             claro={false}
             clases="btn-oscuro"
           >
             <Icon name="mdi:chevron-double-down" size={25} />
           </Btn>
-          <p>Miles de invitados confirmados</p>
+          <p>{isEn ? "Thousands of confirmed guests" : "Miles de invitados confirmados"}</p>
         </div>
         <!-- <Btn liga="#formu" texto="Contáctanos" claro={true} /> -->
       </div>

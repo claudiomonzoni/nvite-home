@@ -27,7 +27,8 @@ const {
 } = Astro.props;
 
 import { Icon } from "astro-icon/components";
-console.log(fondo);
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <section class="grid contenido">
@@ -41,12 +42,12 @@ console.log(fondo);
         </h1>
         <p class={tema} set:html={description} />
         <p class="hero-anchor">
-          Desde $20 por invitado · Personalizada a tus colores · Lista en 2 días
+          {isEn ? "From $1 USD per guest · Customized to your colors · Ready in 2 days" : "Desde $20 por invitado · Personalizada a tus colores · Lista en 2 días"}
         </p>
         <div class={`cta ${tema}`}>
           <Btn
             liga="#nvitaciones"
-            texto="Ver ejemplos →"
+            texto={isEn ? "View examples →" : "Ver ejemplos →"}
             claro={false}
             clases={tema !== "rojo" ? "btn-oscuro" : "btn-claro"}
             blank={false}

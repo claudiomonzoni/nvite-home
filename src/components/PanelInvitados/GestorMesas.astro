@@ -1,5 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 interface MesaData {
   id: number;
@@ -71,26 +75,26 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     <div class="resumen-item">
       <span class="resumen-icon"><Icon name="mdi:checkbox-multiple-outline" size={24} /></span>
       <span class="num">{totalMesas}</span>
-      <span class="lbl">Mesas creadas</span>
+      <span class="lbl">{t('panel.tables.created')}</span>
     </div>
     {
       mesasConSobrecupo > 0 && (
         <div class="resumen-item sobrecupo">
           <span class="resumen-icon"><Icon name="mdi:alert-outline" size={24} /></span>
           <span class="num">{mesasConSobrecupo}</span>
-          <span class="lbl">{mesasConSobrecupo === 1 ? 'Mesa con sobrecupo' : 'Mesas con sobrecupo'}</span>
+          <span class="lbl">{mesasConSobrecupo === 1 ? t('panel.tables.overcapacity') : t('panel.tables.overcapacityPlural')}</span>
         </div>
       )
     }
     <div class="resumen-item completa">
       <span class="resumen-icon"><Icon name="mdi:calendar-check-outline" size={24} /></span>
       <span class="num">{mesasCompletas}</span>
-      <span class="lbl">{mesasCompletas === 1 ? 'Mesa completa' : 'Mesas completas'}</span>
+      <span class="lbl">{mesasCompletas === 1 ? t('panel.tables.complete') : t('panel.tables.completePlural')}</span>
     </div>
     <div class="resumen-item disponible">
       <span class="resumen-icon"><Icon name="mdi:crop-free" size={24} /></span>
       <span class="num">{espaciosDisponibles}</span>
-      <span class="lbl">Espacios disponibles</span>
+      <span class="lbl">{t('panel.tables.availableSeats')}</span>
     </div>
   </div>
 
@@ -98,15 +102,15 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     <!-- Panel Izquierdo: Lista de Mesas -->
     <div class="mesas-grid-column">
       <div class="section-header">
-        <h2>Distribución de Mesas ({mesas.length})</h2>
+        <h2>{t('panel.tables.title')} ({mesas.length})</h2>
         <div class="header-actions-group">
           <button id="btn-exportar-mesas" class="btn-excel-sm" title="Exportar Distribución de Mesas a Excel">
             <Icon name="mdi:file-excel-outline" size={18} />
-            <span>Descargar Excel</span>
+            <span>{t('panel.actions.downloadExcel')}</span>
           </button>
           <button id="btn-nueva-mesa" class="btn-primary-sm">
             <Icon name="mdi:table-plus" size={18} />
-            <span>Agregar Mesa</span>
+            <span>{t('panel.tables.add')}</span>
           </button>
         </div>
       </div>
@@ -144,7 +148,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                     <div>
                       <h3 class="mesa-name">{mesa.nombre}</h3>
                       <span class="mesa-capacity">
-                        Capacidad: {mesa.capacidad} asientos
+                        {t('panel.tables.capacity', { capacity: mesa.capacidad })}
                       </span>
                     </div>
                   </div>
@@ -156,20 +160,20 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                       data-id={mesa.id}
                       data-nombre={mesa.nombre}
                       data-capacidad={mesa.capacidad}
-                      title="Editar Mesa"
+                      title={t('panel.guest.edit')}
                     >
                       <Icon name="mdi:pencil-outline" size={20} />
-                      <span>Editar</span>
+                      <span>{t('panel.guest.edit')}</span>
                     </button>
                     <button
                       class="btn-icon delete"
                       data-action-delete-mesa
                       data-id={mesa.id}
                       data-nombre={mesa.nombre}
-                      title="Eliminar Mesa"
+                      title={t('panel.guest.delete')}
                     >
                       <Icon name="mdi:delete-outline" size={20} />
-                      <span>Borrar</span>
+                      <span>{t('panel.guest.delete')}</span>
                     </button>
                   </div>
 
@@ -187,7 +191,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                     </div>
                     <div class="occupancy-row">
                       <span class="occupancy-text">
-                        Ocupación: {pasesTotales} / {mesa.capacidad}
+                        {t('panel.tables.occupancy', { current: pasesTotales, max: mesa.capacidad })}
                       </span>
                       {esExcedido && (
                         <span class="excedido-badge" title="La ocupación supera la capacidad de la mesa">
@@ -213,14 +217,14 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                           </div>
                           <div class="guest-details">
                             <span class="guest-passes">
-                              {guest.pases} pases
+                              {t('panel.guest.passes', { count: guest.pases })}
                             </span>
                             <select
                               class="select-mesa-assign mini"
                               data-guest-id={guest.id}
                               data-current-mesa-id={mesa.id}
                             >
-                              <option value="0">Desasignar</option>
+                              <option value="0">{t('panel.tables.unassign')}</option>
                               {mesas.map((m) => (
                                 <option value={m.id} selected={m.id === mesa.id}>
                                   {m.nombre}
@@ -231,12 +235,12 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                         </li>
                       ))
                     ) : (
-                      <li class="mesa-empty-placeholder">Mesa vacía</li>
+                      <li class="mesa-empty-placeholder">{t('panel.tables.emptyTable')}</li>
                     )}
                     {libres > 0 && (
                       <li class="mesa-free-space-item">
                         <Icon name="mdi:circle-outline" size={14} />
-                        <span>{libres} espacios disponibles</span>
+                        <span>{t('panel.tables.availableCount', { count: libres })}</span>
                       </li>
                     )}
                   </ul>
@@ -246,8 +250,8 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
           ) : (
             <div class="empty-mesas-state">
               <Icon name="mdi:table-furniture" size={48} />
-              <p>No has creado ninguna mesa para tu evento.</p>
-              <p class="sub">Usa el botón "Agregar Mesa" para comenzar a organizar.</p>
+              <p>{t('panel.tables.emptyState')}</p>
+              <p class="sub">{t('panel.tables.emptySub')}</p>
             </div>
           )
         }
@@ -257,7 +261,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
     <!-- Panel Derecho: Pool de Invitados Sin Asignar -->
     <div class="unassigned-pool-column">
       <div class="section-header">
-        <h2>Sin Asignar ({invitadosSinAsignar.length})</h2>
+        <h2>{t('panel.tables.unassignedTitle')} ({invitadosSinAsignar.length})</h2>
       </div>
 
       <div class="unassigned-list-container">
@@ -275,8 +279,8 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                     <div>
                       <span class="guest-name">{guest.nombre}</span>
                       <span class="guest-sub">
-                        {guest.pases} pases •{" "}
-                        {guest.confirmado ? "Confirmado" : "Pendiente"}
+                        {t('panel.guest.passes', { count: guest.pases })} •{" "}
+                        {guest.confirmado ? t('panel.guest.confirmed') : lang === 'en' ? 'Pending' : 'Pendiente'}
                       </span>
                     </div>
                   </div>
@@ -287,7 +291,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
                       data-current-mesa-id="0"
                     >
                       <option value="0" selected>
-                        Asignar mesa...
+                        {lang === 'en' ? 'Assign table...' : 'Asignar mesa...'}
                       </option>
                       {mesas.map((m) => (
                         <option value={m.id}>{m.nombre}</option>
@@ -300,7 +304,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
           ) : (
             <div class="all-assigned-placeholder">
               <Icon name="mdi:checkbox-marked-circle-outline" size={36} />
-              <p>Todos tus invitados confirmados y pendientes ya están asignados a una mesa.</p>
+              <p>{t('panel.tables.allAssigned')}</p>
             </div>
           )
         }
@@ -312,19 +316,19 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
   <dialog id="modal-mesa-crear" class="admin-dialog">
     <button type="button" class="btn-close-modal" data-close-mesa-modal title="Cerrar ventana">X</button>
     <div class="dialog-content">
-      <h2>Agregar Nueva Mesa</h2>
+      <h2>{t('panel.tables.add')}</h2>
       <form id="form-mesa-crear">
         <label>
-          Nombre de la mesa
-          <input type="text" name="nombre" required maxlength="50" placeholder="ej: Mesa de Novios, Mesa 4" />
+          {t('panel.tables.tableName')}
+          <input type="text" name="nombre" required maxlength="50" placeholder={lang === 'en' ? "e.g. VIP Table, Table 4" : "ej: Mesa de Novios, Mesa 4"} />
         </label>
         <label>
-          Capacidad de asientos
+          {lang === 'en' ? 'Seat capacity' : 'Capacidad de asientos'}
           <input type="number" name="capacidad" required min="1" max="100" value="10" />
         </label>
         <div class="dialog-actions">
-          <button type="button" class="btn-cancel" data-close-mesa-modal>Cancelar</button>
-          <button type="submit" class="btn-submit">Crear Mesa</button>
+          <button type="button" class="btn-cancel" data-close-mesa-modal>{t('panel.modal.cancel')}</button>
+          <button type="submit" class="btn-submit">{t('panel.tables.add')}</button>
         </div>
       </form>
     </div>
@@ -334,20 +338,20 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
   <dialog id="modal-mesa-editar" class="admin-dialog">
     <button type="button" class="btn-close-modal" data-close-mesa-modal title="Cerrar ventana">X</button>
     <div class="dialog-content">
-      <h2>Editar Mesa</h2>
+      <h2>{lang === 'en' ? 'Edit Table' : 'Editar Mesa'}</h2>
       <form id="form-mesa-editar">
         <input type="hidden" name="id" id="edit-mesa-id" />
         <label>
-          Nombre de la mesa
+          {t('panel.tables.tableName')}
           <input type="text" name="nombre" id="edit-mesa-nombre" required maxlength="50" />
         </label>
         <label>
-          Capacidad de asientos
+          {lang === 'en' ? 'Seat capacity' : 'Capacidad de asientos'}
           <input type="number" name="capacidad" id="edit-mesa-capacidad" required min="1" max="100" />
         </label>
         <div class="dialog-actions">
-          <button type="button" class="btn-cancel" data-close-mesa-modal>Cancelar</button>
-          <button type="submit" class="btn-submit">Guardar Cambios</button>
+          <button type="button" class="btn-cancel" data-close-mesa-modal>{t('panel.modal.cancel')}</button>
+          <button type="submit" class="btn-submit">{t('panel.modal.save')}</button>
         </div>
       </form>
     </div>

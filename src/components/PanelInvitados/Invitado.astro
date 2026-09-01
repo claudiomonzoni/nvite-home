@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { useTranslations } from "../../i18n/ui";
 
 export type InvitadoProps = {
   id: number;
@@ -21,6 +22,8 @@ export type InvitadoProps = {
 
 type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}%26uid=${invitadoData.usuarioId}`;
 ---
 
@@ -30,13 +33,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   <div class="status-indicator">
     {
       invitadoData.confirmado ? (
-        <Icon name="mdi:check-circle-outline" size={24} title="Confirmado" />
+        <Icon name="mdi:check-circle-outline" size={24} title={t('panel.guest.confirmed')} />
       ) : invitadoData.noAsiste ? (
-        <Icon name="mdi:calendar-remove-outline" size={24} title="No asiste" />
+        <Icon name="mdi:calendar-remove-outline" size={24} title={t('panel.guest.declined')} />
       ) : invitadoData.InvitacionEnviada ? (
-        <Icon name="mdi:send-outline" size={24} title="Invitación enviada" />
+        <Icon name="mdi:send-outline" size={24} title={t('panel.guest.sent')} />
       ) : (
-        <Icon name="mdi:send-outline" size={24} title="Invitación no enviada" />
+        <Icon name="mdi:send-outline" size={24} title={t('panel.guest.notSent')} />
       )
     }
   </div>
@@ -50,7 +53,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
             name="mdi:crown-outline"
             size={20}
             class="vip-icon"
-            title="Invitado VIP"
+            title={t('panel.guest.vip')}
           />
         )
       }
@@ -67,11 +70,11 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           data-uid={invitadoData.usuarioId}
         >
           <Icon name="mdi:account-edit-outline" size={20} />
-          <span>Editar</span>
+          <span>{t('panel.guest.edit')}</span>
         </button>
         <button class="btn-icon delete" data-delete data-id={invitadoData.uuid}>
           <Icon name="mdi:delete-outline" size={20} />
-          <span>Borrar</span>
+          <span>{t('panel.guest.delete')}</span>
         </button>
       </div>
   </div>
@@ -86,9 +89,9 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
               (invitadoData.confirmado || invitadoData.noAsiste) && 
               invitadoData.pasesOriginales && 
               parseInt(invitadoData.pasesOriginales) !== Math.round(parseFloat(invitadoData.pases || "0")) ? (
-                `${Math.round(parseFloat(invitadoData.pases || "0"))} de ${Math.round(parseFloat(invitadoData.pasesOriginales))} pases`
+                t('panel.guest.passesCount', { confirmed: Math.round(parseFloat(invitadoData.pases || "0")), original: Math.round(parseFloat(invitadoData.pasesOriginales)) })
               ) : (
-                `${Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0"))} pases`
+                t('panel.guest.passes', { count: Math.round(parseFloat(invitadoData.pases || invitadoData.pasesOriginales || "0")) })
               )
             }
           </span>
@@ -97,7 +100,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           invitadoData.mesa && (
             <p class="info-item">
               <Icon name="mdi:table-furniture" size={20} />
-              <span>Mesa: {invitadoData.mesa}</span>
+              <span>{t('panel.guest.table')}: {invitadoData.mesa}</span>
             </p>
           )
         }
@@ -107,13 +110,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         {
           invitadoData.numeroWhats ? (
             <p class="info-item">
-              <Icon name="mdi:whatsapp" size={20} />
+              <Icon name="mdi:cellphone" size={20} />
               <span>{invitadoData.numeroWhats}</span>
             </p>
           ) : (
             <p class="info-item warning">
-              <Icon name="mdi:whatsapp" size={20} />
-              <span>Sin WhatsApp</span>
+              <Icon name="mdi:cellphone-off" size={20} />
+              <span>{t('panel.guest.noWhatsapp')}</span>
             </p>
           )
         }
@@ -121,17 +124,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
         <div class="status-indicators">
           {
             invitadoData.confirmado && (
-              <span class="status-tag confirmed">Confirmado</span>
+              <span class="status-tag confirmed">{t('panel.guest.confirmed')}</span>
             )
           }
           {
             invitadoData.noAsiste && (
-              <span class="status-tag no-asiste">No asiste</span>
+              <span class="status-tag no-asiste">{t('panel.guest.declined')}</span>
             )
           }
           {
             invitadoData.InvitacionEnviada && (
-              <span class="status-tag sent">Enviada</span>
+              <span class="status-tag sent">{t('panel.guest.sent')}</span>
             )
           }
           <span class="status-tag type">{invitadoData.tipoInvitacion}</span>
@@ -140,37 +143,68 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     </div>
 
     <div class="actions-section">
-     
-
       <div class="share-actions">
         {
           invitadoData.numeroWhats && (
-            <a
-              href="#"
-              class="btn-action whatsapp"
-              id="enviarwa"
-              data-wa={invitadoData.numeroWhats}
-              data-copiarwa={urlWA}
-              data-dbid={invitadoData.id}
-              data-status={
-                invitadoData.confirmado
-                  ? "confirmado"
-                  : invitadoData.noAsiste
-                    ? "noAsiste"
-                    : invitadoData.InvitacionEnviada
-                      ? "recordar"
-                      : "invitar"
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>
-                {invitadoData.confirmado ? "Confirmado" : 
-                 invitadoData.noAsiste ? "No asiste" : 
-                 invitadoData.InvitacionEnviada ? "Recordar" : "Invitar"}
-              </span>
-              <Icon name="mdi:whatsapp" size={20} />
-            </a>
+            <>
+              <!-- Botón WhatsApp -->
+              <a
+                href="#"
+                class="btn-action whatsapp"
+                id="enviarwa"
+                data-action="enviar-wa"
+                data-wa={invitadoData.numeroWhats}
+                data-copiarwa={urlWA}
+                data-dbid={invitadoData.id}
+                data-status={
+                  invitadoData.confirmado
+                    ? "confirmado"
+                    : invitadoData.noAsiste
+                      ? "noAsiste"
+                      : invitadoData.InvitacionEnviada
+                        ? "recordar"
+                        : "invitar"
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                title={t('panel.guest.sendWhatsapp')}
+              >
+                <span>
+                  {invitadoData.confirmado ? t('panel.guest.confirmed') : 
+                   invitadoData.noAsiste ? t('panel.guest.declined') : 
+                   invitadoData.InvitacionEnviada ? t('panel.guest.remind') : t('panel.guest.invite')}
+                </span>
+                <Icon name="mdi:whatsapp" size={20} />
+              </a>
+
+              <!-- Botón SMS / iMessage (Mercado USA y Móvil Nativo) -->
+              <a
+                href="#"
+                class="btn-action sms"
+                id="enviarsms"
+                data-action="enviar-sms"
+                data-phone={invitadoData.numeroWhats}
+                data-invitacion={urlWA}
+                data-dbid={invitadoData.id}
+                data-status={
+                  invitadoData.confirmado
+                    ? "confirmado"
+                    : invitadoData.noAsiste
+                      ? "noAsiste"
+                      : invitadoData.InvitacionEnviada
+                        ? "recordar"
+                        : "invitar"
+                }
+                title={t('panel.guest.sendSms')}
+              >
+                <span>
+                  {invitadoData.confirmado ? t('panel.guest.confirmed') : 
+                   invitadoData.noAsiste ? t('panel.guest.declined') : 
+                   invitadoData.InvitacionEnviada ? t('panel.guest.remind') : t('panel.guest.sendSms')}
+                </span>
+                <Icon name="mdi:message-text-outline" size={20} />
+              </a>
+            </>
           )
         }
         <a
@@ -180,7 +214,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
           data-copiar={`${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}&uid=${invitadoData.usuarioId}`}
         >
           <Icon name="mdi:content-copy" size={20} />
-          <span>Copiar enlace</span>
+          <span>{t('panel.guest.copyLink')}</span>
         </a>
       </div>
     </div>
@@ -188,7 +222,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
 </article>
 
 <script>
-  //botones de control para compiar y enviar a whatsapp la invitación en el panel
+  //botones de control para copiar y enviar a whatsapp / sms la invitación en el panel
   const copiarBtnes = document.querySelectorAll(
     "#copiar",
   ) as NodeListOf<HTMLAnchorElement>;
@@ -200,7 +234,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       if (copyValue) {
         navigator.clipboard.writeText(copyValue).then(
           () => {
-            alert("Texto copiado, pegalo en el whatsapp de tu invitado: " + copyValue);
+            alert(copyValue);
           },
           (err) => {
             console.error("Error al copiar el texto: ", err);
@@ -214,7 +248,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   const ua = navigator.userAgent;
 
   const enviarwaBtnes = document.querySelectorAll(
-    "#enviarwa",
+    "[data-action='enviar-wa'], #enviarwa",
   ) as NodeListOf<HTMLAnchorElement>;
   enviarwaBtnes.forEach((btn) => {
     const numeroWhats = btn.dataset.wa;
@@ -223,11 +257,6 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     const dbid = btn.dataset.dbid;
 
     if (!numeroWhats) {
-      const control = btn.closest(".control") as HTMLElement | null;
-      const title = control?.querySelector("h4") as HTMLHeadingElement | null;
-      if (title) {
-        title.style.display = "none";
-      }
       btn.style.display = "none";
       return;
     }
@@ -269,7 +298,58 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
             location.reload();
           }
         } catch (err) {
-          console.error("Error al marcar como enviado:", err);
+          console.error("Error al marcar como enviado por WhatsApp:", err);
+        }
+      }
+    });
+  });
+
+  // Logica para enviar la invitación por SMS / iMessage nativo
+  const enviarsmsBtnes = document.querySelectorAll(
+    "[data-action='enviar-sms'], #enviarsms",
+  ) as NodeListOf<HTMLAnchorElement>;
+  enviarsmsBtnes.forEach((btn) => {
+    const phone = btn.dataset.phone;
+    const invitacion = btn.dataset.invitacion;
+    const status = btn.dataset.status;
+    const dbid = btn.dataset.dbid;
+
+    if (!phone) {
+      btn.style.display = "none";
+      return;
+    }
+
+    let mensaje = "";
+    if (status === "recordar") {
+      mensaje = `¡Hola! Te escribo para recordarte que estamos por cerrar la lista de invitados. ¿Nos confirmas si podrás acompañarnos? ¡Nos encantaría verte! URL: ${invitacion}`;
+    } else {
+      mensaje = `¡Hola! Te comparto tu invitación: ${invitacion || ""}`;
+    }
+
+    const mensajeEncoded = encodeURIComponent(mensaje);
+    const isIos = /iPhone|iPad|iPod|Macintosh/i.test(ua);
+    const smsHref = isIos
+      ? `sms:${phone}&body=${mensajeEncoded}`
+      : `sms:${phone}?body=${mensajeEncoded}`;
+
+    btn.href = smsHref;
+
+    btn.addEventListener("click", async () => {
+      if (status === "invitar" && dbid) {
+        try {
+          const response = await fetch(`/api/${dbid}.json`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ InvitacionEnviada: true }),
+          });
+
+          if (response.ok) {
+            setTimeout(() => location.reload(), 1000);
+          }
+        } catch (err) {
+          console.error("Error al marcar como enviado por SMS:", err);
         }
       }
     });
@@ -624,6 +704,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
   .share-actions {
     display: flex;
     gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .btn-icon {
@@ -634,11 +715,12 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     justify-content: center;
     gap: 0.5rem;
     padding: 0.2rem .7rem;
-    border-radius: 8px;
+    border-radius: $radio;
     border: 1px solid rgba($primario, 0.6);
     color: $primario;
     background: none !important;
     font-size: 0.7rem;
+    font-family: $fuenteA;
     cursor: pointer;
     transition: all 0.2s ease;
     svg{
@@ -662,12 +744,13 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     justify-content: center;
     gap: 0.5rem;
     padding: 0.5rem .8rem;
-    border-radius: 8px;
+    border-radius: $radio;
     background-color: #fff;
     color: $primario;
     text-decoration: none;
     font-size: clamp(.7rem, .7rem, 1rem);
-    flex: 1;
+    font-family: $fuenteA;
+    flex: 1 0 48%;
     transition: all 0.2s ease;
     @extend .sombra;
 
@@ -678,6 +761,17 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
     &.whatsapp {
       background-color: rgb(43, 175, 91);
       color: #fff;
+      &:hover {
+        background-color: rgb(35, 150, 78);
+      }
+    }
+
+    &.sms {
+      background-color: #007AFF;
+      color: #fff;
+      &:hover {
+        background-color: darken($primario, 10%);
+      }
     }
 
     &.copy {
@@ -685,6 +779,15 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       border: 1px solid $primario;
       box-shadow: none;
     }
+  }
+
+  /* Control de visibilidad según canal de envío preferido */
+  :global([data-dispatch-channel="whatsapp"]) .btn-action.sms {
+    display: none !important;
+  }
+
+  :global([data-dispatch-channel="sms"]) .btn-action.whatsapp {
+    display: none !important;
   }
 
   @include cel {

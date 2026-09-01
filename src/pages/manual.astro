@@ -1,0 +1,1293 @@
+---
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
+
+// Secciones del manual agrupadas con preguntas y metadatos
+const sections = [
+  {
+    num: "01",
+    slug: "acceso",
+    title: isEn ? "Account & Access" : "Acceso y seguridad",
+    shortName: isEn ? "Access" : "Acceso",
+    description: isEn 
+      ? "Logging into the panel, password recovery, and link privacy."
+      : "Ingreso al panel, recuperación de contraseñas y privacidad de enlaces.",
+    questions: [
+      {
+        num: "01",
+        id: "ingreso-panel",
+        question: isEn ? "How do I log into my guest panel?" : "¿Cómo ingreso a mi panel de invitados?",
+        answer: isEn 
+          ? `<p>You can access your private dashboard directly by visiting <a href="/panel" class="inline-link" target="_blank"><strong>www.nvitaciones.com/panel</strong></a> from any smartphone, tablet, or computer.</p>
+             <p>Simply enter the username and password provided to you when your invitation was delivered.</p>`
+          : `<p>Puedes ingresar directamente a tu panel privado visitando <a href="/panel" class="inline-link" target="_blank"><strong>www.nvitaciones.com/panel</strong></a> desde cualquier celular, tableta o computadora.</p>
+             <p>Solo necesitas ingresar el usuario y la contraseña que te proporcionamos al momento de entregarte tu invitación.</p>`,
+        tags: ["panel", "login", "ingresar", "acceso", "contraseña", "entrar", "link"]
+      },
+      {
+        num: "02",
+        id: "recuperar-acceso",
+        question: isEn ? "How do I recover my username or password?" : "¿Cómo recupero mi usuario o contraseña del panel?",
+        answer: isEn
+          ? `<p>For security and personal data protection, access credentials can only be restored directly through our customer support team.</p>
+             <div class="tip-box">
+               <strong>Forgot your credentials?</strong> Send us a message on WhatsApp at <a href="https://wa.me/5217551132468" target="_blank" class="inline-link"><strong>+52 1 755 113 2468</strong></a> or email <strong>invitacionesnvite@gmail.com</strong>, and we will issue new access details for you right away.
+             </div>`
+          : `<p>Por motivos de máxima seguridad y protección de datos, el restablecimiento de credenciales se realiza directamente a través de nuestro equipo de atención a clientes.</p>
+             <div class="tip-box">
+               <strong>¿Olvidaste tus datos de acceso?</strong> Envíanos un mensaje por WhatsApp al <a href="https://wa.me/5217551132468" target="_blank" class="inline-link"><strong>+52 1 755 113 2468</strong></a> o un correo a <strong>invitacionesnvite@gmail.com</strong> y te generaremos un nuevo acceso de inmediato.
+             </div>`,
+        tags: ["olvide", "recuperar", "password", "clave", "usuario", "soporte", "whatsapp"]
+      },
+      {
+        num: "03",
+        id: "compartir-credenciales",
+        question: isEn ? "Can I share my username and password with others?" : "¿Puedo compartir mi usuario y contraseña con otras personas?",
+        answer: isEn
+          ? `<p><strong>Only with trusted individuals directly involved in organizing your event</strong> (such as your partner, wedding planner, or close family members).</p>
+             <p>Keep in mind that inside your panel you will be managing private information, including guest names and phone numbers. Sharing access with third parties could compromise that data. If you ever suspect your password has been exposed, contact us via WhatsApp and we will gladly generate a new one for you.</p>`
+          : `<p>Te sugerimos compartir tus accesos <strong>únicamente con personas de absoluta confianza y directamente involucradas en la organización de tu evento</strong> (como tu pareja, wedding planner o familiares cercanos).</p>
+             <p>Toma en cuenta que en tu panel gestionarás información privada como nombres y números telefónicos. Compartir tus credenciales con terceros podría vulnerar esos datos. Si sospechas que tu contraseña fue comprometida, avísanos por WhatsApp y con gusto te asignaremos una nueva al instante.</p>`,
+        tags: ["compartir", "seguridad", "wedding planner", "privacidad", "pareja"]
+      },
+      {
+        num: "04",
+        id: "privacidad-invitacion",
+        question: isEn ? "What level of privacy and security does each invitation link have?" : "¿Qué nivel de privacidad y seguridad tiene cada invitación?",
+        answer: isEn
+          ? `<p>Each invitation is protected by a randomly and securely generated unique ID, functioning as an exclusive private link accessible only to you and your designated guest.</p>
+             <p>This ensures that other guests cannot view the assigned passes, full names, personal VIP messages, or phone numbers of other attendees, unless you or the guest choose to share the link publicly.</p>`
+          : `<p>Cada invitación está protegida por un identificador (ID) único y cifrado que funciona como un enlace privado exclusivo para ti y tu invitado asignado.</p>
+             <p>Esto garantiza que ningún otro invitado pueda ver los pases asignados, nombres, dedicatorias VIP ni números telefónicos de otras personas, a menos que tú o el propio invitado decidan compartir su enlace.</p>`,
+        tags: ["privacidad", "seguridad", "id", "enlace privado", "datos"]
+      }
+    ]
+  },
+  {
+    num: "02",
+    slug: "invitados",
+    title: isEn ? "Guest Management & Sending" : "Gestión de invitados y envíos",
+    shortName: isEn ? "Guests" : "Invitados",
+    description: isEn 
+      ? "Adding guests, 1-click WhatsApp invites, pass counts, and RSVP confirmations."
+      : "Alta de invitados, envíos por WhatsApp, pases y confirmaciones.",
+    questions: [
+      {
+        num: "01",
+        id: "agregar-invitados",
+        question: isEn ? "How do I add guests to my list?" : "¿Cómo agrego invitados a mi lista?",
+        answer: isEn
+          ? `<ol class="steps-list">
+               <li><strong>Click "Add Guest":</strong> Locate the primary button on the Guests tab.</li>
+               <li><strong>Enter their details:</strong> Fill in the guest or family name, number of assigned passes, and their category (Family, Friends, Work, etc.).</li>
+               <li><strong>Add their WhatsApp number:</strong> Entering their phone number enables the 1-click direct WhatsApp invite button.</li>
+               <li><strong>VIP Guests (Optional):</strong> Check the "VIP Guest" box if you wish to write a special, heartfelt dedication that only this guest will see upon opening their invitation.</li>
+             </ol>`
+          : `<ol class="steps-list">
+               <li><strong>Haz clic en «Agregar invitado»:</strong> Localiza el botón principal en la pestaña de Invitados.</li>
+               <li><strong>Ingresa sus datos:</strong> Escribe el nombre del invitado o familia, el número de pases asignados y selecciona su categoría (Familia, Amigos, Trabajo, etc.).</li>
+               <li><strong>Añade su número de WhatsApp:</strong> Esto habilitará el botón de envío directo por WhatsApp con un solo clic.</li>
+               <li><strong>Invitados VIP (Opcional):</strong> Marca la casilla «Invitado VIP» si deseas redactar una dedicatoria o mensaje especial que solo ese invitado verá al abrir su invitación.</li>
+             </ol>`,
+        tags: ["agregar", "invitado", "pases", "whatsapp", "vip", "dedicatoria", "crear"]
+      },
+      {
+        num: "02",
+        id: "como-invitar",
+        question: isEn ? "How do I send the invitations to my guests?" : "¿Cómo envío las invitaciones a mis invitados?",
+        answer: isEn
+          ? `<p>Once you have added a guest to your list, you have two quick and easy methods to deliver their invitation:</p>
+             <ul class="bullet-list">
+               <li><strong>Direct WhatsApp Button:</strong> If you registered their mobile number, simply click the WhatsApp button on their card. This opens WhatsApp on your phone or computer with a pre-written greeting and their personalized link ready to send.</li>
+               <li><strong>Manual Copy Link:</strong> Click <strong>"Copiar dirección" (Copy Link)</strong> to save the unique URL to your clipboard, allowing you to paste it into WhatsApp, Messenger, Instagram, SMS, or email.</li>
+             </ul>`
+          : `<p>Una vez que hayas registrado a tu invitado, dispones de dos formas muy sencillas para hacerle llegar su invitación:</p>
+             <ul class="bullet-list">
+               <li><strong>Botón directo de WhatsApp:</strong> Si registraste el número de celular de tu invitado, simplemente haz clic en el botón con el icono de WhatsApp en su tarjeta. Se abrirá la aplicación en tu celular o computadora con el mensaje personalizado y el enlace listos para enviar.</li>
+               <li><strong>Copiar enlace manual:</strong> Haz clic en el botón <strong>«Copiar dirección»</strong> para copiar el enlace al portapapeles y pegarlo en cualquier chat de WhatsApp, Messenger, Instagram, mensaje de texto (SMS) o correo electrónico.</li>
+             </ul>`,
+        tags: ["enviar", "invitar", "compartir", "whatsapp", "copiar link", "mensaje"]
+      },
+      {
+        num: "03",
+        id: "conocer-confirmaciones",
+        question: isEn ? "How do I know when a guest has confirmed or declined?" : "¿Cómo sé cuándo un invitado confirma o declina su asistencia?",
+        answer: isEn
+          ? `<p>Your panel updates automatically in real time:</p>
+             <ul class="bullet-list">
+               <li><strong>Card Color Coding:</strong> The guest card changes color instantly (🟢 Green = Confirmed, 🟠 Orange = Pending / Sent, 🔴 Red = Declined).</li>
+               <li><strong>Quick Filters:</strong> Use the top filter buttons to view only confirmed, pending, declined, or unsent invitations at a glance.</li>
+             </ul>`
+          : `<p>La información de tu panel se actualiza automáticamente en tiempo real:</p>
+             <ul class="bullet-list">
+               <li><strong>Cambio de color en las tarjetas:</strong> La tarjeta de cada invitado se actualiza según su estado (🟢 Verde = Confirmado, 🟠 Naranja = Pendiente / Enviado, 🔴 Rojo = Rechazado / Declinado).</li>
+               <li><strong>Filtros rápidos:</strong> En la parte superior de tu panel puedes filtrar tu lista con un clic para visualizar únicamente a los invitados confirmados, pendientes, rechazados o aquellos a quienes aún no les has enviado la invitación.</li>
+             </ul>`,
+        tags: ["confirmar", "confirmado", "estados", "colores", "rechazado", "rsvp", "filtros"]
+      },
+      {
+        num: "04",
+        id: "como-confirman-invitados",
+        question: isEn ? "How do guests confirm their attendance on the invitation?" : "¿Cómo confirman la asistencia mis invitados desde la invitación?",
+        answer: isEn
+          ? `<p>At the bottom of their interactive digital invitation, guests will find a simple confirmation form (RSVP) where they can:</p>
+             <ol class="steps-list">
+               <li>Indicate whether they will attend (Confirm) or cannot make it (Decline).</li>
+               <li>Select how many of their assigned passes they will actually use.</li>
+               <li>Leave an optional congratulatory message or note for the hosts.</li>
+             </ol>
+             <p>As soon as they submit the form, their response is immediately reflected in your guest panel without requiring manual follow-up.</p>`
+          : `<p>Al final de su invitación digital interactiva, los invitados encontrarán un sencillo formulario de confirmación (RSVP) donde podrán:</p>
+             <ol class="steps-list">
+               <li>Indicar si asistirán (Confirmar) o si no podrán acompañarte (Declinar).</li>
+               <li>Seleccionar cuántos pases de los asignados utilizarán.</li>
+               <li>Escribir una felicitación o mensaje opcional para los festejados.</li>
+             </ol>
+             <p>En cuanto pulsen «Confirmar», su respuesta se reflejará al instante en tu panel de control sin necesidad de llamadas ni mensajes adicionales.</p>`,
+        tags: ["formulario", "como confirman", "rsvp", "asistencia", "pases confirmados"]
+      },
+      {
+        num: "05",
+        id: "borrar-invitacion-error",
+        question: isEn ? "What happens if I accidentally delete an invitation?" : "¿Qué sucede si elimino una invitación enviada por error?",
+        answer: isEn
+          ? `<div class="warning-box">
+               <strong>Important Warning:</strong> Deleted invitations cannot be restored.
+             </div>
+             <p>Because each invitation link has a unique, non-repeatable ID, deleting it deactivates that URL permanently. If you remove a guest by mistake, you will need to add them again in your panel and send them the newly generated link.</p>
+             <p><em>Note: For your safety, the system will always ask for confirmation before deleting any record to prevent accidental actions.</em></p>`
+          : `<div class="warning-box">
+               <strong>Advertencia importante:</strong> Las invitaciones eliminadas no se pueden restaurar.
+             </div>
+             <p>Dado que cada enlace es único e irrepetible, la dirección web de la invitación borrada dejará de funcionar de inmediato. Si eliminas una por equivocación, deberás dar de alta nuevamente al invitado en tu panel y compartirle el nuevo enlace generado.</p>
+             <p><em>Nota: Para prevenir accidentes, el sistema siempre te solicitará una confirmación antes de eliminar cualquier registro.</em></p>`,
+        tags: ["eliminar", "borrar", "recuperar", "error", "precaucion"]
+      }
+    ]
+  },
+  {
+    num: "03",
+    slug: "qr",
+    title: isEn ? "Digital Passes & QR Code" : "Pases digitales y código QR",
+    shortName: isEn ? "QR Passes" : "Pases QR",
+    description: isEn 
+      ? "Access validation, table display, and reception check-in."
+      : "Validación de accesos, número de pases y control en puerta.",
+    questions: [
+      {
+        num: "01",
+        id: "codigo-qr-pases",
+        question: isEn ? "How does the QR code on my digital invitation work?" : "¿Cómo funciona el código QR de mi invitación digital?",
+        answer: isEn
+          ? `<p>If you have the <strong>Nvitación Lux</strong> package, each confirmed guest receives a digital pass equipped with a dynamic and non-transferable QR code.</p>
+             <ul class="bullet-list">
+               <li><strong>What information does it show?</strong> Upon scanning, it validates the number of confirmed passes and the guest's assigned table.</li>
+               <li><strong>When is it visible?</strong> The QR code is generated and displayed <strong>only when the designated guest confirms their attendance</strong>.</li>
+               <li><strong>If declined:</strong> If the guest declines the invitation, the pass will display a notification indicating that the invitation was declined, and no access code will be generated.</li>
+             </ul>`
+          : `<p>Si cuentas con el paquete <strong>Nvitación Lux</strong>, cada invitado confirmado dispondrá de un pase digital con código QR dinámico e intransferible.</p>
+             <ul class="bullet-list">
+               <li><strong>¿Qué información contiene?</strong> Al escanearse, valida el número de pases confirmados y la mesa asignada a ese invitado.</li>
+               <li><strong>¿Cuándo es visible?</strong> El código QR se genera y muestra <strong>únicamente cuando el invitado responsable confirma su asistencia</strong>.</li>
+               <li><strong>Si declina la invitación:</strong> El pase mostrará una notificación indicando que la invitación fue declinada y no se generará ningún código de acceso.</li>
+             </ul>`,
+        tags: ["qr", "codigo qr", "pases", "acceso", "lux", "mesa asignada", "entrada"]
+      }
+    ]
+  },
+  {
+    num: "04",
+    slug: "mesas",
+    title: isEn ? "Table Manager & Seating" : "Gestor de mesas y acomodo",
+    shortName: isEn ? "Tables" : "Mesas",
+    description: isEn 
+      ? "Organizing table layouts, seat capacities, and family seating."
+      : "Organización de lugares, capacidades y asignación de mesas.",
+    questions: [
+      {
+        num: "01",
+        id: "agregar-mesas",
+        question: isEn ? "How do I create tables and seat my guests?" : "¿Cómo creo mesas y organizo el acomodo de mis invitados?",
+        answer: isEn
+          ? `<p>If your package includes the <strong>Table Manager (Nvitación Lux)</strong>, organizing your layout is very intuitive:</p>
+             <ol class="steps-list">
+               <li>Inside your dashboard, navigate to the <strong>"Gestor de Mesas" (Table Manager)</strong> tab.</li>
+               <li>Click <strong>"Agregar mesa"</strong>, assign a name or number (e.g., *Table 1*, *VIP Table*, *Bride Family*), and specify the maximum seat capacity.</li>
+               <li>Select and assign guests from your list to each table. The system displays occupied and available seats in real time.</li>
+             </ol>`
+          : `<p>Si cuentas con la <strong>Nvitación Lux</strong> con Gestor de Mesas, organizar el acomodo de tu salón es muy intuitivo:</p>
+             <ol class="steps-list">
+               <li>En tu panel de control, dirígete a la pestaña <strong>«Gestor de Mesas»</strong>.</li>
+               <li>Haz clic en el botón <strong>«Agregar mesa»</strong>, asígnale un nombre o número (ej. *Mesa 1*, *Mesa VIP*, *Familia Novia*) y define el número máximo de asientos.</li>
+               <li>Selecciona y asigna a los invitados de tu lista a la mesa correspondiente. El panel te indicará en tiempo real la cantidad de lugares disponibles y ocupados.</li>
+             </ol>`,
+        tags: ["mesas", "acomodo", "capacidad", "sillas", "gestor de mesas", "lux", "organizar"]
+      },
+      {
+        num: "02",
+        id: "familia-mesas-separadas",
+        question: isEn ? "How do I invite a family but seat the children at a separate table?" : "Quiero invitar a una familia pero sentar a los hijos en otra mesa, ¿cómo lo hago?",
+        answer: isEn
+          ? `<p>In the platform, each guest entry and its assigned passes are seated together at a single table.</p>
+             <div class="tip-box">
+               <strong>How to set it up:</strong> Simply create <strong>two separate guest entries</strong> in your list:
+               <ul>
+                 <li>1 invitation for the parents with their passes (seated at the adults' table).</li>
+                 <li>1 invitation for the children/teens with their passes (seated at the kids' or young adults' table).</li>
+               </ul>
+               This allows you to assign different tables and track the attendance of each group independently.
+             </div>`
+          : `<p>En el sistema, cada registro de invitado y sus pases se asignan en conjunto a una sola mesa.</p>
+             <div class="tip-box">
+               <strong>¿Cómo resolverlo?</strong> Solo debes generar <strong>dos registros de invitación separados</strong> en tu lista:
+               <ul>
+                 <li>1 invitación para los padres con sus pases (asignada a la mesa de adultos).</li>
+                 <li>1 invitación para los hijos con sus pases correspondientes (asignada a la mesa de niños o jóvenes).</li>
+               </ul>
+               De esta manera podrás controlar el acomodo y la asistencia de cada grupo por separado.
+             </div>`,
+        tags: ["separar mesa", "hijos", "niños", "familia", "dos invitaciones", "mesas distintas"]
+      }
+    ]
+  },
+  {
+    num: "05",
+    slug: "proveedores",
+    title: isEn ? "Vendors & Budget Control" : "Control de proveedores y presupuesto",
+    shortName: isEn ? "Vendors" : "Proveedores",
+    description: isEn 
+      ? "Vendor directory, contract budgets, payment logs, and task reminders."
+      : "Directorio de contactos, presupuestos, pagos y checklist.",
+    questions: [
+      {
+        num: "01",
+        id: "para-que-proveedores",
+        question: isEn ? "What is the Vendor section for in my panel?" : "¿Para qué sirve la sección de Proveedores en mi panel?",
+        answer: isEn
+          ? `<p>This section provides complete financial, operational, and logistic control over all contracted event services:</p>
+             <ul class="bullet-list">
+               <li><strong>Contact Directory:</strong> Store phone numbers, names, and notes for your photographer, DJ, catering, venue, florist, makeup artist, etc.</li>
+               <li><strong>Budget & Payments:</strong> Assign the total contracted price, log partial deposits with dates, and keep track of your pending balance.</li>
+               <li><strong>Tasks & Reminders:</strong> Create checklist items with deadlines for each vendor (e.g., *"Send playlist to DJ"*, *"Menu tasting"*).</li>
+               <li><strong>Global Financial Overview:</strong> View clean charts of your total event budget, total liquidated amount, and remaining balance.</li>
+             </ul>`
+          : `<p>Esta sección te permite llevar el control financiero, operativo y logístico de todos los servicios de tu evento en un solo lugar:</p>
+             <ul class="bullet-list">
+               <li><strong>Directorio de contactos:</strong> Guarda los datos y teléfonos de tu fotógrafo, DJ, florista, banquetero, salón, maquillista, etc.</li>
+               <li><strong>Presupuesto y pagos:</strong> Asigna el costo total acordado, registra anticipos o abonos con fecha y consulta el saldo pendiente.</li>
+               <li><strong>Lista de tareas y pendientes:</strong> Agrega recordatorios con fecha límite para cada proveedor (ej. *«Enviar lista de canciones al DJ»*, *«Prueba de menú»*).</li>
+               <li><strong>Balance financiero general:</strong> Monitorea en cifras claras el presupuesto global de tu evento, el total pagado a la fecha y lo que resta por liquidar.</li>
+             </ul>`,
+        tags: ["proveedores", "gastos", "presupuesto", "pagos", "abonos", "tareas", "finanzas", "checklist"]
+      }
+    ]
+  },
+  {
+    num: "06",
+    slug: "vigencia",
+    title: isEn ? "Duration & Updates" : "Vigencia y modificaciones",
+    shortName: isEn ? "Duration" : "Vigencia",
+    description: isEn 
+      ? "Post-delivery adjustments and online duration before secure deletion."
+      : "Actualizaciones posteriores a la entrega y tiempo de permanencia.",
+    questions: [
+      {
+        num: "01",
+        id: "cambiar-datos-fotos",
+        question: isEn ? "Can I change information or photos after sending the invitation?" : "¿Puedo modificar información o fotografías de mi invitación después de haberla enviado?",
+        answer: isEn
+          ? `<p><strong>Yes, it is completely possible.</strong> When changes are updated on the server, any guest who re-opens the link will instantly see the latest version.</p>
+             <p><em>Please note: Modification requests submitted after final approval (Visto Bueno) or formal delivery may incur an administrative adjustment fee.</em></p>`
+          : `<p><strong>Sí, es totalmente posible.</strong> Al actualizarse en el servidor, cualquier invitado que vuelva a abrir el enlace verá la versión más reciente al instante.</p>
+             <p><em>Ten en cuenta que las modificaciones solicitadas con posterioridad a la aprobación final (Visto Bueno) o entrega formal de la invitación pueden generar un cargo administrativo por ajuste.</em></p>`,
+        tags: ["cambiar", "fotos", "modificar", "ajustes", "corregir", "actualizar"]
+      },
+      {
+        num: "02",
+        id: "tiempo-en-linea",
+        question: isEn ? "How long will my invitation and panel remain online?" : "¿Cuánto tiempo permanecerán en línea mi invitación y el panel?",
+        answer: isEn
+          ? `<p>Your digital invitation and private dashboard access will remain active throughout your entire planning period and up to <strong>1 week after your event date</strong>.</p>
+             <p>After this timeframe, access is closed and all guest, table, and vendor records are permanently and securely deleted in strict compliance with data privacy policies. Nvitaciones.com never stores, shares, or monetizes personal data under any circumstance.</p>`
+          : `<p>Tu invitación digital y el acceso a tu panel estarán activos durante toda la etapa de planeación y hasta <strong>1 semana posterior a la fecha de tu evento</strong>.</p>
+             <p>Concluido este periodo, el acceso se cierra y la información de invitados, mesas y proveedores se elimina de forma permanente y segura por estricto cumplimiento de privacidad de datos. Nvitaciones.com no almacena ni comercializa información personal bajo ninguna circunstancia.</p>`,
+        tags: ["vigencia", "duracion", "tiempo en linea", "expiracion", "borrado", "privacidad"]
+      }
+    ]
+  }
+];
+
+const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 0);
+---
+
+<Layout
+  title={isEn ? "User Guide & Help Center - Nvitaciones" : "Manual de Uso y Centro de Ayuda - Nvitaciones"}
+  description={isEn ? "Complete user guide for your Nvitaciones digital invitation: adding guests, WhatsApp invites, QR passes, table seating, and vendor budget." : "Guía completa de uso para tu invitación digital de Nvitaciones: cómo agregar invitados, envíos por WhatsApp, pases con QR, gestor de mesas y proveedores."}
+>
+  <Nav />
+
+  <main id="manual-page">
+    <!-- Header Superior con Buscador Estilo Confirmalia -->
+    <header class="manual-top-header">
+      <h1>{isEn ? "User Guide" : "Manual de uso"}</h1>
+      <div class="search-centered-container">
+        <div class="search-input-box">
+          <Icon name="solar:magnifer-linear" size={22} class="search-ico" />
+          <input
+            type="text"
+            id="manual-search-input"
+            placeholder={isEn ? 'Search "password", "tables", "QR code", "WhatsApp"...' : 'Busca "contraseña", "mesas", "código QR", "WhatsApp"...'}
+            autocomplete="off"
+          />
+          <span class="cmd-badge">⌘ K</span>
+          <button id="clear-search-btn" class="clear-btn" aria-label="Limpiar búsqueda" style="display: none;">
+            <Icon name="solar:close-circle-bold" size={20} />
+          </button>
+        </div>
+
+        <!-- Consultas frecuentes rápidas -->
+        <div class="frequent-queries">
+          <span class="frequent-label">{isEn ? "FREQUENT QUERIES" : "CONSULTAS FRECUENTES"}</span>
+          <div class="frequent-links">
+            <button type="button" class="freq-btn" data-query={isEn ? "add guests" : "cómo agrego"}>
+              {isEn ? "How do I add guests?" : "¿Cómo agrego a mis invitados?"}
+            </button>
+            <button type="button" class="freq-btn" data-query={isEn ? "QR code" : "código QR"}>
+              {isEn ? "How does the QR code work?" : "¿Cómo funciona el código QR?"}
+            </button>
+            <button type="button" class="freq-btn" data-query={isEn ? "recover" : "recupero mi usuario"}>
+              {isEn ? "How to recover password?" : "¿Cómo recuperar mi contraseña?"}
+            </button>
+            <button type="button" class="freq-btn" data-query={isEn ? "tables" : "mesas"}>
+              {isEn ? "How do I seat tables?" : "¿Cómo asigno mesas?"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout Principal: Barra Lateral Sticky ("Explorar por tema") + Columna de Contenido -->
+    <div class="manual-body-container">
+      <div class="confirmalia-layout">
+        
+        <!-- SIDEBAR IZQUIERDA: EXPLORAR POR TEMA (STICKY EN DESKTOP, PILLS EN MÓVIL) -->
+        <aside class="sidebar-explore" id="sidebar-explore">
+          <div class="sidebar-inner">
+            <span class="sidebar-heading">{isEn ? "EXPLORE BY TOPIC" : "EXPLORAR POR TEMA"}</span>
+            
+            <nav class="explore-nav" id="explore-nav">
+              <button type="button" class="topic-item active" data-target="all">
+            
+                <span class="topic-text">{isEn ? "All Topics" : "Todos los temas"}</span>
+              </button>
+              {sections.map((sec) => (
+                <button type="button" class="topic-item" data-target={sec.slug}>
+                  <span class="topic-num">{sec.num}</span>
+                  <span class="topic-text">{sec.shortName}</span>
+                </button>
+              ))}
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Bloque de Ayuda Personal inferior -->
+            <div class="personal-help-box">
+              <span class="help-micro-label">{isEn ? "PERSONAL SUPPORT" : "AYUDA PERSONAL"}</span>
+              <h4 class="help-title">{isEn ? "Is your case more specific?" : "¿Tu caso es más específico?"}</h4>
+              <p class="help-desc">
+                {isEn 
+                  ? "Tell us what you are organizing and our team will guide you."
+                  : "Cuéntanos qué estás organizando y nuestro equipo te orientará."}
+              </p>
+              <a
+                href="https://wa.me/5217551132468?text=Hola,%20tengo%20una%20duda%20sobre%20mi%20invitaci%C3%B3n"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="support-link"
+              >
+                <Icon name="solar:chat-round-dots-bold" size={17} />
+                <span>{isEn ? "Chat with Support" : "Escribir a soporte"}</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- COLUMNA DERECHA: SECCIONES Y PREGUNTAS NUMERADAS -->
+        <div class="content-sections-column" id="content-column">
+          {sections.map((sec) => (
+            <section class="topic-section" id={`sec-${sec.slug}`} data-section={sec.slug}>
+              <!-- Encabezado de la categoría con número itálico grande -->
+              <div class="topic-header">
+                <span class="topic-huge-num">{sec.num}</span>
+                <div class="topic-title-wrap">
+                  <div class="title-and-badge">
+                    <h2 class="topic-main-title">{sec.title}</h2>
+                    <span class="question-count-badge">
+                      {sec.questions.length} {sec.questions.length === 1 ? (isEn ? "question" : "pregunta") : (isEn ? "questions" : "preguntas")}
+                    </span>
+                  </div>
+                  <p class="topic-desc">{sec.description}</p>
+                </div>
+              </div>
+
+              <!-- Lista de Preguntas con borde y botón (+) -->
+              <div class="questions-accordion-group">
+                {sec.questions.map((q) => (
+                  <details
+                    class="question-accordion-item"
+                    id={q.id}
+                    data-keywords={`${q.question.toLowerCase()} ${q.tags.join(" ").toLowerCase()} ${sec.title.toLowerCase()}`}
+                  >
+                    <summary class="question-summary">
+                      <span class="q-num">{q.num}</span>
+                      <h3 class="q-title">{q.question}</h3>
+                      <div class="q-icon-circle">
+                        <span class="plus-sign">+</span>
+                      </div>
+                    </summary>
+                    <div class="q-answer-pane">
+                      <div class="q-answer-inner" set:html={q.answer} />
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          ))}
+
+          <!-- Estado de Búsqueda Vacía -->
+          <div id="search-empty-state" class="empty-state-box" style="display: none;">
+            <Icon name="solar:magnifer-broken" size={44} class="empty-ico" />
+            <h3>{isEn ? "No results found" : "No encontramos resultados"}</h3>
+            <p>{isEn ? "Try searching with other words or click a topic in the sidebar." : "Intenta con otras palabras clave o explora los temas en la barra lateral."}</p>
+            <button type="button" id="clear-filters-btn" class="btn-reset-all">
+              {isEn ? "Show all topics" : "Ver todos los temas"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("manual-search-input");
+    const clearBtn = document.getElementById("clear-search-btn");
+    const topicButtons = document.querySelectorAll(".topic-item");
+    const sections = document.querySelectorAll(".topic-section");
+    const accordionItems = document.querySelectorAll(".question-accordion-item");
+    const emptyState = document.getElementById("search-empty-state");
+    const freqButtons = document.querySelectorAll(".freq-btn");
+    const clearFiltersBtn = document.getElementById("clear-filters-btn");
+
+    let activeFilter = "all";
+    let searchQuery = "";
+
+    function applyFilterAndSearch() {
+      const q = searchQuery.trim().toLowerCase();
+      let totalVisibleQuestions = 0;
+
+      sections.forEach((sec) => {
+        const secSlug = sec.getAttribute("data-section");
+        const matchesTopic = activeFilter === "all" || activeFilter === secSlug;
+
+        let secHasVisibleQuestions = false;
+        const questionsInSec = sec.querySelectorAll(".question-accordion-item");
+
+        questionsInSec.forEach((item) => {
+          const keywords = item.getAttribute("data-keywords") || "";
+          const text = item.textContent.toLowerCase();
+          const matchesQuery = q === "" || keywords.includes(q) || text.includes(q);
+
+          if (matchesTopic && matchesQuery) {
+            item.style.display = "block";
+            secHasVisibleQuestions = true;
+            totalVisibleQuestions++;
+            if (q.length >= 3) {
+              item.open = true;
+            }
+          } else {
+            item.style.display = "none";
+          }
+        });
+
+        // Mostrar u ocultar la sección completa
+        sec.style.display = secHasVisibleQuestions ? "block" : "none";
+      });
+
+      if (emptyState) {
+        emptyState.style.display = totalVisibleQuestions === 0 ? "block" : "none";
+      }
+
+      if (clearBtn) {
+        clearBtn.style.display = q.length > 0 ? "flex" : "none";
+      }
+    }
+
+    // Buscador
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        applyFilterAndSearch();
+      });
+
+      // Atajo de teclado Cmd+K / Ctrl+K
+      document.addEventListener("keydown", (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      });
+    }
+
+    // Limpiar búsqueda
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (searchInput) {
+          searchInput.value = "";
+          searchQuery = "";
+          searchInput.focus();
+          applyFilterAndSearch();
+        }
+      });
+    }
+
+    // Click en categorías del menú lateral
+    topicButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        topicButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.getAttribute("data-target") || "all";
+
+        // Si se seleccionó una categoría específica y estamos en desktop, hacemos scroll suave hacia ella
+        if (activeFilter !== "all" && window.innerWidth > 960) {
+          const targetEl = document.getElementById(`sec-${activeFilter}`);
+          if (targetEl) {
+            const offset = 90;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = targetEl.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }
+        }
+
+        applyFilterAndSearch();
+      });
+    });
+
+    // Consultas frecuentes
+    freqButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const query = btn.getAttribute("data-query") || "";
+        if (searchInput) {
+          searchInput.value = query;
+          searchQuery = query;
+          activeFilter = "all";
+          topicButtons.forEach((b) => b.classList.remove("active"));
+          topicButtons[0]?.classList.add("active");
+          applyFilterAndSearch();
+          searchInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+    });
+
+    // Reset todo
+    if (clearFiltersBtn) {
+      clearFiltersBtn.addEventListener("click", () => {
+        if (searchInput) searchInput.value = "";
+        searchQuery = "";
+        activeFilter = "all";
+        topicButtons.forEach((b) => b.classList.remove("active"));
+        topicButtons[0]?.classList.add("active");
+        applyFilterAndSearch();
+      });
+    }
+  });
+</script>
+
+<style lang="scss">
+  @use "../estilos/_variables.scss" as *;
+  h1{
+    font-weight: bold;
+    font-size: clamp(2rem, 3vw, 3rem);
+    color: $primario;
+    text-align: center;
+  }
+
+  #manual-page {
+    min-height: 100vh;
+    background-color:$fondoGlobal;
+    padding-bottom: 6rem;
+    font-family: $fuenteA, sans-serif;
+  }
+
+  /* ------------------------------------------------------------- */
+  /* HEADER SUPERIOR CON BUSCADOR                                  */
+  /* ------------------------------------------------------------- */
+  .manual-top-header {
+    background: $terciario;
+    border-bottom: 1px solid #eef2f6;
+    padding: 7.5rem 1.5rem 2.5rem;
+
+    @include cel {
+      padding: 5.5rem 1rem 1.5rem;
+    }
+
+    .search-centered-container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .search-input-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transition: all 0.2s ease;
+
+      &:focus-within {
+        border-color: $primario;
+        box-shadow: 0 6px 25px rgba($primario, 0.12);
+      }
+
+      .search-ico {
+        position: absolute;
+        left: 1.25rem;
+        color: #94a3b8;
+        pointer-events: none;
+      }
+
+      input {
+        width: 100%;
+        padding: 1.15rem 5rem 1.15rem 3.4rem;
+        font-size: 1.05rem;
+        color: #1e293b;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-family: inherit;
+
+        &::placeholder {
+          color: #94a3b8;
+          font-size: 0.98rem;
+        }
+
+        @include cel {
+          padding: 0.95rem 3.5rem 0.95rem 2.85rem;
+          font-size: 0.9rem;
+          &::placeholder {
+            font-size: 0.85rem;
+          }
+        }
+      }
+
+      .cmd-badge {
+        position: absolute;
+        right: 1.1rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #94a3b8;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        padding: 0.25rem 0.55rem;
+        border-radius: 6px;
+        letter-spacing: 0.02em;
+
+        @include cel {
+          display: none;
+        }
+      }
+
+      .clear-btn {
+        position: absolute;
+        right: 1.1rem;
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        padding: 0.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #ef4444;
+        }
+      }
+    }
+
+    .frequent-queries {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-top: 1.15rem;
+      padding-left: 0.25rem;
+      flex-wrap: wrap;
+
+      .frequent-label {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: #94a3b8;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .frequent-links {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .freq-btn {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: 0.82rem;
+        color: #64748b;
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $primario;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------- */
+  /* LAYOUT DE 2 COLUMNAS (CONFIRMALIA STYLE)                      */
+  /* ------------------------------------------------------------- */
+  .manual-body-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 3.5rem auto 0;
+    padding: 0 2rem;
+
+    @include cel {
+      margin-top: 1.5rem;
+      padding: 0 1rem;
+    }
+  }
+
+  .confirmalia-layout {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 4.5rem;
+    align-items: start;
+    width: 100%;
+
+    @media (max-width: 960px) {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+
+  /* ------------------------------------------------------------- */
+  /* SIDEBAR: EXPLORAR POR TEMA (STICKY)                           */
+  /* ------------------------------------------------------------- */
+  .sidebar-explore {
+    width: 100%;
+
+    @media (min-width: 961px) {
+      position: sticky;
+      top: 6.5rem;
+      z-index: 10;
+    }
+
+    .sidebar-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-heading {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+
+    .explore-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      /* EN MÓVIL: SE VUELVEN PILLS HORIZONTALES */
+      @media (max-width: 960px) {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }
+
+    .topic-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+
+      .topic-num {
+        font-family: var(--font-hurme), serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #94a3b8;
+        min-width: 22px;
+        transition: color 0.2s ease;
+      }
+
+      .topic-text {
+        flex: 1;
+      }
+
+      &:hover {
+        color: #1e293b;
+        background: #f8fafc;
+
+        .topic-num {
+          color: $primario;
+        }
+      }
+
+      &.active {
+        color: #1e293b;
+        font-weight: 700;
+        background: #f1f5f9;
+
+        .topic-num {
+          color: $primario;
+          font-weight: 700;
+        }
+      }
+
+      /* Estilo Pills en Móvil */
+      @media (max-width: 960px) {
+        flex-shrink: 0;
+        width: auto;
+        white-space: nowrap;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 30px;
+        padding: 0.55rem 1.1rem;
+        font-size: 0.85rem;
+
+        &.active {
+          background: $primario;
+          color: #ffffff;
+          border-color: $primario;
+
+          .topic-num {
+            color: #ffffff;
+          }
+        }
+      }
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 2.25rem 0 1.75rem;
+
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+
+    /* Tarjeta de soporte en sidebar */
+    .personal-help-box {
+      @media (max-width: 960px) {
+        display: none;
+      }
+
+      .help-micro-label {
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: $secundario;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
+
+      .help-title {
+        font-family: var(--font-hurme), serif;
+        font-size: 1.18rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.45rem;
+        line-height: 1.3;
+      }
+
+      .help-desc {
+        font-size: 0.88rem;
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+
+      .support-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: $primario;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $acento;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------- */
+  /* COLUMNA DE CONTENIDO Y PREGUNTAS                              */
+  /* ------------------------------------------------------------- */
+  .content-sections-column {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+
+    @include cel {
+      gap: 3rem;
+    }
+  }
+
+  .topic-section {
+    scroll-margin-top: 6.5rem;
+    width: 100%;
+
+    .topic-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.75rem;
+      margin-bottom: 1.85rem;
+      width: 100%;
+
+      @include cel {
+        gap: 1rem;
+      }
+
+      .topic-huge-num {
+        font-family: var(--font-hurme), serif;
+        font-size: 2.35rem;
+        line-height: 1;
+        color: $primario;
+        font-weight: 600;
+        flex-shrink: 0;
+        min-width: 45px;
+        padding-top: 0.15rem;
+
+        @include cel {
+          font-size: 1.75rem;
+          min-width: 32px;
+        }
+      }
+
+      .topic-title-wrap {
+        flex: 1;
+        min-width: 0;
+
+        .title-and-badge {
+          display: flex;
+          align-items: baseline;
+          gap: 1rem;
+          margin-bottom: 0.35rem;
+          flex-wrap: wrap;
+
+          .topic-main-title {
+            font-family: var(--font-hurme), serif;
+            font-size: clamp(1.85rem, 2.5vw, 2.35rem);
+            font-weight: 700;
+            color: $gris;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
+          }
+
+          .question-count-badge {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            font-weight: 500;
+            white-space: nowrap;
+          }
+        }
+
+        .topic-desc {
+          font-size: 0.98rem;
+          color: #64748b;
+          line-height: 1.55;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------- */
+  /* GRUPO DE PREGUNTAS / ACORDEÓN (LÍNEAS LIMPIAS)                */
+  /* ------------------------------------------------------------- */
+  .questions-accordion-group {
+    border-top: 1px solid #e2e8f0;
+    width: 100%;
+  }
+
+  .question-accordion-item {
+    border-bottom: 1px solid #e2e8f0;
+    width: 100%;
+    transition: background 0.2s ease;
+
+    &[open] {
+      background: $fondoGlobal;
+
+      .q-icon-circle {
+        transform: rotate(45deg);
+        background: $fondoGlobal;
+        color: $primario;
+      }
+    }
+
+    .question-summary {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      padding: 1.45rem 0.5rem;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+      width: 100%;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      @include cel {
+        gap: 1rem;
+        padding: 1.15rem 0.25rem;
+      }
+
+      .q-num {
+        font-family: var(--font-hurme), serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #94a3b8;
+        min-width: 26px;
+        flex-shrink: 0;
+      }
+
+      .q-title {
+        font-family: var(--font-hurme), serif;
+        font-size: clamp(1.1rem, 1.5vw, 1.28rem);
+        font-weight: 600;
+        color: $primario;
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        line-height: 1.4;
+      }
+
+      .q-icon-circle {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1.5px solid #cbd5e1;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-left: auto;
+        transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease;
+      }
+    }
+
+    .q-answer-pane {
+      padding: 0 1rem 1.75rem 3.5rem;
+
+      @include cel {
+        padding: 0 0.5rem 1.35rem 2rem;
+      }
+
+      .q-answer-inner {
+        font-size: 0.98rem;
+        line-height: 1.75;
+        color: #334155;
+
+        p {
+          margin-bottom: 0.85rem;
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        strong, b {
+          color: #0f172a;
+          font-weight: 700;
+        }
+
+        .inline-link {
+          color: $primario;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          &:hover {
+            color: $acento;
+          }
+        }
+      }
+    }
+  }
+
+  /* Elementos de ayuda dentro de respuestas */
+  :global(.steps-list) {
+    margin: 0.85rem 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+  }
+
+  :global(.bullet-list) {
+    margin: 0.85rem 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: disc;
+
+    li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+  }
+
+  :global(.tip-box) {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 0.85rem 1.15rem;
+    border-radius: 0 10px 10px 0;
+    margin: 0.85rem 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #166534;
+
+    ul {
+      margin: 0.4rem 0 0;
+      padding-left: 1.1rem;
+      li {
+        margin-bottom: 0.25rem;
+      }
+    }
+  }
+
+  :global(.warning-box) {
+    background: #fef2f2;
+    border-left: 4px solid #ef4444;
+    padding: 0.85rem 1.15rem;
+    border-radius: 0 10px 10px 0;
+    margin: 0.85rem 0;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #991b1b;
+  }
+
+  /* ------------------------------------------------------------- */
+  /* EMPTY SEARCH STATE                                            */
+  /* ------------------------------------------------------------- */
+  .empty-state-box {
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 18px;
+    padding: 3.5rem 1.5rem;
+    margin: 2rem 0;
+
+    .empty-ico {
+      color: #94a3b8;
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      font-family: var(--font-hurme), serif;
+      font-size: 1.35rem;
+      color: #0f172a;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+
+    p {
+      font-size: 0.92rem;
+      color: #64748b;
+      margin-bottom: 1.35rem;
+    }
+
+    .btn-reset-all {
+      background: $primario;
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: $acento;
+      }
+    }
+  }
+</style>

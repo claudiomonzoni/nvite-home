@@ -8,6 +8,8 @@ interface Props {
   imagenes: Array<{ imagen: string; liga: string }>;
 }
 const { h2, p, imagenes } = Astro.props;
+const lang = Astro.locals.lang || "es";
+const isEn = lang === "en";
 ---
 
 <div id="Savethedate">
@@ -25,7 +27,7 @@ const { h2, p, imagenes } = Astro.props;
             <img src={imagen.imagen} alt={h2} loading="lazy" decoding="async" />
             <Btn
               liga={imagen.liga}
-              texto="Descargar"
+              texto={isEn ? "Download" : "Descargar"}
               clases="btn-oscuro"
               claro={false}
               blank={true}

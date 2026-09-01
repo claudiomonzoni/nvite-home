@@ -168,9 +168,14 @@ if (fechaEvento) {
     }
   }
 }
+
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 ---
 
-<Layout title={nombreEvento ? `Panel - ${nombreEvento}` : "Panel de Administración"}>
+<Layout title={nombreEvento ? `Panel - ${nombreEvento}` : t('panel.menu.title')}>
   <Menu tipo={tipoInvitacion} ruta={ruta} nombreEvento={nombreEvento} invitados={invitadosData} proveedores={proveedoresData} />
   
   <!-- Banner de Cuenta Regresiva Amigable (Alineado en el grid original) -->
@@ -182,11 +187,11 @@ if (fechaEvento) {
         <div class="alerta-mensaje">
           {alertaTipo === "celebrativa" ? (
             <span>
-              <strong>¡Solo {diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día!</strong> 🎉 ¡Excelente avance! Todo está marchando de maravilla, tienes más del 80% de tus invitados confirmados. ¡A disfrutar los preparativos!
+              <strong>{lang === 'en' ? `Only ${diasRestantes} ${diasRestantes === 1 ? 'day' : 'days'} until the big day! 🎉` : `¡Solo ${diasRestantes} ${diasRestantes === 1 ? 'día' : 'días'} para el gran día! 🎉`}</strong> {t('panel.countdown.celebrate', { days: diasRestantes ?? 0, dayText: diasRestantes === 1 ? t('panel.countdown.day') : t('panel.countdown.days') })}
             </span>
           ) : (
             <span>
-              <strong>{diasRestantes} {diasRestantes === 1 ? 'día' : 'días'} para el gran día.</strong> Aún quedan <strong>{totalPendientesConfirmacion}</strong> {totalPendientesConfirmacion === 1 ? 'invitación' : 'invitaciones'} sin confirmar y <strong>{pasesPendientes}</strong> {pasesPendientes === 1 ? 'pase libre' : 'pases libres'}. ¡Tú puedes, falta muy poco!
+              <strong>{lang === 'en' ? `${diasRestantes} ${diasRestantes === 1 ? 'day' : 'days'} until the big day.` : `${diasRestantes} ${diasRestantes === 1 ? 'día' : 'días'} para el gran día.`}</strong> {t('panel.countdown.motivational', { days: diasRestantes ?? 0, dayText: diasRestantes === 1 ? t('panel.countdown.day') : t('panel.countdown.days'), pending: totalPendientesConfirmacion, invText: totalPendientesConfirmacion === 1 ? t('panel.countdown.invitation') : t('panel.countdown.invitations'), passes: pasesPendientes, passText: pasesPendientes === 1 ? t('panel.countdown.pass') : t('panel.countdown.passes') })}
             </span>
           )}
         </div>
@@ -200,20 +205,20 @@ if (fechaEvento) {
       <div class="tabs-container">
         <button class="tab-btn active" data-tab="invitados">
           <Icon name="mdi:account-group-outline" size={20} />
-          <span>Invitaciones</span>
+          <span>{t('panel.tabs.invitations')}</span>
         </button>
 
         {addonMesas && (
           <button class="tab-btn" data-tab="mesas">
             <Icon name="mdi:table-furniture" size={20} />
-            <span>Gestión de Mesas</span>
+            <span>{t('panel.tabs.tables')}</span>
           </button>
         )}
 
         {addonProveedores && (
           <button class="tab-btn" data-tab="proveedores">
             <Icon name="mdi:store-outline" size={20} />
-            <span>Proveedores</span>
+            <span>{t('panel.tabs.vendors')}</span>
           </button>
         )}
       </div>
@@ -231,7 +236,7 @@ if (fechaEvento) {
     <section class="grid contenido">
       <div id="hero">
         <div class="barra-progreso-container">
-          <h3>Progreso de confirmaciones de tus invitaciones</h3>
+          <h3>{t('panel.hero.progressTitle')}</h3>
           <div class="barra-progreso">
             <div
               class="barra"
@@ -262,78 +267,96 @@ if (fechaEvento) {
                     )
                   : 0
               }%</span
-            > de invitaciones confirmadas,
-            <span class="confirmados">{totalPasesConfirmados}</span> pases confirmados,
-            <span class="pendientes">{pasesPendientes}</span> pases por confirmar
+            > {lang === 'en' ? 'of invitations confirmed,' : 'de invitaciones confirmadas,'}
+            <span class="confirmados">{totalPasesConfirmados}</span> {lang === 'en' ? 'passes confirmed,' : 'pases confirmados,'}
+            <span class="pendientes">{pasesPendientes}</span> {lang === 'en' ? 'passes to confirm' : 'pases por confirmar'}
           </p>
         </div>
         <div class="estadisticas">
           <div class="stat-item">
             <span class="stat-numero">{invitadosData.length}</span>
-            <span class="stat-label">Invitaciones creadas</span>
+            <span class="stat-label">{t('panel.stats.created')}</span>
           </div>
             <div class="stat-item">
             <span class="stat-numero"
               >{invitadosData.filter((inv) => inv.InvitacionEnviada).length}</span
             >
-            <span class="stat-label">Invitaciones enviadas</span>
+            <span class="stat-label">{t('panel.stats.sent')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{totalPasesAsignados}</span>
-            <span class="stat-label">Pases asignados</span>
+            <span class="stat-label">{t('panel.stats.assignedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{totalPasesConfirmados}</span>
-            <span class="stat-label">Pases confirmados</span>
+            <span class="stat-label">{t('panel.stats.confirmedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero">{pasesLiberados}</span>
-            <span class="stat-label">Pases liberados</span>
+            <span class="stat-label">{t('panel.stats.releasedPasses')}</span>
           </div>
           <div class="stat-item">
             <span class="stat-numero"
               >{invitadosData.filter((inv) => inv.noAsiste).length}</span
             >
-            <span class="stat-label">declinaciones</span>
+            <span class="stat-label">{t('panel.stats.declined')}</span>
           </div>
         
         </div>
 
         <div class="section-header invitados-section-header">
-          <h2>Invitaciones ({invitadosData.length})</h2>
+          <h2>{t('panel.tabs.invitations')} ({invitadosData.length})</h2>
 
           <div id="conteAgregar">
 
             {usuarioId ? (
 
-<button id="btn-exportar-invitados" class="btn-excel" title="Exportar Invitados a Excel">
+<button id="btn-exportar-invitados" class="btn-excel" title={t('panel.actions.downloadExcel')}>
               <Icon name="mdi:file-excel-outline" size={18} />
-              <span>Descargar Excel</span>
+              <span>{t('panel.actions.downloadExcel')}</span>
             </button>
               <button id="agregar-invitado" class="btn-primary-sm">
               <Icon name="mdi:account-plus-outline" size={18} />
-              <span>Agregar invitado</span>
+              <span>{t('panel.actions.addGuest')}</span>
             </button>
           ) : null}
           </div>
         </div>
 
         <div class="conteFiltros">
-          <input
-            id="search-input"
-            type="text"
-            placeholder="Buscar invitado por nombre..."
-            class="buscador"
-          />
-          <div class="filtros">
-            <div class="filtros-estado">
-              <button class="filtro-btn activo" data-estado="todos">Todos</button>
-              <button class="filtro-btn" data-estado="enviada">Enviada</button>
-              <button class="filtro-btn" data-estado="confirmado">Confirmada</button>
-              <button class="filtro-btn" data-estado="NoAsiste">No asiste</button>
-              <button class="filtro-btn" data-estado="noEnviada">Falta por enviar</button>
+          <div class="filtros-top-row">
+            <input
+              id="search-input"
+              type="text"
+              placeholder={t('panel.actions.searchPlaceholder')}
+              class="buscador"
+            />
+
+            <!-- Selector de Canal de Envío (WhatsApp / SMS / Ambos) -->
+            <div class="canal-envio-wrapper">
+              <span class="canal-label">{t('panel.channel.label')}</span>
+              <div class="canal-botones">
+                <button class="canal-btn activo" data-channel="whatsapp" type="button" title="WhatsApp">
+                  <Icon name="mdi:whatsapp" size={15} />
+                  <span>{t('panel.channel.whatsapp')}</span>
+                </button>
+                <button class="canal-btn" data-channel="sms" type="button" title="SMS / iMessage">
+                  <Icon name="mdi:message-text-outline" size={15} />
+                  <span>{t('panel.channel.sms')}</span>
+                </button>
+                <button class="canal-btn" data-channel="all" type="button" title={t('panel.channel.all')}>
+                  <span>{t('panel.channel.all')}</span>
+                </button>
+              </div>
             </div>
-            
+          </div>
+
+          <div class="filtros-estado">
+            <button class="filtro-btn activo" data-estado="todos">{t('panel.filters.all')}</button>
+            <button class="filtro-btn" data-estado="enviada">{t('panel.filters.sent')}</button>
+            <button class="filtro-btn" data-estado="confirmado">{t('panel.filters.confirmed')}</button>
+            <button class="filtro-btn" data-estado="NoAsiste">{t('panel.filters.declined')}</button>
+            <button class="filtro-btn" data-estado="noEnviada">{t('panel.filters.pending')}</button>
           </div>
         </div>
       </div>
@@ -493,6 +516,32 @@ if (fechaEvento) {
         });
       });
     }
+
+    // 2.1 Selector de Canal de Envío (WhatsApp / SMS / Ambos)
+    const canalBtns = document.querySelectorAll(".canal-btn") as NodeListOf<HTMLButtonElement>;
+    const setDispatchChannel = (channel: string) => {
+      document.documentElement.setAttribute("data-dispatch-channel", channel);
+      canalBtns.forEach((btn) => {
+        if (btn.getAttribute("data-channel") === channel) {
+          btn.classList.add("activo");
+          btn.classList.add("active");
+        } else {
+          btn.classList.remove("activo");
+          btn.classList.remove("active");
+        }
+      });
+      localStorage.setItem("nviteDispatchChannel", channel);
+    };
+
+    const savedChannel = localStorage.getItem("nviteDispatchChannel") || "whatsapp";
+    setDispatchChannel(savedChannel);
+
+    canalBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const channel = btn.getAttribute("data-channel") || "whatsapp";
+        setDispatchChannel(channel);
+      });
+    });
 
     // 3. Exportar a Excel (SheetJS)
     const loadSheetJS = () => {
@@ -732,30 +781,71 @@ if (fechaEvento) {
   }
 
   .buscador {
-    padding: 0.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
-    flex: 1 0 auto;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.45rem 0.85rem;
+    height: 40px;
+    border-radius: $radio;
+    font-size: 0.85rem;
+    font-family: $fuenteA;
     box-shadow: none; 
-    background-color: rgba($terciario, 0.5);
+    border: 1px solid rgba($primario, 0.2);
+    background-color: rgba($terciario, 0.35);
+    color: $primario;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: $primario;
+      background-color: #fff;
+    }
+
+    &::placeholder {
+      color: rgba($primario, 0.6);
+      font-family: $fuenteA;
+    }
 
     @include cel {
-      margin: $margen-min 0;
+      flex: none;
+      width: 100%;
+      height: 42px;
+      font-size: 0.85rem;
+      margin: 0;
     }
   }
 
   .conteFiltros {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: solid 1px #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
     padding-bottom: $margen-min;
-    flex-wrap: wrap;
-    gap: 1rem;
+    border: none;
+  }
+
+  .filtros-top-row {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .buscador {
+      flex: 1;
+      min-width: 220px;
+    }
 
     @include cel {
-      grid-template-columns: 1fr;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+
+      .buscador {
+        flex: none;
+        width: 100%;
+      }
     }
   }
 
@@ -817,47 +907,104 @@ if (fechaEvento) {
     }
   }
 
-  .filtros {
-    display: flex;
-    width: 100%;
-    flex: 1 0 auto;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    
-    @include cel {
-      order: 1;
-    }
-    input {
-      border-radius: $radio;
-    }
-  }
-
   .filtros-estado {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .filtro-btn {
-    flex: 1 0 auto;
-    padding: 0.5rem 1rem;
-    border: 1px solid $primario;
+    flex: 0 0 auto;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba($primario, 0.35);
     border-radius: $radio;
     background: transparent;
     color: $primario;
-    max-width: fit-content;
+    font-family: $fuenteA;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba($primario, 0.08);
+    }
+
+    &.activo, &.active {
+      background: $secundario;
+      color: #fff;
+      border: 1px solid $secundario;
+      font-weight: 600;
+    }
+  }
+
+  .canal-envio-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba($terciario, 0.4);
+    border: 1px solid rgba($primario, 0.15);
+    padding: 0.25rem 0.5rem;
+    border-radius: $radio;
+    font-family: $fuenteA;
+    
+    @include cel {
+      width: 100%;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+  }
+
+  .canal-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: $primario;
+    font-family: $fuenteA;
+    white-space: nowrap;
+    padding-left: 0.2rem;
+  }
+
+  .canal-botones {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .canal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: $radio;
+    border: 1px solid transparent;
+    background: transparent;
+    color: $primario;
+    font-size: clamp(0.6rem, 0.8vw, 0.85rem);
+    font-family: $fuenteA;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
       background: rgba($primario, 0.1);
     }
 
     &.activo, &.active {
-      background: $secundario;
-      color: white;
-      border: 1px solid $secundario;
+      color: #fff;
+      font-weight: 600;
+
+      &[data-channel="whatsapp"] {
+        background: #2baf5b;
+        border-color: #2baf5b;
+      }
+
+      &[data-channel="sms"] {
+        background: #007AFF;
+        border-color: $primario;
+      }
+
+      &[data-channel="all"] {
+        background: $secundario;
+        border-color: $secundario;
+      }
     }
   }
 
@@ -873,7 +1020,7 @@ if (fechaEvento) {
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: .8rem;
-    font-family: var(--font-hurme), sans-serif;
+    font-family: $fuenteA;
 
     &:hover {
       background-color: #dcfce7;
@@ -904,6 +1051,7 @@ if (fechaEvento) {
     @include cel {
       gap: 1rem;
       padding: 0.5rem;
+      margin-bottom: $margen-min;
     }
   }
 
@@ -1035,5 +1183,11 @@ if (fechaEvento) {
     right: auto;
     bottom: auto;
     z-index: auto;
+  }
+
+    #conteAgregar {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
   }
 </style>

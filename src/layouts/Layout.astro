@@ -13,10 +13,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 import Analytics from "@vercel/analytics/astro";
 import WhatsappFloat from "../components/WhatsappFloat.astro";
 import {Font} from "astro:assets";
+const lang = Astro.locals.lang || "es";
 ---
 
 <!doctype html>
-<html lang="es-MX">
+<html lang={lang === "en" ? "en-US" : "es-MX"}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -2,6 +2,15 @@
 import { Image } from "astro:assets";
 import mesaImg from "../assets/home/mesas-home.jpg";
 import { Icon } from "astro-icon/components";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
+
+// URLs de video según idioma (dejar listo para la versión en inglés)
+const videoSrcEs = "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm";
+const videoSrcEn = "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm"; // <- Reemplazar con la URL en inglés cuando esté lista
+const videoSrc = lang === "en" ? videoSrcEn : videoSrcEs;
 ---
 
 <div class="grid contenido">
@@ -9,45 +18,40 @@ import { Icon } from "astro-icon/components";
     <div id="info">
       <div class="conte">
         <h2>
-          <span>Control de tu evento</span>Quién va, cuántos son y dónde se
-          sientan
+          <span>{t('landing.mesas.title')}</span>{t('landing.mesas.subtitle')}
         </h2>
         <p>
-          Agrega a tus invitados, asigna pases, recibe confirmaciones en tiempo
-          real y organiza las mesas, todo desde un solo lugar.
+          {t('landing.mesas.desc')}
         </p>
         <div id="caracteristicas">
-          <h3>Características clave</h3>
+          <h3>{lang === 'en' ? 'Key Features' : 'Características clave'}</h3>
           <div id="conteGrid">
             <div class="item">
               <Icon name="mdi:ticket-confirmation-outline" size={24} />
-              <h4>Confirmaciones en tiempo real</h4>
+              <h4>{t('landing.mesas.feat1.title')}</h4>
               <p>
-                Deja de preguntar "¿vas a ir?". Tus invitados confirman solos y
-                tú lo ves al instante.
+                {t('landing.mesas.feat1.desc')}
               </p>
             </div>
             <div class="item">
               <Icon name="mdi:table" size={24} />
-              <h4>Gestor de mesas </h4>
+              <h4>{t('landing.mesas.feat2.title')}</h4>
               <p>
-                Acomoda a tus invitados antes del evento. Sabes exactamente
-                quién va en cada mesa y cuántos espacios quedan.
+                {t('landing.mesas.feat2.desc')}
               </p>
             </div>
             <div class="item">
               <Icon name="mdi:account-balance-wallet-outline" size={24} />
-              <h4>Administra tus proveedores</h4>
+              <h4>{t('landing.mesas.feat3.title')}</h4>
               <p>
-                Agrega a tus proveedores, gestiona pagos, tareas y pendientes.
+                {t('landing.mesas.feat3.desc')}
               </p>
             </div>
             <div class="item">
               <Icon name="mdi:microsoft-excel" size={24} />
-              <h4>Todo en Excel cuando lo necesites</h4>
+              <h4>{t('landing.mesas.feat4.title')}</h4>
               <p>
-                Comparte el estado de tu evento con tu equipo o coordinador con
-                un solo clic.
+                {t('landing.mesas.feat4.desc')}
               </p>
             </div>
           </div>
@@ -56,8 +60,8 @@ import { Icon } from "astro-icon/components";
     </div>
     <div id="img">
       <div id="poster-container">
-        <Image src={mesaImg} alt="mesas" />
-        <button id="play-btn" aria-label="Reproducir video">
+        <Image src={mesaImg} alt={lang === "en" ? "Guest seating and tables management" : "Gestión de mesas e invitados"} />
+        <button id="play-btn" aria-label={lang === "en" ? "Play demo video" : "Reproducir video"}>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -82,7 +86,7 @@ import { Icon } from "astro-icon/components";
     aria-modal="true"
     aria-labelledby="modal-title"
   >
-    <button class="modal-close" aria-label="Cerrar video" data-close>
+    <button class="modal-close" aria-label={lang === "en" ? "Close video" : "Cerrar video"} data-close>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M18 6L6 18M6 6l12 12"
@@ -94,7 +98,7 @@ import { Icon } from "astro-icon/components";
     <div class="video-wrapper">
       <video id="modal-video" preload="none" playsinline controls>
         <source
-          src="https://res.cloudinary.com/dpnzqg5mx/video/upload/v1785879695/panel-pro.webmhd_r3hz0l.webm"
+          src={videoSrc}
           type="video/webm"
         />
       </video>

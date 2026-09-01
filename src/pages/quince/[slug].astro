@@ -175,7 +175,11 @@ const mesas: Mesa[] = ((quince.data as any).regalos ?? []).filter(
     m.titulo,
 );
 
-const lang = (quince.data.idioma as keyof typeof ui) || "es";
+const queryLang = Astro.url.searchParams.get("lang");
+const lang =
+  queryLang === "en" || queryLang === "es"
+    ? queryLang
+    : (quince.data.idioma as keyof typeof ui) || Astro.locals.lang || "es";
 const t = useTranslations(lang);
 
 //qr
@@ -191,8 +195,8 @@ if (idParam && uidParam) {
       .where(
         and(
           eq(Invitados.uuid, idParam),
-          eq(Invitados.usuarioId, Number(uidParam))
-        )
+          eq(Invitados.usuarioId, Number(uidParam)),
+        ),
       );
     if (response && response.length > 0) {
       dbInvitado = response[0];
@@ -217,15 +221,20 @@ const qrMesa = dbInvitado
 // Calcular fecha límite de confirmación (fecha de los XV años menos 30 días)
 const fechaConfirmacion = new Date(quince.data.fecha);
 fechaConfirmacion.setDate(fechaConfirmacion.getDate() - 30);
-const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "es" ? "es-MX" : "en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
+  lang === "es" ? "es-MX" : "en-US",
+  {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
+);
 ---
 
 <Layout
-  title=`Invitación Xv años de ${quince.data.quinceanera}`
+  title={lang === "en"
+    ? `Quinceañera Invitation of ${quince.data.quinceanera}`
+    : `Invitación XV años de ${quince.data.quinceanera}`}
   url={base.toString()}
   cover={quince.data.cover}
   paleta={quince.data.paleta}
@@ -299,7 +308,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
   </section>
 
   {
-      quince.data.audioMusica && (
+    quince.data.audioMusica && (
       <AudioPlayer
         src={quince.data.audioMusica}
         labels={{
@@ -314,42 +323,51 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     )
   }
 
- {
-  quince.data.version === "Lux" && (
-    <Qr
-      nombreInvitacion={qrNombre}
-      pases={qrPases}
-      mesa={qrMesa}
-      confirmado={Boolean(dbInvitado?.confirmado)}
-      noAsiste={dbInvitado?.noAsiste}
-      title="Datos de la invitación"
-      subtitle="Muestra tus pases y mesa asignada"
-    />
-  )
-}
+  {
+    quince.data.version === "Lux" && (
+      <Qr
+        nombreInvitacion={qrNombre}
+        pases={qrPases}
+        mesa={qrMesa}
+        confirmado={Boolean(dbInvitado?.confirmado)}
+        noAsiste={dbInvitado?.noAsiste}
+        title={lang === "en" ? "Invitation Details" : "Datos de la invitación"}
+        subtitle={
+          lang === "en"
+            ? "Show your passes and assigned table"
+            : "Muestra tus pases y mesa asignada"
+        }
+      />
+    )
+  }
   <section class="grid contenido">
     <Frase frase={quince.data.frase_amor} />
   </section>
 
   <!-- <Encabezados texto={t("quince.myFifteen")} /> -->
-  <section class="grid pantalla">
-    <Padres
-      mama={quince.data.padres.mama}
-      papa={quince.data.padres.papa}
-      fotopapas={quince.data.padres.fotopapas}
-      labels={{
-        blessing: t("quince.parents"),
-        mother: t("parents.mother"),
-        father: t("parents.father"),
-      }}
-    />
-    <Padrinos
-      nombres={quince.data.padrinos}
-      labels={{
-        title: t("godparents.title"),
-      }}
-    />
-  </section>
+
+  {
+    ["Lux", "Clasica"].includes(quince.data.version) && (
+      <section class="grid pantalla">
+        <Padres
+          mama={quince.data.padres.mama}
+          papa={quince.data.padres.papa}
+          fotopapas={quince.data.padres.fotopapas}
+          labels={{
+            blessing: t("quince.parents"),
+            mother: t("parents.mother"),
+            father: t("parents.father"),
+          }}
+        />
+        <Padrinos
+          nombres={quince.data.padrinos}
+          labels={{
+            title: t("godparents.title"),
+          }}
+        />
+      </section>
+    )
+  }
 
   <!-- Imágenes solitarias condicionales -->
   {

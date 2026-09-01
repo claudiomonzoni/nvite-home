@@ -17,6 +17,10 @@ import coverMobileQuince from "../assets/home/nvitaciones-invitaciones-digitales
 import Cardcuadro from "../components/Cardcuadro.astro";
 import MesasHome from "../components/MesasHome.astro";
 import Faq from "../components/Faq.astro";
+import { useTranslations } from "../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 const schemaQuinceService = {
   "@context": "https://schema.org",
@@ -37,27 +41,24 @@ const schemaQuinceService = {
 ---
 
 <Layout
-  title="Invitaciones Digitales de XV Años con RSVP | Nvitaciones México"
-  description="Invitaciones de XV años diseñadas a tu medida para todo México. RSVP por WhatsApp, música, pases digitales y gestor de mesas. Lista en 48 horas."
+  title={t('quince.meta.title')}
+  description={t('quince.meta.description')}
 >
   <script type="application/ld+json" set:html={JSON.stringify(schemaQuinceService)} />
   <div class="grid contenido"></div>
 
   <Hero
-    h1='Invitaciones digitales <br />de <b>Xv años </b> <br /> <span id="spanHeroH1">El día más especial de su vida, <b>merece la invitación perfecta.</b> </span>'
-    p='<span id="pHero"><b>La invitación digital más emotiva y moderna para sus quince años.</b></span> Con tu música favorita, pases personalizados con código QR y confirmación automática por WhatsApp para amigos y familia.'
-    textoValidacion="Más de <b>23,788</b> invitaciones enviadas en México"
+    h1={t('quince.hero.h1')}
+    p={t('quince.hero.p')}
+    textoValidacion={t('landing.hero.validation')}
     imagenDesktop={coverDesktopQuince}
     imagenMobile={coverMobileQuince}
   />
 
   <div class="grid contenido">
     <div id="choro">
-      <h2>Una celebración inolvidable desde el primer mensaje</h2>
-
-      <p>
-        <b>Nosotros creamos el diseño perfecto</b> con sus fotos, colores y detalles en 48 horas. Desde tu panel de anfitrión sabrás al instante quién asistirá, cuántos pases están confirmados y podrás asignar los lugares en el salón fácilmente.
-      </p>
+      <h2>{t('quince.intro.h2')}</h2>
+      <p set:html={t('quince.intro.p')} />
     </div>
   </div>
 
@@ -65,41 +66,36 @@ const schemaQuinceService = {
     <MostrarNvitaciones dondeEstoy="quince" />
   </div>
 
-
-
   <CaracteristicasGrid
     matriz={[
       {
         imagen: quinceCaracteristicasImg,
-        titulo: "Invitaciones <span>personalizadas</span>",
-        texto:
-          "La invitación lleva el nombre de cada quien — sus amigas, su familia, sus compañeras. Cada invitación llega personal y sentida, antes de que lean una sola línea.",
+        titulo: lang === 'en' ? "Personalized <span>Invitations</span>" : "Invitaciones <span>personalizadas</span>",
+        texto: lang === 'en'
+          ? "The invitation carries each person's name — friends, family, classmates. Every invite feels deeply personal from the very first glance."
+          : "La invitación lleva el nombre de cada quien — sus amigas, su familia, sus compañeras. Cada invitación llega personal y sentida, antes de que lean una sola línea.",
         enlace: "#precios",
       },
       {
         imagen: "mdi:email-check",
-        titulo: "Confirmación de asistencia",
-        texto:
-          "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
+        titulo: lang === 'en' ? "Attendance Confirmation" : "Confirmación de asistencia",
+        texto: lang === 'en' ? "Keep control of attendees and make RSVP confirmation effortless for your guests." : "Ten control de los asistentes a tu evento, facilítales a tus invitados su confirmación.",
         enlace: "#",
       },
       {
         imagen: "mdi:infinity-box",
-        texto:
-          "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
+        texto: lang === 'en' ? "Unlimited invitations, send them to all your friends and loved ones." : "Invitaciones ilimitadas, envíalas a todos tus amigos y seres queridos.",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "Con <span>toda la información</span> necesaria de tus 15 años",
+        texto: lang === 'en' ? "With <span>all the essential info</span> for your Quinceañera" : "Con <span>toda la información</span> necesaria de tus 15 años",
       },
       {
         imagen: "mdi:infinity-box",
-        texto: "<span>Cero</span> estrés enviando invitaciones",
+        texto: lang === 'en' ? "<span>Zero</span> stress sending invitations" : "<span>Cero</span> estrés enviando invitaciones",
       },
     ]}
   />
-
-
 
   <MesasHome />
 
@@ -108,37 +104,36 @@ const schemaQuinceService = {
   </div>
 
   <section class="grid contenido">
-      <div class="flex">
-   <Cardcuadro
-      titulo="Recomendación de <b>hospedaje</b>"
-      description="<b>¿Tus invitados viajan?</b> Dales sugerencias de hospedaje y aprovecha los descuentos hoteleros con tus invitados."
-      fondo="/hospedaje.webp"
-      icono="mdi:hotel-outline"
-    />
-    <Cardcuadro
-    titulo="Porcentaje de <b>confirmados</b>"
-    description="<b>Empuja a confirmar a los rezagados</b> aprovechado el empuje que da mostrar, que todos van."
-    fondo="/confirmando.webp"
-    icono="mdi:account-arrow-right-outline"
-    />
-    <Cardcuadro
-       titulo="Pases <b>QR</b>"
-       description="<b>Al confirmar</b> tus invitados, tendrán un código QR para una entrada sin contratiempos a tu evento."
-       fondo="/qr-nvitaciones-3.webp"
-       icono="mdi:qrcode"
-     />
-  </div>
+    <div class="flex">
+      <Cardcuadro
+        titulo={t('bodas.card.lodging.title')}
+        description={t('bodas.card.lodging.desc')}
+        fondo="/hospedaje.webp"
+        icono="mdi:hotel-outline"
+      />
+      <Cardcuadro
+        titulo={t('bodas.card.confirmed.title')}
+        description={t('bodas.card.confirmed.desc')}
+        fondo="/confirmando.webp"
+        icono="mdi:account-arrow-right-outline"
+      />
+      <Cardcuadro
+        titulo={t('bodas.card.qr.title')}
+        description={t('bodas.card.qr.desc')}
+        fondo="/qr-nvitaciones-3.webp"
+        icono="mdi:qrcode"
+      />
+    </div>
     <BannerGeneral
-      encabezado="Confirmación de asistencia"
-      texto="Tus invitados sabrán exactamente cuántos días faltan para el evento y desde la invitación podrán <b>confirmar su asistencia</b>"
+      encabezado={t('bodas.banner1.heading')}
+      texto={t('bodas.banner1.text')}
       tema="primario azul"
       icono="mdi:archive-clock-outline"
       urlImagen="../assets/home/gale/confirmacion.webp"
-    >
-    </BannerGeneral>
+    />
     <BannerGeneral
-      encabezado="Invitación digital con Música"
-      texto="Agrega <b>tu canción favorita</b> y los detalles de tu evento"
+      encabezado={t('bodas.banner2.heading')}
+      texto={t('bodas.banner2.text')}
       tema="secundario "
       icono="mdi:music"
       izquierda={true}
@@ -146,33 +141,18 @@ const schemaQuinceService = {
     />
 
     <BannerGeneral
-      encabezado="Invitación digital con Frase de amor y galería de fotos"
-      texto="Expresa con palabras lo que sientes en una <b>frase animada</b> y muestra hasta 6 fotos en una galería de imágenes"
+      encabezado={t('bodas.banner3.heading')}
+      texto={t('bodas.banner3.text')}
       tema="primario"
       icono="mdi:image-plus"
       urlImagen="../assets/home/gale/frase.webp"
     />
   </section>
 
-    <div class="grid contenido">
+  <div class="grid contenido">
     <BannerGeneral
-      encabezado="Recibes con tu <b>Nvitación</b>"
-      texto={`
-    <ul>
-    <li><b>Trato personalizado.</b></li>
-    <li>Tu invitación,<b> 2 días hábiles</b> después del envío de tus datos.</li>
-    <li>
-   <b>Panel de invitados</b>, controla tus invitaciones.
-    </li>
-    <li>
-<b>Tu invitación web te acompaña</b> durante todo el proceso y permanece disponible hasta la semana posterior al evento.
-    </li>
-    <li><mark>Envíos ilimitados.</mark></li>
-       
-        </ul>
-        <small>*Panel de invitados no aplica en la versión "basic"</small>
-        <br>
-        `}
+      encabezado={t('landing.bannerGeneral.heading')}
+      texto={t('landing.bannerGeneral.text')}
       tema="terciario"
       icono="mdi:deal"
       urlImagen="../assets/home/gale/recibes.webp"
@@ -180,7 +160,7 @@ const schemaQuinceService = {
     >
       <Btn
         liga="#formu"
-        texto="Quiero mi ejemplo gratis →"
+        texto={lang === 'en' ? "Get free demo →" : "Quiero mi ejemplo gratis →"}
         clases="btn-oscuro"
         claro={true}
         blank={false}
@@ -189,40 +169,36 @@ const schemaQuinceService = {
       </Btn>
     </BannerGeneral>
   </div>
-  
 
-  
   <section class="grid contenido">
     <div id="conteCaracteristicas">
       <Caracteristicas
-        encabezado="garantía"
-        texto="Tu invitación <b>siempre en línea.</b>"
+        encabezado={t('landing.guarantee.title')}
+        texto={t('landing.guarantee.text')}
         icono="mdi:shield-crown-outline"
         fondo="/fondo-nvite-caracteristicas.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="entrega"
-        texto="En 48 horas <b>o menos.</b>"
+        encabezado={t('landing.delivery.title')}
+        texto={t('landing.delivery.text')}
         icono="mdi:package-variant-closed-delivered"
         fondo="/fondo-nvite-caracteristicas-2.png"
         colorBg="#FFF1E1"
       />
 
       <Caracteristicas
-        encabezado="cambios"
-        texto="Ajustes <b>sin complicaciones</b>."
+        encabezado={t('landing.changes.title')}
+        texto={t('landing.changes.text')}
         icono="mdi:connect-without-contact"
         fondo="fondo-nvite-caracteristicas-3.png"
         colorBg="#FFF1E1"
-        ;
       />
 
       <Caracteristicas
-        encabezado="soporte"
-        texto="Te guiamos <b>paso a paso.</b>"
+        encabezado={t('landing.support.title')}
+        texto={t('landing.support.text')}
         icono="mdi:support"
         fondo="fondo-nvite-caracteristicas-4.png"
         colorBg="#FFF1E1"
@@ -238,39 +214,33 @@ const schemaQuinceService = {
     <div class="flex">
       <div class="fondo-formu">
         <div class="bande">
-          <h3>Prueba tu Nvitación <br /> sin compromiso</h3>
-          <p>
-            <b>¿Tienes dudas o pedidos especiales?</b>, <br /> Escríbenos por WhatsApp
-            y hagamos que tu invitación sea perfecta <br />😊
-          </p>
+          <h3>{lang === 'en' ? 'Try your Invitation with zero commitment' : 'Prueba tu Nvitación sin compromiso'}</h3>
+          <p set:html={t('landing.form.desc')} />
         </div>
 
         <div id="formu">
           <form>
- 
-
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" placeholder="Tu nombre" />
-            <label for="fecha">Fecha del evento</label>
+            <label for="nombre">{t('landing.form.name')}</label>
+            <input type="text" id="nombre" placeholder={t('landing.form.namePlaceholder')} />
+            <label for="fecha">{t('landing.form.date')}</label>
             <input type="date" name="fecha" id="fecha" />
-            <label for="evento">Tipo de evento</label>
+            <label for="evento">{t('landing.form.type')}</label>
             <select name="evento" id="evento">
-              <option value="Boda">Boda</option>
-              <option value="Xv">XV años</option>
-              <option value="Cumple">Cumpleaños</option>
+              <option value="Boda">{t('landing.form.boda')}</option>
+              <option value="Xv">{t('landing.form.quince')}</option>
+              <option value="Cumple">{lang === 'en' ? 'Birthday' : 'Cumpleaños'}</option>
             </select>
 
             <Btn
               liga="#"
               id="empezar"
-              texto="<b>Enviar</b> ahora"
+              texto={t('landing.form.send')}
               clases="desactivado, btn-oscuro"
               claro={false}
               blank={true}
             >
               <Icon name="mdi:whatsapp" />
             </Btn>
-          
           </form>
         </div>
       </div>

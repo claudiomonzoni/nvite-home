@@ -6,6 +6,10 @@ import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import { Icon } from "astro-icon/components";
 import Btn from "../../components/Btn.astro";
+import { useTranslations } from "../../i18n/ui";
+
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
 
 const cartCookie = Astro.cookies.get("cartItems")?.value as unknown as string;
 
@@ -16,7 +20,7 @@ const totalCartItems = await getTotalCartItems(
 // Calcular el costo por invitado dinámico del primer item del carrito
 let costPerGuest = 20; // Default
 if (totalCartItems.length > 0) {
-  const priceStr = await getProductPrice(totalCartItems[0].product);
+  const priceStr = await getProductPrice(totalCartItems[0].product, lang);
   const numericPrice = Number(priceStr.replace(/,/g, "").replace(/[^\d.]/g, ""));
   if (numericPrice) {
     costPerGuest = Math.round(numericPrice / 100);
@@ -24,21 +28,21 @@ if (totalCartItems.length > 0) {
 }
 ---
 
-<Layout title="Carrito de Compras - Nvitaciones">
+<Layout title={`${t('cart.title')} - Nvitaciones`}>
   <div class="grid contenido">
     <Nav />
     
     <div class="cart-section">
       <div class="cart-header">
-        <h1>Tu Carrito</h1>
+        <h1>{t('cart.title')}</h1>
       </div>
 
       {totalCartItems.length === 0 && (
         <div class="empty-cart">
      
           <Icon name="mdi:cart-off" width="50" height="50" />
-          <p>Tu carrito está vacío</p>
-          <a href="/" class="btn primary">Explorar Invitaciones</a>
+          <p>{t('cart.empty')}</p>
+          <a href="/" class="btn primary">{t('cart.exploreTemplates')}</a>
         </div>
       )}
 
@@ -50,24 +54,24 @@ if (totalCartItems.length > 0) {
 
           <div class="cart-actions">
             <div class="cart-summary">
-              <p class="total-items">{totalCartItems.length} {totalCartItems.length === 1 ? 'Nvitación' : 'Nvitaciones'}</p>
+              <p class="total-items">{totalCartItems.length} {totalCartItems.length === 1 ? (lang === 'en' ? 'Item' : 'Nvitación') : (lang === 'en' ? 'Items' : 'Nvitaciones')}</p>
             </div>
             
-            <!-- Resumen de valor en carrito — NUEVO -->
+            <!-- Resumen de valor en carrito -->
             <div class="cart-value-summary">
-              <p class="cart-anchor">≈ ${costPerGuest} por invitado · Sin límite de envíos</p>
+              <p class="cart-anchor">{lang === 'en' ? `≈ $${costPerGuest} per guest · Unlimited sends` : `≈ $${costPerGuest} por invitado · Sin límite de envíos`}</p>
               <ul class="cart-includes">
-                <li>✦ Personalizada con tu nombre, fecha y colores</li>
-                <li>✦ Lista en 2 días hábiles</li>
-                <li>✦ Tus invitados confirman solos desde la invitación</li>
-                <li>✦ Tú lo ves en tiempo real desde tu panel</li>
+                <li>{lang === 'en' ? '✦ Personalized with your names, date & colors' : '✦ Personalizada con tu nombre, fecha y colores'}</li>
+                <li>{lang === 'en' ? '✦ Ready in 2 business days' : '✦ Lista en 2 días hábiles'}</li>
+                <li>{lang === 'en' ? '✦ Your guests RSVP directly from the invite' : '✦ Tus invitados confirman solos desde la invitación'}</li>
+                <li>{lang === 'en' ? '✦ Track RSVPs in real time from your dashboard' : '✦ Tú lo ves en tiempo real desde tu panel'}</li>
               </ul>
             </div>
             <div class="cart-buttons">
         
               <Btn
                 liga="#"
-                texto="Vaciar carrito"
+                texto={lang === 'en' ? 'Empty cart' : 'Vaciar carrito'}
                 clases="btn-oscuro"
                 claro={false}
                 blank={false}
@@ -76,7 +80,7 @@ if (totalCartItems.length > 0) {
               />
               <Btn
                 liga="/nvitaciones/checkout"
-                texto="Proceder al pago"
+                texto={t('cart.checkout')}
                 clases="btn-claro"
                 claro={false}
                 blank={false}
