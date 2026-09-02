@@ -82,7 +82,7 @@ proveedores.forEach((p) => {
 const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
 ---
 
-<nav class="nav-container">
+<nav class="nav-container" data-lang={lang}>
   <ul class="nav-list">
     <a href={Astro.url.origin}>
       <img src="/nvita-logo.svg" alt="nvitaciones" id="logo" />
@@ -126,7 +126,7 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
                   <div class="notif-texto">
                     <p>{n.titulo}</p>
                   </div>
-                  <button type="button" class="btn-dismiss-notif" data-dismiss-id={n.id} title="Descartar notificación">
+                  <button type="button" class="btn-dismiss-notif" data-dismiss-id={n.id} title={lang === 'en' ? 'Dismiss notification' : 'Descartar notificación'}>
                     &times;
                   </button>
                 </div>
@@ -148,6 +148,8 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const nav = document.querySelector(".nav-container");
+    const lang = nav?.getAttribute("data-lang") || "es";
     const bellBtn = document.getElementById("notif-bell-btn");
     const dropdown = document.getElementById("notif-dropdown");
     const itemsList = document.getElementById("notif-items-list");
@@ -207,10 +209,12 @@ const todasNotificaciones = [...guestsAlerts, ...proveedoresAlerts];
         badge.style.display = remaining > 0 ? "inline-flex" : "none";
       }
       if (countText) {
-        countText.textContent = remaining > 0 ? `${remaining} pendientes` : "Sin notificaciones";
+        countText.textContent = remaining > 0
+          ? `${remaining} ${lang === "en" ? "pending" : "pendientes"}`
+          : lang === "en" ? "No notifications" : "Sin notificaciones";
       }
       if (remaining === 0) {
-        itemsList.innerHTML = `<p class="notif-vacio">No tienes notificaciones pendientes.</p>`;
+        itemsList.innerHTML = `<p class="notif-vacio">${lang === "en" ? "You have no pending notifications." : "No tienes notificaciones pendientes."}</p>`;
       }
     };
 
