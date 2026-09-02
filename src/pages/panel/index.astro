@@ -229,6 +229,7 @@ const t = useTranslations(lang);
   <div
     id="tab-invitados"
     class="tab-content active"
+    data-lang={lang}
     data-nombre-evento={nombreEvento || "Mi Evento"}
     data-fecha-evento={fechaEvento && !isNaN(new Date(fechaEvento).getTime()) ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
     data-invitados={JSON.stringify(invitadosData)}
@@ -438,6 +439,8 @@ const t = useTranslations(lang);
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const panelLang = document.getElementById("tab-invitados")?.getAttribute("data-lang") || "es";
+
     // 1. Funcionalidad de pestañas (tabs) con persistencia en localStorage
     const tabBtns = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
@@ -646,8 +649,8 @@ const t = useTranslations(lang);
         btnExportar.disabled = false;
       } catch (err) {
         console.error(err);
-        alert("Ocurrió un error al descargar el Excel.");
-        btnExportar.innerHTML = "<span>Descargar Excel</span>";
+        alert(panelLang === "en" ? "An error occurred while downloading the Excel file." : "Ocurrió un error al descargar el Excel.");
+        btnExportar.innerHTML = `<span>${panelLang === "en" ? "Download Excel" : "Descargar Excel"}</span>`;
         btnExportar.disabled = false;
       }
     });

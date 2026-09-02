@@ -95,7 +95,7 @@ const comunesFaltantes = PROVEEDORES_COMUNES.filter(
 const todosComunesPrecargados = comunesFaltantes.length === 0;
 ---
 
-<div id="gestor-proveedores-root" class="gestor-proveedores-wrapper" data-proveedores={JSON.stringify(proveedores)}>
+<div id="gestor-proveedores-root" class="gestor-proveedores-wrapper" data-lang={lang} data-proveedores={JSON.stringify(proveedores)}>
   <!-- Top Bar Metrics -->
   <div class="metricas-container">
     <div class="card-metrica">
@@ -507,6 +507,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     const dialogDetalle = document.getElementById("detalle-prov-dialog") as HTMLDialogElement;
 
     const rootElem = document.getElementById("gestor-proveedores-root");
+    const lang = rootElem?.getAttribute("data-lang") || "es";
     let localProveedores: any[] = [];
     if (rootElem) {
       try {
@@ -541,10 +542,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       const btnSave = document.getElementById("btn-guardar-edicion-global");
       if (badge) {
         if (dirty) {
-          badge.textContent = "● Cambios pendientes por guardar";
+          badge.textContent = lang === "en"
+            ? "● Changes pending to save"
+            : "● Cambios pendientes por guardar";
           badge.className = "badge-status dirty";
         } else {
-          badge.textContent = "✓ Todo guardado";
+          badge.textContent = lang === "en" ? "✓ All changes saved" : "✓ Todo guardado";
           badge.className = "badge-status clean";
         }
       }
@@ -559,7 +562,11 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
     const attemptCloseDetailModal = async () => {
       if (isDirty) {
-        const confirmSave = confirm("Tienes cambios pendientes por guardar en este proveedor. ¿Deseas guardarlos antes de salir?\n\n[Aceptar] = Guardar cambios\n[Cancelar] = Descartar cambios y salir");
+        const confirmSave = confirm(
+          lang === "en"
+            ? "This vendor has unsaved changes. Do you want to save them before leaving?\n\n[OK] = Save changes\n[Cancel] = Discard changes and leave"
+            : "Tienes cambios pendientes por guardar en este proveedor. ¿Deseas guardarlos antes de salir?\n\n[Aceptar] = Guardar cambios\n[Cancelar] = Descartar cambios y salir"
+        );
         if (confirmSave) {
           await saveGlobalEdits();
           return;
@@ -647,23 +654,23 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         const contactoTelefono = (formData.get("contactoTelefono") as string || "").trim();
 
         if (!nombre || !categoria) {
-          alert("El nombre y la categoría son requeridos.");
+          alert(lang === "en" ? "Name and category are required." : "El nombre y la categoría son requeridos.");
           return;
         }
         if (nombre.length > 80) {
-          alert("El nombre del proveedor no puede exceder los 80 caracteres.");
+          alert(lang === "en" ? "Vendor name cannot exceed 80 characters." : "El nombre del proveedor no puede exceder los 80 caracteres.");
           return;
         }
         if (contactoNombre.length > 80) {
-          alert("El nombre de contacto no puede exceder los 80 caracteres.");
+          alert(lang === "en" ? "Contact name cannot exceed 80 characters." : "El nombre de contacto no puede exceder los 80 caracteres.");
           return;
         }
         if (contactoTelefono.length > 15) {
-          alert("El teléfono de contacto no puede exceder los 15 caracteres.");
+          alert(lang === "en" ? "Contact phone cannot exceed 15 characters." : "El teléfono de contacto no puede exceder los 15 caracteres.");
           return;
         }
         if (presupuestoTotal < 0 || presupuestoTotal > 10000000) {
-          alert("El presupuesto debe ser un número entre 0 y 10,000,000.");
+          alert(lang === "en" ? "Budget must be a number between 0 and 10,000,000." : "El presupuesto debe ser un número entre 0 y 10,000,000.");
           return;
         }
 
@@ -679,10 +686,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             window.location.reload();
           } else {
             const err = await res.json();
-            alert(err.error || "Error al agregar proveedor");
+            alert(lang === "en" ? "Error adding vendor" : (err.error || "Error al agregar proveedor"));
           }
         } catch (error) {
-          alert("Error de conexión");
+          alert(lang === "en" ? "Connection error" : "Error de conexión");
         }
       });
     }
@@ -692,7 +699,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     if (btnPrecargar) {
       btnPrecargar.addEventListener("click", async () => {
         if (btnPrecargar.disabled) {
-          alert("Todos los proveedores comunes ya han sido agregados a tu lista.");
+          alert(lang === "en" ? "All common vendors have already been added to your list." : "Todos los proveedores comunes ya han sido agregados a tu lista.");
           return;
         }
 
@@ -732,16 +739,20 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
         const faltantes = listaComunes.filter((item) => !checkCovered(item));
 
         if (faltantes.length === 0) {
-          alert("Todos los proveedores comunes ya han sido agregados a tu lista.");
+          alert(lang === "en" ? "All common vendors have already been added to your list." : "Todos los proveedores comunes ya han sido agregados a tu lista.");
           btnPrecargar.disabled = true;
           btnPrecargar.classList.add("disabled");
           return;
         }
 
         const confirmMsg =
-          faltantes.length === 8
-            ? "¿Deseas precargar la lista de los 8 proveedores más comunes (Fotografía, Banquete, DJ, Flores, etc.)?"
-            : `¿Deseas agregar los ${faltantes.length} proveedores comunes faltantes a tu lista?`;
+          lang === "en"
+            ? faltantes.length === 8
+              ? "Do you want to preload the 8 most common vendors (Photography, Catering, DJ, Flowers, etc.)?"
+              : `Do you want to add the ${faltantes.length} missing common vendors to your list?`
+            : faltantes.length === 8
+              ? "¿Deseas precargar la lista de los 8 proveedores más comunes (Fotografía, Banquete, DJ, Flores, etc.)?"
+              : `¿Deseas agregar los ${faltantes.length} proveedores comunes faltantes a tu lista?`;
 
         if (!confirm(confirmMsg)) {
           return;
@@ -758,15 +769,15 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
           });
           const data = await res.json();
           if (res.ok && data.success) {
-            alert(data.message || "Proveedores precargados correctamente.");
+            alert(lang === "en" ? "Vendors preloaded successfully." : (data.message || "Proveedores precargados correctamente."));
             window.location.reload();
           } else {
-            alert(data.error || "Error al precargar proveedores");
+            alert(lang === "en" ? "Error preloading vendors" : (data.error || "Error al precargar proveedores"));
             btnPrecargar.disabled = false;
             btnPrecargar.style.opacity = "1";
           }
         } catch (e) {
-          alert("Error de conexión");
+          alert(lang === "en" ? "Connection error" : "Error de conexión");
           btnPrecargar.disabled = false;
           btnPrecargar.style.opacity = "1";
         }
@@ -948,7 +959,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
           const id = btnDelete.getAttribute("data-id");
           const nombre = btnDelete.getAttribute("data-nombre");
           if (!id) return;
-          if (!confirm(`¿Estás seguro de eliminar el proveedor "${nombre}" y todos sus registros?`)) {
+          const confirmDelete = lang === "en"
+            ? `Are you sure you want to delete vendor "${nombre}" and all its records?`
+            : `¿Estás seguro de eliminar el proveedor "${nombre}" y todos sus registros?`;
+          if (!confirm(confirmDelete)) {
             return;
           }
           try {
@@ -958,11 +972,11 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
             if (res.ok) {
               window.location.reload();
             } else {
-              alert("Error al eliminar proveedor");
+              alert(lang === "en" ? "Error deleting vendor" : "Error al eliminar proveedor");
             }
           } catch (err) {
             console.error(err);
-            alert("Error al eliminar proveedor");
+            alert(lang === "en" ? "Error deleting vendor" : "Error al eliminar proveedor");
           }
           return;
         }
@@ -1017,12 +1031,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
         const monto = Number(inputMonto.value);
         if (!monto || monto <= 0 || monto > 10000000) {
-          alert("Ingresa un monto válido entre $1 y $10,000,000.");
+          alert(lang === "en" ? "Enter a valid amount between $1 and $10,000,000." : "Ingresa un monto válido entre $1 y $10,000,000.");
           return;
         }
         const concepto = inputConcepto.value.trim();
         if (concepto.length > 80) {
-          alert("El concepto de pago no puede exceder los 80 caracteres.");
+          alert(lang === "en" ? "Payment description cannot exceed 80 characters." : "El concepto de pago no puede exceder los 80 caracteres.");
           return;
         }
 
@@ -1066,11 +1080,11 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
         const titulo = inputTitulo.value.trim();
         if (!titulo) {
-          alert("Ingresa el título de la tarea");
+          alert(lang === "en" ? "Enter the task title" : "Ingresa el título de la tarea");
           return;
         }
         if (titulo.length > 100) {
-          alert("El título de la tarea no puede exceder los 100 caracteres.");
+          alert(lang === "en" ? "Task title cannot exceed 100 characters." : "El título de la tarea no puede exceder los 100 caracteres.");
           return;
         }
 
@@ -1095,23 +1109,23 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 
       // Validaciones finales antes de guardar
       if (!draftProv.nombre || !draftProv.categoria) {
-        alert("El nombre y la categoría son requeridos.");
+        alert(lang === "en" ? "Name and category are required." : "El nombre y la categoría son requeridos.");
         return;
       }
       if (draftProv.nombre.length > 80) {
-        alert("El nombre del proveedor no puede exceder los 80 caracteres.");
+        alert(lang === "en" ? "Vendor name cannot exceed 80 characters." : "El nombre del proveedor no puede exceder los 80 caracteres.");
         return;
       }
       if (draftProv.contactoNombre && draftProv.contactoNombre.length > 80) {
-        alert("El nombre de contacto no puede exceder los 80 caracteres.");
+        alert(lang === "en" ? "Contact name cannot exceed 80 characters." : "El nombre de contacto no puede exceder los 80 caracteres.");
         return;
       }
       if (draftProv.contactoTelefono && draftProv.contactoTelefono.length > 15) {
-        alert("El teléfono de contacto no puede exceder los 15 caracteres.");
+        alert(lang === "en" ? "Contact phone cannot exceed 15 characters." : "El teléfono de contacto no puede exceder los 15 caracteres.");
         return;
       }
       if (draftProv.presupuestoTotal < 0 || draftProv.presupuestoTotal > 10000000) {
-        alert("El presupuesto debe ser un número entre 0 y 10,000,000.");
+        alert(lang === "en" ? "Budget must be a number between 0 and 10,000,000." : "El presupuesto debe ser un número entre 0 y 10,000,000.");
         return;
       }
 
@@ -1126,10 +1140,10 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
           setDirty(false);
           window.location.reload();
         } else {
-          alert("Error al guardar los cambios del proveedor");
+          alert(lang === "en" ? "Error saving vendor changes" : "Error al guardar los cambios del proveedor");
         }
       } catch (e) {
-        alert("Error de conexión al guardar los cambios");
+        alert(lang === "en" ? "Connection error while saving changes" : "Error de conexión al guardar los cambios");
       }
     };
 

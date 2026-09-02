@@ -65,6 +65,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
 <div
   class="gestor-mesas-container"
+  data-lang={lang}
   data-nombre-evento={nombreEvento}
   data-fecha-evento={fechaEvento && !isNaN(new Date(fechaEvento).getTime()) ? new Date(fechaEvento).toISOString().split('T')[0] : ""}
   data-invitados={JSON.stringify(invitados)}
@@ -360,6 +361,9 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    const mesasContainer = document.querySelector(".gestor-mesas-container");
+    const lang = mesasContainer?.getAttribute("data-lang") || "es";
+
     // 1. Modales de Mesa
     const crearMesaDialog = document.getElementById("modal-mesa-crear") as HTMLDialogElement;
     const editarMesaDialog = document.getElementById("modal-mesa-editar") as HTMLDialogElement;
@@ -397,15 +401,15 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       const capacidad = parseInt(formData.get("capacidad") as string, 10);
 
       if (!nombre) {
-        alert("El nombre de la mesa es requerido.");
+        alert(lang === "en" ? "Table name is required." : "El nombre de la mesa es requerido.");
         return;
       }
       if (nombre.length > 50) {
-        alert("El nombre de la mesa no puede exceder los 50 caracteres.");
+        alert(lang === "en" ? "Table name cannot exceed 50 characters." : "El nombre de la mesa no puede exceder los 50 caracteres.");
         return;
       }
       if (isNaN(capacidad) || capacidad < 1 || capacidad > 100) {
-        alert("La capacidad de asientos debe ser un número entre 1 y 100.");
+        alert(lang === "en" ? "Seat capacity must be a number between 1 and 100." : "La capacidad de asientos debe ser un número entre 1 y 100.");
         return;
       }
 
@@ -424,11 +428,11 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         if (res.ok && data.success) {
           location.reload();
         } else {
-          alert(data.error || "Error al crear la mesa.");
+          alert(lang === "en" ? "Error creating table." : (data.error || "Error al crear la mesa."));
         }
       } catch (err) {
         console.error(err);
-        alert("Error de conexión al servidor.");
+        alert(lang === "en" ? "Server connection error." : "Error de conexión al servidor.");
       }
     });
 
@@ -457,19 +461,19 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       const capacidad = parseInt(formData.get("capacidad") as string, 10);
 
       if (!id) {
-        alert("ID de mesa no válido.");
+        alert(lang === "en" ? "Invalid table ID." : "ID de mesa no válido.");
         return;
       }
       if (!nombre) {
-        alert("El nombre de la mesa es requerido.");
+        alert(lang === "en" ? "Table name is required." : "El nombre de la mesa es requerido.");
         return;
       }
       if (nombre.length > 50) {
-        alert("El nombre de la mesa no puede exceder los 50 caracteres.");
+        alert(lang === "en" ? "Table name cannot exceed 50 characters." : "El nombre de la mesa no puede exceder los 50 caracteres.");
         return;
       }
       if (isNaN(capacidad) || capacidad < 1 || capacidad > 100) {
-        alert("La capacidad de asientos debe ser un número entre 1 y 100.");
+        alert(lang === "en" ? "Seat capacity must be a number between 1 and 100." : "La capacidad de asientos debe ser un número entre 1 y 100.");
         return;
       }
 
@@ -489,11 +493,11 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         if (res.ok && data.success) {
           location.reload();
         } else {
-          alert(data.error || "Error al editar la mesa.");
+          alert(lang === "en" ? "Error editing table." : (data.error || "Error al editar la mesa."));
         }
       } catch (err) {
         console.error(err);
-        alert("Error de conexión.");
+        alert(lang === "en" ? "Connection error." : "Error de conexión.");
       }
     });
 
@@ -504,7 +508,10 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         const id = btn.getAttribute("data-id");
         const nombre = btn.getAttribute("data-nombre");
 
-        if (confirm(`¿Quieres eliminar la mesa "${nombre}"?\n\nLos invitados asignados a esta mesa volverán a la lista de "Sin Asignar".`)) {
+        const confirmDelete = lang === "en"
+          ? `Do you want to delete table "${nombre}"?\n\nGuests assigned to this table will return to the "Unassigned" list.`
+          : `¿Quieres eliminar la mesa "${nombre}"?\n\nLos invitados asignados a esta mesa volverán a la lista de "Sin Asignar".`;
+        if (confirm(confirmDelete)) {
           try {
             const res = await fetch("/api/mesas.json", {
               method: "DELETE",
@@ -515,11 +522,11 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
             if (res.ok && data.success) {
               location.reload();
             } else {
-              alert(data.error || "Error al eliminar.");
+              alert(lang === "en" ? "Error deleting table." : (data.error || "Error al eliminar."));
             }
           } catch (err) {
             console.error(err);
-            alert("Error de conexión.");
+            alert(lang === "en" ? "Connection error." : "Error de conexión.");
           }
         }
       });
@@ -542,13 +549,13 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
           if (res.ok && data.success) {
             location.reload();
           } else {
-            alert(data.error || "Error al asignar mesa.");
+            alert(lang === "en" ? "Error assigning table." : (data.error || "Error al asignar mesa."));
             // Revertir selección
             select.value = select.getAttribute("data-current-mesa-id") || "0";
           }
         } catch (err) {
           console.error(err);
-          alert("Error de red.");
+          alert(lang === "en" ? "Network error." : "Error de red.");
           select.value = select.getAttribute("data-current-mesa-id") || "0";
         }
       });
@@ -643,7 +650,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
         btnExportarMesas.disabled = false;
       } catch (err) {
         console.error(err);
-        alert("Ocurrió un error al descargar el Excel.");
+        alert(lang === "en" ? "An error occurred while downloading the Excel file." : "Ocurrió un error al descargar el Excel.");
         btnExportarMesas.innerHTML = "<span>Descargar Excel</span>";
         btnExportarMesas.disabled = false;
       }

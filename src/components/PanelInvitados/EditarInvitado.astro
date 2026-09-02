@@ -6,7 +6,7 @@ const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
 ---
 
-<dialog id="editar-invitado-dialog">
+<dialog id="editar-invitado-dialog" data-lang={lang}>
   <div class="formulario">
     <h2>{t('panel.modal.editTitle')}</h2>
     <form id="editar-formu">
@@ -362,6 +362,7 @@ const t = useTranslations(lang);
   const dialogeditar = document.querySelector(
     "#editar-invitado-dialog"
   ) as HTMLDialogElement;
+  const clientLang = dialogeditar?.getAttribute("data-lang") || "es";
   const mensajeVipContainer = document.querySelector(
     "#mensaje-vip-container"
   ) as HTMLDivElement;
@@ -388,11 +389,11 @@ const t = useTranslations(lang);
     const nombre = nombreInput.value.trim();
 
     if (!nombre) {
-      alert("El nombre no puede estar vacío.");
+      alert(clientLang === "en" ? "Name cannot be empty." : "El nombre no puede estar vacío.");
       return;
     }
     if (nombre.length > 80) {
-      alert("El nombre no puede exceder los 80 caracteres.");
+      alert(clientLang === "en" ? "Name cannot exceed 80 characters." : "El nombre no puede exceder los 80 caracteres.");
       return;
     }
 
@@ -403,7 +404,7 @@ const t = useTranslations(lang);
     );
 
     if (isNaN(pases) || pases < 1 || pases > 50) {
-      alert("El número de pases debe ser un número entre 1 y 50.");
+      alert(clientLang === "en" ? "Number of passes must be between 1 and 50." : "El número de pases debe ser un número entre 1 y 50.");
       return;
     }
 
@@ -413,7 +414,7 @@ const t = useTranslations(lang);
     if (whatsappInput && whatsappInput.value) {
       const whatsappVal = whatsappInput.value.replace(/\D/g, "");
       if (whatsappVal.length < 8 || whatsappVal.length > 15) {
-        alert("Por favor ingresa un número de teléfono válido (debe tener entre 8 y 15 dígitos).");
+        alert(clientLang === "en" ? "Please enter a valid phone number (8 to 15 digits)." : "Por favor ingresa un número de teléfono válido (debe tener entre 8 y 15 dígitos).");
         return;
       }
     }
@@ -449,7 +450,9 @@ const t = useTranslations(lang);
       if (!request.ok) {
         const errorText = await request.text();
         throw new Error(
-          `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
+          clientLang === "en"
+            ? `Request error: ${request.status} ${request.statusText}.`
+            : `Error en la solicitud: ${request.status} ${request.statusText}. Respuesta: ${errorText}`
         );
       }
 
@@ -457,7 +460,11 @@ const t = useTranslations(lang);
       try {
         res = await request.json();
       } catch (err) {
-        throw new Error("La respuesta del servidor no es JSON válido.");
+        throw new Error(
+          clientLang === "en"
+            ? "The server response is not valid JSON."
+            : "La respuesta del servidor no es JSON válido."
+        );
       }
 
       if (res.success) {
@@ -465,7 +472,11 @@ const t = useTranslations(lang);
         dialogeditar.close();
         location.reload();
       } else {
-        throw new Error(res.message || "Ocurrió un error desconocido.");
+        throw new Error(
+          clientLang === "en"
+            ? "Unable to update the guest. Please try again."
+            : res.message || "Ocurrió un error desconocido."
+        );
       }
     } catch (e: any) {
       console.error("Error en la solicitud:", e);
