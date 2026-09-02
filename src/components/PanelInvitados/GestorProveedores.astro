@@ -1668,9 +1668,11 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     padding: 0;
    // max-width: 580px;
     width: 92vw;
+    height: max-content;
+    max-height: 90vh;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     background: white;
-    overflow: hidden;
+    overflow-y: auto;
     position: relative;
 
     &::backdrop {
@@ -1682,6 +1684,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       width: 95vw !important;
       max-width: 95vw !important;
       border-radius: 14px !important;
+      max-height: calc(100dvh - 1rem) !important;
     }
 
     &.modal-wide {
@@ -1693,7 +1696,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       @media (max-width: 768px) {
         width: 95vw !important;
         max-width: 95vw !important;
-        max-height: 92vh !important;
+        max-height: calc(100dvh - 1rem) !important;
       }
     }
   }
@@ -1703,14 +1706,12 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     display: flex;
     flex-direction: column;
     background: white;
-    height: 100%;
-    max-height: 88vh;
+    height: auto;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow: visible;
 
     @media (max-width: 768px) {
       padding: 1.2rem 1rem !important;
-      max-height: 95vh !important;
     }
   }
 
@@ -1767,8 +1768,8 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
   }
 
   .modal-scroll-body {
-    flex: 1;
-    overflow-y: auto;
+    flex: none;
+    overflow: visible;
     padding: 1.25rem 0.2rem 1.25rem 0;
 
     @media (max-width: 768px) {
