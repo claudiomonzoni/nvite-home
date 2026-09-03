@@ -1,7 +1,7 @@
 // 1. Import utilities from `astro:content`
 import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
-import { stripePriceLoader, stripeProductLoader } from "stripe-astro-loader";
+import { stripePriceLoader, stripeProductLoader } from "./lib/stripeLoaders";
 import Stripe from "stripe";
 const stripe = new Stripe(import.meta.env.SECRET_STRIPE_KEY);
 // 2. Import loader(s)
