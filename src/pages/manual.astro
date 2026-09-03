@@ -770,6 +770,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
         text-decoration: underline;
         text-underline-offset: 3px;
         transition: color 0.2s ease;
+        font-family: $fuenteA, sans-serif;
 
         &:hover {
           color: $primario;
@@ -841,6 +842,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
+      
 
       /* EN MÓVIL: SE VUELVEN PILLS HORIZONTALES */
       @media (max-width: 960px) {
@@ -875,7 +877,6 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
       .topic-num {
         font-family: var(--font-hurme), serif;
-        font-style: italic;
         font-size: 1rem;
         color: #94a3b8;
         min-width: 22px;
@@ -884,6 +885,7 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
 
       .topic-text {
         flex: 1;
+        font-family: $fuenteA, sans-serif;
       }
 
       &:hover {
@@ -894,12 +896,12 @@ const allQuestionsCount = sections.reduce((acc, s) => acc + s.questions.length, 
           color: $primario;
         }
       }
-
+      
       &.active {
         color: #1e293b;
         font-weight: 700;
         background: #f1f5f9;
-
+        
         .topic-num {
           color: $primario;
           font-weight: 700;

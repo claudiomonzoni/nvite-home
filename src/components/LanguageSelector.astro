@@ -50,7 +50,6 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     position: relative;
     display: inline-flex;
     align-items: center;
-    font-family: inherit;
     z-index: 100;
   }
 
@@ -65,8 +64,10 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     color: $primario;
     cursor: pointer;
     font-size: 0.85rem;
+    font-family: $fuenteA;
     transition: all 0.25s ease;
     backdrop-filter: blur(8px);
+
 
     &:hover {
       background: rgba(255, 255, 255, 0.18);
@@ -105,6 +106,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     &.hidden {
       display: none;
     }
+
     @include cel{
       top: calc(100% - 26px);
       right: 100%;
@@ -131,12 +133,16 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
     background: transparent;
     color: #f1f5f9;
     font-size: 0.85rem;
+    font-family: $fuenteA;
     cursor: pointer;
     text-align: left;
     width: 100%;
     transition: background 0.15s ease, color 0.15s ease;
 
+    
+
     &:hover {
+
       background: rgba(255, 255, 255, 0.12);
       color: #fff;
     }
