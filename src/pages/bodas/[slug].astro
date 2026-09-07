@@ -316,6 +316,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
           mesa={qrMesa}
           confirmado={Boolean(dbInvitado?.confirmado)}
           noAsiste={dbInvitado?.noAsiste}
+          lang={lang}
           title={lang === "en" ? "Invitation Details" : "Datos de la invitación"}
           subtitle={lang === "en" ? "Show your passes and assigned table" : "Muestra tus pases y mesa asignada"}
         />

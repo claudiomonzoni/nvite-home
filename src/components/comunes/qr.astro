@@ -1,6 +1,7 @@
 ---
 
 import QRCode from "qrcode";
+import { useTranslations } from "../../i18n/ui";
 
 type Props = {
   invitacion?: string | null;
@@ -14,6 +15,7 @@ type Props = {
   subtitle?: string;
   alt?: string;
   size?: number;
+  lang?: string | null;
 };
 
 const {
@@ -24,26 +26,30 @@ const {
   confirmado = false,
   noAsiste = false,
   value,
-  title = "Información de invitación",
-  subtitle = "Escanea para ver tus datos",
+  title,
+  subtitle,
   alt,
   size = 240,
+  lang = Astro.locals.lang || "es",
 } = Astro.props as Props;
 
-const displayName = invitacion ?? nombreInvitacion ?? "Invitación";
+const t = useTranslations(lang);
+const displayTitle = title ?? t("qr.title");
+const displaySubtitle = subtitle ?? t("qr.subtitle");
+const displayName = invitacion ?? nombreInvitacion ?? t("qr.invitation");
 const displayPases =
   pases === null || pases === undefined || pases === ""
-    ? "Sin pases asignados"
+    ? t("qr.noPasses")
     : String(pases);
 
 const displayMesa =
   mesa === null || mesa === undefined || mesa === ""
-    ? "Sin mesa asignada"
+    ? t("qr.noTable")
     : String(mesa);
 
 const qrValue =
   value ??
-  `Invitado: ${displayName}\nPases de invitados: ${displayPases}\nMesa asignada: ${displayMesa}`;
+  `${t("qr.guest")}: ${displayName}\n${t("qr.passes")}: ${displayPases}\n${t("qr.assignedTable")}: ${displayMesa}`;
 
 const shouldRender = Boolean(confirmado || noAsiste);
 const qrDataUrl = confirmado && !noAsiste
@@ -61,21 +67,21 @@ const qrDataUrl = confirmado && !noAsiste
 {shouldRender ? (
   <div class={`qr-card ${noAsiste ? 'qr-card--no-asiste' : ''}`}>
     <div class="qr-card__info">
-      <p class="qr-card__eyebrow">{title}</p>
+      <p class="qr-card__eyebrow">{displayTitle}</p>
       <h3>{displayName}</h3>
 
       {noAsiste ? (
         <div class="qr-card__no-asistencia">
-          <p>Este invitado indicó que no asiste al evento</p>
+          <p>{t("qr.noAttendance")}</p>
         </div>
       ) : (
         <ul class="qr-card__list">
           <li>
-            <span>Pases</span>
+            <span>{t("qr.passesLabel")}</span>
             {displayPases}
           </li>
           <li>
-            <span>Mesa</span>
+            <span>{t("qr.tableLabel")}</span>
             {displayMesa}
           </li>
         </ul>
@@ -84,8 +90,8 @@ const qrDataUrl = confirmado && !noAsiste
 
     {!noAsiste && (
       <div class="qr-card__image">
-        <img src={qrDataUrl} alt={alt ?? `Código QR de ${displayName}`} />
-        {subtitle && <p class="qr-card__subtitle">{subtitle}</p>}
+        <img src={qrDataUrl} alt={alt ?? `${t("qr.alt")} ${displayName}`} />
+        {displaySubtitle && <p class="qr-card__subtitle">{displaySubtitle}</p>}
       </div>
     )}
   </div>
