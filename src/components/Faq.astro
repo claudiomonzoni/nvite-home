@@ -144,6 +144,10 @@ const quickSearches = lang === "en"
 
 <script type="application/ld+json" set:html={JSON.stringify(schemaFAQ)} />
 
+<div class="grid contenido">
+    
+
+
 <div class="faq-manual-shell">
   <aside class="faq-sidebar">
     <div class="faq-sidebar-inner">
@@ -208,7 +212,7 @@ const quickSearches = lang === "en"
       </div>
     </section>
 
-   
+   </div>
   </div>
 </div>
 
@@ -240,6 +244,10 @@ const quickSearches = lang === "en"
       position: sticky;
       top: 6.5rem;
       z-index: 10;
+    }
+    @include cel{
+      margin-bottom: $margen-cel;
+      order: 2;
     }
   }
 
