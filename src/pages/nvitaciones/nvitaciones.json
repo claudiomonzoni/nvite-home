@@ -154,7 +154,7 @@
       "en": "Digital wedding invitation featuring an animated quote, countdown, photo gallery, gift registry links, and a private guest dashboard."
     },
     "muestra": {
-      "es": "/bodas/nvitacion-bodas-clasica?nvita-bodas-lux?id=18e649f0&uid=1",
+      "es": "/bodas/nvitacion-bodas-clasica?id=18e649f0&uid=1",
       "en": "/bodas/nvita-wedding-classic?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11&lang=en"
     },
     "beneficios": [
@@ -205,7 +205,7 @@
       "en": "Our most sophisticated quinceañera design featuring video preview, custom music, event timeline, interactive map, and pass management."
     },
     "muestra": {
-      "es": "/quince/elegante-lux-xv?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+      "es": "/quince/elegante-lux-xv?id=18e649f0&uid=1",
       "en": "/quince/xv-lux-elegante-ingles?id=ec07aba1&uid=1"
     },
     "video": "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1781205633/video-detalles_hdvtdk.mp4",
@@ -309,7 +309,7 @@
       "en": "Our most complete wedding invitation: includes custom music, romance gallery, countdown, timeline, GPS map, and a private guest & table seating management dashboard."
     },
     "muestra": {
-      "es": "/bodas/invitacion-bodas-lux?id=dc3c379a-f873-460c-8b2a-0806a7072198&uid=2",
+      "es": "/bodas/invitacion-bodas-lux?id=18e649f0&uid=1",
       "en": "/bodas/nvite-wedding-lux?id=ec07aba1&uid=1"
     },
     "beneficios": [
@@ -361,7 +361,7 @@
       "en": "Exclusive and refined design featuring your favorite song, animated welcome quote, gala dress code, digital passes, and private guest dashboard."
     },
     "muestra": {
-      "es": "/bodas/nvitacion-bodas-lux-elegante?nvita-bodas-lux?id=18e649f0&uid=1",
+      "es": "/bodas/nvitacion-bodas-lux-elegante?id=18e649f0&uid=1",
       "en": "/bodas/nvitacion-bodas-lux-elegante-en?id=ec07aba1&uid=1"
     },
     "beneficios": [
