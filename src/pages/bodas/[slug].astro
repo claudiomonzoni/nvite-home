@@ -492,9 +492,9 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       <section class="grid contenido">
         <ProgresoInvitados
           frase={boda.data.progresoFrase || t("progress.heading")}
-          porcentajeMostrarInvitados={20}
-          mostrarSiempre={true}
-          email={boda.data.email}
+          porcentajeMostrarInvitados={boda.data.progresoPorcentaje ?? 20}
+          mostrarSiempre={boda.data.progresoMostrarSiempre ?? true}
+          email={boda.data.progresoEmail || boda.data.email}
           usuarioId={dbInvitado?.usuarioId}
           labels={{
             confirmed: t("progress.confirmed"),
