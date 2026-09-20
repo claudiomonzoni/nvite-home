@@ -1,0 +1,62 @@
+<div id="ofertaQr" hidden>
+  <div class="contenido">
+    <p class="eyebrow">Gracias por escanear el QR, aprovecha la oferta especial</p>
+    <h3>Usa el cupón <strong>Zihua15</strong></h3>
+    <p>Obtén 15% de descuento en tu invitación digital al finalizar tu compra.</p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "../estilos/variables" as *;
+
+  #ofertaQr {
+    border-radius: $radio;
+    background: rgba($terciario, 0.4);
+    margin: $margen-min 0 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    text-align: center;
+  }
+
+  .contenido {
+    max-width: 42rem;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  h3 {
+    margin: 0;
+    color: $secundario;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+  }
+
+
+
+  .contenido > p:last-child {
+    margin: 0.75rem 0 0;
+    color: $gris;
+  }
+</style>
+
+<script>
+  const ofertaQr = document.getElementById("ofertaQr");
+  const parametrosQr = new URLSearchParams(window.location.search);
+  const llegoPorQr =
+    parametrosQr.get("utm_source") === "flyer" &&
+    parametrosQr.get("utm_medium") === "qr" &&
+    parametrosQr.get("utm_campaign") === "flyer_zihua";
+  const claveSesion = "ofertaQrZihua";
+
+  if (llegoPorQr) {
+    sessionStorage.setItem(claveSesion, "true");
+  }
+
+  if (llegoPorQr || sessionStorage.getItem(claveSesion) === "true") {
+    ofertaQr?.removeAttribute("hidden");
+  }
+</script>

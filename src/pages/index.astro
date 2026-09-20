@@ -12,6 +12,7 @@ import Faq from "../components/Faq.astro";
 import CaracteristicasGrid from "../components/CaracteristicasGrid.astro";
 import Testimonios from "../components/Testimonios.astro";
 import OfertaTiempo from "../components/OfertaTiempo.astro";
+import OfertaQr from "../components/OfertaQr.astro";
 import MostrarNvitaciones from "../components/Pagos/MostrarNvitaciones.astro";
 import Slider from "../components/Slider.astro";
 import caracteristicasImg from "../assets/home/home-invitaciones-digitales-caracteristicas-nvitaciones.webp";
@@ -53,6 +54,10 @@ const t = useTranslations(lang);
      porcentaje={15}
    />
  </div> -->
+
+  <div class="grid contenido">
+    <OfertaQr />
+  </div>
 
   <!-- <section class="grid contenido">
       <div id="video">
