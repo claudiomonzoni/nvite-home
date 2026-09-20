@@ -265,9 +265,17 @@
 
     @for $i from 1 through 10 {
       img:nth-child(#{$i}) {
-        transform: rotate(math.max(math.min((math.random() * 2 - 1) * math.random(math.div($max, 1deg)) * 1deg,
-                $max ),
-              -$max ));
+        transform: rotate(
+          math.max(
+            math.min(
+              (math.random() * 2 - 1) *
+                math.random(math.div($max, 1deg)) *
+                1deg,
+              $max
+            ),
+            -$max
+          )
+        );
       }
     }
 
@@ -346,9 +354,11 @@
 
     .bande {
       background: rgb(254, 241, 241);
-      background: linear-gradient(0deg,
-          var(--terciario) -10%,
-          rgba(255, 255, 255, 0) 40%);
+      background: linear-gradient(
+        0deg,
+        var(--terciario) -10%,
+        rgba(255, 255, 255, 0) 40%
+      );
       font-size: clamp(1.5rem, 1.7vw, 2.4vw);
       z-index: -2;
       padding-top: $margen;
@@ -456,8 +466,6 @@
       font-family: var(--font-headers, "Montserrat Alternates"), sans-serif;
       margin-bottom: 1.5rem;
       color: var(--primario);
-
-
     }
   }
 
@@ -917,12 +925,13 @@
   // Componente Regalos
 
   #Regalos {
-
-
+    p {
+      font-size: clamp(1.2rem, 1.5vw, 1.3rem);
+    }
     #regalo {
       margin-top: $margen;
       padding: $margen;
-      background: rgba(var(--acento-rgb), .4);
+      background: rgba(var(--acento-rgb), 0.4);
       position: relative;
       overflow: hidden;
 
@@ -934,7 +943,7 @@
         flex-wrap: wrap;
       }
 
-      >* {
+      > * {
         position: relative;
         z-index: 1;
       }
@@ -948,7 +957,7 @@
         background-size: 400%;
         mix-blend-mode: color-burn;
         pointer-events: none;
-        opacity: .2;
+        opacity: 0.2;
         z-index: 0;
 
         @include cel {
@@ -963,7 +972,6 @@
       }
 
       h2 {
-
         border-bottom: 1px solid white;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
@@ -992,9 +1000,21 @@
         font-size: clamp(2.7rem, 1.8vw, 3rem);
       }
 
-      background: url("/lluvia.webp") var(--fondoBurn) repeat;
-      background-size: contain;
-      background-blend-mode: overlay;
+      position: relative;
+      overflow: hidden;
+      &::before {
+        content: "";
+        width:100%;
+        height:100%;
+        z-index: -1;
+        position:absolute;
+        opacity: 0.4;
+        top:0;
+        left:0;
+        background: url("/lluvia.webp") var(--fondoBurn) repeat;
+        background-size: contain;
+        background-blend-mode: overlay;
+      }
       margin: $margen-cel 0;
       padding: $margen $margen-cel;
       text-align: center;
@@ -1012,11 +1032,11 @@
       align-items: center;
       text-align: center;
       margin-bottom: $margen-cel;
-      background: rgba(var(--acento-rgb), .4);
+      background: rgba(var(--acento-rgb), 0.4);
       position: relative;
       overflow: hidden;
 
-      >* {
+      > * {
         position: relative;
         z-index: 1;
       }
@@ -1031,7 +1051,7 @@
         background-size: 40%;
         mix-blend-mode: color-burn;
         pointer-events: none;
-        opacity: .2;
+        opacity: 0.2;
         z-index: 0;
 
         @include cel {
@@ -1091,7 +1111,7 @@
     color: var(--secundario);
     border: 0.5px solid var(--acento);
     position: relative;
-    padding: $margen-cel 1rem!important;
+    padding: $margen-cel 1rem !important;
     margin: $margen 0;
     &:before {
       content: "";
@@ -1127,7 +1147,6 @@
       }
     }
 
-
     #dias {
       //transform: translateY(-60%);
       flex: 1 0 100%;
@@ -1145,7 +1164,6 @@
       }
     }
 
-
     .tiempo-container {
       display: flex;
       justify-content: center;
@@ -1161,7 +1179,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
     }
 
     .tiempo-item {
@@ -1179,7 +1196,6 @@
         p {
           font-size: 1.4rem;
         }
-
       }
     }
 
@@ -1219,7 +1235,7 @@
       }
       padding: $margen-cel 0 !important;
       width: 80%;
-      margin: $margen auto ;
+      margin: $margen auto;
     }
   }
 
@@ -1385,7 +1401,9 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
       max-width: 600px;
       margin: 0 auto;
 
@@ -1434,8 +1452,6 @@
           margin-bottom: 0.5rem;
 
           .detalle-item {
-           
-
             svg {
               color: var(--acento);
               flex-shrink: 0;
@@ -1472,7 +1488,7 @@
             font-weight: bold;
             text-align: center;
           }
-          
+
           .descuento-codigo {
             font-family: var(--font-heading), monospace;
             font-size: clamp(1.2rem, 1.4vw, 1.6rem);

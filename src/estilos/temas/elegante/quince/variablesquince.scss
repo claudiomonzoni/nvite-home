@@ -25,15 +25,23 @@
 }
 
 // Variables CSS para tipografías — scoped al tema elegante
-:root[data-theme="elegante"] {
+:root[data-paleta-quince][data-theme="elegante"] {
   --font-heading-default: "Italiana", serif;
   --font-body-default: "Montserrat", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+:root[data-paleta-quince][data-theme="elegante"] h1,
+:root[data-paleta-quince][data-theme="elegante"] h2,
+:root[data-paleta-quince][data-theme="elegante"] h3,
+:root[data-paleta-quince][data-theme="elegante"] h4,
+:root[data-paleta-quince][data-theme="elegante"] h5,
+:root[data-paleta-quince][data-theme="elegante"] h6 {
   font-family: var(--font-heading, var(--font-heading-default));
 }
-body, p, span, div {
+:root[data-paleta-quince][data-theme="elegante"] body,
+:root[data-paleta-quince][data-theme="elegante"] p,
+:root[data-paleta-quince][data-theme="elegante"] span,
+:root[data-paleta-quince][data-theme="elegante"] div {
   font-family: var(--font-body, var(--font-body-default));
 }
 

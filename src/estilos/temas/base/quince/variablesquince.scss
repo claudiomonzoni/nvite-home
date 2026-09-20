@@ -32,7 +32,7 @@
 }
 
 // Variables CSS para tipografías personalizables
-:root {
+:root[data-paleta-quince] {
   --font-heading: "Sacramento", serif;
   --font-body: "Old Standard TT", serif;
 }

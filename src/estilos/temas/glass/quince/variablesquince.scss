@@ -30,7 +30,7 @@
 }
 
 // Variables CSS para tipografías personalizables y Glassmorfismo iOS
-:root[data-theme="glass"] {
+:root[data-paleta-quince][data-theme="glass"] {
   --font-heading: "Sacramento", serif;
   --font-body: "Old Standard TT", serif;
   
