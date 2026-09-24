@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import { db, Invitados, and, eq } from "@/db";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/bodas/Layout.astro";
-import Footer from "../../components/bodas/Footer.astro";
+import Footer from "../../components/comunes/Footer.astro";
 
 //componentes
 import HeroElegante from "../../components/bodas/Hero-elegante.jsx";
@@ -147,6 +147,16 @@ const boda = {
     progresoFrase: fm.progresoFrase ?? "",
     progresoAllReady: fm.progresoAllReady ?? "",
     progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
+    footer: {
+      modo:
+        fm?.footer?.modo ??
+        (fm?.footer?.ocultarMarca
+          ? fm?.footer?.nombreNegocio
+            ? "negocio"
+            : "nada"
+          : "marca"),
+      nombreNegocio: fm?.footer?.nombreNegocio ?? "",
+    },
     paleta: fm.paleta ?? "base",
     theme: fm.theme ?? { name: "base" },
     hospedaje: Array.isArray(fm?.hospedaje)
@@ -648,8 +658,11 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
   <section class="grid contenido">
     <Footer
       ruta={base}
+      modo={boda.data.footer.modo}
+      nombreNegocio={boda.data.footer.nombreNegocio}
       labels={{
         developedBy: t("footer.developedBy"),
+        developedFor: t("footer.developedFor"),
         rights: t("footer.rights"),
         altLogo: t("footer.altLogo"),
       }}

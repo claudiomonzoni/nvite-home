@@ -279,7 +279,6 @@ export default config({
           label: "Mostrar siempre",
           defaultValue: false,
         }),
-
         // === CONFIGURACIÓN ===
         paleta: fields.select({
           label: "Paleta",
@@ -347,6 +346,19 @@ export default config({
             itemLabel: (props) => props.fields.nombre.value || "Hotel",
             validation: { length: { max: 3 } },
           }
+        ),
+        footer: fields.object(
+          {
+            ocultarMarca: fields.checkbox({
+              label: "Ocultar marca y enlace",
+              defaultValue: false,
+            }),
+            nombreNegocio: fields.text({
+              label: "Nombre del negocio",
+              description: "Se mostrará en la leyenda del pie de página",
+            }),
+          },
+          { label: "Pie de página" }
         ),
         // === CONTENIDO ===
         content: fields.mdx({ label: "Contenido" }),
@@ -656,6 +668,19 @@ export default config({
             itemLabel: (props) => props.fields.nombre.value || "Hotel",
             validation: { length: { max: 3 } },
           }
+        ),
+        footer: fields.object(
+          {
+            ocultarMarca: fields.checkbox({
+              label: "Ocultar marca y enlace",
+              defaultValue: false,
+            }),
+            nombreNegocio: fields.text({
+              label: "Nombre del negocio",
+              description: "Se mostrará en la leyenda del pie de página",
+            }),
+          },
+          { label: "Pie de página" }
         ),
 
         content: fields.mdx({

@@ -649,10 +649,12 @@ input::placeholder {
 
 #choro {
   position: relative;
+  z-index: 0;
   padding: $margen;
   text-align: center;
   width: 70%;
   margin: 0 auto;
+  max-width: 50%;
   h2 {
     color: $primario;
     margin-bottom: $margen-cel;
@@ -661,44 +663,55 @@ input::placeholder {
   @include cel {
     padding: $margen $margen-cel 0;
     width: 100%;
+    margin-bottom: $margen-cel;
+     max-width: 100%;
   }
+}
+
+.video-reveal {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  #choro {
+    position: relative;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #video {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    width: 100%;
+    max-width: 62rem;
+    margin-left: auto;
+    margin-right: auto;
+    transform-origin: center center;
+    will-change: transform;
+  }
+
+  #video {
+    margin-top: 0;
+  }
+
 }
 
 #video {
   margin-bottom: $margen-cel;
   display: flex;
   justify-content: center;
-  iframe {
+  video {
+    display: block;
     border-radius: $radio;
     aspect-ratio: 16 / 9;
-    width: 100% !important;
+    width: 100%;
     height: auto;
-  }
-  @include cel {
-    display: none;
   }
 }
 
-#videoCel {
-  margin-bottom: $margen-cel;
-  display: flex;
-  justify-content: center;
-  iframe {
-    border-radius: $radio;
+@include cel {
+  #video video {
     aspect-ratio: 9 / 16;
-    width: 100% !important;
-    height: auto;
-  }
-  @include hd {
-    display: none;
-  }
-  @include hdplus {
-    display: none;
-  }
-  @include tableta {
-    display: none;
-  }
-  @include tableta_land {
-    display: none;
   }
 }

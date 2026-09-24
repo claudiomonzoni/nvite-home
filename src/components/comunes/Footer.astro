@@ -1,0 +1,60 @@
+---
+interface IProps {
+  base: string;
+  ruta?: URL;
+  modo?: "marca" | "negocio" | "nada";
+  nombreNegocio?: string;
+  labels?: {
+    developedBy?: string;
+    developedFor?: string;
+    rights?: string;
+    altLogo?: string;
+  };
+}
+const { modo = "marca", nombreNegocio = "", labels = {} } =
+  Astro.props as IProps;
+
+const l = {
+  developedBy: labels.developedBy || "Invitación desarrollada y diseñada por:",
+  developedFor: labels.developedFor || "Invitación desarrollada para",
+  rights: labels.rights || "Todos los derechos reservados",
+  altLogo:
+    labels.altLogo ||
+    "invitaciones digitales para bodas, quince años y eventos",
+};
+---
+
+<footer>
+  {modo === "negocio" && nombreNegocio ? (
+    <p>{l.developedFor} {nombreNegocio}</p>
+  ) : modo === "marca" ? (
+    <>
+      <p>{l.developedBy}</p>
+      <a href="https://nvitaciones.com" target="_blank">
+        <img src=`/nvita-logo.svg` alt={l.altLogo} class="logo" />
+      </a>
+    </>
+  ) : null}
+  <p>© 2022 - {new Date().getFullYear()} {l.rights}</p>
+</footer>
+
+<style lang="scss">
+  @use "../../estilos/temas/base/bodas/variables" as *;
+
+  footer {
+    border-top: solid 1px rgba(var(--secundario-rgb), 0.5);
+    padding: $margen-cel 0;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .logo {
+    width: 200px;
+
+    @include cel {
+      width: 150px;
+    }
+  }
+</style>

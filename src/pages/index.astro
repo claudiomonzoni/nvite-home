@@ -23,6 +23,17 @@ import { useTranslations } from "../i18n/ui";
 
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
+
+// mostrar video según el idioma, si es inglés o español, para que se vea el video correcto en cada idioma.
+const videoSources = lang === "en"
+  ? {
+      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790106726/home-nvitaciones-horizontal_mdd8vo.mp4",
+      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938726/quince-pdf-elegante_eiqgbo.mp4",
+    }
+  : {
+      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790106726/home-nvitaciones-horizontal_mdd8vo.mp4",
+      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938726/quince-pdf-elegante_eiqgbo.mp4",
+    };
 ---
 
   <Layout
@@ -36,13 +47,7 @@ const t = useTranslations(lang);
   imagenDesktop={coverDesktopHome}
   imagenMobile={coverMobileHome}/>
   
-  <div class="grid contenido">
-    <div id="choro">
-      <h2>{t('landing.intro.h2')}</h2>
-      <p set:html={t('landing.intro.p')}>
-      </p>
-    </div>
-  </div>
+
 
   <!-- <div class="grid contenido">
    <OfertaTiempo
@@ -59,29 +64,29 @@ const t = useTranslations(lang);
     <OfertaQr />
   </div>
 
-  <!-- <section class="grid contenido">
+  <section class="grid contenido video-reveal">
+
+      <div id="choro">
+      <h2>{t('landing.intro.h2')}</h2>
+      <p set:html={t('landing.intro.p')}>
+      </p>
+    </div>
+
       <div id="video">
-        <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/cV49wo2c5fU?si=c95LYo30Mkdnu-1b&controls=0"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          aria-label={lang === "en" ? "Nvitaciones presentation video" : "Video de presentación de Nvitaciones"}
+        >
+          <source src={videoSources.mobile} media="(max-width: 479px)" type="video/mp4" />
+          <source src={videoSources.desktop} media="(min-width: 480px)" type="video/mp4" />
+        </video>
     </div>
-    <div id="videoCel">
-      <iframe
-        width="315"
-        height="560"
-        src="https://www.youtube.com/embed/UBu6HRRfCdA"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen></iframe>
-    </div>
-  </section> -->
+  </section>
+
+
+
   <div id="nvitaciones">
     <MostrarNvitaciones dondeEstoy="home" />
   </div>
@@ -236,6 +241,46 @@ const t = useTranslations(lang);
 </Layout>
 
 <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const videoReveal = document.querySelector(".video-reveal");
+  const choro = videoReveal?.querySelector("#choro") as HTMLElement | null;
+  const videoFrames = videoReveal?.querySelectorAll("#video");
+  const presentationVideo = videoReveal?.querySelector("video") as HTMLVideoElement | null;
+
+  if (videoReveal && choro && videoFrames?.length && presentationVideo) {
+    gsap.fromTo(
+      videoFrames,
+      {
+        y: () => -choro.offsetHeight - 30,
+        scale: 0.82,
+      },
+      {
+        y: 0,
+        scale: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: videoReveal,
+          start: "top 78%",
+          end: "top 25%",
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+          onLeave: () => {
+            presentationVideo.play().catch(() => {
+              // El navegador puede exigir una interacción antes de reproducir con sonido.
+            });
+          },
+          onLeaveBack: () => {
+            presentationVideo.pause();
+          },
+        },
+      },
+    );
+  }
+
   const mivideoHome = document.getElementById(
     "video-home-cel",
   ) as HTMLVideoElement;

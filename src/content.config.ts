@@ -70,6 +70,10 @@ const bodas = defineCollection({
       progresoFrase: z.string().optional(),
       progresoAllReady: z.string().optional(),
       progresoMostrarSiempre: z.boolean().optional(),
+      footer: z.object({
+        ocultarMarca: z.boolean().optional(),
+        nombreNegocio: z.string().optional(),
+      }).optional(),
       // Padres
       padres: z.object({
         mamaNovia: z.string().optional(),
@@ -177,6 +181,10 @@ const quince = defineCollection({
     progresoFrase: z.string().optional(),
     progresoAllReady: z.string().optional(),
     progresoMostrarSiempre: z.boolean().optional(),
+      footer: z.object({
+        ocultarMarca: z.boolean().optional(),
+        nombreNegocio: z.string().optional(),
+      }).optional(),
     regalos: z.array(z.object({ titulo: z.string(), url: z.string() })).optional(),
     tipoRegalos: z.array(z.string()).optional(),
     ceremonia: z

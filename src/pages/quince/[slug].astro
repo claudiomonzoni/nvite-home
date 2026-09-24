@@ -23,7 +23,7 @@ import Confirmacion from "../../components/comunes/Confirmacion";
 import ConfirmacionBasica from "../../components/quince/ConfirmacionBasica";
 import FotoSolitaria from "../../components/comunes/FotoSolitaria.astro";
 import Padres from "../../components/quince/Padres.astro";
-import Footer from "../../components/quince/Footer.astro";
+import Footer from "../../components/comunes/Footer.astro";
 import Padrinos from "../../components/comunes/Padrinos.astro";
 import Qr from "../../components/comunes/qr.astro";
 import Hospedaje from "../../components/comunes/Hospedaje.astro";
@@ -134,6 +134,16 @@ const quince = {
     progresoFrase: fm.progresoFrase ?? "",
     progresoAllReady: fm.progresoAllReady ?? "",
     progresoMostrarSiempre: fm.progresoMostrarSiempre ?? true,
+    footer: {
+      modo:
+        fm?.footer?.modo ??
+        (fm?.footer?.ocultarMarca
+          ? fm?.footer?.nombreNegocio
+            ? "negocio"
+            : "nada"
+          : "marca"),
+      nombreNegocio: fm?.footer?.nombreNegocio ?? "",
+    },
     consideraciones: Array.isArray(fm?.consideraciones)
       ? fm.consideraciones
       : [],
@@ -605,8 +615,11 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
   <section class="grid contenido">
     <Footer
       ruta={base}
+      modo={quince.data.footer.modo}
+      nombreNegocio={quince.data.footer.nombreNegocio}
       labels={{
         developedBy: t("footer.developedBy"),
+        developedFor: t("footer.developedFor"),
         rights: t("footer.rights"),
         altLogo: t("footer.altLogo"),
       }}
