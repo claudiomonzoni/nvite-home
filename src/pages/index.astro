@@ -74,9 +74,11 @@ const videoSources = lang === "en"
 
       <div id="video">
         <video
-          
           playsinline
           preload="metadata"
+          poster="/cover-pc.webp"
+          data-poster-mobile="/cover-cel.webp"
+          data-poster-desktop="/cover-pc.webp"
           aria-label={lang === "en" ? "Nvitaciones presentation video" : "Video de presentación de Nvitaciones"}
         >
           <source src={videoSources.mobile} media="(max-width: 479px)" type="video/webm" />
@@ -291,6 +293,22 @@ const videoSources = lang === "en"
   }
 
   const videoToggle = videoReveal?.querySelector(".video-toggle") as HTMLButtonElement | null;
+
+  const updateVideoPoster = () => {
+    if (!presentationVideo) return;
+
+    const isMobile = window.matchMedia("(max-width: 479px)").matches;
+    const nextPoster = isMobile
+      ? presentationVideo.dataset.posterMobile ?? "/cover-cel.webp"
+      : presentationVideo.dataset.posterDesktop ?? "/cover-pc.webp";
+
+    presentationVideo.setAttribute("poster", nextPoster);
+  };
+
+  if (presentationVideo) {
+    updateVideoPoster();
+    window.addEventListener("resize", updateVideoPoster);
+  }
 
   if (presentationVideo && videoToggle) {
     const updateVideoToggle = () => {
