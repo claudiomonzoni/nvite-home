@@ -27,12 +27,12 @@ const t = useTranslations(lang);
 // mostrar video según el idioma, si es inglés o español, para que se vea el video correcto en cada idioma.
 const videoSources = lang === "en"
   ? {
-      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790106726/home-nvitaciones-horizontal_mdd8vo.mp4",
-      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938726/quince-pdf-elegante_eiqgbo.mp4",
+      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790354796/home-escritorio-en_xpd21k.webm",
+      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790441116/home-cel-en_nn9wut.webm",
     }
   : {
-      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790106726/home-nvitaciones-horizontal_mdd8vo.mp4",
-      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1752938726/quince-pdf-elegante_eiqgbo.mp4",
+      desktop: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790353041/home-escritorio_nf7o0a.webm",
+      mobile: "https://res.cloudinary.com/dpnzqg5mx/video/upload/v1790435132/home-cel_ckgqyw.webm",
     };
 ---
 
@@ -64,7 +64,7 @@ const videoSources = lang === "en"
     <OfertaQr />
   </div>
 
-  <!-- <section class="grid contenido video-reveal">
+  <section class="grid contenido video-reveal">
 
       <div id="choro">
       <h2>{t('landing.intro.h2')}</h2>
@@ -74,16 +74,25 @@ const videoSources = lang === "en"
 
       <div id="video">
         <video
-          controls
+          
           playsinline
           preload="metadata"
           aria-label={lang === "en" ? "Nvitaciones presentation video" : "Video de presentación de Nvitaciones"}
         >
-          <source src={videoSources.mobile} media="(max-width: 479px)" type="video/mp4" />
-          <source src={videoSources.desktop} media="(min-width: 480px)" type="video/mp4" />
+          <source src={videoSources.mobile} media="(max-width: 479px)" type="video/webm" />
+          <source src={videoSources.desktop} media="(min-width: 480px)" type="video/webm" />
         </video>
+        <button
+          class="video-toggle"
+          type="button"
+          aria-label={lang === "en" ? "Play video" : "Reproducir video"}
+          title={lang === "en" ? "Play video" : "Reproducir video"}
+        >
+          <span class="video-toggle__play" aria-hidden="true"></span>
+          <span class="video-toggle__pause" aria-hidden="true"></span>
+        </button>
     </div>
-  </section> -->
+  </section>
 
 
 
@@ -281,19 +290,28 @@ const videoSources = lang === "en"
     );
   }
 
-  const mivideoHome = document.getElementById(
-    "video-home-cel",
-  ) as HTMLVideoElement;
-  const play = document.getElementById("play") as HTMLDivElement;
+  const videoToggle = videoReveal?.querySelector(".video-toggle") as HTMLButtonElement | null;
 
-  if (play && mivideoHome) {
-    play.addEventListener("click", playPause);
-  }
+  if (presentationVideo && videoToggle) {
+    const updateVideoToggle = () => {
+      const isPlaying = !presentationVideo.paused;
+      videoToggle.classList.toggle("is-playing", isPlaying);
+      videoToggle.setAttribute(
+        "aria-label",
+        isPlaying ? "Pausar video" : "Reproducir video",
+      );
+      videoToggle.setAttribute(
+        "title",
+        isPlaying ? "Pausar video" : "Reproducir video",
+      );
+    };
 
-  function playPause() {
-    if (mivideoHome) {
-      if (mivideoHome.paused) mivideoHome.play();
-      else mivideoHome.pause();
-    }
+    videoToggle.addEventListener("click", () => {
+      if (presentationVideo.paused) presentationVideo.play();
+      else presentationVideo.pause();
+    });
+    presentationVideo.addEventListener("play", updateVideoToggle);
+    presentationVideo.addEventListener("pause", updateVideoToggle);
+    updateVideoToggle();
   }
 </script>
