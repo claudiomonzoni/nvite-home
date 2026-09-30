@@ -348,10 +348,19 @@
     h2 {
       text-align: center;
       font-family: var(--font-heading), serif;
-      font-size: clamp(1.5rem, 2vw, 3rem);
+      font-size: clamp(3rem, 2vw, 3rem);
       color: var(--primario);
     }
-
+    .divisor {
+      margin: 0 auto;
+      text-align: center;
+      // filter: saturate(2951%) contrast(52%);
+    }
+    .parents-subtitle {
+     margin: 0 auto;
+      padding: $margen-min $margen-cel;
+      text-align: center;
+    }
     .bande {
       background: rgb(254, 241, 241);
       background: linear-gradient(
@@ -1004,13 +1013,13 @@
       overflow: hidden;
       &::before {
         content: "";
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
         z-index: -1;
-        position:absolute;
+        position: absolute;
         opacity: 0.4;
-        top:0;
-        left:0;
+        top: 0;
+        left: 0;
         background: url("/lluvia.webp") var(--fondoBurn) repeat;
         background-size: contain;
         background-blend-mode: overlay;

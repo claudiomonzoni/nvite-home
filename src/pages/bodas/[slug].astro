@@ -346,9 +346,11 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     )
   }
 
+
   <section class="grid contenido">
     <Frase frase={boda.data.frase_amor} />
   </section>
+
 
   {
     ["Lux", "Clasica"].includes(boda.data.version) && (
@@ -362,7 +364,8 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       papaNovio={boda.data.padres.papaNovio}
       fotopapasNovio={boda.data.padres.fotopapasNovio}
       labels={{
-        ourParents: t("parents.ourParents"),
+        ourParents: t("wedding.story.parentsTitle"),
+        subtitle: t("wedding.story.parentsSubtitle"),
         bride: t("parents.bride"),
         groom: t("parents.groom"),
       }}
@@ -371,21 +374,33 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
 )
 }
 
-  <!-- Imágenes solitarias condicionales -->
-  {
-    imagenesSolitarias[0] && (
-      <FotoSolitaria
-        arriba={false}
-        gradientePorciento={40}
-        src={imagenesSolitarias[0]}
-      />
-    )
-  }
+  
 
   {
     boda.data.galeria.length > 0 && (
       <section class="grid pantalla">
         <Galeria galeria={boda.data.galeria} />
+      </section>
+    )
+  }
+
+
+  {
+    galeria.length > 0 && (
+      <section class="grid pantalla">
+        <SliderVentana>
+          {
+            galeria.map((src) => (
+              <div class="img-window">
+                <img
+                  src={src}
+                  alt={`Galería de ${boda.data.novios || "Bodas de Nvitaciones"}`}
+                  loading="eager"
+                  />
+              </div>
+            ))
+          }
+        </SliderVentana>
       </section>
     )
   }
@@ -407,58 +422,61 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     />
   </section>
 
-  <section class="grid pantalla">
-    <SliderVentana>
-      {
-        galeria &&
-          galeria.map((src) => (
-            <div class="img-window">
-              <img
-                src={src}
-                alt={`Galería de ${boda.data.novios || "Bodas de Nvitaciones"}`}
-                loading="eager"
-              />
-            </div>
-          ))
-      }
-    </SliderVentana>
-  </section>
-
   {
     (boda.data.ceremonia.lugar || boda.data.recepcion.lugar) && (
       <section class="grid contenido">
         <div class="bandejaLugares">
           {boda.data.ceremonia.lugar && (
             <BloqueMapa
-              encabezado={t("invitation.ceremony")}
-              dir={boda.data.ceremonia.lugar}
-              horario={boda.data.ceremonia.hora}
-              lat={boda.data.ceremonia.lat}
-              lng={boda.data.ceremonia.lng}
-              mapName="mapa1"
-              icono="iglesia"
-              labels={{
-                viewMap: t("maps.viewMap"),
-                startTrip: t("maps.startTrip"),
-              }}
+            encabezado={t("wedding.story.ceremony")}
+            dir={boda.data.ceremonia.lugar}
+            horario={boda.data.ceremonia.hora}
+            lat={boda.data.ceremonia.lat}
+            lng={boda.data.ceremonia.lng}
+            mapName="mapa1"
+            icono="iglesia"
+            labels={{
+              viewMap: t("maps.viewMap"),
+              startTrip: t("maps.startTrip"),
+            }}
             />
           )}
           {boda.data.recepcion.lugar && (
             <BloqueMapa
-              encabezado={t("invitation.reception")}
-              dir={boda.data.recepcion.lugar}
-              horario={boda.data.recepcion.hora}
-              lat={boda.data.recepcion.lat}
-              lng={boda.data.recepcion.lng}
-              mapName="mapa2"
-              icono="brindis"
-              labels={{
-                viewMap: t("maps.viewMap"),
-                startTrip: t("maps.startTrip"),
-              }}
+            encabezado={t("wedding.story.reception")}
+            dir={boda.data.recepcion.lugar}
+            horario={boda.data.recepcion.hora}
+            lat={boda.data.recepcion.lat}
+            lng={boda.data.recepcion.lng}
+            mapName="mapa2"
+            icono="brindis"
+            labels={{
+              viewMap: t("maps.viewMap"),
+              startTrip: t("maps.startTrip"),
+            }}
             />
           )}
         </div>
+      </section>
+    )
+  }
+  {
+    imagenesSolitarias[1] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={30}
+        src={imagenesSolitarias[1]}
+      />
+    )
+  }
+
+  {
+    boda.data.itinerario.length > 0 && boda.data.version === "Lux" && (
+      <section class="grid pantalla" id="BaseItinerario">
+        <Itinerario
+          listado={boda.data.itinerario}
+          titulo={t("wedding.story.itinerary")}
+        />
       </section>
     )
   }
@@ -477,25 +495,6 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       encabezado={t("invitation.considerations")}
     />
   </section>
-
-  {
-    imagenesSolitarias[1] && (
-      <FotoSolitaria
-        arriba={true}
-        gradientePorciento={30}
-        src={imagenesSolitarias[1]}
-      />
-    )
-  }
-
-  {
-    boda.data.itinerario.length > 0 && boda.data.version === "Lux" && (
-      <section class="grid pantalla" id="BaseItinerario">
-        
-        <Itinerario listado={boda.data.itinerario} titulo={t("invitation.itinerary")} />
-      </section>
-    )
-  }
 
   {
     boda.data.version === "Lux" && (
@@ -517,7 +516,15 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       </section>
     )
   }
-
+  {
+    imagenesSolitarias[2] && (
+      <FotoSolitaria
+        arriba={true}
+        gradientePorciento={35}
+        src={imagenesSolitarias[2]}
+      />
+    )
+  }
 
 
   <section class="grid contenido">
@@ -525,7 +532,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
       tipo={boda.data.tipoRegalo}
       mesas={mesas}
       labels={{
-        title: t("invitation.gifts"),
+        title: t("wedding.story.gifts"),
         stores: t("gifts.stores"),
         cash: t("gifts.cash"),
         transfers: t("gifts.transfer"),
@@ -548,15 +555,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     />
   </section>
 
-  {
-    imagenesSolitarias[2] && (
-      <FotoSolitaria
-        arriba={true}
-        gradientePorciento={35}
-        src={imagenesSolitarias[2]}
-      />
-    )
-  }
+
 
   {
     boda.data.version === "Lux" && (

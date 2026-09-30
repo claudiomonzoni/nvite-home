@@ -8,6 +8,7 @@ interface Props {
   fotopapasNovio?: string;
   labels?: {
     ourParents?: string;
+    subtitle?: string;
     bride?: string;
     groom?: string;
   };
@@ -25,14 +26,21 @@ const {
 
 const l = {
   ourParents: labels.ourParents || "Nuestros Padres",
+  subtitle: labels.subtitle || "",
   bride: labels.bride || "Novia",
   groom: labels.groom || "Novio",
 };
+import { Image } from "astro:assets";
+import divisor from "../../assets/bodas/imas/divisor-floral-plano1.svg";
 ---
 
 <div id="padres">
   <div class="bande">
     <h2>{l.ourParents}</h2>
+    <div class="divisor">
+      <Image src={divisor} alt="Nuestros padres divisor" />
+    </div>
+    {l.subtitle && <p class="parents-subtitle">{l.subtitle}</p>}
     <div class="conte">
       <ul class="padre">
         {
@@ -67,3 +75,12 @@ const l = {
     </div>
   </div>
 </div>
+
+<style>
+  .parents-subtitle {
+    margin: 0 auto;
+    max-width: 34rem;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style>

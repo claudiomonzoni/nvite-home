@@ -355,6 +355,11 @@
       color: var(--acento);
     }
 
+     .divisor {
+      margin: 0 auto;
+      text-align: center;
+      // filter: saturate(2951%) contrast(52%);
+    }
     .bande {
       background: rgb(254, 241, 241);
       background: linear-gradient(0deg,
