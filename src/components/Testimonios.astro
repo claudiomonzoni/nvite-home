@@ -3,52 +3,93 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SliderControls from "./SliderControls.astro";
+import { useTranslations } from "../i18n/ui";
 
-const reviews = [
+const lang = Astro.locals.lang || "es";
+const t = useTranslations(lang);
+
+type Review = {
+  name: string;
+  nameEn: string;
+  image: string | null;
+  text: string;
+  textEn: string;
+  rating: number | null;
+};
+
+const reviews: Review[] = [
   {
     name: "Berenice Jimenez / CDMX",
+    nameEn: "Berenice Jimenez / Mexico City",
     image: "https://lh3.googleusercontent.com/a-/ALV-UjXmoVWw6nsrNe1efzBInej_NPnj5jfaEl9zibKvXPgy2Gg4JquS=s50-c-rp-mo-br100",
     text: "Nos hicieron unas invitaciones para boda y nos encantaron, están súper lindas y practicas, me las entregaron muy rápido y tienen muy buen estilo. Los súper recomiendo✨🤩 100/10",
+    textEn: "They made our wedding invitations and we loved them. They’re beautiful and practical, were delivered very quickly, and have a great style. I highly recommend them ✨🤩 100/10.",
     rating: 5
   },
   {
     name: "Chucho González / Zihuatanejo Gro.",
+    nameEn: "Chucho González / Zihuatanejo, Guerrero",
     image: "https://lh3.googleusercontent.com/a-/ALV-UjXo4JUASbjgi76039aHG8vnbYGWYwWbLFXzi159ciP60lmteUQK=s50-c-rp-mo-br100",
     text: "Estuvieron excelentes, a todos mis amigos les encantaron, saludos",
+    textEn: "They were excellent. All my friends loved them. Best wishes!",
     rating: 5
   },
   {
+    name: "Erika Sanchez / Texas, EE. UU.",
+    nameEn: "Erika Sanchez / Texas, USA",
+    image: "/erika.webp",
+    text: "Nuestra invitación digital hizo que compartir los detalles de nuestra boda con familiares y amigos fuera muy fácil.",
+    textEn: "Our digital invitation made sharing all the details of our wedding with family and friends so easy",
+    rating: null
+  },
+  {
     name: "Graciela Campos / Merida, Yuc.",
+    nameEn: "Graciela Campos / Mérida, Yucatán",
     image: "https://lh3.googleusercontent.com/a/ACg8ocJzrSiEJc6JE_GX_v4va33Nf9VLdrofwZIeBBK15bn1V2SE_w=s50-c-rp-mo-br100",
     text: "Bellísimas invitaciones 😍 fueron enviadas para nuestra boda y encantaron, súper profesionales en toda la atención",
+    textEn: "Beautiful invitations 😍 We sent them out for our wedding and everyone loved them. The service was very professional throughout.",
     rating: 5
   },
   {
     name: "Sofía Martínez / Morelia, Mich.",
+    nameEn: "Sofía Martínez / Morelia, Michoacán",
     image: "/sofia.webp",
     text: "La invitación LUX quedó perfecta y todos confirmaron, ¡muy recomendable!",
+    textEn: "The LUX invitation turned out perfect and everyone RSVP’d. Highly recommended!",
     rating: 5
   },
   {
     name: "Andrea P. / Guadalajara, Jal.",
+    nameEn: "Andrea P. / Guadalajara, Jalisco",
     image: "/andrea.webp",
     text: "Me encantó el diseño LUX y fueron muy atentos.",
+    textEn: "I loved the LUX design, and the team was very attentive.",
     rating: 5
   },
   {
     name: "Fátima Osorio / CDMX",
+    nameEn: "Fátima Osorio / Mexico City",
     image: "/fatima.webp",
     text: "Me ayudaron durante todo el proceso desde la compra hasta que mande mi primer invitación.",
+    textEn: "They helped me throughout the whole process, from the purchase to sending my first invitation.",
     rating: 5
   }
 ];
+
+const reviewName = (review: { name: string; nameEn: string }) =>
+  lang === "en" ? review.nameEn : review.name;
+const reviewText = (review: { text: string; textEn: string }) =>
+  lang === "en" ? review.textEn : review.text;
+const realReviews = reviews.filter(review => review.rating !== null);
 
 const schemaReviews = {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "Invitaciones Digitales Nvitaciones",
   "image": "https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp",
-  "description": "Organiza a tus invitados con invitaciones digitales. Envía por WhatsApp, confirma asistencias y gestiona tus invitados fácilmente con Nvitaciones.",
+  "description": lang === "en"
+    ? "Organize your guests with digital invitations. Send by WhatsApp, track RSVPs, and manage your guest list with Nvitaciones."
+    : "Organiza a tus invitados con invitaciones digitales. Envía por WhatsApp, confirma asistencias y gestiona tus invitados fácilmente con Nvitaciones.",
   "sku": "nvitaciones-digitales",
   "brand": {
     "@type": "Brand",
@@ -64,27 +105,22 @@ const schemaReviews = {
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5",
-    "reviewCount": reviews.length.toString()
+    "reviewCount": realReviews.length.toString()
   },
-  "review": reviews.map(review => ({
+  "review": realReviews.map(review => ({
     "@type": "Review",
     "author": {
       "@type": "Person",
-      "name": review.name
+      "name": reviewName(review)
     },
     "reviewRating": {
       "@type": "Rating",
       "ratingValue": review.rating.toString(),
       "bestRating": "5"
     },
-    "reviewBody": review.text
+    "reviewBody": reviewText(review)
   }))
 };
-
-import { useTranslations } from "../i18n/ui";
-
-const lang = Astro.locals.lang || "es";
-const t = useTranslations(lang);
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(schemaReviews)} />
@@ -99,16 +135,18 @@ const t = useTranslations(lang);
         {reviews.map(review => (
           <div class="swiper-slide">
             <div class="testimonios__card">
-              <img
-                src={review.image}
-                alt={`Cliente ${review.name}`}
-                class="testimonios__image"
-                loading="lazy"
-                decoding="async"
-              />
-              <h3 class="testimonios__name">{review.name}</h3>
+              {review.image && (
+                <img
+                  src={review.image}
+                  alt={lang === "en" ? `Client ${reviewName(review)}` : `Cliente ${reviewName(review)}`}
+                  class="testimonios__image"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <h3 class="testimonios__name">{reviewName(review)}</h3>
               <p class="testimonios__text">
-                "{review.text}"
+                "{reviewText(review)}"
               </p>
             </div>
           </div>
@@ -174,6 +212,12 @@ const t = useTranslations(lang);
       text-align: center;
       margin-top: 1rem;
       color: $primario;
+    }
+
+    &__sample-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: $acento;
     }
     @include cel {
       padding: 2rem 0 5rem 0;
