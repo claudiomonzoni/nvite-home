@@ -5,9 +5,10 @@ import { useTranslations } from "../i18n/ui";
 
 interface Props {
   showLangSelector?: boolean;
+  languageUrls?: Partial<Record<"es" | "en", string>>;
 }
 
-const { showLangSelector } = Astro.props;
+const { showLangSelector, languageUrls } = Astro.props;
 
 const url = Astro.url.pathname;
 const lang = Astro.locals.lang || "es";
@@ -71,6 +72,11 @@ if (Astro.cookies.has("cartItems")) {
                     {t('nav.quince')}
                   </a>
                 </li>
+                <li>
+                  <a href={lang === "en" ? "/en/blog" : "/blog"} class={url.startsWith("/blog") || url.startsWith("/en/blog") ? "selected" : "none"}>
+                    {lang === "en" ? "Guides & Ideas" : "Guías e ideas"}
+                  </a>
+                </li>
                 {url === "/" ? (
                   <li>
                     <a href="#faq">FAQ</a>
@@ -84,7 +90,7 @@ if (Astro.cookies.has("cartItems")) {
           {
             shouldShowLang && (
               <li>
-                <LanguageSelector currentLang={lang} variant="nav" />
+                <LanguageSelector currentLang={lang} variant="nav" languageUrls={languageUrls} />
               </li>
             )
           }
@@ -170,6 +176,14 @@ if (Astro.cookies.has("cartItems")) {
                   <span>{t('nav.quince')}</span>
                 </a>
               </li>
+              <li class="mobile-nav-item">
+                <a
+                  href={lang === "en" ? "/en/blog" : "/blog"}
+                  class={`mobile-nav-link ${url.startsWith("/blog") || url.startsWith("/en/blog") ? "selected" : ""}`}
+                >
+                  <span>{lang === "en" ? "Guides & Ideas" : "Guías e ideas"}</span>
+                </a>
+              </li>
               {url === "/" ? (
                 <li class="mobile-nav-item">
                   <a href="#faq" class="mobile-nav-link">
@@ -200,7 +214,7 @@ if (Astro.cookies.has("cartItems")) {
           shouldShowLang && (
             <div class="mobile-lang-row">
               <span class="lang-label-txt">{lang === "en" ? "Language:" : "Idioma:"}</span>
-              <LanguageSelector currentLang={lang} variant="nav" />
+              <LanguageSelector currentLang={lang} variant="nav" languageUrls={languageUrls} />
             </div>
           )
         }

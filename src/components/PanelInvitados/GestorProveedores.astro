@@ -1155,6 +1155,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
 </script>
 
 <style lang="scss">
+  @use "sass:color";
   @use "../../estilos/_variables.scss" as *;
 
   .gestor-proveedores-wrapper {
@@ -1396,7 +1397,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
       background: $primario;
       color: white;
       &:hover {
-        background: darken($primario, 8%);
+        background: color.adjust($primario, $lightness: -8%);
       }
     }
 
@@ -2033,7 +2034,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     gap: 0.4rem;
 
     &:hover {
-      background: darken($primario, 8%);
+      background: color.adjust($primario, $lightness: -8%);
       transform: translateY(-1px);
     }
 
@@ -2087,7 +2088,7 @@ const todosComunesPrecargados = comunesFaltantes.length === 0;
     &.primary {
       background: $primario;
       &:hover {
-        background: darken($primario, 8%);
+        background: color.adjust($primario, $lightness: -8%);
       }
     }
   }

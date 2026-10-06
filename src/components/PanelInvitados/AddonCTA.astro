@@ -47,6 +47,7 @@ const { nombre, descripcion, icono = "mdi:lock-outline" } = Astro.props;
 </div>
 
 <style lang="scss">
+  @use "sass:color";
   @use "../../estilos/_variables.scss" as *;
 
   .addon-cta-card {
@@ -166,7 +167,7 @@ const { nombre, descripcion, icono = "mdi:lock-outline" } = Astro.props;
     box-shadow: 0 4px 10px rgba(43, 175, 91, 0.25);
 
     &:hover {
-      background-color: darken(rgb(43, 175, 91), 5%);
+      background-color: color.adjust(rgb(43, 175, 91), $lightness: -5%);
       transform: translateY(-1px);
       box-shadow: 0 6px 14px rgba(43, 175, 91, 0.35);
     }

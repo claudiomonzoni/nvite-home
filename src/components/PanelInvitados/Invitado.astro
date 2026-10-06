@@ -503,6 +503,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
 </script>
 
 <style lang="scss">
+  @use "sass:color";
   @use "../../estilos/_variables.scss" as *;
 
   .invitado-card {
@@ -772,7 +773,7 @@ const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uui
       background-color: #007AFF;
       color: #fff;
       &:hover {
-        background-color: darken($primario, 10%);
+        background-color: color.adjust($primario, $lightness: -10%);
       }
     }
 

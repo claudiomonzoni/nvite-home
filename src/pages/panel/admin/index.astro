@@ -508,6 +508,7 @@ try {
 </script>
 
 <style lang="scss">
+  @use "sass:color";
   @use "../../../estilos/_variables.scss" as *;
 
   .admin-wrapper {
@@ -979,7 +980,7 @@ try {
       cursor: pointer;
 
       &:hover {
-        background-color: darken($acento, 5%);
+        background-color: color.adjust($acento, $lightness: -5%);
       }
     }
   }

@@ -225,6 +225,26 @@ const quince = defineCollection({
   }),
 });
 
+// Public editorial guides, separate from invitation content and its routes.
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/blog" }),
+  schema: z.object({
+    title: z.string().min(1).max(90),
+    description: z.string().min(1).max(180),
+    publishedAt: z.date(),
+    updatedAt: z.date().optional(),
+    author: z.string().default("Equipo Nvitaciones"),
+    category: z.enum(["Bodas en la playa", "Organización", "Inspiración", "Beach Weddings", "Planning", "Inspiration"]),
+    language: z.enum(["es", "en"]).default("es"),
+    slug: z.string().min(1).optional(),
+    translationKey: z.string().min(1).optional(),
+    tags: z.array(z.string()).default([]),
+    coverImage: z.string().optional(),
+    coverImageAlt: z.string().optional(),
+    draft: z.boolean().default(true),
+  }),
+});
+
 const productos = defineCollection({
   loader: stripeProductLoader(stripe),
   schema: z.object({
@@ -266,4 +286,4 @@ const precios = defineCollection({
 // });
 
 // 4. Export a single `collections` object to register your collection(s)
-export const collections = { bodas, quince, productos, precios };
+export const collections = { bodas, quince, blog, productos, precios };

@@ -5,9 +5,10 @@ import type { Lang } from "../i18n/detector";
 interface Props {
   currentLang?: Lang;
   variant?: "nav" | "panel" | "minimal";
+  languageUrls?: Partial<Record<Lang, string>>;
 }
 
-const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.props;
+const { currentLang = (Astro.locals.lang || "es"), variant = "nav", languageUrls } = Astro.props;
 ---
 
 <div class={`lang-switcher-container variant-${variant}`}>
@@ -26,6 +27,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
       type="button"
       class={`lang-option ${currentLang === "es" ? "active" : ""}`}
       data-lang="es"
+      data-url={languageUrls?.es}
     >
 
       <span class="lang-label">Español</span>
@@ -35,6 +37,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
       type="button"
       class={`lang-option ${currentLang === "en" ? "active" : ""}`}
       data-lang="en"
+      data-url={languageUrls?.en}
     >
   
       <span class="lang-label">English</span>
@@ -202,6 +205,7 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
           e.stopPropagation();
           const targetLang = opt.getAttribute("data-lang");
           if (!targetLang) return;
+          const destination = opt.getAttribute("data-url");
 
           // Set cookie immediately in browser
           document.cookie = `nvite_lang=${targetLang};path=/;max-age=31536000;SameSite=Lax`;
@@ -216,8 +220,12 @@ const { currentLang = (Astro.locals.lang || "es"), variant = "nav" } = Astro.pro
             console.error("Error calling set-lang api:", err);
           }
 
-          // Hard reload to guarantee fresh SSR rendering with new cookie
-          window.location.reload();
+          // Editorial pages have locale-specific URLs; other pages keep their current route.
+          if (destination) {
+            window.location.assign(destination);
+          } else {
+            window.location.reload();
+          }
         });
       });
     });

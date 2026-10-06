@@ -1,0 +1,26 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BlogIndex from "../../components/blog/BlogIndex.astro";
+
+export const prerender = true;
+
+const allPosts = await getCollection(
+  "blog",
+  ({ data }: CollectionEntry<"blog">) => !data.draft && data.language === "es",
+);
+const posts = [...allPosts].sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+const alternates = [
+  { lang: "es-MX", href: new URL("/blog", Astro.site).href },
+  { lang: "en-US", href: new URL("/en/blog", Astro.site).href },
+];
+---
+
+<BlogIndex
+  posts={posts}
+  language="es"
+  languageUrls={{ es: "/blog", en: "/en/blog" }}
+  alternates={alternates}
+/>

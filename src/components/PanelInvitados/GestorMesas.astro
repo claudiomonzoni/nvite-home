@@ -659,6 +659,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
 </script>
 
 <style lang="scss">
+  @use "sass:color";
   @use "../../estilos/_variables.scss" as *;
 
   .gestor-mesas-container {
@@ -1321,7 +1322,7 @@ const mesasCompletas = statsMesas.filter((m) => m.completa && !m.sobrecupo).leng
       font-size: 0.85rem;
 
       &:hover {
-        background-color: darken($acento, 5%);
+        background-color: color.adjust($acento, $lightness: -5%);
       }
     }
   }
