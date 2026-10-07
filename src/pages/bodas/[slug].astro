@@ -1,5 +1,6 @@
 ---
 import matter from "gray-matter";
+import { localInvitation, hasLocalInvitationAsset } from "../../lib/localInvitation";
 import { db, Invitados, and, eq } from "@/db";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/bodas/Layout.astro";
@@ -8,7 +9,7 @@ import Footer from "../../components/comunes/Footer.astro";
 //componentes
 import HeroElegante from "../../components/bodas/Hero-elegante.jsx";
 import HeroBase from "../../components/bodas/Hero.jsx";
-import HeroGlass from "../../components/bodas/Hero-glass.jsx";
+import HeroBrisa from "../../components/bodas/Hero-brisa.jsx";
 import Encabezados from "../../components/bodas/Encabezados.astro";
 import AudioPlayer from "../../components/bodas/Audio.astro";
 import Padres from "../../components/bodas/Padres.astro";
@@ -55,6 +56,7 @@ const cacheBust = Date.now().toString();
 // Helper para convertir rutas públicas a GitHub Raw URLs
 const toRawUrl = (maybePath: string | undefined): string | undefined => {
   if (!maybePath) return undefined;
+  if (hasLocalInvitationAsset(maybePath)) return maybePath;
   try {
     new URL(maybePath);
     return maybePath;
@@ -71,7 +73,8 @@ const headers: Record<string, string> = {};
 const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 if (token) headers.Authorization = `Bearer ${token}`;
 
-const res = await fetch(mdxUrl, { headers });
+const localMdx = await localInvitation("bodas", slug);
+const res = localMdx === null ? await fetch(mdxUrl, { headers }) : new Response(localMdx);
 if (!res.ok) {
   return Astro.redirect("/404");
 }
@@ -158,7 +161,7 @@ const boda = {
       nombreNegocio: fm?.footer?.nombreNegocio ?? "",
     },
     paleta: fm.paleta ?? "base",
-    theme: fm.theme ?? { name: "base" },
+    theme: { ...(fm.theme ?? {}), name: fm.theme?.name === "glass" ? "brisa" : (fm.theme?.name ?? "base") },
     hospedaje: Array.isArray(fm?.hospedaje)
       ? fm.hospedaje.map((h: any) => ({
           nombre: h?.nombre ?? "",
@@ -289,9 +292,9 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
                 }}
               />
             );
-          case "glass":
+          case "brisa":
             return (
-              <HeroGlass
+              <HeroBrisa
                 nombres={boda.data.novios}
                 fecha={boda.data.fecha}
                 ellaIniciales={boda.data.ellaIniciales}
@@ -549,6 +552,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
 
   <section class="grid contenido">
     <MensajeVip
+      initialInvitado={dbInvitado}
       labels={{
         tag: t("vip.tag"),
       }}
@@ -586,6 +590,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
               dias_antes={15}
               version={boda.data.version}
               tipo="bodas"
+              themeName={boda.data.theme.name}
               client:only="react"
               initialInvitado={dbInvitado as any}
               labels={{
@@ -619,6 +624,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
           return (
             <section>
               <ConfirmacionBasica
+                themeName={boda.data.theme.name}
                 whatsapp={boda.data.whatsapp}
                 dias_antes={15}
                 client:only="react"

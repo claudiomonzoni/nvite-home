@@ -1,12 +1,13 @@
 ---
 import matter from "gray-matter";
+import { localInvitation, hasLocalInvitationAsset } from "../../lib/localInvitation";
 import { db, Invitados, and, eq } from "@/db";
 import { useTranslations, type ui } from "../../i18n/ui";
 import Layout from "../../layouts/quince/Layout.astro";
 
 //componentes
 import Hero from "../../components/quince/Hero";
-import HeroGlass from "../../components/quince/Hero-glass";
+import HeroBrisa from "../../components/quince/Hero-brisa";
 import HeroElegante from "../../components/quince/Hero-elegante.jsx";
 import AudioPlayer from "../../components/comunes/Audio.astro";
 import ProgresoInvitados from "../../components/comunes/ProgresoInvitados.astro";
@@ -52,6 +53,7 @@ const cacheBust = Date.now().toString();
 // Helper para convertir rutas públicas a GitHub Raw URLs
 const toRawUrl = (maybePath: string | undefined): string | undefined => {
   if (!maybePath) return undefined;
+  if (hasLocalInvitationAsset(maybePath)) return maybePath;
   // Si ya es URL absoluta, dejarla igual
   try {
     new URL(maybePath);
@@ -72,7 +74,8 @@ const headers: Record<string, string> = {};
 const token = import.meta.env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 if (token) headers.Authorization = `Bearer ${token}`;
 
-const res = await fetch(mdxUrl, { headers });
+const localMdx = await localInvitation("quince", slug);
+const res = localMdx === null ? await fetch(mdxUrl, { headers }) : new Response(localMdx);
 if (!res.ok) {
   return Astro.redirect("/404");
 }
@@ -152,7 +155,7 @@ const quince = {
       ? fm.coloresVestimenta
       : [],
     paleta: fm.paleta ?? "base",
-    theme: fm.theme ?? { name: "base" },
+    theme: { ...(fm.theme ?? {}), name: fm.theme?.name === "glass" ? "brisa" : (fm.theme?.name ?? "base") },
     hospedaje: Array.isArray(fm?.hospedaje)
       ? fm.hospedaje.map((h: any) => ({
           nombre: h?.nombre ?? "",
@@ -254,9 +257,9 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
     {
       (() => {
         switch (quince.data.theme.name) {
-          case "glass":
+          case "brisa":
             return (
-              <HeroGlass
+              <HeroBrisa
                 nombres={quince.data.quinceanera}
                 fecha={quince.data.fecha}
                 cover={quince.data.cover}
@@ -407,7 +410,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
     />
   </section>
 
-  <section class="grid pantalla">
+  {galeria.length > 0 && (<section class="grid pantalla">
     <SilderGsap>
       {
         galeria &&
@@ -420,7 +423,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
           ))
       }
     </SilderGsap>
-  </section>
+  </section>)}
 
   <section class="grid contenido fondo-mitad">
     <div id="zigzag">
@@ -524,6 +527,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
 
   <section class="grid contenido">
     <MensajeVip
+      initialInvitado={dbInvitado}
       labels={{
         tag: t("vip.tag"),
       }}
@@ -593,6 +597,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
           return (
             <section>
               <ConfirmacionBasica
+                themeName={quince.data.theme.name}
                 whatsapp={quince.data.whatsapp}
                 dias_antes={15}
                 client:only="react"

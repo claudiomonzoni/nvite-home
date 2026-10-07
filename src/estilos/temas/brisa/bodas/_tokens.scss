@@ -1,0 +1,37 @@
+// Brisa: paper, salt water and an unhurried editorial rhythm.
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap');
+
+@mixin tokens() {
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --brisa-sand: #eee7db;
+  --brisa-sea: #244d54;
+  --brisa-paper: #f2eee5;
+  --brisa-white: #fffdf8;
+  --brisa-line: color-mix(in srgb, var(--primario), transparent 78%);
+  --brisa-shadow: 0 18px 55px color-mix(in srgb, var(--primario), transparent 90%);
+  --brisa-section: clamp(4rem, 9vw, 8rem);
+  --brisa-bg: var(--fondo);
+  --brisa-blur: none;
+  --brisa-border: 1px solid var(--brisa-line);
+  --brisa-text-shadow: none;
+  --sombra: color-mix(in srgb, var(--primario), transparent 92%);
+  --fondoBurn: var(--brisa-paper);
+  --fondoDodge: var(--fondo);
+  --brisa-coast: url('/temas/brisa/orilla.webp');
+  // Default coastal palette. Seasonal palettes keep their own colors.
+  &:where([data-paleta='base'], [data-paleta-quince='base']) {
+  --primario: #244d54;
+  --primario-rgb: 36, 77, 84;
+  --secundario: #50655c;
+  --secundario-rgb: 80, 101, 92;
+  --terciario: #eee7db;
+  --terciario-rgb: 238, 231, 219;
+  --acento: #84613f;
+  --acento-rgb: 132, 97, 63;
+  --fondo: #faf7ef;
+  --texto: #29474b;
+  --gris: #50655c;
+  --gris-rgb: 80, 101, 92;
+  }
+}

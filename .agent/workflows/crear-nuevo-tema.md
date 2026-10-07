@@ -1,276 +1,231 @@
-description: Guia paso a paso para que una persona o un agente cree y registre un nuevo tema para invitaciones de bodas, XV anos o ambos.
+---
+description: Proceso y estado real para crear y registrar temas de invitaciones.
+---
 
-# Cómo Crear un Nuevo Tema Manualmente
+# Crear un nuevo tema de invitación
 
-Este documento explica el proceso real para registrar un nuevo tema (por ejemplo, `glass`) en el sistema. Debe servir tanto como guia manual como lista de comprobacion para un agente de IA.
+Revisión del código: 6 de octubre de 2026. Esta guía distingue lo implementado actualmente de los requisitos para un tema nuevo. Los nombres de archivo se indican desde la raíz del proyecto.
 
-## Paso 1: Crear la estructura de carpetas y el archivo SCSS
-Temas actualmente conectados:
+## 1. Estado actual
 
-| Evento | Temas en el router | Heros disponibles |
-| --- | --- | --- |
-| Bodas | `base`, `clasico`, `moderno`, `elegante`, `glass` | `Hero.jsx`, `Hero-elegante.jsx`, `Hero-glass.jsx` |
-| XV anos | `base`, `elegante`, `glass` | `Hero.jsx`, `Hero-elegante.jsx`, `Hero-glass.jsx` |
+Un tema se conecta en varios lugares independientes: estilos SCSS, Hero de la página, componentes con módulos propios y selector de Keystatic. Registrar una opción en el CMS no conecta automáticamente los demás.
 
-La lista debe actualizarse si cambia `src/estilos/bodas/redireccion.scss`, `src/estilos/quince/redireccion.scss` o alguno de los `switch` de las paginas `[slug].astro`.
+| Evento | Opciones en Keystatic | Mixins registrados en el router SCSS | Hero de la página |
+| --- | --- | --- | --- |
+| Bodas | `base`, `clasico`, `moderno`, `elegante`, `brisa` | Los cinco | Casos explícitos para `base`, `elegante`, `brisa`; los demás devuelven `null` |
+| XV años | `base`, `clasico`, `moderno`, `elegante`, `brisa` | `base`, `elegante`, `brisa` | Casos explícitos para esos tres; cualquier otro nombre usa el Hero Base |
 
-1. Ve a la ruta principal de estilos de los temas: `src/estilos/temas/`.
-2. Crea una nueva carpeta con el nombre de tu tema en minúsculas, sin espacios ni caracteres especiales (ej. `glass`).
-3. Dentro, crea las subcarpetas de los eventos compatibles (`bodas` y/o `quince`).
-4. Dentro de cada evento que quieras soportar, crea su respectivo archivo de variables (ej. `_variables.scss` para bodas, o `variablesquince.scss` para quince años).
+Rutas de referencia:
 
-Como minimo, cada evento necesita un archivo de variables y uno global:
+- `keystatic.config.ts`: el selector `theme.name` se repite en las colecciones `bodas` y `quince`.
+- `src/content.config.ts`: ambas colecciones leen MDX; `theme.name` es `z.string()`, no un enum. El esquema no comprueba que el tema esté implementado.
+- `src/estilos/bodas/redireccion.scss` y `src/estilos/quince/redireccion.scss`: importan los globales y ejecutan sus mixins bajo `:root[data-theme="..."]`.
+- `src/pages/bodas/[slug].astro` y `src/pages/quince/[slug].astro`: seleccionan el Hero con un `switch`.
+- `src/layouts/bodas/Layout.astro` y `src/layouts/quince/Layout.astro`: conectan los routers e inyectan personalización del contenido.
+
+### Conexiones incompletas y reutilización existente
+
+Estado tras reemplazar Glass por Brisa:
+
+- `clasico` y `moderno` de bodas tienen carpetas de estilos, pero no casos de Hero. En XV se ofrecen en el CMS sin carpetas ni mixins propios.
+- `src/components/bodas/Hero-brisa.jsx` y `src/components/quince/Hero-brisa.jsx` contienen sus Heroes completos. Cada uno importa `hero.module.scss` desde la carpeta Brisa de su evento, siguiendo el patrón de los otros temas.
+- Brisa de XV importa sus propias variables. Elegante de XV todavía importa variables de Base en sus globales; no asumir que todos los temas están aislados del mismo modo.
+- `src/components/comunes/Confirmacion.jsx` tiene `themeMap` para `base`, `elegante` y `brisa` de ambos eventos, con fallback a Base. Ambas páginas pasan `themeName`.
+- La versión `Esencial` usa `ConfirmacionBasica.jsx` del evento y selecciona estilos Brisa cuando corresponde; conserva Base para los otros temas. `Lux` y `Clasica` usan la confirmación común.
+- Glass ya no se ofrece en Keystatic ni tiene carpetas o Heroes. Las páginas traducen el nombre antiguo `glass` a `brisa` al leer MDX remoto, para conservar las invitaciones existentes.
+- `src/components/bodas/Pases.jsx` importa el módulo Base directamente. Tener un archivo de pases en otro tema no basta para activarlo.
+- Existen imports de variables de bodas en componentes compartidos como `Footer.astro` y `SliderVentana.astro`. Hay que revisar el CSS emitido para evitar cruces entre eventos.
+
+## 2. Definir alcance y crear archivos
+
+Elegir un identificador en minúsculas, sin espacios, por ejemplo `nuevo`, y definir si soportará bodas, XV o ambos. Mantener ese identificador en carpetas, mixins, CMS y selección de componentes.
+
+Estructura recomendada para un tema con estilos propios en ambos eventos:
 
 ```text
-src/estilos/temas/<tema>/bodas/_variables.scss
-src/estilos/temas/<tema>/bodas/globales.scss
-src/estilos/temas/<tema>/quince/variablesquince.scss
-src/estilos/temas/<tema>/quince/globales.scss
+src/estilos/temas/nuevo/bodas/_variables.scss
+src/estilos/temas/nuevo/bodas/globales.scss
+src/estilos/temas/nuevo/bodas/hero.module.scss
+src/estilos/temas/nuevo/quince/variablesquince.scss
+src/estilos/temas/nuevo/quince/globales.scss
+src/estilos/temas/nuevo/quince/hero.module.scss
+src/components/bodas/Hero-nuevo.jsx
+src/components/quince/Hero-nuevo.jsx
 ```
-**Ejemplo de ruta y archivo resultante para XV años:**
-`src/estilos/temas/glass/quince/variablesquince.scss`
 
-## Paso 2: Configurar las variables y tipografías
+Crear módulos adicionales cuando el diseño lo requiera, por ejemplo `confirmacion.module.scss`. Se puede reutilizar un componente existente de forma explícita si cubre el diseño; no sobrescribir componentes de otros temas. Al copiar archivos, revisar todos sus imports, recursos y nombres de mixins.
 
-Dentro del archivo recién creado, debes importar y aplicar las gamas de colores (paletas) y configurar las tipografías correspondientes.
+## 3. Paletas, fuentes y personalización
 
-### Ejemplo de contenido (`src/estilos/temas/glass/quince/variablesquince.scss`):
+Ambos eventos tienen archivos de paleta `base`, `invierno`, `otono`, `primavera` y `verano` bajo `src/estilos/paletas/<evento>/`. La existencia de un archivo no garantiza que todos los temas lo importen: por ejemplo, las variables Base de bodas no importan Verano.
+
+Los nombres de mixins son distintos según el evento: bodas utiliza `base()`, `invierno()`, etc.; XV utiliza `base-quince()`, `invierno-quince()`, etc. Revisar el archivo de paleta antes de invocarlo.
+
+Ejemplo parcial para las variables del tema nuevo de XV:
 
 ```scss
-// 1. Importar TODAS las paletas disponibles correspondientes al tipo de evento (quince o bodas)
-@use '../../../paletas/quince/invierno' as *;
 @use '../../../paletas/quince/base' as *;
-@use '../../../paletas/quince/otono' as *;
-@use '../../../paletas/quince/primavera' as *;
-@use '../../../paletas/quince/verano' as *;
 
-// 2. Importar la(s) fuente(s) desde Google Fonts para el nuevo tema
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&family=Playfair+Display&display=swap");
-
-// 3. Aplicar cada paleta del evento XV anos
-:root[data-paleta-quince="invierno"] {
-  @include invierno();
-}
-:root[data-paleta-quince="base"] {
-  @include base();
-}
-:root[data-paleta-quince="otono"] {
-  @include otono();
-}
-:root[data-paleta-quince="primavera"] {
-  @include primavera();
-}
-:root[data-paleta-quince="verano"] {
-  @include verano();
+:root[data-paleta-quince="base"][data-theme="nuevo"] {
+  @include base-quince();
 }
 
-// 4. Configurar las variables de tipografias por defecto
-:root[data-paleta-quince] {
-  --font-heading-default: "Playfair Display", serif;
-  --font-body-default: "Outfit", sans-serif;
-  
-  // (Opcional) Variables para el estilo "Glass"
-  // --glass-bg: rgba(255, 255, 255, 0.15);
-}
-
-// Configurar elementos globales asegurando el uso de `var()`
-// En XV anos, acotar tambien las reglas globales al evento y al tema.
-:root[data-paleta-quince][data-theme="glass"] h1,
-:root[data-paleta-quince][data-theme="glass"] h2,
-:root[data-paleta-quince][data-theme="glass"] h3,
-:root[data-paleta-quince][data-theme="glass"] h4,
-:root[data-paleta-quince][data-theme="glass"] h5,
-:root[data-paleta-quince][data-theme="glass"] h6 {
-  font-family: var(--font-heading, var(--font-heading-default));
-}
-:root[data-paleta-quince][data-theme="glass"] body,
-:root[data-paleta-quince][data-theme="glass"] p,
-:root[data-paleta-quince][data-theme="glass"] span,
-:root[data-paleta-quince][data-theme="glass"] div {
-  font-family: var(--font-body, var(--font-body-default));
+:root[data-paleta-quince][data-theme="nuevo"] {
+  --font-heading: "Playfair Display", serif;
+  --font-body: "Outfit", sans-serif;
 }
 ```
 
-> **Importante:** Asegúrate de que las rutas de los `@use` sean correctas según la ubicación de tu archivo, así como el origen de las paletas (`quince` o `bodas`).
+Completar imports y selectores para cada paleta soportada, y cargar las fuentes predeterminadas elegidas. Para bodas usar `data-paleta` y los mixins de bodas. Acotar las variables nuevas al evento y tema; no copiar un `:root` global de archivos antiguos.
 
-El layout de bodas usa `data-paleta`; el layout de XV anos usa `data-paleta-quince`. No declares las fuentes de XV anos en un `:root` sin atributo: los componentes compartidos pueden cargar CSS de ambos eventos y una regla global puede cambiar las fuentes de bodas.
-## Paso 3: Definir el Mixin Global y Conectar el Tema en el Router
-
-Para que Astro compile e inyecte tu nuevo CSS, el sistema centralizado de enrutamiento de estilos debe conocerlo:
-
-1. **SCSS Globales (`globales.scss`):** Si copiaste el archivo `globales.scss` del tema "Base" hacia tu carpeta "glass", abre tu archivo y renombra el mixin para que coincida con tu tema:
-   ```scss
-   @mixin tema-glass() {
-     // ...
-   ```
-2. **El Router de Estilos (`redireccion.scss`):** Ve a `src/estilos/quince/redireccion.scss` (o el equivalente en `bodas`). Importa tu nuevo archivo `globales` en la parte superior y registra el mixin:
-   ```scss
-   // 1. Importar los SCSS globales de tu tema (este archivo ya importa internamente tus variablesquince)
-   @use "../temas/glass/quince/globales" as *;
-
-  // 2. Ejecutar y renderizar el CSS cuando el html tenga el tag data-theme
-   :root[data-theme="glass"] {
-     @include tema-glass();
-   }
-   ```
-
-## Paso 4: Estructurar Componentes y Módulos SCSS (Vital para personalización)
-
-En caso de que tu tema requiera adaptar o añadir módulos propios en la carpeta `src/estilos/temas/glass/quince/` (como por ejemplo `hero.module.scss`), es **obligatorio** que el código utilice las variables CSS de manera nativa y NO las variables de SCSS ni valores en crudo. 
-
-Esto es lo que permite que Keystatic y los MDX sobrescriban configuraciones dinámicamente:
+Usar variables CSS para colores y fuentes personalizables:
 
 ```scss
-// ❌ MAL (variable SCSS de Sass o colores duros)
-background-color: $primario;
-color: #e5989b;
-
-// ✅ BIEN (variable CSS estándar)
-background-color: var(--primario);
-color: var(--texto, var(--primario)); // Permitiendo fallbacks si es necesario
+color: var(--texto, var(--primario));
+background-color: var(--fondo);
+font-family: var(--font-heading), serif;
 ```
 
-## Paso 5: Registrar el nuevo tema en Keystatic (CMS)
+Las variables Sass y mixins siguen siendo útiles para breakpoints y medidas internas. Evitar usarlos para valores que deban cambiar desde Keystatic. Un color fijo o una fuente escrita directamente en un componente no responde al override del MDX. También revisar fondos con imágenes y variables derivadas como `--primario-rgb`: el layout no las recalcula al cambiar `primary`.
 
-Para que el tema "Glass" (o el que estés creando) se pueda elegir desde el panel de administración:
+### Personalización ya implementada en los layouts
 
-1. Abre el archivo `keystatic.config.ts` ubicado en la raíz del proyecto.
-2. Localiza el esquema del campo `"theme" > "name"` (que es donde están "base", "clasico", "moderno", etc.). Suele repetirse o estar abstraído para las colecciones `bodas` y `quinceaneras`.
-3. Agrega la nueva opción en el listado de `options`:
+| Campo MDX / Keystatic | Variable CSS |
+| --- | --- |
+| `theme.colors.primary` | `--primario` |
+| `theme.colors.secondary` | `--secundario` |
+| `theme.colors.accent` | `--acento` |
+| `theme.colors.background` | `--fondo` |
+| `theme.colors.text` | `--texto` |
+| `theme.typography.heading` | `--font-heading` |
+| `theme.typography.body` | `--font-body` |
 
-```typescript
-theme: fields.object({
-  name: fields.select({
-    label: "Nombre del tema",
-    options: [
-      { label: "Base", value: "base" },
-      { label: "Clásico", value: "clasico" },
-      { label: "Moderno", value: "moderno" },
-      { label: "Elegante", value: "elegante" },
-      // 👇 Agregar la nueva opción aquí
-      { label: "Glass", value: "glass" },
-    ],
-    defaultValue: "base",
-  }),
-  colors: fields.object({ ... }),
-  typography: fields.object({ ... }),
-})
+Los layouts escriben overrides bajo el selector de paleta y tema correspondiente, y agregan enlaces de Google Fonts cuando hay fuentes personalizadas. Con `colors: {}` y `typography: {}` no se inyectan overrides; se conserva lo definido en las hojas de estilos cargadas. Los defaults actuales usan `--font-heading` y `--font-body` directamente; no existe una obligación de usar variables `--font-*-default`.
+
+`personalizar-colores-tipografias.md` contiene ejemplos históricos con `data-paleta` para XV y `:root` sin aislamiento. Para un tema nuevo usar los atributos y selectores descritos aquí y comprobar los layouts actuales.
+
+## 4. Conectar los estilos
+
+El `globales.scss` nuevo debe importar sus propias variables y declarar un mixin distinto, por ejemplo `tema-nuevo()`:
+
+```scss
+// Bodas: @use "./variables" as *;
+// XV:
+@use "./variablesquince" as *;
+
+@mixin tema-nuevo() {
+  body {
+    color: var(--texto, var(--primario));
+    background-color: var(--fondo);
+    font-family: var(--font-body), sans-serif;
+  }
+}
 ```
 
-4. Haz este cambio en todas las colecciones donde quieras que esté disponible el nuevo tema.
+En el router del evento, añadir el import y la ejecución. Ejemplo para XV:
 
-Una vez hecho esto, al acceder a `/keystatic` ya se podrá seleccionar "Glass" desde el menú desplegable de Tema.
+```scss
+@use "../temas/nuevo/quince/globales" as *;
 
-## Paso 6: Crear y Vincular Componentes Temáticos (Ej. Hero)
-
-Cada tema (como "Glass") típicamente requiere de su propio bloque principal gráfico, como el componente `Hero`. Al crear un tema nuevo, **no debes sobrescribir** el componente de otro tema, sino que debes crear un componente asociado a tu nuevo tema para cada evento (Bodas y/o XV).
-
-1. **Crear el Componente JSX**: Ve a la carpeta `src/components/quince/` (o `bodas/`). Duplica un archivo hero existente, como `Hero.jsx` o `Hero-elegante.jsx`, y cámbiale el nombre para reflejar tu nuevo tema, por ejemplo: `Hero-glass.jsx`.
-2. **Importar y Renderizar Condicionalmente en Astro**: Para que Astro aplique tu Hero cuando se seleccione "glass", debes ajustar el renderizador:
-   - Abre el layout dinámico de la página del evento: `src/pages/quince/[slug].astro`
-   - Importa tu componente arriba en las importaciones: 
-     `import HeroGlass from "../../components/quince/Hero-glass.jsx";`
-   - Busca el bloque reactivo de `switch (quince.data.theme.name)` (o `boda.data...` independientemente) y añade el nuevo caso de uso:
-
-```astro
-    {
-      (() => {
-        switch (quince.data.theme.name) {
-          case 'elegante':
-            return <HeroElegante {...props} />;
-          case 'base':
-            return <HeroBase {...props} />;
-          // 👇 Agregar el mapeo de renderizado del componente para "Glass":
-          case 'glass':
-            return (
-              <HeroGlass
-                // ... tus propiedades (nombres, fecha, cover, etc) equivalentes
-                client:load
-              />
-            );
-          default:
-            return null;
-        }
-      })()
-    }
+:root[data-paleta-quince][data-theme="nuevo"] {
+  @include tema-nuevo();
+}
 ```
 
-Repite esta misma filosofía operativa en caso de que tu nuevo tema difiera radicalmente de la estructura HTML original de otros componentes (Contador, Itinerario, etc.) e implementa las diferencias a nivel JSX/Astro y refiriéndolas en el mismo `[slug].astro`.
+Para bodas cambiar la ruta y el atributo a `data-paleta`. Las reglas emitidas por archivos de variables o módulos fuera del mixin también deben estar aisladas. Dentro de un selector de `:root`, usar `&` si se quiere estilizar el propio elemento raíz: un `html` anidado busca un descendiente `html`, no la raíz.
 
-## Paso 7: Componentes compartidos y aislamiento
+## 5. Conectar el Hero y conservar sus datos
 
-`src/components/comunes/Confirmacion.jsx` importa estilos de bodas y XV anos al mismo tiempo. Si el nuevo tema tiene una variante de confirmacion:
+Importar `Hero-nuevo.jsx` en la página del evento y añadir un caso explícito al `switch (boda.data.theme.name)` o `switch (quince.data.theme.name)`.
 
-1. Crea el modulo SCSS para cada evento soportado.
-2. Importa los modulos nuevos en `Confirmacion.jsx`.
-3. Agrega el tema al `themeMap` para `bodas`, `quince` o ambos.
-4. Comprueba que los estilos de XV anos no emitan `:root` globales.
+Copiar las propiedades reales del Hero más cercano al diseño:
 
-Busca tambien imports cruzados de `variables*.scss`, `globales.scss` y `hero.module.scss`. Un build puede terminar correctamente aunque una variable global de XV anos termine sobrescribiendo una fuente de bodas.
+- Ambos eventos pasan `nombres`, `fecha`, `cover`, `lang`, `labels` y usan `client:load`.
+- Bodas usa `novios` para `nombres` y pasa `ellaIniciales` y `elIniciales`.
+- XV usa `quinceanera` para `nombres` y pasa `initialInvitado={dbInvitado as any}`.
 
-## Paso 8: Tipografias personalizadas desde el contenido
+Conservar traducciones, comportamiento de apertura, animaciones y datos de invitados que el nuevo diseño necesite. Los textos traducidos se obtienen mediante `src/i18n/ui`; probar español e inglés. No confiar en el fallback como registro del tema: bodas devuelve `null` para nombres desconocidos, XV devuelve el Hero Base.
 
-Los layouts `src/layouts/bodas/Layout.astro` y `src/layouts/quince/Layout.astro` leen `theme.typography` del MDX. Si `heading` o `body` tienen valor, el layout:
+Si cambia la estructura de otra sección, crear su variante y conectarla explícitamente en la página o en el componente selector correspondiente.
 
-- escribe `--font-heading` y/o `--font-body` en un selector que incluye la paleta y el tema;
-- agrega un enlace a la familia correspondiente de Google Fonts.
+## 6. Confirmación y otros módulos
 
-Si el frontmatter contiene `typography: {}`, se utilizan las fuentes por defecto del tema. No es necesario escribir fuentes manualmente en Keystatic para usar los defaults.
+Para una confirmación propia de `Lux` / `Clasica`:
 
-## Paso 9: Registro actual en Keystatic
+1. Crear el módulo de cada evento soportado.
+2. Importarlo en `src/components/comunes/Confirmacion.jsx`.
+3. Añadir el identificador a `themeMap.bodas` y/o `themeMap.quince`.
+4. Asegurar que la página pase `tipo` y `themeName`; ambas páginas ya los pasan.
+5. Conservar `initialInvitado`, traducciones y lógica de confirmación existente.
 
-El archivo es `keystatic.config.ts`. El objeto `theme.name` aparece una vez en la coleccion `bodas` y otra en `quince`. Actualmente ambas listas contienen `base`, `clasico`, `moderno`, `elegante` y `glass`, pero el router de XV anos solo implementa `base`, `elegante` y `glass`.
+Si el alcance incluye `Esencial`, ampliar también la selección de estilos de `ConfirmacionBasica.jsx` (actualmente Base y Brisa); el mapa de la confirmación común no la afecta. Aplicar el mismo criterio a Pases y cualquier componente con imports fijos de Base.
 
-Antes de agregar una opcion al CMS, confirma que el evento correspondiente ya tiene:
+## 7. Registrar en Keystatic y revisar el esquema
 
-- su carpeta de estilos;
-- su import y mixin en `redireccion.scss`;
-- su caso en el `[slug].astro`;
-- sus componentes especificos o un fallback valido.
+Añadir `{ label: "Nuevo", value: "nuevo" }` a `theme.name.options` solo en las colecciones soportadas de `keystatic.config.ts`, una vez conectados sus estilos y componentes.
 
-## Paso 10: Validacion
+Agregar un nombre no requiere ampliar un enum en `src/content.config.ts`, porque actualmente es un string. Si el nuevo diseño introduce campos de contenido, añadirlos tanto al CMS como al esquema de Astro y conectarlos a sus consumidores.
 
-Las invitaciones se escriben en archivos `.mdx`. Su bloque de frontmatter, delimitado por `---`, usa sintaxis YAML. No es un archivo YAML separado; es la metadata YAML que Astro/Keystatic leen al inicio del MDX.
+## 8. Crear contenido de prueba válido
 
-Para una invitacion de prueba, el inicio del archivo `.mdx` puede verse asi:
+Duplicar una invitación MDX válida del evento en `src/content/bodas/` o `src/content/quince/`, conservar los campos obligatorios y cambiar el bloque `theme`:
 
-```mdx
----
-version: Lux
-titulo: prueba-tema
-paleta: base
+```yaml
 theme:
   name: nuevo
   colors: {}
   typography: {}
----
-
-# Contenido de la invitacion
 ```
 
-Prueba al menos una invitacion de bodas y una de XV anos. En DevTools comprueba:
+Es un fragmento del frontmatter YAML delimitado por `---` dentro del MDX, no una invitación completa. Un archivo con solo `version`, `titulo`, `paleta` y `theme` no cumple el esquema: faltan campos obligatorios como portada, fecha y datos del evento.
 
-1. `document.documentElement.dataset.theme` coincide con el tema.
-2. Bodas tiene `data-paleta`; XV anos tiene `data-paleta-quince`.
-3. `getComputedStyle(document.documentElement).getPropertyValue('--font-heading')` devuelve la fuente esperada.
-4. Las fuentes personalizadas aparecen en Network cuando se solicitan.
-5. Ninguna hoja CSS contiene una regla de XV anos como `:root { --font-heading: ... }`.
+Hacer otra prueba con colores y fuentes personalizados. Usar recursos existentes válidos o incorporar los nuevos a `public/` y revisar sus rutas.
 
-Antes de publicar ejecuta:
+Brisa incluye `src/content/bodas/brisa-demo.mdx` y `src/content/quince/brisa-demo.mdx`, ambos con `draft: true` y datos ilustrativos. En desarrollo, las páginas leen primero el MDX local mediante `src/lib/localInvitation.ts` y usan recursos locales; en producción conservan la lectura desde GitHub. Esto permite revisar un tema antes de subir los archivos.
 
-```bash
-npm run build
-```
+### Diseño y recursos de Brisa
 
-El build debe terminar correctamente. Las advertencias deprecadas de Vite o Sass no sustituyen esta comprobacion; revisa tambien el CSS generado si el tema toca variables globales.
+- Nombre visible: `Brisa · Playa`; identificador persistido: `brisa`.
+- Tipografías predeterminadas: Cormorant Garamond y DM Sans, sustituibles mediante `theme.typography`.
+- Paleta Base costera: azul mar, arena y marfil. Las paletas estacionales siguen disponibles.
+- Cada carpeta de evento (`src/estilos/temas/brisa/bodas/` y `quince/`) contiene sus propios `_tokens.scss`, `_coastal.scss`, variables, globales, `hero.module.scss` y `confirmacion.module.scss`. No existe un Hero compartido fuera de esas carpetas.
+- Fondo generado y optimizado: `public/temas/brisa/orilla.webp`. Su prompt y procedencia se guardan junto al recurso.
+- Apertura mediante un diálogo nativo, compatible con teclado, que conserva `iniciarInvitacion` para el audio y `hero:ready` para las secciones.
+- Vista aislada de componentes: `node scripts/preview-brisa.mjs`, después abrir `http://127.0.0.1:4323/.brisa-preview/` y `?evento=quince`. Esta vista comprueba los Heroes y las confirmaciones básicas reales; las secciones de ejemplo no reemplazan la validación de las rutas completas.
+- Vista de las páginas reales sin sincronizar las colecciones de Stripe: `node node_modules/astro/bin/astro.mjs dev --config scripts/brisa-astro.config.mjs --host 127.0.0.1 --port 4324`. Abrir `/bodas/brisa-demo` y `/quince/brisa-demo` en ese puerto. Los wrappers importan las páginas originales y sus componentes; este perfil es solo para desarrollo y no modifica el despliegue.
 
-## Checklist final
+## 9. Validar antes de publicar
 
-- [ ] El nombre del tema coincide en carpetas, SCSS, Keystatic y `switch`.
-- [ ] Solo se registro en los eventos que realmente lo soportan.
-- [ ] Cada evento tiene variables y `globales.scss` compatibles con sus paletas.
-- [ ] Las variables de XV anos usan `data-paleta-quince`.
-- [ ] Los componentes compartidos tienen el mapeo necesario.
-- [ ] `theme.typography` funciona como override opcional.
-- [ ] Se probaron bodas y XV anos en local.
-- [ ] `npm run build` termina correctamente.
+Durante implementación ejecutar `npm run dev` y comprobar cada evento soportado. Si el tema solo soporta un evento, verificar también una invitación existente del otro para detectar contaminación de estilos.
+
+- Confirmar el Hero, las secciones y las variantes de confirmación incluidas en el alcance.
+- Comprobar la apertura animada del Hero y la emisión única de `hero:ready` al terminar; probar también `prefers-reduced-motion`. Brisa usa GSAP en el Hero de cada evento y conserva `iniciarInvitacion` para el audio.
+- Probar ambos estados del switch de asistencia y limitar explícitamente el tamaño de iconos del botón de confirmación. No validar solo la confirmación básica: Lux usa el componente común.
+- Probar un invitado VIP con mensaje y otro no VIP. Las páginas pasan `dbInvitado` a `MensajeVip` para renderizar su mensaje desde SSR; sin datos iniciales se conserva la consulta al endpoint cuando el DOM está disponible. Un invitado con `vip: false` no debe mostrarlo.
+- Revisar escritorio y móvil, español e inglés, con y sin overrides.
+- Confirmar en DevTools `data-theme`, `data-paleta` para bodas y `data-paleta-quince` para XV.
+- Revisar estilos computados de títulos y texto, además de las variables en la raíz. Que una variable cambie no garantiza que un componente la use.
+- Confirmar la carga de fuentes y recursos en Network.
+- Probar una invitación existente con contenido remoto y todas las secciones habilitadas, además de los ejemplos nuevos. En desarrollo, conservar una ruta local de imagen solo si el archivo existe en `public/`; en caso contrario usar GitHub Raw. Recorrer hasta las imágenes con `loading="lazy"` antes de considerarlas fallidas.
+- Revisar visibilidad efectiva de itinerario y fotos: además de `opacity`, comprobar `z-index`, colores y animaciones heredadas. Brisa neutraliza esas animaciones en el itinerario y corrige las capas de `#BaseItinerario` y `.solita`.
+- Revisar imports cruzados y CSS emitido; no introducir variables de evento/tema en un `:root` global.
+- Comprobar que temas anteriores mantienen su apariencia y comportamiento.
+
+Ejecutar `npm run build` al finalizar la implementación. El proyecto también carga colecciones de productos y precios desde Stripe en `src/content.config.ts`; distinguir errores del tema de fallos de credenciales o servicios externos. Documentar cualquier validación pendiente, sin presentar un build fallido como correcto.
+
+En esta revisión, el build completo quedó bloqueado durante `astro sync` por `require is not defined` en `node_modules/qs/lib/index.js`. Los estilos de ambos routers y los módulos Brisa compilan con Sass; las dos páginas modificadas pasan la transformación sintáctica de Astro. Se verificaron los componentes en cinco anchos y las páginas reales de muestra en escritorio y móvil mediante el perfil aislado de Astro, sin desbordamiento horizontal, imágenes visibles faltantes ni errores de JavaScript. Capturas y métricas: `.impeccable/review/brisa/`. La compilación de producción y el envío real de confirmaciones no están validados.
+
+Actualizar esta guía si cambian routers, opciones del CMS, mapas o casos de Hero.
+
+## Checklist de entrega
+
+- [ ] Identificador consistente en carpetas, mixins, CMS y componentes.
+- [ ] Solo se ofrece en eventos realmente soportados.
+- [ ] Variables propias importadas y selectores aislados por evento/tema.
+- [ ] Paletas y fuentes predeterminadas conectadas.
+- [ ] Hero conectado con datos, traducciones e hidratación necesarios.
+- [ ] Confirmación y módulos con imports fijos revisados para las versiones soportadas.
+- [ ] Overrides de colores y fuentes comprobados visualmente.
+- [ ] Contenido de prueba válido y recursos accesibles.
+- [ ] Revisión móvil/escritorio y regresión de temas existentes.
+- [ ] Build correcto o limitación concreta registrada.

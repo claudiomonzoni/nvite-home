@@ -1,23 +1,22 @@
-@use "_variables.scss" as *;
-@use "globales.scss" as *;
+@use "variablesquince.scss" as *;
+:global(:root[data-paleta-quince][data-theme="brisa"]) {
 
 h2 {
   padding-top: $margen-min;
   font-size: clamp(2.5rem, 1.5vw, 2rem);
   color: var(--primario);
 }
-
 .confirmacion {
   margin-top: $margen;
-  background: url("/bodas/confirma-fondo-izq.webp"),
-    url("/bodas/confirma-fondo-der.webp") var(--glass-bg, rgba(255, 255, 255, 0.4));
+  background: none,
+    none var(--brisa-bg, rgba(255, 255, 255, 0.4));
   background-repeat: no-repeat, no-repeat;
   background-position: left top, right bottom;
   background-size: contain;
   background-blend-mode: overlay, overlay;
-  backdrop-filter: var(--glass-blur, blur(20px));
-  -webkit-backdrop-filter: var(--glass-blur, blur(20px));
-  border: var(--glass-border, 1px solid rgba(255, 255, 255, 0.3));
+  backdrop-filter: var(--brisa-blur, blur(20px));
+  -webkit-backdrop-filter: var(--brisa-blur, blur(20px));
+  border: var(--brisa-border, 1px solid rgba(255, 255, 255, 0.3));
   border-radius: $radio;
   transition: all 0.3s ease;
   @extend .sombra;
@@ -27,7 +26,6 @@ h2 {
     background-blend-mode: overlay, overlay;
   }
 }
-
 .bandeja {
   text-align: center;
   padding: $margen;
@@ -41,7 +39,6 @@ h2 {
     padding: $margen-cel;
   }
 }
-
 form {
   display: flex;
   flex-wrap: wrap;
@@ -75,7 +72,6 @@ form {
     text-align: center;
   }
 }
-
 svg {
   max-width: 2.5rem;
   height: auto;
@@ -84,13 +80,12 @@ svg {
     fill: var(--acento);
   }
 }
-
 #mueve {
   border: solid var(--secundario) 0.9px;
   padding: $margen-min;
   text-align: center;
+  border-radius: $radio;
 }
-
 .conteCheck {
   display: flex;
   flex-wrap: wrap;
@@ -111,7 +106,6 @@ svg {
     text-align: center;
   }
 }
-
 .switch {
   position: relative;
   display: inline-block;
@@ -136,7 +130,6 @@ svg {
     }
   }
 }
-
 .slider {
   position: absolute;
   cursor: pointer;
@@ -162,19 +155,19 @@ svg {
 }
 
 .btnConfirmar {
-  @extend .btn;
+  padding: 0.85rem 1.5rem;
   display: flex;
-  border-radius: .3rem;
+  border-radius: $radio;
+  border: 0;
   background-color: var(--acento);
   color: var(--fondo);
   width: 100%;
   text-align: center;
+  justify-content: center;
 }
-
 .desactivado {
   pointer-events: none;
 }
-
 .asistira {
   background-color: rgba(var(--primario-rgb), 0.1);
   .slider {
@@ -194,19 +187,20 @@ small {
   text-align: center;
   font-size: 0.8rem;
 }
-
 span {
   font-weight: bolder;
   color: var(--acento);
 }
 
 .error {
-  background-color: var(--gris);
+  background-color: var(--terciario);
   color: var(--primario);
   text-align: center;
   padding: $margen-cel;
   margin-bottom: 2rem;
-  font-family: $txt;
+  font-size: 1.2rem;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 600;
 }
 
 .modal {
@@ -246,3 +240,25 @@ span {
   font-size: clamp(0.95rem, 2.2vw, 1rem);
   color: var(--primario);
 }
+
+.confirmacion { background: var(--fondo); border: 0; border-top: 1px solid var(--brisa-line); border-radius: 0; box-shadow: none; backdrop-filter: none; margin: var(--brisa-section) 0; padding: clamp(1rem, 4vw, 3rem) 0; }
+.bandeja { width: min(100%, 48rem); max-width: 100%; padding: clamp(1rem, 4vw, 3rem); }
+form { width: min(100%, 34rem); }
+form :is(textarea, select, input:not([type="checkbox"])) { font: inherit; color: var(--texto); border: 1px solid var(--brisa-line) !important; background: var(--brisa-paper) !important; border-radius: 4px; padding: 0.9rem; min-width: 0; box-shadow: none; backdrop-filter: none; }
+.btnConfirmar { justify-content: center; min-height: 48px; background: var(--primario); color: var(--fondo); font: 500 1rem var(--font-body); border: 0; cursor: pointer; }
+.btnConfirmar:disabled, .desactivado { opacity: 0.5; }
+.modalContent { background: var(--fondo); border-radius: 4px; }
+h2 { font: 400 clamp(2.25rem, 5vw, 3.8rem)/1.1 var(--font-heading); color: var(--primario); }
+span { color: inherit; font-weight: inherit; }
+.error { color: var(--texto); background: var(--brisa-paper); }
+
+.switch { flex: 0 0 56px !important; width: 56px; max-width: 56px; height: 44px; padding: 0; margin: 0 !important; }
+.switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+.switch .slider { top: 6px; bottom: 6px; border-radius: 20px; }
+.switch .slider::before { width: 24px; height: 24px; left: 4px; bottom: 4px; }
+.switch input:checked + .slider::before { transform: translateX(24px); }
+.switch input:focus-visible + .slider { outline: 2px solid var(--primario); outline-offset: 4px; }
+.btnConfirmar { align-items: center; gap: 0.65rem; flex-wrap: nowrap; line-height: 1.4; text-decoration: none; }
+.btnConfirmar img { display: block; flex: 0 0 24px; width: 24px; height: 24px; min-width: 0; max-width: 24px; object-fit: contain; margin: 0; }
+}
+

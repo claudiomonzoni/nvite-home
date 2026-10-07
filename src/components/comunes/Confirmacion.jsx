@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import stylesQuince from "../../estilos/temas/base/quince/confirmacion.module.scss";
 import stylesQuinceElegante from "../../estilos/temas/elegante/quince/confirmacion.module.scss";
-import stylesQuinceGlass from "../../estilos/temas/glass/quince/confirmacion.module.scss";
+import stylesQuinceBrisa from "../../estilos/temas/brisa/quince/confirmacion.module.scss";
 import stylesBodas from "../../estilos/temas/base/bodas/confirmacion.module.scss";
 import stylesBodasElegante from "../../estilos/temas/elegante/bodas/confirmacion.module.scss";
-import stylesBodasGlass from "../../estilos/temas/glass/bodas/confirmacion.module.scss";
+import stylesBodasBrisa from "../../estilos/temas/brisa/bodas/confirmacion.module.scss";
 import { shootConfetti } from "../../js/confetti";
 
 export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bodas', themeName = 'base', labels = {}, initialInvitado = null }) {
@@ -39,12 +39,12 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
     bodas: {
       base: stylesBodas,
       elegante: stylesBodasElegante,
-      glass: stylesBodasGlass,
+      brisa: stylesBodasBrisa,
     },
     quince: {
       base: stylesQuince,
       elegante: stylesQuinceElegante,
-      glass: stylesQuinceGlass,
+      brisa: stylesQuinceBrisa,
     }
   };
   const styles = themeMap[tipo]?.[themeName] || themeMap[tipo]?.base || stylesBodas;
@@ -367,6 +367,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
                 <label className={styles.switch}>
                   <input
                     type="checkbox"
+                    aria-label={t.title}
                     checked={asistira}
                     onChange={(e) => handleSwitchChange(e.target.checked)}
                   />

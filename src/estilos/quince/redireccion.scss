@@ -2,8 +2,8 @@
 @use "../temas/base/quince/variablesquince" as *;
 @use "../temas/base/quince/globales" as *;
 
-// Importar los archivos SCSS del tema Glass
-@use "../temas/glass/quince/globales" as *;
+// Importar los archivos SCSS del tema Brisa
+@use "../temas/brisa/quince/globales" as *;
 
 @use "../temas/elegante/quince/globales" as *;
 
@@ -15,8 +15,8 @@
   @include tema-base();
 }
 
-:root[data-theme="glass"] {
-  @include tema-glass();
+:root[data-paleta-quince][data-theme="brisa"] {
+  @include tema-brisa();
 }
 
 :root[data-theme="elegante"] {

@@ -1,0 +1,6 @@
+import {chromium} from 'file:///C:/Users/claud/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+const b=await chromium.launch({channel:'chrome',headless:true});
+for(const width of [1440,375]){const p=await b.newPage({viewport:{width,height:900}});const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://127.0.0.1:4324/bodas/invitacion-bodas-playa?id=00000000-0000-0000-0000-000000000006&uid=1');await p.getByRole('button',{name:'Toca para comenzar'}).click();await p.locator('.itinerario').scrollIntoViewIfNeeded();await p.locator('#bandejaHospedaje').scrollIntoViewIfNeeded();await p.waitForTimeout(2500);console.log(JSON.stringify(await p.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth,images:[...document.images].filter(i=>!i.naturalWidth&&getComputedStyle(i).display!=='none').map(i=>i.src),itinerary:[...document.querySelectorAll('.itinerario li h4')].map(e=>({text:e.innerText,opacity:getComputedStyle(e).opacity,filter:getComputedStyle(e).filter,color:getComputedStyle(e).color}))}))),errors);await p.locator('.itinerario').screenshot({path:'.impeccable/review/brisa/itinerary-'+width+'.png'});await p.screenshot({path:`.impeccable/review/brisa/client-${width}.png`,fullPage:true});await p.close();}await b.close();
+
+
+

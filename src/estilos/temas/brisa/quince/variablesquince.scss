@@ -1,48 +1,15 @@
-//paleta
-@use '../../../paletas/quince/base.scss' as *;
-@use '../../../paletas/quince/otono.scss' as *;
-@use '../../../paletas/quince/invierno.scss' as *;
-@use '../../../paletas/quince/verano.scss' as *;
-@use '../../../paletas/quince/primavera.scss' as *;
-
-//fuentes
-@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
-
-@import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
-
-
-
-
-:root[data-paleta-quince="base"] {
-  @include base-quince();
-}
-:root[data-paleta-quince="otono"] {
-  @include otono-quince();
-}
-:root[data-paleta-quince="invierno"] {
-  @include invierno-quince();
-}
-:root[data-paleta-quince="verano"] {
-  @include verano-quince();
-}
-:root[data-paleta-quince="primavera"] {
-  @include primavera-quince();
-}
-
-// Variables CSS para tipografías personalizables y Glassmorfismo iOS
-:root[data-paleta-quince][data-theme="glass"] {
-  --font-heading: "Sacramento", serif;
-  --font-body: "Old Standard TT", serif;
-  
-  // iOS Glassmorphism variables
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-blur: blur(20px);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  --glass-text-shadow: 0 1px 4px rgba(255,255,255,0.8);
-}
-
-
+@use '../../../paletas/quince/base' as base;
+@use '../../../paletas/quince/invierno' as invierno;
+@use '../../../paletas/quince/otono' as otono;
+@use '../../../paletas/quince/primavera' as primavera;
+@use '../../../paletas/quince/verano' as verano;
+@use './tokens' as brisa;
+:root[data-paleta-quince="base"][data-theme="brisa"] { @include base.base-quince(); }
+:root[data-paleta-quince="invierno"][data-theme="brisa"] { @include invierno.invierno-quince(); }
+:root[data-paleta-quince="otono"][data-theme="brisa"] { @include otono.otono-quince(); }
+:root[data-paleta-quince="primavera"][data-theme="brisa"] { @include primavera.primavera-quince(); }
+:root[data-paleta-quince="verano"][data-theme="brisa"] { @include verano.verano-quince(); }
+:root[data-paleta-quince][data-theme="brisa"] { @include brisa.tokens(); }
 //media query
 $cel: 479px;
 $nocel: 479px;
@@ -106,7 +73,7 @@ $txt: "Old Standard TT";
 }
 //grid
 // grid
-  .grid {
+  :root[data-paleta-quince][data-theme="brisa"] .grid {
     display: grid;
     grid-template-columns: [pantalla-start] 5vw [extra-start] 5vw [contenido-start] 1fr [contenido-end] 5vw [extra-end] 5vw [pantalla-end];
     @include hd {
@@ -116,24 +83,24 @@ $txt: "Old Standard TT";
       grid-template-columns: [pantalla-start] 6vw [extra-start] 6vw [contenido-start] 1fr [contenido-end] 6vw [extra-end] 6vw [pantalla-end];
     }
   }
-  .contenido > * {
+  :root[data-paleta-quince][data-theme="brisa"] .contenido > * {
     grid-column: contenido;
   }
-  .extra > * {
+  :root[data-paleta-quince][data-theme="brisa"] .extra > * {
     grid-column: extra;
   }
-  .pantalla > * {
+  :root[data-paleta-quince][data-theme="brisa"] .pantalla > * {
     grid-column: pantalla;
   }
-  .pantalla-izq > * {
+  :root[data-paleta-quince][data-theme="brisa"] .pantalla-izq > * {
     grid-column: pantalla-start / contenido-end;
   }
-  .pantalla-der > * {
+  :root[data-paleta-quince][data-theme="brisa"] .pantalla-der > * {
     grid-column: contenido-start / pantalla-end;
   }
   
 // animaciones 
-.anime{
+:root[data-paleta-quince][data-theme="brisa"] .anime {
   transition: all .5s ease-in-out;
   }
 
@@ -149,6 +116,7 @@ $txt: "Old Standard TT";
 // intentar con min
 $margen-riel: calc((100% - (100% - 5rem)) / 2 );
 
-.sombra{
-  box-shadow: 0px 1px 30px 6px var(--sombra);
+:root[data-paleta-quince][data-theme="brisa"] .sombra {
+  box-shadow: var(--brisa-shadow);
 }
+

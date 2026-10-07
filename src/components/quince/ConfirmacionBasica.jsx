@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import estilo from "../../estilos/temas/base/quince/confirmacion.module.scss";
+import estiloBase from "../../estilos/temas/base/quince/confirmacion.module.scss";
 
-export default function Confirmacion({ whatsapp, dias_antes, labels = {} }) {
+import estiloBrisa from "../../estilos/temas/brisa/quince/confirmacion.module.scss";
+
+export default function Confirmacion({ whatsapp, dias_antes, labels = {}, themeName = "base" }) {
+  const estilo = themeName === "brisa" ? estiloBrisa : estiloBase;
   const t = {
     title: labels.title || "Confirmación",
     subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",

@@ -1,14 +1,15 @@
 @use "sass:math";
-@use "../../base/quince/variablesquince" as *;
+@use "./coastal" as coastal;
+@use "./variablesquince" as *;
 
-@mixin tema-glass() {
-  html {
+@mixin tema-brisa() {
+  & {
     box-sizing: border-box;
     font-size: clamp(10px, 0.9vw, 22px);
     color: var(--gris);
     font-family: var(--font-body), serif;
     font-weight: 100;
-    background: url("/quince/decor.svg"), url("/quince/textuta-bg.webp") #fff;
+    background: none, none #fff;
     background-repeat: no-repeat, repeat;
     background-size: 40%, auto;
     background-position: -8vw 120vh, 0%;
@@ -157,8 +158,7 @@
   }
 
   .opa {
-    visibility: hidden;
-    border: 10px solid red !important;
+    visibility: visible;
   }
 
   .gale {
@@ -790,7 +790,7 @@
     #regalo {
       margin-top: $margen;
       padding: $margen $margen-cel;
-      background: url("/bg-floral-regalos-izq.svg") var(--secundario);
+      background: none var(--secundario);
       background-repeat: no-repeat;
       background-size: contain;
       background-blend-mode: screen;
@@ -818,7 +818,7 @@
       background: linear-gradient(rgba(255, 255, 255, 0.4),
           rgba(255, 255, 255, 0.4)),
         // capa blanca semitransparente
-        url("/lluvia.webp") var(--fondoBurn) repeat;
+        none var(--fondoBurn) repeat;
       background-size: contain;
       background-blend-mode: overlay;
       margin-bottom: $margen-cel;
@@ -850,7 +850,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: url("/bg-floral-regalos-der.svg");
+        background: none;
         background-position: top right;
         background-repeat: no-repeat;
         background-size: 40%;
@@ -928,7 +928,7 @@
         rgba(255, 255, 255, 0.8) 100%);
     padding: $margen 1rem;
     text-align: center;
-    font-family: $txt, serif;
+    font-family: var(--font-body), serif;
   }
 
   .bande span {
@@ -1013,12 +1013,12 @@
         position: relative;
         width: clamp(75px, 16vw, 120px);
         height: clamp(95px, 20vw, 150px);
-        background: var(--glass-bg, rgba(255, 255, 255, 0.4));
-        backdrop-filter: var(--glass-blur, blur(20px));
-        -webkit-backdrop-filter: var(--glass-blur, blur(20px));
-        border: var(--glass-border, 1px solid rgba(255, 255, 255, 0.3));
+        background: var(--brisa-bg, rgba(255, 255, 255, 0.4));
+        backdrop-filter: var(--brisa-blur, blur(20px));
+        -webkit-backdrop-filter: var(--brisa-blur, blur(20px));
+        border: var(--brisa-border, 1px solid rgba(255, 255, 255, 0.3));
         border-radius: 16px;
-        box-shadow: var(--glass-shadow);
+        box-shadow: var(--brisa-shadow);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1076,13 +1076,13 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      background: var(--glass-bg, rgba(255, 255, 255, 0.4));
-      backdrop-filter: var(--glass-blur, blur(20px));
-      -webkit-backdrop-filter: var(--glass-blur, blur(20px));
-      border: var(--glass-border, 1px solid rgba(255, 255, 255, 0.3));
+      background: var(--brisa-bg, rgba(255, 255, 255, 0.4));
+      backdrop-filter: var(--brisa-blur, blur(20px));
+      -webkit-backdrop-filter: var(--brisa-blur, blur(20px));
+      border: var(--brisa-border, 1px solid rgba(255, 255, 255, 0.3));
       padding: 0.6rem 1.6rem;
       border-radius: $radio;
-      box-shadow: var(--glass-shadow);
+      box-shadow: var(--brisa-shadow);
 
       @include cel {
         gap: 0.5rem;
@@ -1348,128 +1348,7 @@
       }
     }
   }
+  @include coastal.sections();
 }
 
-//fin mixin tema
 
-@mixin btn-mix($claro) {
-  padding: 1rem $margen-cel;
-  color: white;
-  border: 1px solid white;
-  margin: 0.5rem 0.5rem 0.5rem 0;
-
-  &:hover {
-    background: white;
-    border-radius: $margen-min;
-    color: var(--primario);
-  }
-
-  @if $claro {
-    background: var(--acento);
-    color: var(--primario);
-    border-radius: $radio;
-    border: none !important;
-  }
-
-  @include cel {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-.btn {
-  @include btn-mix($claro: false);
-}
-
-.btn-claro {
-  border: solid;
-  @include btn-mix($claro: true);
-}
-
-footer {
-  border-top: solid 1px var(--secundario);
-  padding: $margen 0;
-  margin: 0 auto;
-  text-align: center;
-
-  img {
-    margin-bottom: 1.5rem;
-  }
-}
-
-.logo {
-  width: 200px;
-  max-width: 200px;
-}
-
-ul {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  padding: $margen-min;
-}
-
-li {
-  list-style: none;
-
-  svg {
-    width: 2rem;
-    height: auto;
-  }
-
-  path {
-    fill: var(--primario);
-  }
-}
-
-@mixin liga($conBorde, $redondo) {
-  margin: $margen-min 0;
-  color: var(--primario);
-  background: var(--terciario);
-  padding: 0.7rem $margen-cel;
-
-  svg {
-    vertical-align: middle;
-  }
-
-  img {
-    max-width: 1.5rem !important;
-    height: auto;
-    vertical-align: middle;
-    margin-right: 0.8rem;
-  }
-
-  @if $conBorde {
-    border: 1px solid var(--acento);
-    background: var(--secundario);
-    opacity: 0.8;
-    color: var(--primario) !important;
-  }
-
-  @if $redondo {
-    border-radius: $radio;
-  }
-
-  @include cel {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: .3rem;
-    font-size: 1.2rem;
-  }
-}
-
-.btn {
-  @include liga(false, false);
-}
-
-.con-borde {
-  @include liga(true, null);
-}
-
-.redondo {
-  @include liga(null, true);
-}

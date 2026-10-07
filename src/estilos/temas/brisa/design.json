@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-07T02:58:34.5089503Z",
+  "title": "Design System: Brisa invitation theme",
+  "extensions": {
+    "scope": "Brisa wedding and XV invitations only; primitives are in adjacent DESIGN.md and normative source is the Sass implementation.",
+    "shadows": [
+      {
+        "name": "brisa-shadow",
+        "value": "0 18px 55px color-mix(in srgb, var(--primario), transparent 90%)",
+        "purpose": "Opening stationery only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "action-transition",
+        "value": "180ms ease",
+        "purpose": "Button background and link color changes."
+      },
+      {
+        "name": "paper-unfold",
+        "value": "800ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Paper clip reveal only under prefers-reduced-motion: no-preference."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Animation and transition duration under reduced motion; scrolling becomes auto."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stacked-invitation",
+        "value": "767px",
+        "condition": "max-width"
+      }
+    ],
+    "assets": [
+      {
+        "path": "/temas/brisa/orilla.webp",
+        "purpose": "Generated shoreline opening backdrop, countdown background, and missing-cover fallback."
+      }
+    ],
+    "integration": {
+      "colors": "Keystatic theme.colors primary/secondary/accent/background/text map to primario/secundario/acento/fondo/texto; base defaults apply only to base palettes, preserving seasonal palettes.",
+      "typography": "Keystatic theme.typography heading/body override font-heading/font-body with existing font loading.",
+      "opening": "Native showModal dialog; opening button focus and body scroll lock; action or Escape dispatches iniciarInvitacion, opens content, then focuses hero heading and dispatches hero:ready on requestAnimationFrame.",
+      "routeComponents": "Preserve themeName through Basic and common bodas; coastal variants of real quince flip cards, Cartas, and maps; omit empty gallery whitespace; disable legacy scroll hiding only for Brisa and retain one authored hero."
+    },
+    "evidence": {
+      "mode": "Code-led implementation; no approved external composition.",
+      "screenshots": ".impeccable/review/brisa",
+      "widths": [
+        320,
+        375,
+        414,
+        768,
+        1440
+      ],
+      "states": [
+        "wedding opening",
+        "wedding invitation",
+        "XV opening",
+        "XV invitation"
+      ],
+      "validation": "Source Sass/Astro syntax, isolated components, and actual wedding/XV invitation route samples validated. Four actual-route samples have no overflow, missing visible images, or JavaScript errors. Full project Astro build remains blocked by qs require undefined.",
+      "actualRoutes": {
+        "method": "Actual src/pages rendered with local MDX and original components, excluding unrelated Stripe collection sync.",
+        "wrappers": ".brisa-preview/astro",
+        "config": "scripts/brisa-astro.config.mjs",
+        "limits": "Does not verify live submissions or all content/version combinations.",
+        "results": ".impeccable/review/brisa/routes-results.json",
+        "captures": [
+          "real-bodas-1440.png",
+          "real-bodas-375.png",
+          "real-quince-1440.png",
+          "real-quince-375.png"
+        ]
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Opening action",
+      "kind": "button",
+      "refersTo": "button-open",
+      "description": "Full-width action on the opening invitation sheet. Preview demonstrates styling; native dialog and event behavior live in each event-specific Hero-brisa.jsx.",
+      "html": "<button class=\"ds-brisa-open\">Abrir invitación <svg width=\"22\" height=\"12\" viewBox=\"0 0 22 12\" fill=\"none\" aria-hidden=\"true\"><path d=\"M1 6h19m-5-5 5 5-5 5\" stroke=\"currentColor\"/></svg></button>",
+      "css": ".ds-brisa-open{display:flex;align-items:center;justify-content:center;gap:1.5rem;width:100%;min-height:50px;padding:.9rem 1rem;border:0;border-radius:2px;background:var(--primario,#244d54);color:var(--fondo,#faf7ef);font:500 .9rem var(--font-body,'DM Sans',sans-serif);cursor:pointer;transition:background-color 180ms ease}.ds-brisa-open:hover{background:var(--acento,#84613f)}.ds-brisa-open:focus-visible{outline:2px solid var(--acento,#84613f);outline-offset:5px}.ds-brisa-open:active{transform:translateY(1px)}@media(prefers-reduced-motion:reduce){.ds-brisa-open{transition-duration:.01ms}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Coastal editorial paper",
+    "overview": "A personal photograph faces an ivory invitation sheet, with deep sea ink, warm sand surfaces, fine rules, and a generated shoreline. This system belongs only to Brisa invitations.",
+    "keyCharacteristics": [
+      "Regular serif names",
+      "Readable sans-serif details",
+      "Warm paper surfaces",
+      "Fine borders",
+      "Responsive photo-led hero"
+    ],
+    "rules": [
+      {
+        "name": "Palette precedence",
+        "body": "Base defaults retain seasonal palettes and Keystatic overrides.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve native dialog focus and invitation events.",
+      "Do use effective custom properties.",
+      "Do stack photograph before paper below 768px."
+    ],
+    "donts": [
+      "Don't apply Brisa to marketing pages.",
+      "Don't add glass panels or heavy section shadows.",
+      "Don't force base colors over editor choices."
+    ]
+  }
+}
+
