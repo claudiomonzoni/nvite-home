@@ -340,6 +340,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "e
     boda.data.audioMusica && (
       <section class="grid contenido">
       <AudioPlayer
+        lang={lang}
         src={boda.data.audioMusica}
         labels={{
           listen: t("audio.listen"),

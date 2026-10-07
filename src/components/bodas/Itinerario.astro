@@ -29,8 +29,13 @@ const { listado, titulo } = Astro.props;
 
   import gsap from "gsap";
   import ScrollTrigger from "gsap/ScrollTrigger";
+  import { animateBrisaItinerary } from '../../lib/brisaItinerary';
 
   window.addEventListener("hero:ready", () => {
+    if (document.documentElement.dataset.theme === 'brisa') {
+      animateBrisaItinerary();
+      return;
+    }
     console.log("hero:ready itinerario");
     const eventoItinerario = gsap.utils.toArray("ol li") as HTMLElement[];
     gsap.registerPlugin(ScrollTrigger);

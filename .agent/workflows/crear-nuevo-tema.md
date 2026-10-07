@@ -186,7 +186,8 @@ Brisa incluye `src/content/bodas/brisa-demo.mdx` y `src/content/quince/brisa-dem
 ### Diseño y recursos de Brisa
 
 - Nombre visible: `Brisa · Playa`; identificador persistido: `brisa`.
-- Tipografías predeterminadas: Cormorant Garamond y DM Sans, sustituibles mediante `theme.typography`.
+- Tipografías predeterminadas: Cormorant Garamond y DM Sans, sustituibles mediante `theme.typography`. `theme.colors.background` y `text` de Keystatic se aplican en Brisa con prioridad en la raíz. Las superficies siguen el fondo elegido; los encabezados conservan `--primario` independientemente de `text`; los iconos y las olas usan `--acento`. Si el fondo es oscuro y no se configura texto, se usa tinta clara. Padres y el itinerario integran sus fondos con `--fondo`; la arena mantiene una capa de color adaptable y el texto hereda la elección de Keystatic.
+- Las tres tarjetas de regalos de Brisa comparten `@extend .sombra`, sombra inferior, degradado oscuro superior derivado de `--fondo` y SVG florales de Base.
 - Paleta Base costera: azul mar, arena y marfil. Las paletas estacionales siguen disponibles.
 - Cada carpeta de evento (`src/estilos/temas/brisa/bodas/` y `quince/`) contiene sus propios `_tokens.scss`, `_coastal.scss`, variables, globales, `hero.module.scss` y `confirmacion.module.scss`. No existe un Hero compartido fuera de esas carpetas.
 - Fondo generado y optimizado: `public/temas/brisa/orilla.webp`. Su prompt y procedencia se guardan junto al recurso.

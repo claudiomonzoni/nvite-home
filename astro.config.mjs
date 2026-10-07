@@ -59,5 +59,11 @@ export default defineConfig({
     ssr: {
       noExternal: ["gsap"],
     },
+    server: {
+      watch: {
+        // Obliga a ignorar carpetas del sistema y la raíz de C:
+        ignored: ['**/node_modules/**', '**/.git/**', 'C:/*']
+      }
+    }
   },
 });

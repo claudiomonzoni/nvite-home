@@ -6,7 +6,8 @@
   --font-body: 'DM Sans', sans-serif;
   --brisa-sand: #eee7db;
   --brisa-sea: #244d54;
-  --brisa-paper: #f2eee5;
+  --brisa-paper: var(--fondo);
+  --brisa-on-primary: #fffdf8;
   --brisa-white: #fffdf8;
   --brisa-line: color-mix(in srgb, var(--primario), transparent 78%);
   --brisa-shadow: 0 18px 55px color-mix(in srgb, var(--primario), transparent 90%);

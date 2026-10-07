@@ -23,7 +23,9 @@ interface Props {
 }
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, url, cover, paleta, theme } = Astro.props;
+import { isDarkColor } from "../../lib/isDarkColor";
 const { name, colors, typography } = theme || {};
+const darkBrisaBackground = name === "brisa" && isDarkColor(colors?.background);
 
 // Generar CSS personalizado solo si hay valores
 const customStyles: string[] = [];
@@ -36,6 +38,19 @@ if (colors) {
     if (colors.accent) customStyles.push(`--acento: ${colors.accent};`);
     if (colors.background) customStyles.push(`--fondo: ${colors.background};`);
     if (colors.text) customStyles.push(`--texto: ${colors.text};`);
+}
+
+// Tipografías personalizadas
+if (name === "brisa") {
+    const readingColor = colors?.text || (darkBrisaBackground ? "#fffdf8" : undefined);
+    if (readingColor) {
+        customStyles.push(`--texto: ${readingColor};`);
+    }
+    if (darkBrisaBackground) {
+        if (!colors?.secondary) customStyles.push(`--secundario: ${readingColor}; --gris: ${readingColor};`);
+    }
+    const actionColor = colors?.primary || "#244d54";
+    customStyles.push(`--brisa-on-primary: ${isDarkColor(actionColor) ? "#fffdf8" : "#244d54"};`);
 }
 
 // Tipografías personalizadas
@@ -69,7 +84,7 @@ import "../../estilos/quince/redireccion.scss";
 ---
 
 <!doctype html>
-<html lang="es" data-paleta-quince={paleta} data-theme={name}>
+<html lang="es" data-paleta-quince={paleta} data-theme={name} data-brisa-contrast={darkBrisaBackground ? "dark" : undefined} style={name === "brisa" ? customStyles.join(" ") : undefined}>
     <head>
         <meta charset="UTF-8" />
         <meta

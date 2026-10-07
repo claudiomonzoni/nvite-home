@@ -22,6 +22,11 @@ const urlPatron = `url("${base}/patron-fondo.png")`
 
 </section>
 
+<script>
+  import { animateBrisaItinerary } from '../../lib/brisaItinerary';
+  window.addEventListener('hero:ready', animateBrisaItinerary);
+</script>
+
 <style lang="scss" define:vars={{urlPatron}}>
   @use "../../estilos/quince/_variables.scss" as *;
 

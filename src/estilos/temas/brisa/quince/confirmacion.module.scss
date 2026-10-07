@@ -160,7 +160,7 @@ svg {
   border-radius: $radio;
   border: 0;
   background-color: var(--acento);
-  color: var(--fondo);
+  color: var(--brisa-on-primary);
   width: 100%;
   text-align: center;
   justify-content: center;
@@ -241,13 +241,13 @@ span {
   color: var(--primario);
 }
 
-.confirmacion { background: var(--fondo); border: 0; border-top: 1px solid var(--brisa-line); border-radius: 0; box-shadow: none; backdrop-filter: none; margin: var(--brisa-section) 0; padding: clamp(1rem, 4vw, 3rem) 0; }
+.confirmacion { background: var(--brisa-paper); border: 0; border-top: 1px solid var(--brisa-line); border-radius: 0; box-shadow: none; backdrop-filter: none; margin: var(--brisa-section) 0; padding: clamp(1rem, 4vw, 3rem) 0; }
 .bandeja { width: min(100%, 48rem); max-width: 100%; padding: clamp(1rem, 4vw, 3rem); }
 form { width: min(100%, 34rem); }
 form :is(textarea, select, input:not([type="checkbox"])) { font: inherit; color: var(--texto); border: 1px solid var(--brisa-line) !important; background: var(--brisa-paper) !important; border-radius: 4px; padding: 0.9rem; min-width: 0; box-shadow: none; backdrop-filter: none; }
-.btnConfirmar { justify-content: center; min-height: 48px; background: var(--primario); color: var(--fondo); font: 500 1rem var(--font-body); border: 0; cursor: pointer; }
+.btnConfirmar { justify-content: center; min-height: 48px; background: var(--primario); color: var(--brisa-on-primary); font: 500 1rem var(--font-body); border: 0; cursor: pointer; }
 .btnConfirmar:disabled, .desactivado { opacity: 0.5; }
-.modalContent { background: var(--fondo); border-radius: 4px; }
+.modalContent { background: var(--brisa-paper); border-radius: 4px; }
 h2 { font: 400 clamp(2.25rem, 5vw, 3.8rem)/1.1 var(--font-heading); color: var(--primario); }
 span { color: inherit; font-weight: inherit; }
 .error { color: var(--texto); background: var(--brisa-paper); }
@@ -261,4 +261,3 @@ span { color: inherit; font-weight: inherit; }
 .btnConfirmar { align-items: center; gap: 0.65rem; flex-wrap: nowrap; line-height: 1.4; text-decoration: none; }
 .btnConfirmar img { display: block; flex: 0 0 24px; width: 24px; height: 24px; min-width: 0; max-width: 24px; object-fit: contain; margin: 0; }
 }
-
