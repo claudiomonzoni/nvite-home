@@ -1,5 +1,6 @@
 ---
 import matter from "gray-matter";
+import { resolveDemoTheme } from '../../lib/demo-theme';
 import { localInvitation, hasLocalInvitationAsset } from "../../lib/localInvitation";
 import { db, Invitados, and, eq } from "@/db";
 import { useTranslations, type ui } from "../../i18n/ui";
@@ -161,7 +162,7 @@ const boda = {
       nombreNegocio: fm?.footer?.nombreNegocio ?? "",
     },
     paleta: fm.paleta ?? "base",
-    theme: { ...(fm.theme ?? {}), name: fm.theme?.name === "glass" ? "brisa" : (fm.theme?.name ?? "base") },
+    theme: resolveDemoTheme('bodas', slug, Astro.url.searchParams, fm.theme),
     hospedaje: Array.isArray(fm?.hospedaje)
       ? fm.hospedaje.map((h: any) => ({
           nombre: h?.nombre ?? "",

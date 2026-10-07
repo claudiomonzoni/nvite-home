@@ -23,6 +23,8 @@ import MesasHome from "../../components/MesasHome.astro";
 import SliderControls from "../../components/SliderControls.astro";
 // Datos
 import nvitacionesData from "./nvitaciones.json";
+import { catalog, previewUrl as getPreviewUrl } from '../../lib/catalog';
+import WeddingSelector from '../../components/WeddingSelector.astro';
 
 const lang = Astro.locals.lang || "es";
 const isEn = lang === "en";
@@ -251,9 +253,16 @@ async function getProductImages(nvitacionInfo: NvitacionInfo | undefined) {
 }
 
 // Buscar en nvitaciones.json por slug
-const nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find(
+let nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find(
   (item) => item.slug === slug,
 );
+const originalCombination = catalog.find(item => item.slug === slug);
+const weddingPilot = originalCombination?.event === 'bodas' && originalCombination.packageId !== 'esencial';
+const requestedDesign = Astro.url.searchParams.get('tema') || originalCombination?.design || 'base';
+const selectedCombination = weddingPilot ? catalog.find(item => item.event === originalCombination?.event &&
+  item.packageId === originalCombination?.packageId && item.design === requestedDesign && item.languages.includes(lang)) || originalCombination : originalCombination;
+const purchaseId = originalCombination?.productId || nvitacionInfo?.id;
+if (weddingPilot) nvitacionInfo = nvitacionesData.find(item => item.id === purchaseId);
 
 // Si no encuentra el slug, devolver 404
 if (!nvitacionInfo) {
@@ -261,7 +270,7 @@ if (!nvitacionInfo) {
 }
 
 // Obtener el producto de Stripe usando el ID mapeado
-const product = await getEntry("productos", nvitacionInfo.id);
+const product = await getEntry("productos", purchaseId!);
 
 // Manejo de 404: Verificar si el producto existe y está activo
 if (!product || !product.data.active) {
@@ -305,6 +314,7 @@ const displayedVersion = localizeVersion(nvitacionInfo?.version, lang);
 const isWedding = (nvitacionInfo?.categoria || "").toLowerCase().includes("boda") || (product?.data?.name || "").toLowerCase().includes("boda");
 
 let previewUrl = getLocalizedText(nvitacionInfo?.muestra, lang);
+if (weddingPilot && selectedCombination) previewUrl = getPreviewUrl(selectedCombination, lang);
 if (isEn && previewUrl && !previewUrl.includes("lang=")) {
   previewUrl += (previewUrl.includes("?") ? "&" : "?") + "lang=en";
 }
@@ -313,6 +323,12 @@ if (isEn && previewUrl && !previewUrl.includes("lang=")) {
 const metaDescription = isEn
   ? `The most complete digital invitation for your celebration — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} per guest. Includes music, animated gallery, countdown and live RSVP.`
   : `La invitación digital más completa para tu boda — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} por invitado. Con música, galería animada, cuenta regresiva y confirmación en tiempo real. Personalizada a tus colores.`;
+const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => item.event === 'bodas' &&
+  item.packageId !== 'esencial' && item.design === 'base').map(async item => {
+    const entry = await getEntry('productos', item.productId);
+    return { packageId: item.packageId, slug: item.canonicalSlug, label: localizeVersion(item.version, lang),
+      price: entry?.data.active ? await getProductPrice(entry, lang) : null };
+  })) : [];
 ---
 
 <Layout
@@ -339,8 +355,12 @@ const metaDescription = isEn
     >
       <div id="izq">
         <div id="fix">
+          {weddingPilot && selectedCombination && <WeddingSelector
+            selected={selectedCombination} packages={weddingPackages} lang={lang}
+            requestedDesign={requestedDesign} />}
           <div
             class="gallery-carousel-wrapper"
+            hidden={weddingPilot}
             id="nv-gallery"
             data-video-url={nvitacionInfo?.video}
           >
@@ -416,7 +436,7 @@ const metaDescription = isEn
           <div id="conteVerNvitacion">
             <p>{displayedDescription}</p>
             {
-              nvitacionInfo && previewUrl && (
+              !weddingPilot && nvitacionInfo && previewUrl && (
                 <>
                   <div class="liga-muestra">
                     <Btn
@@ -462,6 +482,7 @@ const metaDescription = isEn
               data-cart
               data-action="buy-now"
               data-productid={product.data.id}
+              data-design={selectedCombination?.design}
               liga="#"
               clases="btn-claro btn-carrito"
               texto={isEn ? "Get this invitation →" : "Quiero esta invitación →"}
@@ -585,7 +606,7 @@ const metaDescription = isEn
                 <b>{isEn ? "Your favorite song" : "Tu música"}</b> {isEn ? "playing automatically as they open it" : "sonando cuando la abren"}
               </li>
               <li><b>{isEn ? "Animated photo gallery" : "Tus fotos, animadas"}</b>{isEn ? ", before reading a single line" : ", antes de leer un solo detalle"}</li>
-              <li>
+              <li hidden={weddingPilot && originalCombination?.packageId === 'clasica'}>
                 <b>{isEn ? "Detailed celebration timeline" : "Itinerario detallado"}</b> {isEn ? "for your event" : "de tu evento"}
               </li>
               <li>
@@ -671,6 +692,7 @@ const metaDescription = isEn
         data-cart
         data-action="buy-now"
         data-productid={product.data.id}
+        data-design={selectedCombination?.design}
         liga="#"
         clases="btn-claro btn-carrito mobile-sticky-btn"
         texto={isEn ? `Buy ${displayedName.replace(/^Nvitaci[oó]n\s+/i, "").replace(/^Invitation\s+/i, "")}` : `Comprar ${displayedName.replace(/^Nvitaci[oó]n\s+/i, "")}`}
@@ -683,6 +705,7 @@ const metaDescription = isEn
 
 <style lang="scss">
   @use "../../estilos/variables" as *;
+  [hidden] { display: none !important; }
 
   #preview-btn {
     background: $acento;
@@ -1367,6 +1390,8 @@ const metaDescription = isEn
 
 <script>
   import { generateRandomSales } from "../../js/utils";
+  import { getCartCookie, saveCartCookie } from '../../js/utils';
+  import { addSelection } from '../../js/cart-state';
 
   class ProductPage {
     private initialized = false;
@@ -1489,6 +1514,7 @@ const metaDescription = isEn
     // Se destruye cualquier instancia previa para que funcione correctamente
     // con las transiciones de Astro (viewTransitions / SPA navigation).
     initializeGallery() {
+      if (document.getElementById('wedding-selector')) return;
       const GKEY = "__NV_GALLERY__";
       try {
         (window as any)[GKEY]?.destroy?.();
@@ -1734,24 +1760,13 @@ const metaDescription = isEn
       const productId = button.getAttribute("data-productid");
       if (!productId) return;
 
-      const cartItems = this.getCartItemsFromCookie();
-      if (!cartItems.includes(productId)) {
-        cartItems.push(productId);
-        document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
-        document.dispatchEvent(new CustomEvent("cart:updated"));
-      }
+      if (button.getAttribute('aria-disabled') === 'true') return;
+      saveCartCookie(addSelection(getCartCookie(), productId, button.dataset.design));
+      document.dispatchEvent(new CustomEvent("cart:updated"));
 
       window.location.href = "/nvitaciones/checkout";
     }
 
-    private getCartItemsFromCookie(): string[] {
-      const cookie = document.cookie
-        .split(";")
-        .find((c) => c.trim().startsWith("cartItems="))
-        ?.split("=")[1];
-
-      return cookie ? JSON.parse(cookie) : [];
-    }
 
     // Manejo del modal de previsualización
     initializePreviewModal() {

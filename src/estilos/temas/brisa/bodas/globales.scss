@@ -338,11 +338,22 @@
 
   // compoenente padres
   #padres {
-    h2 {
+      h2 {
       text-align: center;
-      font-family: $garigol, serif;
-      font-size: clamp(1.5rem, 2vw, 3rem);
-      color: var(--acento);
+      font-family: var(--font-heading), serif;
+      font-size: clamp(2rem, 2vw, 3rem);
+      color: var(--primario);
+    }
+    .divisor {
+      margin: 0 auto;
+      text-align: center;
+      // filter: saturate(2951%) contrast(52%);
+    }
+    .parents-subtitle {
+      text-align: center;
+      font-family: var(--font-heading), serif;
+      font-size: clamp(1.5rem, 2vw, 2.5rem);
+      color: var(--primario);
     }
 
     .bande {
@@ -352,14 +363,14 @@
           rgba(255, 255, 255, 0) 40%);
       font-size: clamp(1.5rem, 1.7vw, 2.4vw);
       z-index: -2;
-      padding-top: $margen;
+      // padding-top: $margen-cel;
     }
 
     .conte {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: $margen;
+      padding: $margen-cel;
       position: relative;
 
       @include cel {
@@ -658,15 +669,23 @@
   }
 
   //componente frase animada
-  .frase {
-    color: var(--acento);
-    font-family: $garigol, serif;
-    font-size: clamp(1.8rem, 5vw, 7vw);
-    text-align: center;
-    margin: $margen-min $margen-min 0 $margen-min;
-    padding: $margen $margen-min;
-    border-top: 1px solid var(--acento);
-    border-bottom: 1px solid var(--acento);
+ .frase {
+   text-align: center;
+   margin: $margen-min $margen-min 0 $margen-min;
+   padding: $margen $margen-min!important;
+   border-top: 1px solid var(--secundario);
+   border-bottom: 1px solid var(--secundario);
+   line-height: 1em;
+   
+   .word {
+     color: var(--primario);
+     font-family: var(--font-heading), serif;
+     font-size: clamp(2.2rem, 5vw, 5rem);
+    }
+    
+    @include cel {
+      line-height: 2em;
+    }
   }
 
   // Componente Titulos
@@ -798,7 +817,7 @@
 
     h3 {
       color: var(--secundario);
-      font-size: clamp(2.5rem, 2.5vw, 3rem);
+      font-size: clamp(1.8rem, 2.5vw, 3rem);
     }
 
     [data-icon] {
@@ -866,11 +885,11 @@
     flex: 1 0 50%;
 
     h2 {
-      font-size: clamp(2rem, 2.5vw, 3rem);
+      font-size: clamp(1.6rem, 2.5vw, 3rem);
     }
 
     .conte {
-      padding: $margen-cel $margen;
+      padding: $margen-cel $margen 0;
     }
 
     ul {
@@ -880,9 +899,13 @@
 
       li {
         padding: $margen-min 0;
-        border-bottom: 0.5px solid var(--terciario);
+        border-bottom: 0.5px dashed rgba(var(--primario-rgb), 0.5);
         font-size: clamp(1.6rem, 1.5vw, 2rem);
         width: 100%;
+
+        &:last-child {
+          border-bottom: none;
+        }
 
         @include cel {
           font-size: 1.2rem;
@@ -891,8 +914,10 @@
     }
 
     #vestimenta {
-      font-family: $garigol, serif;
-      font-size: clamp(2rem, 2.5vw, 3rem);
+      font-family: var(--text-heading), serif;
+      font-size: clamp(1.5rem, 2.5vw, 3rem)!important;
+      padding-top: 1rem;
+      color: var(--acento);
     }
   }
 

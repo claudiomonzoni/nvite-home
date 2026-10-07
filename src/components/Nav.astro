@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 import LanguageSelector from "./LanguageSelector.astro";
 import { useTranslations } from "../i18n/ui";
+import { normalizeCart, cartCount } from '../js/cart-state';
 
 interface Props {
   showLangSelector?: boolean;
@@ -23,7 +24,7 @@ let cartItemsCount = 0;
 if (Astro.cookies.has("cartItems")) {
   const cookie = Astro.cookies.get("cartItems")?.value as unknown as string;
   try {
-    cartItemsCount = JSON.parse(cookie).length;
+    cartItemsCount = cartCount(normalizeCart(cookie));
   } catch (e) {
     cartItemsCount = 0;
   }
@@ -652,6 +653,7 @@ if (Astro.cookies.has("cartItems")) {
 
 <script>
   import { getCartCookie } from "../../src/js/utils";
+  import { cartCount } from '../js/cart-state';
 
   function initializeCartCount() {
     const badges = document.querySelectorAll(".cart-count-badge");
@@ -659,7 +661,7 @@ if (Astro.cookies.has("cartItems")) {
 
     const updateCartValue = () => {
       const cartItems = getCartCookie();
-      const count = (cartItems && cartItems.length > 0) ? cartItems.length : 0;
+      const count = cartCount(cartItems);
 
       badges.forEach((badge) => {
         if (count > 0) {

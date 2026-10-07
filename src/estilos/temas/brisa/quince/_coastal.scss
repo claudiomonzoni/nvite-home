@@ -39,8 +39,8 @@
   #BaseItinerario .itinerario ol li p, #riel.itinerario ol li p { margin: 0.4rem 0; color: var(--texto); }
   .itinerario ol li { visibility: visible; }
   .solita { z-index: 0; }
-  // Brisa has one authored opening. Legacy scroll scripts must not hide invitation information.
-  .frase .word, #titulos .char, .carta, .carta > *, .bloqueMapa, .bloqueMapa > *, .tituloEncabezados, #detalles, #detalles > *, #Regalos, #Regalos > * { opacity: 1 !important; filter: none !important; transform: none !important; }
+  // Keep these sections visible; the phrase retains its shared GSAP scroll animation.
+  #titulos .char, .carta, .carta > *, .bloqueMapa, .bloqueMapa > *, .tituloEncabezados, #detalles, #detalles > *, #Regalos, #Regalos > * { opacity: 1 !important; filter: none !important; transform: none !important; }
   #bloqueMapa, #bloqueMapa > *, #bloqueMapa .der > *, #bloqueMapa .bandeja > * { opacity: 1 !important; filter: none !important; transform: none !important; }
   .fondo-mitad { background: none; }
   #contador { position: relative; margin: 2rem 0 var(--brisa-section); padding: clamp(2rem, 5vw, 4rem); background: var(--brisa-paper); border: 0; border-radius: 0; color: var(--primario); box-shadow: none; }

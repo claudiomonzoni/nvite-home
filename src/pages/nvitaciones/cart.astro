@@ -14,7 +14,7 @@ const t = useTranslations(lang);
 const cartCookie = Astro.cookies.get("cartItems")?.value as unknown as string;
 
 const totalCartItems = await getTotalCartItems(
-  cartCookie ? JSON.parse(cartCookie) : []
+  cartCookie
 );
 
 // Calcular el costo por invitado dinámico del primer item del carrito
@@ -35,6 +35,9 @@ if (totalCartItems.length > 0) {
     <div class="cart-section">
       <div class="cart-header">
         <h1>{t('cart.title')}</h1>
+        {Astro.url.searchParams.get('error') === 'currency' && <p role="alert">
+          {lang === 'en' ? 'An item has no available price in USD. Please contact us to complete your purchase.' : 'Uno de los productos no tiene un precio disponible en MXN. Contáctanos para completar tu compra.'}
+        </p>}
       </div>
 
       {totalCartItems.length === 0 && (

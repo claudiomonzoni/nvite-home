@@ -1,23 +1,24 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { normalizeCart, type CartLine } from './cart-state';
+import { findCombination } from '../lib/catalog';
 
 export type FinalCartItem = {
   product: CollectionEntry<"productos">;
   quantity: number;
+  design?: CartLine['design'];
+  selection?: ReturnType<typeof findCombination>;
 };
 
 export const getTotalCartItems = async (
-  cartItems: CollectionEntry<"productos">["id"][]
+  cartItems: unknown
 ) => {
   const producto = await getCollection("productos");
 
-  const uniqueCartItems = Array.from(new Set(cartItems));
-
-  const finalCartItems = uniqueCartItems.map((id) => {
-    return {
-      product: producto.find((p) => p.id === id),
-      quantity: cartItems.filter((i) => i === id).length,
-    };
-  }) as FinalCartItem[];
+  const finalCartItems = normalizeCart(cartItems).flatMap(line => {
+    const product = producto.find(p => p.id === line.productId && p.data.active);
+    return product ? [{ product, quantity: line.quantity, design: line.design,
+      selection: findCombination(line.productId, line.design) }] : [];
+  });
 
   return finalCartItems;
 };

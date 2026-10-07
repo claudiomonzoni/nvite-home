@@ -4,6 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { getProductPrice } from "../../js/cart";
 import Btn from "../Btn.astro";
 import nvitacionesData from "../../pages/nvitaciones/nvitaciones.json";
+import { productPath } from '../../lib/catalog-navigation';
 
 type Props = {
   producto: CollectionEntry<"productos">;
@@ -11,6 +12,7 @@ type Props = {
 
 const { producto } = Astro.props;
 const lang = Astro.locals.lang || "es";
+const href = productPath(producto.id);
 const nvitacionInfo = nvitacionesData.find(
   (item) => item.id === producto.data.id,
 );
@@ -102,7 +104,7 @@ const schemaProduct = {
   },
   offers: {
     "@type": "Offer",
-    url: `https://nvitaciones.com/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`,
+    url: `https://nvitaciones.com${href}`,
     priceCurrency: lang === "en" ? "USD" : "MXN",
     price: priceNumberOnly,
     priceValidUntil: "2027-12-31",
@@ -119,7 +121,7 @@ const schemaProduct = {
 
 <article class="producto-card">
   <div class="portada">
-    <a href={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}>
+    <a href={href}>
       <!-- <div class="verNvitacion">Ver Nvitación</div> -->
       <div class="badge-invitado">
         {lang === 'en' ? `From $${costPerGuest} USD` : `Desde $${costPerGuest} MXN`}<br />
@@ -149,7 +151,7 @@ const schemaProduct = {
   </div>
   <div class="conteBtn">
     <Btn
-    liga={`/nvitaciones/${nvitacionInfo?.slug || producto.data.id}`}
+    liga={href}
     texto={lang === 'en' ? 'View demo →' : 'Ver mi ejemplo →'}
     clases="btn-bordes"
     claro={false}
@@ -318,6 +320,8 @@ const schemaProduct = {
 </style>
 
 <script>
+  import { getCartCookie, saveCartCookie } from '../../js/utils';
+  import { addSelection } from '../../js/cart-state';
   function initializeBuyNowButtons() {
     const buyNowButtons = document.querySelectorAll('[data-action="buy-now"]');
 
@@ -334,32 +338,16 @@ const schemaProduct = {
     if (!productId) return;
 
     // Obtener los items actuales del carrito
-    const cartItems = getCartItemsFromCookie();
+    const cartItems = getCartCookie();
 
     // Verificar si el producto ya existe en el carrito
-    if (!cartItems.includes(productId)) {
-      // Solo agregar si no existe
-      cartItems.push(productId);
-
-      // Guardar el carrito actualizado
-      document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
-
-      // Disparar evento de actualización del carrito
-      document.dispatchEvent(new CustomEvent("cart:updated"));
-    }
+    saveCartCookie(addSelection(cartItems, productId, button.dataset.design));
+    document.dispatchEvent(new CustomEvent("cart:updated"));
 
     // Redirigir al checkout
     window.location.href = "/nvitaciones/checkout";
   }
 
-  function getCartItemsFromCookie() {
-    const cookie = document.cookie
-      .split(";")
-      .find((c) => c.trim().startsWith("cartItems="))
-      ?.split("=")[1];
-
-    return cookie ? JSON.parse(cookie) : [];
-  }
 
   // Inicializar en la carga inicial
   initializeBuyNowButtons();

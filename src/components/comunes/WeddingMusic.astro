@@ -84,7 +84,7 @@ const text = {
   }
 </script>
 <style>
-  #rola .music-player { --music-progress: 0%; position: relative; isolation: isolate; display: flex; align-items: center; gap: 1rem; width: min(100%, 32rem); box-sizing: border-box; margin: 1.5rem auto 0; padding: 1rem; border: 0; border-radius: 4px; color: var(--texto, var(--primario)); background: transparent; }
+  #rola .music-player { --music-progress: 0%; position: relative; isolation: isolate; display: flex; align-items: center; gap: 1rem; width: min(100%, 32rem); box-sizing: border-box; margin: 1.5rem auto 0; padding: 1rem; border: 0; border-radius: 4px; color: var(--texto, var(--primario)); background: transparent; border-radius: 40px; }
   #rola .music-player::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: var(--fondo); filter: brightness(0.94); pointer-events: none; }
   #rola .music-player[hidden], #rola .music-player [hidden] { display: none; }
   #rola .music-player button { appearance: none; -webkit-appearance: none; display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; box-sizing: border-box; padding: 10px; margin: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }

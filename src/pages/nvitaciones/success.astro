@@ -2,6 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import Stripe from "stripe";
 import { useTranslations } from "../../i18n/ui";
+import { readSelectionMetadata } from '../../lib/checkout-selection';
+import { findCombination, designLabel } from '../../lib/catalog';
 
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
@@ -17,7 +19,7 @@ const session = await stripe.checkout.sessions.retrieve(sessionId, {
   expand: ["line_items.data.price.product"],
 });
 
-if (!session || !session.customer_details) {
+if (!session || !session.customer_details || session.status !== 'complete' || session.payment_status !== 'paid') {
   return Astro.redirect("/");
 }
 
@@ -34,6 +36,14 @@ const productosUnicos = Object.values(
     })
   )
 );
+const selections = session.metadata?.catalog_version === '1'
+  ? readSelectionMetadata(session.metadata)
+  : (session.line_items?.data || []).flatMap(item => {
+      const product = item.price?.product;
+      const id = typeof product === 'string' ? product : product?.id;
+      const combination = id ? findCombination(id) : undefined;
+      return combination ? [{ ...combination, quantity: item.quantity || 1 }] : [];
+    });
 
 Astro.cookies.delete("cartItems");
 ---
@@ -55,6 +65,12 @@ Astro.cookies.delete("cartItems");
       <p>{lang === 'en' ? `We have sent your receipt to ${email}` : `Hemos enviado el recibo a ${email}`}</p>
 
       <h3>{lang === 'en' ? 'Next step' : 'Siguiente paso'}</h3>
+      {selections.length > 0 && <ul>
+        {selections.map(item => <li>
+          {item.event === 'bodas' ? (lang === 'en' ? 'Wedding' : 'Bodas') : 'XV'} · {item.version} ·
+          {designLabel(item.design, lang)} × {item.quantity}
+        </li>)}
+      </ul>}
       <p class="cart-info">
         {lang === 'en' ? 'Fill out your event details form so our team can customize your invitation.' : 'Completa el formulario de datos de tu evento para que podamos personalizar tu Nvitación.'}
       </p>

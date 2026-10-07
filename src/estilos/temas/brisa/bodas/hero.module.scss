@@ -21,9 +21,9 @@
 .paper h1:focus { outline: none; }
 .monogram { color: var(--acento); font: 400 1.15rem var(--font-heading); letter-spacing: 0.12em; }
 .tide { width: 7rem; max-width: none; height: 1.3rem; color: var(--acento); margin: 0.9rem auto 1.4rem; flex-shrink: 0; }
-.occasion { font: 400 clamp(1.6rem, 2.5vw, 2.25rem)/1.25 var(--font-heading); color: var(--primario); margin-bottom: 1rem; }
-.invite { font: 400 0.94rem/1.8 var(--font-body); max-width: 30ch; margin: 0 auto 1.7rem; }
-.date { font: 500 0.87rem/1.6 var(--font-body); color: var(--primario); }
+.occasion { font: 400 clamp(1.2rem, 2.5vw, 2.25rem)/1.25 var(--font-heading); color: var(--primario); margin-bottom: 1rem; }
+.invite { font: 400 1.6rem var(--font-heading); max-width: 30ch; margin: 0 auto 1.7rem; }
+.date { font: 500 2ch var(--font-body); color: var(--primario); }
 .guest { border-top: 1px solid var(--brisa-line); margin-top: 1.5rem; padding-top: 1rem; font: 400 0.85rem/1.6 var(--font-body); }
 .guest p { margin: 0; }
 .scroll { margin-top: 2.5rem; display: flex; gap: 1rem; align-items: center; color: var(--primario); font: 400 0.75rem var(--font-body); text-decoration: none; }
