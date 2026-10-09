@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import styles from '../../estilos/temas/brisa/bodas/hero.module.scss';
 
 // The date in the MDX represents a calendar day, not a timezone-dependent instant.
@@ -26,6 +27,8 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
   const heroRef = useRef(null);
   const coverRef = useRef(null);
   const openingRef = useRef(false);
+  const transitionRef = useRef(null);
+  const transitionPhotoRef = useRef(null);
   const en = lang.startsWith('en');
   const wedding = tipo === 'bodas';
   const tap = labels.tap || (en ? 'Open invitation' : 'Abrir invitación');
@@ -60,13 +63,25 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
     titleRef.current?.focus({ preventScroll: true });
     const ready = () => window.dispatchEvent(new Event('hero:ready'));
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { ready(); return; }
+    gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
-      gsap.timeline({ onComplete: ready })
-        .fromTo(`.${styles.photo} img`, { scale: 1, opacity: 1 }, { scale: 1, opacity: 1, duration: 1.25, ease: 'power3.out' })
-        .fromTo(`.${styles.paper} > *`, { y: 18, opacity: 0, filter: 'blur(4px)' }, { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.85, stagger: 0.06, ease: 'power2.out' }, 0.15);
+      gsap.fromTo(`.${styles.photo} img`, { scale: 1.06 }, {
+        scale: 1, duration: 1.25, ease: 'power3.out', onComplete: ready,
+      });
+      // On phones the paper sits below the photo: reveal it when it is seen.
+      gsap.fromTo(`.${styles.paper} > *`, { y: 18, opacity: 0, filter: 'blur(4px)' }, {
+        y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.85, stagger: 0.06, ease: 'power2.out',
+        scrollTrigger: { trigger: heroRef.current.querySelector(`.${styles.paper}`), start: 'top 90%', once: true },
+      });
+      ScrollTrigger.refresh();
     }, heroRef);
     return () => context.revert();
   }, [opened]);
+
+  useEffect(() => () => {
+    transitionRef.current?.kill();
+    transitionPhotoRef.current?.remove();
+  }, []);
 
   useEffect(() => {
     const frame = heroRef.current?.querySelector(`.${styles.photo}`);
@@ -115,6 +130,7 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
     const start = thumbnail.getBoundingClientRect();
     const end = target.getBoundingClientRect();
     const photo = thumbnail.cloneNode();
+    transitionPhotoRef.current = photo;
     photo.removeAttribute('id');
     photo.setAttribute('alt', '');
     photo.setAttribute('aria-hidden', 'true');
@@ -127,8 +143,7 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
     thumbnail.style.visibility = 'hidden';
     const finalImage = target.querySelector('img');
     if (finalImage) finalImage.style.visibility = 'hidden';
-    gsap.set(heroRef.current.querySelector(`.${styles.paper}`)?.children, { opacity: 0 });
-    gsap.timeline({ onComplete: () => {
+    transitionRef.current = gsap.timeline({ onComplete: () => {
       document.body.appendChild(photo);
       setOpened(true);
       requestAnimationFrame(() => requestAnimationFrame(() => {

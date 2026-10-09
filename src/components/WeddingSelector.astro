@@ -103,6 +103,41 @@ const copy = en
       })
     }
   </nav>
+  <div class="preview-heading">
+    <p data-preview-status role="status">{copy.loading}</p>
+  </div>
+  <div class="phone-preview">
+    <div class="phone-screen">
+      <iframe
+        src={previewUrl(selected, lang)}
+        title={en
+          ? "Wedding invitation preview"
+          : "Muestra de invitación de bodas"}
+        data-demo
+        loading="eager"
+        allow="autoplay"
+        referrerpolicy="same-origin"></iframe>
+    </div>
+    <img
+      class="phone-frame"
+      src="/marco-cel.webp"
+      width="914"
+      height="1866"
+      alt=""
+      aria-hidden="true"
+      draggable="false"
+    />
+  </div>
+  <p class="preview-heading">
+    <a
+      data-full-preview
+      href={previewUrl(selected, lang)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {en ? "Open fullscreen invitation" : "Abrir en pantalla completa"}
+    </a>
+  </p>
   <h2>{en ? "Choose your design" : "Elige tu diseño"}</h2>
   <div
     class="designs"
@@ -135,41 +170,6 @@ const copy = en
     hidden={requestedDesign === selected.design}
   >
     {copy.invalid}
-  </p>
-  <div class="preview-heading">
-    <p data-preview-status role="status">{copy.loading}</p>
-  </div>
-  <div class="phone-preview">
-    <div class="phone-screen">
-      <iframe
-        src={previewUrl(selected, lang)}
-        title={en
-          ? "Wedding invitation preview"
-          : "Muestra de invitación de bodas"}
-        data-demo
-        loading="lazy"
-        allow="autoplay"
-        referrerpolicy="same-origin"></iframe>
-    </div>
-    <img
-      class="phone-frame"
-      src="/marco-cel.webp"
-      width="914"
-      height="1866"
-      alt=""
-      aria-hidden="true"
-      draggable="false"
-    />
-  </div>
-  <p class="preview-heading">
-    <a
-      data-full-preview
-      href={previewUrl(selected, lang)}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {en ? "Open full invitation" : "Abrir muestra completa"}
-    </a>
   </p>
   <button type="button" class="retry" data-retry hidden
     >{en ? "Retry preview" : "Reintentar muestra"}</button
@@ -295,13 +295,19 @@ const copy = en
   }
   .preview-heading a {
     color: $gris;
-    text-underline-offset: 3px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    //font-size: 1rem;
+    margin-top: 1rem;
+    width: 100%;
   }
   .phone-preview {
+    @extend .sombra;
     position: relative;
     width: min(100%, 390px, calc(75svh * 914 / 1866));
-    aspect-ratio: 914 / 1866;
+    aspect-ratio: 900 / 1866;
     margin: auto;
+    border-radius: 3rem;
   }
   .phone-screen {
     position: absolute;
@@ -324,6 +330,26 @@ const copy = en
     height: 100%;
     pointer-events: none;
     user-select: none;
+  }
+  @media (max-width: 479px) {
+    // A light bezel keeps the phone silhouette without shrinking the demo again.
+    .phone-preview {
+      width: calc(var(--preview-width, 100%) - 40px);
+      height: 98svh;
+      margin: 0 auto;
+      margin-left: calc(var(--preview-offset, 0px) + 20px);
+      padding: 0;
+      box-sizing: border-box;
+      border: 10px solid $primario;
+      border-radius: 2.6rem;
+    }
+    .phone-screen {
+      inset: 0;
+      margin: 0;
+      padding: 0;
+      border-radius:2rem;
+    }
+    .phone-frame { display: none; }
   }
   .notice {
     color: #6d2424;
@@ -363,6 +389,16 @@ const copy = en
     const copy = JSON.parse(root.dataset.copy!);
     const en = root.dataset.en === "true";
     let timer: ReturnType<typeof setTimeout>;
+    let pendingNavigation: ReturnType<typeof setTimeout>;
+    let expectedUrl = new URL(frame.src, location.href).href;
+    // clientWidth excludes desktop-style scrollbars in mobile browser previews.
+    const sizePreview = () => {
+      root.style.setProperty("--preview-width", `${document.documentElement.clientWidth}px`);
+      root.style.setProperty("--preview-offset", `${-root.getBoundingClientRect().left}px`);
+    };
+    sizePreview();
+    const viewportObserver = new ResizeObserver(sizePreview);
+    viewportObserver.observe(document.documentElement);
     const updatePurchase = (design: string, valid: boolean) => {
       document
         .querySelectorAll<HTMLElement>('[data-action="buy-now"]')
@@ -378,6 +414,7 @@ const copy = en
     };
     const fail = () => {
       clearTimeout(timer);
+      frame.setAttribute("aria-busy", "false");
       status.textContent = copy.error;
       retry.hidden = false;
     };
@@ -385,25 +422,47 @@ const copy = en
       clearTimeout(timer);
       status.textContent = copy.loading;
       retry.hidden = true;
+      frame.setAttribute("aria-busy", "true");
       timer = setTimeout(fail, 20000);
     };
     const loaded = () => {
       // Same-origin demos may redirect to 404; iframe load alone is not success.
       try {
-        if (frame.contentWindow?.location.pathname.includes("/404")) {
+        if (frame.src !== expectedUrl) return;
+        const actual = frame.contentWindow?.location;
+        if (actual?.pathname.includes("/404")) {
           fail();
           return;
         }
+        // An earlier navigation can finish after the user picks another theme.
+        if (actual?.href !== expectedUrl || frame.contentDocument?.readyState !== "complete") return;
       } catch {
         fail();
         return;
       }
       clearTimeout(timer);
+      frame.setAttribute("aria-busy", "false");
       status.textContent = copy.ready;
       retry.hidden = true;
     };
     frame.addEventListener("load", loaded);
     frame.addEventListener("error", fail);
+    const navigatePreview = (url: string, force = false) => {
+      clearTimeout(pendingNavigation);
+      clearTimeout(timer);
+      expectedUrl = new URL(url, location.href).href;
+      startLoading();
+      if (!force && frame.src === expectedUrl) {
+        loaded();
+        return;
+      }
+      // Coalesce rapid taps while keeping button/URL/purchase state immediate.
+      pendingNavigation = setTimeout(() => {
+        try { frame.contentWindow?.stop(); } catch { /* Navigation may still be committing. */ }
+        startLoading();
+        frame.src = expectedUrl;
+      }, 180);
+    };
     const choose = (design: string, writeHistory = true) => {
       const selected = buttons.find(
         (button) => button.dataset.theme === design,
@@ -420,10 +479,7 @@ const copy = en
       );
       updatePurchase(design, true);
       full.href = selected.dataset.url!;
-      if (frame.getAttribute("src") !== selected.dataset.url) {
-        startLoading();
-        frame.src = selected.dataset.url!;
-      }
+      navigatePreview(selected.dataset.url!);
       const url = new URL(location.href);
       url.searchParams.set("tema", design);
       root
@@ -440,8 +496,7 @@ const copy = en
       button.addEventListener("click", () => choose(button.dataset.theme!)),
     );
     retry.addEventListener("click", () => {
-      startLoading();
-      frame.src = full.href;
+      navigatePreview(full.href, true);
     });
     const onPop = () =>
       choose(
@@ -454,6 +509,10 @@ const copy = en
       "astro:before-swap",
       () => {
         clearTimeout(timer);
+        clearTimeout(pendingNavigation);
+        viewportObserver.disconnect();
+        frame.removeEventListener("load", loaded);
+        frame.removeEventListener("error", fail);
         window.removeEventListener("popstate", onPop);
       },
       { once: true },
