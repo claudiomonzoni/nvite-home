@@ -192,8 +192,7 @@ Brisa incluye `src/content/bodas/brisa-demo.mdx` y `src/content/quince/brisa-dem
 - Cada carpeta de evento (`src/estilos/temas/brisa/bodas/` y `quince/`) contiene sus propios `_tokens.scss`, `_coastal.scss`, variables, globales, `hero.module.scss` y `confirmacion.module.scss`. No existe un Hero compartido fuera de esas carpetas.
 - Fondo generado y optimizado: `public/temas/brisa/orilla.webp`. Su prompt y procedencia se guardan junto al recurso.
 - Apertura mediante un diálogo nativo, compatible con teclado, que conserva `iniciarInvitacion` para el audio y `hero:ready` para las secciones.
-- Vista aislada de componentes: `node scripts/preview-brisa.mjs`, después abrir `http://127.0.0.1:4323/.brisa-preview/` y `?evento=quince`. Esta vista comprueba los Heroes y las confirmaciones básicas reales; las secciones de ejemplo no reemplazan la validación de las rutas completas.
-- Vista de las páginas reales sin sincronizar las colecciones de Stripe: `node node_modules/astro/bin/astro.mjs dev --config scripts/brisa-astro.config.mjs --host 127.0.0.1 --port 4324`. Abrir `/bodas/brisa-demo` y `/quince/brisa-demo` en ese puerto. Los wrappers importan las páginas originales y sus componentes; este perfil es solo para desarrollo y no modifica el despliegue.
+- Validar Brisa con `npm run dev` sobre las rutas reales `/bodas/brisa-demo` y `/quince/brisa-demo`, usando las muestras locales descritas arriba. Los entornos aislados y scripts de inspecci?n provisionales se retiraron despu?s de integrar el tema.
 
 ## 9. Validar antes de publicar
 

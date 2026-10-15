@@ -5,8 +5,6 @@ dist/
 # generated types
 .astro/
 .impeccable/review/
-.brisa-preview/cache/
-.brisa-preview/dist/
 
 # dependencies
 node_modules/

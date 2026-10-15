@@ -65,9 +65,7 @@
       ],
       "validation": "Source Sass/Astro syntax, isolated components, and actual wedding/XV invitation route samples validated. Four actual-route samples have no overflow, missing visible images, or JavaScript errors. Full project Astro build remains blocked by qs require undefined.",
       "actualRoutes": {
-        "method": "Actual src/pages rendered with local MDX and original components, excluding unrelated Stripe collection sync.",
-        "wrappers": ".brisa-preview/astro",
-        "config": "scripts/brisa-astro.config.mjs",
+        "method": "Historical validation rendered actual src/pages with local MDX and original components using temporary development wrappers. Those wrappers and one-off inspection scripts were removed after integration; use npm run dev and the actual invitation routes for further checks.",
         "limits": "Does not verify live submissions or all content/version combinations.",
         "results": ".impeccable/review/brisa/routes-results.json",
         "captures": [

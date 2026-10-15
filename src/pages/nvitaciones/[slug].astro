@@ -24,7 +24,7 @@ import SliderControls from "../../components/SliderControls.astro";
 // Datos
 import nvitacionesData from "./nvitaciones.json";
 import { catalog, previewUrl as getPreviewUrl } from '../../lib/catalog';
-import WeddingSelector from '../../components/WeddingSelector.astro';
+import InvitationSelector from '../../components/InvitationSelector.astro';
 
 const lang = Astro.locals.lang || "es";
 const isEn = lang === "en";
@@ -257,12 +257,12 @@ let nvitacionInfo: NvitacionInfo | undefined = nvitacionesData.find(
   (item) => item.slug === slug,
 );
 const originalCombination = catalog.find(item => item.slug === slug);
-const weddingPilot = originalCombination?.event === 'bodas' && originalCombination.packageId !== 'esencial';
+const hasInvitationSelector = !!originalCombination && ['clasica', 'lux'].includes(originalCombination.packageId);
 const requestedDesign = Astro.url.searchParams.get('tema') || originalCombination?.design || 'base';
-const selectedCombination = weddingPilot ? catalog.find(item => item.event === originalCombination?.event &&
+const selectedCombination = hasInvitationSelector ? catalog.find(item => item.event === originalCombination?.event &&
   item.packageId === originalCombination?.packageId && item.design === requestedDesign && item.languages.includes(lang)) || originalCombination : originalCombination;
 const purchaseId = originalCombination?.productId || nvitacionInfo?.id;
-if (weddingPilot) nvitacionInfo = nvitacionesData.find(item => item.id === purchaseId);
+if (hasInvitationSelector) nvitacionInfo = nvitacionesData.find(item => item.id === purchaseId);
 
 // Si no encuentra el slug, devolver 404
 if (!nvitacionInfo) {
@@ -314,7 +314,7 @@ const displayedVersion = localizeVersion(nvitacionInfo?.version, lang);
 const isWedding = (nvitacionInfo?.categoria || "").toLowerCase().includes("boda") || (product?.data?.name || "").toLowerCase().includes("boda");
 
 let previewUrl = getLocalizedText(nvitacionInfo?.muestra, lang);
-if (weddingPilot && selectedCombination) previewUrl = getPreviewUrl(selectedCombination, lang);
+if (hasInvitationSelector && selectedCombination) previewUrl = getPreviewUrl(selectedCombination, lang);
 if (isEn && previewUrl && !previewUrl.includes("lang=")) {
   previewUrl += (previewUrl.includes("?") ? "&" : "?") + "lang=en";
 }
@@ -323,7 +323,7 @@ if (isEn && previewUrl && !previewUrl.includes("lang=")) {
 const metaDescription = isEn
   ? `The most complete digital invitation for your celebration — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} per guest. Includes music, animated gallery, countdown and live RSVP.`
   : `La invitación digital más completa para tu boda — ${price.replace(/\.00$/, "")} · ≈ $${costPerGuest} por invitado. Con música, galería animada, cuenta regresiva y confirmación en tiempo real. Personalizada a tus colores.`;
-const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => item.event === 'bodas' &&
+const invitationPackages = hasInvitationSelector ? await Promise.all(catalog.filter(item => item.event === originalCombination?.event &&
   item.packageId !== 'esencial' && item.design === 'base').map(async item => {
     const entry = await getEntry('productos', item.productId);
     return { packageId: item.packageId, slug: item.canonicalSlug, label: localizeVersion(item.version, lang),
@@ -355,12 +355,12 @@ const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => 
     >
       <div id="izq">
         <div id="fix">
-          {weddingPilot && selectedCombination && <WeddingSelector
-            selected={selectedCombination} packages={weddingPackages} lang={lang}
+          {hasInvitationSelector && selectedCombination && <InvitationSelector
+            selected={selectedCombination} packages={invitationPackages} lang={lang}
             requestedDesign={requestedDesign} />}
           <div
             class="gallery-carousel-wrapper"
-            hidden={weddingPilot}
+            hidden={hasInvitationSelector}
             id="nv-gallery"
             data-video-url={nvitacionInfo?.video}
           >
@@ -436,7 +436,7 @@ const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => 
           <div id="conteVerNvitacion">
             <p>{displayedDescription}</p>
             {
-              !weddingPilot && nvitacionInfo && previewUrl && (
+              !hasInvitationSelector && nvitacionInfo && previewUrl && (
                 <>
                   <div class="liga-muestra">
                     <Btn
@@ -606,7 +606,7 @@ const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => 
                 <b>{isEn ? "Your favorite song" : "Tu música"}</b> {isEn ? "playing automatically as they open it" : "sonando cuando la abren"}
               </li>
               <li><b>{isEn ? "Animated photo gallery" : "Tus fotos, animadas"}</b>{isEn ? ", before reading a single line" : ", antes de leer un solo detalle"}</li>
-              <li hidden={weddingPilot && originalCombination?.packageId === 'clasica'}>
+              <li hidden={hasInvitationSelector && originalCombination?.packageId === 'clasica'}>
                 <b>{isEn ? "Detailed celebration timeline" : "Itinerario detallado"}</b> {isEn ? "for your event" : "de tu evento"}
               </li>
               <li>
@@ -1514,7 +1514,7 @@ const weddingPackages = weddingPilot ? await Promise.all(catalog.filter(item => 
     // Se destruye cualquier instancia previa para que funcione correctamente
     // con las transiciones de Astro (viewTransitions / SPA navigation).
     initializeGallery() {
-      if (document.getElementById('wedding-selector')) return;
+      if (document.getElementById('invitation-selector')) return;
       const GKEY = "__NV_GALLERY__";
       try {
         (window as any)[GKEY]?.destroy?.();

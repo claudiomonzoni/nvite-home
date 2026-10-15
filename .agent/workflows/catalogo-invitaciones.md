@@ -1,17 +1,17 @@
 # Catálogo de invitaciones: temas, paquetes y muestras
 
-Guía de mantenimiento manual. Revisada contra el código el 7 de octubre de 2026.
+Guía de mantenimiento manual. Actualizada el 15 de octubre de 2026.
 Describe el estado actual; los ejemplos de ampliación no están aplicados.
 
 ## Alcance actual
 
-- El selector de la ficha comercial está habilitado para bodas, Clásica y Lux.
-- El catálogo incluye bodas y quince. Las páginas de muestra de ambos eventos
-  resuelven el tema, pero el selector comercial todavía filtra solo bodas.
+- El selector de la ficha comercial está habilitado para bodas y XV, Clásica y Lux.
+- Ambos eventos comparten `InvitationSelector.astro`: el paquete, los temas y
+  las muestras se filtran por el evento de la ficha para evitar mezclarlos.
 - Base y Elegante se derivan de los registros existentes del JSON.
 - Brisa se agrega desde `catalog.ts` para Lux en español, en ambos eventos.
 - Esencial sigue en el catálogo existente, fuera del piloto del selector.
-- `/bodas` conserva las tarjetas por tema. Al entrar a una ficha de bodas,
+- `/bodas` e `/invitaciones-quince` conservan las tarjetas por tema. Al entrar a una ficha,
   el enlace lleva el tema seleccionado y permite explorar otros en el selector.
 
 ## Archivos y responsabilidades
@@ -22,7 +22,7 @@ Rutas relativas a la raíz del repositorio:
 | --- | --- |
 | `src/lib/catalog.ts` | Combinaciones de evento, paquete, tema e idioma; nombres visibles; URLs de muestra; producto Base asociado. |
 | `src/pages/nvitaciones/nvitaciones.json` | Registros históricos, datos comerciales, muestras Base/Elegante e imágenes de tarjetas. |
-| `src/components/WeddingSelector.astro` | Botones de paquetes/temas, iframe, selección, historial, enlace de muestra y actualización del botón de compra. |
+| `src/components/InvitationSelector.astro` | Botones de paquetes/temas, iframe, selección, historial, enlace de muestra y actualización del botón de compra. |
 | `src/pages/nvitaciones/[slug].astro` | Activa el piloto, obtiene el paquete/tema solicitado, datos comerciales y precios, y monta el selector. |
 | `src/lib/demo-theme.ts` | Resuelve el tema visual de las muestras públicas a partir de `tema` y `lang`. |
 | `src/pages/bodas/[slug].astro` | Renderiza la invitación de bodas usando el tema resuelto. |
@@ -66,7 +66,7 @@ registrar explícitamente como variante en `catalog.ts`.
 
 1. La ficha lee `?tema=...` y busca una combinación compatible con el paquete
    e idioma. Si falta el parámetro, utiliza el tema del registro original.
-2. `WeddingSelector.astro` filtra `catalog` por `event === 'bodas'`, paquete
+2. `InvitationSelector.astro` filtra `catalog` por `event === selected.event`, paquete
    seleccionado e idioma disponible.
 3. Por cada resultado genera un botón con `data-theme`, `data-label` y
    `data-url={previewUrl(item, lang)}`.
@@ -140,7 +140,7 @@ para habilitar un tema dentro de un paquete existente.
    esa búsqueda. Reutilizar una ruta Base configurada con `?tema=jardin`
    permite resolver la combinación; una ruta nueva necesita revisar ese mapeo
    para que no quede asociada al paquete equivocado.
-6. Si también debe aparecer una tarjeta nueva en `/bodas`, revisar el JSON,
+6. Si también debe aparecer una tarjeta nueva en `/bodas` o `/invitaciones-quince`, revisar el JSON,
    el renderizado de tarjetas y `catalog-navigation.ts`. Las variantes sintéticas
    del catálogo no crean tarjetas ni IDs históricos automáticamente. No inventar
    un producto Stripe como atajo para registrar una tarjeta.
@@ -152,7 +152,7 @@ solo cuando la muestra necesite datos distintos o una ruta propia.
 
 ## Ajustes manuales de UX/UI
 
-Editar `WeddingSelector.astro`:
+Editar `InvitationSelector.astro`:
 
 - HTML: opciones de paquete, nombres de temas y estructura de la muestra.
 - `<style lang="scss">`: `.packages`, `.designs`, selección activa, sombras,

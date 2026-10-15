@@ -1,7 +1,7 @@
 # Plan: catálogo por evento, paquete y diseño
 
 Fecha: 7 de octubre de 2026.
-Estado: piloto de bodas implementado y verificado en código; validación visual y build completo pendientes por errores de dependencias del entorno. Validación remota de precios pendiente por conexión.
+Estado: selector compartido de bodas y XV implementado; pruebas de lógica y compilación Astro/SCSS pasan. La nueva revisión visual de XV y el build completo siguen pendientes por el entorno de desarrollo. No se cambiaron productos ni precios Stripe.
 
 ## Objetivo
 
@@ -105,12 +105,23 @@ esperados; la galería permite descubrir temas y la ficha diferencia paquete de 
 
 ### 5. Extender a XV años
 
-- [ ] Reutilizar componentes y contrato de datos del piloto.
-- [ ] Aplicar exclusivamente las combinaciones verificadas para XV.
-- [ ] Validar demos, idiomas, compra y enlaces antiguos de XV.
+- [x] Reutilizar componentes y contrato de datos del piloto.
+- [x] Aplicar las combinaciones de XV registradas en el catálogo.
+- [x] Validar en pruebas URLs de muestra, idiomas disponibles, carrito/metadata y enlaces antiguos de XV.
+- [ ] Confirmar visualmente el recorrido completo de XV con el servidor local activo.
 
 Criterio de aceptación: bodas y XV comparten el mismo recorrido, con datos y
 funciones correctos para cada evento.
+
+Implementación del 15 de octubre de 2026: `WeddingSelector.astro` se renombró
+a `InvitationSelector.astro` y filtra por el evento seleccionado. Las fichas
+Clásica/Lux de XV usan el mismo preview, manejo de cambios rápidos y selección
+por URL que bodas. Las tarjetas antiguas de XV llevan al paquete Base con su
+tema; se conservan los slugs antiguos, sin redirecciones. No se modificaron
+productos ni precios Stripe. Brisa continúa limitada a Lux en español.
+Las pruebas de catálogo/carrito, metadata y navegación pasan para ambos eventos;
+Astro y SCSS compilan. La revisión visual quedó pendiente: el puerto local 4321
+rechazó la conexión y el proceso de desarrollo terminó antes de quedar listo.
 
 ### 6. Validación y medición
 

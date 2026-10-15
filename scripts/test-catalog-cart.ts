@@ -74,5 +74,34 @@ assert.equal(productPath(base), '/nvitaciones/invitacion-bodas-lux?tema=base');
 assert.equal(productPath(base, 'brisa'), '/nvitaciones/invitacion-bodas-lux?tema=brisa');
 assert.equal(productPath('prod_QNpO0T7kRp1zkL'), '/nvitaciones/invitacion-bodas-clasica?tema=base');
 assert.equal(productPath('prod_QNpXQx0LWRjRFh'), '/nvitaciones/invitacion-bodas-esencial');
-assert.equal(productPath('prod_UcVoRiVmcT6ZQM'), '/nvitaciones/elegante-lux-xv');
-console.log('Theme gallery links: each wedding theme enters its package page with the correct selection.');
+assert.equal(productPath('prod_UcVoRiVmcT6ZQM'), '/nvitaciones/invitacion-xv-lux?tema=elegante');
+assert.equal(productPath(xv), '/nvitaciones/invitacion-xv-lux?tema=base');
+assert.equal(productPath(xv, 'brisa'), '/nvitaciones/invitacion-xv-lux?tema=brisa');
+assert.equal(productPath('prod_SK7Bqg9HjOSmhW'), '/nvitaciones/invitacion-xv-clasica?tema=base');
+assert.equal(productPath('prod_SK7ICkqFPPgSuJ'), '/nvitaciones/invitacion-xv-esencial');
+console.log('Theme gallery links: wedding and XV cards enter their own package with the selected theme.');
+
+// XV must resolve its own samples/products, without leaking wedding data.
+for (const design of ['base', 'elegante', 'brisa']) {
+  const combination = findCombination(xv, design)!;
+  assert.equal(combination.event, 'quince');
+  assert.equal(combination.canonicalSlug, 'invitacion-xv-lux');
+  for (const lang of combination.languages) {
+    const url = new URL(previewUrl(combination, lang), 'https://nvitaciones.com');
+    assert.ok(url.pathname.startsWith('/quince/'));
+    assert.equal(url.searchParams.get('tema'), design);
+    assert.equal(url.searchParams.get('lang'), lang);
+    assert.equal(resolveDemoTheme('quince', url.pathname.split('/').at(-1)!, url.searchParams, { name: 'base' }).name, design);
+  }
+  const lines = addSelection([], xv, design);
+  const paid = readSelectionMetadata(selectionMetadata(lines));
+  assert.equal(paid[0].event, 'quince');
+  assert.equal(paid[0].productId, xv);
+  assert.equal(paid[0].design, design);
+}
+const xvClassic = findCombination('prod_SK7Bqg9HjOSmhW', 'base')!;
+assert.equal(xvClassic.event, 'quince');
+assert.equal(xvClassic.packageId, 'clasica');
+assert.equal(findCombination(xvClassic.productId, 'brisa'), undefined);
+assert.throws(() => previewUrl(findCombination(xv, 'brisa')!, 'en'));
+console.log('XV: sample URLs in available languages, product isolation, package compatibility and checkout metadata passed.');

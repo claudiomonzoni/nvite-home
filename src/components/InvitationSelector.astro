@@ -13,9 +13,12 @@ interface Props {
 }
 const { selected, packages, lang, requestedDesign } = Astro.props;
 const en = lang === "en";
+const previewTitle = selected.event === "quince"
+  ? (en ? "Quinceañera invitation preview" : "Muestra de invitación de XV años")
+  : (en ? "Wedding invitation preview" : "Muestra de invitación de bodas");
 const designs = catalog.filter(
   (item) =>
-    item.event === "bodas" &&
+    item.event === selected.event &&
     item.packageId === selected.packageId &&
     item.languages.includes(lang),
 );
@@ -53,7 +56,8 @@ const copy = en
 
 <section
   class="selector"
-  id="wedding-selector"
+  id="invitation-selector"
+  data-event={selected.event}
   data-package={selected.version}
   data-design={selected.design}
   data-requested={requestedDesign}
@@ -110,9 +114,7 @@ const copy = en
     <div class="phone-screen">
       <iframe
         src={previewUrl(selected, lang)}
-        title={en
-          ? "Wedding invitation preview"
-          : "Muestra de invitación de bodas"}
+        title={previewTitle}
         data-demo
         loading="eager"
         allow="autoplay"
@@ -374,8 +376,8 @@ const copy = en
 </style>
 
 <script>
-  function initializeWeddingSelector() {
-    const root = document.getElementById("wedding-selector");
+  function initializeInvitationSelector() {
+    const root = document.getElementById("invitation-selector");
     if (!root || root.dataset.initialized) return;
     root.dataset.initialized = "true";
     const frame = root.querySelector<HTMLIFrameElement>("[data-demo]")!;
@@ -528,6 +530,6 @@ const copy = en
     )
       loaded();
   }
-  initializeWeddingSelector();
-  document.addEventListener("astro:page-load", initializeWeddingSelector);
+  initializeInvitationSelector();
+  document.addEventListener("astro:page-load", initializeInvitationSelector);
 </script>
