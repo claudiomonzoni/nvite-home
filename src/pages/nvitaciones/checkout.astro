@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getTotalCartItems, getProductPriceIdForLang } from "../../js/cart";
+import { getTotalCartItems, getActivePriceForLang } from "../../js/cart";
+import { selectionMetadata } from '../../lib/checkout-selection';
 import { getCollection } from "astro:content";
 
 import Stripe from "stripe";
@@ -20,7 +21,7 @@ const { origin } = Astro.url;
 const cartCookies = Astro.cookies.get("cartItems")?.value as unknown as string;
 
 const totalCartItems = await getTotalCartItems(
-  cartCookies ? JSON.parse(cartCookies) : []
+  cartCookies
 );
 
 // redirect if there are none
@@ -29,18 +30,18 @@ if (totalCartItems.length === 0) {
 }
 
 // compose our line items with language-specific prices (MXN for ES, USD for EN)
-const lineItems = await Promise.all(
-  totalCartItems.map(async (item) => ({
-    price: (await getProductPriceIdForLang(item.product, lang)) || item.product.data.default_price || undefined,
-    quantity: item.quantity,
-  }))
-);
+const resolvedPrices = await Promise.all(totalCartItems.map(item => getActivePriceForLang(item.product, lang)));
+if (resolvedPrices.some(price => !price || price.data.currency !== (lang === 'en' ? 'usd' : 'mxn'))) {
+  return Astro.redirect('/nvitaciones/cart?error=currency');
+}
+const lineItems = totalCartItems.map((item, index) => ({ price: resolvedPrices[index]!.id, quantity: item.quantity }));
 
 const checkoutSession = await stripe.checkout.sessions.create({
   ui_mode: "embedded",
   mode: "payment",
   allow_promotion_codes: true,
   line_items: lineItems,
+  metadata: selectionMetadata(totalCartItems.map(item => ({ productId: item.product.id, design: item.design, quantity: item.quantity }))),
   locale: lang === "en" ? "en" : "es",
   return_url: `${origin}/nvitaciones/success?session_id={CHECKOUT_SESSION_ID}`,
   // automatic_tax: { enabled: true },

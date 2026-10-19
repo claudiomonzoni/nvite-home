@@ -1,0 +1,7 @@
+{
+  "asset": "orilla.webp",
+  "generator": "Built-in ImageGen",
+  "date": "2026-10-06",
+  "prompt": "Use case: photorealistic-natural. Asset type: wide website background for an elegant beach wedding and quinceañera invitation theme called Brisa. Create a high resolution aerial photograph of a serene Caribbean shoreline, pale warm ivory sand covering the left two thirds and bottom of the image, translucent muted blue-green water at upper right with one delicate organic ribbon of white sea foam diagonally across the right third. Fine real sand grain, soft morning light, refined editorial photography, restrained desaturated palette, lots of quiet empty sand space for invitation typography. No people, buildings, shells, flowers, palm trees, text, logos or watermark. Landscape 3:2 composition. Save generated image for use in the current project.",
+  "processing": "Resized to a maximum width of 1800px and encoded as WebP, quality 86, using Sharp."
+}

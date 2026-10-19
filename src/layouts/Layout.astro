@@ -2,14 +2,23 @@
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  noIndex?: boolean;
+  ogType?: "website" | "article";
+  publishedAt?: Date;
+  alternates?: Array<{ lang: string; href: string }>;
   whatsappProduct?: string;
   whatsappIconOnly?: boolean;
 }
 
-const { title, description, whatsappProduct, whatsappIconOnly } = Astro.props;
+const { title, description, image, noIndex, ogType, publishedAt, alternates = [], whatsappProduct, whatsappIconOnly } = Astro.props;
 import { ClientRouter } from "astro:transitions";
 import "../estilos/globales.scss";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(
+  image || "/invitaciones-digitales-cover-nvitacines-cel.webp",
+  Astro.site,
+).href;
 import Analytics from "@vercel/analytics/astro";
 import WhatsappFloat from "../components/WhatsappFloat.astro";
 import {Font} from "astro:assets";
@@ -33,23 +42,30 @@ const lang = Astro.locals.lang || "es";
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="description" content={description || "Invitaciones digitales para bodas y quinceañeras con confirmación RSVP en tiempo real por WhatsApp."} />
+    {noIndex && <meta name="robots" content="noindex, follow" />}
     <meta name="generator" content={Astro.generator} />
     <meta property="og:site_name" content="Nvitaciones México" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description || "Con mucha alegría te invitamos a mis XV años. Nos dará mucha alegría contar con tu asistencia."} />
     <meta property="og:locale" content="es_MX" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType || "website"} />
+    {ogType === "article" && publishedAt && (
+      <meta property="article:published_time" content={publishedAt.toISOString()} />
+    )}
     <meta
       property="og:image"
-      content="https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp"
+      content={socialImage}
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description || "Invitaciones digitales para bodas y quinceañeras con confirmación RSVP en tiempo real por WhatsApp."} />
-    <meta name="twitter:image" content="https://nvitaciones.com/invitaciones-digitales-cover-nvitacines-cel.webp" />
+    <meta name="twitter:image" content={socialImage} />
     <link rel="canonical" href={canonicalURL} />
+    {alternates.map((alternate) => (
+      <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />
+    ))}
     <link rel="icon" type="image/x-icon" href="/favicon.svg" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="sitemap" href="/sitemap.xml" />
     <title>{title}</title>
     
     <!-- Preload custom local font to prevent render blocking and layout shift -->

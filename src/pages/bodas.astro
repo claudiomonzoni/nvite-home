@@ -17,17 +17,53 @@ import coverMobileBoda from "../assets/home/nvitaciones-invitaciones-digitales-b
 import MesasHome from "../components/MesasHome.astro";
 import Cardcuadro from "../components/Cardcuadro.astro";
 import Faq from "../components/Faq.astro";
+import LigasBlog from "../components/blog/LigasBlog.astro";
 import { useTranslations } from "../i18n/ui";
 
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
+const beachWeddingGuides = lang === "en"
+  ? [
+      {
+        href: "/en/blog/beach-wedding-invitations-guest-information",
+        title: "What to include in a beach wedding invitation",
+        description: "Maps, schedules, lodging details, and other information guests need.",
+      },
+      {
+        href: "/en/blog/organize-beach-wedding-rsvp-guests",
+        title: "How to organize beach wedding RSVPs",
+        description: "Keep responses, assigned passes, and guest requests in order.",
+      },
+      {
+        href: "/en/blog/beach-wedding-ixtapa-zihuatanejo-guest-guide",
+        title: "Ixtapa-Zihuatanejo guest guide",
+        description: "Help guests find the travel details for a wedding on the Pacific coast.",
+      },
+    ]
+  : [
+      {
+        href: "/blog/invitaciones-boda-playa-informacion-invitados",
+        title: "Qué incluir en una invitación para boda en la playa",
+        description: "Mapas, horarios, hospedaje y los detalles que necesitan tus invitados.",
+      },
+      {
+        href: "/blog/organizar-rsvp-invitados-boda-playa",
+        title: "Cómo organizar el RSVP de una boda en la playa",
+        description: "Ordena respuestas, pases asignados y necesidades de tus invitados.",
+      },
+      {
+        href: "/blog/boda-playa-ixtapa-zihuatanejo-guia-invitados",
+        title: "Guía para invitados de una boda en Ixtapa-Zihuatanejo",
+        description: "Comparte información de viaje para celebrar junto al Pacífico.",
+      },
+    ];
 
 const schemaBodasService = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Invitaciones Digitales de Boda Elegantes con RSVP y Mesas",
-  "serviceType": "Diseño de Invitaciones de Boda",
-  "description": "Diseño profesional de invitaciones digitales de boda en todo México. Incluye confirmación RSVP en tiempo real por WhatsApp, gestor de mesas para el banquete, administración de proveedores y mapas interactivos para bodas destino.",
+  "name": lang === "en" ? "Digital invitations for beach weddings" : "Invitaciones digitales para bodas en la playa",
+  "serviceType": lang === "en" ? "Beach wedding digital invitation design" : "Diseño de invitaciones digitales para bodas en la playa",
+  "description": t("bodas.meta.description"),
   "provider": {
     "@type": "ProfessionalService",
     "name": "Nvitaciones",
@@ -35,17 +71,17 @@ const schemaBodasService = {
   },
   "areaServed": {
     "@type": "Country",
-    "name": "México"
+    "name": lang === "en" ? "Mexico" : "México"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Invitaciones de Boda",
+    "name": lang === "en" ? "Wedding invitations" : "Invitaciones de boda",
     "itemListElement": [
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Invitación Digital de Boda Lux"
+          "name": lang === "en" ? "Lux digital wedding invitation" : "Invitación Digital de Boda Lux"
         },
         "priceCurrency": "MXN",
         "price": "1699"
@@ -54,7 +90,7 @@ const schemaBodasService = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Invitación Digital de Boda Clásica"
+          "name": lang === "en" ? "Classic digital wedding invitation" : "Invitación Digital de Boda Clásica"
         },
         "priceCurrency": "MXN",
         "price": "1299"
@@ -148,7 +184,20 @@ const schemaBodasService = {
         icono="mdi:qrcode"
       />
     </div>
-    <BannerGeneral
+
+
+    <LigasBlog
+      ariaLabel={lang === "en" ? "Beach wedding guides" : "Guías para bodas en la playa"}
+      eyebrow={lang === "en" ? "Plan with confidence" : "Planea con más claridad"}
+      title={lang === "en" ? "Planning a beach wedding? Start here." : "¿Planeas una boda en la playa? Empieza por aquí."}
+      description={lang === "en"
+        ? "Practical guides to help you share travel details, collect replies, and make the celebration easier for your guests."
+        : "Guías prácticas para compartir detalles del viaje, organizar confirmaciones y hacer más sencilla la celebración para tus invitados."}
+      readLabel={lang === "en" ? "Read the guide" : "Leer la guía"}
+      links={beachWeddingGuides}
+    />
+
+    <!-- <BannerGeneral
       encabezado={t('bodas.banner1.heading')}
       texto={t('bodas.banner1.text')}
       tema="primario"
@@ -170,7 +219,7 @@ const schemaBodasService = {
       tema="primario"
       icono="mdi:image-plus"
       urlImagen="../assets/home/gale/frase.webp"
-    />
+    /> -->
   </section>
 
   <div class="grid contenido">
@@ -251,9 +300,9 @@ const schemaBodasService = {
     </div>
   </section>
 
-  <div class="grid contenido" id="faq">
+  <!-- <div class="grid contenido" id="faq">
     <Faq />
-  </div>
+  </div> -->
 
   <section class="grid contenido" id="formulario">
     <div class="flex">
@@ -334,6 +383,7 @@ const schemaBodasService = {
       }
     }
   }
+
 </style>
 
 <script>

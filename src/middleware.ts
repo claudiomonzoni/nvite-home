@@ -6,9 +6,21 @@ export const onRequest = defineMiddleware(async (context, next) => {
     const { pathname } = context.url;
     const method = context.request.method;
 
+    // Static pages cannot vary by request headers or cookies. Their language
+    // is fixed by the URL (or falls back to the site's Spanish default).
+    if (context.isPrerendered) {
+        const routeLang = pathname.match(/^\/(en|es)(?:\/|$)/)?.[1];
+        context.locals.lang = routeLang === "en" ? "en" : "es";
+        return next();
+    }
+
     // Detectar y asignar idioma al request actual
     const cookieLang = context.cookies.get(LANG_COOKIE_NAME)?.value;
-    context.locals.lang = detectLanguage(context.request, cookieLang);
+    const routeLang = pathname.match(/^\/(en|es)(?:\/|$)/)?.[1];
+    context.locals.lang = routeLang === "en" ? "en" : routeLang === "es" ? "es" : detectLanguage(context.request, cookieLang);
+    if (routeLang === "en" || routeLang === "es") {
+        context.cookies.set(LANG_COOKIE_NAME, routeLang, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    }
 
     // 📌 Permitir el acceso a imágenes generadas por Astro y archivos estáticos
     if (
@@ -119,6 +131,8 @@ export const onRequest = defineMiddleware(async (context, next) => {
         /^\/quince(\/.*)?$/,                  // Cualquier subruta en /quince
         /^\/invitaciones-quince(\/.*)?$/,     // Cualquier subruta en /invitaciones-quince
         /^\/invitaciones-pdf(\/.*)?$/,        // Cualquier subruta en /invitaciones-pdf
+        /^\/blog(\/.*)?$/,                    // Guías editoriales públicas
+        /^\/en\/blog(\/.*)?$/,                // English editorial guides
         /^\/nvitaciones(\/.*)?$/,             // Cualquier subruta en /nvitaciones
         /^\/terminos-condiciones(\/.*)?$/,    // Cualquier subruta en /terminos-condiciones
         /^\/manual(\/.*)?$/,                    // Cualquier subruta en /manual

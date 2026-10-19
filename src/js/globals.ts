@@ -4,6 +4,7 @@ import {
     saveCartCookie,
   } from "./utils";
   
+  import { addSelection, lineKey } from './cart-state';
   function initializeCart() {
     const quantityEls = document.querySelectorAll(
       "[data-quantity]"
@@ -23,7 +24,7 @@ import {
           return;
         }
     
-        el.textContent = cartItems.filter((id: string) => id === productId).length;
+        el.textContent = String(cartItems.find(line => lineKey(line) === `${productId}:${el.dataset.design ?? ''}`)?.quantity ?? 0);
       });
     });
     
@@ -51,13 +52,14 @@ import {
     }
 
     if (actionType === "increment") {
-      newCartItems.push(productId);
+      saveCartCookie(addSelection(newCartItems, productId, this.dataset.design, true));
+      dispatchCartUpdateEvent();
+      return;
     }
 
     if (actionType === "decrement") {
-      if (newCartItems.includes(productId)) {
-        newCartItems.splice(newCartItems.indexOf(productId), 1);
-      }
+      const index = newCartItems.findIndex(line => lineKey(line) === `${productId}:${this.dataset.design ?? ''}`);
+      if (index >= 0 && --newCartItems[index].quantity === 0) newCartItems.splice(index, 1);
     }
 
     saveCartCookie(newCartItems);

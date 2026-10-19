@@ -1,4 +1,11 @@
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /panel/
+Disallow: /api/
+
 User-agent: *
 Allow: /
+Disallow: /panel/
+Disallow: /api/
 
-Sitemap: https://nvitaciones.com/sitemap-index.xml
+Sitemap: https://nvitaciones.com/sitemap.xml

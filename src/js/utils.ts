@@ -1,3 +1,5 @@
+import { normalizeCart, serializeCart, type CartLine } from './cart-state';
+
 /**
  * Calculates the delivery date by adding business days to the current date
  * If the current day is a weekend, starts counting from next Monday
@@ -53,8 +55,8 @@ export const dispatchCartUpdateEvent = () => {
   };
   
   // COOKIES
-  export const saveCartCookie = (cartItems: string[]) => {
-    document.cookie = `cartItems=${JSON.stringify(cartItems)};path=/;max-age=31536000`;
+  export const saveCartCookie = (cartItems: CartLine[]) => {
+    document.cookie = `cartItems=${encodeURIComponent(serializeCart(cartItems))};path=/;max-age=31536000;SameSite=Lax`;
   };
   
   export const getCartCookie = () => {
@@ -63,7 +65,8 @@ export const dispatchCartUpdateEvent = () => {
       .find((c) => c.trim().startsWith("cartItems="))
       ?.split("=")[1];
   
-    return cookie ? JSON.parse(cookie) : [];
+    try { return normalizeCart(cookie ? decodeURIComponent(cookie) : null); }
+    catch { return []; }
   };
   
   export const deleteCartCookie = () =>

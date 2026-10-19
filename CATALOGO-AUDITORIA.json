@@ -1,0 +1,391 @@
+{
+  "generatedAt": "2026-10-07T17:49:15.118Z",
+  "verification": "Local content and cached Stripe data only; no HTTP/render/guest database verification.",
+  "cacheFileModifiedAt": "2026-10-07T15:28:31.780Z",
+  "combinations": [
+    {
+      "legacySlug": "invitacion-xv-clasica",
+      "event": "quince",
+      "package": "Clásica",
+      "productId": "prod_SK7Bqg9HjOSmhW",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/quince/nvita-quince-clasica?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12",
+          "file": "src/content/quince/nvita-quince-clasica.mdx",
+          "exists": true,
+          "package": "Clasica",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/quince/clasica-ingles?id=363c32ac-39b1-40ba-ac3f-903344348499&uid=12&lang=en",
+          "file": "src/content/quince/clasica-ingles.mdx",
+          "exists": true,
+          "package": "Clasica",
+          "design": "base",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmOaBMuPTZvmW8EhqswJE8",
+          "currency": "mxn",
+          "amount": 1290,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1TrmOaBMuPTZvmW8EhqswJE8",
+          "currency": "mxn",
+          "amount": 1290,
+          "currencyMatches": false
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "mxn"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-bodas-esencial",
+      "event": "bodas",
+      "package": "Esencial",
+      "productId": "prod_QNpXQx0LWRjRFh",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/bodas/invitacion-bodas-esencial",
+          "file": "src/content/bodas/invitacion-bodas-esencial.mdx",
+          "exists": true,
+          "package": "Esencial",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/bodas/esencial-en?lang=en",
+          "file": "src/content/bodas/esencial-en.mdx",
+          "exists": true,
+          "package": "Esencial",
+          "design": "base",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmNJBMuPTZvmW8MnfA0a40",
+          "currency": "mxn",
+          "amount": 690,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uYRBMuPTZvmW8rVAyNtsT",
+          "currency": "usd",
+          "amount": 47,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-xv-esencial",
+      "event": "quince",
+      "package": "Esencial",
+      "productId": "prod_SK7ICkqFPPgSuJ",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/quince/invitacion-bodas-esencial",
+          "file": "src/content/quince/invitacion-bodas-esencial.mdx",
+          "exists": true,
+          "package": "Esencial",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/quince/esencial-ingles",
+          "file": "src/content/quince/esencial-ingles.mdx",
+          "exists": true,
+          "package": "Esencial",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmMdBMuPTZvmW8tZ074OkB",
+          "currency": "mxn",
+          "amount": 690,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uU5BMuPTZvmW8Lp2ZdckM",
+          "currency": "usd",
+          "amount": 47,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-bodas-clasica",
+      "event": "bodas",
+      "package": "Clásica",
+      "productId": "prod_QNpO0T7kRp1zkL",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/bodas/nvitacion-bodas-clasica?id=18e649f0&uid=1",
+          "file": "src/content/bodas/nvitacion-bodas-clasica.mdx",
+          "exists": true,
+          "package": "Clasica",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/bodas/nvita-wedding-classic?id=4749ebd6-deee-41d1-b28c-fbe3d06da614&uid=11&lang=en",
+          "file": "src/content/bodas/nvita-wedding-classic.mdx",
+          "exists": true,
+          "package": "Clasica",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmPRBMuPTZvmW89a4Gya74",
+          "currency": "mxn",
+          "amount": 1290,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uSgBMuPTZvmW8cJx992Kf",
+          "currency": "usd",
+          "amount": 87,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "elegante-lux-xv",
+      "event": "quince",
+      "package": "Lux",
+      "productId": "prod_UcVoRiVmcT6ZQM",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/quince/elegante-lux-xv?id=18e649f0&uid=1",
+          "file": "src/content/quince/elegante-lux-xv.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "elegante",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/quince/xv-lux-elegante-ingles?id=ec07aba1&uid=1",
+          "file": "src/content/quince/xv-lux-elegante-ingles.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "elegante",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmJgBMuPTZvmW8NyQktpgG",
+          "currency": "mxn",
+          "amount": 1688,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uQgBMuPTZvmW8YkB59Gzr",
+          "currency": "usd",
+          "amount": 128,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-xv-lux",
+      "event": "quince",
+      "package": "Lux",
+      "productId": "prod_QLJkNCXvs8egN9",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/quince/invitacion-quince-lux?id=87740a95-3e6e-4c5c-8bf5-56f64d7429dd&uid=8",
+          "file": "src/content/quince/invitacion-quince-lux.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/quince/xv-lux-en?id=ec07aba1&uid=1",
+          "file": "src/content/quince/xv-lux-en.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "base",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmLGBMuPTZvmW87pHkCAo9",
+          "currency": "mxn",
+          "amount": 1688,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uRHBMuPTZvmW8lJMaghIM",
+          "currency": "usd",
+          "amount": 128,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-bodas-lux",
+      "event": "bodas",
+      "package": "Lux",
+      "productId": "prod_Q42WJO0oMaU98G",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/bodas/invitacion-bodas-lux?id=18e649f0&uid=1",
+          "file": "src/content/bodas/invitacion-bodas-lux.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "base",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/bodas/nvite-wedding-lux?id=ec07aba1&uid=1",
+          "file": "src/content/bodas/nvite-wedding-lux.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "base",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmM2BMuPTZvmW8rbuA0NDw",
+          "currency": "mxn",
+          "amount": 1688,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9uRjBMuPTZvmW85FBfDlqo",
+          "currency": "usd",
+          "amount": 128,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    },
+    {
+      "legacySlug": "invitacion-bodas-lux-elegante",
+      "event": "bodas",
+      "package": "Lux",
+      "productId": "prod_SZwAeRXTJGqFO8",
+      "cachedActive": true,
+      "demos": {
+        "es": {
+          "url": "/bodas/nvitacion-bodas-lux-elegante?id=18e649f0&uid=1",
+          "file": "src/content/bodas/nvitacion-bodas-lux-elegante.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "elegante",
+          "draft": false,
+          "language": "es"
+        },
+        "en": {
+          "url": "/bodas/nvitacion-bodas-lux-elegante-en?id=ec07aba1&uid=1",
+          "file": "src/content/bodas/nvitacion-bodas-lux-elegante-en.mdx",
+          "exists": true,
+          "package": "Lux",
+          "design": "elegante",
+          "draft": false,
+          "language": "en"
+        }
+      },
+      "cachedResolvedPrices": {
+        "es": {
+          "id": "price_1TrmKaBMuPTZvmW83ouWSBpK",
+          "currency": "mxn",
+          "amount": 1688,
+          "currencyMatches": true
+        },
+        "en": {
+          "id": "price_1U9GlUBMuPTZvmW8quRXvNoX",
+          "currency": "usd",
+          "amount": 128,
+          "currencyMatches": true
+        }
+      },
+      "activePriceCurrencies": [
+        "mxn",
+        "usd"
+      ],
+      "imageFilesExist": true
+    }
+  ],
+  "unpublishedDesigns": [
+    {
+      "event": "bodas",
+      "file": "src/content/bodas/brisa-demo.mdx",
+      "package": "Esencial",
+      "design": "brisa",
+      "draft": true
+    },
+    {
+      "event": "quince",
+      "file": "src/content/quince/brisa-demo.mdx",
+      "package": "Esencial",
+      "design": "brisa",
+      "draft": true
+    }
+  ]
+}

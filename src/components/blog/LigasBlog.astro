@@ -1,0 +1,166 @@
+---
+interface LinkItem {
+  href: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  ariaLabel: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  readLabel: string;
+  links: LinkItem[];
+}
+
+const { ariaLabel, eyebrow, title, description, readLabel, links } = Astro.props;
+---
+
+<nav class="beach-guides" aria-label={ariaLabel}>
+  <div class="beach-guides__intro">
+    <p class="beach-guides__eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+  <ul class="beach-guides__list">
+    {links.map((link, index) => (
+      <li>
+        <a href={link.href}>
+          <span class="beach-guides__number">{String(index + 1).padStart(2, "0")}</span>
+          <span class="beach-guides__copy">
+            <span class="beach-guides__title">{link.title}</span>
+            <span class="beach-guides__description">{link.description}</span>
+            <span class="beach-guides__read">{readLabel} <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style lang="scss">
+  @use "../../estilos/_variables.scss" as *;
+
+  .beach-guides {
+    display: grid;
+    grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.7fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+    margin: $margen-cel 0;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    color: $primario;
+
+    &__intro {
+      max-width: 30rem;
+
+      h2 {
+        margin: 0 0 0.85rem;
+        font-size: clamp(1.55rem, 2.5vw, 2.2rem);
+        line-height: 1.15;
+        color: $primario;
+        font-weight: 600;
+      }
+
+      p:last-child {
+        margin: 0;
+        line-height: 1.65;
+      }
+    }
+
+    &__eyebrow {
+      margin: 0 0 0.7rem;
+      color: $gris;
+      font-size: 0.85rem;
+    }
+
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      min-width: 0;
+      background: rgba($terciario, 0.3);
+      border-radius: $radio;
+      list-style: none;
+      padding: 1rem;
+      //@extend .sombra;
+    }
+
+    a {
+      display: flex;
+      height: 100%;
+      gap: 0.75rem;
+      padding: 1rem;
+      color: inherit;
+      text-decoration: none;
+      border-radius: inherit;
+
+      &:hover .beach-guides__read,
+      &:focus-visible .beach-guides__read {
+        color: $secundario;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $primario;
+        outline-offset: 3px;
+      }
+    }
+
+    &__number {
+      flex: 0 0 auto;
+      color: $gris;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    &__copy {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__title {
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    &__description {
+      margin-top: 0.45rem;
+      color: $gris;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    &__read {
+      margin-top: auto;
+      padding-top: 0.85rem;
+      font-size: 0.85rem;
+      transition: color 160ms ease;
+    }
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+
+      &__intro {
+        max-width: 42rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      &__list {
+        grid-template-columns: 1fr;
+      }
+
+      li {
+        min-height: 9rem;
+      }
+    }
+  }
+</style>

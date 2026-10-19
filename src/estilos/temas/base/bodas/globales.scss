@@ -688,21 +688,22 @@
   //componente frase animada
   .frase {
     color: var(--primario);
-    font-size: clamp(1.8rem, 5vw, 7vw);
+    font-size: clamp(1.2rem, 5vw, 7vw);
     text-align: center;
     margin: $margen-min $margen-min 0 $margen-min;
     padding: $margen $margen-min;
     border-top: 1px solid var(--secundario);
     border-bottom: 1px solid var(--secundario);
     line-height: 1em;
-
+    
     .word {
       font-family: var(--font-heading), serif;
-      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-size: clamp(2.2rem, 5vw, 5rem);
     }
-
+    
     @include cel {
-      line-height: 1.7em;
+      line-height: 2em;
+      padding: $margen .5rem;
     }
   }
 
@@ -939,7 +940,7 @@
     }
     #regalo {
       margin-top: $margen;
-      padding: $margen;
+      padding: $margen $margen-min;
       background: rgba(var(--acento-rgb), 0.4);
       position: relative;
       overflow: hidden;
@@ -984,7 +985,7 @@
         border-bottom: 1px solid white;
         margin-bottom: $margen-min;
         padding-bottom: $margen-min;
-        font-size: clamp(2.7rem, 1.8vw, 3rem);
+        font-size: clamp(2rem, 1.8vw, 3rem);
       }
 
       h3 {
@@ -1006,7 +1007,7 @@
     #lluvia {
       h3 {
         color: var(--primario);
-        font-size: clamp(2.7rem, 1.8vw, 3rem);
+        font-size: clamp(2rem, 1.8vw, 3rem);
       }
 
       position: relative;
@@ -1073,7 +1074,7 @@
 
       h3 {
         color: var(--primario);
-        font-size: clamp(2.7rem, 1.8vw, 3rem);
+        font-size: clamp(2rem, 1.8vw, 3rem);
       }
 
       b {

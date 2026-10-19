@@ -1,40 +1,15 @@
-//paletas
-@use '../../../paletas/bodas/invierno' as *;
-@use '../../../paletas/bodas/base' as *;
-@use '../../../paletas/bodas/otono' as *;
-@use '../../../paletas/bodas/primavera' as *;
-
-
-//fuentes
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Didact+Gothic&family=Playwrite+CU:wght@100..400&display=swap");
-
-:root[data-paleta="invierno"] {
-  @include invierno();
-}
-:root[data-paleta="base"] {
-  @include base();
-}
-:root[data-paleta="otono"] {
-  @include otono();
-}
-:root[data-paleta="primavera"] {
-  @include primavera();
-}
-
-// Variables CSS para tipografías y Glassmorfismo iOS
-:root[data-theme="glass"] {
-  --font-heading: "DM Serif Display", serif;
-  --font-body: "Didact Gothic", sans-serif;
-  
-  // iOS Glassmorphism variables
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-blur: blur(20px);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  --glass-text-shadow: 0 1px 4px rgba(255,255,255,0.8);
-}
-
-
+@use '../../../paletas/bodas/base' as base;
+@use '../../../paletas/bodas/invierno' as invierno;
+@use '../../../paletas/bodas/otono' as otono;
+@use '../../../paletas/bodas/primavera' as primavera;
+@use '../../../paletas/bodas/verano' as verano;
+@use './tokens' as brisa;
+:root[data-paleta="base"][data-theme="brisa"] { @include base.base(); }
+:root[data-paleta="invierno"][data-theme="brisa"] { @include invierno.invierno(); }
+:root[data-paleta="otono"][data-theme="brisa"] { @include otono.otono(); }
+:root[data-paleta="primavera"][data-theme="brisa"] { @include primavera.primavera(); }
+:root[data-paleta="verano"][data-theme="brisa"] { @include verano.verano(); }
+:root[data-paleta][data-theme="brisa"] { @include brisa.tokens(); }
 //media query
 $cel: 479px;
 $nocel: 479px;
@@ -93,7 +68,7 @@ $txt: "Didact Gothic";
 }
 
 // animaciones 
-.anime{
+:root[data-paleta][data-theme="brisa"] .anime {
   transition: all .5s ease-in-out;
 }
 
@@ -104,6 +79,7 @@ $txt: "Didact Gothic";
 
 $margen-riel: calc((100% - (100% - 5rem)) / 2 );
 
-.sombra {
-  box-shadow: var(--glass-shadow);
+:root[data-paleta][data-theme="brisa"] .sombra {
+  box-shadow: var(--brisa-shadow);
 }
+

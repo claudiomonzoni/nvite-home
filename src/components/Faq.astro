@@ -148,6 +148,27 @@ const schemaFAQ = {
 const quickSearches = lang === "en"
   ? ["guest list", "RSVP", "QR code", "tables"]
   : ["invitados", "confirmar", "código QR", "mesas"];
+
+const showWeddingGuideLinks = Astro.url.pathname === "/bodas" || Astro.url.pathname === "/bodas/";
+const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lang === "en"
+  ? {
+      "How do guests RSVP?": [
+        { href: "/en/blog/organize-beach-wedding-rsvp-guests", label: "How to organize RSVPs for a beach wedding" },
+      ],
+      "Does it work for destination weddings?": [
+        { href: "/en/blog/beach-wedding-invitations-guest-information", label: "What to include in a beach wedding invitation" },
+        { href: "/en/blog/beach-wedding-ixtapa-zihuatanejo-guest-guide", label: "Guest guide to Ixtapa-Zihuatanejo" },
+      ],
+    }
+  : {
+      "¿Cómo hacer invitaciones que confirmen asistencia?": [
+        { href: "/blog/organizar-rsvp-invitados-boda-playa", label: "Cómo organizar el RSVP de una boda en la playa" },
+      ],
+      "¿Funciona para bodas destino en cualquier lugar de México?": [
+        { href: "/blog/invitaciones-boda-playa-informacion-invitados", label: "Qué incluir en una invitación para boda en la playa" },
+        { href: "/blog/boda-playa-ixtapa-zihuatanejo-guia-invitados", label: "Guía para invitados en Ixtapa-Zihuatanejo" },
+      ],
+    };
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(schemaFAQ)} />
@@ -214,6 +235,17 @@ const quickSearches = lang === "en"
             </summary>
             <div class="faq-answer-pane">
               <div class="faq-answer-inner" set:html={faq.answer}></div>
+              {showWeddingGuideLinks && weddingGuideLinks[faq.question] && (
+                <p class="faq-related-guides">
+                  <span>{lang === "en" ? "Related guide:" : "Sigue leyendo:"}</span>{" "}
+                  {weddingGuideLinks[faq.question].map((guide, guideIndex) => (
+                    <>
+                      {guideIndex > 0 && <span aria-hidden="true"> · </span>}
+                      <a href={guide.href}>{guide.label}</a>
+                    </>
+                  ))}
+                </p>
+              )}
             </div>
           </details>
         ))}
@@ -523,6 +555,19 @@ const quickSearches = lang === "en"
 
     a {
       color: $primario;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  .faq-related-guides {
+    margin: 0.65rem 0 0;
+    color: $primario;
+    font-size: 0.92rem;
+
+    a {
+      color: inherit;
+      font-weight: 600;
       text-decoration: underline;
       text-underline-offset: 3px;
     }
