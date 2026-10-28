@@ -25,10 +25,6 @@ const lang = Astro.locals.lang || "es";
     <link rel="canonical" href={canonicalURL} />
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{title}</title>
-    <!-- Preload local Hurme font used in headers -->
-    <link rel="preload" href="/fonts/hurme/HurmeGeometricSans4-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/hurme/HurmeGeometricSans4-Bold.woff2" as="font" type="font/woff2" crossorigin />
-
     <!-- Load Montserrat from Google Fonts non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

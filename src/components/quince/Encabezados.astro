@@ -36,7 +36,7 @@ const { texto } = Astro.props;
 
 
     const texto = new SplitType(ele as HTMLElement, {
-      types: "chars",
+      types: "words",
     });
 
     
@@ -52,7 +52,7 @@ const { texto } = Astro.props;
       delay: 0.7,
     });
 
-    gsap.from(texto.chars, {
+    gsap.from(texto.words, {
       scrollTrigger: {
         trigger: ele as HTMLElement,
         start: "top 100%",

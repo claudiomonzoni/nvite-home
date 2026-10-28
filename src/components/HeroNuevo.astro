@@ -84,7 +84,7 @@ const lang = Astro.locals.lang || "es";
   @use "../estilos/_variables.scss" as *;
 
   #conteHero {
-    position: sticky;
+    position: relative;
     top: 0;
     z-index: 1;
     background: $fondoGlobal;
@@ -102,9 +102,15 @@ const lang = Astro.locals.lang || "es";
   }
   #hero {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 2fr) minmax(15rem, 1.1fr);
     grid-template-rows: 1fr;
     margin-top: 6rem;
+    & > * { min-width: 0; }
+    @media (min-width: 480px) and (max-width: 1023px) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      .imgContainer { order: 2; grid-column: 1 / -1; }
+      #heroCta { order: 1; padding: 1.5rem; }
+    }
     @include cel {
       margin-top: 8rem;
       grid-template-columns: 1fr;
@@ -112,19 +118,24 @@ const lang = Astro.locals.lang || "es";
   }
   #heroh1 {
     order: 0;
-    font-size: clamp(1.1rem, 3vw, 1.2rem);
-    line-height: 1;
+    font-size: var(--type-body);
+    color: $primario;
+    line-height: 1.4;
+    letter-spacing: normal;
+    text-wrap: pretty;
     padding: $margen-cel 0;
     @include cel {
       padding: $margen-min;
-      line-height: 1;
+      line-height: 1.4;
     }
   }
 
   :global(#spanHeroH1) {
     position: relative;
-    line-height: 1;
-    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.08;
+    font-size: clamp(2.25rem, 3.4vw, 4rem);
+    letter-spacing: var(--tracking-heading);
+    text-wrap: balance;
     color: $primario;
     display: block;
     padding-top: .5rem;
@@ -146,9 +157,11 @@ const lang = Astro.locals.lang || "es";
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: $margen-cel;
+    padding: clamp(1rem, 1.5vw, 2rem);
     p {
-      color: $fondoGlobal;
+      color: #35394f;
+      font-size: var(--type-body);
+      line-height: 1.55;
     }
 
     @include cel {
@@ -176,8 +189,9 @@ const lang = Astro.locals.lang || "es";
     }
     p {
       
-      color: $fondoGlobal;
-      font-size: 0.8rem;
+      color: #35394f;
+      font-size: var(--type-small);
+      line-height: 1.5;
       padding:0;
       @include cel {
         font-weight: 600;

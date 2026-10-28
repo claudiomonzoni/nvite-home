@@ -96,30 +96,30 @@ const isEn = lang === "en";
       width: 100%;
       color: $acento;
       font-size: clamp(3rem, 4vw, 5rem);
-      line-height: 0.8em;
+      line-height: 1.08;
+      row-gap: 0.5rem;
       text-align: left;
       // font-family: $fuenteB, serif;
       // text-shadow:
       //   2px 2px 0px var(--fondo),
       //   5px 4px 10px rgba(0, 0, 0, 0.15);
-      transform: translateX(-0.5rem);
       span {
-        line-height: 2em;
+        line-height: 1.4;
         flex: 1 0 100%;
         color: $primario;
         font-size: clamp(1.2rem, 1vw, 2rem);
-        transform: translateX(0.5rem);
+        letter-spacing: normal;
         font-weight: 400 !important;
         font-family: "Montserrat", sans-serif;
       }
       span:nth-child(2) {
-        line-height: 1em;
+        line-height: 1.2;
         font-size: clamp(1.8rem, 2.3vw, 3rem);
       }
 
       @include cel {
         justify-content: center;
-        line-height: 0.7em;
+        line-height: 1.1;
         text-align: center;
         transform: translateX(0rem);
         @include cel {

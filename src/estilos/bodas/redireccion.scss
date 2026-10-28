@@ -5,6 +5,7 @@
 @use "../temas/elegante/bodas/globales" as *;
 @use "../temas/moderno/bodas/globales" as *;
 @use "../temas/brisa/bodas/globales" as *;
+@use "../comunes/tipografia-invitaciones" as tipografia;
 
 
 
@@ -25,4 +26,8 @@
 }
 :root[data-paleta][data-theme="brisa"] {
   @include tema-brisa();
+}
+
+:root:is([data-theme="base"], [data-theme="elegante"], [data-theme="moderno"]) {
+  @include tipografia.lectura();
 }

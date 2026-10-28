@@ -266,7 +266,8 @@ const videoSources = lang === "en"
     gsap.fromTo(
       videoFrames,
       {
-        y: () => -choro.offsetHeight - 30,
+        // Keep the introduction readable while the video enters below it.
+        y: 24,
         scale: 0.82,
       },
       {

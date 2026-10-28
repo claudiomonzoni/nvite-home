@@ -1,4 +1,5 @@
 ---
+import { invitationFontLinks } from "../../utils/invitation-fonts";
 interface Theme {
   name?: string;
   colors?: {
@@ -66,19 +67,7 @@ if (typography) {
 }
 
 // Generar links de Google Fonts si hay tipografías personalizadas
-const fontLinks: string[] = [];
-if (typography?.heading) {
-  const fontName = typography.heading.replace(/ /g, "+");
-  fontLinks.push(
-    `https://fonts.googleapis.com/css2?family=${fontName}&display=swap`,
-  );
-}
-if (typography?.body) {
-  const fontName = typography.body.replace(/ /g, "+");
-  fontLinks.push(
-    `https://fonts.googleapis.com/css2?family=${fontName}&display=swap`,
-  );
-}
+const fontLinks = invitationFontLinks([typography?.heading, typography?.body]);
 
 import "../../estilos/bodas/redireccion.scss";
 ---

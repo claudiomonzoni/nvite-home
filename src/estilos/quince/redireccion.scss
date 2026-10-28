@@ -6,6 +6,7 @@
 @use "../temas/brisa/quince/globales" as *;
 
 @use "../temas/elegante/quince/globales" as *;
+@use "../comunes/tipografia-invitaciones" as tipografia;
 
 // @use "../temas/clasico/quince/clasico" as *;
 
@@ -21,6 +22,10 @@
 
 :root[data-theme="elegante"] {
   @include tema-elegante();
+}
+
+:root:is([data-theme="base"], [data-theme="elegante"]) {
+  @include tipografia.lectura();
 }
 
 

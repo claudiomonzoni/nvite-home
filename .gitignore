@@ -5,6 +5,7 @@ dist/
 # generated types
 .astro/
 .impeccable/review/
+.typography-audit/
 
 # dependencies
 node_modules/

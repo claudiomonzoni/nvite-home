@@ -66,7 +66,7 @@ const { texto } = Astro.props;
 
   titulo.forEach((ele, id) => {
     const texto = new SplitType(ele as HTMLElement, {
-      types: "chars",
+      types: "words",
     });
 
     gsap.from(img[id] as HTMLElement, {
@@ -81,7 +81,7 @@ const { texto } = Astro.props;
       delay: 0.7,
     });
 
-    gsap.from(texto.chars, {
+    gsap.from(texto.words, {
       scrollTrigger: {
         trigger: ele as HTMLElement,
         start: "top 100%",

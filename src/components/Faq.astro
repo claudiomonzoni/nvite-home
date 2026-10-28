@@ -297,10 +297,10 @@ const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lan
   }
 
   .faq-sidebar-heading {
-    font-size: 0.72rem;
+    font-size: var(--type-small);
     font-weight: 800;
     letter-spacing: 0.06em;
-    color: #7f8d9c;
+    color: $primario;
     margin-bottom: 1rem;
   }
 
@@ -345,9 +345,9 @@ const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lan
   .faq-help-box {
     .faq-help-micro-label {
       display: block;
-      font-size: 0.7rem;
+      font-size: var(--type-small);
       letter-spacing: 0.05em;
-      color: $secundario;
+      color: $primario;
       margin-bottom: 0.5rem;
     }
 
@@ -442,11 +442,11 @@ const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lan
   }
 
   .faq-topic-desc {
+    max-width: 65ch;
     margin: 0;
     color: #64748b;
     font-size: 1rem;
     line-height: 1.6;
-    max-width: 760px;
   }
 
   .faq-questions-group {
@@ -493,7 +493,7 @@ const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lan
   .faq-question-num {
     min-width: 28px;
     flex-shrink: 0;
-    font-family: 'Hurme', serif;
+    font-family: var(--font-hurme), sans-serif;
     color: $secundario;
     font-size: 1rem;
   }
@@ -502,7 +502,7 @@ const weddingGuideLinks: Record<string, { href: string; label: string }[]> = lan
     flex: 1;
     margin: 0;
     color: $primario;
-    font-family: 'Hurme', serif;
+    font-family: var(--font-hurme), sans-serif;
     font-size: clamp(1.2rem, 1.8vw, 1.9rem);
     line-height: 1.3;
     font-weight: 600;

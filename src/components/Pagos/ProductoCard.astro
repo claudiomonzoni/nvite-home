@@ -221,13 +221,13 @@ const schemaProduct = {
       background: rgba($primario, 0.8);
       padding: 0.5rem $margen-min;
       color:#fff;
-      font-size: 0.7rem;
+      font-size: var(--type-small);
       border-radius: $radio;
       backdrop-filter: blur(5px);
-      line-height: 1rem;
+      line-height: 1.4;
       z-index: 100;
       small{
-        font-size: .5rem;
+        font-size: 0.9375em;
       }
    
       @extend .sombra;
@@ -238,11 +238,11 @@ const schemaProduct = {
     padding: 0 $margen-min;
   }
   .info span {
-    font-size: clamp(0.7rem, calc(1.1vw + 0.5rem), 0.8rem);
-    color: $acento;
+    font-size: var(--type-small);
+    color: $primario;
     text-transform: capitalize;
     margin-bottom: $margen-cel;
-    font-weight: 300;
+    font-weight: 400;
   }
   .headinfo {
     display: flex;
@@ -277,8 +277,8 @@ const schemaProduct = {
   }
 
   .price-anchor {
-    font-size: 12px;
-    color: #888;
+    font-size: var(--type-small);
+    color: $gris;
     margin-top: 6px;
     margin-bottom: 4px;
     font-style: normal;
@@ -290,8 +290,8 @@ const schemaProduct = {
   }
 
   .price-note {
-    font-size: 11px;
-    color: #aaa;
+    font-size: var(--type-small);
+    color: $gris;
     text-align: center;
     margin-top: -2px;
     margin-bottom: 8px;
@@ -314,8 +314,8 @@ const schemaProduct = {
   .categoria {
     text-transform: capitalize;
     color: $gris;
-    font-size: 0.7rem;
-    font-weight: lighter;
+    font-size: var(--type-small);
+    font-weight: 400;
   }
 </style>
 

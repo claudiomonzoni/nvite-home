@@ -38,17 +38,17 @@ const l = {
             const container = document.querySelector("#mensaje-vip-container");
 
             if (mensajeElement && container) {
-              // Split text into words and characters
+              // Keep letter pairs and handwritten connections within each word.
               const splitText = new SplitType(mensajeElement, {
-                types: "words,chars",
+                types: "words",
                 tagName: "span",
               });
 
-              // Set initial opacity for characters
-              gsap.set(splitText.chars, { opacity: 0.2 });
+              // Set initial opacity for words
+              gsap.set(splitText.words, { opacity: 0.2 });
 
-              // Animate characters when the container enters the viewport
-              gsap.to(splitText.chars, {
+              // Animate words when the container enters the viewport
+              gsap.to(splitText.words, {
                 scrollTrigger: {
                   trigger: ".mensaje-vip",
                   start: "top 80%",

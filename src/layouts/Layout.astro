@@ -68,10 +68,6 @@ const lang = Astro.locals.lang || "es";
     <link rel="sitemap" href="/sitemap.xml" />
     <title>{title}</title>
     
-    <!-- Preload custom local font to prevent render blocking and layout shift -->
-    <link rel="preload" href="/fonts/hurme/HurmeGeometricSans4-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/hurme/HurmeGeometricSans4-Bold.woff2" as="font" type="font/woff2" crossorigin />
-
     <!-- Preconnect Google Fonts & Non-blocking Font Stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

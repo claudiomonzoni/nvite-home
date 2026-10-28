@@ -41,6 +41,11 @@ export default defineConfig({
             style: "normal",
           },
           {
+            src: ["./public/fonts/hurme/HurmeGeometricSans4-SemiBold.woff2"],
+            weight: "600",
+            style: "normal",
+          },
+          {
             src: ["./public/fonts/hurme/HurmeGeometricSans4-Bold.woff2"],
             weight: "700",
             style: "normal",

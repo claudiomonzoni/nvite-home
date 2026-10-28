@@ -2,7 +2,7 @@
  * Pre-emit critique: Philosophy 4 · Hierarchy 4 · Execution 4 · Specificity 4 · Restraint 5 · Variety 4
  */
 @mixin sections() {
-  & { font-size: 16px; box-sizing: border-box; overflow-x: clip; background: var(--fondo); scroll-behavior: smooth; }
+  & { font-size: 100%; font-kerning: normal; box-sizing: border-box; overflow-x: clip; background: var(--fondo); scroll-behavior: smooth; }
   *, *::before, *::after { box-sizing: border-box; }
   body { margin: 0; overflow-x: clip; font: 400 1rem/1.7 var(--font-body); color: var(--texto, var(--primario)); background: var(--fondo); }
   body::before { content: none; }

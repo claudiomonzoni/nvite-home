@@ -259,11 +259,11 @@ const safeJsonLd = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u0
   }
 
   .blog-article__content {
-    max-width: 740px;
+    max-width: 68ch;
     margin: 0 auto;
     color: $gris;
-    font-size: clamp(1rem, 1.35vw, 1.15rem);
-    line-height: 1.85;
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    line-height: 1.75;
   }
 
   .blog-article__content :global(> p:first-child) {
