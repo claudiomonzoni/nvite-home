@@ -9,6 +9,7 @@
 :root[data-paleta-quince="otono"][data-theme="brisa"] { @include otono.otono-quince(); }
 :root[data-paleta-quince="primavera"][data-theme="brisa"] { @include primavera.primavera-quince(); }
 :root[data-paleta-quince="verano"][data-theme="brisa"] { @include verano.verano-quince(); }
+:root:is([data-paleta-quince="base"], [data-paleta-quince="verano"], [data-paleta-quince="otono"])[data-theme="brisa"] { --fondo: var(--terciario, #faf7ef); }
 :root[data-paleta-quince][data-theme="brisa"] { @include brisa.tokens(); }
 //media query
 $cel: 479px;

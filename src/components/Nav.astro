@@ -325,7 +325,10 @@ if (Astro.cookies.has("cartItems")) {
     }
 
     &.hide-nav {
-      transform: translateY(-100%);
+      @media (max-width: 768px) {
+        transform: translateY(calc(-100% - 1px));
+        &:focus-within { transform: translateY(0); }
+      }
     }
 
     &.menu-open {
@@ -680,13 +683,32 @@ if (Astro.cookies.has("cartItems")) {
 
   function initializeNavScroll() {
     const nav = document.getElementById("main-nav");
-    let lastScroll = 0;
+    const mobile = window.matchMedia("(max-width: 768px)");
+    let lastScroll = window.scrollY;
 
     const handleScroll = () => {
-      if (nav?.classList.contains("menu-open")) return;
+      // Clamp elastic overscroll on mobile browsers before comparing direction.
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const currentScroll = Math.max(0, Math.min(window.scrollY, maxScroll));
+      if (nav?.classList.contains("menu-open")) {
+        lastScroll = currentScroll;
+        return;
+      }
 
-      const currentScroll = window.scrollY;
+      if (mobile.matches) {
+        nav?.classList.remove("collapsed");
+        if (currentScroll <= 80) {
+          nav?.classList.remove("hide-nav");
+        } else {
+          // Accumulate small movements so touch jitter does not toggle the menu.
+          if (Math.abs(currentScroll - lastScroll) < 6) return;
+          nav?.classList.toggle("hide-nav", currentScroll > lastScroll);
+        }
+        lastScroll = currentScroll;
+        return;
+      }
 
+      nav?.classList.remove("hide-nav");
       if (currentScroll > lastScroll && currentScroll > 80) {
         nav?.classList.add("collapsed");
       } else {
@@ -697,8 +719,11 @@ if (Astro.cookies.has("cartItems")) {
     };
 
     window.removeEventListener("scroll", (window as any).__navScrollHandler);
+    window.removeEventListener("resize", (window as any).__navScrollHandler);
     (window as any).__navScrollHandler = handleScroll;
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    handleScroll();
   }
 
   function setupMobileMenu() {
@@ -720,6 +745,7 @@ if (Astro.cookies.has("cartItems")) {
     };
 
     const openMenu = () => {
+      nav?.classList.remove("hide-nav");
       hamburgerBtn.classList.add("is-active");
       hamburgerBtn.setAttribute("aria-expanded", "true");
       drawer.classList.add("is-open");

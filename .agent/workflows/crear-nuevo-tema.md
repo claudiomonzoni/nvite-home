@@ -229,3 +229,7 @@ Actualizar esta guía si cambian routers, opciones del CMS, mapas o casos de Her
 - [ ] Contenido de prueba válido y recursos accesibles.
 - [ ] Revisión móvil/escritorio y regresión de temas existentes.
 - [ ] Build correcto o limitación concreta registrada.
+
+### Correcci?n de apertura Brisa ? 30 de octubre de 2026
+
+Las paletas de XV Base, Verano y Oto?o necesitan un `--fondo` de respaldo en las variables de Brisa; la apertura usa un fondo opaco aunque la paleta no lo defina. Mientras exista `dialog[data-brisa-opening]`, el contenido principal permanece oculto, incluso antes de hidratar React; el di?logo conserva su visibilidad. Sin `cover`, se muestra el monograma inicial y se omite la fotograf?a del Hero: no se sustituye por una playa. Comprobar apertura con/sin foto y con movimiento reducido en ambos eventos.

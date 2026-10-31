@@ -29,6 +29,7 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
   const openingRef = useRef(false);
   const transitionRef = useRef(null);
   const transitionPhotoRef = useRef(null);
+  const hasCover = typeof cover === 'string' && cover.trim().length > 0;
   const en = lang.startsWith('en');
   const wedding = tipo === 'bodas';
   const tap = labels.tap || (en ? 'Open invitation' : 'Abrir invitación');
@@ -65,7 +66,8 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { ready(); return; }
     gsap.registerPlugin(ScrollTrigger);
     const context = gsap.context(() => {
-      gsap.fromTo(`.${styles.photo} img`, { scale: 1.06 }, {
+      if (!hasCover) gsap.delayedCall(0, ready);
+      else gsap.fromTo(`.${styles.photo} img`, { scale: 1.06 }, {
         scale: 1, duration: 1.25, ease: 'power3.out', onComplete: ready,
       });
       // On phones the paper sits below the photo: reveal it when it is seen.
@@ -157,9 +159,9 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
   }
 
   return <>
-    <section ref={heroRef} className={`${styles.hero} ${!wedding ? styles.quince : ''}`} aria-label={title}>
+    <section ref={heroRef} className={`${styles.hero} ${!wedding ? styles.quince : ''}`} data-has-cover={hasCover} aria-label={title}>
       <div className={styles.photo}>
-        <img src={cover || '/temas/brisa/orilla.webp'} alt={nombres?.replace(/<[^>]+>/g, '') || title} fetchpriority="high" />
+        {hasCover && <img src={cover} alt={nombres?.replace(/<[^>]+>/g, '') || title} fetchpriority="high" />}
 
       </div>
       <div className={styles.paper}>
@@ -174,9 +176,9 @@ export default function HeroBrisa({ tipo = 'bodas', nombres, fecha, cover, ellaI
       </div>
     </section>
     <span id="brisa-celebracion" className={styles.anchor} />
-    {!opened && <dialog ref={dialogRef} className={styles.opening} aria-label={en ? 'Open invitation' : 'Abrir invitación'} onCancel={event => { event.preventDefault(); openInvitation(); }}>
+    {!opened && <dialog data-brisa-opening ref={dialogRef} className={styles.opening} aria-label={en ? 'Open invitation' : 'Abrir invitación'} onCancel={event => { event.preventDefault(); openInvitation(); }}>
       <div className={styles.stationery}>
-        <button className={styles.coverButton} onClick={openInvitation} aria-label={en ? 'Open invitation photo' : 'Abrir foto de portada'}><img ref={coverRef} src={cover || '/temas/brisa/orilla.webp'} alt={nombres?.replace(/<[^>]+>/g, '') || title} /></button>
+        <button className={styles.coverButton} onClick={openInvitation} aria-label={hasCover ? (en ? 'Open invitation photo' : 'Abrir foto de portada') : tap}>{hasCover ? <img ref={coverRef} src={cover} alt={nombres?.replace(/<[^>]+>/g, '') || title} /> : <span className={styles.seal} aria-hidden="true">{monogram}</span>}</button>
         <h2 dangerouslySetInnerHTML={{ __html: nombres || '' }} />
         <TideLine />
         <p>{labels.loading || (en ? 'An invitation to celebrate together' : 'Una invitación para celebrar juntos')}</p>
