@@ -24,7 +24,7 @@ type Props = { invitadoData: InvitadoProps; ruta: string; tipo: string };
 const { invitadoData, ruta, tipo } = Astro.props;
 const lang = Astro.locals.lang || "es";
 const t = useTranslations(lang);
-const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}%26uid=${invitadoData.usuarioId}`;
+const urlWA: string = `${Astro.url.origin}/${tipo}/${ruta}?id=${invitadoData.uuid ?? ""}&uid=${invitadoData.usuarioId}`;
 ---
 
 <article
