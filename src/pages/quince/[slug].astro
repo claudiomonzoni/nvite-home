@@ -586,6 +586,7 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
               labels={{
                 title: t("invitation.rsvp"),
                 subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
+                assignedPasses: t("rsvp.assignedPasses"),
                 confirmYes: t("rsvp.confirmYes"),
                 confirmNo: t("rsvp.confirmNo"),
                 howMany: t("rsvp.howMany"),
@@ -617,10 +618,12 @@ const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(
                 themeName={quince.data.theme.name}
                 whatsapp={quince.data.whatsapp}
                 dias_antes={15}
+                initialInvitado={dbInvitado}
                 client:only="react"
                 labels={{
                   title: t("invitation.rsvp"),
                   subtitle: `${t("invitation.rsvp.daysBefore")} ${stringFechaConfirmacion}`,
+                  assignedPasses: t("rsvp.assignedPasses"),
                   btnConfirm: t("rsvp.btnConfirm"),
                   whatsappMsg: t("rsvp.whatsappMsgYes"),
                   label: t("rsvp.label"),

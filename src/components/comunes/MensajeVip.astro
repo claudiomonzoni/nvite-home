@@ -1,13 +1,15 @@
 ---
 interface Props {
-  initialInvitado?: { vip?: boolean; mensajePersonalizado?: string } | null;
+  initialInvitado?: { vip?: boolean; mensajePersonalizado?: string | null } | null;
   labels?: {
     tag?: string;
   };
 }
 
 const { labels = {}, initialInvitado = null } = Astro.props;
-const initialMensaje = initialInvitado?.vip ? initialInvitado.mensajePersonalizado : '';
+const initialMensaje = initialInvitado?.vip
+  ? initialInvitado.mensajePersonalizado ?? ''
+  : '';
 
 const l = {
   tag: labels.tag || "invitado especial",

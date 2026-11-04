@@ -11,6 +11,7 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
   const t = {
     title: labels.title || "¿Contamos con tu presencia?",
     subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
+    assignedPasses: labels.assignedPasses || "",
     confirmYes: labels.confirmYes || "¡Confirmo asistencia! 😄",
     confirmNo: labels.confirmNo || "Lo lamento, no podré asistir 😔",
     moveSwitch: labels.moveSwitch || "Mueve el switch a la derecha para confirmar tu asistencia y despues completa el formulario de confirmación.",
@@ -356,6 +357,9 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
             </svg>
             <h2>{t.title}</h2>
             <p dangerouslySetInnerHTML={{ __html: t.subtitle.replace('{dias}', `<b>${dias_antes}</b>`) }} />
+            {t.assignedPasses && id && Number.isFinite(pases) && (
+              <p>{t.assignedPasses.replace('{pases}', String(Math.trunc(pases)))}</p>
+            )}
 
             <form
               id={styles["formulario"]}

@@ -3,11 +3,13 @@ import estiloBase from "../../estilos/temas/base/quince/confirmacion.module.scss
 
 import estiloBrisa from "../../estilos/temas/brisa/quince/confirmacion.module.scss";
 
-export default function Confirmacion({ whatsapp, dias_antes, labels = {}, themeName = "base" }) {
+export default function Confirmacion({ whatsapp, dias_antes, labels = {}, themeName = "base", initialInvitado = null }) {
   const estilo = themeName === "brisa" ? estiloBrisa : estiloBase;
+  const assignedPassCount = Number(initialInvitado?.pases);
   const t = {
     title: labels.title || "Confirmación",
     subtitle: labels.subtitle || "Por favor confírmanos tu asistencia al menos {dias} días antes del evento, nos ayudarás mucho con la organización al hacerlo.",
+    assignedPasses: labels.assignedPasses || "",
     label: labels.label || "Escribenos tu nombre completo y cuantas personas asistiran:",
     btnConfirm: labels.btnConfirm || "Confirmar",
     whatsappMsg: labels.whatsappMsg || "Hola, les confirmo la asistencia Comentarios: {comentarios}."
@@ -57,6 +59,9 @@ export default function Confirmacion({ whatsapp, dias_antes, labels = {}, themeN
             </svg>
             <h2>{t.title}</h2>
             <p dangerouslySetInnerHTML={{ __html: t.subtitle.replace('{dias}', `<b>${dias_antes || 15}</b>`) }} />
+            {t.assignedPasses && Number.isFinite(assignedPassCount) && (
+              <p>{t.assignedPasses.replace('{pases}', String(Math.trunc(assignedPassCount)))}</p>
+            )}
 
             <form id={estilo["formulario"]}>
         

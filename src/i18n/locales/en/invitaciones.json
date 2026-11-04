@@ -49,6 +49,7 @@
   "rsvp.confirmYes": "I confirm my attendance! 😄",
   "rsvp.confirmNo": "Sorry, I cannot attend 😔",
   "rsvp.howMany": "How many passes will you use?",
+  "rsvp.assignedPasses": "Passes assigned: {pases} passes",
   "rsvp.selectPasses": "Select number of passes",
   "rsvp.messageOptional": "Send us a greeting (optional):",
   "rsvp.messagePlaceholder": "Write your message here...",

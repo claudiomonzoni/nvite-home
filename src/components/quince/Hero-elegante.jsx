@@ -146,10 +146,8 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
     tap: labels?.tap || "Toca para comenzar",
     honor: labels?.honor || "Mis 15 años",
     saveDate: labels?.saveDate || "SAVE THE DATE",
-    passes: labels?.passes || "No. de pases",
   };
   const [invitado, setInvitado] = useState(initialInvitado ? initialInvitado.nombre : "-");
-  const [pase, setPase] = useState(initialInvitado ? initialInvitado.pases : 0);
   const [iniciado, setIniciado] = useState(false);
   const [animandoSalida, setAnimandoSalida] = useState(false);
   const loadingTextRef = useRef(null);
@@ -187,7 +185,6 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
         .then(json => {
           if (json && json[0]) {
             setInvitado(json[0].nombre);
-            setPase(json[0].pases);
           }
         })
         .catch(err => console.error("Error fetching guest in Hero-elegante:", err));
@@ -420,11 +417,6 @@ export default function HeroElegante({ nombres, fecha, cover, labels, lang = 'es
             <p className={Style.nombreInvitado}>{invitado}</p>
           )}
 
-          {pase ? (
-            <div id={Style["pases"]}>
-              {l.passes} <p id={Style["NumeroPases"]}>{pase}</p>
-            </div>
-          ) : ""}
         </div>
       </section>
     </>

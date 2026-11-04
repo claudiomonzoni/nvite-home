@@ -18,7 +18,7 @@ function TideLine() {
   return <svg className={styles.tide} viewBox="0 0 160 20" fill="none" aria-hidden="true"><path d="M1 10c20-18 38 18 58 0s38 18 58 0 28 0 42 0M1 17c20-18 38 18 58 0s38 18 58 0 28 0 42 0" stroke="currentColor" strokeWidth="1" /></svg>;
 }
 
-export default function HeroBrisa({ tipo = 'quince', nombres, fecha, cover, ellaIniciales, elIniciales, labels = {}, lang = 'es', initialInvitado = null }) {
+export default function HeroBrisa({ tipo = 'quince', nombres, fecha, cover, ellaIniciales = '', elIniciales = '', labels = {}, lang = 'es', initialInvitado = null }) {
   const [opened, setOpened] = useState(false);
   const [guest, setGuest] = useState(initialInvitado);
   const buttonRef = useRef(null);
