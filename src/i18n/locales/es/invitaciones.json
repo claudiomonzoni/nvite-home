@@ -57,6 +57,8 @@
   "rsvp.btnDecline": "No podré asistir",
   "rsvp.modalYes": "¡Muchas gracias por confirmar su asistencia! Nos llena de alegría saber que podremos contar con su presencia en este día tan especial.",
   "rsvp.modalNo": "Agradecemos mucho su pronta respuesta. Lamentamos que no pueda acompañarnos en esta ocasión tan especial.",
+  "quince.rsvp.whatsappMsgYes": "Hola, les confirmo la asistencia a los XV años: {nombre}, y usaremos {pases} pase(s). {noAsisten} Comentarios: {comentarios}.",
+  "quince.rsvp.whatsappMsgNo": "Hola, lamento informarles que no podré asistir a los XV años: {nombre}. Comentarios: {comentarios}.",
   "rsvp.whatsappMsgYes": "Hola, les confirmo la asistencia a la boda: {nombre}, y usaremos {pases} pase(s). {noAsisten} Comentarios: {comentarios}.",
   "rsvp.whatsappMsgNo": "Hola, lamento informarles que no podré asistir a la boda: {nombre}. Comentarios: {comentarios}.",
   "rsvp.label": "Escribenos tu nombre completo y cuantas personas asistiran:",
