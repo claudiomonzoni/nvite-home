@@ -133,7 +133,8 @@
     }
 
     .nombreInvitado {
-      font-family: var(--font-heading, "Italiana"), serif;
+      font-family: var(--font-body, "Montserrat"), sans-serif;
+
       font-size: clamp(2rem, 7vw, 3rem);
       font-weight: 400;
       color: var(--primario, #3d447d);
