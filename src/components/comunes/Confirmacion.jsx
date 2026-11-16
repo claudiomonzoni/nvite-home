@@ -276,26 +276,25 @@ export default function Confirmacion({ whatsapp, dias_antes, version, tipo = 'bo
         // Actualizamos la base de datos
         await actualizarBaseDatos(asistira);
 
-        // Si el usuario dejó un mensaje o nombres de personas que no asisten, abrimos WhatsApp
+        const baseMessage = asistira ? t.modalYes : t.modalNo;
+        const finalMessage = isLuxVersion
+          ? `${baseMessage}\n\n${luxMessage}`
+          : baseMessage;
+
+        setModalMessage(finalMessage);
+        setModalVisible(true);
+
+        // Abrir WhatsApp cuando hay comentarios o personas que no asisten.
         if (comentarios.trim() !== "" || personasNoAsisten.trim() !== "") {
           if (whatsappUrl) {
             window.open(whatsappUrl, "_blank");
           }
-        } else {
-          // Si no hay mensaje ni nombres, mostramos agradecimiento según el caso
-          const baseMessage = asistira ? t.modalYes : t.modalNo;
-          const finalMessage = isLuxVersion
-            ? `${baseMessage}\n\n${luxMessage}`
-            : baseMessage;
-
-          setModalMessage(finalMessage);
-          setModalVisible(true);
         }
       } catch (err) {
         console.error("Error al procesar la confirmación:", err);
       }
     },
-    [actualizarBaseDatos, asistira, comentarios, personasNoAsisten]
+    [actualizarBaseDatos, asistira, comentarios, personasNoAsisten, t.modalYes, t.modalNo, isLuxVersion, luxMessage]
   );
 
   const renderPasesOptions = useMemo(() => {

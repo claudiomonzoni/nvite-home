@@ -234,9 +234,9 @@ const qrMesa = dbInvitado
   ? String(dbInvitado.mesa ?? "")
   : String(fm?.mesaAsignada ?? fm?.mesa ?? fm?.mesaAsignadaInvitado ?? "");
 
-// Calcular fecha límite de confirmación (fecha de la boda menos 30 días)
+// Calcular fecha límite de confirmación (fecha de la boda menos 15 días)
 const fechaConfirmacion = new Date(boda.data.fecha);
-fechaConfirmacion.setDate(fechaConfirmacion.getDate() - 30);
+fechaConfirmacion.setDate(fechaConfirmacion.getDate() - 15);
 const stringFechaConfirmacion = fechaConfirmacion.toLocaleDateString(lang === "es" ? "es-MX" : "en-US", {
   year: "numeric",
   month: "long",
